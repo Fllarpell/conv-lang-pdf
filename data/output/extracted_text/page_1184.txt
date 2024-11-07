@@ -1,0 +1,102 @@
+INDEX
+1155
+Windows object type, 923–926
+Windows on Windows, 950–955
+Windows page combining, 972–973
+Windows page fault clustering, 959
+Windows page frame number database, 969–970
+Windows page list, 977
+Windows page replacement algorithm, 968–969
+Windows page table, 967–969
+Windows page-fault handling, 963–966
+Windows pagefile, 958–960, 977
+Windows pagefile reservation, 959
+Windows pagefile-backed section, 960
+Windows parse, 919
+Windows patch, 1033
+Windows patch binary, 1033
+Windows patchguard, 1031
+Windows physical memory management, 969–971
+Windows plug-and-play manager, 980
+Windows pointer authentication, 1030
+Windows power management, 1000–1003
+Windows power manager, 1000
+Windows prefetch, 965
+Windows prepaging, 965
+Windows priority boost, 948
+Windows priority floor, 948
+Windows priority inversion, 948
+Windows process environment block, 929
+Windows process manager, 907
+Windows processes, 929–955
+Windows prochandle, 885
+Windows protected process, 936, 1025
+Windows pushlock, 940
+Windows qos class, 949
+Windows quality-of-service class, 949
+Windows read-ahead, 979
+Windows recovery environment, 914
+Windows registry, 891–894
+Windows reserved page, 958
+Windows resilient file system, 989
+Windows resource tracking, 977
+Windows restricted token, 931
+Windows return flow guard, 1029
+Windows return-oriented programming, 1028
+Windows safe-mode, 914
+Windows sandbox, 1016
+Windows scheduling, 944–950
+Windows scheduling group, 950
+Windows SDK, 882
+Windows sectionhandle, 885
+Windows secure kernel, 897
+Windows security, 1018–1035
+Windows security descriptor, 1021
+Windows security mitigation, 1025–1026
+Windows security reference monitor, 908
+Windows self-map, 941
+Windows semaphore, 938
+Windows server container, 1011, 1013
+Windows server silo, 1012
+Windows shadow stack, 1029
+Windows shim, 943
+Windows side-by-side library, 927
+Windows silo, 1011
+Windows socket, 937
+Windows soft fault, 958, 964
+Windows software development kit, 882
+Windows standby list, 959
+Windows standby mode, 1001
+Windows storage pool, 980
+Windows storage spaces, 980
+Windows store eviction thread, 975
+Windows store manager, 973
+Windows structure, 894–929
+Windows subsystem, 880, 883–884, 926–929
+Windows superfetch, 966
+Windows synchronization, 938–940
+Windows system access control list, 1022
+Windows system partition, 976
+Windows system process, 934, 977
+Windows system store, 975
+Windows system structure, 894–929
+Windows system thread, 977
+Windows terminal server, 950
+Windows thin provisioning, 981
+Windows thread, 929–955, 933–934
+Windows thread environment block, 930
+Windows thread local storage, 930
+Windows thread pool, 932–933
+Windows thread scheduling, 944–950
+Windows threads, 929–955
+Windows thunk layer, 951
+Windows translation lookaside buffer, 962
+Windows turbo thunk, 951
+Windows update, 1032
+Windows user account control, 1024
+Windows user shared data, 930
+Windows user-mode driver framework, 985
+Windows validdatalength, 978
+Windows virtual address allocation, 958
+Windows virtual address descriptor, 962
+Windows virtual disk, 980

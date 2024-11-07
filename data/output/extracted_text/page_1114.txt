@@ -1,0 +1,21 @@
+CHAP. 12
+PROBLEMS
+1085
+costs $100,000 per year (including overhead, such as computers, office space, 
+secretarial support, and management overhead). Do you believe this answer? If not, what
+might be wrong with it?
+26. As memory gets cheaper and cheaper, one could imagine a computer with a big 
+battery-backed-up RAM instead of a hard disk. At current prices, how much would a
+low-end RAM-only PC cost? Assume that a 100-GB RAM-disk is sufficient for a 
+lowend machine. Is this machine likely to be competitive?
+27. Name some features of a conventional operating system that are not needed in an
+embedded system used inside an appliance.
+28. Write a procedure in C to do a double-precision addition on two giv en parameters.
+Write the procedure using conditional compilation in such a way that it works on
+16-bit machines and also on 32-bit machines.
+29. Write programs that enter randomly generated short strings into an array and then can
+search the array for a given string using (a) a simple linear search (brute force), and (b)
+a more sophisticated method of your choice. Recompile your programs for array sizes
+ranging from small to as large as you can handle on your system. Evaluate the 
+performance of both approaches. Where is the break-even point?
+30. Write a program to simulate an in-memory file system.

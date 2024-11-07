@@ -1,0 +1,48 @@
+SEC. 11.8
+THE WINDOWS NT FILE SYSTEM
+997
+list of extension MFT records is made nonresident (i.e., stored in other disk blocks
+instead of in the base MFT record). Then it can grow as large as needed.
+An MFT entry for a small directory is shown in Fig. 11-48. The record 
+contains a number of directory entries, each of which describes one file or directory.
+Each entry has a fixed-length structure followed by a variable-length file name.
+The fixed part contains the index of the MFT entry for the file, the length of the file
+name, and a variety of other fields and flags. Looking for an entry in a directory
+consists of examining all the file names in turn.
+Standard
+info header
+Index root
+header
+Standard
+info
+Unused
+Record
+header
+A directory entry contains the MFT index for the file, 
+the length of the file name, the file name itself, 
+and various fields and flags
+Figure 11-48. The MFT record for a small directory.
+Large directories use a different format. Instead, of listing the files linearly, a
+B+ tree is used to make alphabetical lookup possible and to make it easy to insert
+new names in the directory in the proper place.
+We now hav e enough information to finish describing how file-name lookup
+occurs for a file \ ?? \ C: \ foo \ bar. In Fig. 11-20, we saw how the Win32, the
+native NT system calls, and the object and I/O managers cooperated to open a file
+by sending an I/O request to the NTFS device stack for the C: volume. The I/O
+request asks NTFS to fill in a file object for the remaining path name, \ foo \ bar.
+The NTFS parsing of the path \ foo \ bar begins at the root directory for C:,
+whose blocks can be found from entry 5 in the MFT (see Fig. 11-44). The string
+‘‘foo’’ is looked up in the root directory, which returns the index into the MFT for
+the directory foo. This directory is then searched for the string ‘‘bar,’’ which refers
+to the MFT record for this file. NTFS performs access checks by calling back into
+the security reference monitor, and if access checks pass, it searches the MFT
+record for the attribute ::$DATA, which is the default data stream.
+Having found file bar, NTFS will set pointers to its own metadata in the file
+object passed down from the I/O manager. The metadata includes a pointer to the
+MFT record, information about compression and range locks, various details about
+sharing, and so on. Most of this metadata is in data structures shared across all file
+objects referring to the file. A few fields are specific only to the current open, such
+as whether the file should be deleted when it is closed. Once the open has 
+succeeded, NTFS calls IoCompleteRequest to pass the IRP back up the I/O stack to
+the I/O and object managers. Ultimately a handle for the file object is put in the
+handle table for the current process, and control is passed back to user mode. On

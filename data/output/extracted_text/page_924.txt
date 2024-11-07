@@ -1,0 +1,28 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+895
+Figure 11-11. Windows kernel-mode organization.
+for the compiler runtime and low-level libraries, similar to what is in libc in UNIX.
+ntdll.dll also contains special code entry points used by the kernel to initialize
+threads and dispatch exceptions and user-mode asynchronous procedure calls
+(described later). Because the system library is so integral to the operation of the
+kernel, every user-mode process created by NTOS has ntdll mapped at the same
+address (the particular address is randomized in every boot session as a security
+measure). When NTOS is initializing the system, it creates a section object to use
+when mapping ntdll, and it also records addresses of the ntdll entry points used by
+the kernel.
+Below the NTOS kernel and executive layers is a layer of software called the
+HAL (Hardware Abstraction Layer) which abstracts low-level hardware details
+like access to device registers and DMA operations, and the way the motherboard
+firmware represents configuration information and deals with differences in the
+CPU support chips, such as various interrupt controllers.
+The lowest software layer is the hypervisor which is the core of Windows’ 
+virtualization stack, called Hyper-V. It is a Type-1 (bare metal) hypervisor that runs
+on top of the hardware and supports concurrently running multiple operating 
+systems. The hypervisor relies on the virtualization stack components running in the
+root operating system to virtualize guest operating systems. The hypervisor was an
+optional feature in earlier versions of Windows, but Windows 11 enables 
+virtualization by default in order to provide critical security features which we will
+describe in subsequent sections. Hyper-V requires a 64-bit processor with 
+hardware virtualization support and this is reflected in the minimum hardware 
+requirements of the OS. Consequently, older computers cannot run Windows 11.

@@ -1,0 +1,105 @@
+SEC. 2.2
+THREADS
+99
+Threads can help here. Suppose that the word processor is written as a 
+twothreaded program. One thread interacts with the user and the other handles 
+reformatting in the background. As soon as the sentence is deleted from page 1, the
+interactive thread tells the reformatting thread to reformat the whole book. 
+Meanwhile, the interactive thread continues to listen to the keyboard and mouse and
+responds to simple commands like scrolling page 1 while the other thread is 
+computing madly in the background. With a little luck, the reformatting will be 
+completed before the user asks to see page 600, so it can be displayed instantly.
+While we are at it, why not add a third thread? Many word processors have a
+feature of automatically saving the entire file to disk every few minutes to protect
+the user against losing a day’s work in the event of a program crash, system crash,
+or power failure. The third thread can handle the disk backups without interfering
+with the other two. The situation with three threads is shown in Fig. 2-7.
+Kernel
+Keyboard
+Disk
+! Four score and seven 
+years ago, our fathers 
+brought forth upon this 
+continent a new nation: 
+conceived in liberty, 
+and dedicated to the 
+proposition that all 
+men are created equal. !
+  Now we are engaged 
+in a great civil war 
+testing whether that 
+nation, or any nation 
+so conceived and so 
+dedicated, can long 
+endure. We are met on 
+a great battlefield of 
+that war.!
+  We have come to 
+dedicate a portion of 
+that field as a final 
+resting place for those 
+who here gave their 
+lives that this nation 
+might 
+live. 
+It 
+is 
+altogether fitting and 
+proper that we should 
+do this. !
+  But, in a larger sense, 
+we cannot dedicate, we 
+cannot consecrate we 
+cannot 
+hallow 
+this 
+ground. 
+The 
+brave 
+men, living and dead, 
+who struggled here 
+have consecrated it, far 
+above our poor power 
+to add or detract. The 
+world will little note, 
+nor long remember, 
+what we say here, but 
+it can never forget 
+what they did here.!
+   It is for us the living, 
+rather, to be dedicated 
+here to the unfinished 
+work which they who 
+fought here have thus 
+far so nobly advanced. 
+It is rather for us to be 
+here dedicated to the 
+great task remaining 
+before us, that from 
+these honored dead we 
+take increased devotion 
+to that cause for which 
+they gave the last full 
+measure of devotion, 
+that we here highly 
+resolve that these dead 
+shall not have died in 
+vain that this nation, 
+under God, shall have 
+a new birth of freedom 
+and that government of 
+the people by the 
+people, for the people 
+Figure 2-7. A word processor with three threads.
+If the program were single-threaded, then whenever a disk backup started,
+commands from the keyboard and mouse would be ignored until the backup was
+finished. The user would surely perceive this as sluggish performance. 
+Alternatively, keyboard and mouse events could interrupt the disk backup, allowing good
+performance but leading to a complex interrupt-driven programming model. With
+three threads, the programming model is much simpler. The first thread just 
+interacts with the user. The second thread reformats the document when told to. The
+third thread writes the contents of RAM to disk periodically.
+It should be clear that having three separate processes would not work here
+because all three threads need to operate on the document. By having three threads
+instead of three processes, they share a common memory and thus all have access
+to the document being edited. With three processes this would be impossible.

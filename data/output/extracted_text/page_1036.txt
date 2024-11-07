@@ -1,0 +1,43 @@
+SEC. 11.10
+VIRTUALIZATION IN WINDOWS
+1007
+over VMBus to provide various services. The most common use of VSPs is for
+paravirtualized and accelerated devices, but other applications such as syncing time
+in the guest or implementing dynamic memory via ballooning also exist.
+The user-mode virtualization components are for managing VMs as well as 
+device support and orchestration of VM operations such as start, stop, pause, resume,
+live migration, snapshot, etc. VMMS (Virtual Machine Management Service)
+exposes interfaces for other management tools to query and manage virtual
+machines. HCS performs a similar task for containers. For each VM, VMMS 
+creates a virtual machine worker process, VMWP.exe. VMWP manages the state of the
+VM and its state transitions. It includes VDEVs (Virtual Devices), which 
+represent things like the virtual motherboard, disks, networking devices, BIOS,
+keyboard, mouse, etc. As the virtual machine boots and VDEVs are ‘‘powered on,’’
+they set up I/O ports or MMIO ranges in the GPA space through the VID driver or
+they communicate with their VSP driver to initiate VMBus channel set up with the
+corresponding VSC in the guest.
+Device I/O
+There are several ways Hyper-V can expose devices to its guests depending on
+how enlightened the guest OS is and the level of virtualization support in the 
+hardware.
+1. Emulated devices: An unenlightened guest communicates with 
+devices through I/O ports or memory-mapped device registers. For 
+emulated devices, the VDEV sets up these ports and GPA ranges to cause
+hypervisor intercepts when accessed. The intercepts are then 
+forwarded to the VDEV running in the VM worker process through the
+VID driver. In response, the VDEV initiates the I/O requested by the
+guest and resumes the guest VP. Typically, when the I/O is complete,
+the VDEV will inject a synthetic interrupt into the guest via the VID
+and the hypervisor to signal completion. Emulated devices require too
+many context switches between the guest and the host and are not
+appropriate for high-bandwidth devices, but are perfectly OK for 
+devices like keyboard and mouse.
+2. Paravirtualized devices: When a synthetic device is exposed to a
+guest partition from its VDEV, an enlightened guest will load the 
+corresponding VSC driver which sets up VMBus communication with its
+VSP in the root. A very common example of this is storage. Virtual
+hard disks are typically used with VMs and are exposed via the
+StorVSP and StorVSC drivers. Once the VMBus channel is set up,
+I/O requests received by the StorVSC are communicated to the
+StorVSP which then issues them to the corresponding virtual hard
+disk via the vhdmp.sys driver. Figure 11-51 illustrates this flow.

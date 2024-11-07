@@ -1,0 +1,44 @@
+930
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Threads are the kernel’s abstraction for scheduling the CPU in Windows. 
+Priorities are assigned to each thread based on the priority value in the containing
+process. Threads can also be affinitized to run only on certain processors. This
+helps concurrent programs running on multi-core processors to explicitly spread
+out work. Each thread has two separate call stacks, one for execution in user mode
+and one for kernel mode. There is also a TEB (Thread Environment Block) that
+keeps user-mode data specific to the thread, including per-thread storage called
+TLS (Thread Local Storage), and fields for Win32, language and cultural 
+localization, and other specialized fields that have been added by various facilities.
+Besides the PEBs and TEBs, there is another data structure that kernel mode
+shares with each process, namely, user shared data. This is a page that is writable
+by the kernel, but read-only in every user-mode process. It contains a number of
+values maintained by the kernel, such as various forms of time, version 
+information, amount of physical memory, and a large number of shared flags used by
+various user-mode components, such as COM, terminal services, and the 
+debuggers. The use of this read-only shared page is purely a performance optimization,
+as the values could also be obtained by a system call into kernel mode. But system
+calls are much more expensive than a single memory access, so for some 
+system-maintained fields, such as the time, this makes a lot of sense. The other fields,
+such as the current time zone, change infrequently (except on airborne computers),
+but code that relies on these fields must query them often just to see if they hav e
+changed. As with many performance optimizations, it is a bit ugly, but it works.
+Processes
+The most fundamental component of a process in Windows is its address
+space. If the process is intended for running a program (and most are), process
+creation allows a section backed by an executable file on disk to be specified,
+which gets mapped into the address space and prepared for execution. When a
+process is created, the creating process receives a handle that allows it to modify
+the new process by mapping sections, allocating virtual memory, writing 
+parameters and environmental data, duplicating file descriptors into its handle table, and
+creating threads. This is very different from how processes are created in UNIX
+and reflects the difference in the target systems for the original designs of UNIX
+vs. Windows.
+As described in Sec. 11.1, UNIX was designed for 16-bit single-processor 
+systems that used swapping to share memory among processes. In such systems, 
+having the process as the unit of concurrency and using an operation like fork to create
+processes was a brilliant idea. To run a new process with small memory and no 
+virtual memory hardware, processes in memory have to be swapped out to disk to 
+create space. UNIX originally implemented fork simply by swapping out the parent
+process and handing its physical memory to the child. The operation was almost
+free. Programmers love things that are free.

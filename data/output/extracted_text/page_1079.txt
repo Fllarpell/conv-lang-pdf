@@ -1,0 +1,42 @@
+1050
+OPERATING SYSTEM DESIGN
+CHAP. 12
+Each of these ways of doing business engenders its own programming style.
+In the algorithmic paradigm, algorithms are central and the operating system is
+regarded as a service provider. In the event-driven paradigm, the operating system
+also provides services, but this role is overshadowed by its role as a coordinator of
+user activities and a generator of events that are consumed by processes.
+Data Paradigms
+The execution paradigm is not the only one exported by the operating system.
+An equally important one is the data paradigm. The key question here is how 
+system structures and devices are presented to the programmer. In early FORTRAN
+batch systems, everything was modeled as a sequential magnetic tape. Card decks
+read in were treated as input tapes, card decks to be punched were treated as output
+tapes, and output for the printer was treated as an output tape. Disk files were also
+treated as tapes. Random access to a file was possible only by rewinding the tape
+corresponding to the file and reading it again.
+The mapping was done using job control cards like these:
+MOUNT(TAPE08, REEL781)
+RUN(INPUT, MYDATA, OUTPUT, PUNCH, TAPE08)
+The first card instructed the operator to go get tape reel 781 from the tape rack and
+mount it on tape drive 8. The second card instructed the operating system to run
+the just-compiled FORTRAN program, mapping INPUT (meaning the card reader)
+to logical tape 1, disk file MYDATA to logical tape 2, the printer (called OUTPUT)
+to logical tape 3, the card punch (called PUNCH) to logical tape 4, and physical
+tape drive 8 to logical tape 5.
+FORTRAN had a well-defined syntax for reading and writing logical tapes.
+By reading from logical tape 1, the program got card input. By writing to logical
+tape 3, output would later appear on the printer. By reading from logical tape 5,
+tape reel 781 could be read in, and so on. Note that the tape idea was just a 
+paradigm to integrate the card reader, printer, punch, disk files, and tapes. In this
+example, only logical tape 5 was a physical tape; the rest were ordinary (spooled)
+disk files. It was a primitive paradigm, but it was a start in the right direction.
+Later came UNIX, which goes much further using the model of ‘‘everything is
+a file.’’ Using this paradigm, all I/O devices are treated as files and can be opened
+and manipulated as ordinary files. The C statements
+fd1 = open("file1", O RDWR);
+fd2 = open("/dev/tty", O RDWR)’
+open a true disk file and the user’s terminal (keyboard + display). Subsequent
+statements can use fd1 and fd2 to read and write them, respectively. From that
+point on, there is no difference between accessing the file and accessing the 
+terminal, except that seeks on the terminal are not allowed.

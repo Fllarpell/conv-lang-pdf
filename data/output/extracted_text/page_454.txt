@@ -1,0 +1,57 @@
+SEC. 5.8
+POWER MANAGEMENT
+425
+State 
+Name
+Meaning
+C0
+Active
+CPU executes instructions.
+C1
+Auto Halt
+CPU’s core clock off , other components (e.g., bus interface and
+interr upt controller still run at full speed so processor can return to
+execution almost immediately.
+C2
+Stop Clock
+Core + bus clocks are off, but CPU maintains software-visible state.
+C3
+Deep Sleep
+Even the clock generator is off. CPU flushes internal caches.
+No snooping/cache coherence.
+C4
+Deeper Sleep
+Br illiant name for a state where the CPU voltage is reduced also.
+Cn
+... 
+(More C-states are possible.)
+Figure 5-41. Example C-States in modern processors (based on Intel 
+terminology). As these states are model specific, you may well find that they are different
+for the CPU inside your own computer.
+Interestingly, scaling down the CPU cores does not always imply a reduction
+in performance. Hruby et al. (2013) show that sometimes the performance of the
+network stack improves with slower cores. The explanation is that a core can be too
+fast for its own good. For instance, imagine a CPU with several fast cores, where
+one core is responsible for the transmission of network packets on behalf of a 
+producer running on another core. The producer and the network stack communicate
+directly via shared memory and they both run on dedicated cores. The producer
+performs a fair amount of computation and cannot quite keep up with the core of
+the network stack. On a typical run, the network stack will transmit all it has to
+transmit and poll the shared memory for some amount of time to see if there is
+really no more data to transmit. Finally, it will give up and go to sleep, because
+continuous polling is very bad for power consumption. Shortly after, the producer
+provides more data, but now the network stack is fast sleep. Waking up the stack
+takes time and slows down the throughput. One possible solution is never to sleep,
+but this is not attractive either because doing so would increase the power
+consumption—exactly the opposite of what we are trying to achieve. A much more
+attractive solution is to run the network stack on a slower core, so that it is 
+constantly busy (and thus never sleeps), while still reducing the power consumption. If
+the network core is slowed down carefully, its performance will be better than a
+configuration where all cores are blazingly fast.
+The Memory
+Tw o possible options exist for saving energy with the memory. First, the cache
+can be flushed and then switched off (see C3 in Fig. 5-41). It can always be
+reloaded from main memory with no loss of information. The reload can be done
+dynamically and quickly, so turning off the cache is entering a sleep state
+A more drastic option is to write the contents of main memory to secondary
+storage, then switch off the main memory itself. This approach is hibernation,

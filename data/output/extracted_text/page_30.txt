@@ -1,0 +1,25 @@
+1
+INTRODUCTION
+A modern computer consists of one or more processors, some amount of main
+memory, hard disks or Flash drives, printers, a keyboard, a mouse, a display, 
+network interfaces, and various other input/output devices. All in all, a complex 
+system. If ev ery application programmer had to understand how all these things work
+in detail, no code would ever get written. Furthermore, managing all these 
+components and using them optimally is an exceedingly challenging job. For this reason,
+computers are equipped with a layer of software called the operating system,
+whose job is to provide user programs with a better, simpler, cleaner, model of the
+computer and to handle managing all the resources just mentioned. Operating 
+systems are the subject of this book.
+It is important to realize that smart phones and tablets (like the Apple iPad) are
+just computers in a smaller package with a touch screen. They all have operating
+systems. In fact, Apple’s iOS is fairly similar to macOS, which runs on Apple’s
+desktop and MacBook systems. The smaller form factor and touch screen really
+doesn’t change that much about what the operating system does. Android 
+smartphones and tablets all run Linux as the true operating system on the bare hardware.
+What users perceive as ‘‘Android’’ is simply a layer of software running on top of
+Linux. Since macOS (and thus iOS) is derived from Berkeley UNIX and Linux is a
+clone of UNIX, by far the most popular operating system in the world is UNIX and
+its variants. For this reason, we will pay a lot of attention in this book to UNIX.
+Most readers probably have had some experience with an operating system
+such as Windows, Linux, FreeBSD, or macOS, but appearances can be deceiving.
+1

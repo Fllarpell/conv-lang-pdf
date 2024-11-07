@@ -1,0 +1,34 @@
+SEC. 5.3
+I/O SOFTWARE LAYERS
+363
+Unifor m interfacing for device drivers
+Buffer ing
+Error reporting
+Allocating and releasing dedicated devices
+Providing a device-independent block size
+Figure 5-13. Functions of the device-independent I/O software.
+Uniform Interfacing for Device Drivers
+A major issue in an operating system is how to make all I/O devices and 
+drivers look more or less the same. If disks, printers, keyboards, and so on, are all
+interfaced in different ways, every time a new device comes along, the operating
+system must be modified for the new device. Having to hack on the operating 
+system for each new device is not a good idea.
+One aspect of this issue is the interface between the device drivers and the rest
+of the operating system. In Fig. 5-14(a), we illustrate a situation in which each 
+device driver has a different interface to the operating system. What this means is that
+the driver functions available for the system to call differ from driver to driver. It
+might also mean that the kernel functions that the driver needs also differ from
+driver to driver. Taken together, it means that interfacing each new driver requires a
+lot of new programming effort.
+Operating system
+Operating system
+SATA disk driver USB disk driver SCSI disk driver
+SATA disk driver USB disk driver SCSI disk driver
+(a)
+(b)
+Figure 5-14. (a) Without a standard driver interface. (b) With a standard driver
+interface.
+In contrast, in Fig. 5-14(b), we show a different design in which all drivers
+have the same interface. Now it becomes much easier to plug in a new driver, 
+providing it conforms to the driver interface. It also means that driver writers know
+what is expected of them. In practice, not all devices are absolutely identical, but

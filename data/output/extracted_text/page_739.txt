@@ -1,0 +1,44 @@
+710
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+users. Numerous users contributed commands and other user programs, so MINIX
+quickly became a collective undertaking by large numbers of users over the 
+Internet. It was a prototype of other collaborative efforts that came later. In 1997, 
+Version 2.0 of MINIX was released and the base system, now including networking,
+had grown to 62,200 lines of code.
+Around 2004, the direction of MINIX development changed sharply. The focus
+shifted to building an extremely reliable and dependable system that could 
+automatically repair its own faults and become self-healing, continuing to function 
+correctly even in the face of repeated software bugs being triggered. Consequently,
+the modularization idea present in Version 1 was greatly expanded in MINIX 3.0.
+Nearly all the device drivers were moved to user space, with each driver running as
+a separate process. The size of the entire kernel abruptly dropped to under 4000
+lines of code, something a single programmer could easily understand. Internal
+mechanisms were changed to enhance fault tolerance in numerous ways.
+In addition, over 650 popular UNIX programs were ported to MINIX 3.0,
+including the X Window System (sometimes just called X), various compilers
+(including gcc), text-processing software, networking software, Web browsers, and
+much more. Unlike previous versions, which were primarily educational in nature,
+starting with MINIX 3.0, the system was quite usable, with the focus moving
+toward high dependability. The ultimate goal is: No more reset buttons.
+A third edition of the book Operating Systems: Design and Implementation
+appeared, describing the new system, giving its source code in an appendix, and
+describing it in detail (Tanenbaum and Woodhull, 2006). The system continues to
+ev olve and has an active user community. It has since been ported to the ARM
+processor, making it available for embedded systems. For more details and to get
+the current version for free, you can visit www.minix3.org.
+10.1.7 Linux
+During the early years of MINIX development and discussion on the Internet,
+many people requested (or in many cases, demanded) more and better features, to
+which the author often said ‘‘No’’ (to keep the system small enough for students to
+understand completely in a one-semester university course).
+This continuous
+‘‘No’’ irked many users. At this time, FreeBSD was not available, so that was not
+an option. After a number of years went by like this, a Finnish student, Linus 
+Torvalds, decided to write another UNIX clone, named Linux, which would be a 
+fullblown production system with many features MINIX was initially lacking. The
+first version of Linux, 0.01, was released in 1991. It was cross-developed on a
+MINIX machine and borrowed numerous ideas from MINIX, ranging from the
+structure of the source tree to the layout of the file system. However, it was a
+monolithic rather than a microkernel design, with the entire operating system in the
+kernel. The code totaled 9300 lines of C and 950 lines of assembler, which is

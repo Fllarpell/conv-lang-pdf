@@ -1,0 +1,41 @@
+SEC. 2.1
+PROCESSES
+97
+For the sake of accuracy, it should be pointed out that the probabilistic model
+just described is only an approximation. It implicitly assumes that all n processes
+are independent, meaning that it is quite acceptable for a system with fiv e 
+processes in memory to have three running and two waiting. But with a single CPU, we
+cannot have three processes running at once, so a process becoming ready while
+the CPU is busy will have to wait. Thus, the processes are not independent. A more
+accurate model can be constructed using queueing theory, but the point we are
+making—multiprogramming lets processes use the CPU when it would otherwise
+become idle—is, of course, still valid, even if the true curves of Fig. 2-6 are 
+slightly different from those shown in the figure.
+Even though the model of Fig. 2-6 is fairly simple-minded, it can nevertheless
+be used to make specific, although approximate, predictions about CPU 
+performance. Suppose, for example, that a computer has 8 GB of memory, with the
+operating system and its tables taking up 2 GB and each user program also taking
+up 2 GB. These sizes allow three user programs to be in memory at once. With an
+80% average I/O wait, we have a CPU utilization (ignoring operating system 
+overhead) of 1 < 0. 83 or about 49%. Adding another 8 GB of memory allows the 
+system to go from three-way multiprogramming to seven-way multiprogramming,
+thus raising the CPU utilization to 79%. In other words, the additional 8 GB will
+raise the throughput by 30%.
+Adding yet another 8 GB would increase CPU utilization only from 79% to
+91%, thus raising the throughput by only another 12%. Using this model, the 
+computer’s owner might decide that the first addition was a good investment but that
+the second was not.
+2.2 THREADS
+In traditional operating systems, each process has an address space and a single
+thread of control. In fact, that is almost the definition of a process. Nevertheless, in
+many situations, it is useful to have multiple threads of control in the same address
+space running in quasi-parallel, as though they were (almost) separate processes
+(except for the shared address space). In the following sections, we will discuss
+threads and their implications. Later we will look at an alternative solution.
+2.2.1 Thread Usage
+Why would anyone want to have a kind of process within a process? It turns
+out there are several reasons for having these miniprocesses, called threads. Let
+us now examine some of them. The main reason for having threads is that in many
+applications, multiple activities are going on at once. Some of these may block
+from time to time. By decomposing such an application into multiple sequential
+threads that run in quasi-parallel, the programming model becomes simpler.

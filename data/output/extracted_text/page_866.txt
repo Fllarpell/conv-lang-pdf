@@ -1,0 +1,45 @@
+SEC. 10.8
+ANDROID
+837
+Application Sandboxes
+Traditionally in operating systems, applications are seen as code executing as
+the user, on the user’s behalf. This behavior has been inherited from the command
+line, where you run the ls command and expect that to run as your identity (UID),
+with the same access rights as you have on the system. In the same way, when you
+use a graphical user interface to launch a game you want to play, that game will
+effectively run as your identity, with access to your files and many other things it
+may not actually need.
+This is not, however, how we mostly use computers today. We run 
+applications we acquired from some less trusted third-party source, and those apps can
+have sweeping functionality, doing a wide variety of things that we have little 
+control over. There is a disconnect between the application model supported by the
+operating system and the one actually in use. This may be mitigated by strategies
+such as distinguishing between normal and ‘‘admin’’ user privileges and issuing a
+warning the first time an application runs, but those do not really address the
+underlying disconnect.
+In other words, traditional operating systems are very good at protecting users
+from other users, but not at protecting users from themselves and their 
+applications. All programs run with the power of the user and, if any of them misbehaves,
+it can do all the same damage as the user (and sometimes more). Think about it:
+how much damage could you do in, say, a UNIX environment? You could leak all
+information accessible to the user. You could perform rm –rf * to give yourself a
+nice, empty home directory. And if the program is not just buggy, but also 
+malicious, it could encrypt all your files for ransom. Running everything with ‘‘the
+power of you’’ is dangerous!
+On mobile devices at the time Android was being developed, this problem of
+protecting users from their applications was typically addressed by the introduction
+of a gatekeeper to the device: one or more trusted entities (such as the 
+telecommunications carrier or manufacturer of the device) who are responsible for 
+determining whether an application is safe before allowing it to be installed. Such an
+approach was counter to a key goal of Android, to create an open platform where
+ev eryone could compete equally and there was no single entity controlling what
+the user could do on their device, so another solution was needed.
+Android addresses the problem with a core premise: that an application is 
+actually the developer of that application running as a guest on the user’s device. Thus,
+an application is not trusted with anything sensitive that is not explicitly approved
+by the user.
+In Android’s implementation, this philosophy is rather directly expressed
+through user IDs. When an Android application is installed, a new unique Linux
+user ID (or UID) is created for it, and all of its code runs as that ‘‘user.’’ Linux user
+IDs thus create a sandbox for each application, with their own isolated area of the
+file system, just as they create sandboxes for users on a desktop system. In other

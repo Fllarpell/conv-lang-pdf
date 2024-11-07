@@ -1,0 +1,74 @@
+256
+MEMORY MANAGEMENT 
+CHAP. 3
+µsec (i.e., 2 msec) to handle the fault. If a program takes 60 sec to run, during which
+time it gets 15,000 page faults, how long would it take to run if twice as much memory
+were available?
+43. A group of operating system designers for the Frugal Computer Company are thinking
+about ways to reduce the amount of backing store needed in their new operating 
+system. The project manager has just suggested not bothering to save the program text in
+the swap area at all, but just page it in directly from the binary file whenever it is 
+needed. Under what conditions, if any, does this idea work for the program text? Under
+what conditions, if any, does it work for the data?
+44. A machine-language instruction to load a 32-bit word into a register contains the 32-bit
+address of the word to be loaded. What is the maximum number of page faults this
+instruction can cause?
+45. Explain the difference between internal fragmentation and external fragmentation.
+Which one occurs in paging systems? Which one occurs in systems using pure 
+segmentation?
+46. When segmentation and paging are both being used, as in MULTICS, first the segment
+descriptor must be looked up, then the page descriptor. Does the TLB also work this
+way, with two lev els of lookup?
+47. We consider a program which has the two segments shown below consisting of 
+instructions in segment 0, and read/write data in segment 1. Segment 0 has read/execute 
+protection, and segment 1 has just read/write protection. The memory system is a 
+demandpaged virtual memory system with virtual addresses that have a 4-bit page number, and
+a 10-bit offset. The page tables and protection are as follows (all numbers in the table
+are in decimal):
+Segment 0
+Segment 1
+Read/Execute 
+Read/Write
+Vir tual Pa ge #  
+Pag e frame #
+Vir tual Pa ge #  
+Pag e frame #
+0
+2
+0
+On Disk
+1
+On Disk 
+1
+14
+2
+11
+2
+ 9
+3
+5
+3
+6
+4
+On Disk 
+4 
+On Disk
+5
+On Disk 
+5
+13
+6
+4
+6
+8
+7
+3
+7
+12
+For each of the following cases, either give the real (actual) memory address which
+results from dynamic address translation or identify the type of fault which occurs
+(either page or protection fault).
+(a) Fetch from segment 1, page 1, offset 3
+(b) Store into segment 0, page 0, offset 16
+(c) Fetch from segment 1, page 4, offset 28
+(d) Jump to location in segment 1, page 3, offset 32

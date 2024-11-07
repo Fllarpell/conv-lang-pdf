@@ -1,0 +1,84 @@
+SEC. 8.1
+MULTIPROCESSORS
+529
+main memory (and often sharing caches). In other words, the model of 
+shared-memory multicomputers may be implemented using physically separate CPUs,
+multiple cores on a single CPU, or a combination. While this model, illustrated in
+Fig. 8-1(a), sounds simple, actually implementing it is not really so simple and
+usually involves considerable message passing under the covers, as we will explain
+shortly. Howev er, this message passing is invisible to the programmers.
+C
+C
+C
+C
+C
+C
+C
+C
+M C
+C
+C
+C
+C
+Shared
+memory
+
+Interconnect
+CPU
+Local
+memory
+(a)
+(b)
+(c)
+M C
+C
+M
+C
+M
+C
+M
+C
+C
+M
+C
+C M
+C M
+C
+C
+M
+M
+M
+M
+C+ M
+C+ M
+C+ M
+C+ M
+C+ M
+C+ M
+Complete system
+Internet
+Figure 8-1. (a) 
+A shared-memory multiprocessor.
+(b) A message-passing
+multicomputer. (c) A wide area distributed system.
+Next comes the system of Fig. 8-1(b) in which the CPU-memory pairs are 
+connected by a high-speed interconnect. This kind of system is called a 
+message-passing multicomputer. Each memory is local to a single CPU and can be accessed
+only by that CPU. The CPUs communicate by sending multiword messages over
+the interconnect. With a good interconnect, a short message can be sent in 10–50
+µsec, but still far longer than the memory access time of Fig. 8-1(a). There is no
+shared global memory in this design. Multicomputers (i.e., message-passing 
+systems) are much easier to build than (shared-memory) multiprocessors, but they are
+harder to program. Thus each genre has its fans. Hardware engineers like designs
+that make the hardware cheap and simple, no matter how difficult they are to 
+program. Programmers are generally not fans of this approach, but they stuck with
+what they are given.
+The third model, which is illustrated in Fig. 8-1(c), connects complete 
+computer systems over a wide area network, such as the Internet, to form a distributed
+system. Each of these has its own memory, and the systems communicate by 
+message passing. The only real difference between Fig. 8-1(b) and Fig. 8-1(c) is that in
+the latter complete computers are used and message times are often 10–100 msec.
+This long delay forces these loosely coupled systems to be used in different ways
+than the tightly coupled systems of Fig. 8-1(b). The three types of systems differ
+in their delays by something like three orders of magnitude. That is the difference
+between a day and 3 years. Users tend to notice differences like that.

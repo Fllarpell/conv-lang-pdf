@@ -1,0 +1,33 @@
+SEC. 10.8
+ANDROID
+853
+perspective it is foreground for location access, but ‘‘while the app is in use’’ better
+explains this to the user.
+Android 11 went a step further and introduced a new concept of ‘‘only this
+once,’’ shown in Fig. 10-79, now giving the user an option to restrict location
+access to only their current session in the app. When selected, once the app is
+exited, the location permission will be silently revoked and cause the app to no
+longer have location access. The next time the app is used, there will be another
+prompt for location access and the user can decide in this new situation what to
+allow.
+Figure 10-79. Android 11’s ‘‘only this once’’ prompt.
+A transient permission grant is useful for permissions like location, where any
+time apps have access to it they hav e available a continuous stream of new personal
+data about the user, in this case where the user is located. (The same capability was
+at this time applied to two other permissions with similar semantics, access to the
+camera and microphone.) This addresses the situation where users feels like the
+app is asking for access to such data in a situation that makes sense now, but they
+do not think the app normally needs that access.
+Note also another change to the location experience, where the option to give
+background access to location is completely gone. This happened because having
+more than three options results in an overly complicated experience for users 
+trying to decide what they want, and the vast majority of applications do not need full
+background access since most such use cases are served better by foreground 
+services.
+For the rare cases where an app really could make use of full background 
+location access, and the user can be convinced to allow this, the option still remains in
+the overall system settings for the app’s permissions, shown in Fig. 10-80. Here
+the user can see all of the possible options, including the option currently selected
+for the app (if any), and change the selection as desired.
+Most recently, Android 12 further extends the options available to the user
+about location access by giving them the option to select between coarse vs. fine

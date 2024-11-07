@@ -1,0 +1,53 @@
+SEC. 9.5
+EXPLOITING SOFTWARE
+651
+miners. Moreover, carbon monoxide is odorless, so the miners might not even 
+notice it. In the past, miners therefore brought canaries into the mine as biological
+early warning systems. Any build up of toxic gases would kill the canary before
+harming its owner. If your bird died, it was probably time to go up. Besides, the
+canaries provide lovely audio while alive.
+Modern computer systems still use (digital) canaries as early warning systems.
+The idea is very simple. At places where the program makes a function call, the
+compiler inserts code to save a random canary value on the stack, just below the
+return address. Upon a return from the function, the compiler inserts code to check
+the value of the canary. If the value changed, something is wrong. In that case, it is
+better to hit the panic button and crash rather than continuing.
+Av oiding Stack Canaries
+Canaries work well against attacks like the one above, but many buffer 
+overflows are still possible. For instance, consider the code snippet in Fig. 9-18. It uses
+two new functions. The strcpy is a C library function to copy a string into a buffer,
+while the strlen determines the length of a string.
+01. void A (char *date) {
+02. 
+int len;
+03. 
+char B [128];
+04. 
+char logMsg [256];
+05.
+06. 
+strcpy (logMsg, date);
+/* first copy the string with the date in the log message */
+07. 
+len = str len (date); 
+/* deter mine how many characters are in the date string */
+08. 
+gets (B); 
+/* now get the actual message */
+09. 
+strcpy (logMsg+len, B);
+/* and copy it after the date into logMessage */
+10. 
+writeLog (logMsg);
+/* finally, write the log message to disk */
+11. }
+Figure 9-18. Skipping the stack canary: by modifying len first, the attack is able
+to bypass the canary and modify the return address directly.
+As we saw in the previous example, function A reads a log message from 
+standard input, but this time it explicitly prepends it with the current date (provided as
+a string argument to function A). First, it copies the date into the log message
+(line 6). A date string may have different length, depending on the day of the week,
+the month, etc. For instance, Friday has 5 letters, but Saturday 8. Same thing for
+the months. So, the second thing it does is determine how many characters are in
+the date string (line 7). Then it gets the user input (line 8) and copies it into the log
+message, starting just after the date string. It does this by specifying the destination

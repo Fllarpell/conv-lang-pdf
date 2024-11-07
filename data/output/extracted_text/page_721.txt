@@ -1,0 +1,44 @@
+692
+SECURITY 
+CHAP. 9
+which allows users to write programs to perform such tasks as high-performance
+filtering of network packets. The code you write executes inside the operating 
+system itself.
+It should be clear that allowing foreign code to run on your machine is more
+than a wee bit risky. Nev ermind running it directly inside the operating system.
+Nevertheless, some people do want to run such code, so the question arises: ‘‘Can
+such code be run safely’’? The short answer is: ‘‘Yes, but not easily.’’ The 
+fundamental problem is that when a process (or operating system) imports untrusted
+code into its address space and runs it, that code is running with all the power the
+user (or operating system) has, including the ability to read, write, erase, or encrypt
+the user’s disk files, email data to far-away countries, and much more.
+Long ago, operating systems developed the process concept to build walls
+between users. The idea is that each process has its own protected address space
+and its own UID, allowing it to touch files and other resources belonging to it, but
+not to other users. For providing protection against one part of the process (the 
+foreign code) and the rest, the process concept does not help. Threads allow multiple
+threads of control within a process, but do nothing to protect one thread against
+another one.
+One solution is to run the foreign code as a separate process, but this is not
+always what we want. For instance, eBPF really wants to run inside the kernel.
+Various methods of dealing with foreign code have been implemented. Below we
+will look at one such method: sandboxing. In addition, code signing can also be
+used to verify the source of the foreign program.
+Sandboxing
+The aim of sandboxing is to confine the untrusted/foreign code to a limited
+range of virtual addresses enforced at run time (Wahbe et al., 1993). It works by
+dividing the virtual address space up into equal-size regions, which we will call
+sandboxes. Each sandbox must have the property that all of its addresses share
+some string of high-order bits. For a 48-bit address space, we could divide it up
+into many sandboxes on 4-GB boundaries so that all addresses within a sandbox
+have a common upper 16 bits. Equally well, we could have a few more sandboxes
+on 1-GB boundaries, with each sandbox having an 18-bit address prefix. The 
+sandbox size should be chosen to be large enough to hold the largest chunk of foreign
+code without wasting too much virtual address space. Physical memory is not an
+issue if demand paging is present, as it usually is. Each foreign program is given
+two sandboxes, one for the code and one for the data, as illustrated in Fig. 9-36(a)
+For illustration purposes, we will assume a small machine with 256-MB and 16
+sandboxes of 16 MB each.
+The basic idea behind a sandbox is to guarantee that the untrusted code, which
+we will refer to as ‘‘foreign program’’ from now on, cannot jump to code outside
+its code sandbox or reference data outside its data sandbox. The reason for having

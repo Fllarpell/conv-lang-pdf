@@ -1,0 +1,42 @@
+1036
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+are represented by device objects, which are created from the configuration 
+description of the system or by the plug-and-play manager as it discovers devices
+when enumerating the system buses. Devices are stacked and I/O request packets
+are passed down the stack and serviced by the drivers for each device in the device
+stack. I/O is inherently asynchronous, and drivers commonly queue requests for
+further work and return back to their caller. File-system volumes are implemented
+as devices in the I/O system.
+The NTFS file system is based on a master file table, which has one record per
+file or directory. All the metadata in an NTFS file system is itself part of an NTFS
+file. Each file has multiple attributes, which can be either in the MFT record or
+nonresident (stored in blocks outside the MFT). NTFS supports Unicode, 
+compression, journaling, and encryption among many other features.
+Finally, Windows has a sophisticated security system based on access control
+lists and integrity levels. Each process has an authentication token that tells the
+identity of the user and what special privileges the process has, if any. Each object
+has a security descriptor associated with it. The security descriptor points to a 
+discretionary access control list that contains access control entries that can allow or
+deny access to individuals or groups. Windows has added numerous security 
+features in recent releases, including BitLocker for encrypting entire volumes, and
+address-space randomization, nonexecutable stacks, and other measures to make
+successful attacks more difficult.
+PROBLEMS
+1. Give one advantage and one disadvantage of the registry vs. having individual .ini files.
+2. A mouse can have one, two, or three buttons. All three types are in use. Does the HAL
+hide this difference from the rest of the operating system? Why or why not?
+3. The HAL keeps track of time starting in the year 1601. Give an example of an 
+application where this feature is useful.
+4. In Sec. 11.3.3, we described the problems caused by multithreaded applications closing
+handles in one thread while still using them in another. One possibility for fixing this
+would be to insert a sequence field. How could this help? What changes to the system
+would be required?
+5. Many components of the executive (Fig. 11-11) call other components of the executive.
+Give three examples of one component calling another one, but use (six) different 
+components in all.
+6. How would you design a mechanism to achieve BNO (BaseNamedObjects) isolation
+for non-UWP applications?
+7. An alternative to using DLLs is to statically link each program with precisely those
+library procedures it actually calls, no more and no less. If this scheme were to be
+introduced, what would be the benefits and drawbacks?

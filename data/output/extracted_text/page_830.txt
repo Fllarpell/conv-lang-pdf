@@ -1,0 +1,41 @@
+SEC. 10.8
+ANDROID
+801
+closing applications when done with them. Mobile devices also tend
+to run without the swap space that allows operating systems to fail
+more gracefully when the current set of running applications requires
+more RAM than is physically available. To address both of these
+requirements, the system needs to take a more proactive stance about
+managing application processes and deciding when they should be
+started and stopped.
+7. Encourage applications to interoperate and collaborate in rich and
+secure ways. Mobile applications are in some ways a return back to
+shell commands: rather than the increasingly large monolithic design
+of desktop applications, they are often targeted and more focused for
+specific needs. To help support this, the operating system should 
+provide new types of facilities for these applications to collaborate 
+together to create a larger whole.
+8. Create a full general-purpose operating system. Mobile devices are a
+new expression of general purpose computing, not something simpler
+than our traditional desktop operating systems. Android’s design
+should be rich enough that it can grow to be at least as capable as a
+traditional operating system.
+10.8.4 Android Architecture
+Android is built on top of the standard Linux kernel, with only a few 
+significant extensions to the kernel itself that will be discussed later. Once in user space,
+however, its implementation is quite different from a traditional Linux distribution
+and uses many of the Linux features you already understand, but in very different
+ways.
+As in a traditional Linux system, Android’s first user-space process is init,
+which is the root of all other processes. The daemons Android’s init process starts
+are different, however, focused more on low-level details (managing file systems
+and hardware access) rather than higher-level user facilities like scheduling cron
+jobs. Android also has an additional layer of processes, those running ART (for
+Android Runtime which implements the Java language environment); these are
+responsible for executing all parts of the system implemented in Java.
+Figure 10-39 illustrates the basic process structure of Android. First is the init
+process, which spawns a number of low-level daemon processes. One of these is
+zygote, which is the root of the higher-level Java language processes.
+Android’s init does not run a shell in the traditional way, since a typical
+Android device does not have a local console for shell access. Instead, the daemon
+process adbd listens for remote connections (such as over USB) that request shell

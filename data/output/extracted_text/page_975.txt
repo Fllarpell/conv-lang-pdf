@@ -1,0 +1,94 @@
+946
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Win32 process class priorities
+Above 
+Below
+Real-time 
+High
+normal 
+Normal 
+normal
+Idle
+Time critical 
+31
+15 
+15
+15 
+15
+15
+Highest 
+26
+15 
+12
+10 
+8
+6
+Win32
+Above nor mal
+25 
+14
+11 
+9 
+7
+5
+thread
+Nor mal
+24 
+13
+10 
+8 
+6
+4
+priorities
+Below nor mal
+23 
+12
+9
+7
+5
+3
+Lowest 
+22
+11 
+8
+6
+4
+2
+Idle 
+16
+1
+1
+ 1
+ 1
+1
+Figure 11-25. Mapping of Win32 priorities to Windows priorities.
+It should be noted that scheduling is done by picking a thread without regard to
+which process that thread belongs. Thus, the scheduler does not first pick a process
+and then pick a thread in that process. It only looks at the threads. It does not 
+consider which thread belongs to which process except to determine if it also needs to
+switch address spaces when switching threads.
+To improve the scalability of the scheduling algorithm for multiprocessors with
+a high number of processors, the scheduler partitions the global set of ready
+threads into multiple separate ready queues each with its own array of 32 lists.
+These ready queues exist in two forms, processor local ready queues that are 
+associated with a single processor and shared ready queues that are associated with
+groups of processors. A thread is only eligible to be placed into a shared ready
+queue if it is capable of running on all processors associated with the queue. When
+a processor needs to select a new thread to run due to a thread blocking, it will first
+consult the ready queues to which it is associated and only consult ready queues
+associated with other processors if no candidate threads could be found locally.
+As an additional improvement, the scheduler tries hard not to have to take the
+locks that protect access to the ready queue lists. Instead, it sees if it can directly
+dispatch a thread that is ready to run to the processor where it should run rather
+than add it to a ready queue.
+Some multiprocessor systems have complex memory topologies where CPUs
+have their own local memory and while they can execute programs and access data
+out of other processors memory, this comes at a performance cost. These systems
+are called NUMA (NonUniform Memory Access) machines. Additionally, some
+multiprocessor systems have complex cache hierarchies where only some of the
+processor cores in a physical CPU share a last-level cache. The scheduler is aware
+of these complex topologies and tries to optimize thread placement by assigning
+each thread an ideal processor. The scheduler then tries to schedule each thread to
+a processor that is as close topologically to its ideal processor as possible. If a
+thread cannot be scheduled to a processor immediately, then it will be placed in a

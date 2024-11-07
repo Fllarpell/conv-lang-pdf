@@ -1,0 +1,98 @@
+1126
+INDEX
+Content provider, Android, 828–830
+Content-based page sharing, 501
+Context record, Windows, 944
+Context switch, 28, 154
+Contiguous file allocation, 280–282
+Control flow guard, Windows, 1028
+Control object, 901
+Control program for microcomputers, 16
+Control-flow enforcement technology, 1026
+Control-flow integrity, 683
+Control-flow restriction, 683–685
+Controlling access to resources, 618–628
+Conversational monitor system, 70
+Cooked mode, 398
+Coordination-based middleware, 595–598
+Copy on write, 54, 90, 229
+Linux, 732, 754
+Windows, 960
+virtual machine, 501, 504
+CopyFile Win32 call, 889
+CORBA (see Common Object Request Broker
+Architecture)
+Corbato, Fernando, 1046
+Core, 24, 537
+Core image, 40
+Core memory, 27
+Covert channel, 669–671
+COW (see Cluster Of Workstations)
+COW (see Copy On Write)
+CP-40, 480
+CP-67, 480
+CP/CMS, 480
+CP/M (see Control Program for Microcomputers)
+Cpuset, 506
+Cracker, 614
+Crash recovery with stable storage, 382–385
+Creat system call, 269, 277, 770, 771, 772, 774, 785
+Create Win32 call, 985
+CreateEvent Win32 call, 921, 922
+CreateFile Win32 call, 889, 922, 924, 1022
+CreateFileMapping Win32 call, 962
+CreateProcess Win32 call, 90, 883, 888, 941, 1022
+CreateSemaphore Win32 call, 917, 938
+Credential guard, Windows, 1025
+Critical region, 121
+Critical section, 121
+Windows, 939
+Cron daemon, 724
+Crossbar switch, 532
+Crosspoint, 532
+CRT (see Cathode Ray Tube)
+Cryptographic hash algorithm, 635
+Cryptographic key, 632
+Cryptography, 616, 632–636
+digital signature, 635–636
+public-key, 634–635
+secret-key, 633–634
+symmetric-key, 633–634
+CS (see Connected Standby)
+CTSS (see Compatible Time Sharing System)
+Cube interconnection, 559
+CUDA, 540
+Current allocation matrix, 452
+Current directory, 275
+Current priority, Windows, 945
+Current virtual time, 216
+Cutler, David, 17, 874, 894, 905
+Cyberwarfare, 615
+Cycle stealing, 346
+Cylinder, 28
+Cylinder skew, 372
+D
+D-space, 227
+DACL (see Discretionary ACL)
+Daemon, 89, 369, 724
+Linux, 724
+printer, 119
+DAG (see Directed Acyclic Graph)
+Dalvik, Android, 796, 798, 802, 807, 809
+Dalvik executable, 807
+Dangling pointer, 648
+Darwin, Charles, 47
+Data confidentiality, 608
+Data execution prevention, 652–653, 653
+Windows, 1027
+Data paradigm, 1050–1051
+Data rate for devices, 339
+Data segment, 56, 744
+Datagram service, 586
+DAX (see Direct Access for files)
+DDA (see Discrete Device Assignment)
+Deadlock, 437–471
+communication, 465–466
+conditions, 445
+introduction, 444–445
+ostrich algorithm, 447–449

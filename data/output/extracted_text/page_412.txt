@@ -1,0 +1,45 @@
+SEC. 5.4
+MASS STORAGE: DISK AND SSD
+383
+Before describing the algorithm, it is important to have a clear model of the
+possible errors. The model assumes that when a disk writes a block (one or more
+sectors), either the write is correct or it is incorrect and this error can be detected
+on a subsequent read by examining the values of the ECC fields. In principle,
+guaranteed error detection is never possible because with a, say, 16-byte ECC field
+guarding a 512-byte sector, there are 24096 data values and only 2144 ECC values.
+Thus if a block is garbled during writing but the ECC is not, there are billions upon
+billions of incorrect combinations that yield the same ECC. If any of them occur,
+the error will not be detected. On the whole, the probability of random data having
+the proper 16-byte ECC is about 2<144, which is small enough that we will call it
+zero, even though it is really not.
+The model also assumes that a correctly written sector can spontaneously go
+bad and become unreadable. However, the assumption is that such events are so
+rare that having the same sector go bad on a second (independent) drive during a
+reasonable time interval (e.g., 1 day) is small enough to ignore.
+The model also assumes the CPU can fail, in which case it just stops. Any disk
+write in progress at the moment of failure also stops, leading to incorrect data in
+one sector and an incorrect ECC that can later be detected. Under all these 
+conditions, stable storage can be made 100% reliable in the sense of writes either 
+working correctly or leaving the old data in place. Of course, it does not protect against
+physical disasters, such as an earthquake happening and the computer falling 100
+meters into a fissure and landing in a pool of boiling magma. It is tough to recover
+from this condition in software.
+Stable storage uses a pair of identical disks with the corresponding blocks
+working together to form one error-free block. In the absence of errors, the 
+corresponding blocks on both drives are the same. Either one can be read to get the same
+result. To achieve this goal, the following three operations are defined:
+1. Stable writes. A stable write consists of first writing the block on
+drive 1, then reading it back to verify that it was written correctly. If
+it was not, the write and reread are done again up to n times until they
+work. After n consecutive failures, the block is remapped onto a spare
+and the operation repeated until it succeeds, no matter how many
+spares have to be tried. After the write to drive 1 has succeeded, the
+corresponding block on drive 2 is written and reread, repeatedly if
+need be, until it, too, finally succeeds. In the absence of CPU crashes,
+when a stable write completes, the block has correctly been written
+onto both drives and verified on both of them.
+2. Stable reads. A stable read first reads the block from drive 1. If this
+yields an incorrect ECC, the read is tried again, up to n times. If all
+of these give bad ECCs, the corresponding block is read from drive 2.
+Given the fact that a successful stable write leaves two good copies of
+the block behind, and our assumption that the probability of the same

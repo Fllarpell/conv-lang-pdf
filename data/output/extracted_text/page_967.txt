@@ -1,0 +1,45 @@
+938
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Synchronization
+Processes can also use various types of synchronization objects. Just as 
+Windows provides numerous interprocess communication mechanisms, it also provides
+numerous synchronization mechanisms, including events, semaphores, mutexes,
+and various user-mode primitives. All of these mechanisms work with threads, not
+processes, so that when a thread blocks on a semaphore, other threads in that 
+process (if any) are not affected and can continue to run.
+One of the most fundamental synchronization primitives exposed by the kernel
+is the Event. Events are kernel-mode objects and thus have security descriptors
+and handles. Event handles can be duplicated using DuplicateHandle and passed to
+another process so that multiple processes can synchronize on the same event. An
+ev ent can also be given a name in the Win32 namespace and have an ACL set to
+protect it. Sometimes sharing an event by name is more appropriate than 
+duplicating the handle.
+As we have described previously, there are two kinds of events: notification
+ev ents and synchronization events. An event can be in one of two states: signaled
+or not-signaled. A thread can wait for an event to be signaled with 
+WaitForSingleObject. If another thread signals an event with SetEvent, what happens depends
+on the type of event. With a notification event, all waiting threads are released and
+the event stays set until manually cleared with ResetEvent. With a 
+synchronization event, if one or more threads are waiting, exactly one thread is released and
+the event is cleared. An alternative operation is PulseEvent, which is like SetEvent
+except that if nobody is waiting, the pulse is lost and the event is cleared. In 
+contrast, a SetEvent that occurs with no waiting threads is remembered by leaving the
+ev ent in the signaled state so a subsequent thread that calls a wait API for the event
+will not actually wait.
+Semaphores can be created using the CreateSemaphore Win32 API function,
+which can also initialize it to a given value and define a maximum value as well.
+Like events, semaphores are also kernel-mode objects. Calls for up and down
+exist, although they hav e the somewhat odd names of ReleaseSemaphore (up) and
+WaitForSingleObject (down). It is also possible to give WaitForSingleObject a
+timeout, so the calling thread can be released eventually, even if the semaphore
+remains at 0. WaitForSingleObject and WaitForMultipleObjects are the common
+interfaces used for waiting on the dispatcher objects discussed in Sec. 11.3. While
+it would have been possible to wrap the single-object version of these APIs in a
+wrapper with a somewhat more semaphore-friendly name, many threads use the
+multiple-object version which may include waiting for multiple flavors of 
+synchronization objects as well as other events like process or thread termination, I/O
+completion, and messages being available on sockets and ports.
+Mutexes are also kernel-mode objects used for synchronization, but simpler
+than semaphores because they do not have counters. They are essentially locks,
+with API functions for locking WaitForSingleObject and unlocking ReleaseMutex.

@@ -1,0 +1,46 @@
+SEC. 12.4
+PERFORMANCE
+1073
+obvious procedure is given in Fig. 12-7(a). It loops over the bits in a byte, 
+counting them one at a time. It is pretty simple and straightforward.
+#define BYTE SIZE 8
+/* A byte contains 8 bits */
+int bit count(int byte)
+{
+/* Count the bits in a byte. */
+int i, count = 0;
+for (i = 0; i < BYTE SIZE; i++)
+/* loop over the bits in a byte */
+if ((byte >> i) & 1) count++;
+/* if this bit is a 1, add to count */
+retur n(count);
+/* retur n sum */
+}
+(a)
+/*Macro to add up the bits in a byte and return the sum. */
+#define bit count(b) ((b&1) + ((b>>1)&1) + ((b>>2)&1) + ((b>>3)&1) + \
+((b>>4)&1) + ((b>>5)&1) + ((b>>6)&1) + ((b>>7)&1))
+(b)
+/*Macro to look up the bit count in a table. */
+char bits[256] = {0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 1, 2, 2, 3, 2, 3, 3, ...};
+#define bit count(b) (int) bits[b]
+(c)
+Figure 12-7. (a) A procedure for counting bits in a byte. (b) A macro to count
+the bits. (c) A macro that counts bits by table lookup.
+This procedure has two sources of inefficiency. First, it must be called, stack
+space must be allocated for it, and it must return. Every procedure call has this
+overhead. Second, it contains a loop, and there is always some overhead 
+associated with a loop.
+A completely different approach is to use the macro of Fig. 12-7(b). It is an
+inline expression that computes the sum of the bits by successively shifting the 
+argument, masking out everything but the low-order bit, and adding up the eight
+terms. The macro is hardly a work of art, but it appears in the code only once.
+When the macro is called, for example, by
+sum = bit count(table[i]);
+the macro call looks identical to the call of the procedure. Thus, other than one
+somewhat messy definition, the code does not look any worse in the macro case
+than in the procedure case, but it is much more efficient since it eliminates both the
+procedure-call overhead and the loop overhead.
+We can take this example one step further. Why compute the bit count at all?
+Why not look it up in a table? After all, there are only 256 different bytes, each
+with a unique value between 0 and 8. We can declare a 256-entry table, bits, with

@@ -1,0 +1,37 @@
+681
+the programmers protest too much when this is proposed, having two cow orkers
+check each other’s code is also a possibility.
+9.7.3 Login Spoofing
+In this insider attack, the perpetrator is a legitimate user who is attempting to
+collect other people’s passwords through a technique called login spoofing. It is
+typically employed in organizations with many public computers on a LAN used
+by multiple users. Many universities, for example, have rooms full of computers
+where students can log onto any computer. It works like this. Normally, when no
+one is logged in on a UNIX computer, a screen similar to that of Fig. 9-32(a) is 
+displayed. When a user sits down and types a login name, the system asks for a 
+password. If it is correct, the user is logged in and a shell (and possibly a GUI) is 
+started.
+Login:
+Login:
+(a)
+(b)
+Figure 9-32. (a) Correct login screen. (b) Phony login screen.
+Now consider this scenario. A malicious user, Mal, writes a program to 
+display the screen of Fig. 9-32(b). It looks amazingly like the screen of Fig. 9-32(a),
+except that this is not the system login program running, but a phony one written
+by Mal. Mal now starts up the phony login program and walks away to watch the
+fun from a safe distance. When a user sits down and types a login name, the 
+program responds by asking for a password and disabling echoing. After the login
+name and password have been collected, they are written away to a file and the
+phony login program sends a signal to kill its shell. This action logs Mal out and
+triggers the real login program to start and display the prompt of Fig. 9-32(a). The
+user assumes that she made a typing error and just logs in again. This time, 
+however, it works. But in the meantime, Mal has acquired another (login name, 
+password) pair.
+9.8 OPERATING SYSTEM HARDENING
+The single best way to handle security bugs is to not have them at all. Think of
+how nice it would be if we could accompany software with a mathematical proof
+that it is correct and contains no vulnerabilities. That is exactly what formal 
+verification of software is all about. In the past, researchers have shown that it is actually
+SEC. 9.7
+INSIDER ATTACKS

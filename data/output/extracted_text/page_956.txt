@@ -1,0 +1,46 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+927
+systems use them. In Windows, almost all libraries are DLLs, from the system
+library ntdll.dll that is loaded into every process to the high-level libraries of 
+common functions that are intended to allow rampant code-reuse by application 
+developers.
+DLLs improve the efficiency of the system by allowing common code to be
+shared among processes, reduce program load times from disk by keeping 
+commonly used code around in memory, and increase the serviceability of the system
+by allowing operating system library code to be updated without having to 
+recompile or relink all the application programs that use it.
+On the other hand, shared libraries introduce the problem of versioning and
+increase the complexity of the system because changes introduced into a shared
+library to help one particular program have the potential of exposing latent bugs in
+other applications, or just breaking them due to changes in the implementation—a
+problem that in the Windows world is referred to as DLL hell.
+The implementation of DLLs is simple in concept. Instead of the compiler
+emitting code that calls directly to subroutines in the same executable image, a
+level of indirection is introduced: the IAT (Import Address Table). When an
+executable is loaded, it is searched for the list of DLLs that must also be loaded
+(this will be a graph in general, as the listed DLLs will themselves will generally
+list other DLLs needed in order to run). The required DLLs are loaded and the IAT
+is filled in for them all.
+The reality is more complicated. One problem is that the graphs that represent
+the relationships between DLLs can contain cycles, or have nondeterministic
+behaviors, so computing the list of DLLs to load can result in a sequence that does
+not work. Also, in Windows the DLL libraries are given a chance to run code
+whenever they are loaded into a process, or when a new thread is created. 
+Generally, this is so they can perform initialization, or allocate per-thread storage, but
+many DLLs perform a lot of computation in these attach routines. If any of the
+functions called in an attach routine needs to examine the list of loaded DLLs, a
+deadlock can occur, hanging the process. For this reason, these attach/detach 
+routines must follow strict rules.
+DLLs are used for more than just sharing common code. They enable a hosting
+model for extending applications. At the other end of the Internet, Web servers
+load dynamic code to produce a better Web experience for the pages they display.
+Applications like Microsoft Office link and run DLLs to allow Office to be used as
+a platform for building other applications. The COM (component object model)
+style of programming allows programs to dynamically find and load code written
+to provide a particular published interface, which leads to in-process hosting of
+DLLs by almost all the applications that use COM.
+All this dynamic loading of code has resulted in even greater complexity for
+the operating system, as library version management is not just a matter of 
+matching executables to the right versions of the DLLs, but sometimes loading multiple
+versions of the same DLL into a process—which Microsoft calls side-by-side. A

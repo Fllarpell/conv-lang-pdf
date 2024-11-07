@@ -1,0 +1,43 @@
+1048
+OPERATING SYSTEM DESIGN
+CHAP. 12
+12.2.2 Paradigms
+Once the goals have been established, the design can begin. A good starting
+place is thinking about how the customers will view the system. One of the most
+important issues is how to make all the features of the system hang together well
+and present what is often called architectural coherence. In this regard, it is
+important to distinguish two kinds of operating system ‘‘customers.’’ On the one
+hand, there are the users, who interact with application programs; on the other are
+the programmers, who write them. The former mostly deal with the GUI; the latter
+mostly deal with the system call interface. If the intention is to have a single GUI
+that pervades the complete system, as in MacOS, the design should begin there. If,
+on the other hand, the intention is to support many possible GUIs, such as in
+UNIX, the system-call interface should be designed first. Doing the GUI first is
+essentially a top-down design. The issues are what features it will have, how the
+user will interact with it, and how the system should be designed to support it. For
+example, if most programs display icons on the screen and then wait for the user to
+click on one of them, this suggests an event-driven model for the GUI and 
+probably also for the operating system. On the other hand, if the screen is mostly full of
+text windows, then a model in which processes read from the keyboard is probably
+better.
+Doing the system-call interface first is a bottom-up design. Here the issues are
+what kinds of features programmers in general need. Actually, not many special
+features are needed to support a GUI. For example, the UNIX windowing system,
+X, is just a big C program that does reads and wr ites on the keyboard, mouse, and
+screen. X was dev eloped long after UNIX and did not require many changes to the
+operating system to get it to work. This experience validated the fact that UNIX
+was sufficiently complete.
+User-Interface Paradigms
+For both the GUI-level interface and the system-call interface, the most 
+important aspect is having a good paradigm (sometimes called a metaphor) to provide a
+way of looking at the interface. Many GUIs for desktop machines use the WIMP
+paradigm that we discussed in Chap. 5. This paradigm uses point-and-click, 
+pointand-double-click, dragging, and other idioms throughout the interface to provide
+an architectural coherence to the whole. Often there are additional requirements for
+programs, such as having a menu bar with FILE, EDIT, and other entries, each of
+which has certain well-known menu items. In this way, users who know one 
+program can quickly learn another.
+However, the WIMP user interface is not the only one possible. Tablets, 
+smartphones, and some laptops use touch screens to allow users to interact more directly
+and more intuitively with the device. Some palmtop computers use a stylized
+handwriting interface. Dedicated multimedia devices may use a video-recorder-like

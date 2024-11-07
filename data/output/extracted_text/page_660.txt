@@ -1,0 +1,48 @@
+SEC. 9.3
+FORMAL MODELS OF SECURE SYSTEMS
+631
+5
+2
+6
+4
+3
+1
+D
+E
+C
+A
+B
+4
+3
+2
+1
+Security level
+Legend
+Process
+Object
+Read
+Write
+Figure 9-11. The Bell-LaPadula multilevel security model.
+The simple security property says that all solid (read) arrows go sideways or
+upward. The * property says that all dashed (write) arrows also go sideways or
+upward. Since information flows only horizontally or upward, any information that
+starts out at level k can never appear at a lower level. In other words, there is never
+a path that moves information downward, thus guaranteeing the security of the
+model.
+The Bell-LaPadula model refers to organizational structure, but ultimately has
+to be enforced by the operating system. One way this could be done is by 
+assigning each user a security level, to be stored along with other user-specific data such
+as the UID and GID. Upon login, the user’s shell would acquire the user’s security
+level and this would be inherited by all its children. If a process running at security
+level k attempted to open a file or other object whose security level is greater than
+k, the operating system should reject the open attempt. Similarly attempts to open
+any object of security level less than k for writing must fail. This is extremely 
+simple and easy to enforce. Just add two if statements to the code and, bingo, a secure
+system—at least for the military.
+The Biba Model
+To summarize the Bell-LaPadula model in military terms, a lieutenant can ask
+a private to reveal all he knows and then copy this information into a general’s file
+without violating security. Now let us put the same model in civilian terms. 
+Imagine a company in which janitors have security level 1, computer programmers have
+security level 3, and the president of the company has security level 5. Using 
+Bell

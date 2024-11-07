@@ -1,0 +1,47 @@
+474
+DEADLOCKS 
+CHAP. 6
+latter primitive specifies a process to receive from and blocks if no message from that
+process is available, even though messages may be waiting from other processes.
+There are no shared resources, but processes need to communicate frequently about
+other matters. Is deadlock possible? Discuss.
+34. In an electronic funds transfer system, there are hundreds of identical processes that
+work as follows. Each process reads an input line specifying an amount of money, the
+account to be credited, and the account to be debited. Then it locks both accounts and
+transfers the money, releasing the locks when done. With many processes running in
+parallel, there is a very real danger that a process having locked account x will be
+unable to lock y because y has been locked by a process now waiting for x. Devise a
+scheme that avoids deadlocks. Do not release an account record until you have 
+completed the transactions. (In other words, solutions that lock one account and then
+release it immediately if the other is locked are not allowed.)
+35. One way to prevent deadlocks is to eliminate the hold-and-wait condition. In the text it
+was proposed that before asking for a new resource, a process must first release 
+whatev er resources it already holds (assuming that is possible). However, doing so 
+introduces the danger that it may get the new resource but lose some of the existing ones to
+competing processes. Propose an improvement to this scheme.
+36. A computer science student assigned to work on deadlocks thinks of the following 
+brilliant way to eliminate deadlocks. When a process requests a resource, it specifies a
+time limit. If the process blocks because the resource is not available, a timer is 
+started. If the time limit is exceeded, the process is released and allowed to run again. If
+you were the professor, what grade would you give this proposal and why?
+37. Main memory units are preempted in swapping and virtual memory systems. The
+processor is preempted in time-sharing environments. Do you think that these 
+preemption methods were developed to handle resource deadlock or for other purposes? How
+high is their overhead?
+38. Explain the differences between deadlock, livelock, and starvation.
+39. Assume two processes are issuing a seek command to reposition the mechanism to
+access the disk and enable a read command. Each process is interrupted before 
+executing its read, and discovers that the other has moved the disk arm. Each then reissues
+the seek command, but is again interrupted by the other. This sequence continually
+repeats. Is this a resource deadlock or a livelock? What methods would you 
+recommend to handle the anomaly?
+40. Local Area Networks utilize a media access method called CSMA/CD, in which 
+stations sharing a bus can sense the medium and detect transmissions as well as 
+collisions. In the Ethernet protocol, stations requesting the shared channel do not transmit
+frames if they sense the medium is busy. When such transmission has terminated, 
+waiting stations each transmit their frames. Two frames that are transmitted at the same
+time will collide. If stations immediately and repeatedly retransmit after collision
+detection, they will continue to collide indefinitely.
+(a) Is this a resource deadlock or a livelock?
+(b) Can you suggest a solution to this anomaly?
+(c) Can starvation occur with this scenario?

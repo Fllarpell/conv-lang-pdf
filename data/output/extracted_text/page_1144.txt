@@ -1,0 +1,43 @@
+SEC. 13.2
+ALPHABETICAL BIBLIOGRAPHY
+1115
+SALUS, P.H.: ‘‘UNIX At 25,’’ Byte, Vol. 19, pp. 75–82, Oct. 1994.
+SANTOS, H.M.D.: Cybersecurity: A Practical Engineering Approach, London: Chapman
+and Hall, 2022.
+SASSE, M.A.: ‘‘Red-Eye Blink, Bendy Shuffle, and the Yuck Factor: A User Experience of
+Biometric Airport Systems,’’ IEEE Security and Privacy, Vol. 5, pp. 78–81, May/June
+2007.
+SCHEIBLE, J.P.: ‘‘ A Survey of Storage Options,’’ Computer, Vol. 35, pp. 42–46, Dec.
+2002.
+SCHOENFIELD, S.E.: Securing Syst., London: CRC Press, 2021.
+SCHWARZKOPF, M and BAILIS, P.: ‘‘Research for Practice: Cluster Scheduling for 
+Datacenters,’’ Commun. ACM, Vol. 6, pp. 50–53, May 2018.
+SCOTT, M., LEBLANC, T., and MARSH, B.: ‘‘Multi-Model Parallel Programming in 
+Psyche,’’ Proc. Second ACM Symp. on Principles and Practice of Parallel Programming,
+ACM, pp. 70–78, 1990.
+SEAWRIGHT, L.H., and MACKINNON, R.A.: ‘‘VM/370—A Study of Multiplicity and 
+Usefulness,’’ IBM Syst. J., Vol. 18, pp. 4–17, 1979.
+SEREBRYANY, K., BRUENING, D., POTAPENKO, A., and VYUKOV, D.: ‘‘ AddressSanitizer:
+A Fast Address Sanity Checker,’’ Proc. USENIX Ann. Tech. Conf., USENIX, pp.
+28–28, 2013.
+SETTY, S., ANGEL, S., GUPTA, T., and LEE, J.: ‘‘Proving the Correct Execution of 
+Concurrent Services in Zero-Knowledge,’’ Proc. 13th USENIX Symp. on Operating Syst.
+Design and Implementation, USENIX, 2018.
+SHAHRAD, M., FONSECA, R., GOIRI, I., CHAUDHRY, G., BATUM, P., COOKE, J., 
+LAUREANO, E., TRESNESS, C., RUSSINOVICH, M., and .BIANCHINI, R.: ‘‘Serverless in
+the Wild: Characterizing and Optimizing the Serverless Workload at a Large Cloud
+Provider,’’ Proc. Annual Technical Conf., USENIX, pp. 205–218, 2020.
+SHAN, Y., HUNAG, Y., CHEN, Y., and ZHANG, Y.: ‘‘LegoOS: A Disseminated, Distributed
+OS for Hardware Resource Disaggregation,’’ Proc. 13th USENIX Symp. on Operating
+Syst. Design and Implementation, USENIX, pp. 69–87, 2018.
+SHEN, K., SHRIRAMAN, A., DWARKADAS, S., ZHANG, X., and CHEN, Z.: ‘‘Power 
+Containers: An OS Facility for Fine-Grained Power and Energy Management on Multicore
+Servers,’’ Proc. 18th Int’l Conf. on Arc h. Support for Prog. Lang. and Operating Syst.,
+ACM, pp. 65–76, 2013.
+SHOTTS, W.: The Linux Command Line 2nd ed., Amazon, 2019.
+SHUB, C.M: ‘‘ A Unified Treatment of Deadlock,’’ J. Computing Sciences in Colleges, Vol.
+19, pp. 194–204, Oct. 2003.
+SILBERSCHATZ, A., GALVIN, P.B., and GAGNE, G: Operating Syst. 10th Hoboken, NJ:
+Wiley, 2018.
+SIMON, R.J.: Windows NT Win32 API SuperBible, Corte Madera, CA: Sams Publishing,
+1997.

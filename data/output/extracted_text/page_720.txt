@@ -1,0 +1,44 @@
+SEC. 9.8
+OPERATING SYSTEM HARDENING
+691
+By integrating the TPM in our secure boot process above, we can create proof
+that the machine was at least booted in a secure way. The idea is that the booting
+computer creates ‘‘measurements’’—hashes of what is loaded in memory. For
+instance, Fig. 9-36(b) shows that whenever the firmware has checked the signature
+of a bootloader, it asks the TPM to extend PCR-0 with a hash of the code and data
+it loaded in memory. For simplicity, we will assume that the computer uses only
+PCR-0. When the bootloader starts running, it does the same with the kernel
+image, and the kernel, once it is running, does the same with the other operating
+system components. In the end, having the right value in PCR-0 proves that the
+boot process was executed correctly and securely. The resulting cryptographic hash
+in PCR-0 serves as a hash chain that binds the kernel to the bootloader and the
+bootloader to the root of trust.
+As shown in Fig. 9-36(c), the remote computer now verifies if this is the case
+by sending an arbitrary number known as a nonce (of, say, 160 bits) to the TPM
+and asking it to return (a) the value of PCR-0, and (b) a digital signature of the
+concatenation of the value of PCR-0 and the nonce. The TPM signs them with its
+(unique and unforgeable) private Attestation Identity Key. The corresponding 
+public key is well known, so the remote computer can now (a) verify the signature and
+(b) check that the PCR-0 is correct (proving that the right steps were taken in the
+boot process). In particular, it first checks the signature and the nonce. Next, it
+looks up the three hashes in its database of trusted bootloaders, kernels, and OS
+components. If they are not there, the attestation fails. Otherwise, the challenging
+party recreates the combined hash of all three components and compares it to the
+value of PCR-0, as received from the attesting side. If the values are the same, the
+remote party knows that the attesting machine was booted in a trusted way. The
+signed result prevents attackers from forging the result, and since we know that the
+trusted bootloader performs the appropriate measurement of the kernel and the 
+kernel in turn measures the application, no other code configuration could have 
+produced the same hash chain. In case you are wondering about the role of the nonce:
+it ensures that the signature is ‘‘fresh’’—making it impossible for the attacker to
+send an old, recorded reply.
+9.8.6 Encapsulating Untrusted Code
+Viruses and worms are programs that get onto a computer without the owner’s
+knowledge and against the owner’s will. Sometimes, however, people more-or-less
+intentionally import and run foreign code on their machines. In the past, Web
+browsers would execute Java ‘‘Applets’’ in the browser and Microsoft even allowed
+the execution of native code. Neither of these solutions will be missed by many.
+Nowadays, we still execute untrusted code in our browsers, for instance, in the
+form of JavaScript or other scripting languages.
+Even operating systems sometimes allow foreign code to be executed in the
+kernel. An example includes Linux’ eBPF (extended Berkeley Packet Filter),

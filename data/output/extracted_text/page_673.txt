@@ -1,0 +1,44 @@
+644
+SECURITY 
+CHAP. 9
+computer. At login time, the server sends a random number, r, to the user’s 
+computer, which then computes f (r, k) and sends that back, where f is a publicly
+known function. The server then does the computation itself and checks if the
+result sent back agrees with the computation. The advantage of this scheme over a
+password is that even if a wiretapper sees and records all the traffic in both 
+directions, she will learn nothing that helps her next time. Of course, the function, f, has
+to be complicated enough that k cannot be deduced, even giv en a large set of 
+observations. Cryptographic hash functions are good choices, with the argument being
+the XOR of r and k. These functions are known to be hard to reverse.
+9.4.2 Authentication Using a Physical Object
+The second method for authenticating users is to check for some physical
+object they hav e rather than something they know. Metal door keys hav e been used
+for centuries for this purpose. Nowadays, the physical object used is often a plastic
+card that is inserted into a reader associated with the computer. Normally, the user
+must not only insert the card, but must also type in a password, to prevent someone
+from using a lost or stolen card. Viewed this way, using a bank’s ATM (Automated
+Teller Machine) starts out with the user logging in to the bank’s computer via a
+remote terminal (the ATM) using a plastic card and a password (currently a 4-digit
+PIN code in most countries, but this is just to avoid the expense of putting a full
+QWERTY keyboard on the ATM machine).
+Information-bearing plastic cards come in two varieties: magnetic stripe cards
+and chip cards. Magnetic stripe cards hold about 140 bytes of information written
+on a piece of magnetic tape glued to the back of the card. This information can be
+read out by the terminal and then sent to a central computer. Often the information
+contains the user’s password (e.g., PIN code) so the terminal can perform an 
+identity check even if the link to the main computer is down. Typically the password is
+encrypted by a key known only to the bank. These cards cost about $0.10 to $0.50,
+depending on whether there is a hologram sticker on the front and the production
+volume. As a way to identify users in general, magnetic stripe cards are risky
+because the equipment to read and write them is cheap and widespread.
+Chip cards contain a tiny integrated circuit (chip) on them. These cards can be
+subdivided into two categories: stored value cards and smart cards. Stored value
+cards contain a small amount of memory (often only a few KB) using ROM 
+technology to allow the value to be remembered when the card is removed from the
+reader and thus the power turned off. There is no CPU on the card, so the value
+stored must be changed by an external CPU (in the reader). These cards are mass
+produced by the millions for well under $1 and are used, for example, as prepaid
+telephone cards. When a call is made, the telephone just decrements the value in
+the card, but no money actually changes hands. For this reason, these cards are
+generally issued by one company for use on only its machines (e.g., telephones or
+vending machines). They could be used for login authentication by storing a 1-KB

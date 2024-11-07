@@ -1,0 +1,49 @@
+96
+PROCESSES AND THREADS
+CHAP. 2
+1. Hardware stacks program counter, etc.
+2. Hardware loads new program counter from interrupt vector.
+3. Assembly-language procedure saves registers.
+4. Assembly-language procedure sets up new stack.
+5. C interrupt service runs (typically reads and buffers input).
+6. Scheduler decides which process is to run next.
+7. C procedure returns to the assembly code.
+8. Assembly-language procedure starts up new current process.
+Figure 2-5. Skeleton of what the lowest level of the operating system does when
+an interrupt occurs. The details may vary between operating systems.
+A better model is to look at CPU usage from a probabilistic viewpoint. 
+Suppose that a process spends a fraction p of its time waiting for I/O to complete. With
+n processes in memory at once, the probability that all n processes are waiting for
+I/O (in which case the CPU will be idle) is pn. The CPU utilization is then given
+by the formula
+CPU utilization = 1 < pn
+Figure 2-6 shows, for different values of p (or ‘‘I/O wait’’), the CPU utilization as a
+function of n, which is called the degree of multiprogramming.
+50% I/O wait
+80% I/O wait
+20% I/O wait
+100
+80
+60
+40
+20
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+0
+Degree of multiprogramming
+CPU utilization (in percent)
+Figure 2-6. CPU utilization as a function of the number of processes in memory.
+From the figure it is clear that if processes spend 80% of their time waiting for
+I/O, at least 10 processes must be in memory at once to get the CPU waste below
+10%. When you realize that an interactive process waiting for a user to type 
+something at a terminal (or click on an icon) is in I/O wait state, it should be clear that
+I/O wait times of 80% and more are not unusual. But even on servers, processes
+doing a lot of disk I/O will often have this percentage or more.

@@ -1,0 +1,46 @@
+SEC. 11.2
+PROGRAMMING WINDOWS
+889
+Windows supports two special execution environments both called WOW
+(Windows-on-Windows). WoW32 is used on 32-bit x86 systems to run 16-bit
+Windows 3.x applications by mapping the system calls and parameters between the
+16-bit and 32-bit worlds. The last version of Windows to include the WoW32
+execution environment was Windows 10. Since Windows 11 requires a 64-bit 
+processor and those processors cannot run 16-bit code, WoW32 is no longer supported.
+WoW64, which allows 32-bit applications to run on 64-bit systems, continues to be
+supported on Windows 11. In fact, starting with Windows 10, WoW64 is enhanced
+to enable running 32-bit x86 applications on arm64 hardware via instruction 
+emulation. Windows 11 further extends emulation capabilities to run 64-bit x64 
+applications on arm64. Section 11.4.4 describes the WoW64 and emulation 
+infrastructure in more detail.
+The Windows API philosophy is very different from the UNIX philosophy. In
+the latter, the operating system functions are simple, with few parameters and few
+places where there are multiple ways to perform the same operation. Win32 
+provides very comprehensive interfaces with many parameters, often with three or
+four ways of doing the same thing, and mixing together low-level and high-level
+functions, like CreateFile and CopyFile.
+This means Win32 provides a very rich set of interfaces, but it also introduces
+much complexity due to the poor layering of a system that intermixes both 
+highlevel and low-level functions in the same API. For our study of operating systems,
+only the low-level functions of the Win32 API that wrap the native NT API are 
+relevant, so those are what we will focus on.
+Win32 has calls for creating and managing both processes and threads. There
+are also many calls that relate to interprocess communication, such as creating,
+destroying, and using mutexes, semaphores, events, communication ports, and
+other IPC objects.
+Although much of the memory-management system is invisible to 
+programmers, one important feature is visible: namely the ability of a process to map
+a file onto a region of its virtual memory. This allows threads running in a process
+the ability to read and write parts of the file using pointers without having to 
+explicitly perform read and write operations to transfer data between the disk and 
+memory. With memory-mapped files the memory-management system itself performs
+the I/Os as needed (demand paging).
+Windows implements memory-mapped files using a combination of three
+facilities. First it provides interfaces which allow processes to manage their own
+virtual address space, including reserving ranges of addresses for later use. 
+Second, Win32 supports an abstraction called a file mapping, which is used to 
+represent addressable objects like files (a file mapping is called a section in the NT layer
+which is a better name because section objects do not have to represent files). Most
+often, file mappings are created using a file handle to refer to memory backed by
+files, but they can also be created to refer to memory backed by the system pagefile
+by using a NULL file handle.

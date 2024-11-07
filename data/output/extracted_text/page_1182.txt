@@ -1,0 +1,102 @@
+INDEX
+1153
+Win32 call (continued)
+SetProcessinformation, 949
+SetSecurityDescriptorDacl, 1023
+SetThreadContext, 904
+Setthreadinformation, 949
+SetThreadPriority, 945
+SleepConditionVariableCS, 939
+SleepConditionVariableSRW, 939
+SmPageEvict, 975
+SmPageRead, 974
+SmPageWrite, 973, 974
+TerminateProcess, 91
+Up, 938
+ValidDataLength, 979
+VirtualAlloc, 963, 1009
+VirtuAlloc, 975
+Wait3, 905
+WaitForMultipeObjects, 938
+WaitForMultipleObject, 905
+WaitForMultipleObjects, 915
+WaitForSingleObject, 938
+WaitOnAddress, 939
+WakeAllConditionVariable, 939
+WakeByAddressAll, 939
+WakeByAddressSingle, 939
+WakeConditionVariable, 939
+Write, 982
+Win32 memory-management system calls, 961–962
+Window, 409
+Window manager, 405
+Windows, 1, 871–1036
+booting, 910–914
+history, 871–880
+icons menus pointing, 430
+kernel, 894
+NT, 874
+programming, 880–894
+Windows 3.0, 873
+Windows 7, 877
+Windows 8, 877–878
+Windows 8.1, 878
+Windows 10, 3, 878–879
+Windows 11, 3, 871–1036
+history, 879
+Windows 95, 3, 873
+Windows 98, 873
+Windows 2000, 3, 17, 875
+Windows access token, windows security, 1020
+Windows access violation, 964
+Windows address space layout randomization, 1028
+Windows affinitized thread, 930
+Windows antimalware, 1034–1045
+Windows API call, 60–63
+NtAllocateVirtualMemory, 885
+NtCancelIoFile, 984
+NtClose, 918, 920
+NtCreateFile, 885, 922, 923, 982, 984
+NtCreateProcess, 884, 885, 936, 943
+NtCreateThread, 885, 936
+NtCreateUserProcess, 936, 941, 942
+NtDeviceIoControlFile, 984
+NtDuplicateObject, 885
+NtFlushBuffersFile, 984
+NtFsControlFile, 984, 1000
+NtLockFile, 984
+NtMapViewOfSection, 885
+NtNotifyChangeDirectoryFile, 983, 999
+NtQueryDirectoryFile, 982
+NtQueryInformationFile, 983
+NtQueryVolumeInformationFile, 982
+NtReadFile, 920, 982
+NtReadVirtualMemory, 885
+NtResumeThread, 936, 943
+NtSetInformationFile, 983
+NtSetVolumeInformationFile, 983
+NtUnLockFile, 984
+NtWriteFile, 920, 982
+NtWriteVirtualMemory, 885
+Windows application silo, 1012
+Windows application-launch prefetching, 965
+Windows arbitrary code guard, 1030
+Windows asynchronous procedure call, 903–904
+Windows asynchronout procedure call, 901–903
+Windows auto-expand pushlock, 940
+Windows autoboost, 949
+Windows back-patch, 1033
+Windows background prefetch, 966
+Windows balance set manager, 969
+Windows bandwidth reservation, 982
+Windows base binary, 1033
+Windows base layer, 1014
+Windows base priority, 945
+Windows boot manager, 912
+Windows cache manager, 908
+Windows cache-aware pushlock, 940
+Windows canary, 1027
+Windows canonical address, 955
+Windows class driver, windows910
+Windows code integrity guard, 1030
+Windows commit charge, 959

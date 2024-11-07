@@ -1,0 +1,50 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+123
+Lock Variables
+As a second attempt, let us look for a software solution. Consider having a 
+single, shared (lock) variable, initially 0. When a process wants to enter its critical
+region, it first tests the lock. If the lock is 0, the process sets it to 1 and enters the
+critical region. If the lock is already 1, the process just waits until it becomes 0.
+Thus, a 0 means that no process is in its critical region, and a 1 means that some
+process is in its critical region.
+Unfortunately, this idea contains exactly the same fatal flaw that we saw in the
+spooler directory. Suppose that one process reads the lock and sees that it is 0.
+Before it can set the lock to 1, another process is scheduled, runs, and sets the lock
+to 1. When the first process runs again, it will also set the lock to 1, and two 
+processes will be in their critical regions at the same time.
+Now you might think that we could get around this problem by first reading
+out the lock value, then checking it again just before storing into it, but that really
+does not help. The race now occurs if the second process modifies the lock just
+after the first process has finished its second check.
+Strict Alternation
+A third approach to the mutual exclusion problem is shown in Fig. 2-23. This
+program fragment, like nearly all the others in this book, is written in C. C was
+chosen here because real operating systems are virtually always written in C (or
+occasionally C++), but hardly ever in languages like Java, Python, or Haskell. C is
+powerful, efficient, and predictable, characteristics critical for writing operating
+systems. Java, for example, is not predictable because it might run out of storage at
+a critical moment and need to invoke the garbage collector to reclaim memory at a
+most inopportune time. This cannot happen in C because there is no garbage 
+collection in C. A quantitative comparison of C, C++, Java, and four other languages
+is given by Prechelt (2000).
+while (TRUE) {
+while (TRUE) {
+while (turn != 0) { }  
+/* loop */
+while (turn != 1) { }  
+/* loop */
+cr itical region( );
+cr itical region( );
+tur n = 1;
+tur n = 0;
+noncr itical region( );
+noncr itical region( );
+}
+}
+(a) 
+(b)
+Figure 2-23. A proposed solution to the critical-region problem. (a) Process 0.
+(b) Process 1. In both cases, be sure to note the semicolons terminating the while
+statements.
+In Fig. 2-23, the integer variable turn, initially 0, keeps track of whose turn it is
+to enter the critical region and examine or update the shared memory. Initially,

@@ -1,0 +1,44 @@
+1114
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+ROCHE, T., LOMN, V., MUTSCHLER, C., and IMBERT, L.: ‘‘ A Side Journey To Titan,’’
+Proc. 30th USENIX Security Symp., USENIX, pp. 231–248, 2021.
+RODRIGUES, E.R., NAV AUX, P.O., PANETTA, J., and MENDES, C.L.: ‘‘ A New Technique
+for Data Privatization in User-Level Threads and Its Use in Parallel Applications,’’
+Proc. 2010 Symp. on Applied Computing, ACM, pp. 2149–2154, 2010.
+ROSCOE, T., ELPHINSTONE, K., and HEISER, G.: ‘‘Hype and Virtue,’’ Proc. 11th 
+Workshop on Hot Topics in Operating Syst., USENIX, pp. 19–24, 2007.
+ROSENBLUM, M., BUGNION, E., DEVINE, S. and HERROD, S.A.: ‘‘Using the SIMOS
+Machine Simulator to Study Complex Computer Systems,’’ ACM Trans. Model. 
+Comput. Simul., Vol. 7, pp. 78–103, 1997.
+ROSENBLUM, M., and GARFINKEL, T.: ‘‘Virtual Machine Monitors: Current Technology
+and Future Trends,’’ Computer, Vol. 38, pp. 39–47, May 2005.
+ROSENBLUM, M., and OUSTERHOUT, J.K.: ‘‘The Design and Implementation of a 
+LogStructured File System,’’ Proc. 13th Symp. on Operating Syst. Prin., ACM, pp. 1–15,
+1991.
+ROZIER, M., ABROSSIMOV, V., ARMAND, F., BOULE, I., GIEN, M., GUILLEMONT, M.,
+HERRMANN, F., KAISER, C., LEONARD, P., LANGLOIS, S., and NEUHAUSER, W.:
+‘‘Chorus Distributed Operating Systems,’’ Computing Syst., Vol. 1, pp. 305–379, Oct.
+1988.
+RUAN, Z., SCHWARZKOPF, M., AGUILERA, M.K., and BELAY, A.: ‘‘ AIFM: 
+High-Performance, Application-Integrated Far Memory,’’ Proc. 14th USENIX Symp. on Operating
+Syst. Design and Implementation, USENIX, 2020.
+RUAN, Z., SCHWARZKOPF, M., AGUILERA, M.K., and BELAY, A.: ‘‘ AIFM: 
+High-Performance, Application-Integrated Far Memory,’’ Proc. 14th USENIX Symp. on Operating
+Syst. Design and Implementation, USENIX, pp. 315–332, 2020.
+RUSSINOVICH, M., GOVINDARAJU, N., RAGHURAMAN, M., HEPKIN, D., and KISHAN,
+A.: ‘‘Virtual Machine Preserving Host Updates for Zero Day Patching in Public
+Cloud,’’ Proc. 16th EuroSys Conf., ACM, 2021.
+RUSSINOVICH, M., and SOLOMON, D.: Windows Internals, Part 1, Redmond, WA:
+Microsoft Press, 2012.
+SACKMAN, H., ERIKSON, W.J., and GRANT, E.E.: ‘‘Exploratory Experimental Studies
+Comparing Online and Offline Programming Performance,’’ Commun. ACM, Vol. 11,
+pp. 3–11, Jan. 1968.
+SALTZER, J.H.: ‘‘Protection and Control of Information Sharing in MULTICS,’’ Commun.
+ACM, Vol. 17, pp. 388–402, July 1974.
+SALTZER, J.H., and KAASHOEK, M.F.: Principles of Computer System Design: An 
+Introduction, Burlington, MA: Morgan Kaufmann, 2009.
+SALTZER, J.H., REED, D.P., and CLARK, D.D.: ‘‘End-to-End Arguments in System
+Design,’’ ACM Trans. Computer Syst., Vol. 2, pp. 277–288, Nov. 1984.
+SALTZER, J.H., and SCHROEDER, M.D.: ‘‘The Protection of Information in Computer
+Systems,’’ Proc. IEEE, Vol. 63, pp. 1278–1308, Sept. 1975.

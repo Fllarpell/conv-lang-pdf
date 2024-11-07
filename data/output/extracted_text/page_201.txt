@@ -1,0 +1,43 @@
+172
+PROCESSES AND THREADS
+CHAP. 2
+extremely common (Li et al., 2019). As we have seen, locking is not just hard, but
+also expensive and operating systems have adopted RCU to avoid locking 
+altogether (McKenney et al., 2013).
+An active research area deals with recording and replaying a process’ 
+execution (Viennot et al., 2013). Replaying helps developers track down hard-to-find
+bugs and security experts to investigate incidents.
+Speaking of security, a major event in 2018 was the disclosure of a series of
+very serious security vulnerabilities in modern CPUs. They required changes
+ev erywhere: hardware, firmware, operating system, and even applications. For this
+chapter, the scheduling implications are especially relevant. For instance, Windows
+adopted a scheduling algorithm to prevent code in different security domains from
+sharing the same processor core (Microsoft, 2018).
+Scheduling (both uniprocessor and multiprocessor) in general is still a topic
+near and dear to the heart of some researchers. Some topics being researched
+include scheduling in clusters for deep learning (Xiao et al., 2018), scheduling for
+microservices (Sriraman, 2018), and schedulability (Yang et al., 2018). All in all,
+processes, threads, and scheduling are not hot topics for research as they once
+were. The research has moved on to topics like power management, virtualization,
+clouds, and security.
+2.7 SUMMARY
+To hide the effects of interrupts, operating systems provide a conceptual model
+consisting of sequential processes running in parallel. Processes can be created and
+terminated dynamically. Each process has its own address space.
+For some applications, it is useful to have multiple threads of control within a
+single process. These threads are scheduled independently and each one has its
+own stack, but all the threads in a process share a common address space. Threads
+can be implemented in user space or in the kernel.
+Alternatively, high-throughput servers may opt for an event-driven model
+instead. Here, the server operates as a finite state machine that responds to events
+and interacts with the operating system using non-blocking system calls.
+Processes can synchronize with one another using synchronization and
+interprocess communication primitives, for example, semaphores, monitors, or
+messages. These primitives are used to ensure that no two processes are ever in
+their critical regions at the same time, a situation that leads to chaos. A process can
+be running, runnable, or blocked and can change state when it or another process
+executes one of the interprocess communication primitives. Interthread 
+communication is similar.
+A great many scheduling algorithms have been studied. Some of these are 
+primarily used for batch systems, such as shortest-job-first scheduling. Others are
+common in both batch systems and interactive systems. These algorithms include

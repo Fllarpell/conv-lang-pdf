@@ -1,0 +1,51 @@
+SEC. 11.11
+SECURITY IN WINDOWS
+1023
+can then be inserted into the security descriptor. The same holds for the group
+SID, if any. Normally, these will be the caller’s own SID and one of the called’s
+groups, but the system administrator can fill in any SIDs.
+Win32 API function
+Description
+InitializeSecur ityDescr iptor
+Prepare a new secur ity descr iptor for use
+LookupAccountSid 
+Look up the SID for a given user name
+SetSecur ityDescr iptorOwner
+Enter the owner SID in the security descriptor
+SetSecur ityDescr iptorGroup
+Enter a group SID in the security descriptor
+InitializeAcl 
+Initialize a DACL or SACL
+AddAccessAllowedAce 
+Add a new ACE to a DACL or SACL allowing access
+AddAccessDeniedAce 
+Add a new ACE to a DACL or SACL denying access
+DeleteAce 
+Remove an ACE from a DACL or SACL
+SetSecur ityDescr iptorDacl
+Attach a DACL to a secur ity descr iptor
+Figure 11-57. The principal Win32 API functions for security.
+At this point, the security descriptor’s DACL (or SACL) can be initialized with
+InitializeAcl. ACL entries can be added using AddAccessAllowedAce and 
+AddAccessDeniedAce. These calls can be repeated multiple times to add as many ACE
+entries as are needed. DeleteAce can be used to remove an entry, that is, when
+modifying an existing ACL rather than when constructing a new ACL. When the
+ACL is ready, SetSecur ityDescr iptorDacl can be used to attach it to the security
+descriptor. Finally, when the object is created, the newly minted security 
+descriptor can be passed as a parameter to have it attached to the object.
+11.11.3 Implementation of Security
+Security in a stand-alone Windows system is implemented by a number of
+components, most of which we have already seen (networking is a whole other
+story and beyond the scope of this chapter). Logging in is handled by winlogon and
+authentication is handled by lsass. The result of a successful login is a new GUI
+shell (explorer.exe) with its associated access token. This process uses the 
+SECURITY and SAM hives in the registry. The former sets the general security policy
+and the latter contains the security information for the individual users, as 
+discussed in Sec. 11.2.3.
+Once a user is logged in, security operations happen when an object is opened
+for access. Every OpenXXX call requires the name of the object being opened and
+the set of rights needed. During processing of the open, the security reference
+monitor (see Fig. 11-11) checks to see if the caller has all the rights required. It
+performs this check by looking at the caller’s access token and the DACL 
+associated with the object. It goes down the list of ACEs in the ACL in order. As soon
+as it finds an entry that matches the caller’s SID or one of the caller’s groups, the

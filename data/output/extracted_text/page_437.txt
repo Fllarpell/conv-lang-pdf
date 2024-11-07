@@ -1,0 +1,44 @@
+408
+INPUT/OUTPUT 
+CHAP. 5
+program is prepared to handle. In this case it is interested in mouse clicks, 
+keystrokes, and windows being uncovered. In practice, a real program would be 
+interested in other events as well. Finally, the call to XMapRaised maps the new 
+window onto the screen as the uppermost window. At this point, the window becomes
+visible on the screen.
+The main loop consists of two statements and is logically much simpler than
+the corresponding loop in Windows. The first statement here gets an event and the
+second one dispatches on the event type for processing. When some event indicates
+that the program has finished, running is set to 0 and the loop terminates. Before
+exiting, the program releases the graphic context, window, and connection.
+It is worth mentioning that not everyone likes a GUI. Many programmers 
+prefer a traditional command-line oriented interface of the type discussed in Sec. 5.6.1
+above. X handles this via a client program called xterm. This program emulates a
+venerable VT102 intelligent terminal, complete with all the escape sequences.
+Thus editors such as vi and Emacs and other software that uses termcap work in
+these windows without modification.
+Graphical User Interfaces
+Most personal computers offer a GUI (Graphical User Interface). The 
+acronym GUI is pronounced ‘‘gooey.’’
+The GUI was invented by Douglas Engelbart and his research group at the
+Stanford Research Institute. It was then copied by researchers at Xerox PARC.
+One fine day, Steve Jobs, cofounder of Apple, was touring PARC and saw a GUI
+on a Xerox computer and said something to the effect of ‘‘Holy mackerel. This is
+the future of computing.’’ The GUI gav e him the idea for a new computer, which
+became the Apple Lisa. The Lisa was too expensive and was a commercial failure,
+but its successor, the Macintosh, was a huge success.
+When Microsoft got a Macintosh prototype so it could develop Microsoft
+Office on it, it begged Apple to license the interface to all comers for a fee so it
+would become the new industry standard. (Microsoft made much more money
+from Office than from MS-DOS, so it was willing to abandon MS-DOS to have a
+better platform for Office.) The Apple executive in charge of the Macintosh, 
+JeanLouis Gasse´e, refused and Steve Jobs was no longer around to overrule him. 
+Eventually, Microsoft got a license for elements of the interface. This formed the basis
+of Windows. When Windows began to catch on, Apple sued Microsoft, claiming
+Microsoft had exceeded the license, but the judge disagreed and Windows went on
+to overtake the Macintosh. If Gasse´e had agreed with the many people within
+Apple who also wanted to license the Macintosh software to everyone under the
+sun, Apple would have become insanely rich on licensing fees alone and Windows
+would not exist now. Of course, Apple has not done so badly since.
+Leaving aside touch-enabled interfaces for the moment, a GUI has four 
+essential elements, denoted by the characters WIMP. These letters stand for Windows,

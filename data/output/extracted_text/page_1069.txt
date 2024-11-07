@@ -1,0 +1,10 @@
+1040
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+you can install software or hardware, find out what changes when a program or device
+is added or removed.
+46. Write a UNIX program that simulates writing an NTFS file with multiple streams. It
+should accept a list of one or more files as arguments and write an output file that 
+contains one stream with the attributes of all arguments and additional streams with the
+contents of each of the arguments. Now write a second program for reporting on the
+attributes and streams and extracting all the components.

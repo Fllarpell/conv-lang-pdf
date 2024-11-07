@@ -1,0 +1,48 @@
+SEC. 3.7
+SEGMENTATION
+245
+segment size, the protection bits, and other items. Figure 3-34(b) illustrates a 
+segment descriptor. The address of the segment in secondary memory was not in the
+segment descriptor but in another table used by the segment fault handler.
+(a)
+(b)
+Main memory address
+of the page table
+Segment length
+(in pages)
+18
+9
+1 1 1
+3
+3
+Page size:
+0 = 1024 words
+1 = 64 words
+0 = segment is paged
+1 = segment is not paged
+Miscellaneous bits
+Protection bits
+Segment 6 descriptor
+Segment 5 descriptor
+Segment 4 descriptor
+Segment 3 descriptor
+Segment 2 descriptor
+Segment 1 descriptor
+Segment 0 descriptor
+Descriptor segment
+36 bits
+Page 2 entry
+Page 1 entry
+Page 0 entry
+Page table for segment 1
+Page 2 entry
+Page 1 entry
+Page 0 entry
+Page table for segment 3
+Figure 3-34. The MULTICS virtual memory. (a) The descriptor segment 
+pointed to the page tables. (b) A segment descriptor. The numbers are the field
+lengths.
+Each segment was an ordinary virtual address space and was paged in the same
+way as the nonsegmented paged memory described earlier in this chapter. The 
+normal page size was 1024 words (although a few small segments used by MULTICS
+itself were not paged or were paged in units of 64 words to save physical memory).

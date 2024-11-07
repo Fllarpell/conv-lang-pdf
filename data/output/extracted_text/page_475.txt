@@ -1,0 +1,47 @@
+446
+DEADLOCKS 
+CHAP. 6
+requested by, granted to, and is currently held by that process. In Fig. 6-6(a),
+resource R is currently assigned to process A.
+(a)
+(b)
+(c)
+T
+U
+D
+C
+S
+B
+A
+R
+Figure 6-6. Resource -allocation graphs. (a) Holding a resource. (b) Requesting
+a resource. (c) Deadlock.
+A directed arc from a process to a resource means that the process is currently
+blocked waiting for that resource. In Fig. 6-6(b), process B is waiting for resource
+S. In Fig. 6-6(c), we see a deadlock: process C is waiting for resource T, which is
+currently held by process D. Process D is not about to release resource T because
+it is waiting for resource U, held by C. Both processes will wait forever. A cycle
+in the graph means that there is a deadlock involving the processes and resources in
+the cycle (assuming that there is one resource of each kind). In this example, the
+cycle is C < T < D < U < C.
+Now let us look at an example of how resource graphs can be used. Imagine
+that we have three processes, A, B, and C, and three resources, R, S, and T. The
+requests and releases of the three processes are given in Fig. 6-7(a)–(c). The 
+operating system is free to run any unblocked process at any instant, so it could decide
+to run A until A finished all its work, then run B to completion, and finally run C.
+This ordering does not lead to any deadlocks (because there is no competition
+for resources) but it also has no parallelism at all. In addition to requesting and
+releasing resources, processes compute and do I/O. When the processes are run
+sequentially, there is no possibility that while one process is waiting for I/O, 
+another can use the CPU. Thus, running the processes strictly sequentially may not be
+optimal. On the other hand, if none of the processes does any I/O at all, shortest
+job first is better than round robin, so under some circumstances running all 
+processes sequentially may be the best way.
+Let us now suppose that the processes do both I/O and computing, so that
+round robin is a reasonable scheduling algorithm. The resource requests might 
+occur in the order of Fig. 6-7(d). If these six requests are carried out in that order, the
+six resulting resource graphs are as shown in Fig. 6-7(e)–(j). After request 4 has
+been made, A blocks waiting for S, as shown in Fig. 6-7(h). In the next two steps B
+and C also block, ultimately leading to a cycle and the deadlock of Fig. 6-7(j).
+However, as we hav e already mentioned, the operating system is under no 
+obligation to run the processes in any particular order. If granting a particular request

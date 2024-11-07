@@ -1,0 +1,42 @@
+613
+Operating system functions that must be part of the TCB include process creation,
+process switching, memory management, and part of file and I/O management. In
+a secure design, often the TCB will be quite separate from the rest of the operating
+system in order to minimize its size and verify its correctness.
+An important part of the TCB is the reference monitor, as shown in Fig. 9-2.
+The reference monitor accepts all system calls involving security, such as opening
+files, and decides whether they should be processed or not. The reference monitor
+thus takes care of mediation, allowing all the security decisions to be put in one
+place, with no possibility of bypassing it. Most operating systems are not designed
+this way, which is part of the reason they are so insecure.
+User process
+All system calls go through the
+ reference monitor for security checking
+Reference monitor
+Trusted computing base
+Operating system kernel
+User
+space
+Kernel
+space
+Figure 9-2. A reference monitor.
+The TCB is closely related to the security principles we discussed earlier. For
+instance, a well-designed TCB is simple, separates privileges, applies the principle
+of least privilege, and so on. This brings us back to the design of the operating 
+system. For some operating system designs, the TCB is enormous. In Windows or
+Linux, the TCB consists of all the code running in the kernel. That includes all the
+core functionality, but also all drivers. If you want to get picky, it also includes the
+compiler, since a rogue compiler could recognize when it is compiling the 
+operating system and intentionally insert exploits in it that do not appear in the source
+code.
+One of the goals of some current security research is to reduce the trusted 
+computing base from millions of lines of code to merely tens of thousands of lines of
+code. Consider the MINIX 3 operating system: a POSIX-conformant system but
+with a radically different structure than Linux or FreeBSD. With MINIX 3, only
+about 15,000 lines of code run in the kernel. Everything else runs as a set of user
+processes. Some of these, like the file system and the process manager, are part of
+the TCB since they can easily compromise system security. But other parts, such as
+the printer driver and the audio driver, are not part of the trusted computing base
+and no matter what is wrong with them (even if they are taken over by a virus),
+SEC. 9.1
+FUNDAMENTALS OF OPERATING SYSTEM SECURITY

@@ -1,0 +1,44 @@
+SEC. 5.1
+PRINCIPLES OF I/O HARDWARE
+347
+bytes in main memory as soon as it gets them from the disk. In other words, why
+does it need an internal buffer? There are two reasons. First, by doing internal
+buffering, the disk controller can verify the checksum before starting a transfer. If
+the checksum is incorrect, an error is signaled and no transfer is done.
+The second reason is that once a disk transfer has started, the bits keep arriving
+from the disk at a constant rate, whether the controller is ready for them or not. If
+the controller tried to write data directly to memory, it would have to go over the
+system bus for each word transferred. If the bus were busy due to some other 
+device using it (e.g., in burst mode), the controller would have to wait. If the next
+disk word arrived before the previous one had been stored, the controller would
+have to store it somewhere. If the bus were very busy, the controller might end up
+storing quite a few words and having a lot of administration to do as well. When
+the block is buffered internally, the bus is not needed until the DMA begins, so the
+design of the controller is much simpler because the DMA transfer to memory is
+not time critical. (Some older controllers did, in fact, go directly to memory with
+only a small amount of internal buffering, but when the bus was very busy, a 
+transfer might have had to be terminated with a buffer overrun error.)
+Some computers do not use DMA. The argument against it might be that the
+main CPU is often far faster than the DMA controller and can do the job much
+faster (when the limiting factor is not the speed of the I/O device). If there is no
+other work for it to do, having the (fast) CPU wait for the (slow) DMA controller
+to finish is pointless. Also, getting rid of the DMA controller and having the CPU
+do all the work in software saves money, important on low-end (embedded) 
+computers.
+5.1.5 Interrupts Revisited
+We briefly introduced interrupts in Sec. 1.3.4, but there is more to be said.
+Before we start, you should know that the literature is confusing when it comes to
+interrupts. Textbooks and Web pages may use the term to refer to hardware 
+interrupts, traps, exceptions, faults, and a few other things. What do these terms mean?
+We generally use trap to refer to a deliberate action by the program code, for
+instance, a trap into the kernel for a system call. A fault or exception is similar,
+except that it is generally not deliberate. For instance, the program may trigger a
+segmentation fault when it tries to access memory that it is not allowed to access or
+wants to learn what 100 divided by zero is. In contrast, we will now talk mostly
+about hardware interrupts, where a device such as printer or a network sends a 
+signal to the CPU. The reason all these terms are frequently clubbed together is that
+they are handled in similar ways, even if they are triggered differently. In this 
+section, we look at the hardware side. In Section 5.3, we will turn to the further 
+handling of interrupts by the software.
+Figure 5-5 shows the interrupt structure in a typical personal computer system.
+In this respect, a smartphone or tablet works the same way. At the hardware level,

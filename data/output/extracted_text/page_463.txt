@@ -1,0 +1,45 @@
+434
+INPUT/OUTPUT 
+CHAP. 5
+33. A slight modification of the elevator algorithm for scheduling disk requests is to
+always scan in the same direction. In what respect is this modified algorithm better
+than the elevator algorithm?
+34. Discuss the trade-off between on-shot mode and square-wav e mode of programmable
+clock operation.
+35. A personal computer salesman visiting a university in South-West Amsterdam 
+remarked during his sales pitch that his company had devoted substantial effort to making
+their version of UNIX very fast. As an example, he noted that their disk driver used
+the elevator algorithm and also queued multiple requests within a cylinder in sector
+order. A student, Harry Hacker, was impressed and bought one. He took it home and
+wrote a program to randomly read 10,000 blocks spread across the disk. To his 
+amazement, the performance that he measured was identical to what would be expected from
+first-come, first-served. Was the salesman lying?
+36. In the discussion of stable storage using nonvolatile RAM, the following point was
+glossed over. What happens if the stable write completes but a crash occurs before the
+operating system can write an invalid block number in the nonvolatile RAM? Does
+this race condition ruin the abstraction of stable storage? Explain your answer.
+37. In the discussion on stable storage, it was shown that the disk can be recovered to a
+consistent state (a write either completes or does not take place at all) if a CPU crash
+occurs during a write. Does this property hold if the CPU crashes again during a 
+recovery procedure. Explain your answer.
+38. In the discussion on stable storage, a key assumption is that a CPU crash that corrupts
+a sector leads to an incorrect ECC. What problems might arise in the fiv e 
+crash-recovery scenarios shown in Figure 5-27 if this assumption does not hold?
+39. The clock interrupt handler on a certain computer requires 2 msec (including process
+switching overhead) per clock tick. The clock runs at 60 Hz. What fraction of the CPU
+is devoted to the clock?
+40. A computer uses a programmable clock in square-wav e mode. If a 500 MHz crystal is
+used, what should be the value of the holding register to achieve a clock resolution of
+(a) a millisecond (a clock tick once every millisecond)?
+(b) 100 microseconds?
+41. A system simulates multiple clocks by chaining all pending clock requests together as
+shown in Fig. 5-29. Suppose the current time is 5000 and there are pending clock
+requests for time 5008, 5012, 5015, 5029, and 5037. Show the values of Clock header,
+Current time, and Next signal at times 5000, 5005, and 5013. Suppose a new (pending)
+signal arrives at time 5017 for 5033. Show the values of Clock header, Current time
+and Next signal at time 5023.
+42. Many versions of UNIX use an unsigned 32-bit integer to keep track of the time as the
+number of seconds since the origin of time. When will these systems wrap around
+(year and month)? Do you expect this to actually happen?
+43. Consider the performance of a 56-kbps modem of yesteryear (which are still common
+in rural areas without broadband). The driver outputs one character and then blocks.

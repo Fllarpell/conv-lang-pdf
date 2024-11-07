@@ -1,0 +1,40 @@
+1000
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+The second mechanism is the NTFS change journal. NTFS keeps a list of all
+the change records for directories and files on the volume in a special file, which
+programs can read using special file-system control operations, that is, the
+FSCTL QUERY USN JOURNAL option to the NtFsControlFile API. The journal
+file is normally very large, and there is little likelihood that entries will be reused
+before they can be examined. However, if journal entries do get reused before an
+application can examine them, then the app just needs to enumerate the directory
+tree it is interested in, to sync up with its state. After that, it can resume using the
+journal.
+File Encryption
+Computers are used nowadays to store all kinds of sensitive data, including
+plans for corporate takeovers, tax information, and love letters, which the owners
+do not especially want revealed to anyone. Information loss can happen when a
+notebook computer is lost or stolen, a desktop system is rebooted using an 
+MSDOS floppy disk to bypass Windows security, or a hard disk is physically removed
+from one computer and installed on another one with an insecure operating system.
+Windows addresses these problems by providing an option to encrypt files, so
+that even in the event the computer is stolen or rebooted using MS-DOS, the files
+will be unreadable. The normal way to use Windows encryption is to mark certain
+directories as encrypted, which causes all the files in them to be encrypted, and
+new files moved to them or created in them to be encrypted as well. The actual
+encryption and decryption are not managed by NTFS itself, but by a driver called
+EFS (Encryption File System), which registers callbacks with NTFS.
+EFS provides encryption for specific files and directories. There is also 
+another encryption facility in Windows called BitLocker which runs as a block filter
+driver and encrypts almost all the data on a volume, which can help protect data no
+matter what—as long as the user takes advantage of the mechanisms available for
+strong keys. Given the number of systems that are lost or stolen all the time, and
+the great sensitivity to the issue of identity theft, making sure secrets are protected
+is very important. An amazing number of notebooks go missing every day. Major
+Wall Street companies supposedly average losing one notebook per week in 
+taxicabs in New York City alone.
+11.9 WINDOWS POWER MANAGEMENT
+The power manager supervises power usage throughout the system. 
+Historically management of power consumption consisted of shutting off the monitor 
+display and stopping the disk drives from spinning. But the issue is rapidly becoming
+more complicated due to requirements for extending how long notebooks can run

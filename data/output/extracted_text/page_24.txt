@@ -1,0 +1,23 @@
+PREFACE
+The fifth edition of this book differs from the fourth edition in many ways.
+There are large numbers of small changes everywhere to bring the material up to
+date as operating systems are not standing still. For example, where the previous
+edition focused almost exclusively on magnetic hard disks for storage, this time we
+give the flash-based Solid State Drives (SSDs) the attention that befits their 
+popularity. The chapter on Windows 8.1 has been replaced entirely by a chapter on the
+new Windows 11. We hav e rewritten much of the security chapter, with more
+focus on topics that are directly relevant for operating systems (and exciting new
+attacks and defenses), while reducing the discussion of cryptography and 
+steganography. Here is a chapter-by-chapter rundown of the changes.
+•
+Chapter 1 has been heavily modified and updated in many places, but
+with the exception of dropping the description of CD-ROMs and
+DVDs in favor of modern storage solutions such as SSDs and 
+persistent memory, no major sections have been added or deleted.
+•
+In Chapter 2, we significantly expanded the discussion of event-driven
+servers and included an extensive example with pseudo code. We gav e
+priority inversion its own section where we also discussed ways to deal
+with the problem. We reordered some of the sections to clarify the 
+discussion. For instance, we now discuss the readers-writers problem
+xxiii

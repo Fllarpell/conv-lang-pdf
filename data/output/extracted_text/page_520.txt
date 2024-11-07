@@ -1,0 +1,46 @@
+SEC. 7.5
+ARE HYPERVISORS MICROKERNELS DONE RIGHT?
+491
+we have turned the hypervisor into a microkernel, like that of Fig. 1-26. The idea,
+explored in paravirtualization, is that emulating peculiar hardware instructions is
+an unpleasant and time-consuming task. It requires a call into the hypervisor and
+then emulating the exact semantics of a complicated instruction. It is far better just
+to have the guest operating system call the hypervisor (or microkernel) to do I/O,
+and so on.
+Indeed, some researchers have argued that we should perhaps consider 
+hypervisors as ‘‘microkernels done right’’ (Hand et al., 2005). The first thing to mention
+is that this is a highly controversial topic and some researchers have vocally 
+opposed the notion, arguing that the difference between the two is not fundamental to
+begin with (Heiser et al., 2006). Others suggest that compared to microkernels,
+hypervisors may not even be that well suited for building secure systems, and
+advocate that they be extended with kernel functionality like message passing and
+memory sharing (Hohmuth et al., 2004). Finally, some researchers have made the
+argument that perhaps hypervisors are not even ‘‘operating systems research done
+right’’ (Roscoe et al., 2007). Since nobody said anything about operating system
+textbooks done right (or wrong)—yet—we think we do right by exploring the 
+similarity between hypervisors and microkernels a bit more.
+The main reason the first hypervisors emulated the complete machine was the
+lack of availability of source code for the guest operating system (e.g., for 
+Windows) or the vast number of variants (e.g., for Linux). Perhaps in the future the
+hypervisor/microkernel API will be standardized, and subsequent operating 
+systems will be designed to call it instead of using sensitive instructions. Doing so
+would make virtual machine technology easier to support and use.
+The difference between true virtualization and paravirtualization is illustrated
+in Fig. 7-5. Here we have two virtual machines being supported on VT hardware.
+On the left is an unmodified version of Windows as the guest operating system.
+When a sensitive instruction is executed, the hardware causes a trap to the 
+hypervisor, which then emulates it and returns. On the right is a version of Linux modified
+so that it no longer contains any sensitive instructions. Instead, when it needs to do
+I/O or change critical internal registers (such as the one pointing to the page
+tables), it makes a hypervisor call to get the work done, just like an application 
+program making a system call in standard Linux.
+In Fig. 7-5, we have shown the hypervisor as being divided into two parts 
+separated by a dashed line. In reality, only one program is running on the hardware.
+One part of it is responsible for interpreting trapped sensitive instructions, in this
+case, from Windows. The other part of it just carries out hypercalls. In the figure
+the latter part is labeled ‘‘microkernel.’’ If the hypervisor is intended to run only
+paravirtualized guest operating systems, there is no need for the emulation of 
+sensitive instructions and we have a true microkernel, which just provides very basic
+services such as process dispatching and managing the MMU. The boundary
+between a type 1 hypervisor and a microkernel is vague already and will probably
+get even less clear as hypervisors begin acquiring more and more functionality and

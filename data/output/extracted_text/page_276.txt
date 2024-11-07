@@ -1,0 +1,72 @@
+SEC. 3.7
+SEGMENTATION
+247
+Segment number
+Page!
+number
+Offset
+Descriptor!
+segment
+Segment!
+number
+Page!
+number
+MULTICS virtual address
+Page!
+table
+Page
+Word
+Offset
+Descriptor
+Page frame
+Figure 3-36. Conversion of a two-part MULTICS address into a main memory address.
+Segment!
+number
+Virtual!
+page
+Page!
+frame
+Comparison!
+field
+Protection
+Age
+Is this!
+entry!
+used?
+4!
+6!
+12!
+2!
+2
+1!
+0!
+3!
+1!
+2
+7!
+2!
+1!
+0!
+12
+Read/write!
+Read only!
+Read/write!
+Execute only!
+Execute only
+13!
+10!
+2!
+7!
+9
+1!
+1!
+1!
+0!
+1!
+1
+Figure 3-37. A simplified version of the MULTICS TLB. The existence of two
+page sizes made the actual TLB more complicated.
+The addresses of the 16 most recently referenced pages were kept in the TLB.
+Programs whose working set was smaller than the TLB size came to equilibrium
+with the addresses of the entire working set in the TLB and therefore ran
+efficiently; otherwise, there were TLB faults.

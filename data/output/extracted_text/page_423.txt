@@ -1,0 +1,44 @@
+394
+INPUT/OUTPUT 
+CHAP. 5
+stops running. While the system is running, it regularly resets the timer, so that it
+never expires. In that case, expiration of the timer proves that the system has not
+run for a long time, and leads to corrective action—such as a full-system reset.
+The mechanism used by the clock driver to handle watchdog timers is the same
+as for user signals. The only difference is that when a timer goes off, instead of
+causing a signal, the clock driver calls a procedure supplied by the caller. The 
+procedure is part of the caller’s code. The called procedure can do whatever is 
+necessary, even causing an interrupt, although within the kernel interrupts are often
+inconvenient and signals do not exist. That is why the watchdog mechanism is 
+provided. It is worth nothing that the watchdog mechanism works only when the
+clock driver and the procedure to be called are in the same address space.
+The last thing in our list is profiling. Some operating systems provide a 
+mechanism by which a user program can have the system build up a histogram of its
+program counter, so it can see where it is spending its time. When profiling is a
+possibility, at every tick the driver checks to see if the current process is being 
+profiled, and if so, computes the bin number (a range of addresses) corresponding to
+the current program counter. It then increments that bin by one. This mechanism
+can also be used to profile the system itself.
+5.5.3 Soft Timers
+Most computers have a second programmable clock that can be set to cause
+timer interrupts at whatever rate a program needs. This timer is in addition to the
+main system timer whose functions were described above. As long as the interrupt
+frequency is low, there is no problem using this second timer for 
+application-specific purposes. The trouble arrives when the frequency of the application-specific
+timer is very high. Below we will briefly describe a software-based timer scheme
+that works well under many circumstances, even at fairly high frequencies. The
+idea is due to Aron and Druschel (1999). For more details, please see their paper.
+Generally, there are two ways to manage I/O: interrupts and polling. Interrupts
+have low latency, that is, they happen immediately after the event itself with little
+or no delay. On the other hand, with modern CPUs, interrupts have a substantial
+overhead due to the need for context switching and their influence on the pipeline,
+TLB, and cache.
+The alternative to interrupts is to have the application poll for the event 
+expected itself. Doing this avoids interrupts, but there may be substantial latency because
+an event may happen directly after a poll, in which case it waits almost a whole
+polling interval. On the average, the latency is half the polling interval.
+Interrupt latency today is barely better than that of computers in the 1970s. On
+most minicomputers, for example, an interrupt took four bus cycles: to stack the
+program counter and PSW and to load a new program counter and PSW. 
+Nowadays, dealing with the pipeline, MMU, TLB, and cache adds a great deal of time
+to the overhead. These effects are likely to get worse rather than better in time, thus

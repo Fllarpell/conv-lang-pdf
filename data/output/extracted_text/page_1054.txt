@@ -1,0 +1,44 @@
+SEC. 11.11
+SECURITY IN WINDOWS
+1025
+stripped. Applications launched by the user are assigned the standard token, but
+when elevation is necessary and is approved, the process switches to the actual
+administrator token.
+Of course, without becoming administrator it is possible for an attacker to
+destroy what the user really cares about, namely his personal files. But UAC does
+help foil existing types of attacks, and it is always easier to recover a compromised
+system if the attacker was unable to modify any of the system data or files.
+Another important security feature in Windows is support for protected 
+processes. As we mentioned earlier, protected processes provide a stronger security
+boundary from user-mode attacks, including from administrators. Normally, the
+user (as represented by a token object) defines the privilege boundary in the 
+system. When a process is created, the user has access to the process through any
+number of kernel facilities for process creation, debugging, path names, thread
+injection, and so on. Protected processes are shut off from user-mode access. 
+Usermode callers cannot read or write its virtual memory, cannot inject code or threads
+into its address space. The original use of this was to allow digital rights 
+management software to better protect content. Later, protected processes were expanded
+to more user-friendly purposes, like securing the system against attackers rather
+than securing content against attacks by the system owner. While protected 
+processes are able to thwart straightforward attacks, defending a process against 
+administrator users is very difficult without hardware-based isolation. Administrators
+can easily load drivers into kernel-mode and access any VTL0 process. As such,
+protected processes should be viewed as a layer of defense, but not more.
+As mentioned above, the lsass process handles user authentication and 
+therefore needs to maintain various secrets associated with credentials like password
+hashes and Kerberos tickets in its address space. As such, it runs as a protected
+process to guard against user-mode attacks, but malicious kernel-mode code can
+easily leak these secrets. Credential Guard is a VBS feature introduced in 
+Windows 10 which protects these secrets in an IUM trustlet called LsaIso.exe. lsass
+communicates with LsaIso to perform authentication such that credential secrets
+are never exposed to VTL0 and even kernel-mode malware cannot steal them.
+Microsoft’s efforts to improve the security of Windows have been accelerating
+since early 2000s as more and more attacks have been launched against systems
+around the world. Attackers range from casual hackers to paid professionals to
+very sophisticated nation states with virtually unlimited resources engaging in
+cyber warfare. Some of these attacks have been very successful, taking entire 
+countries and major corporations offline, and incurring costs of billions of dollars.
+11.11.4 Security Mitigations
+It would be great for users if computer software (and hardware) did not have
+any bugs, particularly bugs that are exploitable by hackers to take control of their
+computer and steal their information, or use their computer for illegal purposes

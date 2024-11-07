@@ -1,0 +1,50 @@
+32
+INTRODUCTION 
+CHAP. 1
+the number of bytes it has been instructed to transfer, it signals the interrupt 
+controller chip using certain bus lines in step 2. If the interrupt controller is ready to
+accept the interrupt (which it may not be if it is busy handling a higher-priority
+interrupt), it asserts a pin on the CPU chip telling it, in step 3. In step 4, the 
+interrupt controller puts the number of the device on the bus so the CPU can read it and
+know which device has just finished (many devices may be running at the same
+time).
+CPU
+Interrupt!
+controller
+Disk!
+controller
+Disk drive
+Current instruction
+Next instruction
+1. Interrupt
+3. Return
+2. Dispatch !
+to handler
+Interrupt handler
+(b)
+(a)
+1
+3
+4
+2
+Figure 1-11. (a) The steps in starting an I/O device and getting an interrupt. (b)
+Interrupt processing involves taking the interrupt, running the interrupt handler,
+and returning to the user program.
+Once the CPU has decided to take the interrupt, the program counter and PSW
+are typically then pushed onto the current stack and the CPU switched into kernel
+mode. The device number may be used as an index into part of memory to find the
+address of the interrupt handler for this device. This part of memory is called the
+interrupt vector table. Once the interrupt handler (part of the driver for the 
+interrupting device) has started, it saves the stacked program counter, PSW, and other
+registers (typically in the process table). Then it queries the device to learn its 
+status. When the handler is all finished, it restores the context and returns to the 
+previously running user program to the first instruction that was not yet executed. These
+steps are shown in Fig. 1-11(b). We will discuss interrupt vectors further in in the
+next chapter.
+The third method for doing I/O makes use of special hardware: a DMA
+(Direct Memory Access) chip that can control the flow of bits between memory
+and some controller without constant CPU intervention. The CPU sets up the
+DMA chip, telling it how many bytes to transfer, the device and memory addresses
+involved, and the direction, and lets it go. When the DMA chip is done, it causes
+an interrupt, which is handled as described above. DMA and I/O hardware in 
+general will be discussed in more detail in Chap. 5.

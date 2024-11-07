@@ -1,0 +1,69 @@
+SEC. 3.6
+IMPLEMENTATION ISSUES
+237
+Associated with each process is the nonvolatile storage address of its swap
+area, that is, where on the swap partition its image is kept. This information is kept
+in the process table. Calculating the address to write a page to becomes simple:
+just add the offset of the page within the virtual address space to the start of the
+swap area. However, before a process can start, the swap area must be initialized.
+One way is to copy the entire process image to the swap area, so that it can be
+brought in as needed. The other is to load the entire process in memory and let it
+be paged out as needed.
+However, this simple model has a problem: processes can increase in size after
+starting. Although the program text is usually fixed, the data area can sometimes
+grow, and the stack can always grow. Consequently, it may be better to reserve 
+separate swap areas for the text, data, and stack and allow each of these areas to 
+consist of more than one chunk on the nonvolatile storage.
+The other extreme is to allocate nothing in advance and allocate space on 
+nonvolatile storage for each page when it is swapped out and deallocate it when it is
+swapped back in. In this way, processes in memory do not tie up any swap space.
+The disadvantage is that a disk address is needed in memory to keep track of each
+page on nonvolatile storage. In other words, there must be a table per process 
+telling for each page on nonvolatile storage where it is. The two alternatives are
+shown in Fig. 3-28.
+0
+4
+3
+6
+6
+4
+3
+0
+7
+5
+2
+1
+Pages
+Page!
+table
+Main memory
+Disk
+Swap area
+(a)
+0
+4
+3
+6
+6
+4
+3
+0
+5
+1
+7
+2
+Pages
+Page!
+table
+Main memory
+Disk
+Swap area
+(b)
+Disk!
+map
+Figure 3-28. (a) Paging to a static swap area. (b) Backing up pages dynamically.
+In Fig. 3-28(a), a page table with eight pages is shown. Pages 0, 3, 4, and 6 are
+in main memory. Pages 1, 2, 5, and 7 are on disk. The swap area on disk is as large
+as the process virtual address space (eight pages), with each page having a fixed
+location to which it is written when it is evicted from main memory. Calculating
+this address requires knowing only where the process’ paging area begins, since

@@ -1,0 +1,43 @@
+652
+SECURITY 
+CHAP. 9
+of the copy should be the start of the log message plus the length of the date string
+(line 9). Finally, it writes the log to disk as before.
+Let us suppose the system uses stack canaries. How could we possibly change
+the return address? The trick is that when the attacker overflows buffer B, she does
+not try to hit the return address immediately. Instead, she modifies the variable len
+that is located just above it on the stack. In line 9, len serves as an offset that 
+determines where the contents of buffer B will be written. The programmer’s idea was
+to skip only the date string, but since the attacker controls len, she may use it to
+skip the canary and overwrite the return address.
+Moreover, buffer overflows are not limited to the return address. Any function
+pointer that is reachable via an overflow is fair game. A function pointer is just like
+a regular pointer, except that it points to a function instead of data. For instance, C
+and C++ allow a programmer to declare a variable f as a pointer to a function that
+takes a string argument and returns no result, as follows:
+void (*f)(char*);
+The syntax is perhaps a bit arcane, but it is really just another variable declaration.
+Since function A of the previous example matches the above signature, we can now
+write ‘‘f = A’’ and use f instead of A in our program. It is beyond this book to go
+into function pointers in great detail, but rest assured that function pointers are
+quite common in operating systems. Now suppose the attacker manages to 
+overwrite a function pointer. As soon as the program calls the function using the 
+function pointer, it would really call the code injected by the attacker. For the exploit to
+work, the function pointer need not even be on the stack. Function pointers on the
+heap are just as useful. As long as the attacker can change the value of a function
+pointer or a return address to the buffer that contains the attacker’s code, she is able
+to change the program’s flow of control.
+Data Execution Prev ention
+Perhaps by now you may exclaim: ‘‘Wait a minute! The real cause of the 
+problem is not that the attacker is able to overwrite function pointers and return 
+addresses, but the fact that she can inject code and have it executed. Why not make it
+impossible to execute bytes on the heap and the stack?’’ If so, you had an epiphany.
+However, we will see shortly that epiphanies do not always stop buffer overflow
+attacks. Still, the idea is pretty good. Code injection attacks will no longer work
+if the bytes provided by the attacker cannot be executed as legitimate code.
+Modern CPUs have a feature that is popularly referred to as the NX bit, which
+stands for ‘‘No-eXecute.’’ It is extremely useful to distinguish between data 
+segments (heap, stack, and global variables) and the text segment (which contains the
+code). Specifically, many modern operating systems try to ensure that data 
+segments are writable, but are not executable, and the text segment is executable, but
+not writable. This policy is known on OpenBSD as WˆX (pronounced as ‘‘W

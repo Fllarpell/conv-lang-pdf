@@ -1,0 +1,40 @@
+SEC. 7.13
+SUMMARY
+525
+PROBLEMS
+1. Give a reason why a data center might be interested in virtualization.
+2. Give a reason why a company might be interested in running a hypervisor on a
+machine that has been in use for a while.
+3. Give a reason why a software developer might use virtualization on a desktop machine
+being used for development.
+4. Give a reason why an individual at home might be interested in virtualization. Which
+type of hypervisor would probably be best for a home user?
+5. Why do you think virtualization took so long to become popular? After all, the key
+paper was written in 1974 and IBM mainframes had the necessary hardware and 
+software throughout the 1970s and beyond.
+6. What are the three main requirements for designing hypervisors?
+7. Name two kinds of instructions that are sensitive in the Popek and Goldberg sense.
+8. Name three machine instructions that are not sensitive in the Popek and Goldberg
+sense.
+9. What is the difference between full virtualization and paravirtualization? Which do
+you think is harder to do? Explain your answer.
+10. Does it make sense to paravirtualize an operating system if the source code is 
+available? What if it is not?
+11. Consider a type 1 hypervisor that can support up to n virtual machines at the same
+time. PCs can have a maximum of four disk primary partitions. Can n be larger than 4?
+If so, where can the data be stored?
+12. Briefly explain the concept of process-level virtualization.
+13. Why do type 2 hypervisors exist? After all, there is nothing they can do that type 1
+hypervisors cannot do and the type 1 hypervisors are generally more efficient as well.
+14. Is virtualization of any use to type 2 hypervisors?
+15. Why was binary translation invented? Do you think it has much of a future? Explain
+your answer.
+16. Explain how the x86’s four protection rings can be used to support virtualization.
+17. State one reason as to why a hardware-based approach using VT-enabled CPUs can
+perform poorly when compared to translation-based software approaches.
+18. Give one case where a translated code can be faster than the original code, in a system
+using binary translation.
+19. VMware does binary translation one basic block at a time, then it executes the block
+and starts translating the next one. Could it translate the entire program in advance and
+then execute it? If so, what are the advantages and disadvantages of each technique?
+20. What is the difference between a pure hypervisor and a pure microkernel?

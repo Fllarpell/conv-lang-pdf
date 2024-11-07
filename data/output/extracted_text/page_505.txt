@@ -1,0 +1,17 @@
+476
+DEADLOCKS 
+CHAP. 6
+47. Write a program that detects if there is a deadlock in the system by using a resource
+allocation graph. Your program should read from a file the following inputs: the 
+number of processes and the number of resources. For each process it should read four
+numbers: the number of resources it is currently holding, the IDs of resources it is
+holding, the number of resources it is currently requesting, and the IDs of resources it
+is requesting. The output of program should indicate if there is a deadlock in the 
+system. In case there is, the program should print out the identities of all processes that are
+deadlocked.
+48. In certain countries, when two people meet they bow to each other. The protocol is that
+one of them bows first and stays down until the other one bows. If they bow at the
+same time, they will not know who should stand up straight first, thus creating a 
+deadlock. Write a program that does not deadlock.
+49. In Chap. 2, we have studied monitors. Solve the dining philosophers problem using
+monitors instead of semaphores.

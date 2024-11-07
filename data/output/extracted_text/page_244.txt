@@ -1,0 +1,46 @@
+SEC. 3.4
+PA GE REPLACEMENT ALGORITHMS
+215
+will run without causing many faults until it moves into another execution phase
+(e.g., the next pass of the compiler). If the available memory is too small to hold
+the entire working set, the process will cause many page faults and run slowly,
+since executing an instruction takes a few nanoseconds and reading in a page from,
+say, a disk typically takes 10 msec. At a rate of one or two instructions per 10
+msec, it will take ages to finish. A program causing page faults every few 
+instructions is said to be thrashing (Denning, 1968b).
+In a multiprogramming system, processes are often moved to disk (i.e., all their
+pages are removed from memory) to let others have a turn at the CPU. The 
+question arises of what to do when a process is brought back in again. Technically,
+nothing need be done. The process will just cause page faults until its working set
+has been loaded. The problem is that having numerous page faults every time a
+process is loaded is slow, and it also wastes considerable CPU time, since it takes
+the operating system a few milliseconds of CPU time to process a page fault.
+Therefore, many paging systems try to keep track of each process’ working set
+and make sure that it is in memory before letting the process run. This approach is
+called the working set model (Denning, 1970). It is designed to greatly reduce the
+page fault rate. Loading the pages before letting processes run is also called
+prepaging. Note that the working set changes over time.
+It has long been known that programs rarely reference their address space 
+uniformly, but that the references tend to cluster on a small number of pages. A 
+memory reference may fetch an instruction or data, or it may store data. At any instant
+of time, t, there exists a set consisting of all the pages used by the k most recent
+memory references. This set, w(k, t), is the working set. Because the k > 1  most
+recent references must have used all the pages used by the k = 1 most recent 
+references, and possibly others, w(k, t) is a monotonically nondecreasing function of k.
+The limit of w(k, t) as k becomes large is finite because a program cannot 
+reference more pages than its address space contains, and few programs will use every
+single page. Figure 3-18 depicts the size of the working set as a function of k.
+The fact that most programs randomly access a small number of pages, but that
+this set changes slowly in time explains the initial rapid rise of the curve and then
+the much slower rise for large k. For example, a program that is executing a loop
+occupying two pages using data on four pages may reference all six pages every
+1000 instructions, but the most recent reference to some other page may be a 
+million instructions earlier, during the initialization phase. Due to this asymptotic
+behavior, the contents of the working set are not sensitive to the value of k chosen.
+To put it differently, there exists a wide range of k values for which the working set
+is unchanged. Because the working set varies slowly with time, it is possible to
+make a reasonable guess as to which pages will be needed when the program is
+restarted on the basis of its working set when it was last stopped. Prepaging 
+consists of loading these pages before resuming the process.
+To implement the working set model, it is necessary for the operating system
+to keep track of which pages are in the working set. Having this information also

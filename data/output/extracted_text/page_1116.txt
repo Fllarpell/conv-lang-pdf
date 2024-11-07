@@ -1,0 +1,22 @@
+13
+READING LIST AND BIBLIOGRAPHY
+In the previous 12 chapters, we have touched upon a variety of topics. This
+chapter is intended to aid readers interested in pursuing their study of operating
+systems further. Section 13.1 is a list of suggested readings. Section 13.2 is an
+alphabetical bibliography of all books and articles cited in this book.
+In addition to the references given below, the ACM Symposium on Operating
+System Principles (SOSP) held in odd-numbered years and the USENIX 
+Symposium on Operating System Design and Implementation (OSDI) held in even 
+numbered years are good sources for ongoing work on operating systems. The ACM
+SIGOPS Eurosys Conference, and USENIX Annual Technical Conference, held
+annually are also sources of top-flight papers. Furthermore, the journals ACM
+Tr ansactions on Computer Systems and ACM SIGOPS Operating Systems Review,
+often have relevant articles. Many other ACM, IEEE, and USENIX conferences
+deal with specialized topics.
+13.1 SUGGESTIONS FOR FURTHER READING
+In this section, we give some suggestions for further reading. Unlike the papers
+cited in the sections entitled ‘‘RESEARCH ON ...’’ in the text, which are about 
+current research, these references are mostly introductory or tutorial in nature. They
+can, however, serve to present material in this book from a different perspective or
+with a different emphasis.
+1087

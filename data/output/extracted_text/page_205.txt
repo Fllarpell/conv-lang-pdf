@@ -1,0 +1,44 @@
+176
+PROCESSES AND THREADS
+CHAP. 2
+waituntil x < 0 or y + z < n
+The signal primitive would no longer be needed. This scheme is clearly more general
+than that of Hoare or Brinch Hansen, but it is not used. Why not? (Hint: Think about
+the implementation.)
+36. A fast-food restaurant has four kinds of employees: (1) order takers, who take 
+customers’ orders; (2) cooks, who prepare the food; (3) packaging specialists, who stuff the
+food into bags; and (4) cashiers, who give the bags to customers and take their money.
+Each employee can be regarded as a communicating sequential process. What form of
+interprocess communication do they use? Relate this model to processes in UNIX.
+37. Suppose that we have a message-passing system using mailboxes. When sending to a
+full mailbox or trying to receive from an empty one, a process does not block. Instead,
+it gets an error code back. The process responds to the error code by just trying again,
+over and over, until it succeeds. Does this scheme lead to race conditions?
+38. The CDC 6600 computers could handle up to 10 I/O processes simultaneously using
+an interesting form of round-robin scheduling called processor sharing. A process
+switch occurred after each instruction, so instruction 1 came from process 1, 
+instruction 2 came from process 2, etc. The process switching was done by special hardware,
+and the overhead was zero. If a process needed T sec to complete in the absence of
+competition, how much time would it need if processor sharing was used with n 
+processes?
+39. Consider the following piece of C code:
+void main( ) {
+fork( );
+fork( );
+exit( );
+}
+How many child processes are created upon execution of this program?
+40. Round-robin schedulers normally maintain a list of all runnable processes, with each
+process occurring exactly once in the list. What would happen (scheduling-wise) if a
+process occurred twice in the list? Can you think of any reason for allowing this?
+41. Can a measure of whether a process is likely to be CPU bound or I/O bound be 
+determined by analyzing source code? How can this be determined at run time?
+42. Explain how time quantum value and context switching time affect each other, in a
+round-robin scheduling algorithm.
+43. Measurements of a certain system have shown that the average process runs for a time
+T before blocking on I/O. A process switch requires a time S, which is effectively
+wasted (overhead). For round-robin scheduling with quantum Q, giv e a formula for
+the CPU efficiency for each of the following:
+(a) Q = '
+(b) Q > T
+(c) S < Q < T

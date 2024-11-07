@@ -1,0 +1,40 @@
+SEC. 10.2
+OVERVIEW OF LINUX
+717
+head 20 file
+is perfectly legal, and tells head to first print the initial 10 lines of a file called 20,
+and then print the initial 10 lines of a second file called file. Most Linux 
+commands accept multiple flags and arguments.
+To make it easy to specify multiple file names, the shell accepts magic 
+characters, sometimes called wild cards. An asterisk, for example, matches all possible
+strings, so
+ls *.c
+tells ls to list all the files whose name ends in .c. If files named x.c, y.c, and z.c all
+exist, the above command is equivalent to typing
+ls x.c y.c z.c
+Another wild card is the question mark, which matches any one character. A list of
+characters inside square brackets selects any of them, so
+ls [ape]*
+lists all files beginning with ‘‘a’’, ‘‘p’’, or ‘‘e’’.
+A program like the shell does not have to open the terminal (keyboard and
+monitor) in order to read from it or write to it. Instead, when it (or any other 
+program) starts up, it automatically has access to a file called standard input (for
+reading), a file called standard output (for writing normal output), and a file 
+called standard error (for writing error messages). Normally, all three default to the
+terminal, so that reads from standard input come from the keyboard and writes to
+standard output or standard error go to the screen. Many Linux programs read from
+standard input and write to standard output as the default. For example,
+sor t
+invokes the sort program, which reads lines from the terminal (until the user types
+a CTRL-D, to indicate end of file), sorts them alphabetically, and writes the result
+to the screen.
+It is also possible to redirect standard input and standard output, as that is often
+useful. The syntax for redirecting standard input uses a less-than symbol (<) 
+followed by the input file name. Similarly, standard output is redirected using a 
+greater-than symbol (>). It is permitted to redirect both in the same command. For
+example, the command
+sor t <in >out
+causes sort to take its input from the file in and write its output to the file out.
+Since standard error has not been redirected, any error messages go to the screen.
+A program that reads its input from standard input, does some processing on it, and
+writes its output to standard output is called a filter.

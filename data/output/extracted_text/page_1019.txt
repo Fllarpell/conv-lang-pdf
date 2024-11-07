@@ -1,0 +1,44 @@
+990
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+file names in their native language. For example, qfh¡ is a perfectly legal file name.
+NTFS fully supports case-sensitive names (so foo is different from Foo and FOO).
+The Win32 API does not support case-sensitivity fully for file names and not at all
+for directory names. The support for case sensitivity exists when running the
+POSIX subsystem in order to maintain compatibility with UNIX. Win32 is not
+case sensitive, but it is case preserving, so file names can have different case letters
+in them. Though case sensitivity is a feature that is very familiar to users of UNIX,
+it is largely inconvenient to ordinary users who do not make such distinctions 
+normally. For example, the Internet is largely case-insensitive today.
+An NTFS file is not just a linear sequence of bytes, as FAT -32 and UNIX files
+are. Instead, a file consists of multiple attributes, each represented by a stream of
+bytes. Most files have a few short streams, such as the name of the file and its
+64-bit object ID, plus one long (unnamed) stream with the data. However, a file
+can also have two or more (long) data streams as well. Each stream has a name
+consisting of the file name, a colon, and the stream name, as in foo:stream1. Each
+stream has its own size and is lockable independently of all the other streams. The
+idea of multiple streams in a file is not new in NTFS. The file system on the Apple
+Macintosh used two streams per file, the data fork and the resource fork. The first
+use of multiple streams for NTFS was to allow an NT file server to serve 
+Macintosh clients. Multiple data streams are also used to represent metadata about files,
+such as the thumbnail pictures of JPEG images that are available in the Windows
+GUI. But alas, the multiple data streams are fragile and frequently fall off files
+when they are transported to other file systems, transported over the network, or
+ev en when backed up and later restored, because many utilities ignore them.
+NTFS is a hierarchical file system, similar to the UNIX file system. The 
+separator between component names is ‘‘ \’’, howev er, instead of ‘‘/’’, an old fossil 
+inherited from the compatibility requirements with CP/M when MS-DOS was 
+created (CP/M used the slash for flags). Unlike UNIX the concept of the current 
+working directory, hard links to the current directory (.) and the parent directory (..) are
+implemented as conventions rather than as a fundamental part of the file-system.
+Hard links and symbolic links are supported for NTFS. Creation of symbolic
+links is normally restricted to administrators to avoid security issues like spoofing,
+as UNIX experienced when symbolic links were first introduced in 4.2BSD. The
+implementation of symbolic links uses an NTFS feature called reparse points 
+(discussed later in this section). In addition, compression, encryption, fault tolerance,
+journaling, and sparse files are also supported. These features and their 
+implementations will be discussed shortly.
+11.8.2 Implementation of the NT File System
+NTFS is a highly complex and sophisticated file system that was developed
+specifically for NT as an alternative to the HPFS file system that had been 
+developed for OS/2. While most of NT was designed on dry land, NTFS is unique

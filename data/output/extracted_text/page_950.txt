@@ -1,0 +1,55 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+921
+Director y
+Contents
+\GLOBAL?? 
+Starting place for looking up Win32 devices like C:
+\Device 
+All discovered I/O devices
+\Dr iver 
+Objects corresponding to each loaded device driver
+\ObjectTypes 
+The type objects such as those listed in Fig. 11-21
+\Windows 
+Objects for sending messages to all the Win32 GUI windows
+\BaseNamedObjects 
+User-created Win32 objects such as events, mutexes, etc.
+\Sessions 
+Win32 objects created in each session. Session 0 uses \BaseNamedObjects
+\Arcname 
+Par tition names discovered by the boot loader
+\NLS 
+National Language Support objects
+\FileSystem 
+File-system dr iver objects and file system recognizer objects
+\Secur ity
+Objects belonging to the security system
+\KnownDLLs 
+Key shared librar ies that are opened early and held open
+Figure 11-19. Some typical directories in the object namespace.
+The object manager namespace is not directly exposed through the Win32 API.
+In fact, Win32 namespace for devices and named objects does not even hav e a 
+hierarchical structure. This allows the Win32 namespace to be mapped to the object
+manager namespace in creative ways to provide various application isolation 
+scenarios.
+The Win32 namespace for named objects is flat. For example, the CreateEvent
+function takes an optional object name parameter. This allows multiple 
+applications to open the same underlying Event object and synchronize with one another
+as long as they agree on the event name, say ‘‘MyEvent.’’ The Win32 layer in 
+usermode (kernelbase.dll) determines an object manager directory to place its named
+objects, called BaseNamedObjects. But, where in the object manager namespace
+should BaseNamedObjects live? If it is stored in a global location, the application
+sharing scenario is satisfied, but when multiple users are logged onto the machine,
+application instances in each session may interfere with one another since they
+expect to be manipulating their own event.
+To solve this problem, the Win32 namespace for named objects is instanced
+per user session. Session 0 (where non-interactive OS services run) uses the 
+toplevel \ BaseNamedObjects directory and each interactive session has its own 
+BaseNamedObjects directory underneath the top-level \ Sessions directory. For example,
+if a Session 0 service calls CreateEvent with ‘‘MyEvent,’’ kernelbase.dll redirects
+it to \ BaseNamedObjects\MyEvent, but if an application running in interactive 
+Session 2 makes the same call, the event is \ Sessions\2\BaseNamedObjects\MyEvent.
+There may be instances where an application running in an interactive user 
+session needs to share a named event with a Session 0 service. To accommodate that
+scenario, each session-local BaseNamedObjects directory contains a symbolic link,

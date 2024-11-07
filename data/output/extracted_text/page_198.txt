@@ -1,0 +1,40 @@
+SEC. 2.5
+SCHEDULING
+169
+Real-time scheduling algorithms can be static or dynamic. The former make
+their scheduling decisions before the system starts running. The latter make their
+scheduling decisions at run time, after execution has started. Static scheduling
+works only when there is perfect information available in advance about the work
+to be done and the deadlines that have to be met. Dynamic scheduling algorithms
+do not have these restrictions.
+2.5.5 Policy Versus Mechanism
+Up until now, we hav e tacitly assumed that all the processes in the system 
+belong to different users and are thus competing for the CPU. While this is often
+true, sometimes it happens that one process has many children running under its
+control. For example, a database-management-system process may have many
+children. Each child might be working on a different request, or each might have
+some specific function to perform (query parsing, disk access, etc.). It is entirely
+possible that the main process has an excellent idea of which of its children are the
+most important (or time critical) and which the least. Unfortunately, none of the
+schedulers discussed earlier accept any input from user processes about scheduling
+decisions. As a result, the scheduler rarely makes the best choice.
+The solution to this problem is to separate the scheduling mechanism from
+the scheduling policy, a long-established principle (Levin et al., 1975). What this
+means is that the scheduling algorithm is parameterized in some way, but the
+parameters can be filled in by user processes. Let us consider the database example
+once again. Suppose that the kernel uses a priority-scheduling algorithm but 
+provides a system call by which a process can set (and change) the priorities of its
+children. In this way, the parent can control how its children are scheduled, even
+though it itself does not do the scheduling. Here the mechanism is in the kernel but
+policy is set by a user process. Policy-mechanism separation is a key idea.
+2.5.6 Thread Scheduling
+When several processes each have multiple threads, we have two lev els of 
+parallelism present: processes and threads. Scheduling in such systems differs 
+substantially depending on whether user-level threads or kernel-level threads (or both)
+are supported.
+Let us consider user-level threads first. Since the kernel is not aware of the
+existence of threads, it operates as it always does, picking a process, say, A, and
+giving A control for its quantum. The thread scheduler inside A decides which
+thread to run, say A1. Since there are no clock interrupts to multiprogram threads,
+this thread may continue running as long as it wants to. If it uses up the process’
+entire quantum, the kernel will select another process to run.

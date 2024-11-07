@@ -1,0 +1,46 @@
+SEC. 3.4
+PA GE REPLACEMENT ALGORITHMS
+213
+algorithm. It requires a software counter associated with each page, initially zero.
+At each clock interrupt, the operating system scans all the pages in memory. For
+each page, the R bit, which is 0 or 1, is added to the counter. The counters roughly
+keep track of how often each page has been referenced. When a page fault occurs,
+the page with the lowest counter is chosen for replacement.
+The main problem with NFU is that it is like an elephant: it never forgets 
+anything. For example, in a multipass compiler, pages that were heavily used during
+pass 1 may still have a high count well into later passes. In fact, if pass 1 happens
+to have the longest execution time of all the passes, the pages containing the code
+for subsequent passes may always have lower counts than the pass-1 pages. 
+Consequently, the operating system will remove useful pages instead of pages no longer
+in use.
+Fortunately, a small modification to NFU makes it able to simulate LRU quite
+well. The modification has two parts. First, the counters are each shifted right 1 bit
+before the R bit is added in. Second, the R bit is added to the leftmost rather than
+the rightmost bit.
+Figure 3-17 illustrates how the modified algorithm, known as aging, works.
+Suppose that after the first clock tick, the R bits for pages 0 to 5 have the values 1,
+0, 1, 0, 1, and 1, respectively (page 0 is 1, page 1 is 0, page 2 is 1, etc.). In other
+words, between tick 0 and tick 1, pages 0, 2, 4, and 5 were referenced, setting their
+R bits to 1, while the other ones remained 0. After the six corresponding counters
+have been shifted and the R bit inserted at the left, they hav e the values shown in
+Fig. 3-17(a). The four remaining columns show the six counters after the next four
+clock ticks.
+When a page fault occurs, the page whose counter is the lowest is removed. It
+is clear that a page that has not been referenced for, say, four clock ticks will have
+four leading zeros in its counter and thus will have a lower value than a counter
+that has not been referenced for three clock ticks.
+This algorithm differs from LRU in two important ways. Consider pages 3 and
+5 in Fig. 3-17(e). Neither has been referenced for two clock ticks; both were 
+referenced in the tick prior to that. According to LRU, if a page must be replaced, we
+should choose one of these two. The trouble is, we do not know which of them was
+referenced last in the interval between tick 1 and tick 2. By recording only 1 bit
+per time interval, we have now lost the ability to distinguish references early in the
+clock interval from those occurring later. All we can do is remove page 3, because
+page 5 was also referenced two ticks earlier and page 3 was not.
+The second difference between LRU and aging is that in aging the counters
+have a finite number of bits (8 bits in this example), which limits its past horizon.
+Suppose that two pages each have a counter value of 0. All we can do is pick one
+of them at random. In reality, it may well be that one of the pages was last 
+referenced nine ticks ago and the other was last referenced 1000 ticks ago. We hav e no
+way of seeing that. In practice, however, 8 bits is generally enough if a clock tick
+is around 20 msec. If a page has not been referenced in 160 msec, it probably is

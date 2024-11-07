@@ -1,0 +1,45 @@
+SEC. 6.7
+OTHER ISSUES
+465
+arranged things so that the program can be stopped at any point during the first
+phase and restarted. Many applications cannot be structured this way.
+6.7.2 Communication Deadlocks
+All of our work so far has concentrated on resource deadlocks. One process
+wants something that another process has and must wait until the first one gives it
+up. Sometimes the resources are hardware or software objects, such as cameras or
+database records, but sometimes they are more abstract. Resource deadlock is a
+problem of competition synchronization. Independent processes would complete
+service if their execution were not interleaved with competing processes. A process
+locks resources in order to prevent inconsistent resource states caused by 
+interleaved access to resources.
+Interleaved access to locked resources, however,
+enables resource deadlock. In Fig. 6-5, we saw a resource deadlock where the
+resources were semaphores. A semaphore is a bit more abstract than a camera, but
+in this example, each process successfully acquired a resource (one of the 
+semaphores) and deadlocked trying to acquire another one (the other semaphore). This
+situation is a classical resource deadlock.
+However, as we mentioned at the start of the chapter, while resource deadlocks
+are the most common kind, they are not the only kind. Another kind of deadlock
+can occur in communication systems (e.g., networks), in which two or more 
+processes communicate by sending messages. A common arrangement is that process
+A sends a request message to process B, and then blocks until B sends back a reply
+message. Suppose that the request message gets lost. A is blocked waiting for the
+reply. B is blocked waiting for a request asking it to do something. We hav e a
+deadlock.
+This, though, is not the classical resource deadlock. A does not have 
+possession of some resource B wants, and vice versa. In fact, there are no resources at all
+in sight. But it is a deadlock according to our formal definition since we have a set
+of (two) processes, each blocked waiting for an event only the other one can cause.
+This situation is called a communication deadlock to contrast it with the more
+common resource deadlock. Communication deadlock is an anomaly of 
+cooperation synchronization. The processes in this type of deadlock could not complete
+service if executed independently.
+Communication deadlocks cannot be prevented by ordering the resources
+(since there are no resources) or avoided by careful scheduling (since there are no
+moments when a request could be postponed). Luckily, there is another technique
+that can usually be employed to break communication deadlocks: timeouts. In
+most network communication systems, whenever a message is sent to which a
+reply is expected, a timer is started. If the timer goes off before the reply arrives,
+the sender of the message assumes that the message has been lost and sends it
+again (and again and again if needed). In this way, the deadlock is broken. Phrased
+differently, the timeout serves as a heuristic to detect deadlocks and enables

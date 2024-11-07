@@ -1,0 +1,43 @@
+38
+INTRODUCTION 
+CHAP. 1
+devices contain small computers and most of them run small operating systems. In
+addition, we may have even more embedded systems controlling devices that are
+not connected to a network at all. Examples include traditional microwave ovens
+and washing machines. Such systems do not accept user-installed software, so the
+main property which distinguishes such embedded systems from the computers we
+discussed earlier is the certainty that no untrusted software will ever run on it. Few
+microwave ovens allow you to download and run new applications—all the 
+software is in ROM. However, even that is changing. Some high-end cameras have
+their own app stores that allow users to install custom apps for in-camera editing,
+multiple exposures, different focus algorithms, different image compression 
+algorithms, and more.
+Nevertheless, for most embedded systems there is no need for protection
+between applications, leading to design simplification. Conversely, such operating
+systems may provide more support for functionality such as real-time scheduling
+or low-power networking which are important in many embedded systems. 
+Systems such as Embedded Linux, QNX, and VxWorks are popular in this domain.
+For sev erely resource-constrained devices, the operating system should be able to
+run in just a few kilobytes. For instance, RIOT, an open source operating system
+for IoT devices, can run in less 10 KB and support systems that range from 8-bit
+microcontrollers to general-purpose 32-bit CPUs. The TinyOS operating similarly
+offers a very small footprint, making it popular in sensor nodes.
+1.4.6 Real-Time Operating Systems
+Real-time systems are characterized by having time as a key parameter. For
+example, in industrial process-control systems, real-time computers have to collect
+data about the production process and use it to control machines in the factory.
+Often there are hard deadlines that must be met. For example, if a car is moving
+down an assembly line, certain actions must take place at certain instants of time.
+If, for example, a welding robot welds too early or too late, the car will be ruined.
+If the action absolutely must occur at a certain moment (or within a certain range),
+we have a hard real-time system. Many of these are found in industrial process
+control, avionics, military, and similar application areas. These systems must 
+provide absolute guarantees that a certain action will occur by a certain time.
+A soft real-time system is one where missing an occasional deadline, while
+not desirable, is acceptable and does not cause any permanent damage. Digital
+audio or multimedia systems fall in this category. Smartphones are also soft 
+realtime systems.
+Since meeting deadlines is crucial in (hard) real-time systems, sometimes the
+operating system is simply a library linked in with the application programs, with
+ev erything tightly coupled and no protection between parts of the system. An
+example of this type of real-time system is eCos.

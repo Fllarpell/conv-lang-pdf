@@ -1,0 +1,42 @@
+238
+MEMORY MANAGEMENT 
+CHAP. 3
+pages are stored in it contiguously in order of their virtual page number. A page
+that is in memory always has a shadow copy on disk, but this copy may be out of
+date if the page has been modified since being loaded. The shaded pages in 
+memory indicate pages not present in memory. The shaded pages on the disk are (in
+principle) superseded by the copies in memory, although if a memory page has to
+be swapped back to disk and it has not been modified since it was loaded, the
+(shaded) disk copy will be used.
+In Fig. 3-28(b), pages do not have fixed addresses on disk. When a page is
+swapped out, an empty disk page is chosen on the fly and the disk map (which has
+room for one disk address per virtual page) is updated accordingly. A page in
+memory has no copy on disk. The pages’ entries in the disk map contain an invalid
+disk address or a bit marking them as not in use.
+Having a fixed swap partition is not always possible. For example, no disk or
+SSD partitions may be available. In this case, one or more large, preallocated files
+within the normal file system can be used. Windows uses this approach. However,
+an optimization can be used here to reduce the amount of nonvolatile storage space
+needed. Since the program text of every process came from some (executable) file
+in the file system, the executable file can be used as the swap area. Better yet, since
+the program text is generally read only, when memory is tight and program pages
+have to be evicted from memory, they are just discarded and read in again from the
+executable file when needed. Shared libraries can also work this way.
+3.6.6 Separation of Policy and Mechanism
+An important principle for managing the complexity of any system is to split
+policy from mechanism. We will illustrate how this principle can be applied to
+memory management by having most of the memory manager run as a user-level
+process—a separation that was first done in Mach (Young et al., 1987) on which
+we base the discussion below.
+A simple example of how policy and mechanism can be separated is shown in
+Fig. 3-29. Here the memory management system is divided into three parts:
+1. A low-level MMU handler.
+2. A page fault handler that is part of the kernel.
+3. An external pager running in user space.
+All the details of how the MMU works are encapsulated in the MMU handler,
+which is machine-dependent code and has to be rewritten for each new platform
+the operating system is ported to. The page-fault handler is machine-independent
+code and contains most of the mechanism for paging. The policy is largely 
+determined by the external pager, which runs as a user process.
+When a process starts up, the external pager is notified in order to set up the
+process’ page map and allocate the necessary backing store on nonvolatile storage

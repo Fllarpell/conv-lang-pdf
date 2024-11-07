@@ -1,0 +1,40 @@
+261
+From the user’s standpoint, the most important aspect of a file system is how it
+appears, in other words, what constitutes a file, how files are named and protected,
+what operations are allowed on files, and so on. The details of whether linked lists
+or bitmaps are used to keep track of free storage and how many sectors there are in
+a logical disk block are of no interest, although they are of great importance to the
+designers of the file system. For this reason, we have structured the chapter as 
+several sections. The first two are concerned with the user interface to files and 
+directories, respectively. Then comes a detailed discussion of how the file system is
+implemented and managed. Finally, we giv e some examples of real file systems.
+4.1 FILES
+In the following pages, we will look at files from the user’s point of view, that
+is, how they are used and what properties they hav e.
+4.1.1 File Naming
+A file is an abstraction mechanism. It provides a way to store information on
+the disk and read it back later. This must be done in a way that shields the user
+from the details of how and where the information is stored, and how the disks
+actually work.
+Probably the most important characteristic of any abstraction mechanism is the
+way the objects being managed are named, so we will start our examination of file
+systems with the subject of file naming. When a process creates a file, it gives the
+file a name. When the process terminates, the file continues to exist and can be
+accessed by other processes using its name.
+The exact rules for file naming vary somewhat from system to system, but all
+current operating systems allow strings of letters as legal file names. Thus andrea,
+bruce, and cathy are possible file names. Frequently digits and special characters
+are also permitted, so names like 2, urgent!, and Fig.2-14 are often valid as well.
+Some older file systems, such as the one that was used in MS-DOS in a century
+long ago, limit file names to eight letters maximum, but most modern systems 
+support file names of up to 255 characters or more.
+Some file systems distinguish between upper- and lowercase letters, whereas
+others do not. UNIX falls in the first category; the old MS-DOS falls in the 
+second. Thus, a UNIX system can have all of the following as three distinct files:
+maria, Maria, and MARIA. In MS-DOS, all these names refer to the same file.
+An aside on file systems is probably in order here. Older versions of Windows
+(such as Windows 95 and Windows 98) used the MS-DOS file system, called
+FAT-16, and thus inherited many of its properties, such as how file names are 
+constructed. Admittedly, Windows 98 introduced some extensions to FAT -16, leading
+to FAT-32, but these two are quite similar. Modern versions of Windows all still
+support the FAT file systems, even though they also have a much more advanced

@@ -1,0 +1,40 @@
+352
+INPUT/OUTPUT 
+CHAP. 5
+Some superscalar machines, such as the x86 family, hav e precise interrupts to
+allow old software to work correctly. The price paid for backward compatibility
+with precise interrupts is extremely complex interrupt logic within the CPU to
+make sure that when the interrupt controller signals that it wants to cause an 
+interrupt, all instructions up to some point are allowed to finish and none beyond that
+point are allowed to have any noticeable effect on the machine state. Here the price
+is paid not in time, but in chip area and in complexity of the design. If precise
+interrupts were not required for backward compatibility purposes, this chip area
+would be available for larger on-chip caches, making the CPU faster. On the other
+hand, imprecise interrupts make the operating system far more complicated, less
+secure due to the complexity, and slower, so it is hard to tell which approach is
+really better.
+Also, as mentioned earlier, we will see in Chap. 9 that all the instructions of
+which the effects on the machine state have been undone (and that are therefore
+transient) may be problematic still from a security perspective. The reason is that
+not all effects are undone. In particular, they leave traces deep in the 
+micro-architecture (where we find the cache and the TLB and other components) which an
+attacker may use to leak sensitive information.
+5.2 PRINCIPLES OF I/O SOFTWARE
+Let us now turn away from the I/O hardware and look at the I/O software. First
+we will look at its goals and then at the different ways I/O can be done from the
+point of view of the operating system.
+5.2.1 Goals of the I/O Software
+A key concept in the design of I/O software is known as device independence.
+What it means is that we should be able to write programs that can access any I/O
+device without having to specify the device in advance. For example, a program
+that reads a file as input should be able to read a file on a hard disk, an SSD, or a
+USB stick without having to be modified for each different device. Similarly, one
+should be able to type a command such as
+sor t <input >output
+and have it work with input coming from any kind of storage device or the
+keyboard and the output going to any kind of storage device or the screen. It is up
+to the operating system to take care of the problems caused by the fact that these
+devices really are different and require very different command sequences to read
+or write.
+Closely related to device independence is the goal of uniform naming. The
+name of a file or a device should simply be a string or an integer and not depend on

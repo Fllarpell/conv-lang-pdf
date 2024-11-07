@@ -1,0 +1,42 @@
+164
+PROCESSES AND THREADS
+CHAP. 2
+Priorities can also be assigned dynamically by the system to achieve certain
+system goals. For example, some processes are highly I/O bound and spend most
+of their time waiting for I/O to complete. Whenever such a process wants the CPU,
+it should be given the CPU immediately, to let it start its next I/O request, which
+can then proceed in parallel with another process actually computing. Making the
+I/O-bound process wait a long time for the CPU will just mean having it around
+occupying memory for an unnecessarily long time. A simple algorithm for giving
+good service to I/O-bound processes is to set the priority to 1/ f , where f is the 
+fraction of the last quantum that a process used. A process that used only 1 msec of its
+50-msec quantum would get priority 50, while a process that ran 25 msec before
+blocking would get priority 2, and a process that used the whole quantum would
+get priority 1.
+It is often convenient to group processes into priority classes and use priority
+scheduling among the classes but round-robin scheduling within each class. Figure
+2-44 shows a system with four priority classes. The scheduling algorithm is as 
+follows: as long as there are runnable processes in priority class 4, just run each one
+for one quantum, round-robin fashion, and never bother with lower-priority classes.
+If priority class 4 is empty, then run the class 3 processes round robin. If classes 4
+and 3 are both empty, then run class 2 round robin, and so on. If priorities are not
+adjusted occasionally, lower-priority classes may all starve to death.
+Priority 4!
+Priority 3!
+Priority 2!
+Priority 1
+Queue!
+headers
+Runnable processes
+(Highest priority)
+(Lowest priority)
+Figure 2-44. A scheduling algorithm with four priority classes.
+Multiple Queues
+One of the earliest priority schedulers was in CTSS, the M.I.T. Compatible
+TimeSharing System that ran on the IBM 7094 (Corbato´ et al., 1962). CTSS had
+the problem that process switching was slow because the 7094 could hold only one
+process in memory. Each switch meant swapping the current process to disk and
+reading in a new one from disk. The CTSS designers quickly realized that it was
+more efficient to give CPU-bound processes a large quantum once in a while, 
+rather than giving them small quanta frequently (to reduce swapping). On the other
+hand, giving all processes a large quantum would mean poor response time, as we

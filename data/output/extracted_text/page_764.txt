@@ -1,0 +1,55 @@
+SEC. 10.3
+PROCESSES IN LINUX
+735
+In both cases, the new thread begins executing at function, which is called with
+arg as its only parameter. Also in both cases, the new thread gets its own private
+stack, with the stack pointer initialized to stack ptr.
+The sharing flags parameter is a bitmap that allows a finer grain of sharing
+than traditional UNIX systems. Each of the bits can be set independently of the
+other ones, and each of them determines whether the new thread copies some data
+structure or shares it with the calling thread. Figure 10-9 shows some of the items
+that can be shared or copied according to bits in sharing flags.
+Flag
+Meaning when set
+Meaning when cleared
+CLONE VM 
+Create a new thread 
+Create a new process
+CLONE FS 
+Share umask, root, and wor king dirs 
+Do not share them
+CLONE FILES 
+Share the file descriptors 
+Copy the file descriptors
+CLONE SIGHAND 
+Share the signal handler table 
+Copy the table
+CLONE PARENT 
+New thread has same parent as the caller
+New thread’s parent is caller
+Figure 10-9. Bits in the sharing flags bitmap.
+The CLONE VM bit determines whether the virtual memory (i.e., address
+space) is shared with the old threads or copied. If it is set, the new thread just
+moves in with the existing ones, so the clone call effectively creates a new thread
+in an existing process. If the bit is cleared, the new thread gets its own private
+address space. Having its own address space means that the effect of its STORE
+instructions is not visible to the existing threads. This behavior is similar to fork,
+except as noted below. Creating a new address space is effectively the definition of
+a new process.
+The CLONE FS bit controls sharing of the root and working directories and of
+the umask flag. Even if the new thread has its own address space, if this bit is set,
+the old and new threads share working directories. This means that a call to chdir
+by one thread changes the working directory of the other thread, even though the
+other thread may have its own address space. In UNIX, a call to chdir by a thread
+always changes the working directory for other threads in its process, but never for
+threads in another process. Thus this bit enables a kind of sharing not possible in
+traditional UNIX versions.
+The CLONE FILES bit is analogous to the CLONE FS bit. If set, the new
+thread shares its file descriptors with the old ones, so calls to lseek by one thread
+are visible to the other ones, again as normally holds for threads within the same
+process but not for threads in different processes. Similarly, CLONE SIGHAND
+enables or disables the sharing of the signal handler table between the old and new
+threads. If the table is shared, even among threads in different address spaces, then
+changing a handler in one thread affects the handlers in the others.
+Finally, every process has a parent. The CLONE PARENT bit controls who the
+parent of the new thread is. It can either be the same as the calling thread (in

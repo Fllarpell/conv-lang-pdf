@@ -1,0 +1,37 @@
+604
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+newly created jobs specified as (creating processor, start time, required CPU time)
+where the creating processor is the number of the CPU that created the job, the
+start time is the time at which the job was created, and the required CPU time is the
+amount of CPU time the job needs to complete (specified in seconds). Assume a node
+is overloaded when it has one job and a second job is created. Assume a node is
+underloaded when it has no jobs. Print the number of probe messages sent by both
+algorithms under heavy and light workloads. Also print the maximum and minimum
+number of probes sent by any host and received by any host. To create the workloads,
+write two workload generators. The first should simulate a heavy workload, 
+generating, on average, N jobs every AJL seconds, where AJL is the average job length and N
+is the number of processors. Job lengths can be a mix of long and short jobs, but the
+av erage job length must be AJL. The jobs should be randomly created (placed) across
+all processors. The second generator should simulate a light load, randomly generating
+N/3 jobs every AJL seconds. Play with other parameter settings for the workload 
+generators and see how it affects the number of probe messages.
+39. One of the simplest ways to implement a publish/subscribe system is via a centralized
+broker that receives published articles and distributes them to the appropriate 
+subscribers. Write a multithreaded application that emulates a broker-based pub/sub 
+system. Publisher and subscriber threads may communicate with the broker via (shared)
+memory. Each message should start with a length field followed by that many 
+characters. Publishers send messages to the broker where the first line of the message 
+contains a hierarchical subject line separated by dots followed by one or more lines that
+comprise the published article. Subscribers send a message to the broker with a single
+line containing a hierarchical interest line separated by dots expressing the articles they
+are interested in. The interest line may contain the wildcard symbol ‘‘*’’. The broker
+must respond by sending all (past) articles that match the subscriber’s interest. Articles
+in the message are separated by the line ‘‘BEGIN NEW ARTICLE.’’ The subscriber
+should print each message it receives along with its subscriber identity (i.e., its interest
+line). The subscriber should continue to receive any new articles that are posted and
+match its interests. Publisher and subscriber threads can be created dynamically from
+the terminal by typing ‘‘P’’ or ‘‘S’’ (for publisher or subscriber) followed by the 
+hierarchical subject/interest line. Publishers will then prompt for the article. Typing a single
+line containing ‘‘.’’ will signal the end of the article. (This project can also be 
+implemented using processes communicating via TCP.)

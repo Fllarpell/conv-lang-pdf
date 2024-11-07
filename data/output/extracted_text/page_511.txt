@@ -1,0 +1,41 @@
+482
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+Many people use the term ‘‘virtualization’’ to refer exclusively to 
+hypervisorbased solutions, and use the term ‘‘containerization’’ to talk about OS-level 
+virtualization. While we emphasize that in reality both are forms of virtualization, we
+reluctantly adopt the same convention in this chapter. So, unless we explicitly say
+otherwise (e.g., when we talk about containers), you may assume that henceforth
+virtualization refers to the hypervisor variety.
+7.2 REQUIREMENTS FOR VIRTUALIZATION
+If we leave OS-level virtualization aside, it is important that virtual machines
+act just like the real McCoy. In particular, it must be possible to boot them like real
+machines and install arbitrary operating systems on them, just as can be done on
+the real hardware. It is the task of the hypervisor to provide this illusion and to do
+it efficiently. Indeed, hypervisors should score well in three dimensions:
+1. Safety: The hypervisor should have full control of the virtualized
+resources.
+2. Fidelity: The behavior of a program on a virtual machine should be
+identical to that of the same program running on bare hardware.
+3. Efficiency: Much of the code in the virtual machine should run 
+without intervention by the hypervisor.
+An unquestionably safe way to execute the instructions is to consider each
+instruction in turn in an interpreter (such as Bochs) and perform exactly what is
+needed for that instruction. Some instructions can be executed directly, but not too
+many. For instance, the interpreter may be able to execute an INC (increment)
+instruction simply as is, but instructions that are not safe to execute directly must
+be simulated by the interpreter. For instance, we cannot really allow the guest 
+operating system to disable interrupts for the entire machine or modify the page-table
+mappings. The trick is to make the operating system on top of the hypervisor think
+that it has disabled interrupts, or changed the machine’s page mappings. We will
+see how this is done later. For now, we just want to say that the interpreter may be
+safe, and if carefully implemented, perhaps even hi-fi, but the performance sucks.
+To also satisfy the performance criterion, we will see that VMMs try to execute
+most of the code directly.
+Now let us turn to fidelity. Virtualization has long been a problem on the x86
+architecture due to defects in the Intel 386 architecture that were automatically 
+carried forward into new CPUs for 20 years in the name of backward compatibility. In
+a nutshell, every CPU with kernel mode and user mode has a set of instructions
+that behave differently when executed in kernel mode than when executed in user
+mode. These include instructions that do I/O, change the MMU settings, and so on.
+Popek and Goldberg called these sensitive instructions. There is also a set of

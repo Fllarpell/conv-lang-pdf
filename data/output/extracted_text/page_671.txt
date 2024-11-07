@@ -1,0 +1,42 @@
+642
+SECURITY 
+CHAP. 9
+encrypted password can be looked up easily. If an intruder suspects that Dog
+might be a password, it is no longer sufficient just to encrypt Dog and put the result
+in f. He has to encrypt 2n strings, such as Dog0000, Dog0001, Dog0002, and so
+forth and enter all of them in f. This technique increases the size of f by 2n. UNIX
+uses this method with n = 12. This increases the file size and work factor for the
+attacker by 4096.
+For additional security, modern versions of UNIX typically store the encrypted
+passwords in a separate ‘‘shadow’’ file that, unlike the password file, is only 
+readable by root. The combination of salting the password file and making it 
+unreadable except indirectly (and slowly) can generally withstand most attacks on it.
+One-Time Passwords
+Most superusers exhort their mortal users to change their passwords once a
+month. Unfortunately, nobody ever does this. Even more extreme is changing the
+password with every login, leading to one-time passwords. When one-time 
+passwords are used, the user gets a book containing a list of passwords. Each login uses
+the next password in the list. If an intruder ever discovers a password, it will not
+do him any good, since next time a different password must be used. It is 
+suggested that the user try to avoid losing the password book.
+Actually, a book is not needed due to an elegant scheme devised by Leslie
+Lamport that allows a user to log in securely over an insecure network using 
+onetime passwords (Lamport, 1981). Lamport’s method can be used to allow a user
+running on a home PC to log in to a server over the Internet, even though intruders
+may see and copy down all the traffic in both directions. Furthermore, no secrets
+have to be stored in the file system of either the server or the user’s PC. The 
+method is sometimes called a one-way hash chain.
+The algorithm is based on a one-way function, that is, a function y = f (x) that
+has the property that given x it is easy to find y, but given y it is computationally
+infeasible to find x. The input and output should be the same length, for example,
+256 bits.
+The user picks a secret password that he memorizes. He also picks an integer,
+n, which is how many one-time passwords the algorithm is able to generate. As an
+example, consider n = 4, although in practice a much larger value of n would be
+used. If the secret password is s, the first password is given by running the 
+oneway function n times:
+P1 = f ( f ( f ( f (s))))
+The second password is given by running the one-way function n < 1 times:
+P2 = f ( f ( f (s)))
+The third password runs f twice and the fourth password runs it once. In general,
+Pi<1 = f (Pi). The key fact to note here is that given any password in the sequence,

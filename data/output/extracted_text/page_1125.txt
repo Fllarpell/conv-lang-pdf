@@ -1,0 +1,38 @@
+1096
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+Russinovich and Solomon, Windows Internals, Part 1
+If you want to learn how to use Windows, there are hundreds of books out
+there. If you want to know how Windows works inside, this is your best bet. It
+covers numerous internal algorithms and data structures, and in considerable 
+technical detail. No other book comes close.
+13.1.12 Operating System Design
+Saltzer and Kaashoek, Principles of Computer System Design: An Introduction
+This books looks at computer systems in general, rather than operating systems
+per se, but the principles they identify apply very much to operating systems also.
+What is interesting about this work is that it carefully identifies ‘‘the ideas that
+worked,’’ such as names, file systems, read-write coherence, authenticated and
+confidential messages, etc. Principles that, in our opinion, all computer scientists in
+the world should recite every day, before going to work.
+Brooks, The Mythical Man Month: Essays on Software Engineering
+Fred Brooks was one of the designers of IBM’s OS/360. He learned the hard
+way what works and what does not work. The advice given in this witty, amusing,
+and informative book is as valid now as it was a quarter of a century ago when he
+first wrote it down.
+Cooke et al., ‘‘UNIX and Beyond: An Interview with Ken Thompson’’
+Designing an operating system is much more of an art than a science. 
+Consequently, listening to experts in the field is a good way to learn about the subject.
+They do not come much more expert than Ken Thompson, co-designer of UNIX,
+Inferno, and Plan 9. In this wide-ranging interview, Thompson gives his thoughts
+on where we came from and where we are going in the field.
+Corbato´, ‘‘On Building Systems That Will Fail’’
+In his Turing Award lecture, the father of timesharing addresses many of the
+same concerns that Brooks does in The Mythical Man-Month. His conclusion is
+that all complex systems will ultimately fail, and that to have any chance for 
+success at all, it is absolutely essential to avoid complexity and strive for simplicity
+and elegance in design.
+Lampson, ‘‘Hints for Computer System Design’’
+Butler Lampson, one of the world’s leading designers of innovative operating
+systems, has collected many hints, suggestions, and guidelines from his years of
+experience and put them together in this entertaining and informative article. Like
+Brooks’ book, this is required reading for every aspiring operating system designer.

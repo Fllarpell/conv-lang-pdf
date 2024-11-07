@@ -1,0 +1,54 @@
+726
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+further descendants). A process may also send a signal to all members of its 
+process group with a single system call.
+Signals are also used for other purposes. For example, if a process is doing
+floating-point arithmetic, and inadvertently divides by 0 (something that 
+mathematicians tend to frown upon), it gets a SIGFPE (floating-point exception) signal.
+Some of the signals that are required by POSIX are listed in Fig. 10-5. Many
+Linux systems have additional signals as well, but programs using them may not
+be portable to other versions of Linux and UNIX in general.
+Signal 
+Cause
+SIGABRT
+Sent to abort a process and force a core dump
+SIGALRM 
+The alar m clock has gone off
+SIGFPE 
+A floating-point error has occurred (e.g., division by 0)
+SIGHUP 
+The telecommunications connection was lost
+SIGILL 
+The process has tried to execute an illegal instruction
+SIGQUIT 
+The user has hit the key requesting a core dump
+SIGKILL 
+Sent to kill a process (cannot be caught or ignored)
+SIGPIPE 
+The process has written to a pipe which has no readers
+SIGSEGV 
+The process has referenced an invalid memory address
+SIGTERM 
+Used to request that a process terminate gracefully
+SIGUSR1 
+Available for application-defined purposes
+SIGUSR2 
+Available for application-defined purposes
+Figure 10-5. Some of the signals required by POSIX.
+10.3.2 Process-Management System Calls in Linux
+Let us now look at the Linux system calls dealing with process management.
+The main ones are listed in Fig. 10-6. Fork is a good place to start the discussion.
+The fork system call, supported also by other traditional UNIX systems, is the main
+way to create a new process in Linux systems. (We will discuss another alternative
+in the following section.) It creates an exact duplicate of the original process,
+including all the file descriptors, registers, and everything else. After the fork, the
+original process and the copy (the parent and child) go their separate ways. All the
+variables have identical values at the time of the fork, but since the entire parent
+address space is copied to create the child, subsequent changes in one of them do
+not affect the other. The fork call returns a value, which is zero in the child, and
+equal to the child’s PID in the parent. Using the returned PID, the two processes
+can see which is the parent and which is the child.
+In most cases, after a fork, the child will need to execute different code from
+the parent. Consider the case of the shell. It reads a command from the terminal,
+forks off a child process, waits for the child to execute the command, and then

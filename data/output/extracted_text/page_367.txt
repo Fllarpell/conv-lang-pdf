@@ -1,0 +1,43 @@
+338
+INPUT/OUTPUT 
+CHAP. 5
+presented to the software—the commands the hardware accepts, the functions it
+carries out, and the errors that can be reported back. In this book, we are 
+concerned with programming I/O devices, not designing, building, or maintaining them, so
+our interest is in how the hardware is programmed, not how it works inside. 
+Nevertheless, the programming of many I/O devices is often intimately connected with
+their internal operation. In the next three sections, we will provide a little general
+background on I/O hardware as it relates to programming. It may be regarded as a
+review and expansion of the introductory material in Sec. 1.3.
+5.1.1 I/O Devices
+I/O devices can be roughly divided into two categories: block devices and
+character devices. A block device is one that stores information in fixed-size
+blocks, each one with its own address. Common block sizes range from 512 to
+65,536 bytes. All transfers are in units of one or more entire (consecutive) blocks.
+The essential property of a block device is that it is possible to read or write each
+block independently of all the other ones. Hard disks and SSDs (Solid State
+Drives) are common block devices, and so are magnetic tape drives that are now
+commonly found in computer museums but are also still in use in data centers and
+have been the go-to solution for really big mass storage for over half a century. An
+LT O-8 Ultrium tape, for example, can store 12 TB, be read at 750 MB/s, and is
+expected to last 30 years. It costs under $100.
+The other type of I/O device is the character device. A character device 
+delivers or accepts a stream of characters, without regard to any block structure. It is
+not addressable and does not have a seek operation. Printers, network interfaces,
+mice (for pointing), rats (for psychology lab experiments), and most other devices
+that are not disk-like can be seen as character devices.
+This classification scheme is not perfect. Some devices do not fit in. Clocks,
+for example, are not block addressable. Nor do they generate or accept character
+streams. All they do is cause interrupts at well-defined intervals. Memory-mapped
+screens do not fit the model well either. Nor do touch screens, for that matter. Still,
+the model of block and character devices is general enough that it can be used as a
+basis for making some of the operating system software dealing with I/O device
+independent. The file system, for example, deals just with abstract block devices
+and leaves the device-dependent part to lower-level software.
+I/O devices cover a huge range in speeds, which puts considerable pressure on
+the software to perform well over many orders of magnitude in data rates. Figure
+5-1 shows the data rates of some common devices.
+5.1.2 Device Controllers
+I/O units often consist of a mechanical component and an electronic 
+component. It is possible to separate the two parts to provide a more modular and general
+design. The electronic component is called the device controller or adapter. On

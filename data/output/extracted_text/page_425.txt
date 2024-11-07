@@ -1,0 +1,45 @@
+396
+INPUT/OUTPUT 
+CHAP. 5
+5.6.1 Input Software
+User input comes primarily from the keyboard and mouse (or sometimes touch
+screens), so let us look at those. On a personal computer, the keyboard contains an
+embedded microprocessor which usually interfaces with the motherboard over a
+USB port (or Bluetooth). In the old days of keyboards connected via serial ports,
+an interrupt was generated whenever a key was struck and a second one whenever
+a key was released. At each of these keyboard interrupts, the keyboard driver
+would extract the information about what happened.
+USB keyboards work in a slightly different way and use a so-called interrupt
+transfer to handle the keystrokes. In spite of its name, an interrupt transfer is not
+like a regular interrupt at all. To see why, we must dive into USB communication a
+bit deeper.
+USB devices communicate with a USB host controller, typically located on the
+motherboard, using logical communication channels known as pipes. Each host
+controller is responsible for one or more USB ports and there may be multiple
+pipes between the controller and a device. Besides message pipes that are 
+bidirectional and used for control messages (such as simple commands that the host 
+controller sends to the device, or status reports from the device to the host controller),
+USB offers stream pipes, which are unidirectional data channels. Stream pipes can
+be used for different types of transfer, such as isochronous transfers (which have a
+fixed bandwidth), bulk transfers (sporadic, but large transfers which use all the
+bandwidth they can get, but offer no guarantees), and the interrupt transfers we
+mentioned earlier. Unlike the other types, interrupt transfers guarantee an upper
+bound on the latency of the data transfer between the device and the host 
+controller.
+In USB, the host controller initiates the interrupt transfer. Thus, although the
+device can make data available whenever an event occurs, the transfer does not
+start until the host explicitly requests the data. So how does USB guarantee the
+latency bound? Simple. The host controller promises to poll for interrupt transfer
+data within a specific periodic interval. The length of the interval can be specified
+by the device within the limits that are determined by the type of USB bus. For
+instance, for a USB 2.0 bus, the device may specify polling intervals in multiples
+of 125 microseconds between 125 microseconds and 4 seconds.
+In the interrupt transfer (i.e., when polled), the USB keyboard will send a
+report to the controller containing information about key events, such as key
+presses or key releases. The report has a well-defined format and is up to 8 bytes
+long, where the first byte contains information about the position of the modifier
+keys (such as the shift, alt, and control keys), the second byte is reserved, and the
+remaining six bytes each may contain the scancode of a key that was pressed. In
+other words, a single report may inform the controller of whole sequence of keys.
+An example is shown in Fig. 5-30. When the user presses ‘‘H’’ (without any 
+modifiers), the third byte contains the scancode for that key (the hexadecimal value

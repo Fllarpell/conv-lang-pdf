@@ -1,0 +1,47 @@
+138
+PROCESSES AND THREADS
+CHAP. 2
+variables. They can have attributes and there are various calls for managing the
+attributes (not shown). The most important operations on condition variables are
+pthread cond wait and pthread cond signal. The former blocks the calling
+thread until some other thread signals it (using the latter call). The reasons for
+blocking and waiting are not part of the waiting and signaling protocol, of course.
+The blocking thread often is waiting for the signaling thread to do some work, 
+release some resource, or perform some other activity. Only then can the blocking
+thread continue. The condition variables allow this waiting and blocking to be done
+atomically. The pthread cond broadcast call is used when there are multiple
+threads potentially all blocked and waiting for the same signal.
+Thread call
+Description
+pthread cond init 
+Create a condition var iable
+pthread cond destroy
+Destroy a condition var iable
+pthread cond wait 
+Block waiting for a signal
+pthread cond signal 
+Signal another thread and wake it up
+pthread cond broadcast 
+Signal multiple threads and wake all of them
+Figure 2-32. Some of the Pthreads calls relating to condition variables.
+Condition variables and mutexes are always used together. The pattern is for
+one thread to lock a mutex, then wait on a conditional variable when it cannot get
+what it needs. Eventually another thread will signal it and it can continue. The
+pthread cond wait call atomically unlocks the mutex it is holding. Then, upon
+successful return, the mutex shall have been locked again and owned by the calling
+thread. For this reason, the mutex is one of the parameters.
+It is also worth noting that condition variables (unlike semaphores) have no
+memory. If a signal is sent to a condition variable on which no thread is waiting,
+the signal is lost. Programmers have to be careful not to lose signals.
+As an example of how mutexes and condition variables are used, Fig. 2-33
+shows a very simple producer-consumer problem with a single item buffer. When
+the producer has filled the buffer, it must wait until the consumer empties it before
+producing the next item. Similarly, when the consumer has removed an item, it
+must wait until the producer has produced another one. While very simple, this
+example illustrates the basic mechanisms. The statement that puts a thread to sleep
+should always check the condition to make sure it is satisfied before continuing, as
+the thread might have been awakened due to a UNIX signal or some other reason.
+2.4.7 Monitors
+With semaphores and mutexes interprocess communication looks easy, right?
+Forget it. Look closely at the order of the downs before inserting or removing items
+from the buffer in Fig. 2-28. Suppose that the two downs in the producer’s code

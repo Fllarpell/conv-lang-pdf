@@ -1,0 +1,44 @@
+SEC. 1.2
+HISTORY OF OPERATING SYSTEMS
+19
+processors. The users should not be aware of where their programs are being run or
+where their files are located; that should all be handled automatically and 
+efficiently by the operating system.
+True distributed operating systems require more than just adding a little code
+to a uniprocessor operating system, because distributed and centralized systems
+differ in certain critical ways. Distributed systems, for example, often allow 
+applications to run on several processors at the same time, thus requiring more complex
+processor scheduling algorithms in order to optimize the amount of parallelism.
+Moreover, communication delays within the network often mean that these (and
+other) algorithms must run with incomplete, outdated, or even incorrect 
+information. This situation differs radically from that in a single-processor system in
+which the operating system has complete information about the system state.
+1.2.5 The Fifth Generation (1990–Present): Mobile Computers
+Ever since detective Dick Tracy started talking to his ‘‘two-way radio wrist
+watch’’ in the 1940s comic strip, people have craved a communication device they
+could carry around wherever they went. The first real mobile phone appeared in
+1946 and weighed some 40 kilos. You could take it wherever you went as long as
+you had a car in which to carry it.
+The first true handheld phone appeared in the 1970s and, at roughly one 
+kilogram, was positively featherweight. It was affectionately known as ‘‘the brick.’’
+Pretty soon everybody wanted one. Today, mobile phone penetration in developed
+countries is close to 90% of the global population. We can make calls not just with
+our portable phones and wrist watches, but even with eyeglasses and other 
+wearable items. Moreover, the phone part is no longer central. We receive email, surf
+the Web, text our friends, play games, navigate around heavy traffic—and do not
+ev en think twice about it.
+While the idea of combining telephony and computing in a phone-like device
+has been around since the 1970s also, the first real smartphone did not appear until
+the mid-1990s when Nokia released the N9000, which literally combined two,
+mostly separate devices: a phone and a Personal Digital Assistant. In 1997, 
+Ericsson coined the term smartphone for its GS88 ‘‘Penelope.’’
+Now that smartphones have become ubiquitous, the competition between the
+operating systems is as fierce as in the PC world. At the time of writing, Google’s
+Android is the dominant operating system with Apple’s iOS a clear second, but this
+was not always the case and all may be different again in just a few years. If 
+anything is clear in the world of smartphones, it is that it is not easy to stay king of the
+mountain for long.
+After all, most smartphones in the first decade after their inception were 
+running Symbian OS. It was the operating system of choice for popular brands like
+Samsung, Sony Ericsson, Motorola, and especially Nokia. However, other 
+operating systems like RIM’s Blackberry OS (introduced for smartphones in 2002) and

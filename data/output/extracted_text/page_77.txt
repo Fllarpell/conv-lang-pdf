@@ -1,0 +1,44 @@
+48
+INTRODUCTION 
+CHAP. 1
+It is because they did not know how to build them. Personal computers exist not
+because millions of people have a centuries-old pent-up desire to own a computer,
+but because it is now possible to manufacture them cheaply. We often forget how
+much technology affects our view of systems and it is worth reflecting on this point
+from time to time.
+In particular, it frequently happens that a change in technology renders some
+idea obsolete and it quickly vanishes. However, another change in technology
+could revive it again. This is especially true when the change has to do with the
+relative performance of different parts of the system. For instance, when CPUs
+became much faster than memories, caches became important to speed up the
+‘‘slow’’ memory. If new memory technology someday makes memories much
+faster than CPUs, caches will vanish. And if a new CPU technology makes them
+faster than memories again, caches will reappear. In biology, extinction is forever,
+but in computer science, it is sometimes only for a few years.
+As a consequence of this impermanence, in this book we will from time to
+time look at ‘‘obsolete’’ concepts, that is, ideas that are not optimal with current
+technology. Howev er, changes in the technology may bring back some of the
+so-called ‘‘obsolete concepts.’’ For this reason, it is important to understand why a
+concept is obsolete and what changes in the environment might bring it back again.
+To make this point clearer, let us consider a simple example. Early computers
+had hardwired instruction sets. The instructions were executed directly by 
+hardware and could not be changed. Then came microprogramming (first introduced on
+a large scale with the IBM 360), in which an underlying interpreter carried out the
+‘‘hardware instructions’’ in software. Hardwired execution became obsolete. It
+was not flexible enough. Then RISC computers were invented, and 
+microprogramming (i.e., interpreted execution) became obsolete because direct execution was
+faster. Now we are seeing the resurgence of microprogramming because it allows
+CPUs to be updated in the field (for instance in response to dangerous CPU 
+vulnerabilities such as Spectre, Meltdown, and RIDL). Thus the pendulum has already
+swung several cycles between direct execution and interpretation and may yet
+swing again in the future.
+Large Memories
+Let us now examine some historical developments in hardware and how they
+have affected software repeatedly. The first mainframes had limited memory. A
+fully loaded IBM 7090 or 7094, which played king of the mountain from late 1959
+until 1964, had just over 128 KB of memory. It was mostly programmed in 
+assembly language and its operating system was written in assembly language to save
+precious memory.
+As time went on, compilers for languages like FORTRAN and COBOL got
+good enough that assembly language was pronounced dead. But when the first
+commercial minicomputer (the PDP-1) was released, it had only 4096 18-bit words

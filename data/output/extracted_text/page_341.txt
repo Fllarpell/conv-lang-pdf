@@ -1,0 +1,44 @@
+312
+FILE SYSTEMS
+CHAP. 4
+dumping. These are shown in Fig. 4-28(c). Each directory is prefixed by the 
+directory’s attributes (owner, times, etc.) so that they can be restored. Finally, in phase
+4, the files marked in Fig. 4-28(d) are also dumped, again prefixed by their 
+attributes. This completes the dump.
+Restoring a file system from the dump disk is straightforward. To start with,
+an empty file system is created on the disk. Then the most recent full dump is
+restored. Since the directories appear first on the dump disk, they are all restored
+first, giving a skeleton of the file system. Then the files themselves are restored.
+This process is then repeated with the first incremental dump made after the full
+dump, then the next one, and so on.
+Although logical dumping is straightforward, there are a few tricky issues. For
+one, since the free block list is not a file, it is not dumped and hence it must be 
+reconstructed from scratch after all the dumps have been restored. Doing so is
+always possible since the set of free blocks is just the complement of the set of
+blocks contained in all the files combined.
+Another issue is links. If a file is linked to two or more directories, it is 
+important that the file is restored only one time and that all the directories that are 
+supposed to point to it do so.
+Still another issue is the fact that UNIX files may contain holes. It is permitted
+to open a file, write a few bytes, then seek to a distant file offset and write a few
+more bytes. The blocks in between are not part of the file and should not be
+dumped and must not be restored. Core dump files often have a hole of hundreds
+of megabytes between the data segment and the stack. If not handled properly,
+each restored core file will fill this area with zeros and thus be the same size as the
+virtual address space (e.g., 232 bytes, or worse yet, 264 bytes).
+Finally, special files, named pipes, and the like (anything that is not a real file)
+should never be dumped, no matter in which directory they may occur (they need
+not be confined to /dev). For more information about file-system backups, see
+Zwicky (1991) and Chervenak et al., (1998).
+4.4.3 File-System Consistency
+Another area where reliability is an issue is file-system consistency. Many file
+systems read blocks, modify them, and write them out later. If the system crashes
+before all the modified blocks have been written out, the file system can be left in
+an inconsistent state. This problem is especially critical if some of the blocks that
+have not been written out are i-node blocks, directory blocks, or blocks containing
+the free list.
+To deal with inconsistent file systems, most computers have a utility program
+that checks file-system consistency. For example, UNIX has fsck; Windows has sfc
+(and others). This utility can be run whenever the system is booted, especially
+after a crash. The description below tells how fsck works. Sfc is somewhat 
+different because it works on a different file system, but the general principle of using

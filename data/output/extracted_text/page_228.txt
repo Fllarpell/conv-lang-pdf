@@ -1,0 +1,46 @@
+SEC. 3.3
+VIRTUAL MEMORY
+199
+has not been modified (i.e., is ‘‘clean’’), it can just be abandoned, since the copy on
+disk or SSD is still valid. The bit is sometimes called the dirty bit, since it reflects
+the page’s state.
+The Referenced bit is set whenever a page is referenced, either for reading or
+for writing. Its value is used to help the operating system choose a page to evict
+when a page fault occurs. Pages that are not being used are far better candidates
+than pages that are, and this bit plays an important role in several of the page 
+replacement algorithms that we will study later in this chapter.
+Finally, the last bit allows caching to be disabled for the page. This feature is
+important for pages that map onto device registers rather than memory. If the 
+operating system is sitting in a tight loop waiting for some I/O device to respond to a
+command it was just given, it is essential that the hardware keep fetching the word
+from the device, and not use an old cached copy. With this bit, caching can be 
+turned off. Machines that have a separate I/O space and do not use memory-mapped
+I/O do not need this bit.
+Note that the disk address (the address of the block on the disk or SSD) used to
+hold the page when it is not in memory is not part of the page table. The reason is
+simple. The page table holds only that information the hardware needs to translate
+a virtual address to a physical address. Information the operating system needs to
+handle page faults is kept in software tables inside the operating system. The 
+hardware does not need it.
+Before getting into more implementation issues, it is worth pointing out again
+that what virtual memory fundamentally does is create a new abstraction—the
+address space—which is an abstraction of physical memory, just as a process is an
+abstraction of the physical processor (CPU). Virtual memory can be implemented
+by breaking the virtual address space up into pages, and mapping each one onto
+some page frame of physical memory or having it (temporarily) unmapped. Thus
+this section is basically about an abstraction created by the operating system and
+how that abstraction is managed.
+Also, it may be good to emphasize that all memory accesses made by software
+use virtual addresses. This is not just true for the user processes, but also for the
+operating system. In other words, the kernel has its own mappings in page tables
+also. Whenever a process executes a system call, the operating system page tables
+must be used. Because a context switch (which requires swapping page tables) is
+not cheap, some systems employ a clever trick and simply map the operating 
+system’s page tables in every user process, but with the Supervisor bit indicating that
+these pages can only be accessed by the operating system. Thus, when the user
+process tries to access such a page, it will trigger an exception. However, when the
+user process performs a system call, there is no need to switch page tables 
+anymore: all the kernel page tables and the user page tables are available for the 
+operating system to. Doing so speeds up the system call. Generally, when the operating
+system is mapped into user processes, it is mapped in at the top of the address
+space so as not interfere with user programs, which start at or near 0. Sometimes

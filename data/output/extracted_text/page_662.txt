@@ -1,0 +1,52 @@
+SEC. 9.3
+FORMAL MODELS OF SECURE SYSTEMS
+633
+Similarly, P = D(C, KD) where D is the decryption algorithm and KD is the
+decryption key. This says that to get the plaintext, P, back from the ciphertext, C,
+and the decryption key, KD, one runs the algorithm D with C and KD as 
+parameters. The relation between the various pieces is shown in Fig. 9-12.
+E
+KE
+Encryption key
+Decryption key
+P
+P
+Plaintext in
+Plaintext out
+Encryption
+algorithm
+D
+KD
+Decryption
+algorithm
+Ciphertext
+C = E(P, KE)
+P = D(C, KD)
+Decryption
+Encryption
+Figure 9-12. Relationship between the plaintext and the ciphertext.
+Secret-Key Cryptography
+To make this clearer, consider an encryption algorithm in which each letter is
+replaced by a different letter, for example, all As are replaced by Qs, all Bs are
+replaced by Ws, all Cs are replaced by Es, and so on like this:
+AB CD E  F GH I J K LMNO P QR S  T UVWX Y Z
+QW E RT YU I  O PA S D F GH J  K L Z XC VB NM
+plaintext:
+ciphertext:
+This general system is called a monoalphabetic substitution, with the key being
+the 26-letter string corresponding to the full alphabet. The encryption key in this
+example is QWERTYUIOPASDFGHJKLZXCVBNM. For the key giv en above, the
+plaintext ATTA CK would be transformed into the ciphertext QZZQEA.
+The
+decryption key tells how to get back from the ciphertext to the plaintext. In this
+example, the decryption key is KXVMCNOPHQRSZYIJADLEGWBUFT because
+an A in the ciphertext is a K in the plaintext, a B in the ciphertext is an X in the
+plaintext, etc.
+While the encryption is extremely simple to break, it serves a nice illustration
+of an important class of cryptographic systems. When it is easy to obtain the
+decryption key from the encryption, like in this case, it is called secret-key 
+cryptography or symmetric-key cryptography. Although monoalphabetic 
+substitution ciphers are completely worthless, other symmetric key algorithms are known
+and are relatively secure if the keys are long enough. For serious security, 
+minimally 256-bit keys should be used, giving a search space of 2256 5 1. 2 × 1077 keys.
+For reference, the number of atoms in the entire observable universe, in all the

@@ -1,0 +1,19 @@
+11
+CASE STUDY 2: WINDOWS 11
+Windows is a modern operating system that runs on consumer PCs, laptops,
+tablets, and phones as well as business desktop PCs, workstations, and enterprise
+servers. Windows is also the operating system used in Microsoft’s Xbox gaming
+system, the Hololens mixed-reality device, and Azure cloud computing 
+infrastructure. The most recent version is Windows 11, released in 2021. In this chapter, we
+will examine various aspects of Windows, starting with a brief history, then 
+moving on to its architecture. After this, we will look at processes, memory 
+management, caching, I/O, the file system, power management, and finally, security.
+11.1 HISTORY OF WINDOWS THROUGH WINDOWS 11
+Microsoft’s dev elopment of the Windows operating system for PC-based 
+computers as well as servers can be divided into four eras: MS-DOS, MS-DOS-based
+Windows, NT-based Windows, and Modern Windows. Technically, each of
+these systems is substantially different from the others. Each was dominant during
+different decades in the history of the personal computer. Figure 11-1 shows the
+dates of the major Microsoft operating system releases for desktop computers.
+Below we will briefly sketch each of the eras shown in the table.
+871

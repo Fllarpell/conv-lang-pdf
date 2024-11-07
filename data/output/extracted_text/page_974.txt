@@ -1,0 +1,46 @@
+SEC. 11.4
+PROCESSES AND THREADS IN WINDOWS
+945
+handler itself (since that may keep interrupts turned off too long). Instead, a DPC is
+queued for slightly later, after the interrupt handler is done. In the second case, a
+thread has done a down on a semaphore or blocked on some other object, but with
+a timeout that has now expired. Again it is necessary for the interrupt handler to
+queue a DPC to avoid having it run during the clock interrupt handler. If a thread
+has been made ready by this timeout, the scheduler will be run. If the newly 
+runnable thread has higher priority, the current thread is preempted as in case 1.
+Now we come to the actual scheduling algorithm. The Win32 API provides
+two APIs to influence thread scheduling. First, there is a call SetPr ior ityClass that
+sets the priority class of all the threads in the caller’s process. The allowed values
+are real-time, high, above normal, normal, below normal, and idle. The priority
+class determines the relative priorities of processes. The process priority class can
+also be used by a process to temporarily mark itself as being background, meaning
+that it should not interfere with any other activity in the system. Note that the 
+priority class is established for the process, but it affects the actual priority of every
+thread in the process by setting a base priority that each thread starts with when
+created.
+The second Win32 API is SetThreadPr ior ity. It sets the relative priority of a
+thread (possibly, but not necessarily, the calling thread) with respect to the priority
+class of its process. The allowed values are time critical, highest, above normal,
+normal, below normal, lowest, and idle. Time-critical threads get the highest 
+nonreal-time scheduling priority, while idle threads get the lowest, irrespective of the
+priority class. The other priority values adjust the base priority of a thread with
+respect to the normal value determined by the priority class (+2, +1, 0, <1, <2,
+respectively). The use of priority classes and relative thread priorities makes it 
+easier for applications to decide what priorities to specify.
+The scheduler works as follows. The system has 32 priorities, numbered from
+0 to 31. The combinations of priority class and relative priority are mapped onto 32
+absolute thread priorities according to the table of Fig. 11-25. The number in the
+table determines the thread’s base priority. In addition, every thread has a 
+current priority, which may be higher (but not lower) than the base priority and
+which we will discuss shortly.
+To use these priorities for scheduling, the system maintains an array of 32 lists
+of threads, corresponding to priorities 0 through 31 derived from the table of
+Fig. 11-25. Each list contains ready threads at the corresponding priority. The
+basic scheduling algorithm consists of searching the array from priority 31 down to
+priority 0. As soon as a nonempty list is found, the thread at the head of the queue
+is selected and run for one quantum. If the quantum expires, the thread goes to the
+end of the queue at its priority level and the thread at the front is chosen next. In
+other words, when there are multiple threads ready at the highest priority level,
+they run round robin for one quantum each. If no thread is ready, the idle thread is
+selected for execution in order to idle the processor—that is, set it to a low power
+state waiting for an interrupt to occur.

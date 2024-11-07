@@ -1,0 +1,46 @@
+SEC. 10.4
+MEMORY MANAGEMENT IN LINUX
+749
+The exact boundaries and layout of the memory zones are architecture dependent.
+On x86 hardware, certain devices can perform DMA operations only in the first 16
+MB of address space, hence ZONE DMA is in the range 0–16 MB. However, on
+64-bit machines, there is additional support for those devices that can perform
+32-bit DMA operations, and ZONE DMA32 marks this region. In addition, if the
+hardware, like the older-generation i386, cannot directly map memory addresses
+above 896 MB, ZONE HIGHMEM corresponds to anything above this mark.
+ZONE NORMAL is anything in between them. Therefore, on 32-bit x86 platfor ms,
+the first 896 MB of the Linux address space are directly mapped, whereas the 
+remaining 128 MB of the kernel address space are used to access high memory 
+resgions. On x86 64, ZONE HIGHMEM is not defined. The kernel maintains a zone
+structure for each of the three zones, and can perform memory allocations for the
+three zones separately.
+Main memory in Linux consists of three parts. The first two parts, the kernel
+and memory map, are pinned in memory (i.e., never paged out). The rest of 
+memory is divided into page frames, each of which can contain a text, data, or stack
+page, a page-table page, or be on the free list.
+The kernel maintains a map of the main memory which contains all 
+information about the use of the physical memory in the system, such as its zones, free
+page frames, and so forth. The information, illustrated in Fig. 10-15, is organized
+as follows.
+First of all, Linux maintains an array of page descriptors, of type page, one
+for each physical page frame in the system, called mem map. Each page 
+descriptor contains a pointer to the address space that it belongs to, in case the page is not
+free, a pair of pointers which allow it to form doubly linked lists with other
+descriptors, for instance to keep together all free page frames, and a few other
+fields. In Fig. 10-15, the page descriptor for page 150 contains a mapping to the
+address space the page belongs to. Pages 70, 80, and 200 are free, and they are
+linked together. The size of the page descriptor is 32 bytes, so the mem map 
+consumes less than 1% of the physical memory (for a page frame of 4 KB).
+Since the physical memory is divided into zones, for each zone Linux 
+maintains a zone descriptor. The zone descriptor contains information about the 
+memory utilization within each zone, such as the number of active or inactive pages, low
+and high watermarks to be used by the page-replacement algorithm described later
+in this chapter, as well as many other fields.
+In addition, a zone descriptor contains an array of free areas. The ith element
+in this array identifies the first page descriptor of the first block of 2i free pages.
+Since there may be more than one blocks of 2i free pages, Linux uses the pair of
+page-descriptor pointers in each page element to link these together. This 
+information is used in the memory-allocation operations. In Fig. 10-15, free area[0],
+which identifies all free areas of main memory consisting of only one page frame
+(since 20 is one), points to page 70, the first of the three free areas. The other free
+blocks of size one can be reached through the links in each of the page descriptors.

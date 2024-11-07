@@ -1,0 +1,30 @@
+654
+SECURITY 
+CHAP. 9
+time. Say that after a handful of instructions, the execution encounters another
+return instruction. Now, we ask the same question once again: where can we return
+to? Since the attacker has control over the stack, she can again make the code
+return anywhere she wants to. Moreover, after she has done it twice, she may as
+well do it three times, or four, or ten, etc.
+Thus, the trick of return-oriented programming is to look for small sequences
+of code that (a) do something useful and (b) end with a return instruction. The
+attacker can string together these sequences by means of the return addresses she
+places on the stack. The individual snippets are called gadgets. Typically, they
+have very limited functionality, such as adding two registers, loading a value from
+memory into a register, or pushing a value on the stack. In other words, the 
+collection of gadgets can be seen as a very strange instruction set that the attacker can
+use to build arbitrary functionality by clever manipulation of the stack. The stack
+pointer, meanwhile, serves as a slightly bizarre kind of program counter.
+Gadget C
+Gadget B
+Gadget A
+Text segment
+(part of function Z)
+(part of function Y)
+(part of function X)
+Figure 9-19. Return-oriented programming: linking gadgets.
+Figure 9-19(a) shows an example of how gadgets are linked together by return
+addresses on the stack. The gadgets are short snippets of code that end with a
+return instruction. The return instruction will pop the address to return to off the
+stack and continue execution there. In this case, the attacker first returns to gadget
+A in some function X, then to gadget B in function Y, etc. It is the attacker’s job to

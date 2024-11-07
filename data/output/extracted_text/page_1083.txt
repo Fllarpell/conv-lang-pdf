@@ -1,0 +1,50 @@
+1054
+OPERATING SYSTEM DESIGN
+CHAP. 12
+12.3.1 System Structure
+Probably the first decision the implementers have to make is what the system
+structure should be. We examined the main possibilities in Sec. 1.7, but will
+review them here. An unstructured monolithic design is not a good idea, except
+maybe for a tiny operating system in, say, a toaster, but even there it is arguable.
+Layered Systems
+A reasonable approach that has been well established over the years is a 
+layered system. Dijkstra’s THE system (Fig. 1-25) was the first layered operating 
+system. UNIX and Windows also have a layered structure, but the layering in both of
+them is more a way of trying to describe the system than a real guiding principle
+that was used in building the system.
+For a new system, designers choosing to go this route should first very 
+carefully choose the layers and define the functionality of each one. The bottom layer
+should always try to hide the worst idiosyncrasies of the hardware, as the 
+Hardware Abstraction Layer (HAL) does in Windows Probably the next layer should
+handle interrupts, context switching, and the MMU, so above this level the code is
+mostly machine independent. Above this, different designers will have different
+tastes (and biases). One possibility is to have layer 3 manage threads, including
+scheduling and interthread synchronization, as shown in Fig. 12-2. The idea here
+is that starting at layer 4, we have proper threads that are scheduled normally and
+synchronize using a standard mechanism (e.g., mutexes).
+Interrupt handling, context switching, MMU
+Hide the low-level  hardware
+Virtual memory
+Threads, thread scheduling, thread synchronization
+1
+2
+3
+4
+5
+Driver 1
+Driver n
+...
+File system 1
+...
+File system m
+6
+System call handler
+7
+Layer
+Driver 2
+Figure 12-2. One possible design for a modern layered operating system.
+In layer 4 we might find the device drivers, each one running as a separate
+thread, with its own state, program counter, registers, and so on, possibly (but not
+necessarily) within the kernel address space. Such a design can greatly simplify the
+I/O structure because when an interrupt occurs, it can be converted into an unlock
+on a mutex and a call to the scheduler to (potentially) schedule the newly readied

@@ -1,0 +1,43 @@
+56
+INTRODUCTION 
+CHAP. 1
+array. These will be described shortly. Various library routines, including execl,
+execv, execle, and execve, are provided to allow the parameters to be omitted or
+specified in various ways. Throughout this book we will use the name exec to
+represent the system call invoked by all of these.
+Let us consider the case of a command such as
+cp file1 file2
+used to copy file1 to file2. After the shell has forked, the child process locates and
+executes the file cp and passes to it the names of the source and target files.
+The main program of cp (and main program of most other C programs) 
+contains the declaration
+main(argc, argv, envp)
+where argc is a count of the number of items on the command line, including the
+program name. For the example above, argc is 3.
+The second parameter, argv, is a pointer to an array. Element i of that array is a
+pointer to the ith string on the command line. In our example, argv[0] would point
+to the string ‘‘cp’’, argv[1] would point to the string ‘‘file1’’, and argv[2] would
+point to the string ‘‘file2’’.
+The third parameter of main, envp, is a pointer to the environment, an array of
+strings containing assignments of the form name = value used to pass information
+such as the terminal type and home directory name to programs. There are library
+procedures that programs can call to get the environment variables, which are often
+used to customize how a user wants to perform certain tasks (e.g., the default 
+printer to use). In Fig. 1-19, no environment is passed to the child, so the third 
+parameter of execve is a zero.
+If exec seems complicated, do not despair; it is (semantically) the most 
+complex of all the POSIX system calls. All the other ones are much simpler. As an
+example of a simple one, consider exit, which processes should use when they are
+finished executing. It has one parameter, the exit status (0 to 255), which is
+returned to the parent via statloc in the waitpid system call.
+Processes in UNIX have their memory divided up into three segments: the text
+segment (i.e., the program code), the data segment (i.e., the variables), and the
+stack segment. The data segment grows upward and the stack grows downward,
+as shown in Fig. 1-20. Between them is a gap of unused address space. The stack
+grows into the gap automatically, as needed, but expansion of the data segment is
+done explicitly by using a system call, br k, which specifies the new address where
+the data segment is to end. This call, however, is not defined by the POSIX 
+standard, since programmers are encouraged to use the malloc library procedure for
+dynamically allocating storage, and the underlying implementation of malloc was
+not thought to be a suitable subject for standardization since few programmers use
+it directly and it is doubtful that anyone even notices that br k is not in POSIX. (In

@@ -1,0 +1,101 @@
+1138
+INDEX
+N
+Namespace redirection, Windows, 952
+Namespace virtualization, Windows, 1011
+Naming, 1059–1061
+Naming transparency, 591–593
+National Security Agency, 14
+Native NT API, 884–885
+NC-NUMA (see Non Cache-coherent NUMA)
+Nested page table, 495–496
+Hyper-V, 1005
+Netbook, 877
+Network device, 765
+Network file system, 299, 783–789
+implementation, 786–789
+V4, 789
+Network file system architecture, 783–784
+Network file system protocol, 784–786
+Network hardware, 581–584
+Network interface, 561–562
+Network operating system, 18
+Network protocol, 586–588
+Network service types, 585–586
+Networking Linux, 759–761
+Next fit memory management algorithm, 190
+NFS (see Network File System)
+NFU (see Not Frequently Used page replacement
+algorithm)
+NIC, smart, 562
+Nice system call, 737
+No memory abstraction, 180–183
+No silver bullet, 1082
+Node descriptor, 750
+Node-to-network communication, 564
+Nonblocking call, 566
+Nonblocking network, 532
+Noncanonical mode, 398
+Noncontrol-flow div erting attack, 656–657
+Nonpreemptable resource, 438
+Nonpreemptive scheduling, 156
+Nonrepudiability, 609
+Nonresident attribute, NT file system, 993
+Nonuniform memory access multiprocessor, 530–537
+Nonvolatile memory express, 381
+Nonvolatile RAM, 385
+Nonvolatile storage, 28–29
+Nop sled, 650
+Not frequently used page replacement algorithm, 212
+Not recently used page replacement algorithm,
+209–210
+Notification event, 938
+Notification facility, Windows, 909
+Notification object, 905
+Notification service, Windows, 1002
+Notify system call, 1047
+NPT (see Nested Page Tables)
+NPU (see Neural Processing Unit)
+NRU (see Not Recently Used page replacement
+algorithm)
+NT (see New Technology)
+NT API, 884–885
+NT file system, 262, 989–1000
+alternate data stream, 994
+base record, 991
+compression, 998–999
+default data stream, 994
+encryption, 1000
+immediate file, 994
+implementation, 990–1000
+journaling, 890, 999–1000
+nonresident attribute, 993
+sparse file, 995–996
+storage allocation, 994–998
+structure, 991–994
+NT file system API call, 884–887
+NtAllocateVirtualMemory Windows API call, 885
+NtCancelIoFile Windows API call, 984
+NtClose Windows API call, 918, 920
+NtCreateFile Windows API call, 885, 922, 923, 982, 984
+NtCreateProcess Windows API call, 884, 885, 936, 943
+NtCreateThread Windows API call, 885, 936
+NtCreateUserProcess Windows API call, 936, 941, 942
+NtDeviceIoControlFile Windows API call, 984
+NtDuplicateObject Windows API call, 885
+NtFlushBuffersFile Windows API call, 984
+NTFS (see NT File System)
+NtFsControlFile Windows API call, 984, 1000
+NtLockFile Windows API call, 984
+NtMapViewOfSection Windows API call, 885
+NtNotifyChangeDirectoryFile Windows API call, 983, 999
+NTOS, 900
+NTOS program, 880
+NtQueryDirectoryFile Windows API call, 982
+NtQueryInformationFile Windows API call, 983
+NtReadFile Windows API call, 920, 982
+NtReadVirtualMemory Windows API call, 885
+NtResumeThread Windows API call, 936, 943
+NtSetInformationFile Windows API call, 983
+NtSetVolumeInformationFile Windows API call, 983
+NtUnLockFile Windows API call, 984

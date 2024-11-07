@@ -1,0 +1,44 @@
+760
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+1. Reliable connection-oriented byte stream.
+2. Reliable connection-oriented packet stream.
+3. Unreliable packet transmission.
+The first socket type allows two processes on different machines to establish the 
+equivalent of a pipe between them. Bytes are pumped in at one end and they come
+out in the same order at the other. The system guarantees that all bytes that are sent
+correctly arrive and in the same order they were sent.
+The second type is rather similar to the first one, except that it preserves packet
+boundaries. If the sender makes fiv e separate calls to wr ite, each for 512 bytes, and
+the receiver asks for 2560 bytes, with a type 1 socket all 2560 bytes will be
+returned at once. With a type 2 socket, only 512 bytes will be returned. Four more
+calls are needed to get the rest. The third type of socket is used to give the user
+access to the raw network. This type is especially useful for real-time applications,
+and for those situations in which the user wants to implement a specialized error
+handling scheme. Packets may be lost or reordered by the network. There are no
+guarantees, as in the first two cases. The advantage of this mode is higher 
+performance, which sometimes outweighs reliability (e.g., for multimedia delivery, in
+which being fast counts for more than being right).
+When a socket is created, one of the parameters specifies the protocol to be
+used for it. For reliable byte streams, the most popular protocol is TCP 
+(Transmission Control Protocol). For unreliable packet-oriented transmission, UDP (User
+Datagram Protocol) is the usual choice. Both of these are layered on top of IP
+(Internet Protocol). All of these protocols originated with the U.S. Dept. of
+Defense’s ARPANET, and now form the basis of the Internet. There is no common
+protocol for reliable packet streams.
+Before a socket can be used for networking, it must have an address bound to
+it. This address can be in one of several naming domains. The most common one
+is the Internet naming domain, which uses 32-bit integers for naming endpoints in
+Version 4 and 128-bit integers in Version 6 (Version 5 was an experimental system
+that never made it to the major leagues).
+Once sockets have been created on both the source and destination computers,
+a connection can be established between them (for connection-oriented 
+communication). One party makes a listen system call on a local socket, which creates a
+buffer and blocks until data arrive. The other makes a connect system call, giving
+as parameters the file descriptor for a local socket and the address of a remote
+socket. If the remote party accepts the call, it creates a new socket (since it may
+need the original one to continue to listen for other connection requests), and the
+system then establishes a connection between the caller’s socket and the newly
+created remote socket.
+Once a connection has been established, it functions analogously to a pipe. A
+process can read and write from it using the file descriptor for its local socket.

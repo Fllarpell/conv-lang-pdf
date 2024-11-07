@@ -1,0 +1,45 @@
+SEC. 5.3
+I/O SOFTWARE LAYERS
+359
+5.3.2 Device Drivers
+Earlier in this chapter we looked at what device controllers do. We saw that
+each controller has some device registers used to give it commands or some device
+registers used to read out its status or both. The number of device registers and the
+nature of the commands vary radically from device to device. For example, a
+mouse driver has to accept information from the mouse telling it how far it has
+moved and which buttons are currently depressed. In contrast, a disk driver may
+have to know all about sectors, tracks, cylinders, heads, arm motion, motor drives,
+head settling times, and all the other mechanics of making the disk work properly.
+Obviously, these drivers will be very different.
+Consequently, each I/O device attached to a computer needs some 
+device-specific code for controlling it. This code, called the device driver, is generally 
+written by the device’s manufacturer and delivered along with the device. Since each
+operating system needs its own drivers, device manufacturers commonly supply
+drivers for several popular operating systems.
+Each device driver normally handles one device type, or at most, one class of
+closely related devices. For example, a SATA disk driver can usually handle 
+multiple SATA SSDs and SATA disks of different sizes and different speeds. On the
+other hand, a mouse and joystick are so different that different drivers are usually
+required. However, there is no technical restriction on having one device driver
+control multiple unrelated devices. It is just not a good idea in most cases.
+Sometimes though, wildly different devices are based on the same underlying
+technology. The best-known example is probably USB (Universal Serial Bus). It
+is not called ‘‘universal’’ for nothing. USB devices include disks, mice, memory
+sticks, cameras, keyboards, mini-fans, robots, credit card readers, bar code 
+scanners, rechargeable shavers, paper shredders, disco balls, and thermometers. They
+all use USB and yet they all do very different things. The trick is that USB drivers
+are typically stacked, like a  TCP/IP stack in networks. At the bottom, typically in
+hardware, we find the USB link layer (serial I/O) that handles hardware stuff like
+signaling and decoding a stream of signals to USB packets. It is used by higher
+layers that deal with the data packets and the common functionality for USB that is
+shared by most devices. On top of that, finally, we find the higher-layer APIs such
+as the interfaces for mass storage, cameras, etc. Thus, we still have separate device
+drivers, even though they share part of the protocol stack.
+In order to access the device’s hardware, meaning the controller’s registers, the
+device driver normally has to be part of the operating system kernel, at least with
+current architectures. Actually, it is possible to construct drivers that run in user
+space, with system calls for reading and writing the device registers. This design
+isolates the kernel from the drivers and the drivers from each other, eliminating a
+major source of system crashes—buggy drivers that interfere with the kernel in one
+way or another. For building highly reliable systems, this is definitely a good way
+to go. An example of a system in which the device drivers run as user processes is

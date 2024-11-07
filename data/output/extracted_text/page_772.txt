@@ -1,0 +1,42 @@
+SEC. 10.3
+PROCESSES IN LINUX
+743
+on the terminal’s screen and tries to read the user’s name from the keyboard. When
+someone sits down at the terminal and provides a login name, getty terminates by
+executing /bin/login, the login program. Login then asks for a password, encrypts
+it, and verifies it against the encrypted password stored in the password file,
+/etc/passwd. If it is correct, login replaces itself with the user’s shell, which then
+waits for the first command. If it is incorrect, login just asks for another user
+name. This mechanism is shown in Fig. 10-11 for a system with three terminals.
+Process 0
+Process 1
+Process 2
+Page
+daemon
+Terminal 0
+Terminal 1
+Terminal 2
+Login:
+Password:
+% cp f1 f2
+login
+sh
+cp
+getty
+init
+Figure 10-11. The sequence of processes used to boot some Linux systems.
+In the figure, the getty process running for terminal 0 is still waiting for input.
+On terminal 1, a user has typed a login name, so getty has overwritten itself with
+login, which is asking for the password. A successful login has already occurred
+on terminal 2, causing the shell to type the prompt (%). The user then typed
+cp f1 f2
+which has caused the shell to fork off a child process and have that process execute
+the cp program. The shell is blocked, waiting for the child to terminate, at which
+time the shell will type another prompt and read from the keyboard. If the user at
+terminal 2 had typed cc instead of cp, the main program of the C compiler would
+have been started, which in turn would have forked off more processes to run the
+various compiler passes.
+10.4 MEMORY MANAGEMENT IN LINUX
+The Linux memory model is straightforward, to make programs portable and
+to make it possible to implement Linux on machines with widely differing memory
+management units, ranging from essentially nothing (e.g., the original IBM PC) to

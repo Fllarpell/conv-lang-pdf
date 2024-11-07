@@ -1,0 +1,61 @@
+SEC. 10.2
+OVERVIEW OF LINUX
+721
+Program 
+Typical use
+cat 
+Concatenate multiple files to standard output
+chmod 
+Change file protection mode
+cp 
+Copy one or more files
+cut 
+Cut columns of text from a file
+grep 
+Search a file for some pattern
+head 
+Extract the first lines of a file
+ls 
+List director y
+make
+Compile files to build a binary
+mkdir 
+Make a director y
+od 
+Octal dump a file
+paste 
+Paste columns of text into a file
+pr 
+For mat a file for printing
+ps 
+List running processes
+rm 
+Remove one or more files
+rmdir 
+Remove a director y
+sor t
+Sor t a file of lines alphabetically
+tail 
+Extract the last lines of a file
+tr 
+Translate between character sets
+Figure 10-2. A few of the common Linux utility programs required by POSIX.
+Next, we divide the various kernel subsystems into three main components.
+The I/O component in Fig. 10-3 contains all kernel pieces responsible for 
+interacting with devices and performing network and storage I/O operations. At the 
+highest level, the I/O operations are all integrated under a VFS (Virtual File System)
+layer. That is, at the top level, performing a read operation on a file, whether it is in
+memory or on disk, is the same as performing a read operation to retrieve a 
+character from a terminal input. At the lowest level, all I/O operations pass through some
+device driver. All Linux drivers are classified as either character-device drivers or
+block-device drivers, the main difference being that seeks and random accesses are
+allowed on block devices and not on character devices. Technically, network 
+devices are really character devices, but they are handled somewhat differently, so
+that it is probably clearer to separate them, as has been done in the figure.
+Above the device-driver lev el, the kernel code is different for each device type.
+Character devices may be used in two different ways. Some programs, such as
+visual editors like vi and emacs, want every keystroke as it is hit. Raw terminal
+(tty) I/O makes this possible. Other software, such as the shell, is line oriented,
+allowing users to edit the whole line before hitting ENTER to send it to the 
+program. In this case, the character stream from the terminal device is passed through
+a so-called line discipline, and appropriate formatting is applied.

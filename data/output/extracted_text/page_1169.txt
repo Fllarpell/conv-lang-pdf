@@ -1,0 +1,99 @@
+1140
+INDEX
+Operating system structure (continued)
+kernel threads, 1057
+microkernel, 1056–1057
+Operating system type, 36–39
+Operating system, personal computer, 37
+Operating system, history, 7–20
+Optimal page replacement algorithm, 208–209
+Optimize the common case, 1077–1078
+ORB (see Object Request Brokers)
+Orthogonality principle, 1058–1059
+OS-level virtualization, 504–507
+OS/2, 874, 926
+OS/360, 11
+Ostrich algorithm, 447–449
+Out of memory killer, 224
+Out-of-memory killer, Android, 806–807
+Out-of-order execution, 675
+Output software, 402–419
+Overcommitment of memory, 496
+Overlapped seek, 370
+Overlay, memory, 192
+P
+PAAS (see Platform As A Service)
+PA C (see Pointer Authentication)
+Package, Android, 818
+Package manager, Android, 820
+Packet, 560
+PAE (see Physical Address Extension)
+Page, locked in memory, 236
+memory, 192
+pinned, 236
+Page allocator, 752
+Page cache, 318
+Page coloring, 689
+Page combining, Windows, 972–973
+Page daemon, 755
+Page descriptor, 749
+Page directory, 205–206
+Page directory pointer table, 206
+Page fault, 196, 198, 205, 207–221
+guest-induced, 494
+hypervisor-induced, 495
+major, 203
+minor, 203
+Page fault clustering, 965
+Windows, 959
+Page fault frequency page replacement algorithm, 223
+Page fault handling, 233–236
+Page frame, 194
+Page frame number, 198
+Page frame number database, Windows, 969–970
+Page frame reclaiming algorithm, 754, 755
+Page list, Windows, 977
+Page map level 4, 206
+Page replacement algorithm, 207–221
+aging, 213–214
+clock, 211–212
+first-in first-out, 210
+least recently used, 212–214
+Linux, 755–757
+not frequently used, 212
+not recently used, 209–210
+optimal, 208–209
+page fault frequency, 223
+second-chance, 210–211
+summary, 220–221
+Windows, 968–969
+working set, 214–218
+WSclock, 218–220
+Page sharing, content-based, 501
+transparent, 501
+Page size, 226–337
+Page table, 194, 196–200
+extended, 495–496
+Hyper-V, 1005
+inverted, 206–207
+Linux, 751
+multilevel, 204–206
+nested, 495–496
+shadow, 494
+Windows, 967–969
+Page table entry, 198–200, 955–956
+Page table walk, 203
+Page-fault handling, Windows, 963–966
+Pagefile, Windows, 958–960, 977
+Pagefile reservation, Windows, 959
+Pagefile-backed section, Windows, 960
+Paging, 193–196
+backing store, 236–238
+copy on write, 229
+instruction backup, 234–236
+Linux, 754–757
+local vs. global, 221–224
+shared pages, 228–229
+speeding up, 200–203
+Paging algorithms, 207–221
+Paging daemon, 225

@@ -1,0 +1,42 @@
+260
+FILE SYSTEMS
+CHAP. 4
+popular, complementing or replacing their magnetic counterparts. Compared to
+hard disks, they do not have any moving parts that may break, and offer fast 
+random access. Tapes and optical disks are no longer as popular as they used to be and
+have much lower performance. Nowadays, if they are used at all, it is typically for
+backups. We will study magnetic hard disks and SSDs more in Chap. 5. For the
+moment, you can think of both as disk-like, even though strictly speaking an SSD
+is not a disk at all. Here, ‘‘disk-like’’ means that it supports an interface that 
+appears to be a linear sequence of fixed-size blocks and supporting two operations:
+1. Read block k
+2. Write block k
+In reality there are more, but with these two operations one could, in principle,
+solve the long-term storage problem.
+However, these are very inconvenient operations, especially on large systems
+used by many applications and possibly multiple users (e.g., on a server). Just a
+few of the questions that quickly arise are:
+1. How do you find information?
+2. How do you keep one user from reading another user’s data?
+3. How do you know which blocks are free?
+and there are many more.
+Just as we saw how the operating system abstracted away the concept of the
+processor to create the abstraction of a process and how it abstracted away the 
+concept of physical memory to offer processes (virtual) address spaces, we can solve
+this problem with a new abstraction: the file. Together, the abstractions of 
+processes (and threads), address spaces, and files are the most important concepts 
+relating to operating systems. If you really understand these three concepts from 
+beginning to end, you are well on your way to becoming an operating systems expert.
+Files are logical units of information created by processes. A disk will usually
+contain thousands or even millions of them, each one independent of the others. In
+fact, if you think of each file as a kind of address space, you are not that far off,
+except that they are used to model the disk instead of modeling the RAM.
+Processes can read existing files and create new ones if need be. Information
+stored in files must be persistent, that is, not be affected by process creation and
+termination. A file should disappear only when its owner explicitly removes it.
+Although operations for reading and writing files are the most common ones, there
+exist many others, some of which we will examine below.
+Files are managed by the operating system. How they are structured, named,
+accessed, used, protected, implemented, and managed are major topics in operating
+system design. As a whole, that part of the operating system dealing with files is
+known as the file system and is the subject of this chapter.

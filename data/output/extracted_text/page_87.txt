@@ -1,0 +1,69 @@
+58
+INTRODUCTION 
+CHAP. 1
+specifies the file to be inspected; the second one is a pointer to a structure where
+the information is to be put. The fstat calls does the same thing for an open file.
+1.6.3 System Calls for Directory Management
+In this section, we will look at some system calls that relate more to directories
+or the file system as a whole, rather than just to one specific file as in the previous
+section. The first two calls, mkdir and rmdir, create and remove empty directories,
+respectively. The next call is link. Its purpose is to allow the same file to appear
+under two or more names, often in different directories. A typical use is to allow
+several members of the same programming team to share a common file, with each
+of them having the file appear in his own directory, possibly under different names.
+Sharing a file is not the same as giving every team member a private copy; having
+a shared file means that changes that any member of the team makes are instantly
+visible to the other members—there is only one file. When copies are made of a
+file, subsequent changes made to one copy do not affect the others.
+To see how link works, consider the situation of Fig. 1-21(a). Here are two
+users, ast and jim, each having his own directory with some files. If ast now
+executes a program containing the system call
+link("/usr/jim/memo", "/usr/ast/note");
+the file memo in jim’s directory is now entered into ast’s directory under the name
+note. Thereafter, /usr/jim/memo and /usr/ast/note refer to the same file. As an
+aside, whether user directories are kept in /usr, /user, /home, or somewhere else is
+simply a decision made by the local system administrator.
+/usr/ast
+/usr/jim
+16!
+81!
+40
+mail!
+games!
+test
+(a)
+31!
+70!
+59!
+38
+bin!
+memo!
+f.c.!
+prog1
+/usr/ast
+/usr/jim
+16!
+81!
+40!
+70
+mail!
+games!
+test!
+note
+(b)
+31!
+70!
+59!
+38
+bin!
+memo!
+f.c.!
+prog1
+Figure 1-21. (a) Two directories before linking /usr/jim/memo to ast’s directory.
+(b) The same directories after linking.
+Understanding how link works will probably make clearer what it does. Every
+file in UNIX has a unique number, its i-number, that identifies it. This i-number is
+an index into a table of i-nodes, one per file, telling who owns the file, where its
+disk blocks are, and so on†. A directory is simply a file containing a set of 
+(i-number, ASCII name) pairs. In the first versions of UNIX, each directory entry was 16
+†Most people still call them disk blocks, even if they reside on SSD.

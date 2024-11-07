@@ -1,0 +1,54 @@
+SEC. 12.2
+INTERFACE DESIGN
+1049
+interface. And of course, voice input has a completely different paradigm. What is
+important is not so much the paradigm chosen, but the fact that there is a single
+overriding paradigm that unifies the entire user interface.
+Whatever paradigm is chosen, it is important that all application programs use
+it. Consequently, the system designers need to provide libraries and tool kits to
+application developers that give them access to procedures that produce the 
+uniform look-and-feel. Without tools, application developers will all do something
+different. User interface design is important, but it is not the subject of this book,
+so we will now drop back down to the subject of the operating system interface.
+Execution Paradigms
+Architectural coherence is important at the user level, but equally important at
+the system-call interface level. It is often useful to distinguish between the 
+execution paradigm and the data paradigm, so we will do both, starting with the former.
+Tw o execution paradigms are widespread: algorithmic and event driven. The
+algorithmic paradigm is based on the idea that a program is started to perform
+some function that it knows in advance or gets from its parameters. That function
+might be to compile a program, do the payroll, or fly an airplane to San Francisco.
+The basic logic is hardwired into the code, with the program making system calls
+from time to time to get user input, obtain operating system services, and so on.
+This approach is outlined in Fig. 12-1(a).
+main( )
+main( )
+{
+{
+int ... ;
+mess t msg;
+init( );
+init( );
+do something( );
+while (get message(&msg)) {
+read(...); 
+switch (msg.type) {
+do something else( );
+case 1: ... ;
+wr ite(...);
+case 2: ... ;
+keep going( );
+case 3: ... ;
+exit(0); 
+}
+}
+}
+}
+(a) 
+(b)
+Figure 12-1. (a) Algorithmic code. (b) Event-driven code.
+The other execution paradigm is the ev ent-driven paradigm of Fig. 12-1(b).
+Here the program performs some kind of initialization, for example, by displaying
+a certain screen, and then waits for the operating system to tell it about the first
+ev ent. The event is often a key being struck or a mouse movement. This design is
+useful for highly interactive programs.

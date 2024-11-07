@@ -1,0 +1,41 @@
+444
+DEADLOCKS 
+CHAP. 6
+observation is true, and in nearly all applications trying again later is not a 
+problem. For example, in the popular Ethernet local area network, if two computers
+send a packet at the same time, each one waits a random time and tries again; in
+practice this solution works fine. However, in a few applications one would prefer
+a solution that always works and cannot fail due to an unlikely series of random
+numbers. Think about safety control in a nuclear power plant.
+One improvement to Fig. 6-4 that has no deadlock and no starvation is to 
+protect the fiv e statements following the call to think by a binary semaphore. Before
+starting to acquire forks, a philosopher would do a down on mutex. After replacing
+the forks, she would do an up on mutex. From a theoretical viewpoint, this 
+solution is adequate. From a practical one, it has a performance bug: only one 
+philosopher can be eating at any instant. With fiv e forks available, we should be able to
+allow two philosophers to eat at the same time.
+The solution presented in Fig. 6-5 is deadlock-free and allows the maximum
+parallelism for an arbitrary number of philosophers. It uses an array, state, to keep
+track of whether a philosopher is currently eating, thinking, or hungry (trying to
+acquire forks). A philosopher may move into eating state only if neither neighbor
+is eating. Philosopher i’s neighbors are defined by the macros LEFT and RIGHT.
+In other words, if i is 2, LEFT is 1 and RIGHT is 3.
+The program uses an array of semaphores, one per philosopher, so hungry 
+philosophers can block if the needed forks are busy. Note that each process runs the
+procedure philosopher as its main code, but the other procedures, take forks,
+put forks, and test, are ordinary procedures and not separate processes.
+While we may consider the dining philosophers a contrived example, mostly
+popular with university professors and few others, deadlocks are quite real and
+may occur easily. A lot of research has gone into ways to deal with them. This
+chapter discusses the deadlock and starvation problems in detail, as well as what
+can be done about them.
+6.2 INTRODUCTION TO DEADLOCKS
+Deadlock can be defined formally as follows:
+A set of processes is deadlocked if each process in the set is waiting for an
+event that only another process in the set can cause.
+Because all the processes are waiting, none of them will ever cause any event that
+could wake up any of the other members of the set, and all the processes continue
+to wait forever. For this model, we assume that processes are single threaded and
+that no interrupts are possible to wake up a blocked process. The no-interrupts
+condition is needed to prevent an otherwise deadlocked process from being 
+awakened by an alarm, and then causing events that release other processes in the set.

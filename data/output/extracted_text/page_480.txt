@@ -1,0 +1,43 @@
+SEC. 6.4
+DEADLOCK DETECTION AND RECOVERY
+451
+5. Pick an unmarked outgoing arc at random and mark it. Then follow it
+to the new current node and go to step 3.
+6. If this node is the initial node, the graph does not contain any cycles
+and the algorithm terminates. Otherwise, we have now reached a
+dead end. Remove it and go back to the previous node, that is, the
+one that was current just before this one, make that one the current
+node, and go to step 3.
+What this algorithm does is take each node, in turn, as the root of what it hopes
+will be a tree, and do a depth-first search on it. If it ever comes back to a node it
+has already encountered, then it has found a cycle. If it exhausts all the arcs from
+any giv en node, it backtracks to the previous node. If it backtracks to the root and
+cannot go further, the subgraph reachable from the current node does not contain
+any cycles. If this property holds for all nodes, the entire graph is cycle free, so the
+system is not deadlocked.
+To see how the algorithm works in practice, let us use it on the graph of
+Fig. 6-8(a). The order of processing the nodes is arbitrary, so let us just inspect
+them from left to right, top to bottom, first running the algorithm starting at R, then
+successively A, B, C, S, D, T, E, F, and so forth. If we hit a cycle, the algorithm
+stops.
+We start at R and initialize L to the empty list. Then we add R to the list and
+move to the only possibility, A, and add it to L, giving L = [R, A]. From A we go
+to S, giving L = [R, A, S]. S has no outgoing arcs, so it is a dead end, forcing us to
+backtrack to A. Since A has no unmarked outgoing arcs, we backtrack to R, 
+completing our inspection of R.
+Now we restart the algorithm starting at A, resetting L to the empty list. This
+search, too, quickly stops, so we start again at B. From B we continue to follow
+outgoing arcs until we get to D, at which time L = [B, T, E, V, G, U, D]. Now we
+must make a (random) choice. If we pick S we come to a dead end and backtrack
+to D. The second time we pick T and update L to be [B, T, E, V, G, U, D, T ], at
+which point we discover the cycle and stop the algorithm.
+This algorithm is far from optimal. For a better one, see Even (1979). 
+Nevertheless, it demonstrates that an algorithm for deadlock detection exists.
+6.4.2 Deadlock Detection with Multiple Resources of Each Type
+When multiple copies of some of the resources exist, a different approach is
+needed to detect deadlocks. We will now present a matrix-based algorithm for
+detecting deadlock among n processes, P1 through Pn. Let the number of resource
+classes be m, with E1 resources of class 1, E2 resources of class 2, and generally,
+Ei resources of class i (1 ) i ) m). E is the existing resource vector. It giv es the
+total number of instances of each resource in existence. For example, if class 1 is
+tape drives, then E1 = 2 means the system has two tape drives.

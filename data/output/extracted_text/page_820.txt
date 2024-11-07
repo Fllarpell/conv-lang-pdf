@@ -1,0 +1,43 @@
+SEC. 10.7
+SECURITY IN LINUX
+791
+Directories are files and have the same protection modes that ordinary files do
+except that the x bits refer to search permission instead of execute permission.
+Thus a directory with mode rwxr–xr–x allows its owner to read, modify, and search
+the directory, but allows others only to read and search it, but not add or remove
+files from it.
+Special files corresponding to the I/O devices have the same protection bits as
+regular files. This mechanism can be used to limit access to I/O devices. For
+example, the printer special file, /dev/lp, could be owned by the root or by a special
+user, daemon, and have mode rw– – – – – – – to keep everyone else from directly
+accessing the printer. After all, if everyone could just print at will, chaos would
+result.
+Of course, having /dev/lp owned by, say, daemon with protection mode
+rw– – – – – – – means that nobody else can use the printer. While this would save
+many innocent trees from an early death, sometimes users do have a legitimate
+need to print something. In fact, there is a more general problem of allowing 
+controlled access to all I/O devices and other system resources.
+This problem was solved by adding a new protection bit, the SETUID bit, to
+the 9 protection bits discussed above. When a program with the SETUID bit on is
+executed, the effective UID for that process becomes the UID of the executable
+file’s owner instead of the UID of the user who invoked it. When a process
+attempts to open a file, it is the effective UID that is checked, not the underlying
+real UID. By making the program that accesses the printer be owned by daemon
+but with the SETUID bit on, any user could execute it, and have the power of 
+daemon (e.g., access to /dev/lp) but only to run that program (which might queue print
+jobs for printing in an orderly fashion).
+Many sensitive Linux programs are owned by the root but with the SETUID
+bit on. For example, the program that allows users to change their passwords,
+passwd, needs to write in the password file. Making the password file publicly
+writable would not be a good idea. Instead, there is a program that is owned by the
+root and which has the SETUID bit on. Although the program has complete access
+to the password file, it will change only the caller’s password and not permit any
+other access to the password file.
+In addition to the SETUID bit, there is also a SETGID bit that works 
+analogously, temporarily giving the user the effective GID of the program. In practice,
+this bit is rarely used, however.
+10.7.2 Security System Calls in Linux
+There are only a small number of system calls relating to security. The most
+important ones are listed in Fig. 10-38. The most heavily used security system call
+is chmod. It is used to change the protection mode. For example,
+s = chmod("/usr/ast/newgame", 0755);

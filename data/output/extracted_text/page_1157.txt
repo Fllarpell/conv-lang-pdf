@@ -1,0 +1,101 @@
+1128
+INDEX
+Disk-space management, 301–303
+Dispatcher, 100
+Dispatcher header, 904
+Dispatcher object, 901, 904
+Windows, 904–905
+Distributed operating system, 18
+Distributed shared memory, 571–575
+false sharing, 574
+replicated, 572
+sequential consistency, 575
+Distributed system, 579–598
+hardware, 581–584
+DLL (see Dynamic-Link Library)
+DMA (see Direct Memory Access)
+DMI (see Direct Media Interface)
+DNS (see Domain Name System)
+Docker, 481, 506
+Document-based middleware, 588–590
+Domain 0, 499
+Domain name system, 588
+Don’t hide power, 1052
+DOS (see Disk Operating System)
+Double buffering, 365
+Double fetch vulnerability, 668
+Double indirect block, 328, 781
+Double interleaved disk, 374
+Double torus, 559
+Down system call, 770, 1077
+Down Win32 call, 938, 945
+DPC (see Deferred Procedure Call)
+DPC storm, 902
+DPC watchdog, 902
+Draper, John, 614
+Drive-by-download, 647
+Driver object, 886
+Driver signing, 689
+Driver verifier, 985
+Driver-kernel interface, 762
+DSM (see Distributed Shared Memory)
+Dual-use technology, 615
+Dump, file system, 307–312
+DuplicateHandle Win32 call, 938
+Dynamic binary translation, 512
+Dynamic disk, Windows, 980
+Dynamic fair-share scheduling, Windows, 950
+Dynamic link library, 230, 876
+Dynamic link library 926–928
+Dynamic relocation, 184–185
+Dynamic vs. static structures, 1062–1063
+Dynamic-link library, 64
+E
+E-Cos, 183
+Early binding, 1061
+ECC (see Error-Correcting Code)
+Echoing, keyboard, 398
+Eckert, J. Presper, 8
+Edge browser, 1016
+EEPROM (see Electrically Erasable PROM)
+Effective UID, 791–792
+Efficiency of hypervisor, 482
+Efficiency principle, 1047
+EFS (see Encrypting File System)
+Electrically erasable PROM, 27
+Elevation, Windows, 1024
+Elevator algorithm disk scheduling, 377
+Elevator scheduler, Linux, 764
+Eliminating vulnerabilities, Windows, 1026–1027
+Embedded system, 23, 37–38
+Emulated device, Hyper-V, 1007
+Encapsulating untrusted code, 691–692
+Encapsulation, hardware-independent, 516
+Encrypting file system, 1000
+End-to-end argument, 1055
+Engelbart, Douglas, 17, 408
+ENIAC, 8, 419
+Enlightened operating system, 1003
+Enlightenment, 1006
+EnterCriticalSection Win32 call, 939
+Entropy, 682
+EPT (see Extended Page Table)
+EPT (see Extended Page Tables)
+EPYC Milan chip, 539
+Error checking, 1070
+Error handling, 353
+disk, 367
+Error handling for disks, 379–381
+Error reporting, 367
+Error-correcting code, 339
+Escape character, 400
+Escape sequence, 402
+ESX server, 521–523
+Ethernet, 582–583
+Event, Windows, 938
+Event-driven paradigm, 1049, 1065
+Event-driven programming paradigm, 116
+Event-driven server, 116–118
+Evolution of VMware Workstation, 520–521
+Example file systems, 324–330
+Example program using file-system calls, 270–272

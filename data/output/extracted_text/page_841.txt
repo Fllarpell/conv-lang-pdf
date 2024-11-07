@@ -1,0 +1,52 @@
+812
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+to other processes, as shown in Fig. 10-44. The objects we are looking at here are
+simply locations in the address space of that process. The kernel only keeps track
+of these object addresses, with no meaning attached to them; they may be the 
+location of a C data structure, C++ object, or anything else located in that process’s
+address space.
+References to objects in remote processes are identified by an integer handle,
+which is much like a Linux file descriptor. For example, consider Object2a in
+Process 2—this is known by the kernel to be associated with Process 2, and further
+the kernel has assigned Handle 2 for it in Process 1. Process 1 can thus submit a
+transaction to the kernel targeted to its Handle 2, and from that the kernel can
+determine this is being sent to Process 2 and specifically Object2a in that process.
+Process 1
+Process 1
+Process 2
+Object1a
+Object1a
+Object2a
+Object2a
+Object2b
+Object2b
+Object1b
+Object1b
+Handle 2
+Handle 2
+Handle 1
+Handle 1
+Handle 2
+Handle 2
+Handle 3
+Handle 3
+Process 2
+Kernel
+Figure 10-44. Binder cross-process object mapping.
+Also like file descriptors, the value of a handle in one process does not mean
+the same thing as that value in another process. For example, in Fig. 10-44, we can
+see that in Process 1, a handle value of 2 identifies Object2a; howev er, in Process
+2, that same handle value of 2 identifies Object1a. Further, it is impossible for one
+process to access an object in another process if the kernel has not assigned a 
+handle to it for that process. Again in Fig. 10-44, we can see that Process 2’s Object2b
+is known by the kernel, but no handle has been assigned to it for Process 1. There
+is thus no path for Process 1 to access that object, even if the kernel has assigned
+handles to it for other processes.
+How do these handle-to-object associations get set up in the first place?
+Unlike Linux file descriptors, user processes do not directly ask for handles.
+Instead, the kernel assigns handles to processes as needed. This process is 
+illustrated in Fig. 10-45. Here we are looking at how the reference to Object1b from
+Process 2 to Process 1 in the previous figure may have come about. The key to
+this is how a transaction flows through the system, from left to right at the bottom
+of the figure.

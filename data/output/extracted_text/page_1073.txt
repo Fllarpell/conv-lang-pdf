@@ -1,0 +1,46 @@
+1044
+OPERATING SYSTEM DESIGN
+CHAP. 12
+of them are worse in key respects (such as reliability) than UNIX Version 7 was
+back in the 1970s.
+Why? Inertia and the desire for backward compatibility often get much of the
+blame, and the failure to adhere to good design principles is also a culprit. But
+there is more to it. Operating systems are fundamentally different in certain ways
+from small application programs you can download for $49. Let us look at eight of
+the issues that make designing an operating system much harder than designing an
+application program.
+First, operating systems have become extremely large programs. No one 
+person can sit down at a PC and dash off a serious operating system in a few months.
+Or even a few years. All current versions of UNIX contain millions of lines of
+code; Linux has hit 15 million, for example. Windows 10 and Windows 11 are
+probably in the range of 50–100 million lines of code, depending on what you
+count. No one person can understand a million lines of code, let alone 50 or 100
+million. When you have a product that none of the designers can hope to fully
+understand, it should be no surprise that the results are often far from optimal.
+Operating systems are not the most complex systems around. Aircraft carriers
+are far more complicated, for example, but they partition into isolated subsystems
+much better. The people designing the toilets on an aircraft carrier do not have to
+worry about the radar system. The two subsystems do not interact much. There are
+no known cases of a clogged toilet on an aircraft carrier causing the ship to start
+firing missiles. In an operating system, the file system often interacts with the
+memory system in unexpected and unforeseen ways.
+Second, operating systems have to deal with concurrency. There are multiple
+users and multiple I/O devices all active at once. Managing concurrency is 
+inherently much harder than managing a single sequential activity. Race conditions and
+deadlocks are just two of the problems that come up.
+Third, operating systems have to deal with potentially hostile users—users who
+want to interfere with system operation or do things that they are forbidden from
+doing, such as stealing another user’s files. The operating system needs to take
+measures to prevent these users from behaving improperly. Word-processing 
+programs and photo editors do not have this problem to the same degree.
+Fourth, despite the fact that not all users trust each other, many users do want
+to share some of their information and resources with selected other users. The
+operating system has to make this possible, but in such a way that malicious users
+cannot interfere. Again, application programs do not face anything like this 
+challenge.
+Fifth, operating systems live for a very long time. UNIX has been around for
+50 years. Windows for about 35 years and Linux for about 30. None of these 
+systems shows any sign of vanishing any time soon. Consequently, the designers have
+to think about how hardware and applications may change in the distant future and
+how they should prepare for it. Systems that are locked too closely into one 
+particular vision of the world usually die off.

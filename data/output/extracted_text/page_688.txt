@@ -1,0 +1,53 @@
+SEC. 9.5
+EXPLOITING SOFTWARE
+659
+1. char s[100], g[100] = "Hello ";
+/* declare s and g; initialize g */
+2. fgets(s, 100, stdin);
+/* read a string from the keyboard into s */
+3. strcat(g, s); 
+/* concatenate s onto the end of g */
+4. printf(g); 
+/* pr int g */
+Now it reads a string into the variable s and concatenates it to the initialized string
+g to build the output message in g. It still works. So far so good.
+However, a knowledgeable user who saw this code would quickly realize that
+the input accepted from the keyboard is not a just a string; it is a format string, and
+as such all the format specifications allowed by printf will work. What if someone
+provided ‘‘%08x%08x%08x’’? Well, in that case, the function would have to print
+the three next parameters to prinf as hexadecimal values of 8 digits. But there are
+no other parameters! However, printf does not know that. It will just assume that
+the parameters are in the usual places. For a 32-bit Linux system, where 
+parameters are passed via the stack, it will therefore print the next three values on the
+stack. On a 64-bit Linux system, where the first 6 parameters are passed via 
+registers (and the remaining ones, if any, via the stack), it will print 32 bits of the 
+content of the first three parameter registers. In other words, an attacker is able to leak
+possibly sensitive information via the format string.
+While most of the formatting indicators such as ‘‘%s’’ (for printing strings)
+and ‘‘%d’’ (for printing decimal integers), also format output, a couple are special.
+In particular, ‘‘%n’’ does not print anything. Instead it calculates how many 
+characters should have been output already at the place it appears in the string and
+stores it into the address indicated by the next argument to printf to be processed.
+Here is an example program using ‘‘%n’’:
+1. int main(int argc, char *argv[])
+2. {
+3. 
+int i=0;
+4. 
+printf("Hello %nwor ld\n", &i); 
+/* the %n stores into i */
+5. 
+printf("i=%d\n", i);
+/* i is now 6 */
+6. }
+Figure 9-20. A format string vulnerability.
+When this program is compiled and run, the output it produces on the screen is:
+Hello wor ld
+i=6
+Note that the variable i has been modified by a call to printf, something not 
+obvious to everyone. While this feature is useful once in a blue moon, it means that
+printing a format string can cause a word—or many words—to be stored into
+memory. Was it a good idea to include this feature in printf? Definitely not, but it
+seemed so handy at the time. A lot of software vulnerabilities started like this.
+As we saw in the preceding example, by accident the programmer who 
+modified the code allowed the user of the program to (inadvertently) enter a format

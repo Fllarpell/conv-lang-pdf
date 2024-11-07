@@ -1,0 +1,32 @@
+702
+SECURITY 
+CHAP. 9
+45. Several UNIX systems use the DES algorithm for encrypting passwords. These 
+systems typically apply DES 25 times in a row to obtain the encrypted password. 
+Download an implementation of DES from the Internet and write a program that encrypts a
+password and checks if a password is valid for such a system. Generate a list of 10
+encrypted passwords using the Morris-Thomson protection scheme. Use 16-bit salt for
+your program.
+46. Suppose a system uses ACLs to maintain its protection matrix. Write a set of 
+management functions to manage the ACLs when (1) a new object is created; (2) an object
+is deleted; (3) a new domain is created; (4) a domain is deleted; (5) new access rights
+(a combination of r, w, x) are granted to a domain to access an object; (6) existing
+access rights of a domain to access an object are revoked; (7) new access rights are
+granted to all domains to access an object; (8) access rights to access an object are
+revoked from all domains.
+47. Implement the program code outlined in Sec. 9.5.1 to see what happens when there is
+buffer overflow. Experiment with different string sizes.
+48. In this chapter,, we discussed covert channels. In this exercise, you are to run an 
+experiment to determine the bandwidth of one such channel, namely file locking. You are to
+write two programs that will try to communicate in a sneaky way, the sender and the
+receiver. They are to run on the same computer. The communicate by using a file
+called lockfile. Both programs can read and lock lockfile but cannot write it. Sender
+transmits a 0 by leaving lockfile unlocked. It sends a 1 by locking it. For simplicity,
+assume time is discrete in units of 6t, with one bit transmitted every 6t. The two 
+programs are assumed to be synchronized by an external clock. The sender uses lockfile to
+transmit a sequence of bytes, each one encoded with a Hamming code for reliability.
+The receiver tries to access lockfile at a high rate, with many attempts per 6t. Start with
+6t at 10 sec and determine the error rate in the underlying data stream (after the 
+Hamming code bits have been used to recover from errors and are stripped off) Then 
+gradually reduce 6t by 100 msec each time and plot the error rate and bandwidth as 
+functions of 6t.

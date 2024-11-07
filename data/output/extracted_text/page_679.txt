@@ -1,0 +1,44 @@
+650
+SECURITY 
+CHAP. 9
+user typed in a regular log message, the characters of the message would probably
+not represent a valid code address. As soon as the function A returns, the program
+would try to jump to an invalid target—something the system would not like at all.
+In most cases, the program would crash immediately.
+Now assume that this is not a benign user who provides an overly long 
+message by mistake, but an attacker who provides a tailored message specifically 
+aimed at subverting the program’s control flow. Say the attacker provides an input that
+is carefully crafted to overwrite the return address with the address of buffer B. The
+result is that upon returning from function A, the program will jump to the 
+beginning of buffer B and execute the bytes in the buffer as code. Since the attacker 
+controls the content of the buffer, she can fill it with machine instructions—to execute
+the attacker’s code within the context of the original program. In effect, the 
+attacker has overwritten memory with his own code and gotten it executed. The program
+is now completely under the attacker’s control. She can make it do whatever she
+wants. Often, the attacker code is used to launch a shell (for instance by means of
+the exec system call), enabling the intruder convenient access to the machine. For
+this reason, such code is commonly known as shellcode, even if it does not spawn
+a shell.
+This trick works not just for programs using gets (although you should really
+avoid using that function), but for any code that copies user-provided data in a
+buffer without checking for boundary violations. This user data may consist of
+command-line parameters, environment strings, data sent over a network 
+connection, or data read from a user file. There are many functions that copy or move
+such data: strcpy, memcpy, strcat, and many others. Of course, any old loop that
+you write yourself and that moves bytes into a buffer may be vulnerable as well.
+What if the attacker does not know the exact address to return to? Often an
+attacker can guess where the shellcode resides approximately, but not exactly. In
+that case, a typical solution is to prepend the shellcode with a nop sled: a sequence
+of one-byte NO OPERATION instructions that do not do anything at all. As long as
+the attacker manages to land anywhere on the nop sled, the execution will 
+eventually also reach the real shellcode at the end. Nop sleds work on the stack, but also
+on the heap. On the heap, attackers often try to increase their chances by placing
+nop sleds and shellcode all over the heap. For instance, in a browser, malicious
+JavaScript code may try to allocate as much memory as it can and fill it with a long
+nop sled and a small amount of shellcode. Then, if the attacker manages to divert
+the control flow and aims for a random heap address, chances are that she will hit
+the nop sled. This technique is known as heap spraying.
+Stack Canaries
+One commonly used defense against the attack sketched above is to use stack
+canaries. The name derives from the mining profession. Working in a mine is
+very dangerous work. Toxic gases like carbon monoxide may build up and kill the

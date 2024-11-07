@@ -1,0 +1,46 @@
+512
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+safely, on the hardware. When this is not possible, one approach is to specify a 
+virtualizable subset of the processor architecture, and port the guest operating systems
+to that newly defined platform. This technique is known as paravirtualization
+(Barham et al., 2003; Whitaker et al., 2002) and requires source-code level 
+modifications of the operating system. Put bluntly, paravirtualization modifies the guest
+to avoid doing anything that the hypervisor cannot handle. Paravirtualization was
+infeasible at VMware because of the compatibility requirement and the need to run
+operating systems whose source code was not available, in particular Windows.
+An alternative would have been to employ an all-emulation approach. In this,
+the instructions of the virtual machines are emulated by the VMM on the hardware
+(rather than directly executed). This can be quite efficient; prior experience with
+the SimOS (Rosenblum et al., 1997) machine simulator showed that the use of
+techniques such as dynamic binary translation running in a user-level program
+could limit overhead of complete emulation to a factor-of-fiv e slowdown. Although
+this is quite efficient, and certainly useful for simulation purposes, a factor-of-fiv e
+slowdown was clearly inadequate and would not meet the desired performance
+requirements.
+The solution to this problem combined two key insights. First, although 
+trapand-emulate direct execution could not be used to virtualize the entire x86 
+architecture all the time, it could actually be used some of the time. In particular, it
+could be used during the execution of application programs, which accounted for
+most of the execution time on relevant workloads. The reasons is that these 
+virtualization sensitive instructions are not sensitive all the time; rather they are 
+sensitive only in certain circumstances. For example, the POPF instruction is 
+virtualization-sensitive when the software is expected to be able to disable interrupts
+(e.g., when running the operating system), but is not virtualization-sensitive when
+software cannot disable interrupts (in practice, when running nearly all user-level
+applications).
+Figure 7-8 shows the modular building blocks of the original VMware VMM.
+We see that it consists of a direct-execution subsystem, a binary translation 
+subsystem, and a decision algorithm to determine which subsystem should be used. Both
+subsystems rely on some shared modules, for example to virtualize memory
+through shadow page tables, or to emulate I/O devices.
+The direct-execution subsystem is preferred, and the dynamic binary 
+translation subsystem provides a fallback mechanism whenever direct execution is not
+possible. This is the case for example whenever the virtual machine is in such a
+state that it could issue a virtualization-sensitive instruction. Therefore, each
+subsystem constantly reevaluates the decision algorithm to determine whether a
+switch of subsystems is possible (from binary translation to direct execution) or
+necessary (from direct execution to binary translation). This algorithm has a 
+number of input parameters, such as the current execution ring of the virtual machine,
+whether interrupts can be enabled at that level, and the state of the segments. For
+example, binary translation must be used if any of the following is true:

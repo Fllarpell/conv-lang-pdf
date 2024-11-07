@@ -1,0 +1,44 @@
+770
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Consider, for example, a database consisting of many files in one or more 
+directories that are accessed by unrelated users. It is certainly possible to associate a
+semaphore with each directory or file and achieve mutual exclusion by having
+processes do a down operation on the appropriate semaphore before accessing the
+data. The disadvantage, however, is that a whole directory or file is then made 
+inaccessible, even though only one record may be needed.
+For this reason, POSIX provides a flexible and fine-grained mechanism for
+processes to lock as little as a single byte and as much as an entire file in one
+indivisible operation. The locking mechanism requires the caller to specify the file
+to be locked, the starting byte, and the number of bytes. If the operation succeeds,
+the system makes a table entry noting that the bytes in question (e.g., a database
+record) are locked.
+Tw o kinds of locks are provided, shared locks and exclusive locks. If a  
+portion of a file already contains a shared lock, a second attempt to place a shared lock
+on it is permitted, but an attempt to put an exclusive lock on it will fail. If a 
+portion of a file contains an exclusive lock, all attempts to lock any part of that portion
+will fail until the lock has been released. In order to successfully place a lock,
+ev ery byte in the region to be locked must be available.
+When placing a lock, a process must specify whether it wants to block or not
+in the event that the lock cannot be placed. If it chooses to block, when the 
+existing lock has been removed, the process is unblocked and the lock is placed. If the
+process chooses not to block when it cannot place a lock, the system call returns
+immediately, with the status code telling whether the lock succeeded or not. If it
+did not, the caller has to decide what to do next (e.g., wait and try again).
+Locked regions may overlap. In Fig. 10-26(a) we see that process A has placed
+a shared lock on bytes 4 through 7 of some file. Later, process B places a shared
+lock on bytes 6 through 9, as shown in Fig. 10-26(b). Finally, C locks bytes 2
+through 11. As long as all these locks are shared, they can coexist.
+Now consider what happens if a process tries to acquire an exclusive lock to
+byte 9 of the file of Fig. 10-26(c), with a request to block if the lock fails. Since
+two previous locks cover this block, the caller will block and will remain blocked
+until both B and C release their locks.
+10.6.2 File-System Calls in Linux
+Many system calls relate to files and the file system. First we will look at the
+system calls that operate on individual files. Later we will examine those that
+involve directories or the file system as a whole. To create a new file, the creat call
+can be used. (When Ken Thompson was once asked what he would do differently
+if he had the chance to reinvent UNIX, he replied that he would spell creat as 
+create this time.) parameters provide the name of the file and the protection mode.
+Thus
+fd = creat("abc", mode);

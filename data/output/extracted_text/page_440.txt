@@ -1,0 +1,66 @@
+SEC. 5.6
+USER INTERFACES: KEYBOARD, MOUSE, & MONITOR
+411
+#include <windows.h>
+int WINAPI WinMain(HINSTANCE h, HINSTANCE, hprev, char *szCmd, int iCmdShow)
+{
+WNDCLASS wndclass;
+/* class object for this window */
+MSG msg;
+/* incoming messages are stored here */
+HWND hwnd;
+/* handle (pointer) to the window object */
+/* Initialize wndclass */
+wndclass.lpfnWndProc = WndProc;
+/* tells which procedure to call */
+wndclass.lpszClassName = "Program name"; 
+/* text for title bar */
+wndclass.hIcon = LoadIcon(NULL, IDI APPLICATION); 
+/* load program icon */
+wndclass.hCursor = LoadCursor(NULL, IDC ARROW); 
+/* load mouse cursor */
+RegisterClass(&wndclass); 
+/* tell Windows about wndclass */
+hwnd = CreateWindow ( ... )
+/* allocate storage for the window */
+ShowWindow(hwnd, iCmdShow); 
+/* display the window on the screen */
+UpdateWindow(hwnd); 
+/* tell the window to paint itself */
+while (GetMessage(&msg, NULL, 0, 0)) {
+/* get message from queue */
+Tr anslateMessage(&msg); 
+/* translate the message */
+DispatchMessage(&msg); 
+/* send msg to the appropriate procedure */
+}
+retur n(msg.wParam);
+}
+long CALLBACK WndProc(HWND hwnd, UINT message, UINT wParam, long lParam)
+{
+/* Declarations go here. */
+switch (message) {
+case WM CREATE: 
+... ;
+retur n ... ;
+/* create window */
+case WM PAINT:
+... ;
+retur n ... ;
+/* repaint contents of window */
+case WM DESTROY :
+... ;
+retur n ... ;
+/* destroy window */
+}
+retur n(DefWindowProc(hwnd, message, wParam, lParam)); /* default */
+}
+Figure 5-36. A skeleton of a Windows main program.
+handles, and in this case, h identifies the program. The second parameter is present
+only for reasons of backward compatibility. It is no longer actually used. The third
+parameter, szCmd, is a  zero-terminated string containing the command line that
+started the program, even if it was not started from a command line. The fourth
+parameter, iCmdShow, tells whether the program’s initial window should occupy
+the entire screen, part of the screen, or none of the screen (task bar only).
+This declaration illustrates a widely used Microsoft convention called 
+Hungarian notation. The name is a play on Polish notation, the postfix system invented

@@ -1,0 +1,77 @@
+202
+MEMORY MANAGEMENT 
+CHAP. 3
+Valid 
+Virtual page 
+Modified 
+Protection 
+Pag e frame
+1
+140 
+1
+RW 
+31
+1
+20
+0
+R X  
+38
+1
+130 
+1
+RW 
+29
+1
+129 
+1
+RW 
+62
+1
+19
+0
+R X  
+50
+1
+21
+0
+R X  
+45
+1
+860 
+1
+RW 
+14
+1
+861 
+1
+RW 
+75
+Figure 3-12. A TLB to speed up paging.
+If the virtual page number is present in the TLB but the instruction is trying to
+write on a read-only page, a protection fault is generated.
+The interesting case is what happens when the virtual page number is not in
+the TLB. The MMU detects the miss and does an ordinary page table lookup. It
+then evicts one of the entries from the TLB and replaces it with the page table
+entry just looked up. Thus if that page is used again soon, the second time it will
+result in a TLB hit rather than a miss. When an entry is purged from the TLB, the
+modified bit is copied back into the page table entry in memory. The other values
+are already there, except the reference bit. When the TLB is loaded from the page
+table, all the fields are taken from memory.
+If the operating system wants to change the bits in the page table entry (e.g., to
+make a read-only page writable), it will do so by modifying it in memory. 
+However, to make sure that the next write to that pages succeeds, it must also flush the
+corresponding entry with the old permission bits from the TLB.
+Software TLB Management
+Up until now, we hav e assumed that every machine with paged virtual memory
+has page tables recognized by the hardware, plus a TLB. In this design, TLB 
+management and handling TLB faults are done entirely by the MMU hardware. Traps
+to the operating system occur only when a page is not in memory.
+This assumption is true for many CPUs. However, some RISC machines,
+including the SPARC, MIPS, and (the now dead) HP PA, provide support for page
+management in software. On these machines, the TLB entries are explicitly loaded
+by the operating system. When a TLB miss occurs, instead of the MMU going to
+the page tables to find and fetch the needed page reference, it just generates a TLB
+fault and tosses the problem into the lap of the operating system. The system must
+find the page, remove an entry from the TLB, enter the new one, and restart the
+instruction that faulted. And, of course, all of this must be done in a handful of
+instructions because TLB misses occur much more frequently than page faults.

@@ -1,0 +1,40 @@
+SEC. 10.1
+HISTORY OF UNIX AND LINUX
+713
+academic following dating back to 1977, versus the vigorous young challenger,
+Linux, just two years old but with a growing following among individual users.
+Who knows how this battle of the free UNICES would have turned out?
+10.2 OVERVIEW OF LINUX
+In this section, we will provide a general introduction to Linux and how it is
+used, for the benefit of readers not already familiar with it. Nearly all of this 
+material applies to just about all UNIX variants with only small deviations. Although
+Linux has several graphical interfaces, the focus here is on how Linux appears to a
+programmer working in a shell window on X. Subsequent sections will focus on
+system calls and how it works inside.
+10.2.1 Linux Goals
+UNIX was always an interactive system designed to handle multiple processes
+and multiple users at the same time. It was designed by programmers, for 
+programmers, to use in an environment in which the majority of the users are 
+relatively sophisticated and are engaged in (often quite complex) software 
+development projects. In many cases, a large number of programmers are actively 
+cooperating to produce a single system, so UNIX has extensive facilities to allow people
+to work together and share information in controlled ways. The model of a group
+of experienced programmers working together closely to produce advanced 
+software is obviously very different from the personal-computer model of a single
+beginner working alone with a word processor, and this difference is reflected
+throughout UNIX from start to finish. It is only natural that Linux inherited many
+of these goals, even though the first version was for a personal computer.
+What is it that good programmers really want in a system? To start with, most
+like their systems to be simple, elegant, and consistent. For example, at the lowest
+level, a file should just be a collection of bytes. Having different classes of files for
+sequential access, random access, keyed access, remote access, and so on (as 
+mainframes do) just gets in the way. Similarly, if the command
+ls A*
+means list all the files beginning with ‘‘A’’ then the command
+rm A*
+should mean remove all the files beginning with ‘‘A’’ and not remove the one file
+whose two-character name consists of an ‘‘A’’ and an asterisk. This characteristic is
+sometimes called the principle of least surprise.
+Another thing that experienced programmers generally want is power and 
+flexibility. This means that a system should have a small number of basic elements that
+can be combined in an infinite variety of ways to suit the application. One of the

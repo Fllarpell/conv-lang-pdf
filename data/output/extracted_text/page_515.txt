@@ -1,0 +1,52 @@
+486
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+Vir tualizaton method 
+Type 1 hyper visor
+Type 2 hyper visor
+Vir tualization without HW support
+ESX Server 1.0 
+VMware Wor kstation 1
+Paravir tualization
+Xen 1.0
+Vir tualBox 5.0+
+Vir tualization with HW support
+vSphere, Xen, Hyper-V
+VMware Fusion, KVM, Parallels
+Process virtualization 
+Wine
+Figure 7-2. Examples of hypervisors. Type 1 hypervisors run on the bare metal,
+whereas type 2 hypervisors use the services of an existing host operating system.
+7.4 TECHNIQUES FOR EFFICIENT VIRTUALIZATION
+Virtualizability and performance are important issues, so let us examine them
+more closely. Assume, for the moment, that we have a type 1 hypervisor 
+supporting one virtual machine, as shown in Fig. 7-3. Like all type 1 hypervisors, it
+runs on the bare metal. The virtual machine runs as a user process in user mode,
+and as such is not allowed to execute sensitive instructions (in the Popek-Goldberg
+sense). However, the virtual machine runs a guest operating system that thinks it is
+in kernel mode (although, of course, it is not). We will call this virtual kernel
+mode. The virtual machine also runs user processes, which think they are in user
+mode (and really are in user mode).
+Type 1 hypervisor
+Virtual
+machine
+Guest operating system
+Virtual kernel mode
+Virtual user mode
+Hardware
+Trap on privileged instruction
+User process
+Kernel
+mode
+User
+mode
+Figure 7-3. When the operating system in a virtual machine executes a 
+kernelonly instruction, it traps to the hypervisor if virtualization technology is present.
+What happens when the guest operating system (which thinks it is in kernel
+mode) executes an instruction that is allowed only when the CPU really is in kernel
+mode? Normally, on CPUs without VT, the instruction fails and the operating 
+system crashes. On CPUs with VT, when the guest operating system executes a 
+sensitive instruction, a trap to the hypervisor does occur, as illustrated in Fig. 7-3. The
+hypervisor can then inspect the instruction to see if it was issued by the guest 
+operating system in the virtual machine or by a user program in the virtual machine. In
+the former case, it arranges for the instruction to be carried out; in the latter case, it

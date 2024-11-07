@@ -1,0 +1,55 @@
+SEC. 3.6
+IMPLEMENTATION ISSUES
+239
+Disk
+Main memory
+External
+pager
+Fault
+handler
+User
+process
+MMU
+handler
+1. Page
+  fault
+6. Map
+          page in
+  5. Here 
+      is page
+User
+space
+Kernel
+space
+2. Needed
+page
+4. Page
+       arrives
+3. Request page
+Figure 3-29. Page fault handling with an external pager.
+if need be. As the process runs, it may map new objects into its address space, so
+the external pager is once again notified.
+Once the process starts running, it may get a page fault. The fault handler 
+figures out which virtual page is needed and sends a message to the external pager,
+telling it the problem. The external pager then reads the needed page in from the
+nonvolatile storage and copies it to a portion of its own address space. Then it tells
+the fault handler where the page is. The fault handler then unmaps the page from
+the external pager’s address space and asks the MMU handler to put it into the
+user’s address space at the right place. Then the user process can be restarted.
+This implementation leaves open where the page replacement algorithm is put.
+It would be cleanest to have it in the external pager, but there are some problems
+with this approach. Principal among these is that the external pager does not have
+access to the R and M bits of all the pages. These bits play a role in many of the
+paging algorithms. Thus, either some mechanism is needed to pass this 
+information up to the external pager, or the page replacement algorithm must go in the 
+kernel. In the latter case, the fault handler tells the external pager which page it has
+selected for eviction and provides the data, either by mapping it into the external
+pager’s address space or including it in a message. Either way, the external pager
+writes the data to nonvolatile storage.
+The main advantage of this implementation is more modular code and greater
+flexibility. The main disadvantage is the extra overhead of crossing the user-kernel
+boundary several times and the overhead of the various messages being sent
+between the pieces of the system. The subject is controversial, but as computers
+get faster and faster, and the software gets more and more complex, in the long run
+sacrificing some performance for more reliable software may well be acceptable to
+most implementers and users. Some operating systems that implement paging in

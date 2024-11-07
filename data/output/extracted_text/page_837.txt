@@ -1,0 +1,46 @@
+808
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Using processes for this isolation allows Android to leverage all of Linux’s
+features for managing processes, from memory isolation to cleaning up all of the
+resources associated with a process when it goes away. In addition to processes,
+instead of using Java’s SecurityManager architecture, Android relies exclusively on
+Linux’s security features.
+The use of Linux processes and security greatly simplifies the ART 
+environment, since it is no longer responsible for these critical aspects of system stability
+and robustness. Not incidentally, it also allows applications to freely use native
+code in their implementation, which is especially important for games which are
+usually built with C++-based engines.
+Mixing processes and the Java language like this does introduce some 
+challenges. Bringing up a fresh Java-language environment can take more than a 
+second, even on modern mobile hardware. Recall one of the design goals of Android,
+to be able to quickly launch applications, with a target of 200 msec. Requiring that
+a fresh ART process be brought up for this new application would be well beyond
+that budget. A 200-msec launch is hard to achieve on mobile hardware, even 
+without needing to initialize a new Java-language environment.
+The solution to this problem is the zygote native daemon that we briefly 
+mentioned earlier in the chapter. Zygote is responsible for bringing up and initializing
+ART, to the point where it is ready to start running system or application code 
+written in Java. All new ART-based processes (system or application) are forked from
+zygote, allowing them to start execution with the environment already ready to go.
+This greatly speeds up launching apps.
+It is not just ART that zygote brings up. Zygote also preloads many parts of the
+Android framework that are commonly used in the system and application, as well
+as loading resources and other things that are often needed.
+Note that creating a new process from zygote involves a Linux fork system call
+but there is no exec system call. The new process is a replica of the original zygote
+process, with all of its preinitialized state already set up and ready to go. Figure
+10-41 illustrates how a new Java application process is related to the original
+zygote process. After the fork, the new process has its own separate ART 
+environment, though it is sharing all of the preloaded and initialed data with zygote
+through copy-on-write pages. All that now needs to be done to have the new 
+running process ready to go is to give it the correct identity (UID, etc.), finish any 
+initialization of ART that requires starting threads, and loading the application or 
+system code to be run.
+In addition to launch speed, there is another benefit that zygote brings. Because
+only a fork is used to create processes from it, the large number of dirty RAM
+pages needed to initialize ART and preload classes and resources can be shared
+between zygote and all of its child processes. This sharing is especially important
+for Android’s environment, where swap is not available; demand paging of clean
+pages (such as executable code) from ‘‘disk’’ (flash memory) is available. 
+However, any dirty pages must stay locked in RAM; they cannot be paged out to ‘‘disk.’’

@@ -1,0 +1,41 @@
+SEC. 8.3
+DISTRIBUTED SYSTEMS
+597
+fields of every tuple in the tuple space. A match occurs if the following three 
+conditions are all met:
+1. The template and the tuple have the same number of fields.
+2. The types of the corresponding fields are equal.
+3. Each constant or variable in the template matches its tuple field.
+Formal parameters, indicated by a question mark followed by a variable name or
+type, do not participate in the matching (except for type checking), although those
+containing a variable name are assigned after a successful match.
+If no matching tuple is present, the calling process is suspended until another
+process inserts the needed tuple, at which time the called is automatically revived
+and given the new tuple. The fact that processes block and unblock automatically
+means that if one process is about to output a tuple and another is about to input it,
+it does not matter which goes first. The only difference is that if the in is done
+before the out, there will be a slight delay until the tuple is available for removal.
+The fact that processes block when a needed tuple is not present can be put to
+many uses. For example, it can be used to implement semaphores. To create or do
+an up on semaphore S, a process can execute
+out("semaphore S");
+To do a down, it does
+in("semaphore S");
+The state of semaphore S is determined by the number of (‘‘semaphore S’’) tuples
+in the tuple space. If none exist, any attempt to get one will block until some other
+process supplies one.
+In addition to out and in, Linda also has a primitive operation read, which is
+the same as in except that it does not remove the tuple from the tuple space. There
+is also a primitive eval, which causes its parameters to be evaluated in parallel and
+the resulting tuple to be put in the tuple space. This mechanism can be used to 
+perform an arbitrary computation. This is how parallel processes are created in Linda.
+Publish/Subscribe
+Our next example of a coordination-based model was inspired by Linda and is
+called publish/subscribe (Oki et al., 1993). It consists of a number of processes
+connected by a broadcast network. Each process can be a producer of information,
+a consumer of information, or both.
+When an information producer has a new piece of information (e.g., a new
+stock price), it broadcasts the information as a tuple on the network. This action is
+called publishing. Each tuple contains a hierarchical subject line containing 
+multiple fields separated by periods. Processes that are interested in certain 
+information can subscribe to certain subjects, including the use of wildcards in the

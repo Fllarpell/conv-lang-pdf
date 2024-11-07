@@ -1,0 +1,61 @@
+52
+INTRODUCTION 
+CHAP. 1
+RCX, R8, and R9. If there are more than six arguments, the remainder will be
+pushed onto the stack. As we have only three arguments for read library 
+procedure, this is shown as steps 1–3 in Fig. 1-17.
+Return to caller
+4
+10
+6
+0
+9
+7
+8
+3
+2
+1
+11
+Dispatch
+Sys call
+handler
+Address
+0xFFFFFFFF
+User space
+Kernel space
+(Operating system)
+Library
+procedure
+read
+User program
+calling read
+Trap to the kernel
+Put code for read in register
+Increment SP
+Call read
+Push fd
+Push &buffer
+Push nbytes
+5
+Put nbytes in RDX register
+Put buffer in RSI register
+Put fd in RDI register
+RAX reg.
+(Next instruction)
+Figure 1-17. The 10 steps in making the system call read(fd, buffer, nbytes).
+The first and third parameters are passed by value, but the second parameter is
+a reference, meaning that the address of the buffer is passed, not the contents of the
+buffer. Then comes the actual call to the library procedure (step 4). This 
+instruction is the normal procedure-call instruction used to call all procedures.
+The library procedure, written in assembly language, typically puts the 
+system-call number in a place where the operating system expects it, such as the RAX
+register (step 5). Then it executes a trap instruction (such the X86-64 SYSCALL
+instruction) to switch from user mode to kernel mode and start execution at a fixed
+address within the kernel (step 6). The trap instruction is actually fairly similar to
+the procedure-call instruction in the sense that the instruction following it is taken
+from a distant location and the return address is saved on the stack for use later.
+Nevertheless, the trap instruction also differs from the procedure-call 
+instruction in two fundamental ways. First, as a side effect, it switches into kernel mode.
+The procedure call instruction does not change the mode. Second, rather than 
+giving a relative or absolute address where the procedure is located, the trap 
+instruction cannot jump to an arbitrary address. Depending on the architecture, either it

@@ -1,0 +1,44 @@
+SEC. 11.4
+PROCESSES AND THREADS IN WINDOWS
+951
+reason, the 64-bit version of Windows XP, released in 2001, included WoW64
+(Windows-on-Windows), an emulation layer for running unmodified 32-bit 
+applications on 64-bit Windows. OriginalO, WoW64 only ran 32-bit x86 applications on
+IA-64 and then x64, but Windows 10 further expanded the scope of WoW64 to run
+32-bit ARM applications as well as x86 applications on arm64.
+WoW64 Design
+At its heart, WoW64 is a paravirtualization layer which makes the 32-bit 
+application believe that it is running on a 32-bit system. In this context, the 32-bit 
+architecture is called the guest and the 64-bit OS is the host. Such virtualization could
+have been done by using a virtual machine with full 32-bit Windows running in it.
+In fact, Windows 7 had a feature called XP Mode which did exactly that. However,
+virtual machine-based approaches are much more expensive due to the memory
+and CPU overhead of running two operating systems. Also hiding all the seams
+between the operating systems and making the user feel like she’s using a single
+operating system is difficult. Instead, WoW64 emulates a 32-bit system at the 
+system call layer, in user-mode. The application and all of its 32-bit dependencies load
+and run normally. Their system calls are redirected to the WoW64 layer which 
+converts them to 64-bit and makes the actual system call through the host ntdll.dll.
+This essentially eliminates all overhead and the 64-bit kernel-mode code is largely
+unaware of the 32-bit emulation; it runs just like any other process.
+Figure 11-28 shows the composition of a WoW64 process and the WoW64 
+layers compared to a native 64-bit process. WoW64 processes contain both 32-bit
+code for the guest (composed of application and 32-bit OS binaries) and 64-bit
+native code for the WoW64 layer and ntdll.dll. At process creation time, the kernel
+prepares the address space similar to what a 32-bit OS would. 32-bit versions of
+data structures such as PEB and TEB are created and the 32-bit WoW64-aware
+ntdll.dll is mapped into the process along with the 32-bit application executable.
+Each thread has a 32-bit stack and a 64-bit stack which are switched when 
+transitioning between the two layers (much like how entering kernel-mode switches to
+the thread’s kernel stack and back). All 32-bit components and data structures use
+the low 4 GB of the process address space so all addresses fit within guest pointers.
+Native layer sits underneath the guest code and is composed of WoW64 DLLs
+as well as the native ntdll.dll and the normal 64-bit PEB and TEBs. This layer
+effectively acts as the 32-bit kernel for the guest. There are two categories of
+WoW64 DLLs: the WoW64 abstraction layer (wow64.dll, wow64base.dll and
+wow64win.dll) and the CPU emulation layer. The WoW64 abstraction layer is
+largely platform-independent and acts as the thunk layer, which receives 32-bit
+system calls and converts them to 64-bit calls, accounting for differences in types
+and structure layout. Some of the simpler system calls which do not need extensive
+type conversion go through an optimized path called Turbo Thunks in the CPU
+emulation layer to make direct system calls into the kernel. Otherwise, wow64.dll

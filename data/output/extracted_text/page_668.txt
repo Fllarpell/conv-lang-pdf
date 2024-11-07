@@ -1,0 +1,44 @@
+SEC. 9.4
+AUTHENTICATION
+639
+can change the boot sequence. If you have a notebook computer, stop reading now.
+Go put a password on your BIOS, then come back.
+Another thing that modern systems tend to do is encrypt all content on your
+drive. This is a good thing. It ensures that even if attackers manage to read the raw
+blocks from your drive, they will see only garbled data. Again, if you do not have
+this enabled, put down this book and go fix this first.
+Weak Passwords
+Often, crackers break in simply by connecting to the target computer (e.g.,
+over the Internet) and trying many (login name, password) combinations until they
+find one that works. Many people use their own name in one form or another as
+their login name. For someone whose full name is ‘‘Ellen Ann Smith,’’ ellen,
+smith, ellen smith, ellen-smith, ellen.smith, esmith, easmith, and eas are all 
+reasonable candidates. Armed with one of those books entitled 4096 Names for Your
+New Baby, plus a telephone book full of last names, a cracker can easily compile a
+computerized list of potential login names appropriate to the country being 
+attack%ed (ellen smith might work fine in the United States or England, but 
+probably not in Japan).
+Of course, guessing the login name is not enough. The password has to be
+guessed, too. How hard is that? Easier than you think. The classic work on 
+password security was done by Morris and Thompson (1979) on UNIX systems. They
+compiled a list of likely passwords: first and last names, street names, city names,
+words from a moderate-sized dictionary (also words spelled backward), 
+syntactically valid license plate numbers, etc. They then compared their list to the system
+password file to see if there were any matches. Over 86% of all passwords turned
+up in their list.
+Lest anyone think that better-quality users pick better-quality passwords, rest
+assured that they do not. When in 2012, 6.4 million LinkedIn (hashed) passwords
+leaked to the Web after a hack, many people had fun analyzing the results. The
+most popular password was ‘‘password.’’ The second most popular was ‘‘123456’’
+(‘‘1234’’, ‘‘12345’’, and ‘‘12345678’’ were also in the top 10). Not exactly
+uncrackable. In fact, crackers can compile a list of potential login names and a list
+of potential passwords without much work and run a program to try them on as
+many computers as they can.
+This is similar to what researchers at IOActive did a few years back. They
+scanned a long list of home routers and set-top boxes to see if they were vulnerable
+to the simplest possible attack. Rather than trying out many login names and 
+passwords, as we suggested, they tried only the well-known default login and password
+installed by the manufacturers. Users are supposed to change these values 
+immediately, but it appears that many do not. The researchers found that hundreds of
+thousands of such devices are potentially vulnerable. Perhaps even more worrying,
+the Stuxnet attack on an Iranian nuclear facility made good use of the fact that the

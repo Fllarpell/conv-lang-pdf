@@ -1,0 +1,44 @@
+230
+MEMORY MANAGEMENT 
+CHAP. 3
+3.5.7 Shared Libraries
+Sharing can be done at other granularities than individual pages. If a program
+is started up twice, most operating systems will automatically share all the text
+pages so that only one copy is in memory. Text pages are always read only, so there
+is no problem here. Depending on the operating system, each process may get its
+own private copy of the data pages, or they may be shared and marked read only.
+If any process modifies a data page, a private copy will be made for it, that is, copy
+on write will be applied.
+In modern systems, there are many large libraries used by many processes, for
+example, multiple I/O and graphics libraries. Statically binding all these libraries to
+ev ery executable program on nonvolatile storage would make them even more
+bloated than they already are.
+Instead, a common technique is to use shared libraries (which are called
+DLLs or Dynamic Link Libraries on Windows). To make the idea of a shared
+library clear, first consider traditional linking. When a program is linked, one or
+more object files and possibly some libraries are named in the command to the
+linker, such as the UNIX command
+ld *.o –lc –lm
+which links all the .o (object) files in the current directory and then scans two
+libraries, /usr/lib/libc.a and /usr/lib/libm.a. Any functions called in the object files
+but not present there (e.g., printf) are called undefined externals and are sought in
+the libraries. If they are found, they are included in the executable binary. Any
+functions that they call but are not yet present also become undefined externals.
+For example, printf needs write, so if write is not already included, the linker will
+look for it and include it when found. When the linker is done, an executable 
+binary file is written to nonvolatile storage containing all the functions needed. 
+Functions present in the libraries but not called are not included. When the program is
+loaded into memory and executed, all the functions it needs are there and functions
+it does not need are not there.
+Now suppose common programs use 20–50 MB worth of graphics and user
+interface functions. Statically linking hundreds of programs with all these libraries
+would waste a significant amount of space on nonvolatile storage as well as 
+wasting space in RAM when they were loaded since the system would have no way of
+knowing it could share them. This is where shared libraries come in. When a 
+program is linked with shared libraries (which are slightly different than static ones),
+instead of including the actual function called, the linker includes a small stub 
+routine that binds to the called function at run time. Depending on the system and the
+configuration details, shared libraries are loaded either when the program is loaded
+or when functions in them are called for the first time. Of course, if another 
+program has already loaded the shared library, there is no need to load it again—that is
+the whole point of it. Note that when a shared library is loaded or used, the entire

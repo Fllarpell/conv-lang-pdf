@@ -1,0 +1,37 @@
+816
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+necessary to define that interface and implement the appropriate marshalling and
+unmarshalling code needed to make remote calls with it.
+Figure 10-47 shows a simple example of an interface defined in AIDL. This
+interface is called IExample and contains a single method, print, which takes a 
+single String argument.
+package com.example
+interface IExample {
+void print(Str ing msg);
+}
+Figure 10-47. Simple interface described in AIDL.
+An interface description like that in Fig. 10-47 is compiled by AIDL to 
+generate three Java-language classes illustrated in Fig. 10-48:
+1. IExample supplies the Java-language interface definition.
+2. IExample.Stub is the base class for implementations of this 
+interface. It inherits from Binder, meaning it can be the recipient of IPC
+calls; it inherits from IExample, since this is the interface being
+implemented. The purpose of this class is to perform unmarshalling:
+turn incoming onTransact calls in to the appropriate method call of
+IExample. A subclass of it is then responsible only for implementing
+the IExample methods.
+3. IExample.Proxy is the other side of an IPC call, responsible for 
+performing marshalling of the call. It is a concrete implementation of
+IExample, implementing each method of it to transform the call into
+the appropriate Parcel contents and send it off through a transact call
+on an IBinder it is communicating with.
+Binder
+IExample
+IExample.Stub
+IExample.Proxy
+IBinder
+Figure 10-48. Binder interface inheritance hierarchy.
+With these classes in place, there is no longer any need to worry about the
+mechanics of an IPC. Implementors of the IExample interface simply derive from
+IExample.Stub and implement the interface methods as they normally would.

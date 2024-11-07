@@ -1,0 +1,67 @@
+580
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+Item 
+Multiprocessor 
+Multicomputer
+Distributed System
+Node configuration 
+CPU
+CPU, RAM, net interface 
+Complete computer
+Node peripherals 
+All shared 
+Shared exc. maybe disk
+Full set per node
+Location 
+Same rack 
+Same room
+Possibly wor ldwide
+Inter node communication 
+Shared RAM 
+Dedicated interconnect 
+Traditional networ k
+Operating systems
+One, shared 
+Multiple, same 
+Possibly all different
+File systems
+One, shared 
+One, shared 
+Each node has own
+Administration 
+One organization 
+One organization 
+Many organizations
+Figure 8-26. Comparison of three kinds of multiple CPU systems.
+two do not. This difference leads to different programming models and different
+mindsets. However, from an applications perspective, multiprocessors and 
+multicomputers are just big equipment racks in a machine room. Both are used for 
+solving computationally intensive problems, whereas a distributed system connecting
+computers all over the Internet is typically much more involved in communication
+than in computation and is used in a different way.
+To some extent, loose coupling of the computers in a distributed system is both
+a strength and a weakness. It is a strength because the computers can be used for a
+wide variety of applications, but it is also a weakness, because programming these
+applications is difficult due to the lack of any common underlying model.
+Typical Internet applications include access to remote computers (using telnet,
+ssh, and rlogin), access to remote information (using the World Wide Web and
+FTP, the File Transfer Protocol), person-to-person communication (using email and
+chat programs), and many emerging applications (e.g., e-commerce, telemedicine,
+and distance learning). The trouble with all these applications is that each one has
+to reinvent the wheel. For example, email, FTP, and the World Wide Web all 
+basically move files from point A to point B, but each one has its own way of doing it,
+complete with its own naming conventions, transfer protocols, replication 
+techniques, and everything else. Although many Web browsers hide these differences
+from the average user, the underlying mechanisms are completely different. Hiding
+them at the user-interface level is like having a person at a full-service travel agent
+Website book a trip for you from New York to San Francisco, and only later tell
+you whether she has purchased a plane, train, or bus ticket.
+What distributed systems add to the underlying network is some common 
+paradigm (model) that provides a uniform way of looking at the whole system. The
+intent of the distributed system is to turn a loosely connected bunch of machines
+into a coherent system based on one concept. Sometimes the paradigm is simple
+and sometimes it is more elaborate, but the idea is always to provide something
+that unifies the system.
+A simple example of a unifying paradigm in a different context is found in
+UNIX, where all I/O devices are made to look like files. Having keyboards, mice,

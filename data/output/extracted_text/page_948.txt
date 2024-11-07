@@ -1,0 +1,55 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+919
+To help application writers find problems like these in their programs, 
+Windows has an application verifier that software developers can download from
+Microsoft. Similar to the verifier for drivers we will describe in Sec. 11.7, the
+application verifier does extensive rules checking to help programmers find bugs
+that might not be found by ordinary testing. It can also turn on a FIFO ordering for
+the handle free list, so that handles are not reused immediately (i.e., turns off the
+better-performing LIFO ordering normally used for handle tables). Keeping 
+handles from being reused quickly transforms situations where an operation uses the
+wrong handle into use of a closed handle, which is easy to detect.
+The Object Namespace
+Processes can share objects by having one process duplicate a handle to the
+object into the others. But this requires that the duplicating process have handles to
+the other processes, and is thus impractical in many situations, such as when the
+processes sharing an object are unrelated, or are protected from each other. In other
+cases, it is important that objects persist even when they are not being used by any
+process, such as device objects representing physical devices, or mounted volumes,
+or the objects used to implement the object manager and the NT namespace itself.
+To address general sharing and persistence requirements, the object manager
+allows arbitrary objects to be given names in the NT namespace when they are
+created. However, it is up to the executive component that manipulates objects of a
+particular type to provide interfaces that support use of the object manager’s 
+naming facilities.
+The NT namespace is hierarchical, with the object manager implementing
+directories and symbolic links. The namespace is also extensible, allowing any
+object type to specify extensions of the namespace by specifying a Parse routine.
+The Parse routine is one of the procedures that can be supplied for each object type
+when it is created, as shown in Fig. 11-18.
+Procedure 
+When called 
+Notes
+Open 
+For every new handle 
+Rarely used
+Parse 
+For object types that extend the namespace
+Used for files and registry keys
+Close 
+At last handle close
+Clean up visible side effects
+Delete 
+At last pointer dereference 
+Object is about to be deleted
+Secur ity
+Get or set object’s secur ity descr iptor
+Protection
+Quer yName
+Get object’s name 
+Rarely used outside ker nel
+Figure 11-18. Object procedures supplied when specifying a new object type.
+The Open procedure is rarely used because the default object-manager 
+behavior is usually what is needed and so the procedure is specified as NULL for almost
+all object types.

@@ -1,0 +1,44 @@
+SEC. 13.2
+ALPHABETICAL BIBLIOGRAPHY
+1103
+DIJKSTRA, E.W.: ‘‘Co-operating Sequential Processes,’’ in Programming Languages,
+Genuys, F. (Ed.), London: Academic Press, 1965.
+DIJKSTRA, E.W.: ‘‘The Structure of THE Multiprogramming System,’’ Commun. ACM,
+Vol. 11, pp. 341–346, May 1968.
+DOMINGO, D., and KANNAN, S.: ‘‘pFSCK: Accelerating File System Checking and Repair
+for Modern Storage,’’ Proc. 19th USENIX Conf. on File and Storage Tech., USENIX,
+pp. 113–126, 2021.
+DRESLINSKI, R.G., FICK, D., GIRIDHAR, B., KIM, G., SEO, S., FOJTIK, M., SATPATHY,
+S., LEE, Y., KIM, D. LIU, N., WIECKOWSKI, M., CHEN, G., SYLVESTER, D.,
+BLAAUW, D., and MUDGE, T.: ‘‘Centip3De: A Many-Core Prototype Exploring 3D
+Integration and Near-Threshold Computing,’’ Commun. ACM, Vol. 56, pp. 97–104,
+Nov. 2013.
+DUBOIS, M., SCHEURICH, C., and BRIGGS, F.A.: ‘‘Synchronization, Coherence, and
+Event Ordering in Multiprocessors,’’ Computer, Vol. 21, pp. 9–21, Feb. 1988.
+DUO, W., JIANG, X., KAROUI, O., GUO, X., YOU, D., WANG S., and RUAN, Y. : ‘‘ A 
+Deadlock Prevention Policy for a Class of Multithreaded Software,’’ IEEE ACCESS, IEEE,
+Vol. 8, pp. 16676–16688, 2020.
+DUTA, V., VAN DER KOUWE, E., BOS, H., and GIUFFRIDA, C.: ‘‘PIBE: Practical Kernel
+Control-flow Hardening with Profile-guided Indirect Branch Elimination,’’ Proc. 26th
+Int. Conf. on Arc hitectural Support for Programming Languages and Operating Syst.,
+ACM, 2021.
+EAGER, D.L., LAZOWSKA, E.D., and ZAHORJAN, J.: ‘‘ Adaptive Load Sharing in 
+Homogeneous Distributed Systems,’’ IEEE Trans. Software Eng., Vol. SE-12, pp. 662–675,
+May 1986.
+EL FERKOUSS, O., SNAIKI, I., MOUNAOUAR, O., DAHMOUNI, H., BEN ALI, R.,
+LEMIEUX, Y., and OMAR, C.: ‘‘ A 100Gig Network Processor Platform for Openflow,’’
+Proc. Seventh Int’l Conf. on Network Services and Management, IFIP, pp. 286–289,
+2011.
+EL GAMAL, A.: ‘‘ A Public Key Cryptosystem and Signature Scheme Based on Discrete
+Logarithms,’’ IEEE Trans. Inform. Theory, Vol. IT-31, pp. 469–472, July 1985.
+ENGLER, D.R., CHELF, B., CHOU, A., and HALLEM, S.: ‘‘Checking System Rules Using
+System-Specific Programmer-Written Compiler Extensions,’’ Proc. Fourth USENIX
+Symp. on Operating Syst. Design and Implementation, USENIX, pp. 1–16, 2000.
+ENGLER, D.R., KAASHOEK, M.F., and O’TOOLE, J. Jr.: ‘‘Exokernel: An Operating 
+System Architecture for Application-Level Resource Management,’’ Proc. 15th Symp. on
+Operating Syst. Prin., ACM, pp. 251–266, 1995.
+ERL, T., PUTTINI, R., and MAHMOOD, Z.: Cloud Computing: Concepts, Technology &
+Architecture, Hoboken, NJ: Pearson, 2013.
+EVEN, S.: Graph Algorithms, Potomac, MD: Computer Science Press, 1979.
+FABRY, R.S.: ‘‘Capability-Based Addressing,’’ Commun. ACM, Vol. 17, pp. 403–412, July
+1974.

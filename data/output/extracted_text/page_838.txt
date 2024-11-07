@@ -1,0 +1,36 @@
+SEC. 10.8
+ANDROID
+809
+Preloaded resources
+Preloaded classes
+Dalvik
+Copy-on-write
+Dalvik
+Preloaded classes
+Preloaded resources
+Application classes
+and resources
+App process
+Zygote
+Figure 10-41. Creating a new ART process from zygote.
+10.8.7 Binder IPC
+Android’s system design revolves significantly around process isolation,
+between applications as well as between different parts of the system itself. This
+requires a large amount of interprocess communication to coordinate between the
+different processes, which can take a large amount of work to implement and get
+right. Android’s Binder interprocess communication mechanism is a rich 
+general-purpose IPC facility that most of the Android system is built on top of.
+The Binder architecture is divided into three layers, shown in Fig. 10-42. At
+the bottom of the stack is a kernel module that implements the actual cross-process
+interaction and exposes it through the kernel’s ioctl function. (ioctl is a 
+general-purpose kernel call for sending custom commands to kernel drivers and 
+modules.) On top of the kernel module is a basic object-oriented user-space API,
+allowing applications to create and interact with IPC endpoints through the IBinder
+and Binder classes. At the top is an interface-based programming model where
+applications declare their IPC interfaces and do not otherwise need to worry about
+the details of how IPC happens in the lower layers.
+Binder Kernel Module
+Rather than use existing Linux IPC facilities such as pipes, Binder includes a
+special kernel module that implements its own IPC mechanism. The Binder IPC
+model is different enough from traditional Linux mechanisms that it cannot be
+efficiently implemented on top of them purely in user space. In addition, Android

@@ -1,0 +1,46 @@
+SEC. 11.7
+INPUT/OUTPUT IN WINDOWS
+985
+documentation to help developers produce drivers which conform to the WDM.
+Most Windows drivers start out as copies of an appropriate sample driver from the
+WDK, which is then modified by the driver writer.
+Microsoft also provides a driver verifier which validates many of the actions
+of drivers to be sure that they conform to the WDM requirements for the structure
+and protocols for I/O requests, memory management, and so on. The verifier ships
+with the system, and administrators can control it by running verifier.exe, which
+allows them to configure which drivers are to be checked and how extensive (i.e.,
+expensive) the checks should be.
+Even with all the support for driver dev elopment and verification, it is still very
+difficult to write even simple drivers in Windows, so Microsoft has built a system
+of wrappers called the WDF (Windows Driver Foundation) that runs on top of
+WDM and simplifies many of the more common requirements, mostly related to
+correct interaction with device power management and plug-and-play operations.
+To further simplify driver writing, as well as increase the robustness of the 
+system, WDF includes the UMDF (User-Mode Driver Framework) for writing 
+drivers as services that execute in processes. And there is the KMDF (Kernel-Mode
+Driver Framework) for writing drivers as services that execute in the kernel, but
+with many of the details of WDM made automagical. Since underneath it is the
+WDM that provides the driver model, that is what we will focus on in this section.
+Devices in Windows are represented by device objects. Device objects are also
+used to represent hardware, such as buses, as well as software abstractions like file
+systems, network protocol engines, and kernel extensions, such as antivirus filter
+drivers. All these are organized by producing what Windows calls a device stack,
+as previously shown in Fig. 11-14.
+I/O operations are initiated by the I/O manager calling an executive API
+IoCallDr iver with pointers to the top device object and to the IRP representing the
+I/O request. This routine finds the driver object associated with the device object.
+The operation types that are specified in the IRP generally correspond to the I/O
+manager system calls described earlier, such as create, read, and close.
+Figure 11-41 shows the relationships for a single level of the device stack. For
+each of these operations, a driver must specify an entry point. IoCallDr iver takes
+the operation type out of the IRP, uses the device object at the current level of the
+device stack to find the driver object, and indexes into the driver dispatch table
+with the operation type to find the corresponding entry point into the driver. The
+driver is then called and passed the device object and the IRP.
+Once a driver has finished processing the request represented by the IRP, it has
+three options. It can call IoCallDr iver again, passing the IRP and the next device
+object in the device stack. It can declare the I/O request to be completed and return
+to its caller. Or it can queue the IRP internally and return to its caller, having
+declared that the I/O request is still pending. This latter case results in an 
+asynchronous I/O operation, at least if all the drivers above in the stack agree and also
+return to their callers.

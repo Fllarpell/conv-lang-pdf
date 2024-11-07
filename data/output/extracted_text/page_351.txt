@@ -1,0 +1,43 @@
+322
+FILE SYSTEMS
+CHAP. 4
+back up all their important files every week, each new backup probably contains
+(mostly) the same data.
+Rather than storing the same data multiple times, several file systems 
+implement deduplication to eliminate duplicate copies—exactly like the deduplication
+of pages in the memory subsystem that we discussed in the previous chapter. This
+is a very common phenomenon in operating systems: a technique (in this case
+deduplication) that is a good idea in one subsystem, is often a good idea in other
+subsystems also. Here we discuss deduplication in file systems, but the technique
+is also used in networking to prevent the same data from being sent over the 
+network multiple times.
+File system deduplication is possible at the granularity of files, portions of
+files, or even individual disk blocks. Nowadays, many file systems perform 
+deduplication on fixed-size chunks of, say, 128 KB. When the deduplication procedure
+detects that two files contain chunks that are exactly the same, it will keep only a
+single physical copy that is shared by both files. Of course, as soon as the chunk in
+one of the files is overwritten, a unique copy must be made so that the changes do
+not affect the other file.
+Deduplication can be done inline or post-process. With inline deduplication,
+the file system calculates a hash for every chunk that it is about to write and 
+compares it to the hashes of existing chunks. If the chunk is already present, it will
+refrain from actually writing out the data and instead add a reference to the existing
+chunk. Of course, the additional calculations take time and slow down the write. In
+contrast, post-process deduplication always writes out the data and performs the
+hashing and comparisons in the background, without slowing down the process’
+file operations. Which method is better is debated almost as hotly as which editor
+is best, Emacs or Vi (ev en though the answer to that question is, of course, Emacs).
+As the astute reader may have noticed, there is a problem with the use of
+hashes to determine chunk equivalence: even if it happens rarely, the pigeonhole
+principle says that chunks with different content may have the same hash. Some
+implementations of deduplication gloss over this little inconvenience and accept
+the (very low) probability of getting things wrong, but there also exist solutions
+that verify whether the chunks are truly equivalent before deduplicating them.
+4.4.7 Secure File Deletion and Disk Encryption
+However sophisticated the access restrictions at the level of the operating 
+system, the physical bits on the hard disk or SSDs can always be read back by taking
+out the storage device and reading them back in another machine. This has many
+implications. For instance, the operating system may ‘‘delete’’ a file by removing it
+from the directories and freeing up the i-node for reuse, but that does not remove
+the content of the file on disk. Thus, an attacker can simply read the raw disk
+blocks to bypass all file system permissions, no matter how restrictive they are.

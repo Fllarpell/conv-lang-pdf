@@ -1,0 +1,43 @@
+1072
+OPERATING SYSTEM DESIGN
+CHAP. 12
+Here is a true story of where an optimization did more harm than good. One of
+the authors (AST) had a former student (who shall here remain nameless) who
+wrote the original MINIX mkfs program. This program lays down a fresh file 
+system on a newly formatted disk. The student spent about 6 months optimizing it,
+including putting in disk caching. When he turned it in, it did not work and it
+required several additional months of debugging. This program typically runs on
+the hard disk once during the life of the computer, when the system is installed. It
+also runs once for each disk that is formatted. Each run takes about 2 sec. Even if
+the unoptimized version had taken 1 minute, it was a poor use of resources to
+spend so much time optimizing a program that is used so infrequently.
+A slogan that has considerable applicability to performance optimization is
+Good enough is good enough.
+By this we mean that once the performance has achieved a reasonable level, it is
+probably not worth the effort and complexity to squeeze out the last few percent.
+If the scheduling algorithm is reasonably fair and keeps the CPU busy 90% of the
+time, it is doing its job. Devising a far more complex one that is 5% better is 
+probably a bad idea. Similarly, if the page rate is low enough that it is not a bottleneck,
+jumping through hoops to get optimal performance is usually not worth it. 
+Avoiding disaster is far more important than getting optimal performance, especially
+since what is optimal with one load may not be optimal with another.
+Another concern is what to optimize when. Some programmers have a 
+tendency to optimize to death whatever they dev elop, as soon as it is appears to work.
+The problem is that after optimization, the system may be less clean, making it
+harder to maintain and debug. Also, it makes it harder to adapt it, and perhaps do
+more fruitful optimization later. The problem is known as premature optimization.
+Donald Knuth, sometimes referred to as the father of the analysis of algorithms,
+once said that ‘‘premature optimization is the root of all evil.’’
+12.4.3 Space-Time Trade-offs
+One general approach to improving performance is to trade off time vs. space.
+It frequently occurs in computer science that there is a choice between an 
+algorithm that uses little memory but is slow and an algorithm that uses much more
+memory but is faster. When making an important optimization, it is worth looking
+for algorithms that gain speed by using more memory or conversely save precious
+memory by doing more computation.
+One technique that is sometimes helpful is to replace small procedures by
+macros. Using a macro eliminates the overhead that is associated with a procedure
+call. The gain is especially significant if the call occurs inside a loop. As an 
+example, suppose we use bitmaps to keep track of resources and frequently need to
+know how many units are free in some portion of the bitmap. For this purpose we
+will need a procedure, bit count, that counts the number of 1 bits in a byte. The

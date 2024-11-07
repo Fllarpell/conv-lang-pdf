@@ -1,0 +1,45 @@
+CHAP. 9  
+PROBLEMS
+699
+16. Consider a secret-key cipher that has a 26 × 26 matrix with the columns headed by
+ABC ... Z and the rows also named ABC ... Z. Plaintext is encrypted two characters at a
+time. The first character is the column; the second is the row. The cell formed by the
+intersection of the row and column contains two ciphertext characters. What constraint
+must the matrix adhere to and how many keys are there?
+17. Consider the following way to encrypt a file. The encryption algorithm uses two n-byte
+arrays, A and B. The first n bytes are read from the file into A. Then A[0] is copied to
+B[i], A[1] is copied to B[ j], A[2] is copied to B[k], etc. After all n bytes are copied to
+the B array, that array is written to the output file and n more bytes are read into A.
+This procedure continues until the entire file has been encrypted. Note that here
+encryption is not being done by replacing characters with other ones, but by changing
+their order. How many keys hav e to be tried to exhaustively search the key space?
+Give an advantage of this scheme over a monoalphabetic substitution cipher.
+18. Secret-key cryptography is more efficient than public-key cryptography, but requires
+the sender and receiver to agree on a key in advance. Suppose that the sender and
+receiver hav e never met, but there exists a trusted third party that shares a secret key
+with the sender and also shares a (different) secret key with the receiver. How can the
+sender and receiver establish a new shared secret key under these circumstances?
+19. Give a simple example of a mathematical function that to a first approximation will do
+as a one-way function.
+20. Suppose that two strangers A and B want to communicate with each other using 
+secretkey cryptography, but do not share a key. Suppose both of them trust a third party C
+whose public key is well known. How can the two strangers establish a new shared
+secret key under these circumstances?
+21. Internet cafes are businesses where tourists away from home can rent a computer for
+an hour or two to do business that needs a computer. Describe a way to produce signed
+documents from one using a smart card (assume that all the computers are equipped
+with smart-card readers). Is your scheme secure?
+22. Not having the computer echo the password is safer than having it echo an asterisk for
+each character typed, since the latter discloses the password length to anyone nearby
+who can see the screen. Assuming that passwords consist of upper and lowercase 
+letters and digits only, and that passwords must be a minimum of fiv e characters and a
+maximum of eight characters, how much safer is not displaying anything?
+23. After getting your degree, you apply for a job as director of a large university computer
+center that has just put its ancient mainframe system out to pasture and switched over
+to a large LAN server running UNIX. You get the job. Fifteen minutes after you start
+work, your assistant bursts into your office screaming: ‘‘Some students have 
+discovered the algorithm we use for encrypting passwords and posted it on the Internet.’’ What
+should you do?
+24. Suppose the password file of a system is available to a cracker. How much extra time
+does the cracker need to crack all passwords if the system is using the 
+Morris-Thompson protection scheme with n-bit salt versus if the system is not using this scheme?

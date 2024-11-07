@@ -1,0 +1,46 @@
+SEC. 10.8
+ANDROID
+841
+send and receive email. However, does it make sense for the email application to
+hold a READ PICTURES permission? There is nothing about an email application
+that is directly related to reading the user’s pictures, and no reason for an email
+application to have access to all of those pictures.
+There is another issue with this use of permissions, which we can see by
+returning to Fig. 10-55. Recall how we can launch the email application’s 
+ComposeActivity to share a picture from the camera application. The email application
+receives a URI of the data to share, but does not know where it came from—in the
+figure here it comes from the camera, but any other application could use this to let
+the user email its data, from audio files to word-processing documents. The email
+application only needs to read that URI as a byte stream to add it as an attachment.
+However, with permissions it would also have to specify up-front the permissions
+for all of the data of all of the applications it may be asked to send an email from.
+We hav e two problems to solve. First, we do not want to give applications
+access to wide swaths of data that they do not really need. Second, they need to be
+given access to any data sources, even ones they do not have a priori knowledge
+about.
+There is an important observation to make: the act of emailing a picture is
+actually a user interaction where the user has expressed a clear intent to use a 
+specific picture with a specific application. As long as the operating system is 
+involved in the interaction, it can use this to identify a specific hole to open in the 
+sandboxes between the two applications, allowing that data through.
+Android supports this kind of implicit secure data access through intents and
+content providers. Figure 10-69 illustrates how this situation works for our picture
+emailing example. The camera application at the bottom-left has created an intent
+asking to share one of its images, content://pics/1. In addition to starting the email
+compose application as we had seen before, this also adds an entry to a list of
+‘‘granted URIs,’’ noting that the new ComposeActivity now has access to this URI.
+Now when ComposeActivity looks to open and read the data from the URI it has
+been given, the camera application’s PicturesProvider that owns the data behind the
+URI can ask the activity manager if the calling email application has access to the
+data, which it does, so the picture is returned.
+This fine-grained URI access control can also operate the other direction. An
+example here is another intent action, android.intent.action.GET CONTENT, which
+an application can use to ask the user to pick some data and return it back. This
+would be used in our email application, for example, to operate the other way
+around: the user while in the email application can ask to add an attachment, which
+will launch an activity in the camera application for them to select one.
+Figure 10-70 shows this new flow. It is almost identical to Fig. 10-69, the only
+difference being in the way the activities of the two applications are composed,
+with the email application starting the appropriate picture-selection activity in the
+camera app. Once an image is selected, its URI is returned back to the email 
+application, and at this point our URI grant is recorded by the activity manager.

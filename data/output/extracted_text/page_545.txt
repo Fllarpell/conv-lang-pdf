@@ -1,0 +1,61 @@
+516
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+Virtual Hardware (front end)
+Back end
+1 virtual x86 CPU, with the same
+instruction set extensions as the 
+underlying hardware CPU
+Up to 512 MB of contiguous DRAM
+Multiplexed
+Emulated
+PCI Bus
+Scheduled by the host operating system on
+either a uniprocessor or multiprocessor host
+Allocated and managed by the host OS
+(page-by-page)
+Fully emulated compliant PCI bus
+Virtual disks (stored as files) or direct access
+to a given raw device
+ISO image or emulated access to the real
+CD-ROM
+Physical floppy or floppy image
+Ran in a window and in full-screen mode.
+SVGA required VMware SVGA guest driver
+4x IDE disks
+7x Buslogic SCSI Disks
+1x IDE CD-ROM
+2x 1.44 MB floppy drives
+1x VMware graphics card with VGA
+and SVGA support
+2x serial ports COM1 and COM2
+1x printer (LPT)
+1x keyboard (104-key)
+1x PS-2 mouse
+3x AMD Lance Ethernet cards
+1x Soundblaster
+Connect to host serial port or a file
+Can connect to host LPT port
+Fully emulated; keycode events are 
+generated when they are received by the VMware
+application
+Same as keyboard
+Bridge mode and host-only modes
+Fully emulated
+Figure 7-9. Virtual hardware configuration options of the early VMware
+Workstation, ca. 2000.
+network connectivity to the host’s physical network. Ironically, VMware kept 
+supporting the PCnet device long after physical Lance boards were no longer 
+available, and actually achieved I/O that was orders of magnitude faster than 10 Mbps
+(Sugerman et al., 2001). For storage devices, the original front ends were an IDE
+controller and a Buslogic Controller, and the back end was typically either a file in
+the host file system, such as a virtual disk or an ISO 9660 image, or a raw resource
+such as a drive partition or the physical CD-ROM.
+Splitting front ends from back ends had another benefit: a VMware virtual
+machine could be copied from computer to another computer, possibly with 
+different hardware devices. Yet, the virtual machine would not have to install new 
+device drivers since it only interacted with the front-end component. This attribute,
+called hardware-independent encapsulation, has a huge benefit today in server
+environments and in cloud computing. It enabled subsequent innovations such as
+suspend/resume, checkpointing, and the transparent migration of live virtual
+machines across physical boundaries (Nelson et al., 2005). In the cloud, it allows

@@ -1,0 +1,48 @@
+590
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+To a first approximation, this is the basis of the Web and how it works. Many
+other features have since been added to the basic Web, including style sheets,
+dynamic Web pages that are generated on the fly, Web pages that contain small
+programs or scripts that execute on the client machine, and more, but they are 
+outside the scope of this discussion.
+8.3.4 File-System-Based Middleware
+The basic idea behind the Web is to make a distributed system look like a giant
+collection of hyperlinked documents. A second approach is to make a distributed
+system look like a great big file system. In this section, we will look at some of the
+issues involved in designing a worldwide file system.
+Using a file-system model for a distributed system means that there is a single
+global file system, with users all over the world able to read and write files for
+which they hav e authorization. Communication is achieved by having one process
+write data into a file and having other ones read them back. Many of the standard
+file-system issues arise here, but also some new ones related to distribution.
+Transfer Model
+The first issue is the choice between the upload/download model and the
+remote-access model. In the former, shown in Fig. 8-33(a), a process accesses a
+file by first copying it from the remote server where it lives. If the file is only to be
+read, the file is then read locally, for high performance. If the file is to be written,
+it is written locally. When the process is done with it, the updated file is put back
+on the server. With the remote-access model, the file stays on the server and the 
+client sends commands there to get work done there, as shown in Fig. 8-33(b).
+2. Accesses are
+    done on the
+    client
+3. When client is
+    done, file is
+    returned to server
+New file
+Old file
+Server
+Server
+Client
+Client
+1. Client fetches file
+File stays
+on server
+Reply
+Request
+(a)
+(b)
+Figure 8-33. (a) The upload/download model. (b) The remote-access model.
+The advantages of the upload/download model are its simplicity, and the fact
+that transferring entire files at once is more efficient than transferring them in small

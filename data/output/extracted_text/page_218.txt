@@ -1,0 +1,76 @@
+SEC. 3.2
+A MEMORY ABSTRACTION: ADDRESS SPACES
+189
+Chapter 10, we will look at some specific memory allocators used in Linux (like
+buddy and slab allocators) in more detail. We will also see in later chapters that
+tracking the usage of resources is not specific to memory management. For
+instance, file systems also need to keep track of free disk blocks. In fact, keeping
+track of what slots are free in an set of resources is common in many programs.
+Memory Management with Bitmaps
+With a bitmap, memory is divided into allocation units as small as a few words
+and as large as several kilobytes. Corresponding to each allocation unit is a bit in
+the bitmap, which is 0 if the unit is free and 1 if it is occupied (or vice versa). 
+Figure 3-6(a) shows part of memory and the corresponding bitmap in Fig. 3-6(b).
+(a)
+(b)
+(c)
+A
+B
+C
+D
+E
+8
+16
+24
+Hole
+Starts!
+at 18
+Length!
+2
+Process
+P
+0
+5
+H
+5
+3
+P
+8
+6
+P
+14
+4
+H
+18
+2
+P
+20
+6
+P
+26
+3
+H
+29
+3
+X
+1 1 1 1 1 0 0 0!
+1 1 1 1 1 1 1 1!
+1 1 0 0 1 1 1 1!
+1 1 1 1 1 0 0 0!
+Figure 3-6. (a) A part of memory with fiv e processes and three holes. The tick
+marks show the memory allocation units. The shaded regions (0 in the bitmap)
+are free. (b) The corresponding bitmap. (c) The same information as a list.
+The size of the allocation unit is an important design issue. The smaller the
+allocation unit, the larger the bitmap. However, even with an allocation unit as
+small as 4 bytes, 32 bits of memory will require only 1 bit of the map. A memory
+of 32n bits will use n map bits, so the bitmap will take up only 1/32 of memory. If
+the allocation unit is chosen large, the bitmap will be smaller, but appreciable
+memory may be wasted in the last unit of the process if the process size is not an
+exact multiple of the allocation unit.
+A bitmap provides a simple way to keep track of memory words in a fixed
+amount of memory because the size of the bitmap depends only on the size of
+memory and the size of the allocation unit. The main problem is that when it has
+been decided to bring a k-unit process into memory, the memory manager must
+search the bitmap to find a run of k consecutive 0 bits in the map. Searching a 
+bitmap for a run of a given length is a slow operation (because the run may straddle
+word boundaries in the map); this is an argument against bitmaps.

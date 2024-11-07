@@ -1,0 +1,102 @@
+INDEX
+1127
+Deadlock (continued)
+resource, 445
+Deadlock avoidance, 455–461
+banker’s algorithm, 458–461
+Deadlock detection
+multiple types of resources, 451–454
+single type of resource, 449–451
+Deadlock modeling, 445–447
+Deadlock prevention, 461–464
+attacking mutual-exclusion, 461
+attacking the circular wait, 463–464
+attacking the hold-and-wait, 462
+attacking the no-preemption, 462
+Deadlock recovery, 454–455
+DebugPortHandle, Windows, 885
+Deduplication, 225, 322
+Linux, 972
+memory, 501
+virtual machine, 497
+Default data stream, NT file system, 994
+Defense-in-depth, Windows, 1031
+Deferred procedure call, Windows, 901–903
+Defragmenting a disk, 320–321
+Degree of multiprogramming, 96
+Delete system call, 269, 277
+DeleteAce Win32 call, 1023
+Demand paging, 214
+Denial-of-service attack, 608
+Dentry, 775
+DEP (see Data Execution Prevention)
+Design goals, Android, 800–801
+Design issues for paging, 221–232
+Design principles, 1065–1070
+brute force, 1069
+check for errors first, 1070
+hiding the hardware, 1065–1067
+indirection, 1067–1068
+orthogonality, 1058–1059
+reentrancy, 1069
+reusability, 1068
+Desktop environment, 405
+Device context, 413
+Device controller, 338, 338–340
+Device domain, 499–500
+Device driver, 30, 359–362, 984
+user-mode, 342
+Windows, 910
+Device independence, 352
+Device I/O, Hyper-V, 1007–1010
+Device isolation, 499
+Device object, 886
+Device pass through, 499
+Device stack, Windows, 910, 987–989
+Device-independent bitmap, 416
+Device-independent block size, 368
+Device-independent input/output software, 362–368
+DEX (see Dalvik Executable)
+DFSS (see Dynamic Fair-Share Scheduling)
+Diameter, interconnection, 559
+DIB (see Device-Independent Bitmap)
+Die, chip, 537
+Digital Research, 16
+Digital rights management, 896
+Digital signature, 635–636
+Dining philosophers problem, 440–444
+Direct access for file, 764
+Direct map, Windows, 1009
+Direct media interface, 34
+Direct memory access, 32, 344–347, 356–357
+remote, 564–565
+Directed acyclic graph, 288
+Directory, 42, 264, 272–278
+Directory hierarchy, 591
+Directory management system calls, 58–59, 277
+Directory operation, 277–278
+Directory system, hierarchical, 273–274
+single-level, 272–273
+Directory-based multiprocessor, 535
+Dirty bit, 199
+Disabling interrupts, 121–123
+Disco, 480, 507
+Discrete device assignment, Hyper-V, 1008
+Discretionary access control, 629
+Disk, magnetic, 370–381
+Disk arm scheduling algorithm, 375–379
+Disk block size, 302–303
+Disk blocks, managing free, 303–306
+Disk controller cache, 378
+Disk defragmentaion, 320–321
+Disk driver, 4
+Disk error handling, 379–381
+Disk formatting, 372–375
+Disk operating system, 16
+Disk quota, 306–307
+Disk recalibration, 380–381
+Disk scheduling, 376–377
+elevator algorithm, 377
+first-come first-served, 376
+shortest seek first, 376
+Disk storage, 370–390

@@ -1,0 +1,46 @@
+488
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+a branch. By definition, a basic block contains no jump, call, trap, return, or other
+instruction that alters the flow of control, except for the very last instruction which
+does precisely that. Just prior to executing a basic block, the hypervisor first scans
+it to see if it contains sensitive instructions (in the Popek and Goldberg sense), and
+if so, replaces them with a call to a hypervisor procedure that handles them. The
+branch on the last instruction is also replaced by a call into the hypervisor (to make
+sure it can repeat the procedure for the next basic block). Dynamic translation and
+emulation sound expensive, but typically are not. Translated blocks are cached, so
+no translation is needed in the future. Also, most code blocks do not contain 
+sensitive or privileged instructions and thus can execute natively. In particular, as long
+as the hypervisor configures the hardware carefully (as is done, for instance, by
+VMware), the binary translator can ignore all user processes; they execute in 
+nonprivileged mode anyway.
+After a basic block has completed executing, control is returned to the 
+hypervisor, which then locates its successor. If the successor has already been translated,
+it can be executed immediately. Otherwise, it is first translated, cached, then 
+executed. Eventually, most of the program will be in the cache and run at close to
+full speed. Various optimizations are used, for example, if a basic block ends by
+jumping to (or calling) another one, the final instruction can be replaced by a jump
+or call directly to the translated basic block, eliminating all overhead associated
+with finding the successor block. Again, there is no need to replace sensitive 
+instructions in user programs; the hardware will just ignore them anyway.
+On the other hand, it is common to perform binary translation on all the guest
+operating system code running in ring 1 and replace even the privileged sensitive
+instructions that, in principle, could be made to trap also. The reason is that traps
+are very expensive and binary translation leads to better performance.
+So far we have described a type 1 hypervisor. Although type 2 hypervisors are
+conceptually different from type 1 hypervisors, they use, by and large, the same
+techniques. For instance, VMware ESX Server (a type 1 hypervisor first shipped in
+2001) used exactly the same binary translation as the first VMware Workstation (a
+type 2 hypervisor released two years earlier).
+However, to run the guest code natively and use exactly the same techniques
+requires the type 2 hypervisor to manipulate the hardware at the lowest level,
+which cannot be done from user space. For instance, it has to set the segment
+descriptors to exactly the right value for the guest code. For faithful virtualization,
+the guest operating system should also be tricked into thinking that it is the true
+and only operating system, with full control of all the machine’s resources and
+with access to the entire address space (4 GB on 32-bit machines). When the guest
+operating system finds another system (the host kernel) squatting in its address
+space, first one will not be amused.
+Unfortunately, this is exactly what happens when the guest runs as a user 
+process on a regular operating system. For instance, in Linux a user process has access
+to just 3 GB of the 4-GB address space, as the remaining 1 GB is reserved for the

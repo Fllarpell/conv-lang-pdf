@@ -1,0 +1,41 @@
+SEC. 10.8
+ANDROID
+821
+Activities
+An activity is a part of the application that interacts directly with the user
+through a user interface. When the user launches an application on their device,
+this is actually an activity inside the application that has been designated as such a
+main entry point. The application implements code in its activity that is 
+responsible for interacting with the user.
+The example email manifest shown in Fig. 10-51 contains two activities. The
+first is the main mail user interface, allowing users to view their messages; the 
+second is a separate interface for composing a new message. The first mail activity is
+declared as the main entry point for the application; that is, the activity that will be
+started when the user launches it from the home screen.
+Since the first activity is the main activity, it will be shown to users as an 
+application they can launch from the main application launcher. If they do so, the 
+system will be in the state shown in Fig. 10-52. Here the activity manager, on the left
+side, has made an internal ActivityRecord instance in its process to keep track of
+the activity. One or more of these activities are organized into containers called
+tasks, which roughly correspond to what the user experiences as an application. At
+this point the activity manager has started the email application’s process and an
+instance of its MainMailActivity for displaying its main UI, which is associated
+with the appropriate ActivityRecord. This activity is in a state called resumed since
+it is now in the foreground of the user interface.
+Activity manager in system_server process
+Email app process
+MailMainActivity
+Task: Email
+ActivityRecord
+(MailMainActivity)
+RESUMED
+Figure 10-52. Starting an email application’s main activity.
+If the user were now to switch away from the email application (not exiting it)
+and launch a camera application to take a picture, we would be in the state shown
+in Fig. 10-53. Note that we now hav e a new camera process running the camera’s
+main activity, an associated ActivityRecord for it in the activity manager, and it is
+now the resumed activity. Something interesting also happens to the previous
+email activity: instead of being resumed, it is now stopped and the ActivityRecord
+holds this activity’s saved state.
+When an activity is no longer in the foreground, the system automatically asks
+it to ‘‘save its state.’’ This involves the application creating a minimal amount of

@@ -1,0 +1,43 @@
+484
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+use the trick to replace instructions that are sensitive, but not privileged. Other
+instructions execute natively. The technique is known as binary translation; we
+will discuss it more detail in Sec. 7.4.
+There is no need to rewrite all sensitive instructions. In particular, user 
+processes on the guest can typically run without modification. If the instruction is 
+nonprivileged but sensitive and behaves differently in user processes than in the kernel,
+that is fine. We are running it in userland anyway. For sensitive instructions that are
+privileged, we can resort to the classical trap-and-emulate, as usual. Of course, the
+VMM must ensure that it receives the corresponding traps. Typically, the VMM
+has a module that executes in the kernel and redirects the traps to its own handlers.
+A different form of virtualization is known as paravirtualization. It is quite
+different from full virtualization, because it never even aims to present a virtual
+machine that looks just like the actual underlying hardware. Instead, it presents a
+machine-like software interface that explicitly exposes the fact that it is a 
+virtualized environment. For instance, it offers a set of hypercalls, which allow the
+guest to send explicit requests to the hypervisor (much as a system call offers 
+kernel services to applications). Guests use hypercalls for privileged sensitive 
+operations like updating the page tables, but because they do it explicitly in cooperation
+with the hypervisor, the overall system can be simpler and faster.
+It should not come as a surprise that paravirtualization is not new either. IBM’s
+VM operating system has offered such a facility, albeit under a different name,
+since 1972. The idea was revived by the Denali (Whitaker et al., 2002) and Xen
+(Barham et al., 2003) virtual machine monitors. Compared to full virtualization,
+the drawback of paravirtualization is that the guest has to be aware of the virtual
+machine API. This means it needs to be customized explicitly for the hypervisor.
+Before we delve more deeply into type 1 and type 2 hypervisors, it is important
+to mention that not all virtualization technology tries to trick the guest into 
+believing that it has the entire system. Sometimes, the aim is simply to allow a process to
+run that was originally written for a different operating system and/or architecture.
+We therefore distinguish between full system virtualization and process-level 
+virtualization. While we focus on the former in the remainder of this chapter, 
+process-level virtualization technology is used in practice also. Well-known examples
+include the WINE compatibility layer that allows Windows application to run on
+POSIX-compliant systems like Linux, BSD, and macOS, and the process-level 
+version of the QEMU emulator that allows applications for one architecture to run on
+another.
+7.3 TYPE 1 AND TYPE 2 HYPERVISORS
+Goldberg (1972) distinguished between two approaches to virtualization. One
+kind of hypervisor, dubbed a type 1 hypervisor, is illustrated in Fig. 7-1(a). 
+Technically, it is like an operating system, since it is the only program running in the

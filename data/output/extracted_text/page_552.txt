@@ -1,0 +1,43 @@
+SEC. 7.11
+CASE STUDY: VMWARE
+523
+system optimized specifically to store virtual machine images and
+ensure high I/O throughput. This allows for extreme levels of 
+performance. For example, VMware demonstrated back in 2011 that a
+single ESX Server could issue 1 million disk operations per second
+(VMware, 2011).
+5. ESX Server made it easy to introduce new capabilities, which
+required the tight coordination and specific configuration of multiple
+components of a computer. For example, ESX Server introduced
+VMotion, the first virtualization solution that could migrate a live 
+virtual machine from one machine running ESX Server to another 
+machine running ESX Server, while it was running. This achievement
+required the coordination of the memory manager, the CPU scheduler,
+and the networking stack.
+Over the years, new features were added to ESX Server. ESX Server evolved
+into ESXi, a small-footprint alternative that is sufficiently small in size to be
+preinstalled in the firmware of servers. Today, ESXi is VMware’s most important
+product and serves as the foundation of the vSphere suite.
+7.12 RESEARCH ON VIRTUALIZATION AND THE CLOUD
+Virtualization technology and cloud computing are both extremely active
+research areas. The research produced in these fields is way too much to 
+enumerate. Each has multiple research conferences. For instance, the Virtual Execution
+Environments (VEE) conference focuses on virtualization in the broadest sense.
+You will find papers on migration deduplication, scaling out, and so on. Likewise,
+the ACM Symposium on Cloud Computing (SOCC) is one of the best-known
+venues on cloud computing. Papers in SOCC include work on fault resilience,
+scheduling of data center workloads, management and debugging in clouds.
+Hardware support for virtualization is now present in nearly all relevant CPU
+architectures, restoring the Popek and Goldberg architectural principles into 
+practice. Notably, ARM added a new privilege level ‘‘EL2’’ to support hardware 
+virtualization in ARMv8. In mobile platforms, virtualization is often deployed with
+another hardware feature called TrustZone to allow a ‘‘secure’’ virtual machine to
+co-exist with the main operating environment (Dall et al., 2016).
+Security is perpetually a hot topic for research (Dai et al., 2020; Trach et al.,
+2020), as is reducing energy usage (Kaffes et al., 2020). With so many data centers
+now using virtualization technology, the networks connecting these machines are
+also a major subject of research (Alvarez et al., 2020).
+One of the nice things about virtualization hardware is that untrusted code can
+get direct but safe access to hardware features like page tables, and tagged TLBs.
+With this in mind, the Dune project (Belay, 2012) did not aim to provide a machine
+abstraction, but rather a process abstraction. The process is able to enter Dune

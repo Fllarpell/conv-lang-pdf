@@ -1,0 +1,64 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+133
+typedef int semaphore;
+/* use your imagination */
+semaphore mutex = 1;
+/* controls access to rc */
+semaphore db = 1;
+/* controls access to the database */
+int rc = 0;
+/* # of processes reading or wanting to */
+void reader(void)
+{
+while (TRUE) {
+/* repeat forever */
+down(&mutex); 
+/* get exclusive access to rc */
+rc = rc + 1;
+/* one reader more now */
+if (rc == 1) down(&db); 
+/* if this is the first reader ... */
+up(&mutex); 
+/* release exclusive access to rc */
+read data base( );
+/* access the data */
+down(&mutex); 
+/* get exclusive access to rc */
+rc = rc < 1; 
+/* one reader few er now */
+if (rc == 0) up(&db);
+/* if this is the last reader ... */
+up(&mutex); 
+/* release exclusive access to rc */
+use data read( );
+/* noncr itical region */
+}
+}
+void writer(void)
+{
+while (TRUE) {
+/* repeat forever */
+think up data( );
+/* noncr itical region */
+down(&db); 
+/* get exclusive access */
+wr ite data base( );
+/* update the data */
+up(&db); 
+/* release exclusive access */
+}
+}
+Figure 2-29. A solution to the readers and writers problem.
+Later, additional readers show up. As long as at least one reader is still active, 
+subsequent readers are admitted. As a consequence of this strategy, as long as there is
+a steady supply of readers, they will all get in as soon as they arrive. The writer
+will be kept suspended until no reader is present. If a new reader arrives, say, every
+2 sec, and each reader takes 5 sec to do its work, the writer will never get in. 
+Obviously, this is not a satisfactory situation.
+To avoid this situation, the program could be written slightly differently: when
+a reader arrives and a writer is waiting, the reader is suspended behind the writer
+instead of being admitted immediately. In this way, a writer has to wait for readers
+that were active when it arrived to finish but does not have to wait for readers that
+came along after it. The disadvantage of this solution is that it achieves less 
+concurrency and thus lower performance. Courtois et al. present a solution that gives
+priority to writers. For details, we refer you to the paper.

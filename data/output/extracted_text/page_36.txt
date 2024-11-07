@@ -1,0 +1,43 @@
+SEC. 1.1
+WHAT IS AN OPERATING SYSTEM?
+7
+another, and then eventually the first one again. Determining how the resource is
+time multiplexed—who goes next and for how long—is the task of the operating
+system. Another example of time multiplexing is sharing the printer. When 
+multiple print jobs are queued up for printing on a single printer, a decision has to be
+made about which one is to be printed next.
+The other kind of multiplexing is space multiplexing. Instead of the customers
+taking turns, each one gets part of the resource. For example, main memory is 
+normally divided up among several running programs, so each one can be resident at
+the same time (for example, in order to take turns using the CPU). Assuming there
+is enough memory to hold multiple programs, it is more efficient to hold several
+programs in memory at once rather than give one of them the entire mem, 
+especially if it only needs a small fraction of the total. Of course, this raises issues of 
+fairness, protection, and so forth, and it is up to the operating system to solve them.
+Other resource that are space multiplexed are disks and Flash drives. In many 
+systems, a single disk can hold files from many users at the same time. Allocating disk
+space and keeping track of who is using which disk blocks is a typical operating
+system task. By the way, people commonly refer to all nonvolatile memory as
+‘‘disks,’’ but in this book we try to explicitly distinguish between disks, which have
+spinning magnetic platters, and SSDs (Solid State Drives), which are based on
+Flash memory and electronic rather than mechanical. Still, from a software point
+of view, SSDs are similar to disks in many (but not all) ways.
+1.2 HISTORY OF OPERATING SYSTEMS
+Operating systems have been evolving through the years. In the following 
+sections, we will briefly look at a few of the highlights. Since operating systems have
+historically been closely tied to the architecture of the computers on which they
+run, we will look at successive generations of computers to see what their 
+operating systems were like. This mapping of operating system generations to computer
+generations is crude, but it does provide some structure where there would 
+otherwise be none. The progression given below is largely chronological, but it has been
+a bumpy ride. Each development did not wait until the previous one nicely finished
+before getting started. There was a lot of overlap, not to mention many false starts
+and dead ends. Take this as a guide, not as the last word.
+The first true digital computer was designed by the English mathematician
+Charles Babbage (1792–1871). Although Babbage spent most of his life and 
+fortune trying to build his ‘‘analytical engine,’’ he nev er got it working properly
+because it was purely mechanical, and the technology of his day could not produce
+the required wheels, gears, and cogs to the high precision that he needed. Needless
+to say, the analytical engine did not have an operating system.
+As an interesting historical aside, Babbage realized that he would need 
+software for his analytical engine, so he hired a young woman named Ada Lovelace,

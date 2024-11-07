@@ -1,0 +1,41 @@
+SEC. 6.1
+RESOURCES
+439
+giving it to another process will result in a garbled 3D model of the object. 3D
+scanners are not preemptable at an arbitrary moment.
+Whether a resource is preemptable depends on the context. On a standard PC,
+memory is preemptable because pages can always be swapped out to SSD or disk
+to recover it. However, on a low-end device that does not support swapping or 
+paging, deadlocks cannot be avoided by just swapping out a memory hog.
+In general, deadlocks involve nonpreemptable resources. Potential deadlocks
+that involve preemptable resources can usually be resolved by reallocating
+resources from one process to another. Thus, our treatment will focus on 
+nonpreemptable resources.
+The abstract sequence of events required to use a resource is given below.
+1. Request the resource.
+2. Use the resource.
+3. Release the resource.
+If the resource is not available when it is requested, the requesting process is forced
+to wait. In some operating systems, the process is automatically blocked when a
+resource request fails, and awakened when it becomes available. In other systems,
+the request fails with an error code, and it is up to the calling process to wait a little
+while and try again.
+A process whose resource request has just been denied will normally sit in a
+tight loop requesting the resource, then sleeping, then trying again. Although this
+process is not blocked, for all intents and purposes it is as good as blocked, 
+because it cannot do any useful work. In our further treatment, we will assume that
+when a process is denied a resource request, it is put to sleep.
+The exact nature of requesting a resource is highly system dependent. In some
+systems, a request system call is provided to allow processes to explicitly ask for
+resources. In others, the only resources that the operating system knows about are
+special files that only one process can have open at a time. These are opened by
+the usual open call. If the file is already in use, the caller is blocked until its 
+current owner closes it.
+6.1.2 Resource Acquisition
+For some kinds of resources, such as records in a database system, it is up to
+the user processes rather than the system to manage resource usage themselves.
+One way of allowing this is to associate a semaphore with each resource. These
+semaphores are all initialized to 1. Mutexes can be used equally well. The three
+steps listed above are then implemented as a down on the semaphore to acquire the
+resource, the use of the resource, and finally an up on the resource to release it.
+These steps are shown in Fig. 6-1(a).

@@ -1,0 +1,41 @@
+SEC. 4.7
+SUMMARY
+331
+4.7 SUMMARY
+When seen from the outside, a file system is a collection of files and 
+directories, plus operations on them. Files can be read and written, directories can be
+created and destroyed, and files can be moved from directory to directory. Most
+modern file systems support a hierarchical directory system in which directories
+may have subdirectories and these may have subsubdirectories ad infinitum.
+When seen from the inside, a file system looks quite different. The file system
+designers have to be concerned with how storage is allocated and how the system
+keeps track of which block goes with which file. Possibilities include contiguous
+files, linked lists, file-allocation tables, and i-nodes. Different systems have 
+different directory structures. Attributes can go in the directories or somewhere else
+(e.g., an i-node). Disk space can be managed using free lists or bitmaps. 
+File-system reliability is enhanced by making incremental dumps and by having a program
+that can repair sick file systems. File-system performance is important and can be
+enhanced in several ways, including caching, read ahead, and carefully placing the
+blocks of a file close to each other. Log-structured file systems also improve 
+performance by doing writes in large units.
+Examples of file systems include ISO 9660, MS-DOS, and UNIX. These 
+differ in many ways, including how they keep track of which blocks go with which
+file, directory structure, and management of free disk space.
+PROBLEMS
+1. Give fiv e different path names for the file /etc/passwd. (Hint: Think about the 
+directory entries ‘‘.’’ and ‘‘..’’.)
+2. In Windows, when a user double clicks on a file listed by Windows Explorer, a 
+program is run and given that file as a parameter. List two different ways the operating
+system could know which program to run.
+3. In early UNIX systems, executable files (a.out files) began with a very specific magic
+number, not one chosen at random. These files began with a header, followed by the
+text and data segments. Why do you think a very specific number was chosen for
+executable files, whereas other file types had a more-or-less random magic number as
+the first word?
+4. Is the open system call in UNIX absolutely essential? What would the consequences
+be of not having it?
+5. Systems that support sequential files always have an operation to rewind files. Do 
+systems that support random-access files need this, too?
+6. Some operating systems provide a system call rename to give a file a new name. Is
+there any difference at all between using this call to rename a file and just copying the
+file to a new file with the new name, followed by deleting the old one?

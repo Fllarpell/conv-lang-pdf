@@ -1,0 +1,47 @@
+PREFACE
+xxv
+attestation. Since there is much ongoing research in this area, new 
+references have been added and the research section has been rewritten.
+•
+Chapter 10 has been updated with new dev elopments in Linux and
+Android. Android has evolved considerably since the previous edition,
+and this chapter covers the current version in detail. This section has
+been substantially rewritten.
+•
+Chapter 11 has changed significantly. Where the fourth edition was on
+Windows 8.1, we now discuss Windows 11. It is basically a new 
+chapter.
+•
+Chapter 12 is a slightly revised version of the previous edition. This
+chapter covers the basic principles of system design, and they hav e not
+changed much in the past few years.
+•
+Chapter 13 is a thoroughly updated list of suggested readings. In 
+addition, the list of references has been updated, with entries to well over
+100 new works published after the fourth edition of this book came
+out.
+•
+In addition, the sections on research throughout the book have all been
+redone from scratch to reflect the latest research in operating systems.
+Furthermore, new problems have been added to all the chapters.
+Instructor supplements (including the PowerPoint sheets) can be found at
+A number of people have been involved in the fifth edition. The material in
+Chap. 7 on VMware (in Sec. 7.12) was written by Edouard Bugnion of EPFL in
+Lausanne, Switzerland. Ed was one of the founders of the VMware company and
+knows this material as well as anyone in the world. We thank him greatly for 
+supplying it to us.
+Ada Gavrilovska of Georgia Tech, who is an expert on Linux internals, 
+updated Chap. 10 from the Fourth Edition, which she also wrote. The Android 
+material in Chap. 10 was written by Dianne Hackborn of Google, one of the key
+developers of the Android system. Android is the most popular operating system
+on smartphones, so we are very grateful to have Dianne help us. Chapter 10 is now
+quite long and detailed, but UNIX, Linux, and Android fans can learn a lot from it.
+We hav en’t neglected Windows, however. Mehmet Iyigun of Microsoft 
+updated Chap. 11 from the previous edition of the book. This time the chapter covers
+Windows 11 in detail. Mehmet has a great deal of knowledge of Windows and
+enough vision to tell the difference between places where Microsoft got it right and
+where it got it wrong. He was ably assisted by Andrea Allievi, Pedro Justo, Chris
+Kleynhans, and Erick Smith. Windows fans are certain to enjoy this chapter.
+The book is much better as a result of the work of all these expert contributors.
+Again, we would like to thank them for their invaluable help.
+http://www.pearsonglobaleditions.com.

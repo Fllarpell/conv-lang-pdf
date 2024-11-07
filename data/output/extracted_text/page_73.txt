@@ -1,0 +1,51 @@
+44
+INTRODUCTION 
+CHAP. 1
+/Faculty/Prof.Brown were the working directory, use of the path Courses/CS101
+would yield the same file as the absolute path name given above. Processes can
+change their working directory by issuing a system call specifying the new 
+working directory.
+Before a file can be read or written, it must be opened, at which time the 
+permissions are checked. If the access is permitted, the system returns a small integer
+called a file descriptor to use in subsequent operations. If the access is prohibited,
+an error code is returned.
+Another important concept in UNIX is the mounted file system. Most desktop
+computers and notebooks have one or more regular USB ports into which USB
+memory sticks (really, flash drives) can be plugged, or USB-C ports which can be
+used to connect external SSDs and hard disks. Some computers have optical drives
+for Blu-ray disks and you can ask old-timers for war stories about DVDs, 
+CDROMs, and floppy disks. To provide an elegant way to deal with these removable
+media UNIX allows the file system on these separate storage devices to be attached
+to the main tree. Consider the situation of Fig. 1-15(a). Before the mount call, the
+root file system, on the hard disk, and a second file system, on USB drive, are 
+separate and unrelated. The USB drive may even be formatted with, say, FAT -32 and
+the hard disk with, say, ext4.
+Root
+a
+b
+c
+d
+c
+d
+a
+b
+x
+y
+x
+y
+(a)
+(b)
+USB drive
+Figure 1-15. (a) Before mounting, the files on the USB drive are not accessible.
+(b) After mounting, they are part of the file hierarchy.
+Unfortunately, if the current directory of the shell is in the hard disk file 
+system, the file system on the USB drive cannot be used, because there is no way to
+specify path names on it. UNIX does not allow path names to be prefixed by a
+drive name or number; that would be precisely the kind of device dependence that
+operating systems ought to eliminate. Instead, the mount system call allows the file
+system on the USB drive to be attached to the root file system wherever the 
+program wants it to be. In Fig. 1-15(b) the file system on the USB drive has been
+mounted on directory b, thus allowing access to files /b/x and /b/y. If directory b
+had contained any files, they would not be accessible while the USB drive was
+mounted, since /b would now refer to the root directory of the USB drive. (Not
+being able to access these files is not as serious as it at first seems: file systems are

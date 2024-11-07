@@ -1,0 +1,44 @@
+SEC. 10.1
+HISTORY OF UNIX AND LINUX
+705
+discarded PDP-7 minicomputer. Despite the tiny size of the PDP-7, Thompson’s
+system actually worked and could support Thompson’s dev elopment effort. 
+Consequently, one of the other researchers at Bell Labs, Brian Kernighan, somewhat 
+jokingly called it UNICS (UNiplexed Information and Computing Service)
+because it supported only one user—Ken. Despite some puns about ‘‘EUNUCHS’’
+being a castrated MULTICS, the name stuck, although the spelling was changed to
+UNIX later.
+10.1.2 PDP-11 UNIX
+Thompson’s work so impressed his colleagues at Bell Labs that he was soon
+joined by Dennis Ritchie, and later by his entire department. Two major 
+developments occurred around this time. First, UNIX was moved from the obsolete PDP-7
+to the much more modern PDP-11/20 and then later to the PDP-11/45 and
+PDP-11/70. The latter two machines dominated the minicomputer world for much
+of the 1970s. The PDP-11/45 and PDP-11/70 were powerful machines with large
+physical memories for their era (256 KB and 2 MB, respectively). Also, they had
+memory-protection hardware, making it possible to support multiple users at the
+same time. However, they were both 16-bit machines that limited individual 
+processes to 64 KB of instruction space and 64 KB of data space, even though the
+machine may have had far more physical memory.
+The second development concerned the language in which UNIX was written.
+By now it was becoming painfully obvious that having to rewrite the entire system
+for each new machine was no fun at all, so Thompson decided to rewrite UNIX in
+a high-level language of his own design, called B. B was a simplified form of
+BCPL (which itself was a simplified form of CPL, which, like PL/I, never worked).
+Due to weaknesses in B, primarily lack of structures, this attempt was not 
+successful. Ritchie then designed a successor to B, (naturally) called C, and wrote an
+excellent compiler for it. Working together, Thompson and Ritchie rewrote UNIX
+in C. C was the right language at the right time and has dominated system 
+programming ever since.
+In 1974, Ritchie and Thompson published a landmark paper about UNIX
+(Ritchie and Thompson, 1974). For the work described in this paper, they were
+later given the prestigious ACM Turing Award (Ritchie, 1984; Thompson, 1984).
+The publication of this paper stimulated many universities to ask Bell Labs for a
+copy of UNIX. Since Bell Labs’ parent company, AT&T, was a regulated 
+telephone monopoly at the time and was not permitted to be in the computer business,
+it had no objection to licensing UNIX to universities for a modest fee.
+In one of those coincidences that often shape history, the PDP-11 was the 
+computer of choice at nearly all university computer science departments, and the 
+operating systems that came with the PDP-11 were widely regarded as dreadful by 
+professors and students alike. UNIX quickly filled the void, not least because it was
+supplied with the complete source code, so that people could, and did, tinker with

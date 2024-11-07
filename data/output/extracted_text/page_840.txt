@@ -1,0 +1,51 @@
+SEC. 10.8
+ANDROID
+811
+complete data being delivered. The kernel determines the appropriate process to
+receive that transaction, delivering it to a waiting thread in the process.
+Figure 10-43 illustrates the basic flow of a transaction. Any thread in the 
+originating process may create a transaction identifying its target, and submit this to
+the kernel. The kernel makes a copy of the transaction, adding to it the identity of
+the sender. It determines which process is responsible for the target of the 
+transaction and wakes up a thread in the process to receive it. Once the receiving 
+process is executing, it determines the appropriate target of the transaction and delivers
+it.
+Process 1
+Process 2
+Transaction
+To: Object1
+From: Process 1
+(Data)
+Object1
+Thread pool
+Transaction
+To: Object1
+(Data)
+Thread pool
+Kernel
+Transaction
+To: Object1
+From: Process 1
+(Data)
+T1
+T1
+T2
+T2
+Ta
+Figure 10-43. Basic Binder IPC transaction.
+(For the discussion here, we are simplifying the way transaction data moves
+through the system as two copies, one to the kernel and one to the receiving 
+process’s address space. The actual implementation does this in one copy. For each
+process that can receive transactions, the kernel creates a shared memory area with
+it. When it is handling a transaction, it first determines the process that will be
+receiving that transaction and copies the data directly into that shared address
+space.)
+Note that each process in Fig. 10-43 has a ‘‘thread pool.’’ This is one or more
+threads created by user space to handle incoming transactions. The kernel will 
+dispatch each incoming transaction to a thread currently waiting for work in that 
+process’s thread pool. Calls into the kernel from a sending process, however, do not
+need to come from the thread pool—any thread in the process is free to initiate a
+transaction, such as Ta in Fig. 10-43.
+We hav e already seen that transactions given to the kernel identify a target
+object; howev er, the kernel must determine the receiving process. To accomplish
+this, the kernel keeps track of the available objects in each process and maps them

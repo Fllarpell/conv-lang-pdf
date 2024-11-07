@@ -1,0 +1,41 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+929
+combined into the same process as long as they can safely operate with the same
+security credentials.
+Within each of the shared service processes, individual services are loaded as
+DLLs. They normally share a pool of threads using the Win32 thread-pool facility,
+so that only the minimal number of threads needs to be running across all the 
+resident services.
+Services are common sources of security vulnerabilities in the system because
+they are often accessible remotely (depending on the TCP/IP firewall and IP 
+Security settings) or from unprivileged applications, and not all programmers who write
+services are as careful as they should be to validate the parameters and buffers that
+are passed in via RPC. With shared svchosts, a security or a reliability bug, or a
+memory leak in one service may impact all the other servicing sharing the process
+as well as making diagnosis more difficult. For these reasons, starting with 
+Windows 10, most Windows services run in their own svchost processes unless the
+computer is memory-constrained. The few services that still share svchosts either
+have strong dependencies on being co-located or they make frequent RPC calls to
+one another which would have significant CPU cost if done across process 
+boundaries.
+The number of services running constantly in Windows is staggering. Yet few
+of those services ever receive a single request, though if they do it is likely to be
+from an attacker attempting to exploit a vulnerability. As a result more and more
+services in Windows are turned off by default, particularly on versions of Windows
+Server.
+11.4 PROCESSES AND THREADS IN WINDOWS
+Windows has a number of concepts for managing the CPU and grouping
+resources together. In the following sections, we will examine these, discussing
+some of the relevant Win32 API calls, and show how they are implemented.
+11.4.1 Fundamental Concepts
+In Windows, processes are generally containers for programs. They hold the
+virtual address space, the handles that refer to kernel-mode objects, and threads. In
+their role as a container for threads, they hold common resources used for thread
+execution, such as the pointer to the quota structure, the shared token object, and
+default parameters used to initialize threads—including the priority and scheduling
+class. Each process has user-mode system data, called the PEB (Process 
+Environment Block). The PEB includes the list of loaded modules (i.e., the EXE and
+DLLs), the memory containing environment strings, the current working directory,
+and data for managing the process’ heaps—as well as lots of special-case Win32
+cruft that has been added over time.

@@ -1,0 +1,48 @@
+SEC. 4.1
+FILES
+267
+Command 
+Result
+file README.txt
+UTF-8 Unicode text
+file hjb.sh 
+POSIX shell script, ASCII text executable
+file Makefile 
+makefile script, ASCII text
+file /usr/bin/less
+symbolic link to /bin/less
+file /bin/
+director y
+file /bin/less
+ELF 64-bit LSB shared object, x86-64 [...more infor mation...]
+Figure 4-4. Finding out file types.
+order. Sequential files could be rewound, however, so they could be read as often
+as needed. Sequential files were convenient when the storage medium was 
+magnetic tape rather than disk.
+When disks came into use for storing files, it became possible to read the bytes
+or records of a file out of order, or to access records by key rather than by position.
+Files whose bytes or records can be read in any order are called random-access
+files. They are required by many applications.
+Random access files are essential for many applications, for example, database
+systems. If an airline customer calls up and wants to reserve a seat on a particular
+flight, the reservation program must be able to access the record for that flight
+without having to read the records for thousands of other flights first.
+Tw o methods can be used for specifying where to start reading. In the first
+one, every read operation gives the position in the file to start reading at. In the
+second one, a special operation, seek, is provided to set the current position. After
+a seek, the file can be read sequentially from the now-current position. The latter
+method is used in UNIX and Windows.
+4.1.5 File Attributes
+Every file has a name and its data. In addition, all operating systems associate
+other information with each file, for example, the date and time the file was last
+modified and the file’s size. We will call these extra items the file’s attributes.
+Some people call them metadata. The list of attributes varies considerably from
+system to system. The table of Fig. 4-5 shows some of the possibilities, but other
+ones also exist. No existing system has all of these, but each one is present in
+some system.
+The first four attributes relate to the file’s protection and tell who may access it
+and who may not. All kinds of schemes are possible, some of which we will study
+later. In some systems the user must present a password to access a file, in which
+case the password must be one of the attributes.
+The flags are bits or short fields that control or enable some specific property.
+Hidden files, for example, do not appear in listings of all the files. The archive flag

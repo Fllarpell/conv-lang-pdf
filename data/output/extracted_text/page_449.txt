@@ -1,0 +1,43 @@
+420
+INPUT/OUTPUT 
+CHAP. 5
+the only software most people run on their PC is a Web browser, and maybe not
+ev en that.
+It is probably a fair conclusion to say that most users want high-performance
+interactive computing but do not really want to administer a computer. This has led
+researchers to reexamine timesharing using simple text terminals (now called thin
+clients) that meet modern terminal expectations. X was a step in this direction and
+dedicated X terminals were popular for a little while but they fell out of favor
+because they cost as much as PCs, could do less, and still needed some software
+maintenance. The holy grail would be a high-performance interactive computing
+system in which the user machines had no software at all. Interestingly enough,
+this goal is achievable, although existing solutions tend to be less extreme.
+One of the best known thin clients is the ChromeBook. It is pushed actively
+by Google, but with a wide variety of manufacturers providing a wide variety of
+models. The notebook runs ChromeOS which is based on Linux and the Chrome
+Web browser and was originally assumed to be online all the time. Most other 
+software is hosted on the Web in the form of Web Apps, making the software stack on
+the Chromebook itself considerably thinner than in most traditional notebooks. It
+turns out that model did not work so well, so eventually Google made it possible to
+run Android apps natively on Chromebooks. On the other hand, a system that runs
+a full Linux stack, and a Chrome browser, is not exactly anorexic either.
+5.8 POWER MANAGEMENT
+The first general-purpose electronic computer, the ENIAC, had 18,000 vacuum
+tubes and consumed 140,000 watts of power. As a result, it ran up a nontrivial
+electricity bill. After the invention of the transistor, power usage dropped 
+dramatically and the computer industry lost interest in power requirements. However, 
+nowadays power management is back in the spotlight for several reasons, and the 
+operating system is playing a role here.
+Let us start with desktop PCs. A desktop PC often has a 200-watt power 
+supply (which is typically 85% efficient, that is, loses 15% of the incoming energy to
+heat). If 100 million of these machines are turned on at once worldwide, together
+they use 20,000 megawatts of electricity. This is the total output of 20 
+average-sized nuclear power plants. If power requirements could be cut in half, we
+could get rid of 10 nuclear power plants. From an environmental point of view, 
+getting rid of 10 nuclear power plants (or an equivalent number of fossil-fuel plants) is
+a big win for the planet.
+The other place where power is a very big issue is on battery-powered 
+computers, including notebooks, smartphones, and tablets, among others. The heart of
+the problem is that the batteries cannot hold enough charge to last very long, a few
+hours at most. Furthermore, despite massive research efforts by battery companies,
+computer companies, and consumer electronics companies, progress is glacial. To

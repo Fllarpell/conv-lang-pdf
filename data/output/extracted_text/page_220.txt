@@ -1,0 +1,46 @@
+SEC. 3.2
+A MEMORY ABSTRACTION: ADDRESS SPACES
+191
+Another well-known and widely used algorithm is best fit. Best fit searches
+the entire list, from beginning to end, and takes the smallest hole that is adequate.
+Rather than breaking up a big hole that might be needed later, best fit tries to find a
+hole that is close to the actual size needed, to best match the request and the 
+available holes.
+As an example of first fit and best fit, consider Fig. 3-6 again. If a block of
+size 2 is needed, first fit will allocate the hole at 5, but best fit will allocate the hole
+at 18.
+Best fit is slower than first fit because it must search the entire list every time it
+is called. Somewhat surprisingly, it also results in more wasted memory than first
+fit or next fit because it tends to fill up memory with tiny, useless holes. First fit
+generates larger holes on the average.
+To get around the problem of breaking up nearly exact matches into a process
+and a tiny hole, one could think about worst fit, that is, always take the largest
+available hole, so that the new hole will be big enough to be useful. Simulation has
+shown that worst fit is not a very good idea either.
+All four algorithms can be speeded up by maintaining separate lists for 
+processes and holes. In this way, all of them devote their full energy to inspecting
+holes, not processes. The inevitable price that is paid for this speedup on allocation
+is the additional complexity and slowdown when deallocating memory, since a
+freed segment has to be removed from the process list and inserted into the hole
+list.
+If distinct lists are maintained for processes and holes, the hole list may be kept
+sorted on size, to make best fit faster. When best fit searches a list of holes from
+smallest to largest, as soon as it finds a hole that fits, it knows that the hole is the
+smallest one that will do the job, hence the best fit. No further searching is needed,
+as it is with the single-list scheme. With a hole list sorted by size, first fit and best
+fit are equally fast, and next fit is pointless.
+When the holes are kept on separate lists from the processes, a small 
+optimization is possible. Instead of having a separate set of data structures for maintaining
+the hole list, as is done in Fig. 3-6(c), the information can be stored in the holes.
+The first word of each hole could be the hole size, and the second word a pointer to
+the following entry. The nodes of the list of Fig. 3-6(c), which require three words
+and one bit (P/H), are no longer needed.
+Yet another allocation algorithm is quick fit, which maintains separate lists for
+some of the more common sizes requested. For example, it might have a table with
+n entries, in which the first entry is a pointer to the head of a list of 4-KB holes, the
+second entry is a pointer to a list of 8-KB holes, the third entry a pointer to 12-KB
+holes, and so on. Holes of, say, 21 KB, could be put either on the 20-KB list or on
+a special list of odd-sized holes.
+With quick fit, finding a hole of the required size is extremely fast, but it has
+the same disadvantage as all schemes that sort by hole size, namely, when a 
+process terminates or is swapped out, finding its neighbors to see if a merge with them

@@ -1,0 +1,50 @@
+SEC. 2.2
+THREADS
+109
+Process
+Process
+Thread
+Thread
+Process!
+table
+Process!
+table
+Thread!
+table
+Thread!
+table
+Run-time!
+system
+Kernel!
+space
+User!
+space
+Kernel
+Kernel
+Figure 2-15. (a) A user-level threads package. (b) A threads package managed
+by the kernel.
+counter have been switched, the new thread comes to life again automatically. If
+the machine happens to have an instruction to store all the registers and another
+one to load them all, the entire thread switch can be done in just a handful of
+instructions. Doing thread switching like this is at least an order of magnitude—
+maybe more—faster than trapping to the kernel and is a strong argument in favor
+of user-level threads packages.
+In addition, when a thread is finished running for the moment, for example,
+when it calls thread yield, the code of thread yield saves the thread’s information
+in the thread table and then calls the thread scheduler to pick another thread to run.
+The procedure that saves the thread’s state and the scheduler are just local 
+procedures, so invoking them is much more efficient than making a kernel call. There is
+no need for a trap, a context switch, flushing of caches, and so on. This makes
+thread scheduling very fast.
+User-level threads also have other advantages. They allow each process to have
+its own customized scheduling algorithm. For some applications, for example,
+those with a garbage-collector thread, not having to worry about a thread being
+stopped at an inconvenient moment is a plus. They also scale better, since kernel
+threads invariably require some table space and stack space in the kernel, which
+can be a problem if there is a very large number of threads.
+Despite their better performance, user-level threads packages have some major
+problems. First among these is the problem of how blocking system calls are
+implemented. Suppose that a thread reads from the keyboard before any keys hav e
+been hit. Letting the thread actually make the system call is unacceptable, since
+this will stop all the threads. One of the main goals of having threads in the first
+place was to allow each thread to use blocking calls, but to prevent one blocked

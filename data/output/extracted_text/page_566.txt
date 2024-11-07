@@ -1,0 +1,45 @@
+SEC. 8.1
+MULTIPROCESSORS
+537
+and after it arrives sends it back to node 20. It then updates directory entry 4 to
+indicate that the line is now cached at node 20.
+Now let us consider a second request, this time asking about node 36’s line 2.
+From Fig. 8-6(c) we see that this line is cached at node 82. At this point, the 
+hardware could update directory entry 2 to say that the line is now at node 20 and then
+send a message to node 82 instructing it to pass the line to node 20 and invalidate
+its cache. Note that even a so-called ‘‘shared-memory multiprocessor’’ has a lot of
+message passing going on under the hood.
+As a quick aside, let us calculate how much memory is being taken up by the
+directories. Each node has 16 MB of RAM and 218 9-bit entries to keep track of
+that RAM. Thus, the directory overhead is about 9 × 218 bits divided by 16 MB or
+about 1.76%, which is generally acceptable (although it has to be high-speed 
+memory, which increases its cost, of course). Even with 32-byte cache lines the 
+overhead would only be 4%. With 128-byte cache lines, it would be under 1%.
+An obvious limitation of this design is that a line can be cached at only one
+node. To allow lines to be cached at multiple nodes, we would need some way of
+locating all of them, for example, to invalidate or update them on a write. On many
+multicore processors, a directory entry therefore consists of a bit vector with one
+bit per core. A ‘‘1’’ indicates that the cache line is present on the core, and a ‘‘0’’
+that it is not. Moreover, each directory entry typically contains a few more bits. As
+a result, the memory cost of the directory increases considerably. The design of
+64-bit systems is more complicated, but the fundamental principles are similar.
+Multicore Chips
+As chip manufacturing technology improves, transistors are getting smaller
+and smaller and it is possible to put more and more of them on a chip. This 
+empirical observation is often called Moore’s Law, after Intel co-founder Gordon
+Moore, who first noticed it. In 1974, the Intel 8080 contained a little over 2000
+transistors, while Xeon Nehalem-EX CPUs have over 2 billion transistors.
+An obvious question is: ‘‘What do you do with all those transistors?’’ As we
+discussed in Sec. 1.3.1, one option is to add megabytes of cache to the chip. This
+option is serious, and chips with 4–32 MB of on-chip cache are common. But at
+some point increasing the cache size may run the hit rate up only from 99% to
+99.5%, which does not improve application performance much.
+The other option is to put two or more complete CPUs, usually called cores,
+on the same chip (technically, on the same die). Chips with 4–64 cores are already
+common; and you can even buy chips with hundreds of cores. No doubt more cores
+are on their way. Caches are still crucial and are now spread across the chip. For
+instance, AMD’s EPYC Milan CPU has up to 64 cores with 2 hardware threads
+each, giving 128 virtual cores.
+In many systems, each core typically has access to multiple levels of cache,
+from a close-by, small, fast L1 (Level 1) cache to a more distant, bigger, and
+slower L3 cache, with the L2 in between. Each of the EPYC Milan’s 64 cores has

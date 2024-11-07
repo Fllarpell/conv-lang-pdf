@@ -1,0 +1,57 @@
+SEC. 4.5
+EXAMPLE FILE SYSTEMS
+327
+Block siz e
+FAT-12 
+FAT-16 
+FAT-32
+0.5 KB
+2 MB
+1 KB
+4 MB
+2 KB
+8 MB 
+128 MB
+4 KB
+16 MB
+256 MB
+1 TB
+8 KB
+512 MB
+2 TB
+16 KB
+1024 MB
+2 TB
+32 KB
+2048 MB
+2 TB
+Figure 4-33. Maximum partition size for different block sizes. The empty boxes
+represent forbidden combinations.
+bytes ties up 32 KB of disk space. If the average file is, say, 8 KB, then with a
+32-KB block, three quarters of the disk will be wasted, not a terribly efficient way
+to use the disk. With an 8-KB file and a 4-KB block, there is no disk wastage, but
+the price paid is more RAM eaten up by the FAT . With a 4-KB block and a 2-GB
+disk partition, there are 512K blocks, so the FAT must have 512K entries in 
+memory (occupying 2 MB of RAM).
+MS-DOS uses the FAT to keep track of free disk blocks. Any block that is not
+currently allocated is marked with a special code. When MS-DOS needs a new
+disk block, it searches the FAT for an entry containing this code. Thus no bitmap or
+free list is required.
+4.5.2 The UNIX V7 File System
+Even early versions of UNIX had a fairly sophisticated multiuser file system
+since it was derived from MULTICS. Below we will discuss the V7 file system,
+the one for the PDP-11 that made UNIX famous. We will examine a modern
+UNIX file system in the context of Linux in Chap. 10.
+The file system is in the form of a tree starting at the root directory, with the
+addition of links, forming a directed acyclic graph. File names can be up to 14
+characters and can contain any ASCII characters except / (because that is the 
+separator between components in a path) and NUL (because that is used to pad out
+names shorter than 14 characters). NUL has the numerical value of 0.
+A UNIX directory entry contains one entry for each file in that directory. Each
+entry is extremely simple because UNIX uses the i-node scheme illustrated in
+Fig. 4-15. A directory entry contains only two fields: the file name (14 bytes) and
+the number of the i-node for that file (2 bytes), as shown in Fig. 4-34. These
+parameters limit the number of files per file system to 64K.
+Like the i-node of Fig. 4-15, the UNIX i-node contains some attributes. The
+attributes contain the file size, three times (creation, last access, and last 
+modification), owner, group, protection information, and a count of the number of directory

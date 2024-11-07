@@ -1,0 +1,46 @@
+SEC. 13.2
+ALPHABETICAL BIBLIOGRAPHY
+1099
+BAYS, C.: ‘‘ A Comparison of Next-Fit, First-Fit, and Best-Fit,’’ Commun. ACM, Vol. 20, pp.
+191–192, March 1977.
+BEAUMONT, O., CANON, L-C., EYRAUD-DUBOIS, L., LUCARELLI, G., MARCHAL, L.,
+MOMMESSIN, C., SIMON, B., and TRYSTRAM, D.: ‘‘Scheduling on Two Types of
+Resources: A Survey,’’ ACM Computing Surveys, Vol. 53, pp 1–36, June 2020.
+BELAY, A., BITTAU, A., MASHTIZADEH, A., TEREI, D., MAZIERES, D., and
+KOZYRAKIS, C.: ‘‘Dune: Safe User-level Access to Privileged CPU Features,’’ Proc.
+Ninth USENIX Symp. on Operating Syst. Design and Implementation, USENIX, pp.
+335–348, 2010.
+BELAY, A., PREKAS, G., PRIMORAC, M., KLIMOVIC, A., GROSSMAN, S., KOZYRAKIS,
+C., and BUGNION, E.: ‘‘The IX Operating System: Combining Low Latency, High
+Throughput, and Efficiency in a Protected Dataplane,’’ Tr ans. Computer Syst., ACM,
+Vol. 34(4), pp.11:1–11:39, 2017.
+BELL, D., and LA PADULA, L.: ‘‘Secure Computer Systems: Mathematical Foundations
+and Model,’’ Technical Report MTR 2547 v2, Mitre Corp., Nov. 1973.
+BEN-ARI, M.: Principles of Concurrent and Distributed Programming, Hoboken, NJ: 
+Pearson, 2006.
+BHAT, K., VAN DER KOUWE, E., BOS, H., and GIUFFRIDA, C.: ‘‘ProbeGuard: Mitigating
+Probing Attacks Through Reactive Program Transformations,’’ Proc. 24th Int. Conf. on
+Architectural Support for Programming Languages and Operating Syst., ACM, 2019.
+BHAT, K., VAN DER KOUWE, E., BOS, H., and GIUFFRIDA, C: ‘‘FIRestarter: Practical
+Software Crash Recovery with Targeted Library-level Fault Injection,’’ Proc. 51st
+Annual IEEE/IFIP International Conf. on Dependable Syst. and Networks (DSN), ,
+2021.
+BIBA, K.: ‘‘Integrity Considerations for Secure Computer Systems,’’ Technical Report
+76–371, U.S. Air Force Electronic Systems Division, 1977.
+BILLIMORIA, K.N. Linux Kernel Programming: A comprehensive guide to kernel 
+internals, writing kernel modules, and kernel synchronization, Birmingham, U.K.: Packt
+Publishing, 2021.
+BIRRELL, A.D., and NELSON, B.J.: ‘‘Implementing Remote Procedure Calls,’’ ACM Trans.
+Computer Syst., Vol. 2, pp. 39–59, Feb. 1984.
+BOEHM, B.: Software Eng. Economics, Hoboken, NJ: Pearson, 1981.
+BOSMAN, E., RAZAVI, K., BOS, H., and GIUFFRIDA, C.: ‘‘Dedup Est Machina: Memory
+Deduplication as an Advanced Exploitation Vector,’’ Proc. 37th Symp. on Security and
+Privacy, IEEE, 2017.
+BOULGOURIS, N.V., PLATANIOTIS, K.N., and MICHELI-TZANAKOU, E.: Biometrics:
+Theory, Methods, and Applications, Hoboken, NJ: John Wiley & Sons, 2010.
+BOVET, D.P., and CESATI, M.: Understanding the Linux Kernel, Sebastopol, CA: O’Reilly
+& Associates, 2005.
+BOYD-WICKIZER, S., CHEN, H., CHEN, R., MAO, Y., KAASHOEK, M.F., MORRIS, R.,
+PESTEREV, A., STEIN, L., WU, M., DAI, Y., ZHANG, Y., and ZHANG, Z.: ‘‘Corey: an
+Operating System for Many Cores,’’ Proc. Eighth USENIX Symp. on Operating Syst.
+Design and Implementation, USENIX, pp. 43–57, 2008.

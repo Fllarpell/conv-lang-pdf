@@ -1,0 +1,99 @@
+INDEX
+1133
+Input/output, 2, 45, 337–431
+asynchronous, 353
+busy waiting, 355
+device driver, 359–362
+interrupt-driven, 355–356
+memory-mapped, 340–344
+polling, 355
+power management, 420–428
+programmed, 354
+synchronous, 353
+Input/output API calls, Windows, 982
+Input/output hardware, 337–352
+Input/output in Linux, 757–766
+Input/output in Windows, 979–989
+Input/output port, 340
+Input/output port space, 340
+Input/output software, 352–357, 363–364
+block size, 368
+buffering, 364–367
+daemon, 369
+device allocation, 367–368
+device independent, 362–368
+device number, 364
+display, 402–419
+error reporting, 367
+goals, 352–353
+mouse, 401
+terminal, 395–419
+user-space, 368–370
+Input/output software layers, 357–370
+Input/output system calls in Linux, 761
+Input/output using DMA, 356
+Insider attack, 679–681
+Instruction, 127
+Instruction backup, 234–236
+Integer overflow attack, 665–666
+Integrated circuit, 11
+Integrity requirement, 608
+Integrity * property, 632
+Integrity level, Windows, 1022
+Intel x86, 21, 33, 183, 243, 248, 695
+segmentation, 248
+Intent, Android, 830–831
+Intent resolution, 831
+Interconnection technology, 558–561
+Interface, system call, 1051–1053
+Interface communication, 564
+Interface definition language, 595
+Interfaces to Linux, 714–716
+Interleaved memory, 535
+Internal fragmentation, 226
+Internet, 583–584
+Internet of things, 37–38
+Internet protocol, 587, 760
+Interpreter, 482
+Interprocess communication, 40, 119–152
+Windows, 937
+Interrupt, 31, 347–352
+imprecise, 351–352
+precise, 349–351
+Interrupt-driven input/output, 355–356
+Interrupt flag, 490
+Interrupt handler, 357–358
+Interrupt remapping, 499
+Interrupt service routine, 94
+Windows, 901
+Interrupt vector, 94, 348
+Interrupt vector table, 32
+Intrinsic, X, 404
+Intruder, 614
+Invalid page, Windows, 958
+Inverted page table, 206, 206–207
+IoCallDriver Win32 call, 984, 985
+IoCompleteRequest Win32 call, 984, 997, 998
+Ioctl system call, 761, 982, 983, 984
+IopParseDevice Win32 call, 924
+IOS, 1, 14, 18, 19–20
+IOT (see Internet of Things)
+IP (see Internet Protocol)
+IPC (see InterProcess Communication)
+IPhone, 19, 20
+IRP (see I/O Request Packet)
+ISA (see Industry Standard Architecture)
+Isolated container, Hyper-V, 1015–1016
+Isolated process, Windows, 1016–1017
+Isolated user mode, 1018
+ISR (see Interrupt Service Routine)
+ISRs (see Interrupt Service Routines)
+ITO (see Indium Tin Oxide)
+IUM (see Isolated User Mode)
+J
+Jail, 480, 504
+Java virtual machine, 73
+JBD (see Journaling Block Device)
+Jiffy, 737
+JIT (see Just-in-Time compilation)
+Jitting, Windows, 952

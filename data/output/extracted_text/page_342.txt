@@ -1,0 +1,56 @@
+SEC. 4.4
+FILE-SYSTEM MANAGEMENT AND OPTIMIZATION
+313
+the file system’s inherent redundancy to repair it is still a valid one. All file-system
+checkers verify each file system (disk partition) independently of the other ones. It
+is also important to note that some file systems, such the journaling file systems
+discussed earlier, are designed such that they do not require administrators to run a
+separate file system consistency checker after a crash, because they can handle
+most inconsistencies themselves.
+Tw o kinds of consistency checks can be made: blocks and files. To check for
+block consistency, the program builds two tables, each one containing a counter for
+each block, initially set to 0. The counters in the first table keep track of how
+many times each block is present in a file; the counters in the second table record
+how often each block is present in the free list (or the bitmap of free blocks).
+The program then reads all the i-nodes using a raw device, which ignores the
+file structure and just returns all the disk blocks starting at 0. Starting from an 
+inode, it is possible to build a list of all the block numbers used in the 
+corresponding file. As each block number is read, its counter in the first table is incremented.
+The program then examines the free list or bitmap to find all the blocks that are not
+in use. Each occurrence of a block in the free list results in its counter in the 
+second table being incremented.
+If the file system is consistent, each block will have a 1 either in the first table
+or in the second table, as illustrated in Fig. 4-29(a). However, as a result of a
+crash, the tables might look like Fig. 4-29(b), in which block 2 does not occur in
+either table. It will be reported as being a missing block. While missing blocks
+do no real harm, they waste space and thus reduce the capacity of the disk. The 
+solution to missing blocks is straightforward: the file system checker just adds them to
+the free list.
+1 1 0 1 0 1 1 1 1 0 0 1 1 1 0 0
+0 1 2 3 4 5 6 7 8 9 101112131415
+Block number
+Blocks in use
+0 0 1 0 1 0 0 0 0 1 1 0 0 0 1 1 Free blocks
+(a)
+1 1 0 1 0 1 1 1 1 0 0 1 1 1 0 0
+0 1 2 3 4 5 6 7 8 9 101112131415
+Blocks in use
+0 0 1 0 2 0 0 0 0 1 1 0 0 0 1 1 Free blocks
+(c)
+1 1 0 1 0 1 1 1 1 0 0 1 1 1 0 0
+0 1 2 3 4 5 6 7 8 9 101112131415
+Block number
+Blocks in use
+0 0 0 0 1 0 0 0 0 1 1 0 0 0 1 1 Free blocks
+(b)
+1 1 0 1 0 2 1 1 1 0 0 1 1 1 0 0
+0 1 2 3 4 5 6 7 8 9 101112131415
+Blocks in use
+0 0 1 0 1 0 0 0 0 1 1 0 0 0 1 1 Free blocks
+(d)
+Block number
+Block number
+Figure 4-29. File-system states. (a) Consistent. (b) Missing block. (c) 
+Duplicate block in free list. (d) Duplicate data block.
+Another situation that might occur is that of Fig. 4-29(c). Here we see a block,
+number 4, that occurs twice in the free list. (Duplicates can occur only if the free

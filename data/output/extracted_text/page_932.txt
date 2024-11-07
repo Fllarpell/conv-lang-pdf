@@ -1,0 +1,44 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+903
+recent DPC, it maintains a short history of DPC runtime which is used to identify
+long-running DPCs. When such long-running DPCs are queued up on a processor,
+the currently-running thread (which is about to be starved) is rescheduled to 
+another available processor if the thread is high-enough priority. This way, time-critical
+threads like those feeding media devices are much less likely to be starved due to
+DPCs.
+Asynchronous Procedure Calls
+The other special kernel control object is the APC (Asynchronous Procedure
+Call) object. APCs are like DPCs in that they defer processing of a system 
+routine, but unlike DPCs, which operate in the context of particular CPUs, APCs
+execute in the context of a specific thread. When processing a key press, it does not
+matter which context the DPC runs in because a DPC is simply another part of
+interrupt processing, and interrupts only need to manage the physical device and
+perform thread-independent operations such as recording the data in a buffer in
+kernel space.
+The DPC routine runs in the context of whatever thread happened to be 
+running when the original interrupt occurred. It calls into the I/O system to report that
+the I/O operation has been completed, and the I/O system queues an APC to run in
+the context of the thread making the original I/O request, where it can access the
+user-mode address space of the thread that will process the input.
+At the next convenient time, the kernel layer delivers the APC to the thread and
+schedules the thread to run. An APC is designed to look like an unexpected 
+procedure call, somewhat similar to signal handlers in UNIX. The kernel-mode APC for
+completing I/O executes in the context of the thread that initiated the I/O, but in
+kernel mode. This gives the APC access to both the kernel-mode buffer as well as
+all of the user-mode address space belonging to the process containing the thread.
+When an APC is delivered depends on what the thread is already doing, and even
+what type of system. In a multiprocessor system, the thread receiving the APC may
+begin executing even before the DPC finishes running.
+User-mode APCs can also be used to deliver notification of I/O completion in
+user mode to the thread that initiated the I/O. User-mode APCs invoke a user-mode
+procedure designated by the application, but only when the target thread has 
+blocked in the kernel and is marked as willing to accept APCs, a state known as an
+alertable wait. The kernel interrupts the thread from waiting and returns to user
+mode, but with user-mode stack and registers modified to run the APC dispatch
+routine in the ntdll.dll system library. The APC dispatch routine invokes the 
+usermode routine that the application has associated with the I/O operation. Besides
+specifying user-mode APCs as a means of executing code when I/Os complete, the
+Win32 API QueueUserAPC allows APCs to be used for arbitrary purposes.
+Special User-mode APCs are a flavor of APC that were introduced in later
+Windows 10 releases. These are different from ‘‘normal’’ user-mode APCs in that

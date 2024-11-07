@@ -1,0 +1,40 @@
+94
+PROCESSES AND THREADS
+CHAP. 2
+This view giv es rise to the model shown in Fig. 2-3. Here the lowest level of
+the operating system is the scheduler, with a variety of processes on top of it. All
+the interrupt handling and details of actually starting and stopping processes are
+hidden away in what is here called the scheduler, which is actually not much code.
+The rest of the operating system is nicely structured in process form. Few real 
+systems are as nicely structured as this, however.
+0
+1
+n – 2 n – 1
+Scheduler
+Processes
+Figure 2-3. The lowest layer of a process-structured operating system handles
+interrupts and scheduling. Above that layer are sequential processes.
+2.1.6 Implementation of Processes
+To implement the process model, the operating system maintains a table (an
+array of structures), called the process table, with one entry per process. (Some
+authors call these entries process control blocks.) This entry contains important
+information about the process’ state, including its program counter, stack pointer,
+memory allocation, the status of its open files, its accounting and scheduling 
+information, and everything else about the process that must be saved when the process
+is switched from running to ready or blocked state so that it can be restarted later
+as if it had never been stopped.
+Figure 2-4 shows some of the key fields in a typical system. The fields in the
+first column relate to process management. The other two relate to memory 
+management and file management, respectively. It should be noted that precisely which
+fields the process table has is highly system dependent, but this figure gives a 
+general idea of the kinds of information needed.
+Now that we have looked at the process table, it is possible to explain a little
+more about how the illusion of multiple sequential processes is maintained on one
+(or each) CPU and also explain interrupts in more detail than we were able to do in
+Chap. 1. Associated with each I/O class is a location (typically at a fixed location
+near the bottom of memory) called the interrupt vector. It contains the address of
+the ISR (Interrupt Service Routine). Suppose that user process 3 is running
+when a disk interrupt happens. User process 3’s program counter, program status
+word, and sometimes one or more registers are pushed onto the (current) stack by
+the interrupt hardware. The computer then jumps to the address in the interrupt
+vector. That is all the hardware does. From here on, it is up to the ISR in software.

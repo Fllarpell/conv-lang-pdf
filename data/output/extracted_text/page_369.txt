@@ -1,0 +1,43 @@
+340
+INPUT/OUTPUT 
+CHAP. 5
+assembled, bit by bit, in a buffer inside the controller. After its checksum has been
+verified and the block has been declared to be error free, it can then be copied to
+main memory.
+The controller for an LCD display monitor also works as a bit serial device at
+an equally low lev el. It reads bytes containing the characters to be displayed from
+memory and generates the signals to modify the polarization of the backlight for
+the corresponding pixels in order to write them on screen. If it were not for the
+display controller, the operating system programmer would have to explicitly 
+program the electric fields of all pixels. With the controller, the operating system 
+initializes the controller with a few parameters, such as the number of characters or
+pixels per line and number of lines per screen, and lets the controller take care of
+actually driving the electric fields.
+In a very short time, LCD screens have completely replaced the old CRT
+(Cathode Ray Tube) monitors. CRT monitors fire a beam of electrons onto a 
+fluorescent screen. Using magnetic fields, the system is able to bend the beam and
+draw pixels on the screen. Compared to LCD screens, CRT monitors were bulky,
+power hungry, and fragile. Moreover, the resolution on today’s (Retina) LCD
+screens is so good that the human eye is unable to distinguish individual pixels. It
+is hard to imagine today that laptops in the past came with a small CRT screen that
+made them more than 20 cm deep with a nice work-out weight of around 12 kg.
+5.1.3 Memory-Mapped I/O
+Each controller has a few registers that are used for communicating with the
+CPU. By writing into these registers, the operating system can command the 
+device to deliver data, accept data, switch itself on or off, or otherwise perform some
+action. By reading from these registers, the operating system can learn what the
+device’s state is, whether it is prepared to accept a new command, and so on.
+In addition to the control registers, many devices have a data buffer that the
+operating system can read and write. For example, a common way for computers to
+display pixels on the screen is to have a video RAM, which is basically just a data
+buffer, available for programs or the operating system to write into.
+The issue thus arises of how the CPU communicates with the control registers
+and also with the device data buffers. Two alternatives exist. In the first approach,
+each control register is assigned an I/O port number, an 8- or 16-bit integer. The
+set of all the I/O ports form the I/O port space, which is protected so that ordinary
+user programs cannot access it (only the operating system can). Using a special
+I/O instruction such as
+IN REG,PORT,
+the CPU can read in control register PORT and store the result in CPU register
+REG. Similarly, using
+OUT PORT,REG

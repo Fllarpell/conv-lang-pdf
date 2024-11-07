@@ -1,0 +1,46 @@
+SEC. 5.6
+USER INTERFACES: KEYBOARD, MOUSE, & MONITOR
+409
+Icons, Menus, and Pointing device, respectively. Windows are rectangular blocks
+of screen area used to run programs. Icons are little symbols that can be clicked on
+to cause some action to happen. Menus are lists of actions from which one can be
+chosen. Finally, a pointing device is a mouse, trackball, or other hardware device
+used to move a cursor around the screen to select items.
+The GUI software can be implemented in either user-level code, as is done in
+UNIX systems, or in the operating system itself, as in the case in Windows.
+Input for GUI systems still uses the keyboard and mouse, but output almost
+always goes to a special hardware board called a graphics card. A graphics
+adapter contains a special memory called video RAM that holds the images that
+appear on the screen. Graphics adapters often have a powerful GPU (Graphics
+Processing Unit) with 8–16 GB (or more) of their own RAM, separate from the
+computer’s main memory.
+Each graphics adapter supports some number of screen sizes. Common sizes
+(horizontal × vertical in pixels) are 1600 × 1200, 1920 × 1080, 2560 × 1600, and
+3840 × 2160. However, there are also displays offering higher resolutions (say,
+5120 × 2880 or 6016 × 3384). Higher resolutions are intended to be used on 
+widescreen monitors whose 16:9 aspect ratio matches them exactly. At a resolution of
+just 1920 × 1080 (the size of full HD videos), a color display with 24 bits/pixel 
+requires about 6.2 MB of RAM just to hold the image, so with 8 GB, the graphics
+adapter can hold 1380 images at once. If the full screen is refreshed 60 times/sec,
+the video RAM must be capable of delivering data continuously at 372 MB/sec.
+Of course, 4K video is 3840 × 2160, so it needs four times as much storage and
+bandwidth.
+Output software for GUIs is a massive topic. Many 1500-page books have
+been written about the Windows GUI alone (e.g., Petzold, 2013; Rector and 
+Newcomer, 1997; and Simon, 1997). Clearly, in this section, we can only scratch the
+surface and present a few of the underlying concepts. To make the discussion 
+concrete, we will describe the Win32 API, which is supported by all 32-bit and 64-bit
+versions of Windows. The output software for other GUIs is roughly comparable
+in a general sense, but the details are very different.
+The basic item on the screen is a rectangular area called a window. A 
+window’s position and size are uniquely determined by giving the coordinates (in 
+pixels) of two diagonally opposite corners. A window may contain a title bar, a menu
+bar, a tool bar, a vertical scroll bar, and a horizontal scroll bar. A typical window is
+shown in Fig. 5-35. Note that the Windows coordinate system puts the origin in
+the upper left-hand corner and has y increase downward, which is different from
+the Cartesian coordinates used in mathematics.
+When a window is created, the parameters specify whether it can be moved by
+the user, resized by the user, or scrolled (by dragging the thumb on the scroll bar)
+by the user. The main window produced by most programs can be moved, resized,
+and scrolled, which has enormous consequences for the way Windows programs
+are written. In particular, programs must be informed about changes to the size of

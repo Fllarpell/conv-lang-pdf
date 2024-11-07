@@ -1,0 +1,36 @@
+276
+FILE SYSTEMS
+CHAP. 4
+The first path instructs the system to go upward (to the usr directory), then to go
+down to the directory lib to find the file dictionary.
+Root directory
+bin
+etc
+lib
+usr
+ast
+           hjb
+tmp
+bin
+etc
+lib
+usr
+tmp
+/
+ast
+/usr/hjb
+lib               hjb
+lib
+dict.
+Figure 4-9. A UNIX directory tree.
+The second argument (dot) names the current directory. When the cp command
+gets a directory name (including dot) as its last argument, it copies all the files to
+that directory. Of course, a more normal way to do the copy would be to use the
+full absolute path name of the source file:
+cp /usr/lib/dictionary .
+Here the use of dot saves the user the trouble of typing dictionary a second time.
+Nevertheless, typing
+cp /usr/lib/dictionary dictionar y
+also works fine, as does
+cp /usr/lib/dictionary /usr/ast/dictionar y
+All of these do exactly the same thing.

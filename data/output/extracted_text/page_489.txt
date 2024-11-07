@@ -1,0 +1,97 @@
+460
+DEADLOCKS 
+CHAP. 6
+Printers
+Printers
+Plotters
+Plotters
+Tape drives
+Tape drives
+Process
+Process
+A
+Cameras
+Cameras
+3
+0
+1
+1
+B
+0
+1
+0
+0
+C
+1
+1
+1
+0
+D
+1
+1
+0
+1
+E
+0
+0
+Resources assigned
+0
+0
+A
+1
+1
+0
+0
+B
+0
+1
+1
+2
+C
+3
+1
+0
+0
+D
+0
+0
+1
+0
+E
+2
+1
+Resources still assigned
+1
+0
+E = (6342)
+P = (5322)
+A = (1020)
+Figure 6-15. The banker’s algorithm with multiple resources.
+The three vectors at the right of the figure show the existing resources, E, the
+possessed resources, P, and the available resources, A, respectively. From E we
+see that the system has six tape drives, three plotters, four printers, and two 
+cameras. Of these, fiv e tape drives, three plotters, two printers, and two cameras are
+currently assigned. This fact can be seen by adding up the entries in the four
+resource columns in the left-hand matrix. The available resource vector is just the
+difference between what the system has and what is currently in use.
+The algorithm for checking to see if a state is safe can now be stated.
+1. Look for a row, R, whose unmet resource needs are all smaller than or
+equal to A. If no such row exists, the system will eventually deadlock
+since no process can run to completion (assuming processes keep all
+resources until they exit).
+2. Assume the process of the chosen row requests all the resources it
+needs (which is guaranteed to be possible) and finishes. Mark that
+process as terminated and add all of its resources to the A vector.
+3. Repeat steps 1 and 2 until either all processes are marked terminated
+(in which case the initial state was safe) or no process is left whose
+resource needs can be met (in which case the system was not safe).
+If several processes are eligible to be chosen in step 1, it does not matter which one
+is selected: the pool of available resources either gets larger, or at worst, stays the
+same.
+Now let us get back to the example of Fig. 6-15. The current state is safe.
+Suppose that process B now makes a request for the printer. This request can be
+granted because the resulting state is still safe (process D can finish, and then 
+processes A or E, followed by the rest).
+Now imagine that after giving B one of the two remaining printers, E wants the
+last printer. Granting that request would reduce the vector of available resources to
+(1 0 0 0), which leads to deadlock, so E’s request must be deferred for a while.

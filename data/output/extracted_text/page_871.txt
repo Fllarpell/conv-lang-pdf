@@ -1,0 +1,50 @@
+842
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Activity manager in system_server process
+Camera app process
+Granted URIs
+Task: Pictures
+SEND
+content://pics/1
+Saved state
+STOPPED
+RESUMED
+ActivityRecord
+(ComposeActivity)
+ActivityRecord
+(CameraActivity)
+To: ComposeActivity
+URI: content://pics/1
+Allow
+Check
+PicturesProvider
+Authority: "pics"
+ComposeActivity
+Email app process
+Open
+content://pics/1
+Receive
+data
+Figure 10-69. Sharing a picture using a content provider.
+This approach is extremely powerful, since it allows the system to maintain
+tight control over per-application data, granting specific access to data where 
+needed, without the user needing to be aware that this is happening. Many other user
+interactions can also benefit from it. An obvious one is drag and drop to create a
+similar URI grant, but Android also takes advantage of other information such as
+current window focus to determine the kinds of interactions applications can have.
+A final common security method Android uses is explicit user interfaces for
+allowing/removing specific types of access. In this approach, there is some way an
+application indicates it can optionally provide some functionally, and a 
+system-supplied trusted user interface that provides control over this access.
+A typical example of this approach is Android’s input-method architecture.
+An input method is a specific service supplied by a third-party application that
+allows the user to provide input to applications, typically in the form of an 
+onscreen keyboard. This is a highly sensitive interaction in the system, since a lot of
+personal data will go through the input-method application, including passwords
+the user types.
+An application indicates it can be an input method by declaring a service in its
+manifest with an intent filter matching the action for the system’s input-method
+protocol. This does not, however, automatically allow it to become an input 
+method, and unless something else happens the application’s sandbox has no ability to
+operate like one.

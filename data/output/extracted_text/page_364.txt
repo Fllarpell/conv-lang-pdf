@@ -1,0 +1,18 @@
+CHAP. 4  
+PROBLEMS
+335
+per file. Each field should be formatted in a reasonable way given its type. List only
+the first disk address, if any.
+44. Implement a program to measure the impact of application-level buffer sizes on read
+time. This involves writing to and reading from a large file (say, 2 GB). Vary the 
+application buffer size (say, from 64 bytes to 4 KB). Use timing measurement routines (such
+as gettimeofday and getitimer on UNIX) to measure the time taken for different buffer
+sizes. Analyze the results and report your findings: does buffer size make a difference
+to the overall write time and per-write time?
+45. Implement a simulated file system that will be fully contained in a single regular file
+stored on the disk. This disk file will contain directories, i-nodes, free-block 
+information, file data blocks, etc. Choose appropriate algorithms for maintaining free-block
+information and for allocating data blocks (contiguous, indexed, linked). Your program
+will accept system commands from the user to perform file system operations, 
+including at least one to create/delete directories, create/delete/open files, read/write from/to
+a selected file, and to list directory contents.

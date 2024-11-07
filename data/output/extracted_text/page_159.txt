@@ -1,0 +1,45 @@
+130
+PROCESSES AND THREADS
+CHAP. 2
+semaphore could have the value 0, indicating that no wakeups were saved, or some
+positive value if one or more wakeups were pending.
+Dijkstra proposed having two operations on semaphores, now usually called
+down and up (generalizations of sleep and wakeup, respectively). The down 
+operation on a semaphore checks to see if the value is greater than 0. If so, it 
+decrements the value (i.e., uses up one stored wakeup) and just continues. If the value is
+0, the process is put to sleep without completing the down for the moment. 
+Checking the value, changing it, and possibly going to sleep, are all done as a single, 
+indivisible atomic action. It is guaranteed that once a semaphore operation has
+started, no other process can access the semaphore until the operation has 
+completed or blocked. This atomicity is absolutely essential to solving synchronization
+problems and avoiding race conditions. Atomic actions, in which a group of related
+operations are either all performed without interruption or not performed at all, are
+extremely important in many other areas of computer science as well.
+The up operation increments the value of the semaphore addressed. If one (or
+more) processes were sleeping on that semaphore, unable to complete an earlier
+down operation, one of them is chosen by the system (e.g., at random) and is 
+allowed to complete its down. After an up on a semaphore with processes sleeping
+on it, the semaphore will still have the value of 0. However, there will be one 
+fewer process sleeping on it. The operation of incrementing the semaphore and waking
+up one process is also indivisible. No process ever blocks doing an up, just as no
+process ever blocks doing a wakeup in the earlier model.
+As an aside, in Dijkstra’s original paper, he used the names P and V instead of
+down and up, respectively. Since these have no mnemonic significance to people
+who do not speak Dutch and only marginal significance to those people who do—
+Proberen (try) and Verhogen (raise, make higher)—we will use the terms down and
+up instead. These were first introduced in the Algol 68 programming language.
+Solving the Producer-Consumer Problem Using Semaphores
+Semaphores solve the lost-wakeup problem, as shown in Fig. 2-28. To make
+them work correctly, it is essential that they be implemented in an indivisible way.
+The normal way is to implement up and down as system calls, with the operating
+system briefly disabling all interrupts while it is testing the semaphore, updating it,
+and putting the process to sleep, if necessary. As all of these actions take only a
+few instructions, no harm is done in disabling interrupts. If multiple CPUs are
+being used, each semaphore should be protected by a lock variable, with the TSL or
+XCHG instructions used to make sure that only one CPU at a time examines the
+semaphore.
+Be sure you understand that using TSL or XCHG to prevent several CPUs from
+accessing the semaphore at the same time is quite different from the producer or
+consumer busy waiting for the other to empty or fill the buffer. The semaphore
+operation will take only a few nanoseconds, whereas the producer or consumer
+might take arbitrarily long.

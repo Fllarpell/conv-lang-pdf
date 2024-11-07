@@ -1,0 +1,42 @@
+SEC. 1.5
+OPERATING SYSTEM CONCEPTS
+49
+of memory, and assembly language made a surprise comeback. Eventually, 
+minicomputers acquired more memory and high-level languages became prevalent on
+them.
+When microcomputers hit in the early 1980s, the first ones had 4-KB 
+memories and assembly-language programming rose from the dead. Embedded 
+computers often used the same CPU chips as the microcomputers (8080s, Z80s, and
+later 8086s) and were also programmed in assembler initially. Now their 
+descendants, the personal computers, have lots of memory and are programmed in C,
+C++, Python, Java, and other high-level languages. Smart cards are undergoing a
+similar development, although beyond a certain size, the smart cards often have a
+Java interpreter and execute Java programs interpretively, rather than having Java
+being compiled to the smart card’s machine language.
+Protection Hardware
+Early mainframes, like the IBM 7090/7094, had no protection hardware, so
+they just ran one program at a time. A buggy program could wipe out the 
+operating system and easily crash the machine. With the introduction of the IBM 360, a
+primitive form of hardware protection became available. These machines could
+then hold several programs in memory at the same time and have them take turns
+running (multiprogramming). Monoprogramming was declared obsolete.
+At least until the first minicomputer showed up—without protection 
+hardware—so multiprogramming was not possible. Although the PDP-1 and PDP-8
+had no protection hardware, eventually the PDP-11 did, and this feature led to 
+multiprogramming and eventually to UNIX.
+When the first microcomputers were built, they used the Intel 8080 CPU chip,
+which had no hardware protection, so we were back to monoprogramming—one
+program in memory at a time. It was not until the Intel 80286 chip that protection
+hardware was added and multiprogramming became possible. Until this day, many
+embedded systems have no protection hardware and run just a single program.
+That works because the system designers have total control over all the software.
+Disks
+Early mainframes were largely magnetic-tape based. They would read in a 
+program from tape, compile it, run it, and write the results back to another tape. There
+were no disks and no concept of a file system. That began to change when IBM
+introduced the first hard disk—the RAMAC (RAndoM ACcess) in 1956. It 
+occupied about 4 square meters of floor space and could store 5 million 7-bit 
+characters, enough for a single medium-resolution digital photo. But with an annual
+rental fee of about $35,000, assembling enough of them to store the equivalent of a
+roll of film got pricey quite fast. But eventually prices came down and primitive
+file systems were developed for the successors of these unwieldy devices.

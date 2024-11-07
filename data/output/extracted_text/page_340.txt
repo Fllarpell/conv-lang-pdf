@@ -1,0 +1,74 @@
+SEC. 4.4
+FILE-SYSTEM MANAGEMENT AND OPTIMIZATION
+311
+The second reason for dumping unmodified directories above modified files is
+to make it possible to incrementally restore a single file (possibly to handle 
+recovery from user mistakes rather than system failure). Suppose that a full file-system
+dump is done Sunday evening and an incremental dump is done on Monday
+ev ening. On Tuesday, the directory /usr/jhs/proj/nr3 is removed, along with all the
+directories and files under it. On Wednesday morning bright and early, suppose the
+user wants to restore the file /usr/jhs/proj/nr3/plans/summary. However, it is not
+possible to just restore the file summary because there is no place to put it. The
+directories nr3 and plans must be restored first. To get their owners, modes, times,
+and whatever, correct, these directories must be present on the dump disk even
+though they themselves were not modified since the previous full dump.
+The dump algorithm maintains a bitmap indexed by i-node number with 
+several bits per i-node. Bits will be set and cleared in this map as the algorithm 
+proceeds. The algorithm operates in four phases. Phase 1 begins at the starting 
+directory (the root in this example) and examines all the entries in it. For each modified
+file, its i-node is marked in the bitmap. Each directory is also marked (whether or
+not it has been modified) and then recursively inspected.
+At the end of phase 1, all modified files and all directories have been marked in
+the bitmap, as shown (by shading) in Fig. 4-28(a). Phase 2 conceptually 
+recursively walks the tree again, unmarking any directories that have no modified files
+or directories in them or under them. This phase leaves the bitmap as shown in
+Fig. 4-28(b). Note that directories 10, 11, 14, 27, 29, and 30 are now unmarked
+because they contain nothing under them that has been modified. They will not be
+dumped. By way of contrast, directories 5 and 6 will be dumped even though they
+themselves have not been modified because they will be needed to restore today’s
+changes to a fresh machine. For efficiency, phases 1 and 2 can be combined in one
+tree walk.
+1
+2
+3
+4
+5
+6
+7
+8
+9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
+(d)
+1
+2
+3
+4
+5
+6
+7
+8
+9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
+(c)
+1
+2
+3
+4
+5
+6
+7
+8
+9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
+(b)
+1
+2
+3
+4
+5
+6
+7
+8
+9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
+(a)
+Figure 4-28. Bitmaps used by the logical dumping algorithm.
+At this point, it is known which directories and files must be dumped. These
+are the ones that are marked in Fig. 4-28(b). Phase 3 then consists of scanning the
+i-nodes in numerical order and dumping all the directories that are marked for

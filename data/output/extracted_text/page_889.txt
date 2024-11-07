@@ -1,0 +1,46 @@
+860
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+needs network access, how frequently it should run, etc. Android then decides
+when to run the service and for how long.
+JobScheduler gav e Android the ability to look at the background work desires
+across all of the applications on a device and make scheduling decisions to balance
+how much work each app can do vs. their overall impact on battery life. For 
+example, if Android determines that a particular app has not been used recently, it can
+significantly reduce how much work that app can do in the background in favor of
+other apps that are apparently more important to the user.
+For JobScheduler to actually have an impact, however, apps need to use it; yet
+on its own, there is little incentive for them to do so. It did not replace the 
+underlying flexible service mechanism, which apps were already using, were often easier
+to use (in a more simplistic way than jobs), and allowed them total flexibility to do
+the scheduling they wanted. Further changes were needed to change this situation.
+Android 6.0 took the next step in taking more control over background 
+execution by introducing ‘‘doze mode.’’ The idea here was to identify one specific use
+case where battery life is a clear problem, and thus where strong restrictions could
+be applied by the platform to get significant gains. The target use case here was
+tablets that are not used for days: if the user leaves their tablet sitting on a shelf for
+a day, it is a terrible experience to come back to it with the battery empty. There is
+also no reason for users to have that experience, because they generally do not care
+about the tablet doing much of anything in the background during that time.
+Doze addressed these long periods by defining it as a clear state the device can
+identify itself as being in, and stop all background work it can. Going into this state
+happens when the screen has been off for more than an hour and the device has not
+been moving. At that point, numerous restrictions are placed on the device: apps do
+not have network access and cannot hold wakelocks (so even if they hav e a running
+service they cannot keep the device consuming power), as well as other limitations
+such as turning off Wi-Fi and Bluetooth scans, limiting and throttling alarms, etc.
+A device comes out of doze when the screen is turned back on or it is moved
+significantly (and thus needs to do scans and other things to collect new 
+location-related information). The latter is accomplished by a special feature in the 
+sensor system called a ‘‘significant motion detector’’ that allows the main CPU to go
+to sleep but wake up if the detector triggers.
+While in doze, there is still a need to keep some limited background work 
+happening. For example, an incoming instant message should still trigger a notification
+on the device, and important background operations should still be able to run for
+some amount. These needs are addressed through two mechanisms:
+1. Android always maintains a connection to a server that tells it about
+important real-time events it should deal with, such as incoming
+instant messages or changes in calendar events. These are normally
+not delivered during doze, but a special high priority message allows
+these critical events to briefly wake up the device and handle them
+without impacting the overall doze state.

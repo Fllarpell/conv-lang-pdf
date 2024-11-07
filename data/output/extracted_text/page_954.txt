@@ -1,0 +1,60 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+925
+Type 
+Description
+Process 
+User process
+Thread 
+Thread within a process
+Semaphore 
+Counting semaphore used for interprocess synchronization
+Mutex
+Binar y semaphore used to enter a critical region
+Event 
+Synchronization object with persistent state (signaled/not)
+ALPC port
+Mechanism for interprocess message passing
+Timer 
+Object allowing a thread to sleep for a fixed time interval
+Queue 
+Object used for completion notification on asynchronous I/O
+Open file
+Object associated with an open file
+Access token 
+Security descriptor for some object
+Profile 
+Data str ucture used for profiling CPU usage
+Section 
+Object used for representing mappable files
+Ke y
+Registr y key, used to attach registry to object-manager namespace
+Object directory
+Director y for grouping objects within the object manager
+Symbolic link
+Refers to another object manager object by path name
+Device 
+I/O device object for a physical device, bus, driver, or volume instance
+Device driver 
+Each loaded device driver has its own object
+Figure 11-21. Some common executive object types managed by the object
+manager.
+Process and thread are obvious. There is one object for every process and every
+thread, which holds the main properties needed to manage the process or thread.
+The next three objects, semaphore, mutex, and event, all deal with interprocess
+synchronization. Semaphores and mutexes work as expected, but with various extra
+bells and whistles (e.g., maximum values and timeouts). Events can be in one of
+two states: signaled or nonsignaled. If a thread waits on an event that is in signaled
+state, the thread is released immediately. If the event is in nonsignaled state, it
+blocks until some other thread signals the event, which releases either all blocked
+threads (notification events) or just the first blocked thread (synchronization
+ev ents). An event can also be set up so that after a signal has been successfully
+waited for, it will automatically revert to the nonsignaled state, rather than staying
+in the signaled state.
+Port, timer, and queue objects also relate to communication and 
+synchronization. Ports are channels between processes for exchanging LPC messages. Timers
+provide a way to block for a specific time interval. Queues (known internally as
+KQUEUES) are used to notify threads that a previously started asynchronous I/O
+operation has completed or that a port has a message waiting. Queues are designed
+to manage the level of concurrency in an application, and are also used in 
+high-performance multiprocessor applications, like SQL Server.

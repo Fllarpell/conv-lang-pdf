@@ -1,0 +1,45 @@
+SEC. 11.4
+PROCESSES AND THREADS IN WINDOWS
+931
+In contrast, the hardware environment at the time Cutler’s team wrote NT was
+32-bit multiprocessor systems with virtual memory hardware to share 1–16 MB of
+physical memory. Multiprocessors provide the opportunity to run parts of 
+programs concurrently, so NT used processes as containers for sharing memory and
+object resources, and used threads as the unit of concurrency for scheduling.
+Today’s systems have 64-bit address spaces, dozens of processing cores and
+terabytes of RAM. SSDs have displaced rotating magnetic hard disks and 
+virtualization is rampant. So far, Windows’ design has held up well as it continued
+ev olving and scaling to keep up with advancing hardware. Future systems are 
+likely to have even more cores, faster and bigger RAM. The difference between 
+memory and storage may start disappearing with phase-change memories that retain
+their contents when powered off, yet very fast to access. Dedicated co-processors
+are making a comeback to offload operations like memory movement, encryption,
+and compression to specialized circuits that improve performance and conserve
+power. Security is more important than ever before and we may start seeing 
+emerging hardware designs based on the CHERI (Capability Hardware Enhanced
+RISC Instructions) architecture (Woodruff et al., 2014) with 128-bit 
+capability-based pointers. Windows and UNIX will continue to be adapted to new 
+hardware realities, but what will be really interesting is to see what new operating 
+systems are designed specifically for systems based on these advances.
+Jobs and Fibers
+Windows can group processes together into jobs. Jobs group processes in order
+to apply constraints to them and the threads they contain, such as limiting resource
+use via a shared quota or enforcing a restricted token that prevents threads from
+accessing many system objects. The most significant property of jobs for resource
+management is that once a process is in a job, all processes’ threads in those 
+processes create will also be in the job. There is no escape. As suggested by the name,
+jobs were designed for situations that are more like batch processing than ordinary
+interactive computing.
+In Windows, jobs are most frequently used to group together the processes that
+are executing UWP applications. The processes that comprise a running 
+application need to be identified to the operating system so it can manage the entire 
+application on behalf of the user. Management includes setting resource priorities as
+well as deciding when to suspend, resume, or terminate, all of which happens
+through job facilities.
+Figure 11-22 shows the relationship between jobs, processes, threads, and
+fibers. Jobs contain processes. Processes contain threads. But threads do not 
+contain fibers. The relationship of threads to fibers is normally many-to-many.
+Fibers are cooperatively scheduled user-mode execution contexts which can be
+switched very quickly without entering kernel mode. As such, they are useful when
+an application wants to schedule its own execution contexts, minimizing the 
+overhead of thread scheduling by the kernel.

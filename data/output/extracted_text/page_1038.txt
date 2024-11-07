@@ -1,0 +1,46 @@
+SEC. 11.10
+VIRTUALIZATION IN WINDOWS
+1009
+Instead of allocating physical pages up-front, VA-backed VM GPA space is
+backed by virtual memory allocated from a minimal process (see Sec. 11.4.3) 
+called vmmem. The VID creates a vmmem process for each VA-backed VM and 
+allocates virtual memory in that process corresponding to the RAM size configured for
+the VM, using an internal variant of Vir tualAlloc. The mapping between the
+vmmem virtual address range and the guest GPA space is managed by an NT 
+kernel component called MicroVm, which is tightly integrated with the memory 
+manager.
+A VA-backed VM starts booting with a largely empty SLAT. As its VPs access
+guest physical pages, they hit SLAT page faults, leading to memory intercepts into
+the hypervisor which are forwarded to the VID and then to MicroVm. MicroVm
+determines the virtual address that correspond to the faulting GPA and asks the
+memory manager to perform regular demand-zero fault handling, which involves
+allocating a new physical page and updating the PTE corresponding to the vmmem
+virtual address. After the fault is resolved and the virtual address is added to the
+vmmem working set, MicroVm calls the hypervisor to update the SLAT mapping
+from the faulting GPA to the newly allocated page. After that, the VID can return
+back to the hypervisor, resolving the guest fault and resuming the guest VP.
+The reverse can also happen. If the host memory manager decides to trim a
+valid page from the vmmem working set, MicroVm will ask the hypervisor to 
+invalidate the SLAT mapping for the corresponding GPA. The next time guest
+accesses that GPA, it will take a SLAT fault which will need to be resolved as
+described earlier.
+The design of VA-backed VMs allows the host memory management to treat
+the virtual machine (represented by the vmmem process) just like any other 
+process and apply its memory management bag of tricks to it. Mechanisms like aging,
+trimming, paging, prefetching, page combining, and compression can be used to
+manage VM memory more efficiently.
+VA-backed VMs enable another significant memory optimization: file sharing.
+While there are many applications of file sharing, a particularly important one is
+when multiple guests are running the same OS or when a guest is running the same
+OS as the host. Similar to how guest RAM is associated with a virtual address
+range in vmmem, a binary can be mapped to the vmmem address space using the
+equivalent of MapViewOfFile. The resulting address range is exposed to the guest
+as a new GPA range and the mapping is tracked by MicroVm. That way, accesses
+to the GPA range will result in memory intercepts which will be resolved by file
+pages backed by the binary. The critical point is that host processes that map the
+same file will use the exact same file page in physical memory.
+So far, we described how a file mapping can be exposed to the guest as a GPA
+range while being shared by host processes (or by GPA ranges in other VMs). How
+does the guest use the GPA range as a file? In the guest, an enlightened file system
+driver (called wcifs.sys on Windows) takes advantage of a memory manager feature
+called Direct Map to expose CPU-addressable memory as file pages that the

@@ -1,0 +1,49 @@
+622
+SECURITY 
+CHAP. 9
+practical, however, are storing the matrix by rows or by columns, and then storing
+only the nonempty elements. The two approaches are surprisingly different. In this
+section, we will look at storing it by column; in the next we will study storing it by
+row.
+The first technique consists of associating with each object an (ordered) list
+containing all the domains that may access the object, and how. This list is called
+the ACL (Access Control List) and is illustrated in Fig. 9-6. Here we see three
+processes, each belonging to a different domain, A, B, and C, and three files F1,
+F2, and F3. For simplicity, we will assume that each domain corresponds to 
+exactly one user, in this case, users A, B, and C. Often in the security literature the users
+are called subjects or principals, to contrast them with the things owned, the
+objects, such as files.
+A
+B
+C
+Process
+Owner
+F1
+A: RW;   B: R
+F2
+A: R;   B:RW;   C:R
+F3
+B:RWX;   C: RX
+File
+User!
+space
+Kernel!
+space
+ACL
+Figure 9-6. Use of access control lists to manage file access.
+Each file has an ACL associated with it. File F1 has two entries in its ACL
+(separated by a semicolon). The first entry says that any process owned by user A
+may read and write the file. The second entry says that any process owned by user
+B may read the file. All other accesses by these users and all accesses by other
+users are forbidden (adhering to the principle of fail-safe defaults). Note that the
+rights are granted by user, not by process. As far as the protection system goes,
+any process owned by user A can read and write file F1. It does not matter if there
+is one such process or 100 of them. It is the owner, not the process ID, that 
+matters.
+File F2 has three entries in its ACL: A, B, and C can all read the file, and B can
+also write it. No other accesses are allowed. File F3 is apparently an executable
+program, since B and C can both read and execute it. B can also write it.
+This example illustrates the most basic form of protection with ACLs. More
+sophisticated systems are often used in practice. To start with, we have shown only
+three rights so far: read, write, and execute. There may be additional rights as well.
+Some of these may be generic, that is, apply to all objects, and some may be object

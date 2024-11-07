@@ -1,0 +1,37 @@
+SEC. 13.1
+SUGGESTIONS FOR FURTHER READING
+1093
+changing the guest operating systems to avoid using the bizarre features so that
+they need not be emulated.
+13.1.8 Multiple Processor Systems
+Singh et al., ‘‘Jupiter Rising: A Decade of Clos Topologies and Centralized 
+Control in Google’s Datacenter Network’’
+Scaling computing and communication to the scale of large datacenters and
+beyond is very challenging. How to do it, you can hear (or rather: read) from the
+horse’s mouth in this article by Google’s engineers, where they describe their
+Jupiter datacenter fabric.
+Dreslinski et al., ‘‘Centip3De: A Many-Core Prototype Exploring 3D Integration
+and Near-Threshold Computing’’
+On a single CPU, things are also moving fast. In this dazzling story, the
+authors explain how we can expand many cores by going beyond two dimensions.
+Dubois et al., ‘‘Synchronization, Coherence, and Event Ordering in 
+Multiprocessors’’
+A tutorial on synchronization in shared-memory multiprocessor systems. 
+Howev er, some of the ideas are equally applicable to single-processor and distributed
+memory systems as well.
+Nowatzki et al., ‘‘Heterogeneous Von Neumann/Dataflow Microprocessors’’
+Where many multicore chips used for desktop computers were symmetric (all
+the cores are identical), several modern architectures aim for heterogeneity: 
+different cores packed on the same chip. In this article, the authors explain that it may be
+beneficial to pack cores of a completely different nature on the same die.
+Beaumont et al., ‘‘Scheduling on Two Types of Resources: A Survey’’
+Of course, having different types of resources creates additional problems for
+schedulers also. This survey presents different scheduling techniques for handling
+such heterogeneous architectures.
+13.1.9 Security
+Anderson, Security Engineering, 3rd Ed
+A wonderful book that explains very clearly how to build dependable and
+secure systems by one of the best-known researchers in the field. Not only is this a
+fascinating look at many aspects of security (including techniques, applications,
+and organizational issues), it is also freely available online. No excuse for not 
+reading it.

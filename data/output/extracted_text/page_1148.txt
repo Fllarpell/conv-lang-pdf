@@ -1,0 +1,44 @@
+SEC. 13.2
+ALPHABETICAL BIBLIOGRAPHY
+1119
+WANG, Q., LU, Y., XU, E., LI, J., CHEN, Y., and SHU, Y.: ‘‘Concordia: Distributed Shared
+Memory with In-Network Cache Coherence,’’ Proc. 19th USENIX Conf. on File and
+Storage Tech., USENIX, pp. 277–292, 2021.
+WANG, Z., WU, C., ZHANG, Y., TANG, B., YEW, P-C., XIE, M., LAI, Y., KANG, Y., CHENG,
+Y., and SHI, Z.: ‘‘SafeHidden: An Efficient and Secure Information Hiding Technique
+Using Re-randomization,’’ Proc. 28th USENIX Security Symp. , USENIX, 2019.
+WEI, X., DONG, Z., CHEN, R., and CHEN, H.: ‘‘Deconstructing RDMA-Enabled 
+Distributed Transactions: Hybrid is Better!,’’ Proc. 13th USENIX Symp. on Operating Syst.
+Design and Implementation, USENIX, pp. 233–251, 2018.
+WHITAKER, A., COX, R.S., SHAW, M, and GRIBBLE, S.D.: ‘‘Rethinking the Design of 
+Virtual Machine Monitors,’’ Computer, Vol. 38, pp. 57–62, May 2005.
+WHITAKER, A., SHAW, M, and GRIBBLE, S.D.: ‘‘Scale and Performance in the Denali 
+Isolation Kernel,’’ ACM SIGOPS Operating Syst. Rev., Vol. 36, pp. 195–209, Jan. 2002.
+WIRTH, N.: ‘‘ A Plea for Lean Software,’’ Computer, Vol. 28, pp. 64–68, Feb. 1995.
+WOODRUFF, J., WATSON, R.N.M., CHISNALL, D., MOORE, S.W., ANDERSON, J., DAVIS,
+B., and LAURIE, B.: ‘‘The CHERI Capability Model: Revisiting RISC in an Age of
+Risk,’’ Proc. ISCA, ACM, pp. 457–468, 2014.
+WULF, W.A., COHEN, E.S., CORWIN, W.M., JONES, A.K., LEVIN, R., PIERSON, C., and
+POLLACK, F.J.: ‘‘HYDRA: The Kernel of a Multiprocessor Operating System,’’ 
+Commun. ACM, Vol. 17, pp. 337–345, June 1974.
+XIAO, W., BHARDWAJ, R., RAMJEE, R., SIVATHANU, M., KWATRA, N., HAN, Z., PATEL,
+P., PENG, X., ZHAO, H., ZHANG, Q., YANG, F. and ZHOU1, L.: ‘‘Gandiva: 
+Introspective Cluster Scheduling for Deep Learning,’’ Proc. 13th USENIX Symp. on Operating
+Syst. Design and Implementation, USENIX, 2018.
+XIONG, W., and SZEFER, J.: ‘‘Survey of Transient Execution Attacks and Their 
+Mitigations,’’ ACM Computing Surveys, Vol. 54, no. 3, Article 54, June 2021.
+YANG, S., LIU, J., ARPACI-DUSSEAU, A.C., and ARPACI-DUSSEAU, R.H.: ‘‘Principled
+Schedulability Analysis for Distributed Storage Systems Using Thread Architecture
+Models,’’ Proc. 13th USENIX Symp. on Operating Syst. Design and Implementation,
+USENIX, 2018.
+YOSIFOVICH, P., SOLOMON, D., IONESCU, A., and RUSSINOVICH, M: Windows 
+Internals, Part 1, Amazon, 2017.
+YOSIFOVICH, P.: Windows Kernel Programming, Victoria, B.C.: Leanpub, 2019.
+YOSIFOVICH, P.: Windows 10 System Programming, Amazon, 2020.
+YOUNG, E.G., ZHU, P., CARAZA-HARTER, T., ARPACI-DUSSEAU, A.C., and 
+ARPACIDUSSEAU, R.H.: ‘‘The True Cost of Containing: A gVisor Case Study,’’ 11th USENIX
+Workshop on Hot Topics in Cloud Computing (HotCloud), USENIX, 2019.
+YOUNG, M., TEVANIAN, A., Jr., RASHID, R., GOLUB, D., EPPINGER, J., CHEW, J.,
+BOLOSKY, W., BLACK, D., and BARON, R.: ‘‘The Duality of Memory and 
+Communication in the Implementation of a Multiprocessor Operating System,’’ Proc. 11th Symp.
+on Operating Syst. Prin., ACM, pp. 63–76, 1987.

@@ -1,0 +1,39 @@
+SEC. 1.4
+THE OPERATING SYSTEM ZOO
+39
+We should emphasize that the categories of IoT, embedded, real-time and even
+handheld systems overlap considerably. Many of them have at least some soft 
+realtime aspects. The embedded and real-time systems run only software put in by the
+system designers; users cannot add their own software, which makes protection
+easier.
+1.4.7 Smart Card Operating Systems
+The smallest operating systems run on smart cards, which are credit-card-sized
+devices containing a CPU. They hav e very severe processing power and memory
+constraints. Some are powered by contacts in the reader into which they are 
+inserted, while contactless smart cards are inductively powered (which greatly limits
+what they can do.) Some of them can handle only a single function, such as 
+electronic payments, but others can handle multiple functions. Often these are 
+proprietary systems.
+Some smart cards are Java oriented. This means that the ROM on the smart
+card holds an interpreter for the Java Virtual Machine (JVM). Java applets (small
+programs) are downloaded to the card and are interpreted by the JVM interpreter.
+Some of these cards can handle multiple Java applets at the same time, leading to
+multiprogramming and the need to schedule them. Resource management and 
+protection also become an issue when two or more applets are present at the same
+time. These issues must be handled by the (usually extremely primitive) operating
+system present on the card.
+1.5 OPERATING SYSTEM CONCEPTS
+Most operating systems provide certain basic concepts and abstractions such as
+processes, address spaces, and files that are central to understanding them. In the
+following sections, we will look at some of these basic concepts ever so briefly, as
+an introduction. We will come back to each of them in great detail later in this
+book. To illustrate these concepts we will, from time to time, use examples, 
+generally drawn from UNIX. Similar examples typically exist in other systems as well,
+however, and we will study some of them later.
+1.5.1 Processes
+A key concept in all operating systems is the process. A process is basically a
+program in execution. Associated with each process is its address space, a list of
+memory locations from 0 to some maximum, which the process can read and write.
+The address space contains the executable program, the program’s data, and its
+stack. Also associated with each process is a set of resources, commonly including
+registers (including the program counter and stack pointer), a list of open files,

@@ -1,0 +1,28 @@
+916
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Figure 11-15. Structure of an executive object managed by the object manager.
+Most allocations from the kernel heap manager are achieved using 
+per-processor lookaside lists which contain LIFO lists of allocations the same size. These
+LIFOs are optimized for lock-free operation, improving the performance and
+scalability of the system.
+Each object header contains a quota-charge field, which is the charge levied
+against a process for opening the object. Quotas are used to keep a user from using
+too many system resources. On a personal notebook that doesn’t matter but on a
+shared server, it does. There are separate limits for non-pageable kernel memory
+(which requires allocation of both physical memory and kernel virtual addresses)
+and pageable kernel memory (which uses up kernel virtual addresses and pagefile
+space). When the cumulative charges for either memory type hit the quota limit,
+allocations for that process fail due to insufficient resources. Quotas also are used
+by the memory manager to control working-set size, and by the thread manager to
+limit the rate of CPU usage.
+Both physical memory and kernel virtual addresses are extremely valuable
+resources. When an object is no longer needed, it should be deleted and its 
+memory and addresses reclaimed to free up important resources. But it is important that
+an object should only be deleted when it is no longer in use. In order to correctly
+track object lifetime, the object manager implements a reference counting 
+mechanism and the concept of a referenced pointer which is a pointer to an object whose
+reference count has been incremented for that pointer. This mechanism prevents
+premature object deletion when multiple asynchronous operations may be in flight
+on different threads. Generally, when the last reference to an object is dropped, the
+object is deleted. It is critical not to delete an object that is in use by some process.

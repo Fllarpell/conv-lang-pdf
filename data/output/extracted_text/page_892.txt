@@ -1,0 +1,43 @@
+SEC. 10.8
+ANDROID
+863
+only be started when the app was in a state where it was considered okay to do so,
+such as any time the app itself was already in the foreground for another reason, or
+it was executing in response to something that could be related to a user intent
+(such as responding to the aforementioned media button event).
+This leaves us at the state of background execution in Android, circa 2021.
+Android will, however, continue to evolve; not only to continue to optimize the
+battery life it can provide, but also as it has to address the changing behavior of its
+application ecosystem and expectations of its users.
+10.9 SUMMARY
+In this chapter we have looked at two examples in detail: Linux and Android,
+which built on top on Linux. Linux has been around now for a bit over 30 years
+and has grown from a hobby project by one person who wanted a production 
+version of MINIX to a large and powerful system that powers most of the Internet. It
+is also the most successful open-source project in history.
+We started with a brief overview of the user interface and the shell, with some
+examples of what you can do on the command line. Then we took a brief look at
+some of the standard UNIX programs that are available in Linux. Next we saw
+how Linux is structured in layers.
+After that we moved onto the core of the Linux material, how it works inside.
+This included processes and threads, memory management, input/output, the file
+system, and, of course, security. For each of these we showed some of the system
+calls available and how they are implemented. Then we moved on to Android,
+which is layered on top of Linux. Linux itself is mostly used on desktops, 
+notebooks, and servers but Android is aimed at mobile devices such as smartphones
+and tablets. This changes its goals and requirements considerably. For example,
+how long it takes to start a program is of only minor interest on notebooks, but it is
+crucial on mobile devices. Notebook users really don’t mind if Word takes 3 
+seconds to start, but smartphone users would go crazy if hitting the app to make a
+phone call took 3 seconds to boot. This simple difference in goals has vast 
+implications for the respective designs.
+Another enormous difference between Linux and Android is that while Linux
+tries to avoid wasting energy, Android goes to great lengths to prevent draining the
+battery to fast. A smartphone whose battery lasted only 4 hours would not be a big
+hit.
+After going over tge design goals and history of Android, we took a look at the
+system architecture. Then we studied the innards in detail, includng ART, binder
+IPC, how apps work, intents, and the Android process model. Next come the 
+everimportant security, which has evolved over the years in Android as it has become
+more important. Finally we looked at background execution, which is quite 
+different from how it is done on desktops and notebooks.

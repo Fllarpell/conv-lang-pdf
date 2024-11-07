@@ -1,0 +1,28 @@
+970
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+pages, it is the address of the prototype PTE. To be able to edit the PTE when in a
+different process address space, the PFN entry also contains the page frame index
+of the page that contains the PTE.
+Figure 11-36. Some of the fields in the page-frame database for a valid page.
+Additionally the PFN entry contains forward and backward links for the
+aforementioned page lists and various flags, such as read in progress, write in
+progress, and so on. To sav e space, the lists are linked together with fields referring
+to the next element by its index within the table rather than pointers. The table
+entries for the physical pages are also used to summarize the dirty bits found in the
+various page table entries that point to the physical page (i.e., because of shared
+pages). There is also information used to represent differences in memory pages on
+larger server systems which have memory that is faster from some processors than
+from others, namely NUMA machines.
+One important PFN entry field is priority. The memory manager maintains
+page priority for every physical page. Page priorities range from 0 to 7 and reflect
+how ‘‘important’’ a page is or how likely it is to get re-accessed. The memory 
+manager ensures that higher-priority pages are more likely to remain in memory rather
+than getting paged out and reused. Working set trimming policy takes page priority
+into account by trimming lower-priority pages before higher-priority ones even if
+they are more recently accessed. Even though we generally talk about the standby
+list as if it is a single list, it is actually composed of eight lists, one for each 
+priority. When a page is inserted into the standby list, it is linked to the appropriate 
+sublist based on its priority. When the memory manager is repurposing pages off the
+standby list, it does so starting with the lowest-priority sublists. That way, 
+higher-priority pages are more likely to avoid getting repurposed.

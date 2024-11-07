@@ -1,0 +1,92 @@
+686
+SECURITY 
+CHAP. 9
+1 foo: 
+L1 /* label: legitimate indirect call target (8B) */
+2
+instr 1 /* star t of foo() */
+foo:
+3
+instr 2
+instr 1 /* star t of foo() */
+4
+instr 3
+instr 2
+5
+... 
+instr 3
+6
+ret 
+...
+7
+pop reg0 /* store return addr in reg0 */
+8
+if (*reg0 != L3) raise alar m() /* check label*/
+9
+else jmp (reg0 + 8)
+10
+11 bar:
+L1 /* label: legitimate indirect call target (8B) */
+12 
+instr 1 /* star t of bar() */
+bar :
+13 
+instr 2
+instr 1 /* star t of bar() */
+14 
+instr 3
+instr 2
+15 
+...
+instr 3
+16 
+ret
+...
+17 
+pop reg0 /* store return addr in reg0 */
+18 
+if (*reg0 != L3) raise alar m() /* check label*/
+19 
+else jmp (reg0 + 8)
+20
+21 main:
+main:
+22 
+instr1
+instr1
+23 
+...
+...
+24 
+fptr1 = foo 
+fptr1 = foo
+25 
+fptr2 = bar 
+fptr2 = bar
+26 
+...
+27 
+fptr1() ; indirect call to foo() 
+if (*(fptr1-8) != L1) raise alar m()
+28 
+fptr2() ; indirect call to bar()
+else (fptr1)()
+29 
+instr 21 
+L3 /* label: legitimate target for return */
+30 
+instr 22 
+if (*(fptr2-8) != L1) raise alar m()
+31 
+...
+else (fptr1)()
+32 
+L3 /* label: legitimate target for return */
+33 
+instr 21
+34 
+instr 21
+(a) 
+(b)
+Figure 9-34. Control-flow integrity (pseudo-code): (a) without CFI,
+(b) with CFI.

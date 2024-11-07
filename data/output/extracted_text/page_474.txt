@@ -1,0 +1,39 @@
+SEC. 6.2
+INTRODUCTION TO DEADLOCKS
+445
+In most cases, the event that each process is waiting for is the release of some
+resource (such as a fork) currently possessed by another member of the set. In
+other words, each member of the set of deadlocked processes is waiting for a 
+resource that is owned by a deadlocked process. None of the processes can run, none
+of them can release any resources, and none of them can be awakened. The 
+number of processes and the number and kind of resources possessed and requested are
+unimportant. This result holds for any kind of resource, including both hardware
+and software. This kind of deadlock is called a resource deadlock. It is probably
+the most common kind, but it is not the only kind. We first study resource 
+deadlocks in detail and then at the end of the chapter return briefly to other kinds of
+deadlocks.
+6.2.1 Conditions for Resource Deadlocks
+More than 50 years ago, Coffman et al. (1971) showed that four conditions
+must hold for there to be a (resource) deadlock:
+1. Mutual exclusion condition. Each resource is either currently 
+assigned to exactly one process or is available.
+2. Hold-and-wait condition. Processes currently holding resources that
+were granted earlier can request new resources.
+3. No-preemption condition. Resources previously granted cannot be
+forcibly taken away from a process. They must be explicitly released
+by the process holding them.
+4. Circular wait condition. There must be a circular list of two or more
+processes, each of which is waiting for a resource held by the next
+member of the chain.
+All four of these conditions must be present for a resource deadlock to occur. If
+one of them is absent, no resource deadlock is possible.
+It is worth noting that each condition relates to a policy that a system can have
+or not have. Can a given resource be assigned to more than one process at once?
+Can a process hold a resource and ask for another? Can resources be preempted?
+Can circular waits exist? Later on, we will see how deadlocks can be attacked by
+trying to negate some of these conditions.
+6.2.2 Deadlock Modeling
+A year later, Holt (1972) showed how these four conditions can be modeled
+using directed graphs. The graphs have two kinds of nodes: processes, shown as
+circles, and resources, shown as squares. A directed arc from a resource node
+(square) to a process node (circle) means that the resource has previously been

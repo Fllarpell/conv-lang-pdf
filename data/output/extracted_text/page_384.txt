@@ -1,0 +1,46 @@
+SEC. 5.2
+PRINCIPLES OF I/O SOFTWARE
+355
+As soon as it has copied the first character to the printer, the operating system
+checks to see if the printer is ready to accept another one. Generally, the printer has
+a second register, which gives its status. The act of writing to the data register
+causes the status to become not ready. When the printer controller has processed
+the current character, it indicates its availability by setting some bit in its status 
+register or putting some value in it.
+At this point, the operating system waits for the printer to become ready again.
+When that happens, it prints the next character, as shown in Fig. 5-7(c). This loop
+continues until the entire string has been printed. Then control returns to the user
+process.
+The actions followed by the operating system are briefly summarized in
+Fig. 5-8. First, the data are copied to the kernel. Then the operating system enters
+a tight loop, outputting the characters one at a time. The essential aspect of 
+programmed I/O, clearly illustrated in this figure, is that after outputting a character,
+the CPU continuously polls the device to see if it is ready to accept another one.
+This behavior is often called polling or busy waiting.
+copy from user(buffer, p, count); 
+/* p is the ker nel buffer */
+for (i = 0; i < count; i++) {
+/* loop on every character */
+while (*pr inter status reg != READY) ;
+/* loop until ready */
+*pr inter data register = p[i];
+/* output one character */
+}
+retur n to user( );
+Figure 5-8. Writing a string to the printer using programmed I/O.
+Programmed I/O is simple but has the disadvantage of tying up the CPU full time
+until all the I/O is done. If the time to ‘‘print’’ a character is very short (because all
+the printer is doing is copying the new character to an internal buffer), then busy
+waiting is fine. Also, in an embedded system, where the CPU has nothing else to
+do, busy waiting is fine. However, in more complex systems, where the CPU has
+other work to do, busy waiting is inefficient. A better I/O method is needed.
+5.2.3 Interrupt-Driven I/O
+Now let us consider the case of printing on a printer that does not buffer 
+characters but prints each one as soon as it arrives. If the printer can print, say 100
+characters/sec, each character takes 10 msec to print. This means that after every
+character is written to the printer’s data register, the CPU will sit in an idle loop for
+10 msec waiting to be allowed to output the next character. This is more than
+enough time to do a context switch and run some other process for nearly all of the
+10 msec that would otherwise be wasted.
+The way to allow the CPU to do something else while waiting for the printer to
+become ready is to use interrupts. When the system call to print the string is made,

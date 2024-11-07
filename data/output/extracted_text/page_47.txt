@@ -1,0 +1,46 @@
+18
+INTRODUCTION 
+CHAP. 1
+families of Windows forked off their own variations in the form of service packs
+in a dizzying proliferation of versions. It was enough to drive some administrators
+(and writers of operating systems textbooks) balmy.
+When in January 2007 Microsoft finally released the successor to Windows
+XP, which it called Vista, it came with a new graphical interface, improved 
+security, and many new or upgraded user programs. It bombed. Users complained about
+high system requirements and restrictive licensing terms. Its successor, Windows
+7, a much less resource hungry version of the operating system, quickly overtook
+it. In 2012, Windows 8 came out. It had a completely new look and feel, geared
+largely for touch screens. The company hoped that the new design would become
+the dominant operating system on a wide variety of devices: desktops, notebooks,
+tablets, phones, and home theater PCs. It did not. While Windows 8 (and 
+especially Windows 8.1) were successful, their popularity was mostly limited to PCs. In
+fact, many people did not like the new design much and Microsoft reverted it in
+2015 in Windows 10. A few years later, Windows 10 overtook Windows 7 as the
+most popular Windows version. Windows 11 was released in 2021.
+The other major contender in the personal computer world comprises the
+UNIX family. UNIX, and especially Linux, is strongest on network and enterprise
+servers but also popular on desktop computers, notebooks, tablets, embedded 
+systems, and smartphones. FreeBSD is also a popular UNIX derivative, originating
+from the BSD project at Berkeley. Every modern Mac runs a modified version of
+FreeBSD (macOS). UNIX derivatives are widely used on mobile devices, such as
+those running iOS 7 or Android.
+Many UNIX users, especially experienced programmers, prefer a 
+command-based interface to a GUI, so nearly all UNIX systems support a windowing
+system called the X Window System (also known as X11) produced at M.I.T.
+This system handles the basic window management, allowing users to create,
+delete, move, and resize windows using a mouse. Often a complete GUI-based
+desktop environment, such as Gnome or KDE, is available to run on top of X11,
+giving UNIX a look and feel something like the Macintosh or Microsoft Windows,
+for those UNIX users who want such a thing.
+An interesting development that began during the mid-1980s was the 
+development of network operating systems and distributed operating systems to 
+manage a collection of computers (Van Steen and Tanenbaum, 2017). In a network
+operating system, the users are aware of the existence of multiple computers and
+can log in to remote machines and copy files from one machine to another. Each
+machine runs its own local operating system and has its own local user (or users).
+Such systems are not fundamentally different from single-processor operating 
+systems. They obviously need a network interface and some low-level software to
+drive it, as well as programs to achieve remote login and remote file access, but
+these additions do not change the essential structure of the operating system.
+A distributed operating system, in contrast, is one that appears to its users as a
+traditional uniprocessor system, even though it is actually composed of multiple

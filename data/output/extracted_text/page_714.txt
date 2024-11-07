@@ -1,0 +1,44 @@
+SEC. 9.8
+OPERATING SYSTEM HARDENING
+685
+with function pointers) such that they may only target the entry points of those
+functions, raises the bar for attackers considerably. If more security is needed, we
+could refine the set further, for instance by demanding that the number and types of
+the arguments in the caller and callee match also.
+Given the sets of legitimate targets for indirect calls, indirect jumps, and 
+returns, we now rewrite the code to ensure that such calls, jumps, and returns only
+use these targets. There are many ways to do so. A simple solution is shown in
+pseudo assembly code in Fig. 9-34. In the figure, the original code for 3 functions
+without CFI is on the left. The main function stores the addresses of foo() and
+bar() in function pointers and then uses these function pointers to call the 
+functions. The code on the right shows the instrumented versions of these functions,
+with CFI. The instrumentation starts by assigning each set of legitimate target 
+addresses a label. For instance, the set of legitimate targets for indirect calls gets an
+8B label L1, the set for indirect jumps gets the label L2 (not used in the example),
+and the set for returns gets the label L3. These labels are then stored in front of the
+target addresses in the set (Lines 1, 11, 29, and 32). Finally, instrumentation is
+added to check each indirect call, jump, and return to see if the address they target
+has the required label (Lines 7–9, 17–19, 27–28, and 30–31). Let us take Lines 7–9
+as an example. Instead of a regular ret instruction which takes the return address
+off the stack and jumps to it in one go, the instrumented code explicitly pops the
+return address into a register, checks whether the label is a valid return label, and
+then jumps to the instruction following the 8B label. The case for indirect calls is
+similar: the code in Line 27–28 checks whether the memory location just before
+the function about to be called has the correct label and if so, does the indirect call.
+While the above CFI scheme severely constrains the attackers’ actions, it is not
+foolproof. For instance, by overwriting the return address, the attacker can still
+steer the program to any call site. For better security, we could make the sets of 
+target addresses as small as possible and perhaps even keep track explicitly of the
+actual call site (e.g., in a separate shadow stack out of reach of the attacker).
+Indeed, security researchers have proposed many flavors of fine-grained CFI, but
+most of them are never applied in practice.
+9.8.3 Access Restrictions
+Isolating security domains such as the operating system and user processes
+from each other is one of the cornerstones of security. In the absence of software or
+hardware vulnerabilities, protection rings ensure that no data in the operating 
+system kernel is accessible to user processes. Inside the security domain, we can 
+further partition code from data using data execution protection. In a nutshell, if 
+memory areas are executable, they should not be writable, and if they are writable, they
+should not be executable. This is known as data execution prevention, a topic we
+covered in Sec. 9.5.1. Similarly, access control lists and capabilities determine who
+can do what with which resources. All of these access restrictions help to draw up

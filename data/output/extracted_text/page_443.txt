@@ -1,0 +1,48 @@
+414
+INPUT/OUTPUT 
+CHAP. 5
+specifies a window). The use of redundant information that has no actual value is
+common in Windows.
+Another interesting note is that when hdc is acquired in this way, the program
+can write only in the client area of the window, not in the title bar and other parts
+of it. Internally, in the device context’s data structure, a clipping region is 
+maintained. Any drawing outside the clipping region is ignored. However, there is
+another way to acquire a device context, GetWindowDC, which sets the clipping
+region to the entire window. Other calls restrict the clipping region in other ways.
+Having multiple calls that do almost the same thing is characteristic of Windows.
+A complete treatment of the GDI is out of the question here. For the interested
+reader, the references cited above provide additional information. Nevertheless,
+given how important it is, a few words about the GDI are probably worthwhile.
+GDI has various procedure calls to get and release device contexts, obtain 
+information about device contexts, get and set device context attributes (e.g., the 
+background color), and manipulate GDI objects such as pens, brushes, and fonts, each
+of which has its own attributes. Finally, of course, there are a large number of GDI
+calls to actually draw on the screen.
+The drawing procedures fall into four categories: drawing lines and curves,
+drawing filled areas, managing bitmaps, and displaying text. We saw an example
+of drawing text above, so let us take a quick look at one of the others. The call
+Rectangle(hdc, xleft, ytop, xright, ybottom);
+draws a filled rectangle whose corners are (xleft, ytop) and (xright, ybottom). For
+example,
+Rectangle(hdc, 2, 1, 6, 4);
+will draw the rectangle shown in Fig. 5-37. The line width and color and fill color
+are taken from the device context. Other GDI calls are similar in flavor.
+0
+0
+1
+2
+3
+4
+5
+6
+7
+1
+2
+3
+4
+5
+6
+7
+8
+Figure 5-37. An example rectangle drawn using Rectangle. Each box represents
+one pixel.

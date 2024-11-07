@@ -1,0 +1,46 @@
+326
+FILE SYSTEMS
+CHAP. 4
+bytes (actually only 4086 × 512 bytes because 10 of the disk addresses were used
+as special markers, such as end of file, bad block, etc.). With these parameters, the
+maximum disk partition size was about 2 MB and the size of the FAT table in
+memory was 4096 entries of 2 bytes each. Using a 12-bit table entry would have
+been too slow.
+This system worked well for floppy disks, but when hard disks came out, it
+became a problem. Microsoft solved the problem by allowing additional block
+sizes of 1 KB, 2 KB, and 4 KB. This change preserved the structure and size of
+the FAT -12 table, but allowed disk partitions of up to 16 MB.
+Since MS-DOS supported four disk partitions per disk drive, the new FAT -12
+file system worked up to 64-MB disks. Beyond that, something had to give. What
+happened was the introduction of FAT -16, with 16-bit disk pointers. Additionally,
+block sizes of 8 KB, 16 KB, and 32 KB were permitted. (32,768 is the largest
+power of two that can be represented in 16 bits.) The FAT -16 table now occupied
+128 KB of main memory all the time, but with the larger memories by then 
+available, it was widely used and rapidly replaced the FAT -12 file system. The largest
+disk partition that can be supported by FAT -16 is 2 GB (64K entries of 32 KB
+each) and the largest disk, 8 GB, namely four partitions of 2 GB each. For quite a
+while, that was good enough.
+But not forever. For business letters, this limit is not a problem, but for storing
+digital video using the DV standard, a 2-GB file holds just over 9 minutes of video.
+As a consequence of the fact that a PC disk can support only four partitions, the
+largest video that can be stored on a disk is about 38 minutes, no matter how large
+the disk is. This limit also means that the largest video that can be edited on line is
+less than 19 minutes, since both input and output files are needed.
+Starting with the second release of Windows 95, the FAT -32 file system, with
+its 28-bit disk addresses, was introduced and the version of MS-DOS underlying
+Windows 95 was adapted to support FAT -32. In this system, partitions could 
+theoretically be 228 × 215 bytes, but they are actually limited to 2 TB (2048 GB) 
+because internally the system keeps track of partition sizes in 512-byte sectors using
+a 32-bit number, and 29 × 232 is 2 TB. The maximum partition size for various
+block sizes and all three FAT types is shown in Fig. 4-33.
+In addition to supporting larger disks, the FAT -32 file system has two other
+advantages over FAT -16. First, an 8-GB disk using FAT -32 can be a single 
+partition. Using FAT -16 it has to be four partitions, which appears to the Windows user
+as the C:, D:, E:, and F: logical disk drives. It is up to the user to decide which file
+to place on which drive and keep track of what is where.
+The other advantage of FAT -32 over FAT -16 is that for a given size disk 
+partition, a smaller block size can be used. For example, for a 2-GB disk partition,
+FAT-16 must use 32-KB blocks; otherwise with only 64K available disk addresses,
+it cannot cover the whole partition. In contrast, FAT -32 can use, for example,
+4-KB blocks for a 2-GB disk partition. The advantage of the smaller block size is
+that most files are much shorter than 32 KB. If the block size is 32 KB, a file of 10

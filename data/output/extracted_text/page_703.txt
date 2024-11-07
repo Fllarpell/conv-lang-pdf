@@ -1,0 +1,44 @@
+674
+SECURITY 
+CHAP. 9
+are other cache side channels also, but however interesting they may be, the details
+are beyond the scope of this book. Clearly, the cache can also be used for covert
+channels: by agreeing that accessing one cacheline means 0 and another cacheline
+means 1, a sender and receiver can exchange arbitrary messages. We will see later
+how novel and frankly fairly scary attacks use cache-based covert channels to leak
+sensitive information from the operating system kernel.
+You may wonder what Andy could have done to thwart Herbert’s cow ardly and
+indirect attacks on his co-author’s cryptographic key. One answer here is: use 
+better software. For instance, by carefully designing your encryption routine to be
+constant time, with no observable timing differences between the different values
+for the key bit, the side channel no longer works. For instance, assume a new 
+design of Encrypt() where do one thing() and do one thing() use the same cache
+lines. In that case, Herbert’s code will not be able to use the above side channel to
+distinguish between different cases.
+9.6.3 Transient Execution Attacks
+In January 2018, the Meltdown and Spectre hardware vulnerabilities became
+public and Intel, one of the affected CPU vendors, saw its stock price drop by 
+several percentage points. The world looked on in astonishment. It suddenly dawned
+that it could no longer trust the hardware. Moreover, the vendors indicated that
+some of the issues would not be fixed. What was going on?
+The new vulnerabilities consisted of hardware vulnerabilities that could be
+exploited from software. Before we dive into the details, we should mention that
+these are very advanced attacks that are keeping security researchers and operating
+system developers busy around the world. They are also very cool.
+Since Meltdown and Spectre, researchers have found many new members of
+that family of vulnerabilities. They are all based on optimizations in the CPU that
+make sure that the CPU is kept as busy as possible, so that it does that not waste
+time waiting. The way they achieve this is by making the CPU perform operations
+ahead of schedule.
+In Sec. 5.1, we looked at one such optimization whereby instructions that were
+started later would start and often finish well before an earlier instruction finishes
+execution. For instance, DIV (division) is an expensive instruction. It gets worse if
+an operand has to be fetched from memory and is not in the cache. After the CPU
+has started such an instruction, it may take many clock cycles before it completes.
+What is the CPU to do in the meantime? Since most CPUs are superscalar, they
+have many execution units. For instance, they hav e multiple units to load values
+from memory, multiple units to perform integer addition and subtraction, etc. If the
+instruction following the division is an addition that does not depend on the result
+of the division, there is no harm in execution that ahead-of-time. And the next
+instruction. And the next. By the time the division is finally done, many later 
+instructions will have completed already and all their results can now be committed.

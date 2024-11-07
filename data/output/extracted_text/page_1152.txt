@@ -1,0 +1,99 @@
+INDEX
+1123
+ARM 64 Emulation Compatible, 953
+ART (see Android RunTime)
+AS/400, 625
+ASCII, 1059–1060
+ASCII file, 265
+ASLR (see Address Space Layout Randomization)
+Associative memory, 201
+Asynchronous call, 566
+Asynchronous input/output, 353
+Asynchronous procedure call, Windows, 903–904
+Asynchronous system call, 116
+Asychronous vs. synchronous communication,
+1064–1065
+AT attachment, 30
+Atanasoff, John, 8
+Atomic action, 130
+Atomic transaction, 293
+Atomic read system call, 740
+Atomic set system call, 740
+Attack, active, 616
+Attack (see Security attack)
+Attack surface, 610
+Attacker, 614, 614–617
+Attestation, remote, 913
+Attribute, file, 267–268
+Audio visual disk, 381
+Authentication, 146, 637–647
+challenge-response, 643–644
+multifactor, 897
+Authentication using a physical object, 644–645
+Authentication using biometrics, 645–647
+Authenticity, 609
+Autoboost, Windows, 949
+Auto-expand PushLock, Windows, 940
+Automounting, 785
+AV disk (see Audio Visual disk)
+Av ailability, 608
+Av ailable resource vector, 452
+Av oiding deadlock, 455–461
+Azure, Microsoft, 506
+B
+B programming language, 705
+Babbage, Charles, 7–8, 13
+Back door attack, 680–681
+Back-patch, Windows, 1033
+Background execution, Android, 856–861
+Background prefetch, Windows, 966
+Backing store for paging, 236–238
+Backup, file system, 307–312
+Bad disk sector, 373
+Bad-news diode, 1080
+Balance set manager, Windows, 969
+Ballooning, 497
+Bandwidth reservation, Windows, 982
+Banker’s algorithm, 458
+single resource, 458–459
+multiple resources, 459–461
+Barrier, 148–150
+Base binary, Windows, 1033
+Base layer, Windows, 1014
+Base named object, 891, 921-922
+Base priority, Windows, 945
+Base record, NT file system, 991
+Base register, 185
+Bash shell, 716
+Basic block, 487
+Basic input output system, 27, 34–35, 180
+Batch system, 9
+scheduling, 160–161
+Battery management, 427
+BCD (see Boot Configuration Database)
+Bell-LaPadula model, 630–631
+Berkeley software distribution, 15, 707–709, 711–712, 782, 786
+Berkeley UNIX, 707–708
+Berners-Lee, Tim, 78
+Berry, Clifford, 8
+Best fit memory management algorithm, 191
+Biba model, 631–632
+Big kernel lock, 544, 740
+Big-endian machine, 1045
+Big.little architecture, 540
+Binary exponential backoff, 583
+Binary semaphore, 131
+Binary translation, 72, 483, 487, 488, 512–513
+Binder, Android, 809, 814
+Binder interfaces, Android, 816
+Binder kernel module, 809–814
+Binder user-space API, 814–815
+Binderproxy, 814
+Binding time, 1061
+Biometric authentication, 645–647
+Biometrics, 879
+BIOS (see Basic Input Output System)
+Bitmap for memory management, 189
+BitLocker, 636, 1000
+Bitmap, 415–416
+Blackberry, 19

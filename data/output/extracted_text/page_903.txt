@@ -1,0 +1,53 @@
+874
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+markets, where UNIX was the dominant operating system. Microsoft was also 
+concerned that the Intel microprocessor family might not continue to be competitive,
+as it was already being challenged by RISC architectures. To address these issues,
+Microsoft recruited a group of engineers from DEC (Digital Equipment 
+Corporation) led by Dave Cutler, one of the key designers of DEC’s VMS operating system
+(among others). Cutler was chartered to develop a brand-new 32-bit operating 
+system that was intended to implement OS/2, the operating system API that Microsoft
+was jointly developing with IBM at the time. The original design documents by
+Cutler’s team called the system NT OS/2.
+Cutler’s system was called NT (New Technology) (and also because the 
+original target processor was the new Intel 860, code-named the N10). NT was 
+designed to be portable across different processors and emphasized security and
+reliability, as well as compatibility with the MS-DOS-based versions of Windows.
+Cutler’s background at DEC shows in various places, with there being more than a
+passing similarity between the design of NT and that of VMS and other operating
+systems designed by Cutler, shown in Fig. 11-2.
+Year 
+DEC operating system
+Characteristics
+1973 
+RSX-11M
+16-bit, multiuser, real-time, swapping
+1978 
+VAX/VMS 
+32-bit, vir tual memor y
+1987 
+VAXELAN 
+Real-time
+1988 
+PRISM/Mica
+Canceled in favor of MIPS/Ultrix
+Figure 11-2. DEC operating systems developed by Dave Cutler.
+Programmers familiar only with UNIX find the architecture of NT to be quite
+different. This is not just because of the influence of VMS, but also because of the
+differences in the computer systems that were common at the time of design.
+UNIX was first designed in the 1970s for single-processor, 16-bit, tiny-memory,
+swapping systems where the process was the unit of concurrency and composition,
+and fork/exec were inexpensive operations (since swapping systems frequently
+copy processes to disk anyway). NT was designed in the early 1990s, when 
+multiprocessor, 32-bit, multimegabyte, virtual memory systems were common. In NT,
+threads are the units of concurrency, dynamic libraries are the units of composition,
+and fork/exec are implemented by a single operation to create a new process and
+run another program without first making a copy.
+The first version of NT-based Windows (Windows NT 3.1) was released in
+1993. It was called 3.1 to correspond with the then-current consumer Windows 3.1.
+The joint project with IBM had foundered, so though the OS/2 interfaces were still
+supported, the primary interfaces were 32-bit extensions of the Windows APIs,
+called Win32. Between the time NT was started and first shipped, Windows 3.0
+had been released and had become extremely successful commercially. It too was
+able to run Win32 programs, but using the Win32s compatibility library.

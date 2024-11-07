@@ -1,0 +1,37 @@
+284
+FILE SYSTEMS
+CHAP. 4
+the table will take up 3 GB or 2.4 GB of main memory all the time, depending on
+whether the system is optimized for space or time. Not wildly practical. Clearly the
+FAT idea does not scale well to large disks. Nevertheless, it was the original 
+MSDOS file system and is still fully supported by all versions of Windows though
+(and UEFI). Versions of the FAT file system are still commonly used on the SD
+cards used in digital cameras, electronic picture frames, music players, and other
+portable electronic devices, as well as in other embedded applications.
+I-nodes
+Our last method for keeping track of which blocks belong to which file is to
+associate with each file a data structure called an i-node (index-node), which lists
+the attributes and disk addresses of the file’s blocks. A simple example is depicted
+in Fig. 4-15. Given the i-node, it is then possible to find all the blocks of the file.
+The big advantage of this scheme over linked files using an in-memory table is that
+the i-node needs to be in memory only when the corresponding file is open. If each
+i-node occupies n bytes and a maximum of k files may be open at once, the total
+memory occupied by the array holding the i-nodes for the open files is only kn
+bytes. Only this much space need be reserved in advance.
+File Attributes
+Address of disk block 0
+Address of disk block 1
+Address of disk block 2
+Address of disk block 3
+Address of disk block 4
+Address of disk block 5
+Address of disk block 6
+Address of disk block 7
+Address of block of pointers
+Disk block!
+containing!
+additional!
+disk addresses
+Figure 4-15. An example i-node.
+This array is usually far smaller than the space occupied by the file table
+described in the previous section. The reason is simple. The table for holding the

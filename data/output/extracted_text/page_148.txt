@@ -1,0 +1,44 @@
+SEC. 2.4
+SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+119
+2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+Processes frequently need to synchronize and communicate with other 
+processes. For example, in a shell pipeline, the output of the first process must be 
+passed to the second process, and so on down the line. Thus, there is a need for 
+communication between processes, preferably in a well-structured way not using 
+interrupts. In the following sections, we will look at some of the issues related to this
+IPC (InterProcess Communication).
+Very briefly, there are three issues here. The first was alluded to above: how
+one process can pass information to another. The second has to do with making
+sure two or more processes or threads do not get in each other’s way, for example,
+two threads in an airline reservation system each trying to grab the last seat on a
+plane for different customers. The third concerns proper sequencing when 
+dependencies are present: if thread A produces data and thread B prints them, B has to
+wait until A has produced some data before starting to print. We will examine all
+three of these issues starting in the next section.
+It is also important to mention that two of these issues apply to threads as well
+as to processes with shared memory. The first one—passing information—is 
+clearly easier for threads since they share a common address space by nature. However,
+the other two—keeping out of each other’s hair and proper sequencing—are 
+complicated for threads also. Below we will discuss the problems in the context of
+processes, but please keep in mind that the same problems and solutions apply to
+threads.
+2.4.1 Race Conditions
+In some operating systems, processes that are working together may share
+some common storage that each one can read and write. The shared storage may be
+in main memory (possibly in a kernel data structure) or it may be a shared file; the
+location of the shared memory does not change the nature of the communication or
+the problems that arise. To see how interprocess communication works in practice,
+let us now consider a simple but common example: a print spooler. When a process
+wants to print a file, it enters the file name in a special spooler directory. Another
+process, the printer daemon, periodically checks to see if there are any files to be
+printed, and if there are, it prints them and then removes their names from the
+directory.
+Imagine that our spooler directory has a very large number of slots, numbered
+0, 1, 2, ..., each one capable of holding a file name. Also imagine that there are two
+shared variables, out, which points to the next file to be printed, and in, which
+points to the next free slot in the directory. These two variables might well be kept
+in a two-word file available to all processes. At a certain instant, slots 0 –3 are
+empty (the files have already been printed) and slots 4–6 are full (with the names
+of files queued for printing). More or less simultaneously, processes A and B
+decide they want to queue a file for printing. This situation is shown in Fig. 2-21.

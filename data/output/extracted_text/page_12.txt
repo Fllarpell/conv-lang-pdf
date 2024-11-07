@@ -1,0 +1,41 @@
+CONTENTS
+xi
+3.5 
+DESIGN ISSUES FOR PAGING SYSTEMS 221
+3.5.1 Local versus Global Allocation Policies 221
+3.5.2 Load Control 224
+3.5.3 Cleaning Policy 225
+3.5.4 Page Size 226
+3.5.5 Separate Instruction and Data Spaces 227
+3.5.6 Shared Pages 228
+3.5.7 Shared Libraries 230
+3.5.8 Mapped Files 232
+3.6 
+IMPLEMENTATION ISSUES 232
+3.6.1 Operating System Involvement with Paging 232
+3.6.2 Page Fault Handling 233
+3.6.3 Instruction Backup 234
+3.6.4 Locking Pages in Memory 236
+3.6.5 Backing Store 236
+3.6.6 Separation of Policy and Mechanism 238
+3.7 
+SEGMENTATION 240
+3.7.1 Implementation of Pure Segmentation 242
+3.7.2 Segmentation with Paging: MULTICS 243
+3.7.3 Segmentation with Paging: The Intel x86 248
+3.8 
+RESEARCH ON MEMORY MANAGEMENT 248
+3.9 
+SUMMARY 250
+4
+FILE SYSTEMS
+259
+4.1 
+FILES 261
+4.1.1 File Naming 261
+4.1.2 File Structure 263
+4.1.3 File Types 264
+4.1.4 File Access 266
+4.1.5 File Attributes 267
+4.1.6 File Operations 269
+4.1.7 An Example Program Using File-System Calls 270

@@ -1,0 +1,101 @@
+INDEX
+1149
+System call (continued)
+pipe, 773
+read, 269, 593, 619, 738, 746, 757, 758,
+772, 775, 779, 781, 786, 788, 793, 1045,
+1047, 1048, 1051
+readdir, 277, 774
+receive, 1047
+rename, 270, 277
+rewinddir, 774
+rmb, 740
+rmdir, 773
+seek, 269
+select, 110, 905
+sem trywait, 741
+send, 1047
+senda, 1047
+sendfile, 775
+sendrec, 1047
+set-acl, 625
+set attributes, 270
+setgid, 792
+setuid, 792
+sigaction, 729
+socket, 765
+stat, 773, 776, 778
+sync, 757, 984
+unlink, 277, 774
+unlock, 1054, 1065
+unmap, 747
+vmalloc, 753
+waitpid, 726, 727, 728
+Windows, 60–63
+wmb, 740
+write, 269, 593, 619, 746, 757, 758, 760, 772,
+775, 782, 788, 793, 1048
+System call (see also individual system calls)
+System call (see also Win32 call)
+System call (see also Windows API call)
+System on a chip, 538
+System partition, Windows, 976
+System process, Windows, 934, 977
+System restore, 914
+System store, Windows, 975
+System thread, Windows, 977
+System V, 15, 707
+System V examples, 1088
+System V interface definition, 708
+System-call interface, 1051–1053
+System/360, 11
+Syzkaller, 615
+T
+Tagged architecture, 625
+Task, 730
+TCB (see Trusted Computing Base)
+TCP (see Transmission Control Protocol)
+TCP/IP, 707, 711
+TDX (see Trust Domain Extension)
+Team structure, 1079–1081
+TEB (see Thread Environment Block)
+TEE (see Trusted Execution Environment)
+Template, Linda, 596
+Tensor processing unit, 540
+Termcap, 403
+Terminal, 395
+Terminal server, Windows, 950
+TerminateProcess Win32 Call, 91
+Te xt segment, 56, 744
+Te xt window, 402
+THE operating system, 64
+Thermal power management, 427
+Thin client, 419–420
+Thin provisioning, Windows, 981
+Thrashing, 215
+Thread, 97–116
+comparison of models, 118
+hybrid, 112–113
+kernel, 111–112
+Linux, 733–736
+POSIX, 106–107
+user-space, 107–111
+Windows, 933–934
+worker, 100
+Thread Win32 calls, 934–940
+Thread cache, 100
+Thread call, 137–138
+Thread environment block, Windows, 930
+Thread local storage, Windows, 930
+Thread model, classical, 102–106
+Thread pool, Windows, 932–933
+Thread scheduling, 169–171
+Windows, 944–950
+Thread switch, 109
+Thread table, 108
+Thread usage, 97
+Threads, Windows, 929–955
+Windows implementation, 941–950
+Thunk layer, Windows, 951
+Tightly coupled system, 529
+Time system call, 54

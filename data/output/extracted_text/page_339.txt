@@ -1,0 +1,68 @@
+310
+FILE SYSTEMS
+CHAP. 4
+may also have other internal files that should not be backed up, so the dumping
+program needs to be aware of them.
+The main advantages of physical dumping are simplicity and great speed 
+(basically, it can run at the speed of the disk). The main disadvantages are the inability
+to skip selected directories, make incremental dumps, and restore individual files
+upon request. For these reasons, most installations make logical dumps.
+A logical dump starts at one or more specified directories and recursively
+dumps all files and directories found there that have changed since some given
+base date (e.g., the last backup for an incremental dump or system installation for a
+full dump). Thus, in a logical dump, the dump disk gets a series of carefully 
+identified directories and files, which makes it easy to restore a specific file or directory
+upon request.
+Since logical dumping is the most common form, let us examine a common
+algorithm in detail using the example of Fig. 4-27 to guide us. Most UNIX systems
+use this algorithm. In the figure, we see a file tree with directories (squares) and
+files (circles). The shaded items have been modified since the base date and thus
+need to be dumped. The unshaded ones do not need to be dumped.
+1
+18
+19
+5
+6
+27
+7
+10
+20
+22
+30
+29
+23
+14
+11
+2
+3
+4
+8
+9
+12
+13
+15
+31
+28
+32
+24
+25
+26
+16
+17
+21
+File that
+has changed
+File that has
+not changed
+Root directory
+Directory 
+that has not 
+changed
+Figure 4-27. A file system to be dumped. The squares are directories and the 
+circles are files. The shaded items have been modified since the last dump. Each
+directory and file is labeled by its i-node number.
+This algorithm also dumps all directories (even unmodified ones) that lie on
+the path to a modified file or directory for two reasons. The first reason is to make
+it possible to restore the dumped files and directories to a fresh file system on a 
+different computer. In this way, the dump and restore programs can be used to 
+transport entire file systems between computers.

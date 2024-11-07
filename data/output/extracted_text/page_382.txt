@@ -1,0 +1,46 @@
+SEC. 5.2
+PRINCIPLES OF I/O SOFTWARE
+353
+the device in any way. In UNIX, all disks can be integrated in the file-system 
+hierarchy in arbitrary ways so the user need not be aware of which name corresponds
+to which device. For example, a USB stick can be mounted on top of the directory
+/usr/ast/backup so that copying a file to /usr/ast/backup/monday copies the file to
+the USB stick. In this way, all files and devices are addressed the same way: by a
+path name.
+Another important issue for I/O software is error handling. In general, errors
+should be handled as close to the hardware as possible. If the controller discovers
+a read error, it should try to correct the error itself if it can. If it cannot, then the
+device driver should handle it, perhaps by just trying to read the block again. Many
+errors are transient, such as read errors caused by specks of dust on the read head
+of a disk, and will frequently go away if the operation is repeated. Only if the
+lower layers are not able to deal with the problem should the upper layers be told
+about it. In many cases, error recovery can be done transparently at a low lev el
+without the upper levels even knowing about the error.
+Still another important issue is that of synchronous (blocking) versus 
+asynchronous (interrupt-driven) transfers. Most physical I/O is asynchronous, that is,
+the CPU starts the transfer and goes off to do something else until the interrupt
+arrives. User programs are much easier to write if the I/O operations are 
+blocking—after a read system call the program is automatically suspended until the data
+are available in the buffer. It is up to the operating system to make operations that
+are actually interrupt-driven look blocking to the user programs. However, some
+very high-performance applications need to control all the details of the I/O, so
+operating systems also make asynchronous I/O available to them.
+Another issue for the I/O software is buffering. Often data that come off a 
+device cannot be stored directly in their final destination. For example, when a packet
+comes in off the network, the operating system does not know where to put it until
+it has stored the packet somewhere and examined it to see which port it is 
+addressed to. Also, some devices have sev ere real-time constraints (for example, digital
+audio devices), so the data must be put into an output buffer in advance to decouple
+the rate at which the buffer is filled from the rate at which it is emptied, in order to
+avoid buffer underruns. Buffering involves considerable copying and often has a
+major impact on I/O performance.
+The final concept that we will mention here is sharable versus dedicated 
+devices. Some I/O devices, such as disks and SSDs, can be used by many users at the
+same time. No problems are caused by multiple users having open files on the
+same storage devices at the same time. Other devices, such as printers, have to be
+dedicated to a single user until that user is finished. Then another user can have the
+printer. Having two or more users writing characters intermixed at random to the
+same page will definitely not work. Scanners are like that as well. Introducing
+dedicated (unshared) devices also introduces a variety of problems, such as 
+deadlocks. Again, the operating system must be able to handle both shared and 
+dedicated devices in a way that avoids problems.

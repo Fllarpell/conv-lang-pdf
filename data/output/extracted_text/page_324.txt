@@ -1,0 +1,133 @@
+SEC. 4.3
+FILE-SYSTEM IMPLEMENTATION
+295
+The device component that is responsible for handling such wear-leveling is
+known as the FTL (Flash Translation Layer). It has many other responsibilities
+also and it is sometimes referred to as the drive’s secret sauce. The secret sauce
+typically runs on a simple processor with access to fast memory. It is shown on the
+left in Fig. 4-20. The data are stored in the flash packages (FPs) on the right. Each
+flash package consists of multiple dies and each die in turn contains a number of
+so-called planes: collections of flash blocks containing flash pages.
+Flash Translation 
+Layer (FTL)
+Memory
+FP
+FP
+FP
+FP
+FP
+FP
+FP
+FP
+die 0
+Plane 0
+Block 0
+Page 0
+    :
+Page n
+Block 1
+Page 0
+    :
+Page n
+Block n
+Page 0
+    :
+Page n
+:
+Plane 1
+Block 0
+Page 0
+    :
+Page n
+Block 1
+Page 0
+    :
+Page n
+Block n
+Page 0
+    :
+Page n
+:
+Plane m
+Block 0
+Page 0
+    :
+Page n
+Block 1
+Page 0
+    :
+Page n
+Block n
+Page 0
+    :
+Page n
+:
+...
+die 1
+Plane 0
+Block 0
+Page 0
+    :
+Page n
+Block 1
+Page 0
+    :
+Page n
+Block n
+Page 0
+    :
+Page n
+:
+Plane 1
+Block 0
+Page 0
+    :
+Page n
+Block 1
+Page 0
+    :
+Page n
+Block n
+Page 0
+    :
+Page n
+:
+Plane m
+Block 0
+Page 0
+    :
+Page n
+Block 1
+Page 0
+    :
+Page n
+Block n
+Page 0
+    :
+Page n
+:
+...
+"Secret sauce"
+Figure 4-20. Components inside a typical flash SSD.
+To access a specific flash page on the SSD, we need to address the 
+corresponding die on the appropriate flash package, and on that die the right plane, block and
+page—a rather complicated, hierarchical address! Unfortunately, this is not how
+file systems work at all. The file system simply requests to read a disk block at a
+linear, logical disk address. How does the SSD translate between these logical
+addresses and the complex physical addresses on the device? Here is a hint: the
+Flash Translation Layer was not given its name for nothing.
+Much like the paging mechanism in virtual memory, the FTL uses translation
+tables to indicate that logical block 54321 is really at die 0 of flash package 1, in
+plane 2 and block 5. Such translation tables are handy also for wear leveling, since
+the device is free to move a page to a different block (for instance, because it needs
+to be updated), as long as it adjusts the mapping in the translation table.
+The FTL also takes care of managing blocks and pages that are no longer
+needed. Suppose that after deleting or moving data a few times, a flash block 
+contains several invalid flash pages. Since only some of the pages are now valid, the
+device can free up space by copying the remaining valid pages to a block which
+still has free pages available and then erasing the original block. This is known as
+garbage collection. In reality, things are much more complicated. For instance,
+when do we do garbage collection? If we do it constantly and as early as possible,
+it may interfere with the user’s I/O requests. If we do it too late, we may run out of
+free blocks. A reasonable compromise is to do it during idle periods, when the
+SSD is not busy otherwise.

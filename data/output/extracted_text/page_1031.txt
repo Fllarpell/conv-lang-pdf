@@ -1,0 +1,46 @@
+1002
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+very, very fast because most of the system initialization steps are skipped. Of
+course, sometimes the system needs to perform a real shutdown in order to fix a
+problem or install an update to the kernel. If the system is told to reboot rather than
+shutdown, the system undergoes a real shutdown and performs a normal boot.
+On phones and tablets, as well as the newest generation of laptops, computing
+devices are expected to be always on yet consume little power. To provide this
+experience, modern Windows implements a special version of power management
+called CS (Connected Standby). CS is possible on systems with special 
+networking hardware which is able to listen for traffic on a small set of connections using
+much less power than if the CPU were running. A CS system always appears to be
+on, coming out of CS as soon as the screen is turned on by the user. Connected
+standby is different than the regular standby mode because a CS system will also
+come out of standby when it receives a  packet on a monitored connection. Once
+the battery begins to run low, a CS system will go into the hibernation state to
+avoid completely exhausting the battery and perhaps losing user data.
+Achieving good battery life requires more than just turning off the processor as
+often as possible. It is also important to keep the processor off as long as possible.
+The CS network hardware allows the processors to stay off until data have arrived,
+but other events can also cause the processors to be turned back on. In NT-based
+Windows device drivers, system services, and the applications themselves 
+frequently run for no particular reason other than to check on things. Such polling
+activity is usually based on setting timers to periodically run code in the system or
+application. Timer-based polling can produce a cacophony of events turning on the
+processor. To avoid this, Windows requires that timers specify an imprecision
+parameter which allows the operating system to coalesce timer events and reduce
+the number of separate occasions one of the processors will have to be turned back
+on. Windows also formalizes the conditions under which an application that is not
+actively running can execute code in the background. Operations like checking for
+updates or freshening content cannot be performed solely by requesting to run
+when a timer expires. An application must defer to the operating system about
+when to run such background activities. For example, checking for updates might
+occur only once a day or at the next time the device is charging its battery. A set of
+system brokers provide a variety of conditions which can be used to limit when
+background activity is performed. If a background task needs to access a low-cost
+network or utilize a user’s credentials, the brokers will not execute the task until
+the requisite conditions are present.
+Many applications today are implemented with both local code and services in
+the cloud. Windows provides WNS (Windows Notification Service), which
+allows third-party services to push notifications to a Windows device in CS without
+requiring the CS network hardware to specifically listen for packets from the third
+party’s servers. WNS notifications can signal time-critical events, such as the 
+arrival of a text message or a VoIP call. When a WNS packet arrives, the processor
+will have to be turned on to process it, but the ability of the CS network hardware

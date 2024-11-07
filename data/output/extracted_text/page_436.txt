@@ -1,0 +1,65 @@
+SEC. 5.6
+USER INTERFACES: KEYBOARD, MOUSE, & MONITOR
+407
+tend to be short-lived and do not survive workstation reboots. Typical resources
+include windows, fonts, colormaps (color palettes), pixmaps (bitmaps), cursors,
+and graphic contexts. The latter are used to associate properties with windows and
+are similar in concept to device contexts in Windows.
+A rough, incomplete skeleton of an X program is shown in Fig. 5-34. It begins
+by including some required headers and then declaring some variables. It then
+connects to the X server specified as the parameter to XOpenDisplay. Then it 
+allocates a window resource and stores a handle to it in win. In practice, some 
+initialization would happen here. After that it tells the window manager that the new
+window exists so the window manager can manage it.
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+main(int argc, char *argv[])
+{
+Display disp; 
+/* ser ver identifier */
+Window win; 
+/* window identifier */
+GC gc;
+/* graphic context identifier */
+XEvent event; 
+/* storage for one event */
+int running = 1;
+disp = XOpenDisplay("display name"); 
+/* connect to the X server */
+win = XCreateSimpleWindow(disp, ... ); /* allocate memory for new window */
+XSetStandardProper ties(disp, ...); 
+/* announces window to window mgr */
+gc = XCreateGC(disp, win, 0, 0);
+/* create graphic context */
+XSelectInput(disp, win, ButtonPressMask | KeyPressMask | ExposureMask);
+XMapRaised(disp, win); 
+/* display window; send Expose event */
+while (running) {
+XNextEvent(disp, &ev ent); 
+/* get next event */
+switch (event.type) {
+case Expose:
+...; 
+break;
+/* repaint window */
+case ButtonPress:
+...; 
+break;
+/* process mouse click */
+case Keypress: 
+...;
+break; 
+/* process keyboard input */
+}
+}
+XFreeGC(disp, gc); 
+/* release graphic context */
+XDestroyWindow(disp, win); 
+/* deallocate window’s memor y space */
+XCloseDisplay(disp); 
+/* tear down networ k connection */
+}
+Figure 5-34. A skeleton of an X Window application program.
+The call to XCreateGC creates a graphic context in which properties of the
+window are stored. In a more complete program, they might be initialized here.
+The next statement, the call to XSelectInput, tells the X server which events the

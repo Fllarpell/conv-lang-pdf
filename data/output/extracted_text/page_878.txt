@@ -1,0 +1,47 @@
+SEC. 10.8
+ANDROID
+849
+Runtime prompt 
+Permissions
+CONTACTS 
+READ CONTACTS, WRITE CONTACTS, GET ACCOUNTS
+CALENDAR 
+READ CALENDAR, WRITE CALENDAR
+SMS 
+SEND SMS, RECEIVE SMS, READ SMS
+STORAGE 
+READ EXTERNAL STORAGE, WRITE EXTERNAL STORAGE
+LOCATION 
+ACCESS FINE LOCATION, ACCESS COARSE LOCATION
+PHONE 
+READ PHONE STATE, CALL PHONE, PROCESS OUTGOING CALLS
+MICROPHONE 
+RECORD AUDIO
+CAMERA 
+CAMERA
+SENSORS 
+BODY SENSORS
+Figure 10-76. Select list of runtime permissions.
+There are still normal permissions, but they are no longer shown to the user at
+all. Instead, the platform still restricts access to them, so that information in the
+manifest can be used to audit applications with guarantees about what they can and
+cannot do on the device. The remaining permissions from before that are now
+auditable normal permissions are shown in Fig. 10-77.
+Permission
+SET ALARM
+ACCESS NETWORK STATE
+ACCESS WIFI STATE
+VIBRATE
+FLASHLIGHT
+EXPAND STATUS BAR
+KILL BACKGROUND PROCESSES
+SET WALLPAPER
+INTERNET
+BLUETOOTH
+MODIFY AUDIO SETTINGS
+WAKE LOCK
+Figure 10-77. Select list of auditable normal permissions.
+This organizational change effectively moved the permission design from 
+security-centric to privacy-centric. The new permission groups represent separate types
+of data the user may be interested in protecting, and everything else has been 
+hidden from them.

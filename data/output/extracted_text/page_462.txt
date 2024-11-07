@@ -1,0 +1,43 @@
+CHAP. 5  
+PROBLEMS
+433
+18. How much cylinder skew is needed for a 7200-RPM disk with a track-to-track seek
+time of 1 msec? The disk has 200 sectors of 512 bytes each on each track.
+19. A disk rotates at 7200 RPM. It has 500 sectors of 512 bytes around the outer cylinder.
+How long does it take to read a sector?
+20. Calculate the maximum data rate in bytes/sec for the disk described in the previous
+problem.
+21. RAID level 3 is able to correct single-bit errors using only one parity drive. What is the
+point of RAID level 2? After all, it also can only correct one error and takes more
+drives to do so.
+22. A RAID can fail if two or more of its drives crash within a short time interval. Suppose
+that the probability of one drive crashing in a given hour is p. What is the probability
+of a k-drive RAID failing in a given hour?
+23. Compare RAID level 0 through 5 with respect to read performance, write performance,
+space overhead, and reliability.
+24. How many pebibytes are there in a zebibyte?
+25. Why are optical storage devices inherently capable of higher data density than 
+magnetic storage devices? Note: This problem requires some knowledge of high-school
+physics and how magnetic fields are generated.
+26. What are the advantages and disadvantages of optical disks versus magnetic disks?
+27. If a disk controller writes the bytes it receives from the disk to memory as fast as it
+receives them, with no internal buffering, is interleaving conceivably useful? Discuss.
+28. If a disk has double interleaving, does it also need cylinder skew in order to avoid
+missing data when making a track-to-track seek? Discuss your answer.
+29. Consider a magnetic disk consisting of 16 heads and 400 cylinders. This disk has four
+100-cylinder zones with the cylinders in different zones containing 160, 200, 240. and
+280 sectors, respectively. Assume that each sector contains 512 bytes, average seek
+time between adjacent cylinders is 1 msec, and the disk rotates at 7200 RPM. 
+Calculate the (a) disk capacity, (b) optimal track skew, and (c) maximum data transfer rate.
+30. A disk manufacturer has two disks that each have 10,000 cylinders. The newer one has
+double the linear recording density of the older one. Which disk properties are better
+on the newer drive and which are the same? Are any worse on the newer one?
+31. Suppose some clever computer science student decides to redesign the MBR and 
+partition table of a hard disk to provide more than four partitions. What are some 
+consequences of this change?
+32. Disk requests come in to the disk driver for cylinders 10, 22, 20, 2, 40, 6, and 38, in
+that order. A seek takes 6 msec per cylinder. How much seek time is needed for
+(a) First-come, first served.
+(b) Closest cylinder next.
+(c) Elevator algorithm (initially moving upward).
+In all cases, the arm is initially at cylinder 20.

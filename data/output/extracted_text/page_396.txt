@@ -1,0 +1,42 @@
+SEC. 5.3
+I/O SOFTWARE LAYERS
+367
+just after the last bit has been sent, that bit arrives at the receiver, where the packet
+has been buffered in the controller. Next the packet is copied to the receiver’s 
+kernel buffer (step 4). Finally, it is copied to the receiving process’ buffer (step 5).
+Usually, the receiver then sends back an acknowledgement. When the sender gets
+the acknowledgement, it is free to send the next packet. However, it should be
+clear that all this copying is going to slow down the transmission rate considerably
+because all the steps must happen sequentially.
+Error Reporting
+Errors are far more common in the context of I/O than in other contexts. When
+they occur, the operating system must handle them as best it can. Many errors are
+device specific and must be handled by the appropriate driver, but the framework
+for error handling is device independent.
+One class of I/O errors is programming errors. These occur when a process
+asks for something impossible, such as writing to an input device (keyboard, 
+scanner, mouse, etc.) or reading from an output device (printer, plotter, etc.). Other
+errors are providing an invalid buffer address or other parameter, and specifying an
+invalid device (e.g., drive 3 when the system has only two drives), and so on. The
+action to take on these errors is straightforward: just report back an error code to
+the caller.
+Another class of errors is the class of actual I/O errors, for example, trying to
+write a block that has been damaged or trying to read from a camera that has been
+switched off. In these circumstances, it is up to the driver to determine what to do.
+If the driver does not know what to do, it may pass the problem back up to 
+device-independent software.
+What this software does depends on the environment and the nature of the
+error. If it is a simple read error and there is an interactive user available, it may
+display a dialog box asking the user what to do. The options may include retrying a
+certain number of times, ignoring the error, or killing the calling process. If there
+is no user available, probably the only real option is to have the system call fail
+with an error code.
+However, some errors cannot be handled this way. For example, a critical data
+structure, such as the root directory or free block list, may have been destroyed. In
+this case, the system may have to display an error message and terminate. There is
+not much else it can do.
+Allocating and Releasing Dedicated Devices
+Some devices, such as printers, can be used only by a single process at any
+given moment. It is up to the operating system to examine requests for device
+usage and accept or reject them, depending on whether the requested device is
+available or not. A simple way to handle these requests is to require processes to

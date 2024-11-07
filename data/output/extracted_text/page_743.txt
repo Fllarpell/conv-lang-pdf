@@ -1,0 +1,46 @@
+714
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+basic guidelines behind Linux is that every program should do just one thing and
+do it well. Thus compilers do not produce listings, because other programs can do
+that better.
+Finally, most programmers have a strong dislike for useless redundancy. Why
+type copy when cp is clearly enough to make it abundantly clear what you want? It
+is a complete waste of valuable hacking time. To extract all the lines containing
+the string ‘‘ard’’ from the file f, the Linux programmer merely types
+grep ard f
+The opposite approach is to have the programmer first select the grep program
+(with no arguments), and then have grep announce itself by saying: ‘‘Hi, I’m grep,
+I look for patterns in files. Please enter your pattern.’’ After getting the pattern,
+grep prompts for a file name. Then it asks if there are any more file names. 
+Finally, it summarizes what it is going to do and asks if that is correct. While this kind
+of user interface may be suitable for rank novices, it drives skilled programmers up
+the wall. What they want is a servant, not a nanny.
+10.2.2 Interfaces to Linux
+Linux system can be regarded as a kind of pyramid, as illustrated in Fig. 10-1.
+At the bottom is the hardware, consisting of the CPU, memory, disks, a monitor
+and keyboard, and other devices. Running on the bare hardware is the operating
+system. Its function is to control the hardware and provide a system call interface
+to all the programs. These system calls allow user programs to create and manage
+processes, files, and other resources.
+Users
+Standard utility programs!
+(shell, editors, compilers, etc.)
+Standard library!
+(open, close, read, write, fork, etc.)
+Linux operating system!
+(process management, memory management,!
+the file system, I/O, etc.)
+Hardware!
+(CPU, memory, disks, terminals, etc.)
+User!
+interface
+Library!
+interface
+System!
+call!
+interface
+User!
+mode
+Kernel mode
+Figure 10-1. The layers in a Linux system.

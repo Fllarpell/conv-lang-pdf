@@ -1,0 +1,43 @@
+SEC. 7.9
+CLOUDS
+503
+Clouds can transform the way companies do computing. Overall, consolidating
+the computing resources in a small number of places (conveniently located near a
+power source and cheap cooling) benefits from economy of scale. Outsourcing
+your processing means that you need not worry so much about managing your IT
+infrastructure, backups, maintenance, depreciation, scalability, reliability, 
+performance, and perhaps security. All of that is done in one place and, assuming the
+cloud provider is competent, done well. You would think that IT managers are 
+happier today than 10 years ago. However, as these worries disappeared, new ones
+emerged. Can you really trust your cloud provider to keep your sensitive data safe?
+Will a competitor running on the same infrastructure be able to infer information
+you wanted to keep private? What law(s) apply to your data (for instance, if the
+cloud provider is from the United States, is your data subject to the PATRIOT Act,
+ev en if your company is in Europe)? Once you store all your data in cloud X, will
+you be able to get them out again, or will you be tied to that cloud and its provider
+forever, something known as vendor lock-in?
+7.9.2 Virtual Machine Migration
+Virtualization technology not only allows IAAS clouds to run multiple 
+different operating systems on the same hardware at the same time, it also permits
+clever management. We hav e already discussed the ability to overcommit
+resources, especially in combination with deduplication. Now we will look at
+another management issue: what if a machine needs servicing (or even 
+replacement) while it is running lots of important machines? Probably, clients will not be
+happy if their systems go down because the cloud provider wants to replace a disk
+drive.
+Hypervisors decouple the virtual machine from the physical hardware. In other
+words, it does not really matter to the virtual machine if it runs on this machine or
+that machine. Thus, the administrator could simply shut down all the virtual 
+machines and restart them again on a shiny new machine. Doing so, however, results
+in significant downtime. The challenge is to move the virtual machine from the
+hardware that needs servicing to the new machine without taking it down at all.
+A slightly better approach might be to pause the virtual machine, rather than
+shut it down. During the pause, we copy over the memory pages used by the virtual
+machine to the new hardware as quickly as possible, configure things correctly in
+the new hypervisor and then resume execution. Besides memory, we also need to
+transfer storage and network connectivity, but if the machines are close, this can be
+relatively fast. We could make the file system network-based to begin with (like
+NFS, the network file system), so that it does not matter whether your virtual
+machine is running on hardware in server rack 1 or 3. Likewise, the IP address can
+simply be switched to the new location. Nevertheless, we still need to pause the
+machine for a noticeable amount of time. Less time perhaps, but still noticeable.

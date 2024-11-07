@@ -1,0 +1,41 @@
+CHAP. 10
+PROBLEMS
+867
+What problem may a process requesting an exclusive lock suffer from?
+38. If a Linux file has protection mode 755 (octal), what can the owner, the owner’s group,
+and everyone else do to the file?
+39. Some tape drives hav e numbered blocks and the ability to overwrite a particular block
+in place without disturbing the blocks in front of or behind it. Could such a device hold
+a mounted Linux file system?
+40. In Fig. 10-24, both Aron and Nathan have access to the file x in their respective 
+directories after linking. Is this access completely symmetrical in the sense that anything
+one of them can do with it the other one can, too?
+41. As we have seen, absolute path names are looked up starting at the root directory and
+relative path names are looked up starting at the working directory. Suggest an efficient
+way to implement both kinds of searches.
+42. When the file /usr/ast/work/f is opened, several disk accesses are needed to read i-node
+and directory blocks. Calculate the number of disk accesses required under the
+assumption that the i-node for the root directory is always in memory, and all 
+directories are one block long.
+43. A Linux i-node has 12 disk addresses for data blocks, as well as the addresses of 
+single, double, and triple indirect blocks. If each of these holds 256 disk addresses, what
+is the size of the largest file that can be handled, assuming that a disk block is 1 KB?
+44. When an i-node is read in from the disk during the process of opening a file, it is put
+into an i-node table in memory. This table has some fields that are not present on the
+disk. One of them is a counter that keeps track of the number of times the i-node has
+been opened. Why is this field needed?
+45. On multi-CPU platforms, Linux maintains a runqueue for each CPU. Is this a good
+idea? Explain your answer?
+46. The concept of loadable modules is useful in that new device drivers may be loaded in
+the kernel while the system is running. Provide two disadvantages of this concept.
+47. After a system crash and reboot, a recovery program is usually run. Suppose this 
+program discovers that the link count in a disk i-node is 2, but only one directory entry
+references the i-node. Can it fix the problem, and if so, how?
+48. Make an educated guess as to which Linux file system call is the fastest.
+49. Is it possible to unlink a file that has never been linked? What happens?
+50. Based on the information presented in this chapter, if a Linux ext2 file system were to
+be put on a 1.44-MB floppy disk, what is the maximum amount of user file data that
+could be stored on the disk? Assume that disk blocks are 1 KB.
+51. In view of all the trouble that students can cause if they get to be superuser, why does
+this concept exist in the first place?
+52. A professor shares files with his students by placing them in a publicly accessible

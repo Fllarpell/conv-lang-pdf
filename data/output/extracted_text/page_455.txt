@@ -1,0 +1,43 @@
+426
+INPUT/OUTPUT 
+CHAP. 5
+since virtually all power can be cut to memory at the expense of a substantial
+reload time, especially if the SSD is off, too. When the memory is cut off, the CPU
+either has to be shut off as well or has to execute out of ROM. If the CPU is off, the
+interrupt that wakes it up has to cause it to jump to code in ROM so the memory
+can be reloaded before being used. Despite all the overhead, switching off the
+memory for long periods of time (e.g., hours) may be worth it if restarting in a few
+seconds is considered much more desirable than rebooting the operating system
+from disk, which often takes a minute or more.
+Wireless Communication
+Increasingly many portable computers have a wireless connection to the 
+outside world (e.g., the Internet). The radio transmitter and receiver required are often
+first-class power hogs. In particular, if the radio receiver is always on in order to
+listen for incoming email, the battery may drain fairly quickly. On the other hand,
+if the radio is switched off after, say, 1 minute of being idle, incoming messages
+may be missed, which is clearly undesirable.
+One efficient solution to this problem has been proposed by Kravets and 
+Krishnan (1998). The heart of their solution exploits the fact that mobile devices (e.g.,
+smartphones) communicate with fixed base stations that have large memories and
+disks and no power constraints. What they propose is to have the mobile computer
+send a message to the base station when it is about to turn off the radio. From that
+time on, the base station buffers incoming messages on its disk. The mobile 
+computer may indicate explicitly how long it is planning to sleep, or simply inform the
+base station when it switches on the radio again. At that point any accumulated
+messages can be sent to it.
+Outgoing messages that are generated while the radio is off are buffered on the
+mobile computer. If the buffer threatens to fill up, the radio is turned on and the
+queue transmitted to the base station.
+When should the radio be switched off? One possibility is to let the user or the
+application program decide. Another is to turn it off after some number of seconds
+of idle time. When should it be switched on again? Again, the user or program
+could decide, or it could be switched on periodically to check for inbound traffic
+and transmit any queued messages. Of course, it also should be switched on when
+the output buffer is close to full. Various other heuristics are possible.
+An example of a wireless technology supporting such a power-management
+scheme can be found in 802.11 (‘‘WiFi’’) networks. In 802.11, a mobile computer
+can notify the access point that it is going to sleep but it will wake up before the
+base station sends the next beacon frame. The access point sends out these frames
+periodically. At that point the access point can tell the mobile computer that it has
+data pending. If there is no such data, the mobile computer can sleep again until
+the next beacon frame.

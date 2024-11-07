@@ -1,0 +1,96 @@
+1134
+INDEX
+Job, 8
+Windows, 931
+Job object, Windows, 1011
+Jobs, Steve, 17, 408, 614
+Journal, NTFS, 890
+Journaling, NT file system, 999–1000
+Journaling block device, 782
+Journaling file system, 292–293, 781
+Just-in-time compilation, 807
+JVM (see Java Virtual Machine)
+K
+KASLR, 682–683
+KCET (see Kernel-mode CET)
+KCFG (see Kernel CFG)
+KDE, 18
+Kerckhoffs’ principle, 611, 632
+Kernel
+Linux, 720–723
+Windows, 881, 885–887, 891–982, 894–901
+Kernel address space, Windows, 956
+Kernel handle, 917
+Kernel layer
+Linux, 722–723
+Windows, 900–901
+Kernel mode, 2
+virtual, 486
+Kernel-mode driver framework, Windows, 985
+Kernel page table isolation, 676
+Kernel thread, 111–112, 1057
+Ke y, 264
+cryptographic, 632
+registery, 915
+Ke yboard software, 397–401
+Kildall, Gary 16
+Kill system call, 54, 729
+Kmalloc system call, 753
+KMDF (see Kernel-Mode Driver Framework)
+KPTI (see Kernel Page Table Isolation)
+KQUEUES, 925
+Kubernetes, 506
+KVM, 481
+L
+L1 cache, 26
+L2 cache, 26
+Lamport, Leslie, 642
+Lampson, Butler, 1052
+Lane, 34
+LAN (see Local Area Network)
+Language projection, 880
+Large memory page table, 203–207
+Large page, Windows, 956
+Large programming project, 76–77, 1078–1082
+Large scale integration, 15
+Late binding, 1061
+Layered operating system, 64–66
+Layered system, 1054–1055
+Layers, Windows, 881
+Leader-follower multiprocessor, 543
+Least recently used, simulation, 212–214
+Least recently used page replacement algorithm, 212–214
+Least-recently used algorithm, Windows, 967
+LeaveCriticalSection Win32 call, 939
+Library operating system, 74
+Lightweight process, 102
+Limit register, 185
+Limiting TOCTOU, Windows, 1032
+Linda, 595
+Line discipline, 764
+Link, 54, 288, 768
+file, 277–278
+symbolic, 278
+Link system call, 277, 774
+Linked list for memory management, 190
+Linked-list file allocation, 282–284
+Linker, 77
+Linux, 15, 18, 710–793
+booting, 741–743
+history, 710–713
+Linux buddy algorithm, 752
+Linux cache, 763
+Linux daemons, 724
+Linux deduplication, 972
+Linux elevator scheduler, 764
+Linux ext2 file system, 776–781
+Linux ext3 file system, 781
+Linux ext4 file system, 781–782
+Linux extensions to Android, 803–807
+Linux file system, 766–789
+/proc, 782–783
+implementation, 774–783
+NFS, 783–789
+Reiser, 292–293, 298
+system calls, 770–774
+Linux filter, 717

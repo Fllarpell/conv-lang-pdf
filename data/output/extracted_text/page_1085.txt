@@ -1,0 +1,54 @@
+1056
+OPERATING SYSTEM DESIGN
+CHAP. 12
+Microkernel-Based Client-Server Systems
+A compromise between having the operating system do everything and the
+operating system do nothing is to have the operating system do a little bit. This
+design leads to a microkernel with much of the operating system running as 
+userlevel server processes, as illustrated in Fig. 12-3. This is the most modular and
+flexible of all the designs. The ultimate in flexibility is to have each device driver
+also run as a user process, fully protected against the kernel and other drivers, but
+ev en having the device drivers run in the kernel adds to the modularity.
+Client"
+process
+Client"
+process
+Client"
+process"
+"Process"
+server"
+"File"
+server"
+"Memory"
+server"
+"Microkernel
+User mode
+Kernel mode
+Client obtains"
+service by"
+sending messages"
+to server processes
+Figure 12-3. Client-server computing based on a microkernel.
+When the device drivers are in the kernel, they can access the hardware device
+registers directly. When they are not, some mechanism is needed to provide access
+to them. If the hardware permits, each driver process could be given access to only
+those I/O devices it needs. For example, with memory-mapped I/O, each driver
+process could have the page for its device mapped in, but no other device pages. If
+the I/O port space can be partially protected, the correct portion of it could be made
+available to each driver.
+Even if no hardware assistance is available, the idea can still be made to work.
+What is then needed is a new system call, available only to device-driver processes,
+supplying a list of (port, value) pairs. What the kernel does is first check to see if
+the process owns all the ports in the list. If so, it then copies the corresponding 
+values to the ports to initiate device I/O. A similar call can be used to read I/O ports.
+This approach keeps device drivers from examining (and damaging) kernel
+data structures, which is (for the most part) a good thing. An analogous set of calls
+could be made available to allow driver processes to read and write kernel tables,
+but only in a controlled way and with the approval of the kernel.
+The main problem with this approach, and with microkernels in general, is the
+performance hit all the extra context switches cause. However, virtually all work
+on microkernels was done many years ago when CPUs were much slower. 
+Nowadays, applications that use every drop of CPU power and cannot tolerate a small
+loss of performance are few and far between. After all, when running a word 
+processor or Web browser, the CPU is probably idle 95% of the time. If a 
+microkernel

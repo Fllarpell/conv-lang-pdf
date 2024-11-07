@@ -1,0 +1,43 @@
+224
+MEMORY MANAGEMENT 
+CHAP. 3
+specific process and must be applied in that context. There really is no working set
+for the machine as a whole, and trying to use the union of all the working sets
+would lose the locality property and not work well.
+3.5.2 Load Control
+Even with the best page replacement algorithm and optimal global allocation
+of page frames to processes, it can happen that the system thrashes. In fact, 
+whenev er the combined working sets of all processes exceed the capacity of memory,
+thrashing can be expected. One symptom of this situation is that the PFF algorithm
+indicates that some processes need more memory but no processes need less 
+memory. In this case, there is no way to give more memory to those processes needing
+it without hurting some other processes. The only real solution is to temporarily
+get rid of some processes.
+The simplest solution is a blunt one: kill some processes. Operating systems
+often have a special process called OOM (Out of Memory killer) that becomes
+active when the system is low on memory. It reviews all running processes and
+selects a victim to kill, freeing up its resources to keep the system running. 
+Specifically, the OOM killer will examine all processes and assign them a score to 
+indicate how ‘‘bad’’ it is. For instance, using up a lot of memory will increase a 
+process’ badness score, while important processes (such as root and system processes)
+get low scores. Also, the OOM killer will try to minimize the number of processes
+to terminate (while still freeing up enough memory). After considering all the
+processes, it will kill the process(es) with the highest score(s).
+A considerably more friendly way to reduce the number of processes 
+competing for memory is to swap some of them to nonvolatile storage and free up all the
+pages they are holding. For example, one process can be swapped to nonvolatile
+storage and its page frames divided up among other processes that are thrashing. If
+the thrashing stops, the system can run for a while this way. If it does not stop,
+another process has to be swapped out, and so on, until the thrashing stops. Thus
+ev en with paging, swapping may still be needed, only now swapping is used to
+reduce potential demand for memory, rather than to reclaim pages. Thus paging
+and swapping are not mutually contradictory.
+Swapping processes out to relieve the load on memory is reminiscent of 
+twolevel scheduling, in which some processes are put on nonvolatile storage and a
+short-term scheduler is used to schedule the remaining processes. Clearly, the two
+ideas can be combined, with just enough processes swapped out to make the 
+pagefault rate acceptable. Periodically, some processes are brought in from nonvolatile
+storage and other ones are swapped out.
+However, another factor to consider is the degree of multiprogramming. When
+the number of processes in main memory is too low, the CPU may be idle for 
+substantial periods of time. This consideration argues for considering not only process

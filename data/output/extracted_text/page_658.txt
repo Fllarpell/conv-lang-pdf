@@ -1,0 +1,67 @@
+SEC. 9.3
+FORMAL MODELS OF SECURE SYSTEMS
+629
+Compiler Mailbox 7
+Objects
+Secret
+Read!
+Execute
+Read!
+Execute
+Read!
+Write
+Read!
+Execute
+Read!
+Write
+Erica 
+  Henry 
+Roberta    
+Compiler Mailbox 7
+Objects
+Secret
+Read!
+Execute
+Read!
+Execute
+Read!
+Write
+Read
+Read!
+Execute
+Read!
+Write
+Erica 
+  Henry 
+Roberta 
+(a)
+(b)
+Figure 9-10. (a) An authorized state. (b) An unauthorized state.
+the system will carry out her request because it does not know that the state of
+Fig. 9-10(b) is unauthorized.
+It should now be clear that the set of all possible matrices can be partitioned
+into two disjoint sets: the set of all authorized states and the set of all unauthorized
+states. A question around which much theoretical research has revolved is this:
+‘‘Given an initial authorized state and a set of commands, can it be proven that the
+system can never reach an unauthorized state?’’
+In effect, we are asking if the available mechanism (the protection commands)
+is adequate to enforce some protection policy. Giv en this policy, some initial state
+of the matrix, and the set of commands for modifying the matrix, what we would
+like is a  way to prove that the system is secure. Such a proof turns out quite 
+difficult to acquire; many general-purpose systems are not theoretically secure. 
+Harrison et al. (1976) proved that in the case of an arbitrary configuration for an 
+arbitrary protection system, security is theoretically undecidable. However, for a 
+specific system, it may be possible to prove whether the system can ever move from
+an authorized state to an unauthorized state. For more information, see Landwehr
+(1981).
+9.3.1 Multilevel Security
+Most operating systems allow individual users to determine who may read and
+write their files and other objects. This policy is called discretionary access 
+control. In many environments this model works fine, but there are other 
+environments where much tighter security is required, such as the military, corporate
+patent departments, and hospitals. In the latter environments, the organization has
+stated rules about who can see what, and these may not be modified by individual
+soldiers, lawyers, or doctors, at least not without getting special permission from
+the boss (and probably from the boss’ lawyers as well). These environments need
+mandatory access controls to ensure that the stated security policies are enforced
+by the system, in addition to the standard discretionary access controls. What these

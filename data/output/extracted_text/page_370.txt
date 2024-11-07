@@ -1,0 +1,41 @@
+SEC. 5.1
+PRINCIPLES OF I/O HARDWARE
+341
+the CPU can write the contents of REG to a control register. Most early computers,
+including nearly all mainframes, such as the IBM 360 and all of its successors,
+worked this way.
+In this scheme, the address spaces for memory and I/O are different, as shown
+in Fig. 5-2(a). The instructions
+IN R0,4
+and
+MOV R0,4
+are completely different in this design. The former reads the contents of I/O port 4
+and puts it in R0, whereas the latter reads the contents of memory word 4 and puts
+it in R0. The 4s in these examples refer to different and unrelated address spaces.
+Two address
+One address space
+Two address spaces
+Memory
+I/O ports
+0xFFFF…!
+0
+(a)
+(b)
+(c)
+Figure 5-2. (a) Separate I/O and memory space. (b) Memory-mapped I/O.
+(c) Hybrid.
+The second approach, introduced with the PDP-11, is to map all the control
+registers into the memory space, as shown in Fig. 5-2(b). Each control register is
+assigned a unique memory address to which no memory is assigned. This system is
+called memory-mapped I/O. In most systems, the assigned addresses are at or
+near the top of the address space. A hybrid scheme, with memory-mapped I/O
+data buffers and separate I/O ports for the control registers, is shown in Fig. 5-2(c).
+The x86 uses this architecture, with addresses 640K to 1M < 1 being reserved for
+device data buffers in IBM PC compatibles, in addition to I/O ports 0 to 64K < 1.
+As an aside, assigning 360K addresses for I/O devices on the original PC was
+an absurdly large number and limited the amount of memory that could be put on a
+PC. Having 4K I/O addresses would have been plenty. But back when memory
+cost $1 per byte, no one thought that anyone would want to have 640 KB on a PC,
+let alone 900 KB or more. What the designers did not realize was how fast 
+memory prices would tumble. Nowadays, you would be hard pressed to find a notebook
+computer with less than 4,000,000 KB of RAM.

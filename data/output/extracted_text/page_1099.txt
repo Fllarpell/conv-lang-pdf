@@ -1,0 +1,41 @@
+1070
+OPERATING SYSTEM DESIGN
+CHAP. 12
+Check for Errors First
+Many system calls can fail for a variety of reasons: the file to be opened
+belongs to someone else; process creation fails because the process table is full; or
+a signal cannot be sent because the target process does not exist. The operating 
+system must painstakingly check for every possible error before carrying out the call.
+Many system calls also require acquiring resources such as process-table slots,
+i-node table slots, or file descriptors. A general piece of advice that can save a lot
+of grief is to first check to see if the system call can actually be carried out before
+acquiring any resources. This means putting all the tests at the beginning of the
+procedure that executes the system call. Each test should be of the form
+if (error condition) return(ERROR CODE);
+If the call gets all the way through the gamut of tests, then it is certain that it will
+succeed. At that point resources can be acquired.
+Interspersing the tests with resource acquisition means that if some test fails
+along the way, all resources acquired up to that point must be returned. If an error
+is made here and some resource is not returned, no damage is done immediately.
+For example, one process-table entry may just become permanently unavailable.
+No big deal. However, over a period of time, this bug may be triggered multiple
+times. Eventually, most or all of the process-table entries may become unavailable,
+leading to a system crash in an extremely unpredictable and difficult-to-debug way.
+Many systems suffer from this problem in the form of memory leaks. 
+Typically, the program calls malloc to allocate space but forgets to call free later to
+release it. Ever so gradually, all of memory disappears until the system is rebooted.
+Engler et al. (2000) have proposed a way to check for some of these errors at
+compile time. They observed that the programmer knows many inv ariants that the
+compiler does not know, such as when you lock a mutex, all paths starting at the
+lock must contain an unlock and no more locks of the same mutex. They hav e
+devised a way for the programmer to tell the compiler this fact and instruct it to
+check all the paths at compile time for violations of the invariant. The programmer
+can also specify that allocated memory must be released on all paths and many
+other conditions as well.
+12.4 PERFORMANCE
+All things being equal, a fast operating system is better than a slow one. 
+Howev er, a fast unreliable operating system is not as good as a reliable slow one. Since
+complex optimizations often lead to bugs, it is important to use them sparingly.
+This notwithstanding, there are places where performance is critical and 
+optimizations are worth the effort. In the following sections, we will look at some 
+techniques that can be used to improve performance in places where that is called for.

@@ -1,0 +1,47 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+149
+initial values. The values might represent temperatures at various points on a sheet
+of metal. The idea might be to calculate how long it takes for the effect of a flame
+placed at one corner to propagate throughout the sheet.
+Starting with the current values, a transformation is applied to the matrix to get
+the second version of the matrix, for example, by applying the laws of
+thermodynamics to see what all the temperatures are 6T later. Then the process is
+repeated over and over, giving the temperatures at the sample points as a function
+of time as the sheet heats up. The algorithm produces a sequence of matrices over
+time, each one for a given point in time.
+Now imagine that the matrix is very large (for example, 1 million by 1 
+million), so that parallel processes are needed (possibly on a multiprocessor) to speed
+up the calculation. Different processes work on different parts of the matrix, 
+calculating the new matrix elements from the old ones according to the laws of physics.
+However, no process may start on iteration n + 1 until iteration n is complete, that
+is, until all processes have finished their current work. The way to achieve this goal
+is to program each process to execute a barr ier operation after it has finished its
+part of the current iteration. When all of them are done, the new matrix (the input
+to the next iteration) will be finished, and all processes will be simultaneously
+released to start the next iteration.
+It is worth mentioning that special low-level barriers are popular also to 
+synchronize memory operations. Such barriers, unimaginatively called memory 
+barriers or memory fences, enforce an order to guarantee that all memory operations
+(to read or write memory) started before the barrier instruction will also finish
+before the memory operations issued after the barrier. They are important because
+modern CPUs execute instructions out of order and that may cause problems. For
+instance, if instruction 2 does not depend on the result of instruction 1, the CPU
+may start executing it ahead of time. After all, modern processors are superscalar
+and have many execution units to perform calculations and memory accesses in
+parallel. In fact, if instruction 1 takes a long time, instruction 2 may even complete
+before it, and the CPU may then start executing instruction 3. Now consider the
+situation where one thread waits on another using busy waiting:
+THREAD 1:
+THREAD 2:
+while (turn != 1) { } /* loop */
+x = 100;
+pr intf ("%d\n", x);
+tur n = 1;
+If turn == 0 initially and all instructions execute in order, the program will print the
+value 100. However, if the instructions in Thread 2 execute out of order, turn will
+be updated before x and the printed value could be some older value of x. 
+Similarly, the instructions of Thread 1 may be reordered, making it read x before 
+performing the check in the line above it. The solution in both cases is to wedge a 
+barrier instruction in between the two lines.
+Incidentally, memory barriers often play an important role in the mitigation of
+a nasty class of CPU vulnerabilities that are commonly referred to as transient

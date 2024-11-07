@@ -1,0 +1,44 @@
+CHAP. 8  
+PROBLEMS
+601
+3. Suppose that the wire between switch 2A and switch 3B in the omega network of
+Fig. 8-5 breaks. Who is cut off from whom?
+4. How is signal handling done in the model of Fig. 8-7?
+5. When a system call is made in the model of Fig. 8-8, a problem has to be solved
+immediately after the trap that does not occur in the model of Fig. 8-7. What is the
+nature of this problem and how might it be solved?
+6. Rewrite the enter region code of Fig. 2-22 using the pure read to reduce thrashing
+induced by the TSL instruction.
+7. Multicore CPUs are common in conventional desktop machines and laptop computers.
+Desktops with tens or hundreds of cores are not far off. One possible way to harness
+this power is to parallelize standard desktop applications such as the word processor or
+the Web browser. Another possible way to harness the power is to parallelize the 
+services offered by the operating system, for example, TCP processingas well as 
+commonly used library services such as secure http library functions. Which approach
+appears the most promising? Why?
+8. Are critical regions on code sections really necessary in an SMP operating system to
+avoid race conditions or will mutexes on data structures do the job as well?
+9. When the TSL instruction is used for multiprocessor synchronization, the cache block
+containing the mutex will get shuttled back and forth between the CPU holding the
+lock and the CPU requesting it if both of them keep touching the block. To reduce bus
+traffic, the requesting CPU executes one TSL ev ery 50 bus cycles, but the CPU holding
+the lock always touches the cache block between TSL instructions. If a cache block
+consists of 16 32-bit words, each of which requires one bus cycle to transfer, and the
+bus runs at 400 MHz, what fraction of the bus bandwidth is eaten up by moving the
+cache block back and forth?
+10. In the text, it was suggested that a binary exponential backoff algorithm be used
+between uses of TSL to poll a lock. It was also suggested to have a maximum delay
+between polls. Would the algorithm work correctly if there were no maximum delay?
+11. Suppose that the TSL instruction was not available for synchronizing a multiprocessor.
+Instead, another instruction, SWP, was provided that atomically swapped the contents
+of a register with a word in memory. Could that be used to provide multiprocessor 
+synchronization? If so, how could it be used? If not, why does it not work?
+12. In this problem you are to compute how much of a bus load a spin lock puts on the bus.
+Imagine that each instruction executed by a CPU takes 5 nsec. After an instruction has
+completed, any bus cycles needed, for example, for TSL are carried out. Each bus cycle
+takes an additional 10 nsec above and beyond the instruction execution time. If a 
+process is attempting to enter a critical region using a TSL loop, what fraction of the bus
+bandwidth does it consume? Assume that normal caching is working so that fetching
+an instruction inside the loop consumes no bus cycles.
+13. When gang scheduling is used, does the number of CPUs in the gang have to be a
+power of two? Explain your answer.

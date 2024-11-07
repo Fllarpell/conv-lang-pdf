@@ -1,0 +1,58 @@
+SEC. 3.4
+PA GE REPLACEMENT ALGORITHMS
+219
+2204
+Current virtual time
+1213 0
+2084 1
+2032 1
+1620 0
+2020 1
+2003 1
+1980 1
+2014 1
+Time of
+last use
+R bit
+(a)
+(b)
+(c)
+(d)
+New page
+1213 0
+2084 1
+2032 1
+1620 0
+2020 1
+2003 1
+1980 1
+222
+4 0
+1213 0
+2084 1
+2032 1
+1620 0
+2020 1
+2003 1
+1980 1
+2
+4 0
+2204 1
+2084 1
+2032 1
+1620 0
+2020 1
+2003 1
+1980 1
+2
+4 0
+20
+20
+20
+Figure 3-20. Operation of the WSClock algorithm. (a) and (b) give an example
+of what happens when R = 1. (c) and (d) give an example of R = 0.
+1. At least one write has been scheduled.
+2. No writes have been scheduled.
+In the first case, the hand just keeps moving, looking for a clean page. Since one or
+more writes have been scheduled, eventually some write will complete and its page
+will be marked as clean. The first clean page encountered is evicted. This page is

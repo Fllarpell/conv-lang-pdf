@@ -1,0 +1,43 @@
+198
+MEMORY MANAGEMENT 
+CHAP. 3
+In this chapter, we worry only about virtual memory and not full virtualization.
+In other words: no virtual machines yet. We will see in Chap. 7 that each virtual
+machine requires its own virtual memory and as a result the page table 
+organization becomes much more complicated—involving shadow or nested page tables
+and more. Even without such arcane configurations, paging and virtual memory
+are fairly sophisticated, as we shall see.
+Structure of a Page Table Entry
+Let us now turn from the structure of the page tables in the large, to the details
+of a single page table entry. The exact layout of an entry in the page table is highly
+machine dependent, but the kind of information present is roughly the same from
+machine to machine. In Fig. 3-11, we present a sample page table entry. The size
+varies from computer to computer, but 64 bits is a common size on today’s general
+purpose computers. The most important field is the Pa g e frame number. After all,
+the goal of the page mapping is to output this value. If the page size is 4-KB (i.e.,
+212 bytes), we only need the most significant 52 bits for the page frame number†,
+leaving 12 bits to encode other information about the page. For instance, the
+Present/absent bit indicates whether the entry is valid and can be used. If this bit is
+0, the virtual page to which the entry belongs is not currently in memory. 
+Accessing a page table entry with this bit set to 0 causes a page fault.
+Page frame number
+Caching
+disabled
+Modiﬁed
+Present/absent
+Supervisor
+Referenced
+Protection
+Figure 3-11. A typical page table entry.
+The Protection bits tell what kinds of access are permitted. In the simplest
+form, this field contains 1 bit, with 0 for read/write and 1 for read only. A more
+sophisticated arrangement is having 3 bits, one bit each for enabling reading, 
+writing, and executing the page. Somewhat related is the Supervisor bit that indicates
+whether the page is accessible only to privileged code, i.e., the operating system
+(or supervisor) or also to user programs. Any attempt by a user program to access a
+supervisor page will result in a fault.
+The Modified and Referenced bits keep track of page usage. When a page is
+written to, the hardware automatically sets the Modified bit. This bit is of value
+when the operating system decides to reclaim a page frame. If the page in it has
+been modified (i.e., is ‘‘dirty’’), it must be written back to nonvolatile storage. If it
+† Most 64-bit CPUs use only 48-bit addresses by design, so 36 bits suffice for the page frame number.

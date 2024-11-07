@@ -1,0 +1,46 @@
+SEC. 2.5
+SCHEDULING
+165
+have already seen. Their solution was to set up priority classes. Processes in the
+highest class were run for one quantum. Processes in the next-highest class were
+run for two quanta. Processes in the next one were run for four quanta, etc. 
+Whenev er a process used up all the quanta allocated to it, it was moved down one class.
+Thus, the processes in the highest class would run more frequently and with high
+priority, but for a shorter time—ideal for interactive processes.
+As an example, consider a process that needed to compute continuously for
+100 quanta. It would initially be given one quantum, then swapped out. Next time
+it would get two quanta before being swapped out. On succeeding runs it would get
+4, 8, 16, 32, and 64 quanta, although it would have used only 37 of the final 64
+quanta to complete its work. Only 7 swaps would be needed (including the initial
+load) instead of 100 with a pure round-robin algorithm. Furthermore, as the 
+process sank deeper and deeper into the priority queues, it would be run less and less
+frequently, saving the CPU for short, interactive processes.
+The following policy was adopted to avoid punishing forever a process that
+needed to run for a long time when it first started but became interactive later.
+Whenever a carriage return (Enter key) was typed at a terminal, the process
+belonging to that terminal was moved to the highest-priority class, on the 
+assumption that it was about to become interactive. One fine day, some user with a heavily
+CPU-bound process discovered that just sitting at the terminal and typing carriage
+returns at random every few seconds did wonders for his response time. He told all
+his friends. They told all their friends. Moral of the story: getting it right in 
+practice is much harder than getting it right in principle.
+Shortest Process Next
+Because shortest job first always produces the minimum average response time
+for batch systems, it would be nice if it could be used for interactive processes as
+well. To a certain extent, it can be. Interactive processes generally follow the 
+pattern of wait for command, execute command, wait for command, execute 
+command, etc. If we regard the execution of each command as a separate ‘‘job,’’ then
+we can minimize overall response time by running the shortest one first. The 
+problem is figuring out which of the currently runnable processes is the shortest one.
+One approach is to make estimates based on past behavior and run the process
+with the shortest estimated running time. Suppose that the estimated time per 
+command for some process is T0. Now suppose its next run is measured to be T1. We
+could update our estimate by taking a weighted sum of these two numbers, that is,
+aT0 + (1 < a)T1. Through the choice of a we can decide to have the estimation
+process forget old runs quickly, or remember them for a long time. With a = 1/2,
+we get successive estimates of
+T0,
+T0/2 + T1/2,
+T0/4 + T1/4 + T2/2,
+T0/8 + T1/8 + T2/4 + T3/2
+After three new runs, the weight of T0 in the new estimate has dropped to 1/8.

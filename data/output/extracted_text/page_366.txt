@@ -1,0 +1,22 @@
+5
+INPUT/OUTPUT
+In addition to providing abstractions such as processes, address spaces, and
+files, an operating system also controls all the computer’s I/O (Input/Output) 
+devices. It must issue commands to the devices, catch interrupts, and handle errors.
+It should also provide an interface between the devices and the rest of the system
+that is simple and easy to use. To the extent possible, the interface should be the
+same for all devices (device independence). The I/O code represents a significant
+fraction of the total operating system. How the operating system manages I/O is
+the subject of this chapter.
+This chapter is organized as follows. We will look first at some of the 
+principles of I/O hardware and then at I/O software in general. I/O software can be
+structured in layers, with each having a well-defined task. We will look at these
+layers to see what they do and how they fit together.
+Next, we will look at several I/O devices in detail: disks, clocks, keyboards,
+and displays. For each device, we will look at its hardware and software. Finally,
+we will consider power management.
+5.1 PRINCIPLES OF I/O HARDWARE
+Different people look at I/O hardware in different ways. Electrical engineers
+look at it in terms of chips, wires, power supplies, motors, and all the other 
+physical components that comprise the hardware. Programmers look at the interface
+337

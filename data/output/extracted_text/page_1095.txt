@@ -1,0 +1,45 @@
+1066
+OPERATING SYSTEM DESIGN
+CHAP. 12
+A third approach is to immediately convert an interrupt into a message to some
+thread. The low-level code just builds a message telling where the interrupt came
+from, enqueues it, and calls the scheduler to (potentially) run the handler, which
+was probably blocked waiting for the message. All these techniques, and others
+like them, all try to convert interrupts into thread-synchronization operations. 
+Having each interrupt handled by a proper thread in a proper context is easier to 
+manage than running a handler in the arbitrary context that it happened to occur in. Of
+course, this must be done efficiently, but deep within the operating system, 
+everything must be done efficiently.
+Most operating systems are designed to run on multiple hardware platforms.
+These platforms can differ in terms of the CPU chip, MMU, word length, RAM
+size, and other features that cannot easily be masked by the HAL or equivalent.
+Nevertheless, it is highly desirable to have a single set of source files that are used
+to generate all versions; otherwise each bug that later turns up must be fixed 
+multiple times in multiple sources, with the danger that the sources drift apart.
+Some hardware differences, such as RAM size, can be dealt with by having the
+operating system determine the value at boot time and keep it in a variable. 
+Memory allocators, for example, can use the RAM-size variable to determine how big to
+make the block cache, page tables, and the like. Even static tables such as the 
+process table can be sized based on the total memory available.
+However, other differences, such as different CPU chips, cannot be solved by
+having a single binary that determines at run time which CPU it is running on. One
+way to tackle the problem of one source and multiple targets is to use conditional
+compilation. In the source files, certain compile-time flags are defined for the 
+different configurations and these are used to bracket code that is dependent on the
+CPU, word length, MMU, and so on. For example, imagine an operating system
+that is to run on the IA32 line of x86 chips (sometimes referred to as x86-32), or
+on UltraSPARC chips, which need different initialization code. The init procedure
+could be written as illustrated in Fig. 12-6(a). Depending on the value of CPU,
+which is defined in the header file config.h, one kind of initialization or other is
+done. Because the actual binary contains only the code needed for the target
+machine, there is no loss of efficiency this way.
+As a second example, suppose there is a need for a data type Register, which
+should be 32 bits on the IA32 and 64 bits on the UltraSPARC. This could be 
+handled by the conditional code of Fig. 12-6(b) (assuming that the compiler produces
+32-bit ints and 64-bit longs). Once this definition has been made (probably in a
+header file included everywhere), the programmer can just declare variables to be
+of type Register and know they will be the right length.
+The header file, config.h, has to be defined correctly, of course. For the IA32 it
+might be something like this:
+#define CPU IA32
+#define WORD LENGTH 32

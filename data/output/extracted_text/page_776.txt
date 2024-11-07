@@ -1,0 +1,56 @@
+SEC. 10.4
+MEMORY MANAGEMENT IN LINUX
+747
+Text
+BSS
+Data
+Text
+Stack pointer
+Stack pointer
+20K
+8K
+0K
+24K
+0K
+(a)
+(b)
+(c)
+OS
+Physical memory
+Mapped file
+Mapped file
+Process A
+Process B
+BSS
+Data
+8K
+Unused!
+memory
+Figure 10-13. Tw o processes can share a mapped file.
+management can use the malloc library procedure (defined by the ANSI C 
+standard). How malloc is implemented is thus moved outside the scope of the POSIX
+standard. In some circles, this approach is known as passing the buck.
+In practice, most Linux systems have system calls for managing memory. The
+most common ones are listed in Fig. 10-14. Br k specifies the size of the data 
+segment by giving the address of the first byte beyond it. If the new value is greater
+than the old one, the data segment becomes larger; otherwise it shrinks.
+System call
+Description
+s = brk(addr) 
+Change data segment size
+a = mmap(addr, len, prot, flags, fd, offset)
+Map a file in
+s = unmap(addr, len) 
+Unmap a file
+Figure 10-14. Some system calls relating to memory management. The return
+code s is <1 if an error has occurred; a and addr are memory addresses, len is a
+length, prot controls protection, flags are miscellaneous bits, fd is a file 
+descriptor, and offset is a file offset.
+The mmap and munmap system calls control memory-mapped files. The first
+parameter to mmap, addr, determines the address at which the file (or portion
+thereof) is mapped. It must be a multiple of the page size. If this parameter is 0,
+the system determines the address itself and returns it in a. The second parameter,
+len, tells how many bytes to map. It, too, must be a multiple of the page size. The
+third parameter, prot, determines the protection for the mapped file. It can be
+marked readable, writable, executable, or some combination of these. The fourth
+parameter, flags, controls whether the file is private or sharable, and whether addr

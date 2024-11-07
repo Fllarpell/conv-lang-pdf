@@ -1,0 +1,46 @@
+400
+INPUT/OUTPUT 
+CHAP. 5
+The ERASE character allows the user to rub out the character just typed. It is
+usually the backspace (CTRL-H). It is not added to the character queue but instead
+removes the previous character from the queue. It should be echoed as a sequence
+of three characters, backspace, space, and backspace, in order to remove the 
+previous character from the screen. If the previous character was a tab, erasing it
+depends on how it was processed when it was typed. If it is immediately expanded
+into spaces, some extra information is needed to determine how far to back up. If
+the tab itself is stored in the input queue, it can be removed and the entire line just
+output again. In most systems, backspacing will only erase characters on the 
+current line. It will not erase a carriage return and back up into the previous line.
+When the user notices an error at the start of the line being typed in, it is often
+convenient to erase the entire line and start again. The KILL character erases the
+entire line. Most systems make the erased line vanish from the screen, but a few
+older ones echo it plus a carriage return and line feed because some users like to
+see the old line. Consequently, how to echo KILL is a matter of taste. As with
+ERASE it is usually not possible to go further back than the current line. When a
+block of characters is killed, it may or may not be worth the trouble for the driver
+to return buffers to the pool, if one is used.
+Sometimes the ERASE or KILL characters must be entered as ordinary data.
+The LNEXT character serves as an escape character. In UNIX CTRL-V is the
+default. As an example, older UNIX systems often used the @ sign for KILL, but
+the Internet mail system uses addresses of the form linda@cs.washington.edu.
+Someone who feels more comfortable with older conventions might redefine KILL
+as @, but then need to enter an @ sign literally to address email. This can be done
+by typing CTRL-V @. The CTRL-V itself can be entered literally by typing
+CTRL-V twice consecutively. After seeing a CTRL-V, the driver sets a flag saying
+that the next character is exempt from special processing. The LNEXT character
+itself is not entered in the character queue.
+To allow users to stop a screen image from scrolling out of view, control codes
+are provided to freeze the screen and restart it later. In UNIX these are STOP,
+(CTRL-S) and START, (CTRL-Q), respectively. They are not stored but are used to
+set and clear a flag in the keyboard data structure. Whenever output is attempted,
+the flag is inspected. If it is set, no output occurs. Usually, echoing is also 
+suppressed along with program output.
+It is often necessary to kill a runaway program being debugged. The INTR
+(DEL) and QUIT (CTRL-\) characters can be used for this purpose. In UNIX,
+DEL sends the SIGINT signal to all the processes started up from that keyboard.
+Implementing DEL can be quite tricky because UNIX was designed from the
+beginning to handle multiple users at the same time. Thus, in the general case,
+there may be many processes running on behalf of many users, and the DEL key
+must signal only the user’s own processes. The hard part is getting the information
+from the driver to the part of the system that handles signals, which, after all, has
+not asked for this information.

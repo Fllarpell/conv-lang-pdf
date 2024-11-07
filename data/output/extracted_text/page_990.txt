@@ -1,0 +1,52 @@
+SEC. 11.5
+MEMORY MANAGEMENT
+961
+11.5.2 Memory-Management System Calls
+The Win32 API contains a number of functions that allow a process to manage
+its virtual memory explicitly. The most important of these functions are listed in
+Fig. 11-32. All of them operate on a region consisting of either a single page or a
+sequence of two or more pages that are consecutive in the virtual address space. Of
+course, processes do not have to manage their memory; paging happens 
+automatically, but these calls give processes additional power and flexibility. Most 
+applications use higher-level heap APIs to allocate and free dynamic memory. Heap
+implementations build on top of these lower-level memory management calls to
+manage smaller blocks of memory.
+Win32 API function
+Description
+Vir tualAlloc
+Reser ve or commit a region
+Vir tualFree 
+Release or decommit a region
+Vir tualProtect
+Change the read/write/execute protection on a region
+Vir tualQuery
+Inquire about the status of a region
+Vir tualLock
+Make a region memory resident (i.e., disable paging for it)
+Vir tualUnlock
+Make a region pageable in the usual way
+CreateFileMapping 
+Create a file-mapping object and (optionally) assign it a name
+MapViewOfFile 
+Map (par t of) a file into the address space
+UnmapViewOfFile 
+Remove a mapped file from the address space
+OpenFileMapping 
+Open a previously created file-mapping object
+Figure 11-32. The principal Win32 API functions for managing virtual memory
+in Windows.
+The first four API functions are used to allocate, free, protect, and query
+regions of virtual address space. Allocated regions always begin on 64-KB 
+boundaries to minimize porting problems to future architectures with pages larger than
+current ones as well as reducing virtual address space fragmentation. The actual
+amount of address space allocated can be less than 64 KB, but must be a multiple
+of the page size. The next two APIs give a process the ability to hardwire pages in
+memory so they will not be paged out and to undo this property. A real-time 
+program might need pages with this property to avoid page faults to disk during 
+critical operations, for example. A limit is enforced by the operating system to prevent
+processes from getting too greedy. The pages actually can be removed from 
+memory, but only if the entire process is swapped out. When it is brought back, all the
+locked pages are reloaded before any thread can start running again. Although not
+shown in Fig. 11-32, Windows also has native API functions to allow a process to
+read/write the virtual memory of a different process over which it has been given
+control, that is, for which it has a handle (see Fig. 11-7).

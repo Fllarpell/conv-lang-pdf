@@ -1,0 +1,46 @@
+SEC. 1.3
+COMPUTER HARDWARE REVIEW
+27
+On multicore chips, the designers have to decide where to place the caches. In
+Fig. 1-8(a), a single L2 cache is shared by all the cores. In contrast, in Fig. 1-8(b),
+each core has its own L2 cache. Each strategy has its pros and cons. For example,
+the shared L2 cache requires a more complicated cache controller but the per-core
+L2 caches makes keeping the caches consistent more difficult.
+Main memory comes next in the hierarchy of Fig. 1-9. This is the workhorse
+of the memory system. Main memory is usually called RAM (Random Access
+Memory). Old-timers sometimes call it core memory, because computers in the
+1950s and 1960s used tiny magnetizable ferrite cores for main memory. They hav e
+been gone for decades but the name persists. Currently, memories are often tens of
+gigabytes on desktop or server machines. All CPU requests that cannot be 
+satisfied out of the cache go to main memory.
+In addition to the main memory, many computers have different kinds of 
+nonvolatile random-access memory. Unlike RAM, nonvolatile memory does not lose
+its contents when the power is switched off. ROM (Read Only Memory) is 
+programmed at the factory and cannot be changed afterward. It is fast and 
+inexpensive. On some computers, the bootstrap loader used to start the computer is 
+contained in ROM. EEPROM (Electrically Erasable PROM) is also nonvolatile,
+but in contrast to ROM can be erased and rewritten. However, writing it takes
+orders of magnitude more time than writing RAM, so it is used in the same way
+ROM is, except that it is now possible to correct bugs in programs by rewriting
+them in the field. Boot strapping code may also be stored in Flash memory,
+which is similarly nonvolatile, but in contrast to ROM can be erased and rewritten.
+The boot strapping code is commonly referred to as BIOS (Basic Input/Output
+System). Flash memory is also commonly used as the storage medium in portable
+electronic devices such as smartphones and in SSDs to serve as a faster alternative
+to hard disks. Flash memory is intermediate in speed between RAM and disk.
+Also, unlike disk memory, if it is erased too many times, it wears out. Firmware
+inside the device tries to mitigate this through load balancing.
+Yet another kind of memory is CMOS, which is volatile. Many computers use
+CMOS memory to hold the current time and date. The CMOS memory and the
+clock circuit that increments the time in it are powered by a small battery, so the
+time is correctly updated, even when the computer is unplugged. The CMOS 
+memory can also hold the configuration parameters, such as which drive to boot from.
+CMOS is used because it draws so little power that the original factory-installed
+battery often lasts for several years. However, when it begins to fail, the computer
+can appear to be losing its marbles, forgetting things that it has known for years,
+like how to boot.
+Incidentally, many computers today support a scheme known as virtual 
+memory, which we will discuss at some length in Chap. 3. It makes it possible to run
+programs larger than physical memory by placing them on nonvolatile storage
+(SSD or disk) and using main memory as a kind of cache for the most heavily
+executed parts. From time to time, the program will need data that are currently not

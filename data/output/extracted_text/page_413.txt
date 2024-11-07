@@ -1,0 +1,68 @@
+384
+INPUT/OUTPUT 
+CHAP. 5
+block spontaneously going bad on both drives in a reasonable time
+interval is negligible, a stable read always succeeds.
+3. Crash recovery. After a crash, a recovery program scans both disks
+comparing corresponding blocks. If a pair of blocks are both good
+and the same, nothing is done. If one of them has an ECC error, the
+bad block is overwritten with the corresponding good block. If a pair
+of blocks are both good but different, the block from drive 1 is written
+onto drive 2.
+In the absence of CPU crashes, this scheme always works because stable
+writes always write two valid copies of every block and spontaneous errors are
+assumed never to occur on both corresponding blocks at the same time. What
+about in the presence of CPU crashes during stable writes? It depends on precisely
+when the crash occurs. There are fiv e possibilities, as depicted in Fig. 5-25.
+Old
+1
+Old
+2
+Disk
+1
+Old
+2
+Disk
+New
+1
+Old
+2
+Disk
+New
+1
+2
+Disk
+New
+1
+New
+2
+Disk
+Crash
+Crash
+Crash
+Crash
+Crash
+(a)
+(b)
+(c)
+(d)
+(e)
+ECC!
+error
+Figure 5-25. Analysis of the influence of crashes on stable writes.
+In Fig. 5-25(a), the CPU crash happens before either copy of the block is 
+written. During recovery, neither will be changed and the old value will continue to
+exist, which is allowed.
+In Fig. 5-25(b), the CPU crashes during the write to drive 1, destroying the
+contents of the block. However, the recovery program detects this error and
+restores the block on drive 1 from drive 2. Thus, the effect of the crash is wiped
+out and the old state is fully restored.
+In Fig. 5-25(c), the CPU crash happens after drive 1 is written but before drive
+2 is written. The point of no return has been passed here: the recovery program
+copies the block from drive 1 to drive 2. The write succeeds.
+Fig. 5-25(d) is like Fig. 5-25(b): during recovery, the good block overwrites the
+bad block. Again, the final value of both blocks is the new one.
+Finally, in Fig. 5-25(e), the recovery program sees that both blocks are the
+same, so neither is changed and the write succeeds here, too.
+Various optimizations and improvements are possible to this scheme. For
+starters, comparing all the blocks pairwise after a crash is doable, but expensive. A

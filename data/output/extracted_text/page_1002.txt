@@ -1,0 +1,44 @@
+SEC. 11.5
+MEMORY MANAGEMENT
+973
+Periodically, the memory manager scans process private pages and identifies 
+identical ones by computing hashes to pick candidates and then performing a 
+byte-bybyte comparison after blocking any modification to candidate pages. Once 
+identical pages are found, these private pages are converted to shareable pages 
+transparently to the process. Each PTE is marked copy-on-write such that if any of the
+sharing processes writes to a combined page, they get their own copy.
+In practice, page combining results in fairly significant memory savings
+because many processes load the same system DLLs at the same addresses which
+result in many identical pages due to copy-on-written import address table pages,
+writable data sections and even heap allocations with identical contents. 
+Interestingly, the most common combined page is entirely composed of zeroes, indicating
+that a lot of code allocates and zeroes memory, but does not write to it afterwards.
+While page combining sounds like a broadly applicable optimization, it has
+various security implications that must be considered. Even though page 
+combining happens without application involvement and is hidden from applications—for
+example, when they call Win32 APIs to query whether a certain virtual address
+range is private or shareable—it is possible for an attacker to determine whether a
+virtual page is combined with others by timing how long it takes to write to the
+page (and other clever tricks). This can allow the attacker to infer contents of pages
+in other, potentially more privileged, processes leading to information disclosure.
+For this reason, Windows does not combine pages across different security
+domains, except for ‘‘well-known’’ page contents like all-zeroes.
+11.5.4 Memory Compression
+Another significant performance optimization in Windows memory 
+management is memory compression. It’s a feature enabled by default on client 
+systems, but off by default on server systems. Memory compression aims to fit more
+data into physical memory by compressing currently unused pages such that they
+take up less space. As a result, it reduces hard page faults and replaces them with
+soft faults involving a decompression step. Finally, it reduces the volume of 
+pagefile writes as well since all data written to the pagefile is now compressed. 
+Memory compression is implemented in an executive component called the store 
+manager which closely integrates with the memory manager and exposes to it a simple
+key-value interface to add, retrieve, and remove pages.
+Let us follow the journey of a private page in a process working set as it goes
+through the compression pipeline, illustrated in Fig. 11-38. When the memory
+manager decides to trim the page from the working set based on its normal 
+policies, the private page ends up on the modified list. At some point, the memory
+manager decides, again based on usual policies, to gather pages from the modified
+list to write to the pagefile.
+Since our page is not compressed, the memory manager calls the store 
+manager’s SmPageWr ite routine to add the page to a store. The store manager chooses

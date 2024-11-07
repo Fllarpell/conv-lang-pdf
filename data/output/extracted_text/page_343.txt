@@ -1,0 +1,46 @@
+314
+FILE SYSTEMS
+CHAP. 4
+list is really a list; with a bitmap it is impossible.) The solution here is also simple:
+rebuild the free list.
+The worst thing that can happen is that the same data block is present in two or
+more files, as shown in Fig. 4-29(d) with block 5. If either of these files is
+removed, block 5 will be put on the free list, leading to a situation in which the
+same block is both in use and free at the same time. If both files are removed, the
+block will be put onto the free list twice.
+The appropriate action for the file-system checker to take is to allocate a free
+block, copy the contents of block 5 into it, and insert the copy into one of the files.
+In this way, the information content of the files is unchanged (although almost
+assuredly one is garbled), but the file-system structure is at least made consistent.
+The error should be reported, to allow the user to inspect the damage.
+In addition to checking to see that each block is properly accounted for, the
+file-system checker also checks the directory system. It, too, uses a table of 
+counters, but these are per file, rather than per block. It starts at the root directory and
+recursively descends the tree, inspecting each directory in the file system. For
+ev ery i-node in every directory, it increments a counter for that file’s usage count.
+Remember that due to hard links, a file may appear in two or more directories.
+Symbolic links do not count and do not cause the counter for the target file to be
+incremented.
+When the checker is all done, it has a list, indexed by i-node number, telling
+how many directories contain each file. It then compares these numbers with the
+link counts stored in the i-nodes themselves. These counts start at 1 when a file is
+created and are incremented each time a (hard) link is made to the file. In a 
+consistent file system, both counts will agree. However, two kinds of errors can occur:
+the link count in the i-node can be too high or it can be too low.
+If the link count is higher than the number of directory entries, then even if all
+the files are removed from the directories, the count will still be nonzero and the 
+inode will not be removed. This error is not serious, but it wastes space on the disk
+with files that are not in any directory. It should be fixed by setting the link count
+in the i-node to the correct value.
+The other error is potentially catastrophic. If two directory entries are linked
+to a file, but the i-node says that there is only one, when either directory entry is
+removed, the i-node count will go to zero. When an i-node count goes to zero, the
+file system marks it as unused and releases all of its blocks. This action will result
+in one of the directories now pointing to an unused i-node, whose blocks may soon
+be assigned to other files. Again, the solution is just to force the link count in the 
+inode to the actual number of directory entries.
+These two operations, checking blocks and checking directories, are often 
+integrated for efficiency reasons (i.e., only one pass over the i-nodes is required).
+Other checks are also possible. For example, directories have a definite format,
+with i-node numbers and ASCII names. If an i-node number is larger than the
+number of i-nodes on the disk, the directory has been damaged.

@@ -1,0 +1,45 @@
+SEC. 10.8
+ANDROID
+839
+Permissions
+In their base state, Android’s application sandboxes must disallow any
+cross-application interactions that can violate security between them. This may be
+for robustness (preventing one app from crashing another app), but most often it is
+about information access.
+Consider our camera application. When the user takes a picture, the camera
+application stores that picture in its private data space. No other applications can
+access that data, which is what we want since the pictures there may be sensitive
+data to the user.
+After the user has taken a picture, she may want to email it to a friend. Email
+is a separate application, in its own sandbox, with no access to the pictures in the
+camera application. How can the email application get access to the pictures in the
+camera application’s sandbox?
+The best-known form of access control in Android is application permissions.
+Permissions are specific well-defined abilities that can be granted to an application
+at install time. The application lists the permissions it needs in its manifest, and
+depending on the type of permission they will either be granted at install time (if
+allowed) or can ask the user to grant them the permission while running.
+Figure 10-67 shows how our email application could make use of permissions
+to access pictures in the camera application. In this case, the camera application
+has associated the READ PICTURES permission with its pictures, saying that any
+application holding that permission can access its picture data. The email 
+application declares in its manifest that it requires this permission. The email application
+can now access a URI owned by the camera, such as content://pics/1; upon 
+receiving the request for this URI, the camera app’s content provider asks the package
+manager whether the caller holds the necessary permission. If it does, the call 
+succeeds and appropriate data are returned to the application.
+Permissions are not tied to content providers; any IPC into the system may be
+protected by a permission by asking the package manager if the caller holds the
+required permission. Recall that application sandboxing is based on processes and
+UIDs, so a security barrier always happens at a process boundary, and permissions
+themselves are associated with UIDs. Given this, a permission check can be 
+performed by retrieving the UID associated with the incoming IPC and asking the
+package manager whether that UID has been granted the corresponding 
+permission. For example, permissions for accessing the user’s location are enforced by
+the system’s location manager service when applications call in to it.
+Figure 10-68 shows what happens when an application does not hold a 
+permission needed for an operation it is performing. Here the browser application is 
+trying to directly access the user’s pictures, but the only permission it holds is one for
+network operations over the Internet. In this case the PicturesProvider is told by
+the package manager that the calling process does not hold the needed READ 
+PICTURES permission, and as a result throws a SecurityException back to it.

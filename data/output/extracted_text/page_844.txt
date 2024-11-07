@@ -1,0 +1,67 @@
+SEC. 10.8
+ANDROID
+815
+Process 1
+Binder1b
+Binder1b
+Binder1b
+Parcel
+transact()
+BinderProxy
+(Handle 2)
+BinderProxy
+(Handle 3)
+onTransact()
+Parcel
+Binder1b
+Binder2b
+Binder2a
+Process 1
+Process 2
+Process 2
+Handle 1
+Handle 1
+Handle 2
+Handle 3
+Handle 3
+Handle 3
+Handle 2
+Transaction
+Transaction
+To: Handle 2
+From: Process 1
+To: Binder2a
+From: Process 1
+Data
+Data
+Data
+Data
+Data
+Data
+Data
+Data
+Kernel
+Figure 10-46. Binder user-space API.
+The kernel transaction structure we had previously looked at is thus split apart
+in the user-space APIs: the target is represented by a BinderProxy and its data are
+held in a Parcel. The transaction flows through the kernel as we previously saw
+and, upon appearing in user space in the receiving process, its target is used to
+determine the appropriate receiving Binder object while a Parcel is constructed
+from its data and delivered to that object’s onTransact method.
+These three classes now make it fairly easy to write IPC code:
+1. Subclass from Binder.
+2. Implement onTransact to decode and execute incoming calls.
+3. Implement corresponding code to create a Parcel that can be passed
+to that object’s transact method.
+The bulk of this work is in the last two steps. This is the unmarshalling and
+marshalling code that is needed to turn how we’d prefer to program—using 
+simple method calls—into the operations that are needed to execute an IPC. This is
+boring and error-prone code to write, so we’d like to let the computer take care of
+that for us.
+Binder Interfaces and AIDL
+The final piece of Binder IPC is the one that is most often used, a high-level
+interface-based programming model. Instead of dealing with Binder objects and
+Parcel data, here we get to think in terms of interfaces and methods.
+The main piece of this layer is a command-line tool called AIDL (for Android
+Interface Definition Language). This tool is an interface compiler, taking an
+abstract description of an interface and generating from it the source code that is

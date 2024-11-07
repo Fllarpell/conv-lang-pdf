@@ -1,0 +1,40 @@
+SEC. 1.6
+SYSTEM CALLS
+57
+most systems, there are other memory areas also, for instance those create with the
+mmap system call, which creates a new virtual memory areas, but we will get to
+those later.)
+Address (hex)
+FFFF
+0000
+Stack
+Data
+Text
+Gap
+Figure 1-20. Processes have three segments: text, data, and stack.
+1.6.2 System Calls for File Management
+Many system calls relate to the file system. In this section, we will look at
+calls that operate on individual files; in the next one we will examine those that
+involve directories or the file system as a whole.
+To read or write a file, it must first be opened. This call specifies the file name
+to be opened, either as an absolute path name or relative to the working directory,
+as well as a code of O RDONLY, O WRONLY, or O RDWR, meaning open for
+reading, writing, or both. To create a new file, the O CREAT parameter is used.
+The file descriptor returned can then be used for reading or writing. Afterward, the
+file can be closed by close, which makes the file descriptor available for reuse on a
+subsequent open.
+The most heavily used calls are undoubtedly read and wr ite. We saw read 
+earlier. Wr ite has the same parameters.
+Although most programs read and write files sequentially, for some 
+applications programs need to be able to access any part of a file at random. Associated
+with each file is a pointer that indicates the current position in the file. When 
+reading (writing) sequentially, it normally points to the next byte to be read (written).
+The lseek call changes the value of the position pointer, so that subsequent calls to
+read or wr ite can begin anywhere in the file.
+Lseek has three parameters: the first is the file descriptor for the file, the 
+second is a file position, and the third tells whether the file position is relative to the
+beginning of the file, the current position, or the end of the file. The value returned
+by lseek is the absolute position in the file (in bytes) after changing the pointer.
+For each file, UNIX keeps track of the file mode (regular file, special file,
+directory, and so on), size, time of last modification, and other information. 
+Programs can ask to see this information via the stat system call. The first parameter

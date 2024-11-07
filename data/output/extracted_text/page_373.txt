@@ -1,0 +1,44 @@
+344
+INPUT/OUTPUT 
+CHAP. 5
+buses. One possibility is to first send all memory references to the memory. If the
+memory fails to respond, then the CPU tries the other buses. This design can be
+made to work but requires additional hardware complexity.
+A second possible design is to put a snooping device on the memory bus to
+pass all addresses presented to potentially interested I/O devices. The problem here
+is that I/O devices may not be able to process requests at the speed the memory
+can.
+A third possible design, and one that would well match the design sketched in
+Fig. 1-12, is to filter addresses in the memory controller. In that case, the memory
+controller chip contains range registers that are preloaded at boot time. For 
+example, 640K to 1M < 1 could be marked as a nonmemory range. Addresses that fall
+within one of the ranges marked as nonmemory are forwarded to devices instead of
+to memory. The main disadvantage of this scheme is the need for figuring out at
+boot time which memory addresses are not really memory addresses. Thus each
+scheme has arguments for and against it, so compromises and trade-offs are 
+inevitable, especially when backward compatibility with legacy systems is important.
+5.1.4 Direct Memory Access
+No matter whether a CPU does or does not have memory-mapped I/O, it needs
+to address the device controllers to exchange data with them. The CPU can request
+data from an I/O controller one byte at a time, but doing so wastes the CPU’s time,
+so a different scheme, called DMA (Direct Memory Access) is often used. To
+simplify the explanation, we assume that the CPU accesses all devices and memory
+via a single system bus that connects the CPU, the memory, and the I/O devices, as
+shown in Fig. 5-4. We already know that the real organization in modern systems
+is more complicated, but all the principles are the same. The operating system can
+only use DMA if the hardware has a DMA controller, which most systems do.
+Sometimes this controller is integrated into disk controllers and other controllers,
+but such a design requires a separate DMA controller for each device. More 
+commonly, a single DMA controller is available (e.g., on the motherboard) for 
+regulating transfers to multiple devices, often concurrently.
+No matter where it is physically located, the DMA controller has access to the
+system bus independent of the CPU, as shown in Fig. 5-4. It contains several 
+registers that can be written and read by the CPU. These include a memory address
+register, a byte count register, and one or more control registers. The control 
+registers specify the I/O port to use, the direction of the transfer (reading from the I/O
+device or writing to the I/O device), the transfer unit (byte at a time or word at a
+time), and the number of bytes to transfer in one burst.
+To explain how DMA works, consider how data are read from, say, a disk. Let
+us first look at how disk reads occur when DMA is not used. First, the disk 
+controller reads the block (one or more sectors) from the drive serially, bit by bit, until
+the entire block is stored in the controller’s internal buffer. Next, it computes the

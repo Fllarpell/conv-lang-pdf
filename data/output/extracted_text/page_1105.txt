@@ -1,0 +1,48 @@
+1076
+OPERATING SYSTEM DESIGN
+CHAP. 12
+Path 
+I-node number
+/usr 
+6
+/usr/ast 
+26
+/usr/ast/mbox
+60
+/usr/ast/books 
+92
+/usr/bal 
+45
+/usr/bal/paper.ps 
+85
+Figure 12-9. Part of the i-node cache for Fig. 4-36.
+/usr/ast/grants/erc is presented, the cache returns the fact that /usr/ast is i-node 26,
+so the search can start there, eliminating four disk accesses.
+A problem with caching paths is that the mapping between file name and 
+inode number is not fixed for all time. Suppose that the file /usr/ast/mbox is
+removed from the system and its i-node reused for a different file owned by a 
+different user. Later, the file /usr/ast/mbox is created again, and this time it gets i-node
+106. If nothing is done to prevent it, the cache entry will now be wrong and 
+subsequent lookups will return the wrong i-node number. For this reason, when a file or
+directory is deleted, its cache entry and (if it is a directory) all the entries below it
+must be purged from the cache.
+Disk blocks and path names are not the only items that are cacheable. I-nodes
+can be cached, too. If pop-up threads are used to handle interrupts, each one of
+them requires a stack and some additional machinery. These previously used
+threads can also be cached, since refurbishing a used one is easier than creating a
+new one from scratch (to avoid having to allocate memory). Just about anything
+that is hard to produce can be cached.
+12.4.5 Hints
+Cache entries are always correct. A cache search may fail, but if it finds an
+entry, that entry is guaranteed to be correct and can be used without further ado. In
+some systems, it is convenient to have a table of hints. These are suggestions
+about the solution, but they are not guaranteed to be correct. The called must verify
+the result itself.
+A well-known example of hints are the URLs embedded on Web pages. 
+Clicking on a link does not guarantee that the Web page pointed to is there. In fact, the
+page pointed to may have been removed 10 years ago. Thus the information on the
+pointing page is really only a hint.
+Hints are also used in connection with remote files. The information in the hint
+tells something about the remote file, such as where it is located. However, the file
+may have moved or been deleted since the hint was recorded, so a check is always
+needed to see if it is correct.

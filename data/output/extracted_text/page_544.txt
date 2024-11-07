@@ -1,0 +1,44 @@
+SEC. 7.11
+CASE STUDY: VMWARE
+515
+how to correctly virtualize ring 1 and ring 2, the VMware VMM simply had code
+to detect if a guest was trying to enter into ring 1 or ring 2, and, in that case, would
+stop execution of the virtual machine. This not only removed unnecessary code,
+but more importantly it allowed the VMware VMM to assume that ring 1 and ring
+2 would never be used by the virtual machine, and therefore that it could use these
+rings for its own purposes. In fact, the VMware VMM’s binary translator runs at
+ring 1 to virtualize ring 0 code.
+The Virtual Hardware Platform
+So far, we hav e primarily discussed the problem associated with the 
+virtualization of the x86 processor. But an x86-based computer is much more than its
+processor. It also has a chipset, some firmware, and a set of I/O peripherals to 
+control disks, network cards, CD-ROM, keyboard, etc.
+The diversity of I/O peripherals in x86 personal computers made it impossible
+to match the virtual hardware to the real, underlying hardware. Whereas there were
+only a handful of x86 processor models in the market, with only minor variations
+in instruction-set level capabilities, there were thousands of I/O devices, most of
+which had no publicly available documentation of their interface or functionality.
+VMware’s key insight was to not attempt to have the virtual hardware match the
+specific underlying hardware, but instead have it always match some configuration
+composed of selected, canonical I/O devices. Guest operating systems then used
+their own existing, built-in mechanisms to detect and operate these (virtual) 
+devices.
+The virtualization platform consisted of a combination of multiplexed and
+emulated components. Multiplexing meant configuring the hardware so it can be
+directly used by the virtual machine, and shared (in space or time) across multiple
+virtual machines. Emulation meant exporting a software simulation of the selected,
+canonical hardware component to the virtual machine. Figure 7-9 illustrates that
+VMware Workstation used multiplexing for processor and memory and emulation
+for everything else.
+For the multiplexed hardware, each virtual machine had the illusion of having
+one dedicated CPU and a configurable, but a fixed amount of contiguous RAM
+starting at physical address 0.
+Architecturally, the emulation of each virtual device was split between a 
+frontend component, which was visible to the virtual machine, and a back-end 
+component, which interacted with the host operating system (Waldspurger and 
+Rosenblum, 2012). The front-end was essentially a software model of the hardware 
+device that could be controlled by unmodified device drivers running inside the 
+virtual machine. Regardless of the specific corresponding physical hardware on the
+host, the front end always exposed the same device model.
+For example, the first Ethernet device front end was the AMD PCnet ‘‘Lance’’
+chip, once a popular 10-Mbps plug-in board on PCs, and the back end provided

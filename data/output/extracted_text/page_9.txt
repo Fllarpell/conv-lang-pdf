@@ -1,0 +1,44 @@
+viii
+CONTENTS
+1.4 
+THE OPERATING SYSTEM ZOO 36
+1.4.1 Mainframe Operating Systems 36
+1.4.2 Server Operating Systems 37
+1.4.3 Personal Computer Operating Systems 37
+1.4.4 Smartphone and Handheld Computer Operating Systems 37
+1.4.5 The Internet of Things and Embedded Operating Systems 37
+1.4.6 Real-Time Operating Systems 38
+1.4.7 Smart Card Operating Systems 39
+1.5 
+OPERATING SYSTEM CONCEPTS 39
+1.5.1 Processes 39
+1.5.2 Address Spaces 41
+1.5.3 Files 42
+1.5.4 Input/Output 45
+1.5.5 Protection 46
+1.5.6 The Shell 46
+1.5.7 Ontogeny Recapitulates Phylogeny 47
+1.6 
+SYSTEM CALLS 50
+1.6.1 System Calls for Process Management 53
+1.6.2 System Calls for File Management 57
+1.6.3 System Calls for Directory Management 58
+1.6.4 Miscellaneous System Calls 60
+1.6.5 The Windows API 60
+1.7 
+OPERATING SYSTEM STRUCTURE 63
+1.7.1 Monolithic Systems 63
+1.7.2 Layered Systems 64
+1.7.3 Microkernels 66
+1.7.4 Client-Server Model 68
+1.7.5 Virtual Machines 69
+1.7.6 Exokernels and Unikernels 73
+1.8 
+THE WORLD ACCORDING TO C  74
+1.8.1 The C Language 74
+1.8.2 Header Files 75
+1.8.3 Large Programming Projects 76
+1.8.4 The Model of Run Time 78
+1.9 
+RESEARCH ON OPERATING SYSTEMS 78
+1.10 OUTLINE OF THE REST OF THIS BOOK 79

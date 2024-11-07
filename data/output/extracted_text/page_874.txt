@@ -1,0 +1,45 @@
+SEC. 10.8
+ANDROID
+845
+As an example of what SELinux provides, consider a simple bug where some
+system code writes a file and accidentally makes it world readable, such as a file
+keeping track of the permissions granted to apps. In the UID-based security model,
+this mistake allows any app sandbox to modify this file, such as to change it to say
+it has a permission the user did not actually give it.
+With SELinux enabled, however, this exploit is defeated: Android’s SELinux
+rules say that no app sandbox can read or write a system file, so the exploit will
+still be stopped. Each UID sandbox also has an associated SELinux context 
+defining the rules for what it is allowed to do, written to be as minimal as possible. For
+example, the rules for an isolated service’s sandbox say that it has no read/write
+access at all to data files.
+More information on how Android uses SELinux can be found online at
+https://source.android.com/security/selinux.
+Privacy and Permissions
+Privacy is a newer but increasingly important issue that operating systems must
+address. Where security can be described as addressing the goal that ‘‘nothing
+placed on the device can harm it or the user’’ (such as harm its operation, force the
+user to pay money to access it, force ads on users, allow other apps to be installed
+they do not want, etc.), the goal of privacy is to help users be confident that ‘‘the
+information about them is being protected and only used for what they want.’’
+Security is most notable to the user in its absence: if the device’s security is
+good, it always behaves as intended and the user never has a bad experience from
+malware. Privacy, in contrast, involves a more direct interaction between the 
+operating system and the users, because it requires that they hav e confidence that the
+platform is looking out for their data, allows them to make the decisions they want
+about how their data is protected, and gives some visibility into what happens to
+their data.
+To help illustrate the difference between security and privacy, consider
+Fig. 10-71, which the only thing most users want to know about the security of
+their operating system (if even that). Keep this in mind as we look at the thinking
+that goes behind designing the privacy of the system.
+Privacy cannot happen without security: without a secure foundation for 
+controlling what apps can do, an operating system cannot give assurance about what
+happens to the users’ data—a malicious app could access their data through 
+insecure paths without the user knowing. And though security on Android provides the
+walls that allow statements about privacy to hav e meaning, security is not by itself
+sufficient to address privacy concerns.
+When Android was first designed, security was the primary focus for its users
+and developers: operating systems were still evolving to address security in the
+modern world of wide-spread use of devices that allow people to install and use
+apps without concern for them causing damage. Mobile devices further 
+exacerbated security issues due the increased personal nature of them, such as always

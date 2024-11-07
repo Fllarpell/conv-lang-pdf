@@ -1,0 +1,44 @@
+896
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+The other major components of kernel mode are the device drivers. Windows
+uses device drivers for any kernel-mode facilities which are not part of NTOS or
+the HAL. This includes file systems, network protocol stacks, and kernel 
+extensions like antivirus and DRM (Digital Rights Management) software, as well as
+drivers for managing physical devices, interfacing to hardware buses, and so on.
+The I/O and virtual memory components cooperate to load (and unload) device
+drivers into kernel memory and link them to the NTOS and HAL layers. The I/O
+manager provides interfaces which allow devices to be discovered, organized, and
+operated—including arranging to load the appropriate device driver. Much of the
+configuration information for managing devices and drivers is maintained in the
+SYSTEM hive of the registry. The plug-and-play subcomponent of the I/O 
+manager maintains information about the hardware detected within the HARDWARE
+hive, which is a volatile hive maintained in memory rather than on disk, as it is
+completely recreated every time the system boots.
+We will now examine the various components of the operating system in a bit
+more detail.
+The Hypervisor
+The Hyper-V hypervisor runs as the lowest software layer underneath 
+Windows. Its job is to virtualize the hardware such that multiple guest operating 
+systems can run concurrently, each in their own virtual machine, which Windows calls
+a partition. The hypervisor achieves this by taking advantage of virtualization 
+exCtensions supported by the CPU (VT-X on Intel, AMD-V on AMD and ARMv8-A
+on ARM processors) to confine each guest to its assigned memory, CPU, and 
+hardware resources, isolated from other guests. Also, the hypervisor intercepts many of
+the privileged operations performed by guest operating systems and emulates them
+to maintain the illusion. An operating system running on top of the hypervisor
+executes threads and handles interrupts on abstractions of the physical processors
+called virtual processors. The hypervisor schedules the virtual processors on
+physical processors.
+Being a Type-1 hypervisor, the Windows hypervisor runs directly on the 
+underlying hardware, but uses its virtualization stack components in the root operating
+system to provide device support services to its guests. For example, an emulated
+disk read request initiated by a guest operating system is handled by the virtual
+disk controller component running in user-mode by performing the requested read
+operation using regular Win32 APIs. While the root operating system must be
+Windows when running Hyper-V, other operating systems, such as Linux, can be
+run in the guest partitions. A guest operating system may perform very poorly
+unless it has been modified (i.e., paravirtualized) to work with the hypervisor.
+For example, if a guest operating system kernel is using a spinlock to 
+synchronize between two virtual processors and the hypervisor reschedules the virtual
+processor holding the spinlock, the lock hold time may increase by several orders

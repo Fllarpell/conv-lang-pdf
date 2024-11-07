@@ -1,0 +1,43 @@
+SEC. 8.3
+DISTRIBUTED SYSTEMS
+585
+8.3.2 Network Services and Protocols
+All computer networks provide certain services to their users (hosts and 
+processes), which they implement using certain rules about legal message exchanges.
+Below we will give a brief introduction to these topics.
+Network Services
+Computer networks provide services to the hosts and processes using them.
+Connection-oriented service is modeled after the telephone system. To talk to
+someone, you pick up the phone, dial the number, talk, and then hang up. 
+Similarly, to use a connection-oriented network service, the service user first establishes
+a connection, uses the connection, and then releases the connection. The essential
+aspect of a connection is that it acts like a tube: the sender pushes objects (bits) in
+at one end, and the receiver takes them out in the same order at the other end.
+In contrast, connectionless service is modeled after the postal system. Each
+message (letter) carries the full destination address, and each one is routed through
+the system independent of all the others. Normally, when two messages are sent to
+the same destination, the first one sent will be the first one to arrive. Howev er, it is
+possible that the first one sent can be delayed so that the second one arrives first.
+With a connection-oriented service this is impossible.
+Each service can be characterized by a quality of service. Some services are
+reliable in the sense that they nev er lose data. Usually, a reliable service is 
+implemented by having the receiver confirm the receipt of each message by sending
+back a special acknowledgement packet so the sender is sure that it arrived. The
+acknowledgement process introduces overhead and delays, which are necessary to
+detect packet loss, but which do slow things down.
+A typical situation in which a reliable connection-oriented service is 
+appropriate is file transfer. The owner of the file wants to be sure that all the bits arrive 
+correctly and in the same order they were sent. Very few file-transfer customers would
+prefer a service that occasionally scrambles or loses a few bits, even if it is much
+faster.
+Reliable connection-oriented service has two relatively minor variants: 
+message sequences and byte streams. In the former, the message boundaries are 
+preserved. When two 1-KB messages are sent, they arrive as two distinct 1-KB 
+messages, never as one 2-KB message. In the latter, the connection is simply a stream
+of bytes, with no message boundaries. When 2K bytes arrive at the receiver, there
+is no way to tell if they were sent as one 2-KB message, two 1-KB messages, 2048
+1-byte messages, or something else. If the pages of a book are sent over a network
+to an imagesetter as separate messages, it might be important to preserve the 
+message boundaries. On the other hand, with a terminal logging into a remote server
+system, a byte stream from the terminal to the computer is all that is needed. There
+are no message boundaries here.

@@ -1,0 +1,44 @@
+318
+FILE SYSTEMS
+CHAP. 4
+for every character written. Of course, most programs do internal buffering, so
+they normally write not a character, but a line or a larger unit on each wr ite system
+call.
+A consequence of this difference in caching strategy is that just removing a
+disk from a UNIX system without doing a sync will almost always result in lost
+data, and frequently in a corrupted file system as well. With write-through caching,
+no problem arises. These differing strategies were chosen because UNIX was 
+developed in an environment in which all disks were hard disks and not removable,
+whereas the first Windows file system was inherited from MS-DOS, which started
+out in the floppy-disk world. As hard disks became the norm, the UNIX approach,
+with its better efficiency (but worse reliability), became the norm, and it is also
+used now on Windows for hard disks. However, NTFS takes other measures (e.g.,
+journaling) to improve reliability, as discussed earlier.
+At this point, it is worth discussing the relationship between the buffer cache
+and the page cache. Conceptually they are different in that a page cache caches
+pages of files to optimize file I/O, while a buffer cache simply caches disk blocks.
+The buffer cache, which predates the page cache, really behaves like disk, except
+that the reads and writes access memory. The reason people added a page cache
+was that it seemed a good idea to move the cache higher up in the stack, so file 
+requests could be served without going through the file system code and all its 
+complexities. Phrased differently: files are in the page cache and disk blocks in the
+buffer cache. In addition, a cache at a higher level without need for the file system
+made it easier to integrate it with the memory management subsystem—as 
+befitting a component called page cache. Howev er, it has probably not escaped your
+notice that the files in the page cache are typically on disk also, so that their data
+are now in both of the caches.
+Some operating systems therefore integrate the buffer cache with the page
+cache. This is especially attractive when memory-mapped files are supported. If a
+file is mapped onto memory, then some of its pages may be in memory because
+they were demand paged in. Such pages are hardly different from file blocks in the
+buffer cache. In this case, they can be treated the same way, with a single cache for
+both file blocks and pages. Even if the functions are still distinct, they point to the
+same data. For instance, as most data has both a file and a block representation, the
+buffer cache simply point into the page cache—leaving only one instance of the
+data cached in memory.
+Block Read Ahead
+A second technique for improving perceived file-system performance is to try
+to get blocks into the cache before they are needed to increase the hit rate. In 
+particular, many files are read sequentially. When the file system is asked to produce
+block k in a file, it does that, but when it is finished, it makes a sneaky check in the
+cache to see if block k + 1 is already there. If it is not, it schedules a read for block

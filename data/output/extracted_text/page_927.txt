@@ -1,0 +1,48 @@
+898
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Besides these larger issues of portability, there are also minor ones even 
+between different motherboards from different manufacturers. Differences in CPU
+versions affect how synchronization primitives like spin-locks are implemented.
+There are several families of support chips that create differences in how hardware
+interrupts are prioritized, how I/O device registers are accessed, management of
+DMA transfers, control of the timers and real-time clock, multiprocessor 
+synchronization, working with firmware facilities such as ACPI (Advanced Configuration
+and Power Interface), and so on. Microsoft made a serious attempt to hide these
+types of machine dependencies in a thin layer at the bottom called the HAL, as
+mentioned earlier. The job of the HAL is to present the rest of the operating 
+system with abstract hardware that hides the specific details of processor version, 
+support chipset, and other configuration variations. These HAL abstractions are 
+presented in the form of machine-independent services (procedure calls and macros)
+that NTOS and the drivers can use.
+By using the HAL services and not addressing the hardware directly, drivers
+and the kernel require fewer changes when being ported to new processors—and in
+most cases can run unmodified on systems with the same processor architecture,
+despite differences in versions and support chips.
+The HAL does not provide abstractions or services for specific I/O devices
+such as keyboards, mice, and disks or for the memory management unit. These
+facilities are spread throughout the kernel-mode components, and without the HAL
+the amount of code that would have to be modified when porting would be 
+substantial, even when the actual hardware differences were small. Porting the HAL
+itself is straightforward because all the machine-dependent code is concentrated in
+one place and the goals of the port are well defined: implement all of the HAL 
+services. For many releases, Microsoft supported a HAL Development Kit allowing
+system manufacturers to build their own HAL, which would allow other kernel
+components to work on new systems without modification, provided that the 
+hardware changes were not too great. This practice is no longer active and as such,
+there’s little reason to maintain the HAL layer in a separate binary, hal.dll. With
+Windows 11, the HAL layer has been merged into ntoskrnl.exe. Hal.dll is now a
+forwarder binary kept around to maintain compatibility with drivers that use its
+interfaces all of which are redirected to the HAL layer in ntoskrnl.exe.
+As an example of what the hardware abstraction layer does, consider the issue
+of memory-mapped I/O vs. I/O ports. Some machines have one and some have the
+other. How should a driver be programmed: to use memory-mapped I/O or not?
+Rather than forcing a choice, which would make the driver not portable to a
+machine that did it the other way, the hardware abstraction layer offers procedures
+for driver writers to use for reading the device registers others for writing them:
+uc = READ PORT UCHAR(por t);
+WRITE PORT UCHAR(por t, uc);
+us = READ PORT USHORT(por t);
+WRITE PORT USHORT(por t, us);
+ul = READ PORT ULONG(por t);
+WRITE PORT LONG(por t, ul);

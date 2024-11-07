@@ -1,0 +1,50 @@
+392
+INPUT/OUTPUT 
+CHAP. 5
+The first clock function, maintaining the time of day (also called the real time)
+is not difficult. It just requires incrementing a counter at each clock tick, as 
+mentioned before. The only thing to watch out for is the number of bits in the 
+time-ofday counter. With a clock rate of 60 Hz, a 32-bit counter will overflow in just over
+2 years. Clearly the system cannot store the real time as the number of ticks since
+Jan. 1, 1970 in 32 bits.
+Three approaches can be taken to solve this problem. The first way is to use a
+64-bit counter, although doing so makes maintaining the counter more expensive
+since it has to be done many times a second. The second way is to maintain the
+time of day in seconds, rather than in ticks, using a subsidiary counter to count
+ticks until a whole second has been accumulated. Because 232 seconds is more than
+136 years, this method will work until the twenty-second century.
+The third approach is to count in ticks, but to do that relative to the time the
+system was booted, rather than relative to a fixed external moment. When the 
+backup clock is read or the user types in the real time, the system boot time is 
+calculated from the current time-of-day value and stored in memory in any convenient
+form. Later, when the time of day is requested, the stored time of day is added to
+the counter to get the current time of day. All three approaches are shown in
+Fig. 5-28.
+(a)
+(b)
+(c)
+Time of day in ticks
+Time of day!
+in seconds
+Counter in ticks
+System boot time!
+in seconds
+Number of ticks!
+in current second
+64 bits
+32 bits
+32 bits
+Figure 5-28. Three ways to maintain the time of day.
+The second clock function is preventing processes from running too long.
+Whenever a process is started, the scheduler initializes a counter to the value of
+that process’ quantum in clock ticks. At every clock interrupt, the clock driver
+decrements the quantum counter by 1. When it gets to zero, the clock driver calls
+the scheduler to set up another process.
+The third clock function is doing CPU accounting. The most accurate way to
+do it is to start a second timer, distinct from the main system timer, whenever a
+process is started up. When that process is stopped, the timer can be read out to tell
+how long the process has run. To do things right, the second timer should be saved
+when an interrupt occurs and restored afterward.
+A less accurate, but simpler, way to do accounting is to maintain a pointer to
+the process table entry for the currently running process in a global variable. At
+ev ery clock tick, a field in the current process’ entry is incremented. In this way,

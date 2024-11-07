@@ -1,0 +1,46 @@
+986
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Device object
+Instance data
+Next device object
+Driver object
+Driver object
+Dispatch table
+CREATE
+READ
+WRITE
+FLUSH
+IOCTL
+CLEANUP
+CLOSE
+…
+Loaded device driver
+Driver code
+Figure 11-41. A single level in a device stack.
+I/O Request Packets
+Figure 11-42 shows the major fields in the IRP. The bottom of the IRP is a
+dynamically sized array containing fields that can be used by each driver for the
+device stack handling the request. These stack fields also allow a driver to specify
+the routine to call when completing an I/O request. During completion each level
+of the device stack is visited in reverse order, and the completion routine assigned
+by each driver is called in turn. At each level, the driver can continue to complete
+the request or decide there is still more work to do and leave the request pending,
+suspending the I/O completion for the time being.
+When allocating an IRP, the I/O manager has to know how deep the particular
+of the stack depth in a field in each device object as the device stack is formed.
+Note that there is no formal definition of what the next device object is in any
+stack. That information is held in private data structures belonging to the previous
+driver on the stack. In fact, the stack does not really have to be a stack at all. At any
+layer a driver is free to allocate new IRPs, continue to use the original IRP, send an
+I/O operation to a different device stack, or even switch to a system worker thread
+to continue execution.
+The IRP contains flags, an operation code for indexing into the driver dispatch
+table, buffer pointers for possibly both kernel and user buffers, and a list of MDLs
+(Memory Descriptor Lists) which are used to describe the physical pages 
+represented by the buffers, that is, for DMA operations. There are fields used for 
+cancellation and completion operations. The fields in the IRP that are used to queue the
+IRP to devices while it is being processed are reused when the I/O operation has
+finally completed to provide memory for the APC control object used to call the
+I/O manager’s completion routine in the context of the original thread. There is
+also a link field used to link all the outstanding IRPs to the initiating thread.

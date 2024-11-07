@@ -1,0 +1,22 @@
+2
+PROCESSES AND THREADS
+We are now about to embark on a detailed study of how operating systems are
+designed and constructed. The most central concept in any operating system is the
+process: an abstraction of a running program. Everything else hinges on this 
+concept, and the operating system designer (and student) should have a thorough
+understanding of what a process is as early as possible.
+Processes are one of the oldest and most important abstractions that operating
+systems provide. They support the ability to have (pseudo) concurrent operation
+ev en when there is only one CPU available. They turn a single CPU into multiple
+virtual CPUs. When there are four or eight or more CPUs (cores) available, there
+could be dozens or hundreds of processes running. Without the process 
+abstraction, modern computing could not exist. In this chapter, we will go into 
+considerable detail about processes and their first cousins, threads.
+2.1 PROCESSES
+All modern computers often do several things at the same time. People used to
+working with computers may not be fully aware of this fact, so a few examples
+may make the point clearer. First consider a Web server. Requests come in from all
+over asking for Web pages. When a request comes in, the server checks to see if
+the page needed is in the cache. If it is, it is sent back; if it is not, a disk request is
+started to fetch it. However, from the CPU’s perspective, disk requests take
+85

@@ -1,0 +1,56 @@
+262
+FILE SYSTEMS
+CHAP. 4
+native file system (NTFS) that has different properties (such as file names in 
+Unicode). We will discuss NTFS in Chap. 11. There is also a second file system for
+Windows, known as ReFS (Resilient File System), but that one is targeted at the
+server version of Windows. In this chapter, when we refer to the MS-DOS or FAT
+file systems, we mean FAT -16 and FAT -32 as used on Windows unless specified
+otherwise. We will discuss the FAT file systems later in this chapter and NTFS in
+Chap. 12, where we will examine Windows 10 in detail. Incidentally, there is also
+an even newer FAT -like file system, known as exFAT file system, a Microsoft
+extension to FAT -32 that is optimized for flash drives and large file systems.
+Many operating systems support two-part file names, with the two parts 
+separated by a period, as in prog.c. The part following the period is called the file
+extension and usually indicates something about the file. In MS-DOS, for 
+example, file names were 1–8 characters, plus an optional extension of 1–3 characters.
+In UNIX, the size of the extension, if any, is up to the user, and a file may even
+have two or more extensions, as in homepage.html.zip, where .html indicates a Web
+page in HTML and .zip indicates that the file (homepage.html) has been 
+compressed using the zip program. Some of the more common file extensions and their
+meanings are shown in Fig. 4-1.
+Extension 
+Meaning
+.bak 
+Backup file
+.c 
+C source program
+.gif 
+Compuserve Graphical Interchange For mat image
+.html 
+Wor ld Wide Web HyperText Mar kup Language document
+.jpg 
+Still picture encoded with the JPEG standard
+.mp3 
+Music encoded in MPEG layer 3 audio for mat
+.mpg 
+Movie encoded with the MPEG standard
+.o 
+Object file (compiler output, not yet linked)
+.pdf 
+Por table Document For mat file
+.ps 
+PostScr ipt file
+.tex
+Input for the TEX for matting program
+.txt 
+General text file
+.zip 
+Compressed archive
+Figure 4-1. Some typical file extensions.
+In some systems (e.g., all flavors of UNIX), file extensions are just 
+conventions and are not enforced by the operating system. A file named file.txt might be
+some kind of text file, but that name is more to remind the owner than to convey
+any actual information to the computer. On the other hand, a C compiler may 
+actually insist that files it is to compile end in .c, and it may refuse to compile them if
+they do not. However, the operating system does not care.

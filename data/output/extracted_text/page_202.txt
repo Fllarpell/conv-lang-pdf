@@ -1,0 +1,38 @@
+SEC. 2.7
+SUMMARY
+173
+round robin, priority scheduling, multilevel queues, guaranteed scheduling, lottery
+scheduling, and fair-share scheduling. Some systems make a clean separation
+between the scheduling mechanism and the scheduling policy, which allows users
+to have control of the scheduling algorithm.
+PROBLEMS
+1. In Fig. 2-2, three process states are shown. In theory, with three states, there could be
+six transitions, two out of each state. However, only four transitions are shown. Are
+there any circumstances in which either or both of the missing transitions might occur?
+2. Suppose that you were to design an advanced computer architecture that did process
+switching in hardware, instead of having interrupts. What information would the CPU
+need? Describe how the hardware process switching might work.
+3. On all current computers, at least part of the interrupt handlers are written in assembly
+language. Why?
+4. When an interrupt or a system call transfers control to the operating system, a kernel
+stack area separate from the stack of the interrupted process is generally used. Why?
+5. A computer system has enough room to hold fiv e programs in its main memory. These
+programs are idle waiting for I/O half the time. What fraction of the CPU time is
+wasted?
+6. A computer has 4 GB of RAM of which the operating system occupies 512 MB. The
+processes are all 256 MB (for simplicity) and have the same characteristics. If the goal
+is 99% CPU utilization, what is the maximum I/O wait that can be tolerated?
+7. Multiple jobs can run in parallel and finish faster than if they had run sequentially.
+Suppose that two jobs, each needing 20 minutes of CPU time, start simultaneously.
+How long will the last one take to complete if they run sequentially? How long if they
+run in parallel? Assume 50% I/O wait.
+8. Consider a multiprogrammed system with degree of 6 (i.e., six programs in memory at
+the same time). Assume that each process spends 40% of its time waiting for I/O. What
+will be the CPU utilization?
+9. Assume that you are trying to download a large 2-GB file from the Internet. The file is
+available from a set of mirror servers, each of which can deliver a subset of the file’s
+bytes; assume that a given request specifies the starting and ending bytes of the file.
+Explain how you might use threads to improve the download time.
+10. In the text it was stated that the model of Fig. 2-10(a) was not suited to a file server
+using a cache in memory. Why not? Could each process have its own cache?
+11. If a multithreaded process forks, a problem occurs if the child gets copies of all the

@@ -1,0 +1,44 @@
+SEC. 11.1
+HISTORY OF WINDOWS THROUGH WINDOWS 11
+877
+had moved from floppy, to CD, and with Windows Vista, to DVD. Technology had
+been keeping up, however, and faster processors and larger memories made it 
+possible for computers to get faster despite all this bloat.
+Unfortunately for Microsoft, Windows Vista was released at a time when 
+customers were becoming enthralled with inexpensive computers, such as low-end
+notebooks and netbook computers. These machines used slower processors to save
+cost and battery life, and in their earlier generations limited memory sizes. At the
+same time, processor performance ceased to improve at the same rate it had 
+previously due to the difficulties in dissipating the heat created by ever-increasing clock
+speeds. Moore’s law continued to hold, but the additional transistors were going
+into new features and multiple processors rather than improvements in 
+single-processor performance. The substantial growth in Windows Vista meant that it 
+performed poorly on these computers relative to Windows XP, and the release was
+never widely accepted.
+The issues with Windows Vista were addressed in the subsequent release,
+Windows 7. Microsoft invested heavily in testing and performance automation,
+new telemetry technology, and extensively strengthened the teams charged with
+improving performance, reliability, and security. Though Windows 7 had relatively
+few functional changes compared to Windows Vista, it was better engineered and
+more efficient. Windows 7 quickly supplanted Vista and ultimately Windows XP to
+be the most popular version of Windows within a few years after its release.
+11.1.5 Windows 8
+By the time Windows 7 finally shipped, the computing industry once again
+began to change dramatically. The success of the Apple iPhone as a portable 
+computing device, and the advent of the Apple iPad, had heralded a sea-change which
+led to the dominance of lower-cost Android phones and tablets, much as Microsoft
+had dominated the desktop in the first three decades of personal computing. Small,
+portable, yet powerful devices and ubiquitous fast networks were creating a world
+where mobile computing and network-based services were becoming the dominant
+paradigm. The old world of desktop and notebook computers was replaced by
+machines with small screens that ran applications readily downloadable from 
+dedicated app stores. These applications were not the traditional variety, like word
+processing, spreadsheets, and connecting to corporate servers. Instead, they 
+provided access to services such as Web search, social networking, games, Wikipedia,
+streaming music and video, shopping, and personal navigation. The business 
+models for computing were also changing, with user data collection and advertising
+opportunities becoming the largest economic force behind computing.
+Microsoft began a process to redesign itself as a devices and services company
+in order to better compete with Google and Apple. It needed an operating system it
+could deploy across a wide spectrum of devices: phones, tablets, game consoles,
+laptops, desktops, servers, and the cloud. Windows thus underwent an even bigger

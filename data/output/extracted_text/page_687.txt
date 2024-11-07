@@ -1,0 +1,41 @@
+658
+SECURITY 
+CHAP. 9
+It is important to emphasize that attackers are also improving their exploitation
+techniques. In this section, we have tried to give an overview of some of the more
+important techniques, but there are many variations of the same idea. The one thing
+we are fairly certain of is that in the next edition of this book, this section will still
+be relevant (and probably longer).
+The good news is that help is on the way. Many of these exploits are due to the
+fact that C and C++ are very permissive and do not check much, in order to make
+programs written in them very fast. More modern languages, such as Rust and Go,
+are much more secure. Yes, programs written in them are not as fast as C or C++
+programs, but people now are more willing to accept some hit in performance in
+return for fewer bugs than they were 30 or 40 years ago.
+9.5.2 Format String Attacks
+The next attack is also a memory-corruption attack, but of a very different
+nature. Some programmers do not like typing, even though they are excellent 
+typists. Why name a variable reference count when rc obviously means the same
+thing and saves 13 keystrokes on every occurrence? This dislike of typing can
+sometimes lead to catastrophic system failures as described below.
+Consider the following fragment from a C program that prints the traditional C
+greeting at the start of a program:
+char *s="Hello Wor ld";
+pr intf("%s", s);
+In this program, the character string variable s is declared and initialized to a string
+consisting of ‘‘Hello World’’ and a null byte to indicate the end of the string. The
+call to the function printf has two arguments, the format string ‘‘%s’’, which
+instructs it to print a string, and the address of the string. When executed, this piece
+of code prints the string on the screen (or wherever standard output goes). It is 
+correct and bulletproof.
+But suppose the programmer gets lazy and instead of the above, types:
+char *s="Hello Wor ld";
+pr intf(s);
+This call to printf is allowed because printf has a variable number of arguments, of
+which the first must be a format string. But a string not containing any formatting
+information (such as ‘‘%s’’) is legal, so although the second version is not good
+programming practice, it is allowed and it will work. Best of all, it saves typing
+five characters, clearly a big win.
+Six months later some other programmer is instructed to modify the code to
+first ask the user for his name, then greet the user by name. After studying the
+code somewhat hastily, she changes it a little bit, like this:

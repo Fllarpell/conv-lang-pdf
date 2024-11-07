@@ -1,0 +1,41 @@
+SEC. 6.4
+DEADLOCK DETECTION AND RECOVERY
+455
+checkpoint contains not only the memory image, but also the resource state, in
+other words, which resources are currently assigned to the process. To be most
+effective, new checkpoints should not overwrite old ones but should be written to
+new files, so as the process executes, a whole sequence accumulates.
+When a deadlock is detected, it is easy to see which resources are needed. To
+do the recovery, a process that owns a needed resource is rolled back to a point in
+time before it acquired that resource by starting at one of its earlier checkpoints.
+All the work done since the checkpoint is lost (e.g., output printed since the 
+checkpoint must be discarded, since it will be printed again). In effect, the process is
+reset to an earlier moment when it did not have the resource, which is now 
+assigned to one of the deadlocked processes. If the restarted process tries to acquire the
+resource again, it will have to wait until it becomes available.
+Recovery through Killing Processes
+The crudest but simplest way to break a deadlock is to kill one or more 
+processes. One possibility is to kill a process in the cycle. With a little luck, the other
+processes will be able to continue. If this does not help, it can be repeated until the
+cycle is broken.
+Alternatively, a process not in the cycle can be chosen as the victim in order to
+release its resources. In this approach, the process to be killed is carefully chosen
+because it is holding resources that some process in the cycle needs. For example,
+one process might hold a printer and want a plotter, with another process holding a
+plotter and wanting a printer. These two are then deadlocked. A third process may
+hold another identical printer and another identical plotter and be happily running.
+Killing the third process will release these resources and break the deadlock
+involving the first two.
+Where possible, it is best to kill a process that can be rerun from the beginning
+with no ill effects. For example, a compilation can always be rerun because all it
+does is read a source file and produce an object file. If it is killed partway through,
+the first run has no influence on the second run.
+On the other hand, a process that updates a database cannot always be run a
+second time safely. If the process adds 1 to some field of a table in the database,
+running it once, killing it, and then running it again will add 2 to the field, which is
+incorrect.
+6.5 DEADLOCK AV OIDANCE
+In the discussion of deadlock detection, we tacitly assumed that when a 
+process asks for resources, it asks for them all at once (the R matrix of Fig. 6-9). In
+most systems, however, resources are requested one at a time. The system must be
+able to decide whether granting a resource is safe or not and make the allocation

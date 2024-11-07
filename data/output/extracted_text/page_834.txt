@@ -1,0 +1,46 @@
+SEC. 10.8
+ANDROID
+805
+Wake locks on Android allow the system to go in to a deeper sleep mode, 
+without being tied to an explicit user action like turning the screen off. The default
+state of the system with wake locks is that the device is asleep. When the device is
+running, to keep it from going back to sleep something needs to be holding a wake
+lock.
+While the screen is on, the system always holds a wake lock that prevents the
+device from going to sleep, so it will stay running, as we expect.
+When the screen is off, however, the system itself does not generally hold a
+wake lock, so it will stay out of sleep only as long as something else is holding
+one. When no more wake locks are held, the system goes to sleep, and it can come
+out of sleep only due to a hardware interrupt.
+Once the system has gone to sleep, a hardware interrupt will wake it up again,
+as in a traditional operating system. Some sources of such an interrupt are 
+timebased alarms, events from the cellular radio (such as for an incoming call), 
+incoming network traffic, and presses on certain hardware buttons (such as the power
+button). Interrupt handlers for these events require one change from standard
+Linux: they need to acquire an initial wake lock to keep the system running after it
+handles the interrupt.
+The wake lock acquired by an interrupt handler must be held long enough to
+transfer control up the stack to the driver in the kernel that will continue processing
+the event. That kernel driver is then responsible for acquiring its own wake lock,
+after which the interrupt wake lock can be safely released without risk of the 
+system going back to sleep.
+If the driver is then going to deliver this event up to user space, a similar 
+handshake is needed. The driver must ensure that it continues to hold the wake lock
+until it has delivered the event to a waiting user process and ensured there has been
+an opportunity there to acquire its own wake lock. This flow may continue across
+subsystems in user space as well; as long as something is holding a wake lock, we
+continue performing the desired processing to respond to the event. Once no more
+wake locks are held, however, the entire system falls back to sleep and all 
+processing stops.
+After Android shipped, there was significant discussion with the Linux 
+community about how to merge Android’s wake lock facility back into the mainline
+kernel. This was especially important because wake locks require that drivers use
+them to keep the system running when needed, causing a fork of not just the kernel
+but also any drivers that need to do this.
+Ultimately Linux added a ‘‘wakeup event’’ facility, allowing drivers and other
+entities in the kernel to note when they are the source of a wakeup and/or need to
+ensure the device continues to stay way. The decision for whether to go into 
+suspend, however, was moved to user space, keeping the policy for when to suspend
+out of the kernel. Android provides a user space implementation that makes the
+decision to suspend based on the wakeup event state in the kernel as well as wake
+lock requests coming to it from elsewhere in user space.

@@ -1,0 +1,50 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+125
+#define FALSE 0
+#define TRUE 1
+#define N
+2
+/* number of processes */
+int turn; 
+/* whose turn is it? */
+int interested[N];
+/* all values initially 0 (FALSE) */
+void enter region(int process);
+/* process is 0 or 1 */
+{
+int other;
+/* number of the other process */
+other = 1 < process; 
+/* the opposite of process */
+interested[process] = TRUE; 
+/* show that you are interested */
+tur n = process; 
+/* set flag */
+while (turn == process && interested[other] == TRUE) /* null statement */ ;
+}
+void leave region(int process)
+/* process: who is leaving */
+{
+interested[process] = FALSE; 
+/* indicate departure from critical region */
+}
+Figure 2-24. Peterson’s solution for achieving mutual exclusion.
+Let us see how this solution works. Initially neither process is in its critical
+region. Now process 0 calls enter region. It indicates its interest by setting its
+array element and sets turn to 0. Since process 1 is not interested, enter region
+returns immediately. If process 1 now makes a call to enter region, it will hang
+there until interested[0] goes to FALSE, an event that happens only when process 0
+calls leave region to exit the critical region.
+Now consider the case that both processes call enter region almost 
+simultaneously. Both will store their process number in turn. Whichever store is done last
+is the one that counts; the first one is overwritten and lost. Suppose that process 1
+stores last, so turn is 1. When both processes come to the while statement, process
+0 executes it zero times and enters its critical region. Process 1 loops and does not
+enter its critical region until process 0 exits its critical region.
+The TSL Instruction
+Now let us look at a proposal that requires a little help from the hardware.
+Some computers, especially those designed with multiple processors in mind, have
+an instruction like
+TSL RX,LOCK
+(Test and Set Lock) that works as follows. It reads the contents of the memory
+word lock into register RX and then stores a nonzero value at the memory address

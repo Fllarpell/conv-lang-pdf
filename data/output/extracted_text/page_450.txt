@@ -1,0 +1,43 @@
+SEC. 5.8
+POWER MANAGEMENT
+421
+an industry used to a doubling of performance every 18 months (Moore’s law),
+having no progress at all seems like a violation of the laws of physics, but that is
+the current situation. As a consequence, making computers use less energy so
+existing batteries last longer is high on everyone’s agenda. The operating system
+plays a major role here, as we will see below.
+At the lowest level, hardware vendors are trying to make their electronics more
+energy efficient. Techniques used include reducing transistor size, employing
+dynamic voltage scaling, using low-swing and adiabatic buses, and similar 
+techniques. These are outside the scope of this book.
+There are two general approaches to reducing energy consumption. The first
+one is for the operating system to turn off parts of the computer (mostly I/O 
+devices) when they are not in use because a device that is off uses little or no energy.
+The second one is for the application program to use less energy, possibly 
+degrading the quality of the user experience, in order to stretch out battery time. We will
+look at each of these approaches in turn, but first we will say a little bit about 
+hardware design with respect to power usage.
+5.8.1 Hardware Issues
+Batteries come in two general types: disposable and rechargeable. Disposable
+batteries (most commonly AAA, AA, and D cells) can be used to run handheld 
+devices, but do not have enough energy to power notebook computers with large
+bright screens. A rechargeable battery, in contrast, can store enough energy to
+power a notebook for a few hours. Nickel cadmium batteries used to dominate
+here, but they gav e way to nickel metal hydride batteries, which last longer and do
+not pollute the environment quite as badly when they are eventually discarded.
+Lithium ion batteries are even better, and may be recharged without first being
+fully drained, but their capacities are also severely limited. Most modern portable
+devices use lithium ion batteries. All battery manufacturers understand that the
+patent on a notebook battery that lasts 40 hours of heavy use is worth billions of
+dollars, but the physics is tough.
+The general approach most computer vendors take to battery conservation is to
+design the CPU, memory, and I/O devices to have multiple states: on, sleeping,
+hibernating, and off. To use the device, it must be on. When the device will not be
+needed for a short time, it can be put to sleep, which reduces energy consumption.
+It can be awakened quickly by typing a character or moving the mouse. When it is
+not expected to be needed for a longer interval, it can be made to hibernate, which
+reduces energy consumption even more. The trade-off here is that getting a device
+out of hibernation often takes more time and energy than getting it out of sleep
+state. Finally, when a device is off, it does nothing and consumes no power. Not all
+devices have all these states, but when they do, it is up to the operating system to
+manage the state transitions at the right moments.

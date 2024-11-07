@@ -1,0 +1,52 @@
+148
+PROCESSES AND THREADS
+CHAP. 2
+known as a rendezvous. It is easier to implement than a buffered message scheme
+but is less flexible since the sender and receiver are forced to run in lockstep.
+Message passing is commonly used in parallel programming systems. One
+well-known message-passing system, for example, is MPI (Message-Passing
+Interface). It is widely used for scientific computing. For more information about
+it, see for example Gropp et al. (1994) and Snir et al. (1996).
+2.4.9 Barriers
+Our last synchronization mechanism is intended for groups of processes rather
+than two-process producer-consumer type situations. Some applications are 
+divided into phases and have the rule that no process may proceed into the next phase
+until all processes are ready to proceed to the next phase. This behavior may be
+achieved by placing a barrier at the end of each phase. When a process reaches
+the barrier, it is blocked until all processes have reached the barrier. This allows
+groups of processes to synchronize. Barrier operation is illustrated in Fig. 2-38.
+Barrier
+Barrier
+Barrier
+A
+A
+A
+B
+B
+B
+C
+C
+D
+D
+D
+Time
+Time
+Time
+Process
+(a)
+(b)
+(c)
+C
+Figure 2-38. Use of a barrier. (a) Processes approaching a barrier. (b) All 
+processes but one blocked at the barrier. (c) When the last process arrives at the 
+barrier, all of them are let through.
+In Fig. 2-38(a) we see four processes approaching a barrier. What this means is
+that they are just computing and have not reached the end of the current phase yet.
+After a while, the first process finishes all the computing required of it during the
+first phase. It then executes the barr ier primitive, generally by calling a library 
+procedure. The process is then suspended. A little later, a second and then a third
+process finish the first phase and also execute the barr ier primitive. This situation is
+illustrated in Fig. 2-38(b). Finally, when the last process, C, hits the barrier, all the
+processes are released, as shown in Fig. 2-38(c).
+As an example of a problem requiring barriers, consider a common relaxation
+problem in physics or engineering. There is typically a matrix that contains some

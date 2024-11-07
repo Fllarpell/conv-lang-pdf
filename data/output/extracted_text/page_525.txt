@@ -1,0 +1,52 @@
+496
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+maintaining the shadow page tables explicitly. With EPT, the hypervisor still has
+an additional set of page tables, but now the CPU is able to handle much of the
+intermediate level in hardware also. In our example, the hardware first walks the
+‘‘regular’’ page tables to translate the guest virtual address to a guest physical
+address, just as it would do without virtualization. The difference is that it also
+walks the extended (or nested) page tables without software intervention to find the
+host physical address, and it needs to do this every time a guest physical address is
+accessed. The translation is illustrated in Fig. 7-7.
+Level 1 offset
+63
+48 47
+39 38
+30 29
+21 20
+12 11
+0
+Level 2 offset
+Level 3 offset
+Level 4 offset
+page offset
++
++
+etc.
+Guest pointer to
+level 1 page table
+Guest pointer to entry in
+level 1 page table
+Guest pointer to entry in
+level 2 page table
+Look up in nested page tables
+Look up in nested page tables
+Figure 7-7. Extended/nested page tables are walked every time a guest physical
+address is accessed—including the accesses for each level of the guest’s page 
+tables.
+Unfortunately, the hardware may need to walk the nested page tables more 
+frequently then you might think. Let us suppose that the guest virtual address was not
+cached and requires a full page-table lookup. Every level in paging hierarchy
+incurs a lookup in the nested page tables. In other words, the number of memory
+references grows quadratically with the depth of the hierarchy. Even so, EPT 
+dramatically reduces the number of VM exits. Hypervisors no longer need to map the
+guest’s page table read only and can do away with shadow page-table handling.
+Better still, when switching virtual machines, it just changes this mapping, the
+same way an operating system changes the mapping when switching processes.
+Reclaiming Memory
+Having all these virtual machines on the same physical hardware all with their
+own memory pages and all thinking they are the king of the mountain is great—
+until we need the memory back. This is particularly important in the event of 
+overcommitment of memory, where the hypervisor pretends that the total amount of
+memory for all virtual machines combined is more than the total amount of real

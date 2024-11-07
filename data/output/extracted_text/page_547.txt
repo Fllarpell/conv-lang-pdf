@@ -1,0 +1,54 @@
+518
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+CPU
+VMM Context
+Host OS Context
+Kernel mode
+User mode
+Disk
+int handler
+int handler
+IDTR
+Any
+Proc.
+Host OS
+write()
+fs
+scsi
+VMM
+Driver
+world
+switch
+VMM
+VMX
+Virtual Machine
+(i)
+(ii)
+(iii)
+(iv)
+(v)
+Figure 7-10. The VMware Hosted Architecture and its three components: VMX,
+VMM driver, and VMM.
+These components each have different functions and operate independently
+from one another:
+1. A user-space program (the VMX) which the user perceives to be the
+VMware program. The VMX performs all UI functions, starts the 
+virtual machine, and then performs most of the device emulation (front
+end), and makes regular system calls to the host operating system for
+the back end interactions. There is typically one multithreaded VMX
+process per virtual machine.
+2. A small kernel-mode device driver (the VMX driver), which gets
+installed within the host operating system. It is used primarily to
+allow the VMM to run by temporarily suspending the entire host
+operating system. There is one VMX driver installed in the host 
+operating system, typically at boot time.
+3. The VMM, which includes all the software necessary to multiplex the
+CPU and the memory, including the exception handlers, the 
+trap-andemulate handlers, the binary translator, and the shadow paging 
+module. The VMM runs in kernel mode, but it does not run in the context
+of the host operating system. In other words, it cannot rely directly on
+services offered by the host operating system, but it is also not 
+constrained by any rules or conventions imposed by the host operating
+system. There is one VMM instance for each virtual machine, created
+when the virtual machine starts.

@@ -1,0 +1,44 @@
+66
+INTRODUCTION 
+CHAP. 1
+program to test and grade student programs and run this program in ring n, with
+the student programs running in ring n + 1 so that they could not change their
+grades.
+1.7.3 Microkernels
+With the layered approach, the designers have a choice where to draw the 
+kernel-user boundary. Traditionally, all the layers went in the kernel, but that is not
+necessary. In fact, a strong case can be made for putting as little as possible in 
+kernel mode because bugs in the kernel can bring down the system instantly. In 
+contrast, user processes have less power so that a bug there may not be fatal.
+Various researchers have repeatedly studied the number of bugs per 1000 lines
+of code (e.g., Basilli and Perricone, 1984; and Ostrand and Weyuker, 2002). Bug
+density depends on module size, module age, and more, but a ballpark figure for
+serious industrial systems is between two and ten bugs per thousand lines of code.
+This means that a monolithic operating system of fiv e million lines of code is 
+likely to contain between 10,000 and 50,000 kernel bugs. Not all of these are fatal, of
+course, since some bugs may be things like a  minor misspelling in an error 
+message is rarely needed.
+The basic idea behind the microkernel design is to achieve high reliability by
+splitting the operating system up into small, well-defined modules, only one of
+which—the microkernel—runs in kernel mode and the rest run as relatively 
+powerless ordinary user processes. In particular, by running each device driver and file
+system as a separate user process, a bug in one of these can crash that component,
+but cannot crash the entire system. Thus, a bug in the audio driver will cause the
+sound to be garbled or stop, but will not crash the computer. In contrast, in a
+monolithic system with all the drivers in the kernel, a buggy audio driver can easily
+reference an invalid memory address and bring the system to a grinding halt
+instantly.
+Many microkernels have been implemented and deployed for decades (Haertig
+et al., 1997; Heiser et al., 2006; Herder et al., 2006; Hildebrand, 1992; Kirsch et
+al., 2005; Liedtke, 1993, 1995, 1996; Pike et al., 1992; and Zuberi et al., 1999).
+With the exception of macOS, which is based on the Mach microkernel (Accetta et
+al., 1986), common desktop operating systems do not use microkernels. However,
+they are dominant in real-time, industrial, avionics, and military applications that
+are mission critical and have very high reliability requirements. A few of the 
+better-known microkernels include Integrity, K42, L4, PikeOS, QNX, Symbian, and
+MINIX 3. We now giv e a brief overview of MINIX 3, which has taken the idea of
+modularity to the limit, breaking most of the operating system up into a number of
+independent user-mode processes. MINIX 3 is a POSIX-conformant, open source
+system freely available at www.minix3.org (Giuffrida et al., 2012; Giuffrida et al.,
+2013; Herder et al., 2006; Herder et al., 2009; and Hruby et al., 2013). Intel
+adopted MINIX 3 for its management engine in virtually all its CPUs.

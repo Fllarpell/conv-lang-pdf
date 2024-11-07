@@ -1,0 +1,36 @@
+SEC. 2.2
+THREADS
+113
+multiplexed on top of them. These user-level threads are created, destroyed, and
+scheduled just like user-level threads in a process that runs on an operating system
+without multithreading capability. In this model, each kernel-level thread has some
+set of user-level threads that take turns using it.
+2.2.7 Making Single-Threaded Code Multithreaded
+Many existing programs were written for single-threaded processes. 
+Converting these to multithreading is much trickier than it may at first appear. Below we
+will examine just a few of the pitfalls.
+As a start, the code of a thread normally consists of multiple procedures, just
+like a process. These may have local variables, global variables, and parameters.
+Local variables and parameters do not cause any trouble, but variables that are 
+global to a thread but not global to the entire program are a problem. These are 
+variables that are global in the sense that many procedures within the thread use them
+(as they might use any global variable), but other threads should logically leave
+them alone.
+As an example, consider the errno variable maintained by UNIX. When a
+process (or a thread) makes a system call that fails, the error code is put into errno.
+In Fig. 2-17, thread 1 executes the system call access to find out if it has 
+permission to access a certain file. The operating system returns the answer in the global
+variable errno. After control has returned to thread 1, but before it has a chance to
+read errno, the scheduler decides that thread 1 has had enough CPU time for the
+moment and switches to thread 2. Thread 2 executes an open call that fails, which
+causes errno to be overwritten and thread 1’s access code to be lost forever. When
+thread 1 starts up later, it will read the wrong value and behave incorrectly.
+Thread 1
+Thread 2
+Access (errno set)
+Errno inspected
+Open (errno overwritten)
+Time
+Figure 2-17. Conflicts between threads over the use of a global variable.
+Various solutions to this problem are possible. One is to prohibit global 
+variables altogether. Howev er worthy this ideal may be, it conflicts with much existing

@@ -1,0 +1,37 @@
+SEC. 10.8
+ANDROID
+823
+Activity manager in system_server process
+Camera app process
+CameraMainActivity
+Task: Camera
+ActivityRecord
+(CameraMainActivity)
+ActivityRecord
+(MailMainActivity)
+Task: Email
+Saved state
+STOPPED
+RESUMED
+Figure 10-54. Removing the email process to reclaim RAM for the camera.
+ComposeActivity here is participating in. If the user, while in the camera 
+application, decides she wants to share a picture she took, our email application’s 
+ComposeActivity is one of the sharing options she has. If it is selected, that activity will
+be started and given the picture to be shared. (Later we will see how the camera
+application is able to find the email application’s ComposeActivity.)
+Performing that share option while in the activity state seen in Fig. 10-54 will
+lead to the new state in Fig. 10-55. There are a number of important things to note:
+1. The email app’s process must be started again, to run its 
+ComposeActivity.
+2. However, the old MailMainActivity is not started at this point, since it
+is not needed. This reduces RAM use.
+3. The camera’s task now has two records: the original 
+CameraMainActivity we had just been in, and the new ComposeActivity that is now
+displayed. To the user, these are still one cohesive task: it is the 
+camera currently interacting with them to email a picture.
+4. The new ComposeActivity is at the top, so it is resumed; the previous
+CameraMainActivity is no longer at the top, so its state has been
+saved. We can at this point safely quit its process if its RAM is 
+needed elsewhere.
+If you want to experiment yourself with this on Android, it should be noted
+that starting in Android 5.0 a real share flow would result in the ComposeActivity

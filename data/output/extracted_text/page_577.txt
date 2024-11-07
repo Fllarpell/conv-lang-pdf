@@ -1,0 +1,45 @@
+548
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+1991). The variable should reside in an otherwise unused cache block to avoid
+conflicts. The algorithm works by having a CPU that fails to acquire the lock 
+allocate a lock variable and attach itself to the end of a list of CPUs waiting for the
+lock. When the current lock holder exits the critical region, it frees the private lock
+that the first CPU on the list is testing (in its own cache). This CPU then enters the
+critical region. When it is done, it frees the lock its successor is using, and so on.
+Although the protocol is somewhat complicated (to avoid having two CPUs attach
+themselves to the end of the list simultaneously), it is efficient and starvation free.
+For all the details, readers should consult the paper.
+CPU 3
+CPU 3 spins on this (private) lock
+CPU 4 spins on this (private) lock
+CPU 2 spins on this (private) lock
+When CPU 1 is finished with the
+real lock, it releases it and also
+releases the private lock CPU 2
+is spinning on
+CPU 1
+holds the
+real lock
+Shared memory
+4
+2
+3
+1
+Figure 8-11. Use of multiple locks to avoid cache thrashing.
+Spinning vs. Switching
+So far we have assumed that a CPU needing a locked mutex just waits for it,
+by polling continuously, polling intermittently, or attaching itself to a list of 
+waiting CPUs. Sometimes, there is no alternative for the requesting CPU to just 
+waiting. For example, suppose that some CPU is idle and needs to access the shared
+ready list to pick a process to run. If the ready list is locked, the CPU cannot just
+decide to suspend what it is doing and run another process, as doing that would
+require reading the ready list. It must wait until it can acquire the ready list.
+However, in other cases, there is a choice. For example, if some thread on a
+CPU needs to access the file system buffer cache and it is currently locked, the
+CPU can decide to switch to a different thread instead of waiting. The issue of
+whether to spin or to do a thread switch has been a matter of much research, some
+of which will be discussed below. Note that this issue does not occur on a 
+uniprocessor because spinning does not make much sense when there is no other CPU to
+release the lock. If a thread tries to acquire a lock and fails, it is always blocked to
+give the lock owner a chance to run and release the lock.

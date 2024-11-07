@@ -1,0 +1,46 @@
+492
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+Unmodified Windows
+Modified Linux
+Trap due
+to sensitive
+instruction
+Trap due
+to hypervisor
+call
+Paravirtualization
+True virtualization
+Microkernel
+Type 1 hypervisor
+Hardware
+Figure 7-5. True virtualization and paravirtualization.
+hypercalls, as seems likely. Again, this subject is controversial, but it is 
+increasingly clear that the program running in kernel mode on the bare hardware should be
+small and reliable and consist of thousands, not millions, of lines of code.
+Paravirtualizing the guest operating system raises a number of serious issues.
+First, if the sensitive (i.e., kernel-mode) instructions are replaced with calls to the
+hypervisor, how can the operating system run on the native hardware? After all,
+the hardware does not understand these hypercalls. And second, what if there are
+multiple hypervisors available in the marketplace, such as VMware, the open
+source Xen originally from the University of Cambridge, and Microsoft’s Hyper-V,
+all with somewhat different hypervisor APIs? How can the kernel be modified to
+run on all of them?
+Amsden et al. (2006) have proposed a solution. In their model, the kernel is
+modified to call special procedures whenever it needs to do something sensitive.
+Together these procedures, called the VMI (Virtual Machine Interface), form a
+low-level layer that interfaces with the hardware or hypervisor. These procedures
+are designed to be generic and not tied to any specific hardware platform or to any
+particular hypervisor.
+An example of this technique is given in Fig. 7-6 for a paravirtualized version
+of Linux they call VMI Linux (VMIL). When VMI Linux runs on the bare 
+hardware, it has to be linked with a library that issues the actual (sensitive) instruction
+needed to do the work, as shown in Fig. 7-6(a). When running on a hypervisor, say
+VMware or Xen, the guest operating system is linked with different libraries that
+make the appropriate (and different) hypercalls to the underlying hypervisor. In
+this way, the core of the operating system remains portable yet is hypervisor
+friendly and still efficient.
+Other proposals for a virtual machine interface have also been made. Another
+popular one is called paravirt ops. The idea is conceptually similar to what we
+described above, but different in the details. Essentially, a group of several Linux
+vendors that included companies like IBM, VMware, Xen, and Red Hat advocated

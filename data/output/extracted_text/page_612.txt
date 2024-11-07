@@ -1,0 +1,44 @@
+SEC. 8.3
+DISTRIBUTED SYSTEMS
+583
+2T µsec, and then try again. On each further collision, the maximum wait interval
+is doubled, reducing the chance of more collisions. This algorithm is known as
+binary exponential backoff. We saw it earlier to reduce polling overhead on
+locks.
+An Ethernet has a maximum cable length and also a maximum number of
+computers that can be connected to it. To exceed either of these limits, a large
+building or campus can be wired with multiple Ethernets, which are then 
+connected by devices called bridges. A bridge is a device that allows traffic to pass
+from one Ethernet to another when the source is on one side and the destination is
+on the other.
+To avoid the problem of collisions, modern Ethernets use switches, as shown in
+Fig. 8-28(b). Each switch has some number of ports, to which can be attached a
+computer, an Ethernet, or another switch. When a packet successfully avoids all
+collisions and makes it to the switch, it is buffered there and sent out on the port
+where the destination machine lives. By giving each computer its own port, all
+collisions can be eliminated, at the cost of bigger switches. Compromises, with just
+a few computers per port, are also possible. In Fig. 8-28(b), a classical Ethernet
+with multiple computers connected to a cable by vampire taps is attached to one of
+the ports of the switch.
+The Internet
+The Internet evolved from the ARPANET, an experimental packet-switched
+network funded by the U.S. Dept. of Defense Advanced Research Projects Agency.
+It went live in December 1969 with three computers in California and one in Utah.
+It was designed at the height of the Cold War to a be a highly fault-tolerant 
+network that would continue to relay military traffic even in the event of direct nuclear
+hits on multiple parts of the network by automatically rerouting traffic around the
+dead machines.
+The ARPANET grew rapidly in the 1970s, eventually encompassing hundreds
+of computers. Then a packet radio network, a satellite network, and eventually
+thousands of Ethernets were attached to it, leading to the federation of networks we
+now know as the Internet.
+The Internet consists of two kinds of computers, hosts and routers. Hosts are
+PCs, notebooks, smartphones, tablets, smart watches, servers, mainframes, and
+other computers owned by individuals or companies that want to connect to the
+Internet. Routers are specialized switching computers that accept incoming 
+packets on one of many incoming lines and send them on their way along one of many
+outgoing lines. A router is similar to the switch of Fig. 8-28(b), but also differs
+from it in ways that will not concern us here. Routers are connected together in
+large networks, with each router having wires or fibers to many other routers and
+hosts. Large national or worldwide router networks are operated by telephone 
+companies and ISPs (Internet Service Providers) for their customers.

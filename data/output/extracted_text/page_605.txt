@@ -1,0 +1,43 @@
+576
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+node has its own memory and its own set of processes. CPU 1 cannot suddenly
+decide to run a process located on node 4 without first doing a fair amount of work
+to go get it. This difference means that scheduling on multicomputers is easier but
+allocation of processes to nodes is more important. Below we will study these
+issues.
+Multicomputer scheduling is somewhat similar to multiprocessor scheduling,
+but not all of the former’s algorithms apply to the latter. The simplest 
+multiprocessor algorithm—maintaining a single central list of ready processes—does not work
+however, since each process can only run on the CPU it is currently located on.
+However, when a new process is created, a choice can be made where to place it,
+for example, to balance the load.
+Since each node has its own processes, any local scheduling algorithm can be
+used. However, it is also possible to use multiprocessor gang scheduling, since that
+merely requires an initial agreement on which process to run in which time slot,
+and some way to coordinate the start of the time slots.
+8.2.7 Load Balancing
+There is relatively little to say about multicomputer scheduling because once a
+process has been assigned to a node, any local scheduling algorithm will do, unless
+gang scheduling is being used. However, precisely because there is so little control
+once a process has been assigned to a node, the decision about which process
+should go on which node is important. This is in contrast to multiprocessor 
+systems, in which all processes live in the same memory and can be scheduled on any
+CPU at will. Consequently, it is worth looking at how processes can be assigned to
+nodes in an effective way. The algorithms and heuristics for doing this assignment
+are known as processor allocation algorithms.
+A large number of processor (i.e., node) allocation algorithms have been 
+proposed over the years. They differ in what they assume is known and what the goal
+is. Properties that might be known about a process include the CPU requirements,
+memory usage, and amount of communication with every other process. Possible
+goals include minimizing wasted CPU cycles due to lack of local work, 
+minimizing total communication bandwidth, and ensuring fairness to users and processes.
+Below we will examine a few algorithms to give an idea of what is possible.
+A Graph-Theoretic Deterministic Algorithm
+A widely studied class of algorithms is for systems consisting of processes
+with known CPU and memory requirements, and a known matrix giving the 
+average amount of traffic between each pair of processes. If the number of processes is
+greater than the number of CPUs, k, sev eral processes will have to be assigned to
+each CPU. The idea is to perform this assignment to minimize network traffic.
+The system can be represented as a weighted graph, with each vertex being a
+process and each arc representing the flow of messages between two processes.

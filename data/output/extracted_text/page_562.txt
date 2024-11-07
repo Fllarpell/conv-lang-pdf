@@ -1,0 +1,47 @@
+SEC. 8.1
+MULTIPROCESSORS
+533
+some crosspoint or line is already occupied (assuming the memory module itself is
+available). Not all interconnects have this fine property. Furthermore, no advance
+planning is needed. Even if seven arbitrary connections are already set up, it is
+always possible to connect the remaining CPU to the remaining memory.
+Contention for memory is still possible, of course, if two CPUs want to access
+the same module at the same time. Nevertheless, by partitioning the memory into
+n units, contention is reduced by a factor of n compared to the model of Fig. 8-2.
+One of the worst properties of the crossbar switch is the fact that the number of
+crosspoints grows as n2. With 1000 CPUs and 1000 memory modules, we need a
+million crosspoints. Such a large crossbar switch is not feasible. Nevertheless, for
+medium-sized systems, a crossbar design is workable.
+UMA Multiprocessors Using Multistage Switching Networks
+A completely different multiprocessor design is based on the humble 2 × 2
+switch shown in Fig. 8-4(a). This switch has two inputs and two outputs. 
+Messages arriving on either input line can be switched to either output line. For our
+purposes, messages will contain up to four parts, as shown in Fig. 8-4(b). The
+Module field tells which memory to use. The Address specifies an address within a
+module. The Opcode gives the operation, such as READ or WRITE. Finally, the
+optional Value field may contain an operand, such as a 32-bit word to be written on
+a WRITE. The switch inspects the Module field and uses it to determine if the 
+message should be sent on X or on Y.
+A
+B
+X
+Y
+(a)
+(b)
+Module
+Address
+Opcode
+Value
+Figure 8-4. (a) A 2 × 2 switch with two input lines, A and B, and two output
+lines, X and Y. (b) A message format.
+Our 2 × 2 switches can be arranged in many ways to build larger multistage
+switching networks (Adams et al., 1987; Garofalakis and Stergiou, 2013; and
+Kumar and Reddy, 1987). One possibility is the no-frills, cattle-class omega 
+network, illustrated in Fig. 8-5. Here, we have connected eight CPUs to eight 
+memories using 12 switches. More generally, for n CPUs and n memories we would need
+log2 n stages, with n/2 switches per stage, for a total of (n/2) log2 n switches,
+which is a lot better than n2 crosspoints, especially for large values of n.
+The wiring pattern of the omega network is often called the perfect shuffle,
+since the mixing of the signals at each stage resembles a deck of cards being cut in
+half and then mixed card-for-card. To see how the omega network works, suppose
+that CPU 011 wants to read a word from memory module 110. The CPU sends a

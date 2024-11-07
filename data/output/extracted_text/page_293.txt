@@ -1,0 +1,44 @@
+264
+FILE SYSTEMS
+CHAP. 4
+unusual things, the latter can be very important. All versions of UNIX (including
+Linux and MacOS) as well as Windows use this file model. It is worth noting that
+in this chapter when we talk about UNIX the text usually applies MacOS (which
+was based on Berkeley UNIX) and Linux (which was carefully designed to be
+compatible with UNIX).
+The first step up in structure is illustrated in Fig. 4-2(b). In this model, a file is
+a sequence of fixed-length records, each with some internal structure. Central to
+the idea of a file being a sequence of records is the idea that the read operation
+returns one record and the write operation overwrites or appends one record. As a
+historical note, in decades gone by, when the 80-column punched card was pretty
+much the only input medium available, many (mainframe) operating systems based
+their file systems on files consisting of 80-character records, in effect, card images.
+These systems also supported files of 132-character records, which were intended
+for the line printer (which in those days were big chain printers having 132 
+columns). Programs read input in units of 80 characters and wrote it in units of 132
+characters, although the final 52 could be spaces, of course. No current 
+generalpurpose system uses this model as its primary file system any more, but back in the
+days of 80-column punched cards and 132-character line printer paper, this was a
+common model on mainframe computers.
+The third kind of file structure is shown in Fig. 4-2(c). In this organization, a
+file consists of a tree of records, not necessarily all the same length, each 
+containing a key field in a fixed position in the record. The tree is sorted on the key
+field, to allow rapid searching for a particular key.
+The basic operation here is not to get the ‘‘next’’ record, although that is also
+possible, but to get the record with a specific key. For the zoo file of Fig. 4-2(c),
+one could ask the system to get the record whose key is pony, for example, without
+worrying about its exact position in the file. Furthermore, new records can be
+added to the file, with the operating system, and not the user, deciding where to
+place them. This type of file is clearly quite different from the unstructured byte
+streams used in UNIX and Windows and is used on some large mainframe 
+computers for commercial data processing.
+4.1.3 File Types
+Many operating systems support several types of files. UNIX (again, including
+MacOS and Linux) and Windows, for example, have regular files and directories.
+UNIX also has character and block special files. Regular files are the ones that
+contain user information. All the files of Fig. 4-2 are regular files since these are
+the files most users deal with. Directories are system files for maintaining the
+structure of the file system. We will study directories below. Character special
+files are related to input/output and used to model serial I/O devices, such as 
+terminals, printers, and networks. Block special files are used to model disks. In this
+chapter, we will be primarily interested in regular files.

@@ -1,0 +1,24 @@
+SEC. 10.8
+ANDROID
+859
+Figure 10-83. Android’s early battery use screen.
+notifications is an example of creating incentives that achieve the desired outcome:
+in this case a strong disincentive to abuse foreground services, because the 
+associated notification will annoy people and give them a negative impression of the app.
+The battery usage display is an example of creating accountability: making visible
+the things applications are doing that can have significant impact on the device, so
+they can be held accountable for bad behavior and allow the user to take action
+based on that.
+Neither of these approaches helps address the tragedy of the commons 
+problem, where many reasonably behaving apps together consume too much power. It
+is difficult to find incentives that would significantly change the decisions those
+apps make (or even clearly say what the right decision is for each app), and
+accountability from battery usage data would simply show a large number of apps
+each individually using a small amount of the overall power. This was not initially
+a significant issue for Android, but as time went on, and devices had increasing
+numbers of apps installed on them, and those apps grew increasing amounts of
+functionality, it needed to be addressed.
+Android 5.0 made the first major step at addressing cross-app power 
+consumption problems with the introduction of the JobScheduler API. This provides a new
+specialized kind of service, one the app does not explicitly start or bind to, but
+instead tells the platform information about when it should run, such as whether it

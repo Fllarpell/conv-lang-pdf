@@ -1,0 +1,41 @@
+578
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+node’s load is below some threshold value, the new process is sent there (Eager et
+al., 1986). If not, another machine is chosen for probing. Probing does not go on
+forever. If no suitable host is found within N probes, the algorithm terminates and
+the process runs on the originating machine. The idea is for heavily loaded nodes
+to try to get rid of excess work, as shown in Fig. 8-25(a), which depicts 
+sender-initiated load balancing.
+I’m full
+Here, have a process
+Take some work
+I’m overloaded
+Help !
+(a)
+(b)
+I have nothing to do
+Yawn
+I’m bored
+I’m free tonight
+Need help ?
+Figure 8-25. (a) An overloaded node looking for a lightly loaded node to hand
+off processes to. (b) An empty node looking for work to do.
+Eager et al. constructed an analytical queueing model of this algorithm. Using
+this model, it was established that the algorithm behaves well and is stable under a
+wide range of parameters, including various threshold values, transfer costs, and
+probe limits.
+Nevertheless, it should be observed that under conditions of heavy load, all
+machines will constantly send probes to other machines in a futile attempt to find
+one that is willing to accept more work. Few processes will be off-loaded, but 
+considerable overhead may be incurred in the attempt to do so.
+A Receiver-Initiated Distributed Heuristic Algorithm
+A complementary algorithm to the one discussed above, which is initiated by
+an overloaded sender, is one initiated by an underloaded receiver, as shown in
+Fig. 8-25(b). With this algorithm, whenever a process finishes, the system checks
+to see if it has enough work. If not, it picks some machine at random and asks it
+for work. If that machine has nothing to offer, a second, and then a third machine
+is asked. If no work is found with N probes, the node temporarily stops asking,
+does any work it has queued up, and tries again when the next process finishes. If
+no work is available, the machine goes idle. After some fixed time interval, it
+begins probing again. Having the idle server do the work of probing is best.

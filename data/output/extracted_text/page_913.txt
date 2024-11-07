@@ -1,0 +1,44 @@
+884
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+between processes using the subsystem (shown on the left) and the subsystem
+process itself (shown on the right). Calls to the subsystem process normally take
+place using the kernel-mode LPC (Local Procedure Call) facilities, which 
+implement cross-process procedure calls.
+The hook in Win32 CreateProcess detects which subsystem each program
+requires by looking at the binary image. It then asks smss.exe to start the 
+subsystem process (if it is not already running). The subsystem process then takes over
+responsibility for loading the program.
+The NT kernel was designed to have a lot of general-purpose facilities that can
+be used for writing operating-system-specific subsystems. But there is also special
+code that must be added to correctly implement each subsystem. As examples, the
+native NtCreateProcess system call implements process duplication in support of
+POSIX fork system call, and the kernel implements a particular kind of string table
+for Win32 (called atoms) which allows read-only strings to be efficiently shared 
+across processes.
+The subsystem processes are native NT programs which use the native system
+calls provided by the NT kernel and core services, such as smss.exe and lsass.exe
+(local security administration). The native system calls include cross-process 
+facilities to manage virtual addresses, threads, handles, and exceptions in the processes
+created to run programs written to use a particular subsystem.
+11.2.3 The Native NT Application Programming Interface
+Like all other operating systems, Windows has a set of system calls it can 
+perform. In Windows, these are implemented in the NTOS executive layer that runs in
+kernel mode. Microsoft has published very few of the details of these native system
+calls. They are used internally by lower-level programs that ship as part of the
+operating system (mainly services and the subsystems), as well as kernel-mode 
+device drivers. The native NT system calls do not really change very much from
+release to release, but Microsoft chose not to make them public so that applications
+written for Windows would be based on Win32 and thus more likely to work with
+both the MS-DOS-based and NT-based Windows systems, since the Win32 API is
+common to both.
+Most of the native NT system calls operate on kernel-mode objects of one kind
+or another, including files, processes, threads, pipes, semaphores, and so on. 
+Figure 11-6 gives a list of some of the common categories of kernel-mode objects 
+supported by the kernel in Windows. Later, when we discuss the object manager, we
+will provide further details on the specific object types.
+Sometimes use of the term object regarding the data structures manipulated by
+the operating system can be confusing because it is mistaken for object-oriented.
+Windows operating system objects do provide data hiding and abstraction, but they
+lack some of the most basic properties of object-oriented systems such as 
+inheritance and polymorphism, so Windows is not object-oriented in the technical sense.

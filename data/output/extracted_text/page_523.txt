@@ -1,0 +1,46 @@
+494
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+Now suppose a second virtual machine starts and maps its virtual pages 4, 5,
+and 6 onto physical pages 10, 11, and 12 and loads the control register to point to
+its page tables. The hypervisor catches the trap, but what should it do? It cannot
+use this mapping because physical pages 10, 11, and 12 are already in use. It can
+find some free pages, say 20, 21, and 22, and use them, but it first has to create new
+page tables mapping the virtual pages 4, 5, and 6 of virtual machine 2 onto 20, 21,
+and 22. If another virtual machine starts and tries to use physical pages 10, 11, and
+12, it has to create a mapping for them. In general, for each virtual machine the
+hypervisor needs to create a shadow page table that maps the virtual pages used
+by the virtual machine onto the actual pages the hypervisor gav e it.
+Worse yet, every time the guest operating system changes its page tables, the
+hypervisor must change the shadow page tables as well. For example, if the guest
+OS remaps virtual page 7 onto what it sees as physical page 200 (instead of 10),
+the hypervisor has to know about this change. The trouble is that the guest 
+operating system can change its page tables by just writing to memory. No sensitive 
+operations are required, so the hypervisor does not even know about the change and
+certainly cannot update the shadow page tables used by the actual hardware.
+A possible (but clumsy) solution is for the hypervisor to keep track of which
+page in the guest’s virtual memory contains the top-level page table. It can get this
+information the first time the guest attempts to load the hardware register that
+points to it because this instruction is sensitive and traps. The hypervisor can create
+a shadow page table at this point and also map the top-level page table and the
+page tables it points to as read only. A subsequent attempts by the guest operating
+system to modify any of them will cause a page fault and thus give control to the
+hypervisor, which can analyze the instruction stream, figure out what the guest OS
+is trying to do, and update the shadow page tables accordingly. It is not pretty, but
+it is doable in principle.
+Another, equally clumsy, solution is to do exactly the opposite. In this case, the
+hypervisor simply allows the guest to add new mappings to its page tables at will.
+As this is happening, nothing changes in the shadow page tables. In fact, the 
+hypervisor is not even aware of it. However, as soon as the guest tries to access any of
+the new pages, a fault will occur and control reverts to the hypervisor. The 
+hypervisor inspects the guest’s page tables to see if there is a mapping that it should add,
+and if so, adds it and reexecutes the faulting instruction. What if the guest removes
+a mapping from its page tables? Clearly, the hypervisor cannot wait for a page fault
+to happen, because it will not happen. Removing a mapping from a page table 
+happens by way of the INVLPG instruction (which is really intended to invalidate a
+TLB entry). The hypervisor therefore intercepts this instruction and removes the
+mapping from the shadow page table also. Again, not pretty, but it works.
+Both of these techniques incur many page faults, and page faults are expensive.
+We typically distinguish between ‘‘normal’’ page faults that are caused by guest
+programs that access a page that has been paged out of RAM, and page faults that
+are related to ensuring the shadow page tables and the guest’s page tables are in

@@ -1,0 +1,39 @@
+826
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+service, noting that it has been started, and thus created its SyncService instance in
+the application’s process. While in this state the service is fully active (barring the
+entire system going to sleep if not holding a wake lock) and free to do what it
+wants. It is possible for the application’s process to go away while in this state,
+such as if the process crashes, but the activity manager will continue to maintain its
+ServiceRecord and can at that point decide to restart the service if desired.
+Activity manager in system_server process
+Email app process
+SyncService
+ServiceRecord
+(SyncService)
+STARTED
+Figure 10-57. Starting an application service.
+To see how one can use a service as a connection point for interaction with
+other applications, let us say that we want to extend our existing SyncService to
+have an API that allows other applications to control its sync interval. We will
+need to define an AIDL interface for this API, like the one shown in Fig. 10-58.
+package com.example.email
+interface ISyncControl {
+int getSyncInterval();
+void setSyncInterval(int seconds);
+}
+Figure 10-58. Interface for controlling a sync service’s sync interval.
+To use this, another process can bind to our application service, getting access
+to its interface. This creates a connection between the two applications, shown in
+Fig. 10-59. The steps of this process are as follows:
+1. The client application tells the activity manager that it would like to
+bind to the service.
+2. If the service is not already created, the activity manager creates it in
+the service application’s process.
+3. The service returns the IBinder for its interface back to the activity
+manager, which now holds that IBinder in its ServiceRecord.
+4. Now that the activity manager has the service IBinder, it can be sent
+back to the original client application.
+5. The client application now having the service’s IBinder may proceed
+to make any direct calls it would like on its interface.

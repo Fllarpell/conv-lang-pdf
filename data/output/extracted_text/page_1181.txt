@@ -1,0 +1,99 @@
+1152
+INDEX
+VMotion, 508
+VMS, 874, 894, 926
+VMware, 507–423
+history, 507–508
+VMware Workstation, 485, 508–508
+ACM SOftware System Award, 509
+ev olution, 520–521
+solution overview, 511
+VMX, 511
+Volume shadow copy, Windows, 981
+Virtualization-based security, Windows, 1017–1018
+VSM (see Virtual Secure Mode)
+VT (see Virtualization Technology)
+VTL (see Virtual Trust Level)
+Vulnerabilities, Windows, 1027–1031
+Vulnerability, 606
+W
+Wait3 Win32 call, 905
+WaitForMultipeObjects Win32 call, 905, 915, 938
+WaitOnAddress Win32 call, 939
+Waitpid system call, 54, 726, 727, 728
+Waitqueue, 740
+Wake lock, Android, 804–805
+WakeAllConditionVariable Win32 call, 939
+WakeByAddressAll Win32 call, 939
+WakeByAddressSingle Win32 call, 939
+WakeConditionVariable Win32 call, 939
+Wakeup waiting bit, 128
+Wandering tree problem, 297
+WANs (see Wide Area Network)
+War dialer, 640
+Watchdog timer, 393
+WDF (see Windows Driver Foundation)
+WDK (see Windows Driver Kit)
+WDM (see Windows Driver Model)
+Weak password, 638–640
+Web app, 420
+Web browser, 588
+Web page, 588
+What should be optimized?, 1071–1072
+Why are operating systems slow?, 1071
+Why is system design hard?, 1043–1045
+Wide area network, 581
+Widget, X, 405
+Wild card, 717
+Wildcard, 623
+WIMP (see Windows, icons menus pointing)
+Win32, 874, 881, 887–891
+Win32 call
+AcquireSRWLockExclusive, 939
+AcquireSRWLockShared, 939
+AddAccessAllowedAce, 1023
+AddAccessDeniedAce, 1023
+Close, 982, 985
+CopyFile, 889
+Create, 985
+CreateEvent, 921, 922
+CreateFile, 889, 922, 924, 1022
+CreateFileMapping, 962
+CreateProcess, 90, 883, 884, 888, 941, 942, 1022
+CreateSemaphore, 917, 938
+DeleteAce, 1023
+Down, 938, 945
+DuplicateHandle, 938
+EnterCriticalSection, 939
+ExitProcess, 91
+ExitWindowsEx, 1014
+FlushFileBuffer, 979
+GetTokenInformation, 1020
+InitializeACL, 1023
+InitializeSecurityDescriptor, 1022
+InitiateSystemShutdown, 1014
+InitOnceExecuteOnce, 939
+ioCallDriver, 984
+IoCallDriver, 985
+IoCompleteRequest, 984, 997, 998
+IopParseDevice, 924
+LeaveCriticalSection, 939
+LookUpAccountSid, 1022
+MapViewOfFile, 1009
+ObCreateObjecttype, 924
+ObOpenObjectByName, 923
+Open, 982
+OpenSemaphore, 917
+OpenXXX, 1023
+PsCreateSiloContext, 1012
+PsGetSiloContext, 1012
+PulseEvent, 938
+QueueUserAPC, 903–904
+Read, 982, 985
+ReadFile, 997
+ReleaseMutex, 938
+ReleaseSemaphore, 938
+ResetEvent, 938
+SetEvent, 938, 944
+SetInformationJobObject, 1012, 1013
+SetPriorityClass, 945

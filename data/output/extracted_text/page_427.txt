@@ -1,0 +1,45 @@
+398
+INPUT/OUTPUT 
+CHAP. 5
+Tw o possible philosophies can be adopted for the driver. In the first one, the
+driver’s job is just to accept input and pass it upward unmodified. A program 
+reading from the keyboard gets a raw sequence of ASCII codes. (Giving user programs
+the scan codes is too primitive, as well as being highly keyboard dependent.)
+This philosophy is well suited to the needs of sophisticated screen editors such
+as Emacs, which allow the user to bind an arbitrary action to any character or
+sequence of characters. It does, however, mean that if the user types dste instead
+of date and then corrects the error by typing three backspaces and ate, followed by
+a carriage return, the user program will be given all 11 ASCII codes typed, as 
+follows:
+d s t e @ @ @ a t e CR
+Not all programs want this much detail. Often they just want the corrected
+input, not the exact sequence of how it was produced. This observation leads to the
+second philosophy: the driver handles all the intraline editing and just delivers 
+corrected lines to the user programs. The first philosophy is character oriented; the
+second one is line oriented. Originally they were referred to as raw mode and
+cooked mode, respectively. The POSIX standard uses the less-picturesque term
+canonical mode to describe line-oriented mode. Noncanonical mode is 
+equivalent to raw mode, although many details of the behavior can be changed. 
+POSIXcompatible systems provide several library functions that support selecting either
+mode and changing many parameters.
+If the keyboard is in canonical (cooked) mode, characters must be stored until
+an entire line has been accumulated, because the user may subsequently decide to
+erase part of it. Even if the keyboard is in raw mode, the program may not yet have
+requested input, so the characters must be buffered to allow type ahead. Either a
+dedicated buffer can be used or buffers can be allocated from a pool. The former
+puts a fixed limit on type ahead; the latter does not. This issue arises most acutely
+when the user is typing to a shell window (also known as command-line window)
+and has just issued a command (such as a compilation) that has not yet completed.
+Subsequent characters typed have to be buffered because the shell is not ready to
+read them. System designers who do not permit users to type far ahead ought to be
+tarred and feathered, or worse yet, forced to use their own system.
+Although the keyboard and monitor are logically separate devices, many users
+have grown accustomed to seeing the characters they hav e just typed appear on the
+screen. This process is called echoing.
+Echoing is complicated by the fact that a program may be writing to the screen
+while the user is typing (again, think about typing to a shell window). At the very
+least, the keyboard driver has to figure out where to put the new input without its
+being overwritten by program output.
+Echoing also gets complicated when more than 80 characters have to be 
+displayed in a window with 80-character lines (or some other number). Depending on
+the application, wrapping around to the next line may be appropriate. However,

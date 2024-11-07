@@ -1,0 +1,43 @@
+SEC. 11.10
+VIRTUALIZATION IN WINDOWS
+1011
+11.10.2 Containers
+Hardware-based virtualization is very powerful but sometimes provides more
+isolation than desired. In many cases, it is preferable to have more fine-grained 
+virtualization. Windows 10 added support for containers which leverages fine-grained
+software virtualization. This section will investigate a few uses for more 
+finegrained virtualization and then examine how it is implemented.
+Earlier in Sec. 11.2.1 the modern app architecture was discussed, one of the
+benefits being reliable install/uninstall and the ability to deliver apps via the 
+Microsoft Store. In Windows 8, only modern apps were delivered via the store—leaving
+out the enormous library of existing Windows applications. Microsoft wanted to
+provide a way for software vendors to package their existing applications to be
+delivered from the store while maintaining the benefits the store was meant to 
+provide. The solution was to encourage applications to be distributed via MSIX 
+packages and allow the installation of the application to be virtualized. Rather than
+requiring an installer to modify the file system and registry to install the app, those
+modifications would be virtualized. When the application is launched, the system
+creates a container with an alternate view of the file system and registry namespace
+that make it look like the application has been installed (to the application about to
+be run). If the user decides to uninstall the application, the MSIX package is 
+deleted, but there is no longer a need to go and remove application files and state
+from the file system and registry.
+Windows 10 also introduced a feature similar to Linux containers, known as
+Windows Server Containers. A Windows Server Container provides an 
+environment that looks like a  full virtual machine. The container gets its own IP address,
+can have its own computer name on the network, its own set of user accounts, etc.
+However, a Windows Server Container is much lighter weight than a VM because
+it shares the kernel with the host, only the user mode processes are replicated.
+These types of containers do not provide the same level of isolation as a VM but
+provide a very convenient deployment model and reduce the concern of running
+two applications that normally could not coexist.
+Namespace Virtualization
+The underlying technology that containers build on is known as namespace 
+virtualization. Rather than virtualizing hardware, as VMs do, containers make it 
+possible for one or more processes to run with a slightly different view of various
+namespaces.
+To provide namespace virtualization support, Windows 10 introduced the
+notions of Silos. Silos are an extension to the job object (see Sec. 11.4.1) that
+allow for namespace virtualization. Silos make it possible to provide alternative
+views of namespaces to the processes running within them. Silos are the 
+fundamental building block for implementing container support in Windows. There are

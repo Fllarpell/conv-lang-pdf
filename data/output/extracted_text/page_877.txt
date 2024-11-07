@@ -1,0 +1,44 @@
+848
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+the camera and microphone is protected by dangerous permissions, above, since
+these give access to sensitive personal data; access to the vibration hardware and
+flashlight are normal since the worst the app can do with this is annoy the user.
+Permission 
+Group
+SET ALARM 
+SET ALARM
+ACCESS NETWORK STATE
+NETWORK
+ACCESS WIFI STATE
+NETWORK
+GET ACCOUNTS 
+ACCOUNTS
+VIBRATE 
+HARDWARE CONTROLS
+FLASHLIGHT 
+HARDWARE CONTROLS
+EXPAND STATUS BAR 
+SYSTEM TOOLS
+KILL BACKGROUND PROCESSES 
+SYSTEM TOOLS
+SET WALLPAPER 
+SYSTEM TOOLS
+Figure 10-74. Select list of install-time normal permissions.
+Android 6.0 switched the user’s permission experience from the previous
+install-time model to a runtime model. This means that instead of granting the
+application a permission’s capabilities at the point of install, for many permissions
+the app now must explicitly ask the user at runtime through a system prompt as
+illustrated in Fig. 10-75.
+Figure 10-75. Android 6.0 runtime permission prompt.
+Moving to runtime prompts could not simply take the existing permissions as
+is and present them to the user one at a time, while the app is running, as it needs
+them: that would be overwhelming to the user. It thus required extensive rew ork of
+the permission organization so they are appropriate for runtime permissions, 
+resulting in the new model shown in Fig. 10-76.
+The permissions here (now on the right side of the table) are still classified as
+dangerous permissions, but not directly shown to users; rather, the group they are
+in (on the right side) is the runtime prompt that will be shown to the user, allowing
+the app to get access to all permissions it has requested in that group. The 
+granularity of the underlying permissions is thus retained, but the amount of information
+and choice the user must deal with is greatly decreased.

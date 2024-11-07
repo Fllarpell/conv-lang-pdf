@@ -1,0 +1,64 @@
+SEC. 10.6
+THE LINUX FILE SYSTEM
+779
+layer. The actual i-node structure contains quite a few more fields, since the same
+structure is also used to represent directories, devices, and other special files. The
+i-node structure also contains fields reserved for future use. History has shown that
+unused bits do not remain that way for long.
+Field 
+Bytes
+Description
+Mode 
+2
+File type, protection bits, setuid, setgid bits
+Nlinks 
+2
+Number of directory entr ies pointing to this i-node
+Uid 
+2
+UID of the file owner
+Gid 
+2
+GID of the file owner
+Size
+4
+File size in bytes
+Addr 
+60
+Address of first 12 disk blocks, then 3 indirect blocks
+Gen 
+1
+Generation number (incremented every time i-node is reused)
+Atime 
+4
+Time the file was last accessed
+Mtime 
+4
+Time the file was last modified
+Ctime 
+4
+Time the i-node was last changed (except the other times)
+Figure 10-33. Some fields in the i-node structure in Linux.
+Let us now see how the system reads a file. Remember that a typical call to the
+library procedure for invoking the read system call looks like this:
+n = read(fd, buffer, nbytes);
+When the kernel gets control, all it has to start with are these three parameters and
+the information in its internal tables relating to the user. One of the items in the
+internal tables is the file-descriptor array. It is indexed by a file descriptor and 
+contains one entry for each open file (up to the maximum number, often 32).
+The idea is to start with this file descriptor and end up with the corresponding
+i-node. Let us consider one possible design: just put a pointer to the i-node in the
+file-descriptor table. Although simple, unfortunately this method does not work.
+The problem is as follows. Associated with every file descriptor is a file position
+that tells at which byte the next read (or write) will start. Where should it go? One
+possibility is to put it in the i-node table. However, this approach fails if two or
+more unrelated processes happen to open the same file at the same time because
+each one has its own file position.
+A second possibility is to put the file position in the file-descriptor table. In
+that way, every process that opens a file gets its own private file position. 
+Unfortunately this scheme fails too, but the reasoning is more subtle and has to do with the
+nature of file sharing in Linux. Consider a shell script, s, consisting of two 
+commands, p1 and p2, to be run in order. If the shell script is called by the command
+s >x
+it is expected that p1 will write its output to x, and then p2 will write its output to x
+also, starting at the place where p1 stopped.

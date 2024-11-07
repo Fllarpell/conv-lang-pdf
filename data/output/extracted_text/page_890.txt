@@ -1,0 +1,32 @@
+SEC. 10.8
+ANDROID
+861
+2. While in doze, the system will go into short maintenance windows,
+shown in Fig. 10-84, where most doze restrictions are released; this
+allows some continued operation of things like background syncing of
+email, refreshing news, etc.
+Figure 10-84. Doze and maintenance windows.
+Apps can coordinate their work with doze maintenance windows through the
+previously mentioned JobScheduler. During doze, jobs are not scheduled, and the
+maintenance window is primarily a period when important pending jobs will be
+run by the system. This is the first significant incentive Android introduced for
+apps to switch from raw services to jobs, since services cannot as easily coordinate
+the work they are doing with the inability to access the network or hold wake locks
+during doze.
+Android 7.0 created a new doze mode called ‘‘doze light.’’ This applies many
+of the background restriction benefits of doze to most cases when a device’s screen
+is off, even when it is being moved around. After the screen is off for a short
+period (around 15 minutes), doze light will kick in and apply the same network and
+wake lock restrictions as regular doze. Maintenance windows also exist in this
+mode, although they are much briefer in both duration and period between them.
+Since the device is allowed to be moving around in this mode, lower-level work
+like Wi-Fi and Bluetooth scans must be allowed to run.
+Unfortunately, doze did not create sufficient incentives for apps to switch to
+JobScheduler (or at least to do this quickly), so Android 8.0 took a stronger
+approach with the creation of background execution restrictions. This applied a
+hard rule that most applications simply could no longer freely use plain services
+for background work, and now had to use JobScheduler. (At the same time, a new
+more explicit exception was created for purely foreground services in order to 
+continue supporting their use cases.)
+There is a mechanism for apps to remove background restrictions from 
+themselves, through the explicit user interface mechanism previously discussed on the

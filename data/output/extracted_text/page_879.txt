@@ -1,0 +1,42 @@
+850
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+For something to justify being shown as a runtime permission, it must clearly
+pass a test: ‘‘Is this something the user easily understands (which generally means
+it represents some clear data about them), and can be confident in making a 
+decision about releasing access to that data?’’ Users answering yes to a runtime 
+permission prompt is them making a statement that they are going to trust that app (and
+its developer) with all of that type of personal data on their device.
+The INTERNET permission is a good case study in this design process: it was
+modified from a dangerous permission shown to the user at install, to a normal 
+permission that does not require a runtime prompt and is never shown to the user. The
+reasoning behind this is given below:
+1. How many applications would ask for this as a runtime 
+permission? Most of them, so the user will be confronted with it frequently
+and needs to be especially confident about making a good decision.
+(Frequent prompts for decisions the user is not confident in can easily
+lead to all of the prompts being mostly ignored by them.)
+2. Is this protecting some data the user can clearly understand? No.
+That makes it harder for the user to understand what is being asked.
+3. Is this giving the application an ability the user cares about? Yes.
+In a way, apps being able to access the network seems like something
+that is of interest to the user’s privacy.
+4. Why would a user decide whether or not to give an app the 
+permission? A common thought process here is: ‘‘I do not want the app
+to access the network so it cannot send my data off the device.’’
+5. Deciding to allow access to the network actually has a close 
+connection to decisions around giving it access to personal data! That is,
+a user saying ‘‘no’’ to the network permission will often lead to them
+feeling better about saying ‘‘yes’’ to requests to get access to their
+data.
+6. Wanting to control network access is thus actually a proxy for 
+wanting a guarantee about the app not being able to export any data off the
+device. However, that is not what the network permission does. Even
+if an app does not have network access, there are many ways it can
+export data, even accidentally: for example if it opens the browser on
+a Website associated with it, the URL it hands to the browser can 
+contain any data it wants, which is then sent to the app’s server.
+It is best that network access not be a runtime permission, for multiple 
+reasons. It would be requested by most apps, causing the user to be constantly 
+confronted with it. They are being asked to make a decision that is not clear how it
+impacts them. The main reason that many users would infer why they should say

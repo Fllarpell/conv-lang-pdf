@@ -1,0 +1,102 @@
+1146
+INDEX
+Security principles (continued)
+open design, 611
+privilege separation, 610
+psychological acceptability, 611
+Security reference monitor, Windows, 908
+Security scheduling, 556–557
+Security system calls, Linux, 791–792
+Security triad, 608–609
+Seek system call, 269
+Segment, 240
+Segmentation, 240–248
+implementation, 242–243
+Intel x86
+MULTICS, 243–247
+Segmentation fault, 203
+Select system call, 110, 905
+Self-map, Windows, 941
+SELinux, 843–845
+Semantics, file sharing, 593–594
+session, 593
+Semaphore, 129–133, 130–132
+Windows, 938
+Sem trywait system call, 741
+Send and receive, multicomputer, 565
+Send system call, 1047
+Senda system call, 1047
+Sendfile system call, 775
+Sendrec system call, 1047
+Sensitive instruction, 482
+Separate instruction and data space, 227–229
+Separation of policy and mechanism, 169, 238–240
+Sequential access, 266
+Sequential consistency, 593
+distributed shared memory, 575
+Sequential process, 86
+Serial ATA, 30, 370
+Serial bus architecture, 33
+Server, 68
+ev ent-driven, 116–118
+X, 404
+Server container, Windows, 1011, 1013
+Server operating system, 37
+Server physical address, Hyper-V, 1005
+Server silo, Windows, 1012
+Server stub, 569
+Service, Android, 825–837
+Service pack, 17
+Session semantics, 593
+Set attributes system call, 270
+Set-acl system call, 625
+SetEvent Win32 call, 938, 944
+Setgid system call, 792
+SetInformationJobObject Win32 call, 1012, 1013
+SetPriorityClass Win32 call, 945
+SetProcessinformation Win32 call, 949
+SetSecurityDescriptorDacl Win32 call, 1023
+SetThreadContext Win32 call, 904
+Setthreadinformation Win32 call, 949
+SetThreadPriority Win32 call, 945
+Setuid system call, 792
+Sfc program, 312
+SGX (see Software Guard Extension)
+SHA-256 hash function, 635
+SHA-512 hash function, 635
+Shadow page table, 494
+Shadow stack, Windows, 1029
+Shamir, Adi, 634
+Shared bus architecture, 33
+Shared file, 288–290
+Shared hosting, 71
+Shared library, 64, 230–232
+Shared lock, 770
+Shared pages, 228–229
+Shared text segment, 746
+Shared-memory multiprocessor, 530
+Shell, 2, 46–47, 716–719
+simplified, 728
+Shell magic character, 717
+Shell pipe symbol, 718
+Shell pipeline, 718
+Shell prompt, 716
+Shell script, 718
+Shell wild card, 717
+Shellcode, 650
+Shim, Windows, 943
+Shipley, Peter, 640
+Short name, NT file system, 993
+Shortcut, 278
+Shortest job first scheduling, 160–161
+Shortest process next scheduling, 165–166
+Shortest remaining time next scheduling
+algorithm, 161
+Shortest seek first disk scheduling, 376
+SID (see Security ID)
+Side channel, 556
+Side-by-side library, Windows, 927
+Side-channel attack, 671–674
+Sigaction system call, 729
+Signal, 725
+monitor, 141

@@ -1,0 +1,43 @@
+628
+SECURITY 
+CHAP. 9
+other hand, ACLs allow selective rev ocation of rights, which capabilities do not.
+Finally, if an object is removed and the capabilities are not or vice versa, problems
+arise. ACLs do not suffer from this problem.
+Most users are familiar with ACLs, because they are common in operating 
+systems like Windows and UNIX. However, capabilities are not that uncommon
+either. For instance, the L4 kernel that runs on many smartphones from many 
+manufacturers (typically alongside or underneath other operating systems like Android)
+is capability based. Likewise, the FreeBSD has embraced Capsicum, bringing
+capabilities to a popular member of the UNIX family. While Linux also has a
+notion of capabilities, it is important to emphasize that these are very different and
+not ‘‘real’’ capabilities in the (Dennis and Van Horn, 1966) sense of the word.
+9.3 FORMAL MODELS OF SECURE SYSTEMS
+Protection matrices, such as that of Fig. 9-4, are not static. They frequently
+change as new objects are created, old objects are destroyed, and owners decide to
+increase or restrict the set of users for their objects. A considerable amount of
+attention has been paid to modeling protection systems in which the protection
+matrix is constantly changing. We will now touch briefly upon some of this work.
+Decades ago, Harrison et al. (1976) identified six primitive operations on the
+protection matrix that can be used as a base to model any protection system. These
+primitive operations are create object, delete object, create domain, delete domain,
+inser t right, and remove right. The two latter primitives insert and remove rights
+from specific matrix elements, such as granting domain 1 permission to read File6.
+These six primitives can be combined into protection commands. It is these
+protection commands that user programs can execute to change the matrix. They
+may not execute the primitives directly. For example, the system might have a
+command to create a new file, which would test to see if the file already existed,
+and if not, create a new object and give the owner all rights to it. There might also
+be a command to allow the owner to grant permission to read the file to everyone
+in the system, in effect, inserting the ‘‘read’’ right in the new file’s entry in every
+domain.
+At any instant, the matrix determines what a process in any domain can do, not
+what it is authorized to do. The matrix is what is enforced by the system; 
+authorization has to do with management policy. As an example of this distinction, let
+us consider the simple system of Fig. 9-10 in which domains correspond to users.
+In Fig. 9-10(a), we see the intended protection policy: Henry can read and write
+mailbox7, Roberta can read and write secret, and all three users can read and
+execute compiler.
+Now imagine that Roberta is very clever and has found a way to issue 
+commands to have the matrix changed to Fig. 9-10(b). She has now gained illicit
+access to mailbox7, something she is forbidden from having. If she tries to read it,

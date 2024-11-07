@@ -1,0 +1,46 @@
+SEC. 2.5
+SCHEDULING
+159
+excellent throughput (many short jobs per hour) but at the expense of a terrible
+turnaround time for the long jobs. If short jobs kept arriving at a fairly steady rate,
+the long jobs might never run, making the mean turnaround time infinite while
+achieving a high throughput.
+CPU utilization is often used as a metric on batch systems. Actually though, it
+is not a good metric. What really matters is how many jobs per hour come out of
+the system (throughput) and how long it takes to get a job back (turnaround time).
+Using CPU utilization as a metric is like rating cars based on how many times per
+hour the engine turns over. Howev er, knowing when the CPU utilization is almost
+100% is useful for knowing when it is time to get more computing power.
+For interactive systems, different goals apply. The most important one is to
+minimize response time, that is, the time between issuing a command and getting
+the result. On a personal computer where a background process is running (for
+example, reading and storing email from the network), a user request to start a 
+program or open a file should take precedence over the background work. Having all
+interactive requests go first will be perceived as good service.
+A somewhat related issue is what might be called proportionality. Users have
+an inherent (but often incorrect) idea of how long things should take. When a
+request that the user perceives as complex takes a long time, users accept that, but
+when a request that is perceived as simple takes a long time, users get irritated. For
+example, if clicking on an icon that starts uploading a 5-GB video to a cloud server
+takes 60 sec, the user will probably accept that as a fact of life because he does not
+expect the upload to take 5 sec. He knows it will take time.
+On the other hand, when a user clicks on the icon that breaks the connection to
+the cloud server after the video has been uploaded, he has different expectations. If
+it has not completed after 30 sec, the user will probably be swearing a blue streak,
+and after 60 sec he will be foaming at the mouth. This behavior is due to the 
+common user perception that sending a lot of data is supposed to take a lot longer than
+just breaking the connection. In some cases (such as this one), the scheduler cannot
+do anything about the response time, but in other cases it can, especially when the
+delay is due to a poor choice of process order.
+Real-time systems have different properties than interactive systems, and thus
+different scheduling goals. They are characterized by having deadlines that must or
+at least should be met. For example, if a computer is controlling a device that 
+produces data at a regular rate, failure to run the data-collection process on time may
+result in lost data. Thus, the foremost need in a real-time system is meeting all (or
+most) deadlines.
+In some real-time systems, especially those involving multimedia, 
+predictability is important. Missing an occasional deadline is not fatal, but if the audio 
+process runs too erratically, the sound quality will deteriorate rapidly. Video is also an
+issue, but the ear is much more sensitive to jitter than the eye. To avoid this 
+problem, process scheduling must be highly predictable and regular. We will study
+batch and interactive scheduling algorithms in this chapter.

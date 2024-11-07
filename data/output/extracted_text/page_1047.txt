@@ -1,0 +1,41 @@
+1018
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+per-VTL SLAT. The IOMMU is leveraged to enforce memory access protection for
+devices. As such, it is not possible for even kernel-mode code to circumvent these
+protections. Similar to how CPUs implement different privilege levels, each VTL
+has its own virtual processor state, isolated from lower VTLs. A virtual processor
+can transition between VTLs (similar to making a system call from user-mode into
+kernel-mode and back). When entering a particular VTL, the VP context is updated
+with the target VTL processor state and the VP is subject to that VTL’s memory
+access protections. Higher VTLs can also prevent lower VTLs from accessing or
+modifying privileged CPU registers or I/O ports, which could otherwise be used to
+disable the hypervisor or tamper with secure devices (like fingerprint readers).
+Finally, each VTL has its own interrupt subsystem, such that it can enable, disable,
+and dispatch interrupts without interference from lower VTLs. Even though many
+VTLs can be supported by the hypervisor, we will focus on VTL0 and VTL1 in
+this chapter.
+VTL0 is the VSM normal mode in which Windows, with its user-mode and
+kernel-mode components, runs. VTL1 is referred to as the secure mode in which a
+security-focused micro-OS called the Secure Kernel runs. Figure 11-54 shows this
+organization. The Secure Kernel provides various security services to Windows as
+well as IUM (Isolated User Mode) the ability to run VTL1 user-mode programs
+which are completely shielded from VTL0. Windows includes IUM processes,
+called trustlets, which securely manage user credentials, encryption keys, as well
+as biometric information for fingerprint or face authentication. The overall 
+collection of these security mechanisms is termed VBS.
+In the next section, we are going to cover the basics of Windows security and
+then go deeper into various security services provided by VBS.
+11.11 SECURITY IN WINDOWS
+NT was originally designed to meet the U.S. Department of Defense’s C2
+security requirements (DoD 5200.28-STD), the Orange Book, which secure DoD
+systems must meet. This standard requires operating systems to have certain 
+properties in order to be classified as secure enough for certain kinds of military work.
+Although Windows was not specifically designed for C2 compliance, it inherits
+many security properties from the original security design of NT, including these:
+1. Secure login with anti-spoofing measures.
+2. Discretionary access controls.
+3. Privileged access controls.
+4. Address-space protection per process.
+5. New pages must be zeroed before being mapped in.
+6. Security auditing.

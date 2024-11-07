@@ -1,0 +1,48 @@
+204
+MEMORY MANAGEMENT 
+CHAP. 3
+Multilevel Page Tables
+As a first approach, consider the use of a multilevel page table. A simple 
+example is shown in Fig. 3-13. In Fig. 3-13(a) we have a 32-bit virtual address that is
+partitioned into a 10-bit PT1 field, a 10-bit PT2 field, and a 12-bit Offset field.
+Since offsets are 12 bits, pages are 4 KB, and there are a total of 220 of them.
+(a)
+(b)
+Top-level
+page table
+Second-level
+page tables
+To
+pages
+Page
+table for
+the top
+4M of
+memory
+6
+5
+4
+3
+2
+1
+0
+1023
+6
+5
+4
+3
+2
+1
+0
+1023
+Bits
+10
+10
+12
+PT1
+PT2
+Offset
+Figure 3-13. (a) A 32-bit address with two page table fields. (b) Tw o-level page
+tables.
+The secret to the multilevel page table method is to avoid keeping all the page
+tables in memory all the time. In particular, those that are not needed should not

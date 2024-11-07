@@ -1,0 +1,44 @@
+1058
+OPERATING SYSTEM DESIGN
+CHAP. 12
+the mechanism, if possible, so that changes in the policy module do not affect the
+mechanism module.
+To make the split between policy and mechanism clearer, let us consider two
+real-world examples. As a first example, consider a large company that has a 
+payroll department, which is in charge of paying the employees’ salaries. It has 
+computers, software, blank checks, agreements with banks for direct deposits, and
+more mechanisms for actually paying out the salaries. However, the 
+policy—determining who gets paid how much—is completely separate and is decided by 
+management. The payroll department just does what it is told to do.
+As the second example, consider a restaurant. It has the mechanism for 
+serving diners, including tables, plates, waiters, a kitchen full of equipment, 
+agreements with food suppliers and credit card companies, and so on. The policy is set
+by the chef, namely, what is on the menu. If the chef decides that tofu is out and
+big steaks are in (or vice versa), this new policy can be handled by the existing
+mechanism.
+Now let us consider some operating system examples. First, let us consider
+thread scheduling. The kernel could have a priority scheduler, with k priority 
+levels. The mechanism is an array, indexed by priority level, as is the case in UNIX
+and Windows. Each entry is the head of a list of ready threads at that priority level.
+The scheduler just searches the array from highest priority to lowest priority,
+selecting the first threads it hits. That is the mechanism. The policy is in setting
+the priorities. The system may have different classes of users, each with a different
+priority, for example. It might also allow user processes to set the relative priority
+of its threads. Priorities might be increased after completing I/O or decreased after
+using up a quantum. There are numerous other policies that could be followed, but
+the idea here is the separation between setting policy and carrying it out.
+A second example is paging. The mechanism involves MMU management,
+keeping lists of occupied and free pages, and code for shuttling pages to and from
+disk. The policy is deciding what to do when a page fault occurs. It could be local
+or global, LRU-based or FIFO-based, or something else, but this algorithm can
+(and should) be completely separate from the mechanics of managing the pages.
+A third example is allowing modules to be loaded into the kernel. The 
+mechanism concerns how they are inserted, how they are linked, what calls they can make,
+and what calls can be made on them. The policy is determining who is allowed to
+load a module into the kernel and which modules. Maybe only the superuser can
+load modules, but maybe any user can load a module that has been digitally signed
+by the appropriate authority.
+12.3.3 Orthogonality
+Good system design consists of separate concepts that can be combined 
+independently. For example, in C there are primitive data types including integers,
+characters, and floating-point numbers. There are also mechanisms for combining

@@ -1,0 +1,44 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+897
+of magnitude, leaving other virtual processors running in the partition spinning for
+very long periods of time. To solve this problem, a guest operating system is
+enlightened to spin only a short time before calling into the hypervisor to yield its
+physical processor to run another virtual processor.
+While the main job of the hypervisor is to run guest operating systems, it also
+helps improve the security of Windows by exposing a secure execution 
+environment called VSM (Virtual Secure Mode) in which a security-focused micro-OS
+called the SK (Secure Kernel) runs. The Secure Kernel provides a set of security
+services to Windows, collectively termed VBS (Virtualization-Based Security).
+These services help protect code flow and integrity of OS components and 
+maintain consistency of sensitive OS data structures as well as processor registers. In
+Sec. 11.10 we will discuss the inner workings of Hyper-V virtualization stack and
+learn how Virtualization-based Security works.
+The Hardware Abstraction Layer
+One goal of Windows is to make the system portable across hardware 
+platforms. Ideally, to bring up an operating system on a new type of computer system,
+it should be possible to just recompile the operating system on the new platform.
+Unfortunately, it is not this simple. While many of the components in some layers
+of the operating system can be largely portable (because they mostly deal with
+internal data structures and abstractions that support the programming model),
+other layers must deal with device registers, interrupts, DMA, and other hardware
+features that differ significantly from machine to machine.
+Most of the source code for the NTOS kernel is written in C rather than 
+assembly language (only 2% is assembly on x86, and less than 1% on x64). However, all
+this C code cannot just be scooped up from an x86 system, plopped down on, say,
+an ARM system, recompiled, and rebooted owing to the many hardware 
+differences between processor architectures that have nothing to do with the different
+instruction sets and which cannot be hidden by the compiler. Languages like C
+make it difficult to abstract away some hardware data structures and parameters,
+such as the format of page table entries and the physical memory page sizes and
+word length, without severe performance penalties. All of these, as well as a slew
+of hardware-specific optimizations, would have to be manually ported even though
+they are not written in assembly code.
+Hardware details about how memory is organized on large servers, or what
+hardware synchronization primitives are available, can also have a big impact on
+higher levels of the system. For example, NT’s virtual memory manager and the
+kernel layer are aware of hardware details related to cache and memory locality.
+Throughout the system, NT uses compare&swap synchronization primitives, and it
+would be difficult to port to a system that does not have them. Finally, there are
+many dependencies in the system on the ordering of bytes within words. On all the
+systems NT has ever been ported to, the hardware was set to little-endian mode.

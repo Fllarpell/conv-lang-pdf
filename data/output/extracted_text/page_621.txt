@@ -1,0 +1,61 @@
+592
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+A
+Root
+B
+C
+A
+D
+B
+C
+File server 1
+Client 1
+E
+F
+Root
+A
+D
+B
+C
+Client 1
+E
+F
+D
+Root
+E
+F
+A
+D
+B
+C
+File server 2
+Client 2
+E
+F
+Root
+A
+D
+B
+C
+Client 2
+E
+(a)
+(b)
+(c)
+F
+Figure 8-34. (a) Two file servers. The squares are directories and the circles are
+files. (b) A system in which all clients have the same view of the file system.
+(c) A system in which different clients have different views of the file system.
+server automatically, even if dir1 and dir2 exist on both servers. The problem is
+that moving the file automatically changes its path name from /server1/dir1/dir2/x
+to /server2/dir1/dir2/x. Programs that have the former string built into them will
+cease to work if the path changes. A system in which files can be moved without
+their names changing is said to have location independence. A distributed system
+that embeds machine or server names in path names clearly is not location 
+independent. One based on remote mounting is not, either, since it is not possible to
+move a file from one file group (the unit of mounting) to another and still be able
+to use the old path name. Location independence is not easy to achieve, but it is a
+desirable property to have in a distributed system.
+To summarize what we said earlier, there are three common approaches to file
+and directory naming in a distributed system:

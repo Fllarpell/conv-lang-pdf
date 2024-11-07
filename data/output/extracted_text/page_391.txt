@@ -1,0 +1,44 @@
+362
+INPUT/OUTPUT 
+CHAP. 5
+example of the latter situation, scrolling the screen requires just writing a few bytes
+into the controller’s registers. No mechanical motion is needed, so the entire 
+operation can be completed in nanoseconds.
+In the former case, the blocked driver will be awakened by the interrupt. In the
+latter case, it will never go to sleep. Either way, after the operation has been 
+completed, the driver must check for errors. If everything is all right, the driver may
+have some data to pass to the device-independent software (e.g., a block just read).
+Finally, it returns some status information for error reporting back to its caller. If
+any other requests are queued, one of them can now be selected and started. If
+nothing is queued, the driver blocks waiting for the next request.
+This simple model is only a rough approximation to reality. Many factors make
+the code much more complicated. For one thing, an I/O device may complete
+while a driver is running, interrupting the driver. The interrupt may cause a device
+driver to run. In fact, it may cause the current driver to run. For example, while the
+network driver is processing an incoming packet, another packet may arrive. 
+Consequently, drivers have to be reentrant, meaning that a running driver has to
+expect that it will be called a second time before the first call has completed.
+In a hot-pluggable system, devices can be added or removed while the 
+computer is running. As a result, while a driver is busy reading from some device, the
+system may inform it that the user has suddenly removed that device from the 
+system. Not only must the current I/O transfer be terminated without damaging any
+kernel data structures, but any pending requests for the now-vanished device must
+also be gracefully removed from the system and their callers given the bad news.
+Furthermore, the unexpected addition of new devices may cause the kernel to 
+juggle resources (e.g., interrupt request lines), taking old ones away from the driver
+and giving it new ones in their place.
+Drivers are not allowed to make system calls, but they often need to interact
+with the rest of the kernel. Usually, calls to certain kernel procedures are permitted.
+For example, there are usually calls to allocate and deallocate hardwired pages of
+memory for use as buffers. Other useful calls are needed to manage the MMU,
+timers, the DMA controller, the interrupt controller, and so on.
+5.3.3 Device-Independent I/O Software
+Although some of the I/O software is device specific, other parts of it are 
+device independent. The exact boundary between the drivers and the 
+device-independent software is system (and device) dependent, because some functions that could
+be done in a device-independent way may actually be done in the drivers, for
+efficiency or other reasons. The functions shown in Fig. 5-13 are typically done in
+the device-independent software.
+The basic function of the device-independent software is to perform the I/O
+functions that are common to all devices and to provide a uniform interface to the
+user-level software. We will now look at the above issues in more detail.

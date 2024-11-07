@@ -1,0 +1,49 @@
+784
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Client 1
+Client 2
+Server 1
+Server 2
+/
+/usr
+/usr/ast
+/usr/ast/work
+/bin
+/bin
+cat
+cp
+Is
+mv
+sh
+a
+b
+c
+d
+e
+/proj2
+/proj1
+/projects
+/mnt
+/bin
+Mount
+/
+Figure 10-35. Examples of remote mounted file systems. Directories are shown
+as squares and files as circles.
+1. Diskless workstations often have only a skeleton file system (in RAM) and get
+all their files from remote servers like this. Similarly, client 1 has mounted server
+2’s directory /projects on its directory /usr/ast/work so it can now access file a as
+/usr/ast/work/proj1/a. Finally, client 2 has also mounted the projects directory and
+can also access file a, only as /mnt/proj1/a. As seen here, the same file can have
+different names on different clients due to its being mounted in a different place in
+the respective trees. The mount point is entirely local to the clients; the server does
+not know where it is mounted on any of its clients.
+NFS Protocols
+Since one of the goals of NFS is to support a heterogeneous system, with 
+clients and servers possibly running different operating systems on different 
+hardware, it is essential that the interface between the clients and servers be well
+defined. Only then is anyone able to write a new client implementation and expect
+it to work correctly with existing servers, and vice versa.
+NFS accomplishes this goal by defining two client-server protocols. A 
+protocol is a set of requests sent by clients to servers, along with the corresponding
+replies sent by the servers back to the clients.

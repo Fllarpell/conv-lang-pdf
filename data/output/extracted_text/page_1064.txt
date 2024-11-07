@@ -1,0 +1,43 @@
+SEC. 11.11
+SECURITY IN WINDOWS
+1035
+before it gets to attack. Windows includes a full-featured antimalware package
+called Windows Defender. This type of software hooks into kernel operations to
+detect malware inside files, as well as recognize the behavioral patterns that are
+used by specific instances (or general categories) of malware. These behaviors
+include the techniques used to survive reboots, modify the registry to alter system
+behavior, and launching particular processes and services needed to implement an
+attack. Windows Defender provides a good protection against common malware
+and similar software packages are also available from third-party providers.
+11.12 SUMMARY
+Kernel mode in Windows is structured in the HAL, the kernel and executive
+layers of NTOS, and a large number of device drivers implementing everything
+from device services to file systems and networking to graphics. The HAL hides
+certain differences in hardware from the other components. The kernel layer 
+manages the CPUs to support multithreading and synchronization, and the executive
+implements most kernel-mode services.
+The executive is based on kernel-mode objects that represent the key executive
+data structures, including processes, threads, memory sections, drivers, devices,
+and synchronization objects—to mention a few. User processes create objects by
+calling system services and get back handle references which can be used in 
+subsequent system calls to the executive components. The operating system also creates
+objects internally. The object manager maintains a namespace into which objects
+can be inserted for subsequent lookup.
+The most important objects in Windows are processes, threads, and sections.
+Processes have virtual address spaces and are containers for resources. Threads are
+the unit of execution and are scheduled by the kernel layer using a priority 
+algorithm in which the highest-priority ready thread always runs, preempting 
+lower-priority threads as necessary. Sections represent memory objects, like files, that can
+be mapped into the address spaces of processes. EXE and DLL program images
+are represented as sections, as is shared memory.
+Windows supports demand-paged virtual memory. The paging algorithm is
+based on the working-set concept. The system maintains several types of page lists,
+to optimize the use of memory. The various page lists are fed by trimming the
+working sets using complex formulas that try to reuse physical pages that have not
+been referenced in a long time. The cache manager manages virtual addresses in
+the kernel that can be used to map files into memory, dramatically improving I/O
+performance for many applications because read operations can be satisfied 
+without accessing the disk.
+I/O is performed by device drivers, which follow the Windows Driver Model.
+Each driver starts out by initializing a driver object that contains the addresses of
+the procedures that the system can call to manipulate devices. The actual devices

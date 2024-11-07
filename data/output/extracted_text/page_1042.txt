@@ -1,0 +1,46 @@
+SEC. 11.10
+VIRTUALIZATION IN WINDOWS
+1013
+The benefit of associating all configuration with the silo and having the storage
+slots hold object manager objects is that cleanup is simple. When the last process
+in the silo goes away, and the last reference to the silo goes away the system can
+just run down the entries in each storage slot and drop the reference to the 
+associated object. This is very similar to what the system does when a process exits, and
+its handle table is run down.
+Server containers are a bit more complicated than application silos as many
+more namespaces must be virtualized to create the illusion of an isolated machine.
+For example, application silos typically share most namespaces with the host and
+often only need a few new resources inserted into the observed namespace. With
+server containers all namespaces must be virtualized. This includes the full object
+manager namespace, the file system and registry, the network namespace, the 
+process and thread ID namespace, etc. If, for example, the network namespace was not
+virtualized a process in one container might use a port that a process in another
+container needed. By giving each container its own IP address and port space, such
+conflicts are avoided. Additionally, the process and thread ID namespaces are 
+virtualized to avoid one container seeing or having access to processes and threads
+from another container.
+In addition to the larger set of namespaces to be virtualized, server containers
+also require private copies of various kernel state. A Windows administrator can
+normally configure certain global system state that effects the entire machine. To
+provide an administrative process running within the container this same type of
+control, the kernel was updated to allow this state to apply per container rather than
+globally. The result is that much of the kernel state that was previously stored in
+global variables is now referenced per container. There is a notion of a host 
+container which is where the host’s state is stored.
+Booting a server silo begins in the same way as creating an application silo.
+The job object is promoted into a silo and the namespace configuration is done.
+Unlike standard app containers, server containers get a full private object manager
+namespace. The root of the server containers namespace is an object manager
+directory on the host. This allows the host full visibility and access to the container
+which aids in management tasks. For example, the following directory may 
+represent the root of a server container namespace: \ Silos \ 100. In this example, 100 is
+the job identifier of the silo backing the server container. This directory is also 
+prepopulated with a variety of objects such that the object manager namespace for the
+container will look like what the host’s namespace looks like just before launching
+the first user mode process. Some of those objects are shared with the host and are
+exposed to the container with a special type of symbolic link that allow host
+objects to be accessed from within the container.
+Once the container’s namespace is setup, the next step is to promote the silo to
+a server silo. This is done with another SetInfor mationJobObject call. Promoting
+the silo to a server silo allocates additional data structures used to maintain 
+instanced copies of kernel state. Then the kernel invokes enlightened kernel components

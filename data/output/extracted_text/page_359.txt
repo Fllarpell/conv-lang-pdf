@@ -1,0 +1,42 @@
+330
+FILE SYSTEMS
+CHAP. 4
+number for the parent directory. Thus, a procedure looking up ../chris/prog.c 
+simply looks up .. in the working directory, finds the i-node number for the parent
+directory, and searches that directory for chris. No special mechanism is needed to
+handle these names. As far as the directory system is concerned, they are just
+ordinary ASCII strings, just the same as any other names. The only bit of trickery
+here is that .. in the root directory points to itself.
+4.6 RESEARCH ON FILE SYSTEMS
+File systems have always attracted more research than other parts of the 
+operating system and that is still the case. Entire conferences such as FAST, MSST, and
+NAS are devoted largely to file and storage systems.
+A considerable amount of research addresses the reliability of storage and file
+systems. A powerful way to guarantee reliability is to formally prove the safety of
+your system even in the face of catastrophic events, such as crashes (Chen et al.,
+2017). Also, with the rising popularity of SSDs as the primary storage medium, it
+is interesting to look at how well they hold up in large enterprise storage systems
+(Maneas et al., 2020).
+As we have seen in this chapter, file systems are complex beasts and 
+developing new file systems is not easy. Many operating systems allow file systems to be
+developed in user space (e.g., the FUSE userspace filesystem framework on
+Linux), but the performance is generally much lower. With new storage devices
+such as low-level SSDs arriving on the market, the need for an agile storage stack
+is important and research is needed to develop high-performance file systems
+quickly (Miller et al., 2021). In fact, new advances in storage technology is driving
+much of the research on file systems. For instance, how do we build efficient file
+systems for new persistent memory (Chen et al., 2021; and Neal, 2021)? Or how
+can we speed up file system checking (Domingo, 2021)? Even fragmentation 
+creates different issues on hard disks and SSDs and requires different approaches
+(Kesavan, 2019).
+Storing increasing amounts of data on the same file system is challenging,
+especially in mobile devices, leading to the development of new methods to 
+compress the data without slowing down the system too much, for instance by taking
+the access patterns of files into account (Ji et al., 2021). We hav e seen that as an
+alternative to per-file or per-block compression, some file systems today support
+deduplication across the entire system to prevent storing the same data twice.
+Unfortunately, deduplication tends to lead to poor data locality and trying to obtain
+good deduplication without performance loss due to lack of locality is difficult
+(Zou, 2021). Of course, with data deduplicated all over the place, it becomes much
+harder to estimate how much space if left or will be left when we delete a certain
+file (Harnik, 2019).

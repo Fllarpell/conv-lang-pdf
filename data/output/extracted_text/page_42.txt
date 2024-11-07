@@ -1,0 +1,46 @@
+SEC. 1.2
+HISTORY OF OPERATING SYSTEMS
+13
+called spooling (from Simultaneous Peripheral Operation On Line) and was
+also used for output. With spooling, the 1401s were no longer needed, and much
+carrying of tapes disappeared.
+Although third-generation operating systems were well suited for big scientific
+calculations and massive commercial data-processing runs, they were still basically
+batch systems. Many programmers pined for the first-generation days when they
+had the machine all to themselves for a few hours, so they could debug their 
+programs quickly. With third-generation systems, the time between submitting a job
+and getting back the output was often several hours, so a single misplaced comma
+could cause a compilation to fail, and the programmer to waste half a day. 
+Programmers did not like that very much.
+This desire for quick response time paved the way for timesharing, a variant
+of multiprogramming, in which each user has an online terminal. In a timesharing
+system, if 20 users are logged in and 17 of them are thinking or talking or drinking
+coffee, the CPU can be allocated in turn to the three jobs that want service. Since
+people debugging programs usually issue short commands (e.g., compile a fiv 
+epage procedure†) rather than long ones (e.g., sort a million-record file), the 
+computer can provide fast, interactive service to a number of users and perhaps also
+work on big batch jobs in the background when the CPU is otherwise idle. The
+first general-purpose timesharing system, CTSS (Compatible Time Sharing 
+System), was developed at M.I.T. on a specially modified 7094 (Corbato´ et al., 1962).
+However, timesharing did not really become popular until the necessary protection
+hardware became widespread during the third generation.
+After the success of the CTSS system, M.I.T., Bell Labs, and General Electric
+(at that time a major computer manufacturer) decided to embark on the 
+development of a ‘‘computer utility,’’ that is, a machine that would support some hundreds
+of simultaneous timesharing users. Their model was the electricity system—when
+you need electric power, you just stick a plug in the wall, and within reason, as
+much power as you need will be there. The designers of this system, known as
+MULTICS (MULTiplexed Information and Computing Service), envisioned
+one huge machine providing computing power for everyone in the Boston area.
+The idea that machines 10,000 times faster than their GE-645 mainframe would be
+sold (for well under $1000) by the millions only 40 years later was pure science
+fiction. Sort of like the idea of supersonic trans-Atlantic undersea trains now.
+MULTICS was a mixed success. It was designed to support hundreds of users
+on a machine 1000× slower than a modern smartphone and with a million times
+less memory. This is not quite as crazy as it sounds, since in those days people
+knew how to write small, efficient programs, a skill that has subsequently been
+completely lost. There were many reasons that MULTICS did not take over the
+world, not the least of which is that it was written in the PL/I programming 
+language, and the PL/I compiler was years late and barely worked at all when it 
+finally arrived. In addition, MULTICS was enormously ambitious for its time, much
+like Charles Babbage’s analytical engine in the nineteenth century.

@@ -1,0 +1,43 @@
+102
+PROCESSES AND THREADS
+CHAP. 2
+and puts the results in an output buffer. The output buffer writes these results back
+to disk. In this way, input, output, and processing can all be going on at the same
+time. Of course, this model works only if a system call blocks only the calling
+thread, not the entire process.
+2.2.2 The Classical Thread Model
+Now that we have seen why threads might be useful and how they can be used,
+let us investigate the idea a bit more closely. The process model is based on two
+independent concepts: resource grouping and execution. Sometimes it is useful to
+separate them; this is where threads come in. First we will look at the classical
+thread model; after that we will examine the Linux thread model, which blurs the
+line between processes and threads.
+One way of looking at a process is that it is a convenient way to group together
+related resources. A process has an address space that contains program text and
+data, as well as other resources. These resources may include open files, child
+processes, pending alarms, signal handlers, accounting information, and more. By
+putting them together in the form of a process, they can be managed more easily.
+The other concept a process has is a thread of execution, usually shortened to
+just thread. The thread has a program counter associated with it that keeps track
+of which instruction to execute next. It has registers, which hold its current 
+working variables. It also has a stack, which contains the thread’s execution history, one
+frame for each procedure called but not yet returned from. Although a thread must
+execute in some process, the thread and its process are different concepts and can
+be treated separately. Processes are used to group resources together; threads are
+the entities scheduled for execution on the CPU.
+What threads add to the process model is to allow multiple executions to take
+place in the same process environment (and address space), to a large degree 
+independent of one another. Having multiple threads running in parallel in one process
+is analogous to having multiple processes running in parallel in one computer. In
+the former case, the threads share an address space and other resources. In the 
+latter case, processes share physical memory, disks, printers, and other resources.
+Because threads have some of the properties of processes, they are sometimes 
+called lightweight processes. The term multithreading is also used to describe the
+situation of allowing multiple threads in the same process. As we saw in Chap. 1,
+some CPUs have direct hardware support for multithreading and allow a thread
+switch to happen on a nanosecond time scale.
+In Fig. 2-10(a) we see three traditional processes. Each process has its own
+address space and a single thread of control. In contrast, in Fig. 2-10(b) we see a
+single process with three threads of control. Although in both cases we have three
+threads, in Fig. 2-10(a) each of them operates in a different address space, whereas
+in Fig. 2-10(b) all three of them share the same address space.

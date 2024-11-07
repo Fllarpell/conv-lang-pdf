@@ -1,0 +1,43 @@
+868
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+directory on the Computer Science department’s Linux system. One day he realizes
+that a file placed there the previous day was left world-writable. He changes the 
+permissions and verifies that the file is identical to his master copy. The next day he finds
+that the file has been changed. How could this have happened and how could it have
+been prevented?
+53. Linux has a system call fsuid. Unlike setuid, which grants the user all the rights of the
+effective id associated with a running program fsuid grants the user who is running the
+program special rights only with respect to access to files. Why is this feature useful?
+54. On a Linux system, go to /proc/#### directory, where #### is a decimal number 
+corresponding to a process currently running in the system. Answer the following along
+with an explanation:
+(a) What is the size of most of the files in this directory?
+(b) What are the time and date settings of most of the files?
+(c) What type of access right is provided to the users for accessing the files?
+55. If you are writing an Android activity to display a Web page in a browser, how would
+you implement its activity-state saving to minimize the amount of saved state without
+losing anything important?
+56. If you are writing networking code on Android that uses a socket to download a file,
+what should you consider doing that is different than on a standard Linux system?
+57. If you are designing something like Android’s zygote process for a system that will
+have multiple threads running in each process forked from it, would you prefer to start
+those threads in zygote or after the fork?
+58. Imagine you use Android’s Binder IPC to send an object to another process. You later
+receive an object from a call into your process, and find that what you have received is
+the same object as previously sent. What can you assume or not assume about the 
+caller in your process?
+59. Consider an Android system that, immediately after starting, follows these steps:
+1. The home (or launcher) application is started.
+2. The email application starts syncing its mailbox in the background.
+3. The user launches a camera application.
+4. The user launches a Web browser application.
+The Web page the user is now viewing in the browser application requires increasingly
+more RAM, until it needs everything it can get. What happens?
+60. Write a minimal shell that allows simple commands to be started. It should also allow
+them to be started in the background.
+61. Write a dumb terminal program to connect two Linux computers via the serial ports.
+Use the POSIX terminal management calls to configure the ports.
+62. Write a client-server application which, on request, transfers a large file via sockets.
+Reimplement the same application using shared memory. Which version do you expect
+to perform better? Why? Conduct performance measurements with the code you have

@@ -1,0 +1,44 @@
+624
+SECURITY 
+CHAP. 9
+belonging to multiple groups does not have to specify which group to use at login
+time. All of them count all of the time. A disadvantage of this approach is that it
+provides less encapsulation: Tana can edit the password file during a pigeon club
+meeting.
+The use of groups and wildcards introduces the possibility of selectively 
+blocking a specific user from accessing a file. For example, the entry
+anna, *: (none); *, *: RW
+gives the entire world except for Anna read and write access to the file. This works
+because the entries are scanned in order, and the first one that applies is taken; 
+subsequent entries are not even examined. A match is found for Anna on the first
+entry and the access rights, in this case, ‘‘none’’ are found and applied. The search
+is terminated at that point. The fact that the rest of the world has access is never
+ev en seen.
+The other way of dealing with groups is not to have ACL entries consist of
+(UID, GID) pairs, but to have each entry be a UID or a GID. For example, an
+entry for the file pigeon data could be
+debbie: RW; emma: RW; pigfan: RW
+meaning that Debbie and Emma, and all members of the pigfan group have read
+and write access to the file.
+It sometimes occurs that a user or a group has certain permissions with respect
+to a file that the file owner later wishes to revoke. With access-control lists, it is
+relatively straightforward to revoke a previously granted access. All that has to be
+done is edit the ACL to make the change. However, if the ACL is checked only
+when a file is opened, most likely the change will take effect only on future calls to
+open. Any file that is already open will continue to have the rights it had when it
+was opened, even if the user is no longer authorized to access the file.
+On UNIX systems such as Linux and FreeBSD, you can use the commands
+getfacl and setfacl to inspect and set the access control list, respectively. In 
+practice, many users limit themselves to regulating the access to files using the 
+wellknown UNIX read, write, and execute permissions for the ‘‘user’’ (owner),
+‘‘group,’’ and ‘‘other’’ (ev erybody else), but access control lists give them 
+finergrained control over who gets access to what. For instance, suppose we have a file
+hello.txt with the following file permissions:
+-rw-r----- 1 herbertb staff
+6 Nov 20 11:05 hello.txt
+In other words, the file has read/write permission for the owner, read permissions
+for everyone in group staff, and no permissions for everybody else. Using access
+control lists, Herbert can give a user Yossar ian read/write permissions to the file
+without adding him to the group staff or making the file accessible to everybody
+else, as follows:
+setfacl -m u:yossar ian:rw hello.txt

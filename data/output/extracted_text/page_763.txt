@@ -1,0 +1,44 @@
+734
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+cannot be blocked when calling fork. Now consider the case that the other threads
+are not created in the child process. Suppose that one of the not-created threads
+holds a mutex that the one-and-only thread in the new process tries to acquire after
+doing the fork. The mutex will never be released and the one thread will hang 
+forev er. Numerous other problems exist, too. There is no simple solution.
+File I/O is another problem area. Suppose that one thread is blocked reading
+from a file and another thread closes the file or does an lseek to change the current
+file pointer. What happens next? Who knows?
+Signal handling is another thorny issue. Should signals be directed at a specific
+thread or just at the process? A SIGFPE (floating-point exception) should 
+probably be caught by the thread that caused it. What if it does not catch it? Should just
+that thread be killed, or all threads? Now consider the SIGINT signal, generated
+by the user at the keyboard. Which thread should catch that? Should all threads
+share a common set of signal masks? All solutions to these and other problems
+usually cause something to break somewhere. Getting the semantics of threads
+right (not to mention the code) is a nontrivial business.
+Linux supports kernel threads in an interesting way that is worth looking at.
+The implementation is based on ideas from 4.4BSD, but kernel threads were not
+enabled in that distribution because Berkeley ran out of money before the C library
+could be rewritten to solve the problems discussed earlier.
+Historically, processes were resource containers and threads were the units of
+execution. A process contained one or more threads that shared the address space,
+open files, signal handlers, alarms, and everything else. Everything was clear and
+simple as described above.
+In 2000, Linux introduced a powerful new system call, clone, that blurred the
+distinction between processes and threads and possibly even inv erted the primacy
+of the two concepts. Clone is not present in any other version of UNIX. 
+Classically, when a new thread was created, the original thread(s) and the new one shared
+ev erything but their registers. In particular, file descriptors for open files, signal
+handlers, alarms, and other global properties were per process, not per thread.
+What clone did was make it possible for each of these aspects and others to be
+process specific or thread specific. It is called as follows:
+pid = clone(function, stack ptr, shar ing flags, arg);
+The call creates a new thread, either in the current process or in a brand new 
+process, depending on sharing flags. If the new thread is in the current process, it
+shares the address space with the existing threads, and every subsequent write to
+any byte in the address space by any thread is immediately visible to all the other
+threads in the process. On the other hand, if the address space is not shared, then
+the new thread gets an exact copy of the address space, but subsequent writes by
+the new thread are not visible to the old ones. These semantics are the same as
+POSIX. Clone generalizes fork while preserving legacy semantics where needed.

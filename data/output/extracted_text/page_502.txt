@@ -1,0 +1,54 @@
+CHAP. 6  
+PROBLEMS
+473
+cumstances in which diagonal trajectories are also possible?
+21. Can the resource trajectory scheme of Fig. 6-11 also be used to illustrate the problem
+of deadlocks with three processes and three resources? How or why not?
+22. In theory, resource trajectory graphs could be used to avoid deadlocks. By clever
+scheduling, the operating system could avoid unsafe regions. Is there a practical way
+of actually doing this?
+23. Can a system be in a state that is neither deadlocked nor safe? If so, give an example.
+If not, prove that all states are either deadlocked or safe.
+24. Take a careful look at Fig. 6-14(b). If D asks for one more unit, does this lead to a safe
+state or an unsafe one? What if the request came from C instead of D?
+25. A system has two processes and three identical resources. Each process needs a 
+maximum of two resources. Is deadlock possible? Explain your answer.
+26. Consider the previous problem again, but now with p processes each needing a 
+maximum of m resources and a total of r resources available. What condition must hold to
+make the system deadlock free?
+27. Suppose that process A in Fig. 6-15 requests the last tape drive. Does this action lead
+to a deadlock?
+28. A computer has X tape drives, with n processes competing for them. Each process may
+need up to m drives. How many tape drives should the system have to guarantee that it
+is deadlock free?
+29. The banker’s algorithm is being run in a system with m resource classes and n 
+processes. In the limit of large m and n, the number of operations that must be performed
+to check a state for safety is proportional to manb. What are the values of a and b?
+30. A system has four processes and fiv e allocatable resources. The current allocation and
+maximum needs are as follows:
+Allocated 
+Maximum
+Available
+Process A
+1 0 2 1 1  
+1 1 2 1 3  
+0 0 x 1 1
+Process B
+2 0 1 1 0  
+2 2 2 1 0
+Process C
+1 1 0 1 0  
+2 1 3 1 0
+Process D
+1 1 1 1 0  
+1 1 2 2 1
+What is the smallest value of x for which this is a safe state?
+31. One way to eliminate circular wait is to have rule saying that a process is entitled only
+to a single resource at any moment. Give an example to show that this restriction is
+unacceptable in many cases.
+32. Tw o processes, A and B, each need three records, 1, 2, and 3, in a database. If A asks
+for them in the order 1, 2, 3, and B asks for them in the same order, deadlock is not
+possible. However, if B asks for them in the order 3, 2, 1, then deadlock is possible.
+With three resources, there are 3! or six possible combinations in which each process
+can request them. What fraction of the combinations is sure to be deadlock free?
+33. A distributed system using mailboxes has two IPC primitives, send and receive. The

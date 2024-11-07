@@ -1,0 +1,53 @@
+134
+PROCESSES AND THREADS
+CHAP. 2
+2.4.6 Mutexes
+When the semaphore’s ability to count is not needed, a simplified version of
+the semaphore, called a mutex, is sometimes used. Mutexes are good only for 
+managing mutual exclusion to some shared resource or piece of code. They are easy
+and efficient to implement, which makes them especially useful in thread packages
+that are implemented entirely in user space.
+A mutex is a shared variable that can be in one of two states: unlocked or
+locked. Consequently, only 1 bit is required to represent it, but in practice an 
+integer often is used, with 0 meaning unlocked and all other values meaning locked.
+Tw o procedures are used with mutexes. When a thread (or process) needs access
+to a critical region, it calls mutex lock. If the mutex is currently unlocked 
+(meaning that the critical region is available), the call succeeds and the calling thread is
+free to enter the critical region.
+On the other hand, if the mutex is already locked, the calling thread is blocked
+until the thread in the critical region is finished and calls mutex unlock. If 
+multiple threads are blocked on the mutex, one of them is chosen at random and allowed
+to acquire the lock.
+Because mutexes are so simple, they can easily be implemented in user space
+provided that a TSL or XCHG instruction is available. The code for mutex lock and
+mutex unlock for use with a user-level threads package are shown in Fig. 2-30.
+The solution with XCHG is essentially the same.
+mutex lock:
+TSL REGISTER,MUTEX
+| copy mutex to register and set mutex to 1
+CMP REGISTER,#0
+| was mutex zero?
+JZE ok
+| if it was zero, mutex was unlocked, so return
+CALL thread yield 
+| mutex is busy; schedule another thread
+JMP mutex lock
+| tr y again
+ok: 
+RET
+| retur n to caller; critical region entered
+mutex unlock:
+MOVE MUTEX,#0
+| store a 0 in mutex
+RET 
+| retur n to caller
+Figure 2-30. Implementation of mutex lock and mutex unlock.
+The code of mutex lock is similar to the code of enter region of Fig. 2-25 but
+with a crucial difference. When enter region fails to enter the critical region, it
+keeps testing the lock repeatedly (busy waiting). Eventually, the clock runs out and
+some other process is scheduled to run. Sooner or later the process holding the lock
+gets to run and releases it.
+With (user) threads, the situation is different because there is no clock that
+stops threads that have run too long. Consequently, a thread that tries to acquire a
+lock by busy waiting will loop forever and never acquire the lock because it never
+allows any other thread to run and release the lock.

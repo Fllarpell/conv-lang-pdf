@@ -1,0 +1,43 @@
+150
+PROCESSES AND THREADS
+CHAP. 2
+execution vulnerabilities. Here, attackers can exploit the fact that CPUs execute
+instructions out of order. Between the first disclosure of the Meltdown and Spectre
+issues in 2018, many such vulnerabilities have come to light. Since they generally
+impact the operating system also, we will briefly look at transient execution attacks
+in Chap. 9.
+2.4.10 Priority Inversion
+Earlier in this chapter, we mentioned the priority inversion problem, a truly
+classic problem that was known already in the 1970s. Now let us look at it in more
+detail.
+A famous example of priority inversion occurred on Mars in 1997. In an
+impressive engineering effort, NASA had managed to land a little robot rover on
+the red planet, destined to send a wealth of interesting information back to earth.
+Except there was a problem. Pathfinder’s radio transmissions stopped sending data
+constantly, requiring system resets to get it going again. It turned out that three
+threads were getting in each other’s hair. Pathfinder used a form of shared memory,
+which was called the ‘‘information bus,’’ for passing information between its 
+different components. A low-priority thread used the bus periodically to pass on the
+meteorological data (a kind of Mars weather report) it had gathered. Meanwhile, a
+high priority thread for information bus management would also periodically
+access it. To prevent both threads from accessing the shared memory at the same
+time, its access was controlled by a mutex in the rover’s software. A third,
+medium-priority thread was responsible for communications and did not need the
+mutex at all.
+The priority inversion occurred when the low-priority thread for 
+meteorological data gathering had been preempted by the medium priority communications
+thread, while holding the mutex. After some time, the high-priority thread needed
+to run but immediately blocked as it could not grab the mutex. The long-running
+medium-priority thread kept executing, as if it had higher priority than the 
+information bus thread.
+There are different ways to solve the priority inversion problem. The simplest
+one is to disable all interrupts while in the critical region. As mentioned earlier,
+this is not desirable for user programs: What if they forget to enable them again?
+Another solution, known as priority ceiling is to associate a priority with the
+mutex itself and assign that to the process holding it. As long as no process that
+needs to grab the mutex has a higher priority than the ceiling priority, inv ersion is
+no longer possible.
+A third way is priority inheritance. Here, the low-priority task holding the
+mutex will temporarily inherit the priority of the high-priority task trying to obtain
+it. Again, no medium priority task will be able to preempt the task holding the
+mutex. This was the technique eventually used to fix the Mars Pathfinder problems.

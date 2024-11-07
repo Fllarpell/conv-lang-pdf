@@ -1,0 +1,45 @@
+SEC. 2.1
+PROCESSES
+89
+with (human) users and perform work for them. Others run in the background and
+are not associated with particular users, but instead have some specific function.
+For example, one background process may be designed to accept incoming email,
+sleeping most of the day but suddenly springing to life when email arrives. Another
+background process may be designed to accept incoming requests for Web pages
+hosted on that machine, waking up when a request arrives to service the request.
+Processes that stay in the background to handle some activity such as email, Web
+pages, news, printing, and so on are called daemons. Large systems commonly
+have dozens of them. In UNIX†, the ps program can be used to list the running
+processes. In Windows, the task manager can be used.
+In addition to the processes created at boot time, new processes can be created
+afterward as well. Often a running process will issue system calls to create one or
+more new processes to help it do its job. Creating new processes is particularly 
+useful when the work to be done can easily be formulated in terms of several related,
+but otherwise independent interacting processes. For example, if a large amount of
+data are being fetched over a network for subsequent processing, it may be 
+convenient to create one process to fetch the data and put them in a shared buffer while
+a second process removes the data items and processes them. On a multiprocessor,
+allowing each process to run on a different CPU may also make the job go faster.
+In interactive systems, users can start a program by typing a command or 
+(double) clicking on an icon. Taking either of these actions starts a new process and
+runs the selected program in it. In command-based UNIX systems running the X
+Window System, the new process takes over the window in which it was started. In
+Windows, when a process is started it does not have a window, but it can create one
+(or more) and most do. In both systems, users may have multiple windows open at
+once, each running some process. Using the mouse, the user can select a window
+and interact with the process, for example, providing input when needed.
+The last situation in which processes are created applies only to batch systems
+found on large mainframes. Think of inventory management at the end of a day at
+a chain of stores—calculating what to order, analyzing per-store product 
+popularity, etc. Here users can submit batch jobs to the system (possibly remotely). When
+the operating system decides it has the resources to run another job, it creates a
+new process and runs the next job from the input queue in it.
+Technically, in all these cases, a new process is created by having an existing
+process execute a process creation system call. That process may be a running user
+process, a system process invoked from the keyboard or mouse, or a 
+batch-manager process. What that process does is execute a system call to create the new
+process. This system call tells the operating system to create a new process and
+indicates, directly or indirectly, which program to run in it. To get the ball rolling,
+the very first process is hard-crafted when the system is booted.
+† In this chapter, UNIX should be interpreted as including almost all POSIX-based systems, including
+Linux, FreeBSD, MacOS, Solaris, etc., and to some extent, Android and iOS as well.

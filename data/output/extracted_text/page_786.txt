@@ -1,0 +1,47 @@
+SEC. 10.4
+MEMORY MANAGEMENT IN LINUX
+757
+PG active and PG referenced set to zero in Fig. 10-18. However, if necessary,
+pages may be reclaimed even if they are in some of the other states. The refill
+arrows in Fig. 10-18 illustrate this fact.
+Inactive
+Used
+Used
+Used
+Timeout
+Timeout
+Refill
+Refill
+Refill
+PG_active = 0!
+PG_referenced = 0
+PG_active = 0!
+PG_referenced = 1
+PG_active = 1!
+PG_referenced = 0
+PG_active = 1!
+PG_referenced = 1
+Active
+Figure 10-18. Page states considered in the page-frame replacement algorithm.
+The reason PRFA maintains pages in the inactive list although they might have
+been referenced is to prevent situations such as the following. Consider a process
+which makes periodic accesses to different pages, with a 1-hour period. A page
+accessed since the last loop will have its reference flag set. However, since it will
+not be needed again for the next hour, there is no reason not to consider it as a 
+candidate for reclamation.
+The actual step of reclaiming memory pages is performed by kernel worker
+threads. These threads either (1) wake up periodically, typically every 500 msec, to
+write back to disk very old dirty pages, or (2) are explicitly awakened by the kernel
+when available memory levels fall below a certain threshold, to write back dirty
+pages from the page cache to disk. Dirty pages may also be written out to disk on
+explicit requests for synchronization, via systems calls such as sync, fsync, or
+fdatasync. Older Linux versions used two separate daemons: kupdate, for 
+oldpage write back, and bdflush, for page write back under low memory conditions. In
+the 2.4 kernel, this functionality was integrated in the pdflush threads. The choice
+of multiple threads was made in order to hide long disk latencies. Later, the
+pdflush threads were replaced first by per-block device flusher threads, until the
+writeback (and other) functionality was all assigned to the kernel worker threads.
+10.5 INPUT/OUTPUT IN LINUX
+The I/O system in Linux is fairly straightforward and the same as in other
+UNICES. Basically, all I/O devices are made to look like files and are accessed as
+such with the same read and wr ite system calls that are used to access all ordinary

@@ -1,0 +1,52 @@
+SEC. 5.4
+MASS STORAGE: DISK AND SSD
+377
+Tall buildings also have to deal with this trade-off. The problem of scheduling
+an elevator in a tall building is similar to that of scheduling a disk arm. Requests
+come in continuously calling the elevator to floors (cylinders) at random. The 
+computer running the elevator could easily keep track of the sequence in which 
+customers pushed the call button and service them using FCFS or SSF.
+However, most elevators use a different algorithm in order to reconcile the
+mutually conflicting goals of efficiency and fairness. They keep moving in the
+same direction until there are no more outstanding requests in that direction, then
+they switch directions. This algorithm, known both in the disk world and the 
+elevator world as the elevator algorithm, requires the software to maintain 1 bit: the
+current direction bit, UP or DOWN. When a request finishes, the disk or elevator
+driver checks the bit. If it is UP, the arm or cabin is moved to the next highest
+pending request. If no requests are pending at higher positions, the direction bit is
+reversed. When the bit is set to DOWN, the move is to the next lowest requested
+position, if any. If no request is pending, it just stops and waits. In big office 
+towers, when there are no requests pending, the software might send the cabin to the
+ground floor, since it is more likely to be need there shortly than on, say, the 19th
+floor. Disk software does not usually try to speculatively preposition the head 
+anywhere.
+Figure 5-23 shows the elevator algorithm using the same seven requests as
+Fig. 5-22, assuming the direction bit was initially UP. The order in which the 
+cylinders are serviced is 12, 16, 34, 36, 9, and 1, which yields arm motions of 1, 4, 18,
+2, 27, and 8, for a total of 60 cylinders. In this case, the elevator algorithm is 
+slightly better than SSF, although it is usually worse. One nice property the elevator
+algorithm has is that given any collection of requests, the upper bound on the total
+motion is fixed: it is just twice the number of cylinders.
+Initial!
+position
+Cylinder
+X
+X
+X X
+X
+X
+X
+0
+5
+10
+15
+20
+25
+30
+35
+Time
+Sequence of seeks
+Figure 5-23. The elevator algorithm for scheduling disk requests.
+A slight modification of this algorithm that has a smaller variance in response
+times (Teory, 1972) is to always scan in the same direction. When the 
+highest-numbered cylinder with a pending request has been serviced, the arm goes to the

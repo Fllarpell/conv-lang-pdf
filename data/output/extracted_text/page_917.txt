@@ -1,0 +1,55 @@
+888
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+mapping is. Most low-level Win32 functions have native NT equivalents, which is
+not surprising as Win32 was designed with NT in mind. In many cases, the Win32
+layer must manipulate the Win32 parameters to map them onto NT, for example,
+canonicalizing path names and mapping onto the appropriate NT path names,
+including special MS-DOS device names (like LPT:). The Win32 APIs for 
+creating processes and threads also must notify the Win32 subsystem process, csrss.exe,
+that there are new processes and threads for it to supervise, as we will describe in
+Sec. 11.4. It’s worth noting that while the Win32 API is built on the NT API, not
+all of the NT API is exposed through Win32.
+Win32 call
+Native NT API call
+CreateProcess 
+NtCreateProcess
+CreateThread 
+NtCreateThread
+SuspendThread 
+NtSuspendThread
+CreateSemaphore 
+NtCreateSemaphore
+ReadFile 
+NtReadFile
+DeleteFile 
+NtSetInfor mationFile
+CreateFileMapping 
+NtCreateSection
+Vir tualAlloc
+NtAllocateVir tualMemory
+MapViewOfFile 
+NtMapViewOfSection
+DuplicateHandle 
+NtDuplicateObject
+CloseHandle 
+NtClose
+Figure 11-8. Examples of Win32 API calls and the native NT API calls that they
+wrap.
+Some Win32 calls take path names, whereas the equivalent NT calls use 
+handles. So the wrapper routines have to open the files, call NT, and then close the
+handle at the end. The wrappers also translate the Win32 APIs from ANSI to 
+Unicode. The Win32 functions shown in Fig. 11-8 that use strings as parameters are
+actually two APIs, for example, CreateProcessW and CreateProcessA. The
+strings passed to the latter API must be translated to Unicode before calling the
+underlying NT API, since NT works only with Unicode.
+Since few changes are made to the existing Win32 interfaces in each release of
+Windows, in theory, the binary programs that ran correctly on any previous release
+will continue to run correctly on a new release. In practice, there are often many
+compatibility problems with new releases. Windows is so complex that a few
+seemingly inconsequential changes can cause application failures. And 
+applications themselves are often to blame, since they frequently make explicit checks for
+specific operating system versions or fall victim to their own latent bugs that are
+exposed when they run on a new release. Nevertheless, Microsoft makes an effort
+in every release to test a wide variety of applications to find incompatibilities and
+either correct them or provide application-specific workarounds.

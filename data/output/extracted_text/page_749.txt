@@ -1,0 +1,43 @@
+720
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+be created with mkdir and removed with rmdir. To see a list of the files in a 
+directory, ls can be used. It has a vast number of flags to control how much detail about
+each file is shown (e.g., size, owner, group, creation date), to determine the sort
+order (e.g., alphabetical, by time of last modification, reversed), to specify the 
+layout on the screen, and much more.
+We hav e already seen several filters: grep extracts lines containing a given 
+pattern from standard input or one or more input files; sort sorts its input and writes it
+on standard output; head extracts the initial lines of its input; tail extracts the final
+lines of its input. Other filters defined by 1003.1 are cut and paste, which allow
+columns of text to be cut and pasted into files; od, which converts its (usually 
+binary) input to ASCII text, in octal, decimal, or hexadecimal; tr, which does character
+translation (e.g., lowercase to uppercase), and pr, which formats output for the
+printer, including options to include running heads, page numbers, and so on.
+Compilers and programming tools include cc, which calls the C compiler, and
+ar, which collects library procedures into archive files.
+Another important tool is make, which is used to maintain large programs
+whose source code consists of multiple files. Typically, some of these are header
+files, which contain type, variable, macro, and other declarations. Source files often
+include these using a special include directive. This way, two or more source files
+can share the same declarations. However, if a header file is modified, it is 
+necessary to find all the source files that depend on it and recompile them. The function
+of make is to keep track of which file depends on which header, and similar things,
+and arrange for all the necessary compilations to occur automatically. Nearly all
+Linux programs, except some of the very smallest ones, are set up to be compiled
+with make.
+A selection of the POSIX utility programs is listed in Fig. 10-2, along with a
+short description of each. All Linux systems have them and many more.
+10.2.5 Kernel Structure
+In Fig. 10-1 we saw the overall structure of a Linux system. Now let us zoom
+in and look more closely at the kernel as a whole before examining the various
+parts, such as process scheduling and the file system.
+The kernel sits directly on the hardware and enables interactions with I/O 
+devices and the memory management unit and controls CPU access to them. At the
+lowest level, as shown in Fig. 10-3 it contains interrupt handlers, which are the 
+primary way for interacting with devices, and the low-level dispatching mechanism.
+This dispatching occurs when an interrupt happens. The low-level code here stops
+the running process, saves its state in the kernel process structures, and starts the
+appropriate driver. Process dispatching also happens when the kernel completes
+some operations and it is time to start up a user process again. The dispatching
+code is in assembler and is quite distinct from scheduling.

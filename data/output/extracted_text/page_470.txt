@@ -1,0 +1,61 @@
+SEC. 6.1
+RESOURCES
+441
+typedef int semaphore;
+semaphore resource 1; 
+semaphore resource 1;
+semaphore resource 2; 
+semaphore resource 2;
+void process A(void) {
+void process A(void) {
+down(&resource 1); 
+down(&resource 1);
+down(&resource 2); 
+down(&resource 2);
+use both resources( );
+use both resources( );
+up(&resource 2); 
+up(&resource 2);
+up(&resource 1); 
+up(&resource 1);
+}
+}
+void process B(void) {
+void process B(void) {
+down(&resource 1); 
+down(&resource 2);
+down(&resource 2); 
+down(&resource 1);
+use both resources( );
+use both resources( );
+up(&resource 2); 
+up(&resource 1);
+up(&resource 1); 
+up(&resource 2);
+}
+}
+(a) 
+(b)
+Figure 6-2. (a) Deadlock-free code. (b) Code with a potential deadlock.
+primitive is by showing how elegantly it solves the dining philosophers problem.
+We merely use it as a nice illustration of how deadlocks occur and how to avoid
+them. The problem can be stated quite simply as follows. Five philosophers are
+seated around a circular table. Each philosopher has a plate of spaghetti. The
+spaghetti is so slippery that a philosopher needs two forks to eat it. Between each
+pair of plates is one fork. The layout of the table is illustrated in Fig. 6-3.
+The life of a philosopher consists of alternating periods of eating and thinking.
+(This is something of an abstraction, even for philosophers, but the other activities
+are irrelevant here.) When a philosopher gets sufficiently hungry, she tries to 
+acquire her left and right forks, one at a time, in either order. If successful in 
+acquiring two forks, she eats for a while, then puts down the forks, and continues to
+think. The key question is: Can you write a program for each philosopher that does
+what it is supposed to do and never gets stuck? (It has been pointed out that the
+two-fork requirement is somewhat artificial; perhaps we should switch from Italian
+food to Chinese food, substituting rice for spaghetti and chopsticks for forks.)
+Figure 6-4 shows the obvious solution. The procedure take fork waits until the
+specified fork is available and then seizes it. Unfortunately, the obvious solution is
+wrong. Suppose that all fiv e philosophers take their left forks simultaneously.
+None will be able to take their right forks, and there will be a deadlock.
+We could easily modify the program so that after taking the left fork, the 
+program checks to see if the right fork is available. If it is not, the philosopher puts
+down the left one, waits for some time, and then repeats the whole process. This

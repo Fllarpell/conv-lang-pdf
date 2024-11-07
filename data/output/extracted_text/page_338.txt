@@ -1,0 +1,46 @@
+SEC. 4.4
+FILE-SYSTEM MANAGEMENT AND OPTIMIZATION
+309
+way, the file system is effectively frozen at the moment of the snapshot, so it can
+be backed up at leisure afterward.
+Fifth and last, making backups introduces many nontechnical problems into an
+organization. The best online security system in the world may be useless if the
+system administrator keeps all the backup disks (or tapes) in his office and leaves it
+open and unguarded whenever he walks down the hall to get coffee. All a spy has
+to do is pop in for a second, put one tiny disk or tape in his pocket, and saunter off
+jauntily. Goodbye security. Also, making a daily backup has little use if the fire
+that burns down the computers also burns up all the backup media. For this reason,
+the backups should be kept off-site, but that introduces more security risks because
+now two sites must be secured. While these practical administration issues should
+be taken into account in any org anization, below we will discuss only the technical
+issues involved in making file-system backups.
+Tw o strategies can be used for dumping a disk to a backup medium: a physical
+dump or a logical dump. A physical dump starts at block 0 of the disk, writes all
+the disk blocks onto the output disk in order, and stops when it has copied the last
+one. Such a program is so simple that it can probably be made 100% bug free,
+something that can probably not be said about any other useful program.
+Nevertheless, it is worth making several comments about physical dumping.
+For one thing, there is no value in backing up unused disk blocks. If the dumping
+program can obtain access to the free-block data structure, it can avoid dumping
+unused blocks. However, skipping unused blocks requires writing the number of
+each block in front of the block (or the equivalent), since it is no longer true that
+block k on the backup was block k on the disk.
+A second concern is dumping bad blocks. It is nearly impossible to 
+manufacture large disks without any defects. Some bad blocks are always present. 
+Sometimes when a low-level format is done, the bad blocks are detected, marked as bad,
+and replaced by spare blocks reserved at the end of each track for just such 
+emergencies. In many cases, the disk controller handles bad-block replacement 
+transparently without the operating system even knowing about it.
+However, sometimes blocks go bad after formatting, in which case the 
+operating system will eventually detect them. Usually, it solves the problem by creating a
+‘‘file’’ consisting of all the bad blocks—just to make sure they nev er appear in the
+free-block pool and are never assigned. Needless to say, this file is completely
+unreadable.
+If all bad blocks are remapped by the disk controller and hidden from the 
+operating system as just described, physical dumping works fine. On the other hand, if
+they are visible to the operating system and maintained in one or more bad-block
+files or bitmaps, it is absolutely essential that the physical dumping program get
+access to this information and avoid dumping them to prevent endless disk read
+errors while trying to back up the bad-block file.
+Windows systems have paging and hibernation files that are not needed in the
+ev ent of a restore and should not be backed up in the first place. Specific systems

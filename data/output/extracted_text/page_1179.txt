@@ -1,0 +1,99 @@
+1150
+INDEX
+Time bomb, 680
+Time of check to time of use attack, 667–668
+Time sharing, 551–552
+Time-space tradeoffs, 1072–1075
+Timer, 390
+Timesharing, 13
+TinyOS, 38
+TLB (see Translation Lookaside Buffer)
+TLS (see Thread Local Storage)
+TOCTOU (see Time of Check To Time Of Use)
+Token, 890
+Tombstone file, 1014
+Top-down implementation, 1063–1064
+Torvalds, Linux, 15
+Touch screen, 417–419
+Touchpad, 401
+TPM (see Trusted Platform Module)
+TPU (see Tensor Processing Unit)
+Track, 28
+Trackpad, 401–402
+Transaction, Android, 810
+Transfer model, middleware, 590
+Transient execution, 149
+Transient execution attack, 674–679
+speculation, 677–679
+Translation lookaside buffer, 201–203
+managing in software, 202–203
+Windows, 962
+Transmission control protocol, 587, 760
+Transparency, location, 591–592
+naming, 591–592
+Transparent huge page, 226–227
+Transparent page sharing, 501
+Trap, 52, 347
+Trap vs. binary translation 488
+Trap-and-emulate, 483–484
+Triple indirect block, 328, 781
+Trojan horse, 607
+Trust domain extension, 688
+Trusted computing base, 612–614
+Trusted execution environment, 688
+Trusted platform module, 636, 636–637, 690, 912
+Trusted system, 612
+Trustlet, 1018
+TSL instruction, 125–127, 545–547
+Tuple, 596
+Tuple space, 596
+Turbo thunk, Windows, 951
+Turing, Alan, 8
+Tw o-level scheduling, 552
+Tw o-phase locking, 464–465
+Type 1 hypervisor, 71, 484–486, 488
+Type 2 hypervisor, 62, 485–486, 488
+VMWare Workstation, 517
+Type-confusion vulnerability, 662–664
+U
+UAC (see User Account Control)
+UDP (see User Datagram Protocol)
+UEFI (see Unified Extensible Firmware Interface)
+UID (see User ID)
+UMA (see Uniform Memory Access)
+UMDF (see User-Mode Driver Framework)
+Umount system call, 54
+Undefined external, 230
+Unicode, 886, 1060
+UNICS (see UNiplexed Information and Computing Service)
+Unified extensible firmware interface, 34, 279–280, 911
+Uniform interfacing for device drivers, 363–364
+Uniform memory access multiprocessor, 530–535
+Uniform naming, 352
+Uniform resource locator, 589
+Unikernel, 73–74, 612
+Universal coordinated time, 391
+Universal serial bus, 34, 359
+Universal Windows Platform, 878, 881–883
+2BSD, 707
+4BSD, 707
+32v, 707
+Berkeley, 707–708
+file names, 262
+file system, 261–277
+history, 704–713
+input/output, 400–406
+PDP-11, 705–706
+process, 89–93
+V7, 324–330
+UNIX password security, 640–642
+UNIX system call (see System call)
+Unlink system call, 54, 277, 774
+Unlock system call, 1054, 1065
+Unmap system call, 747
+Unmarshalling, 815
+Unsafe state, 457–458
+Up Win32 call, 938
+Upload/download model, 590
+URL (see Uniform Resource Locator)
+UNIX, 1, 4, 14–18, 39–51, 56–62, 76–80, 89–93, 105–107, 261–277, 308–312, 400

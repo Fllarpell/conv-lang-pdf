@@ -1,0 +1,42 @@
+SEC. 9.5
+EXPLOITING SOFTWARE
+655
+gather these gadgets in an existing binary. As she did not create the gadgets 
+herself, she sometimes has to make do with gadgets that are perhaps less than ideal,
+but good enough for the job. For instance, Fig. 9-19(b) suggests that gadget A has a
+check as part of the instruction sequence. The attacker may not care for the check
+at all, but since it is there, she will have to accept it. For most purposes, it is 
+perhaps good enough to pop any nonnegative number into register 1. The next gadget
+pops any stack value into register 2, and the third multiplies register 1 by 4, pushes
+it on the stack, and adds it to register 2. Combining, these three gadgets yields the
+attacker something that may be used to calculate the address of an element in an
+array of integers. The index into the array is provided by the first data value on the
+stack, while the base address of the array should be in the second data value.
+Return-oriented programming may look very complicated, and perhaps it is.
+But as always, people have dev eloped tools to automate as much as possible.
+Examples include gadget harvesters and even ROP compilers. Nowadays, ROP is
+one of the most important exploitation techniques used in the wild.
+Address-Space Layout Randomization
+Here is another idea to stop these attacks. Besides modifying the return address
+and injecting some (ROP) program, the attacker should be able to return to exactly
+the right address—with ROP no nop sleds are possible. This is easy, if the 
+addresses are fixed, but what if they are not? ASLR (Address Space Layout 
+Randomization) aims to randomize the addresses of functions and data between every run
+of the program. As a result, it becomes much harder for the attacker to exploit the
+system. Specifically, ASLR often randomizes the positions of the initial stack, the
+heap, and the libraries.
+Like canaries and DEP, most modern operating systems support ASLR both
+for the operating system and user applications, although the amount of randomness
+(the ‘‘entropy’’) differs. The combined force of these three protection mechanisms
+has raised the bar for attackers significantly. Just jumping to injected code or even
+some existing function in memory has become hard work. Together, they form an
+important line of defense in modern operating systems. What is especially nice
+about them is that they offer their protection at a very reasonable cost to 
+performance.
+Bypassing ASLR
+Even with all three defenses enabled, attackers still manage to exploit the 
+system. There are several weaknesses in ASLR that allow intruders to bypass it. The
+first weakness is that ASLR is often not random enough. Many implementations of
+ASLR still have certain code at fixed locations. Moreover, even if a segment is 
+randomized, the randomization may be weak, so that an attacker can brute-force it.
+For instance, on 32-bit systems the entropy may be limited because you cannot

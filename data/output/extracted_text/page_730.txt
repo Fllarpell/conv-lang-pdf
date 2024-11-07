@@ -1,0 +1,45 @@
+CHAP. 9  
+PROBLEMS
+701
+37. To verify that an downloaded driver has been signed by a trusted vendor, the 
+drivervendor may include a certificate signed by a trusted third party that contains its public key.
+However, to read the certificate, the user needs the trusted third party’s public key. This
+could be provided by a trusted fourth party, but then the user needs that public key. It
+appears that there is no way to bootstrap the verification system, yet existing browsers
+use it. How could it work?
+38. In Sec. 9.5.4, we saw that type confusion bugs in C++ are caused by bugs when 
+statically casting a parent type to the wrong child type. Besides the
+static cast
+construct, C++ also supports dynamics casts, using the
+dynamic cast
+construct. Dynamic casts are enforced at run time with an explicit type check and are
+therefore ensure type safety. Why would programmers not simply use dynamic casts
+ev erywhere and get rid of most type confusion bugs altogether?
+39. One major problem with format string vulnerabilities is the ‘‘%n’’ formatting indicator
+which is hardly used by anyone. For this reason, many C libraries no longer support
+‘‘%n’’ by default. Will this solve the problem of format string vulnerabilities?
+40. To mitigate cache side channels, we want to partition the cache such that two processes
+always use different parts of the cache. Unfortunately, hardware support for such 
+partitioning is often lacking. What could the operating system do to provide such 
+partitioning?
+41. In Sec. 9.6.3, we mentioned that we can stop many of the Spectre problems by 
+inserting so-called fence instructions which stop speculation across that instruction. There
+are many other and much more complicated other mitigations also, but hey, let us at
+least stick a fence instruction after every ‘‘if ’’ condition. Doing so is very simple and
+would get rid of a large number of vulerabilities. Explain why this is not a good idea.
+42. Describe three features that make Java a better programming language than C to write
+secure programs.
+43. In Sec. 9.7.3 we described login spoofing as an attack in which the attacker starts a
+program on a computer that displays a fake login screen on a computer. This would
+typically be used in a room full of computers at a university that students could use for
+assignments. When the student sits down and enters a login name and password, the
+fake program sends them off to its owner and then exits. The second time the student
+tries to login in it works and the students thinks there must of been a typing error the
+first time. Devise a way in which the operating system could defeat this kind of 
+spoofing attack.
+44. Write a pair of programs, in C or as shell scripts, to send and receive a message by a
+covert channel on a UNIX system. (Hint: A permission bit can be seen even when a
+file is otherwise inaccessible, and the sleep command or system call is guaranteed to
+delay for a fixed time, set by its argument.) Measure the data rate on an idle system.
+Then create an artificially heavy load by starting up numerous different background
+processes and measure the data rate again.

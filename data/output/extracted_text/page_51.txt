@@ -1,0 +1,58 @@
+22
+INTRODUCTION 
+CHAP. 1
+In fact, we distinguish between the architecture and the micro-architecture.
+The architecture consists of everything that is visible to the software such as the
+instructions and the registers. The micro-architecture comprises the 
+implementation of the architecture. Here we find data and instruction caches, translation
+lookaside buffers, branch predictors, the pipelined datapath, and many other 
+elements that should not normally be visible to the operating system or any other 
+software.
+To improve performance, CPU designers have long abandoned the simple
+model of fetching, decoding, and executing one instruction at a time. Many modern
+CPUs have facilities for executing more than one instruction at the same time. For
+example, a CPU might have separate fetch, decode, and execute units, so that while
+it is executing instruction n, it could also be decoding instruction n + 1 and 
+fetching instruction n + 2. Such an organization is called a pipeline and is illustrated in
+Fig. 1-7(a) for a pipeline with three stages. Longer pipelines are common. In most
+pipeline designs, once an instruction has been fetched into the pipeline, it must be
+executed, even if the preceding instruction was a conditional branch that was taken.
+Pipelines cause compiler writers and operating system writers great headaches
+because they expose the complexities of the underlying machine to them and they
+have to deal with them.
+Fetch!
+unit
+Fetch!
+unit
+Fetch!
+unit
+Decode!
+unit
+Decode!
+unit
+Execute!
+unit
+Execute!
+unit
+Execute!
+unit
+Execute!
+unit
+Decode!
+unit
+Holding!
+buffer
+(a)
+(b)
+Figure 1-7. (a) A three-stage pipeline. (b) A superscalar CPU.
+Even more advanced than a pipeline design is a superscalar CPU, shown in
+Fig. 1-7(b). In this design, multiple execution units are present, for example, one
+for integer arithmetic, one for floating-point arithmetic, and one for Boolean 
+operations. Two or more instructions are fetched at once, decoded, and dumped into a
+holding buffer until they can be executed. As soon as an execution unit becomes
+available, it looks in the holding buffer to see if there is an instruction it can 
+handle, and if so, it removes the instruction from the buffer and executes it. An 
+implication of this design is that program instructions are often executed out of order. For
+the most part, it is up to the hardware to make sure the result produced is the same
+one a sequential implementation would have produced, but an annoying amount of
+the complexity is foisted onto the operating system, as we shall see.

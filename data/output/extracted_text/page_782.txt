@@ -1,0 +1,44 @@
+SEC. 10.4
+MEMORY MANAGEMENT IN LINUX
+753
+To alleviate this problem, Linux has a second memory allocator, the slab 
+allocator, which takes chunks using the buddy algorithm but then carves slabs (smaller
+units) from them and manages the smaller units separately.
+Since the kernel frequently creates and destroys objects of certain type (e.g.,
+task struct), it relies on so-called object caches. These caches consist of pointers
+to one or more slab which can store a number of objects of the same type. Each of
+the slabs may be full, partially full, or empty.
+For instance, when the kernel needs to allocate a new process descriptor, that
+is, a new task struct, it looks in the object cache for task structures, and first tries
+to find a partially full slab and allocate a new task struct object there. If no such
+slab is available, it looks through the list of empty slabs. Finally, if necessary, it
+will allocate a new slab, place the new task structure there, and link this slab with
+the task-structure object cache. The kmalloc kernel service, which allocates 
+physically contiguous memory regions in the kernel address space, is in fact built on top
+of the slab and object cache interface described here.
+A third memory allocator, vmalloc, is also available and is used when the
+requested memory needs to be contiguous only in virtual space, not in physical
+memory. In practice, this is true for most of the requested memory. One exception
+consists of devices, which live on the other side of the memory bus and the 
+memory management unit, and therefore do not understand virtual addresses. However,
+the use of vmalloc results in some performance degradation, and it is used 
+primarily for allocating large amounts of contiguous virtual address space, such as for
+dynamically inserting kernel modules. All these memory allocators are derived
+from those in System V.
+Virtual Address-Space Representation
+The virtual address space is divided into homogeneous, contiguous, 
+pagealigned areas or regions. That is to say, each area consists of a run of consecutive
+pages with the same protection and paging properties. The text segment and 
+mapped files are examples of areas (see Fig. 10-13). There can be holes in the virtual
+address space between the areas. Any memory reference to a hole results in a fatal
+page fault. The page size is fixed, for example, 4 KB for the Pentium and 8 KB for
+the Alpha. Starting with the Pentium, support for page frames of 4 MB was added.
+On recent 64-bit architectures, Linux can support huge pages of 2 MB or 1 GB
+each. In addition, in a PAE (Physical Address Extension) mode, which is used on
+certain 32-bit architectures to increase the process address space beyond 4 GB,
+page sizes of 2 MB are supported.
+Each area is described in the kernel by a vm area struct entry. All the
+vm area structs for a process are linked together in a list sorted on virtual address
+so that all the pages can be found. When the list gets too long (more than 32
+entries), a tree is created to speed up searching it. The vm area struct entry lists
+the area’s properties. These properties include the protection mode (e.g., read only

@@ -1,0 +1,53 @@
+SEC. 2.5
+SCHEDULING
+161
+similar work is done every day. When several equally important jobs are sitting in
+the input queue waiting to be started, the scheduler picks the shortest job first.
+Look at Fig. 2-42. Here we find four jobs A, B, C, and D with run times of 8, 4, 4,
+and 4 minutes, respectively. By running them in that order, the turnaround time for
+A is 8 minutes, for B is 12 minutes, for C is 16 minutes, and for D is 20 minutes for
+an average of 14 minutes.
+(a)
+8!
+A
+4!
+B
+4!
+C
+4!
+D
+(b)
+8!
+A
+4!
+B
+4!
+C
+4!
+D
+Figure 2-42. An example of shortest-job-first scheduling. (a) Running four jobs
+in the original order. (b) Running them in shortest-job-first order.
+Now let us consider running these four jobs using shortest job first, as shown
+in Fig. 2-42(b). The turnaround times are now 4, 8, 12, and 20 minutes for an 
+average of 11 minutes. Shortest job first is provably optimal. Consider the case of four
+jobs, with execution times of a, b, c, and d, respectively. The first job finishes at
+time a, the second at time a + b, and so on. The mean turnaround time is
+(4a + 3b + 2c + d)/4. It is clear that a contributes more to the average than the
+other times, so it should be the shortest job, with b next, then c, and finally d as the
+longest since it affects only its own turnaround time. The same argument applies
+equally well to any number of jobs.
+It is worth pointing out that shortest job first is optimal only when all the jobs
+are available simultaneously. As a counterexample, consider fiv e jobs, A through E,
+with run times of 2, 4, 1, 1, and 1, respectively. Their arrival times are 0, 0, 3, 3,
+and 3. Initially, only A or B can be chosen, since the other three jobs have not 
+arrived yet. Using shortest job first, we will run the jobs in the order A, B, C, D, E, for
+an average wait of 4.6. However, running them in the order B, C, D, E, A has an
+av erage wait of 4.4.
+Shortest Remaining Time Next
+A preemptive version of shortest job first is shortest remaining time next.
+With this algorithm, the scheduler always chooses the process whose remaining
+run time is the shortest. Again here, the run time has to be known in advance.
+When a new job arrives, its total time is compared to the current process’ 
+remaining time. If the new job needs less time to finish than the current process, the 
+current process is suspended and the new job started. This scheme allows new short
+jobs to get good service.

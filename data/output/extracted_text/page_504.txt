@@ -1,0 +1,49 @@
+CHAP. 6  
+PROBLEMS
+475
+41. A program contains an error in the order of cooperation and competition mechanisms,
+resulting in a consumer process locking a mutex (mutual exclusion semaphore) before
+it blocks on an empty buffer. The producer process blocks on the mutex before it can
+place a value in the empty buffer and awaken the consumer. Thus, both processes are
+blocked forever, the producer waiting for the mutex to be unlocked and the consumer
+waiting for a signal from the producer. Is this a resource deadlock or a communication
+deadlock? Suggest methods for its control.
+42. Cinderella and the Prince are getting divorced. To divide up their property, they hav e
+agreed on the following algorithm. Every morning, each one may send a letter to the
+other’s lawyer requesting one item of property. Since it takes a day for letters to be
+delivered, they hav e agreed that if both discover that they hav e requested the same item
+on the same day, the next day they will send a letter canceling the request. Among
+their property is their dog, Woofer, Woofer’s doghouse, their canary, Tweeter, and
+Tweeter’s cage. The animals love their houses, so it has been agreed that any division
+of property separating an animal from its house is invalid, requiring the whole division
+to start over from scratch. Both Cinderella and the Prince desperately want Woofer. So
+that they can go on (separate) vacations, each spouse has programmed a personal 
+computer to handle the negotiation. When they come back from vacation, the computers
+are still negotiating. Why? Is deadlock possible? Is starvation possible? Discuss.
+43. A student majoring in anthropology and minoring in computer science has embarked
+on a research project to see if African baboons can be taught about deadlocks. He
+locates a deep canyon and fastens a rope across it, so the baboons can cross 
+hand-overhand. Several baboons can cross at the same time, provided that they are all going in
+the same direction. If eastward-moving and westward-moving baboons ever get onto
+the rope at the same time, a deadlock will result (the baboons will get stuck in the 
+middle) because it is impossible for one baboon to climb over another one while suspended
+over the canyon. If a baboon wants to cross the canyon, he must check to see that no
+other baboon is currently crossing in the opposite direction. Write a program using
+semaphores that avoids deadlock. Do not worry about a series of eastward-moving
+baboons holding up the westward-moving baboons indefinitely.
+44. Repeat the previous problem, but now avoid starvation. When a baboon that wants to
+cross to the east arrives at the rope and finds baboons crossing to the west, he waits
+until the rope is empty, but no more westward-moving baboons are allowed to start
+until at least one baboon has crossed the other way.
+45. Program a simulation of the banker’s algorithm. Your program should cycle through
+each of the bank clients asking for a request and evaluating whether it is safe or unsafe.
+Output a log of requests and decisions to a file.
+46.
+Write a program to implement the deadlock detection algorithm with multiple
+resources of each type. Your program should read from a file the following inputs: the
+number of processes, the number of resource types, the number of resources of each
+type in existence (vector E), the current allocation matrix C (first row, followed by the
+second row, and so on), the request matrix R (first row, followed by the second row,
+and so on). The output of your program should indicate whether there is a deadlock in
+the system. In case there is, the program should print out the identities of all processes
+that are deadlocked.

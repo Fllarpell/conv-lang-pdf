@@ -1,0 +1,43 @@
+290
+FILE SYSTEMS
+CHAP. 4
+The problem with symbolic links is the extra overhead required. The file 
+containing the path must be read, then the path must be parsed and followed, 
+component by component, until the i-node is reached. All of this activity may require a
+considerable number of extra disk accesses. Furthermore, an extra i-node is needed
+for each symbolic link, as is an extra disk block to store the path, although if the
+path name is short, the system could store it in the i-node itself, as a kind of 
+optimization. Symbolic links have the advantage that they can be used to link to files
+on machines anywhere in the world, by simply providing the network address of
+the machine where the file resides in addition to its path on that machine.
+There is also another problem introduced by links, symbolic or otherwise.
+When links are allowed, files can have two or more paths. Programs that start at a
+given directory and find all the files in that directory and its subdirectories will
+locate a linked file multiple times. For example, a program that dumps all the files
+in a directory and its subdirectories onto a backup drive may make multiple copies
+of a linked file. Furthermore, if the backup drive is then read into another machine,
+unless the dump program is clever, the linked file may be copied twice onto the
+disk, instead of being linked.
+4.3.5 Log-Structured File Systems
+Changes in technology are putting pressure on current file systems. Let us 
+consider computers with (magnetic) hard disks. In the next section, we will look at
+SSDs. In systems with hard disks, the CPUs keep getting faster, the disks are
+becoming much bigger and cheaper (but not much faster), and memories are 
+growing exponentially in size. The one parameter that is not improving by leaps and
+bounds is disk seek time.
+The combination of these factors led to a performance bottleneck in file 
+systems. Research done at Berkeley attempted to alleviate this problem by designing a
+completely new kind of file system, LFS (the Log-structured File System). In this
+section, we will briefly describe how LFS works. For a more complete treatment,
+see the original paper on LFS (Rosenblum and Ousterhout, 1991).
+The idea that drove the LFS design is that as CPUs get faster and RAM 
+memories get larger, disk caches are also increasing rapidly. Consequently, it is now 
+possible to satisfy a very substantial fraction of all read requests directly from the
+file-system cache, with no disk access needed. It follows from this observation
+that in the future, most disk accesses will be writes, so the read-ahead mechanism
+used in some file systems to fetch blocks before they are needed no longer gains
+much performance.
+To make matters worse, in most file systems, writes are done in very small
+chunks. Small writes are highly inefficient, since a 50-µsec disk write is often 
+preceded by a 10-msec seek and a 4-msec rotational delay. With these parameters,
+disk efficiency drops to a fraction of 1%.

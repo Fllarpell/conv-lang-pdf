@@ -1,0 +1,45 @@
+1116
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+SINGH, A., ONG, J., AGARWAL, A., ANDERSON, G., ARMISTEAD, A., BANNON, R., 
+BOVING, S., DESAI, G., FELDERMAN, B., GERMANO, P., KANAGALA, A., LIU, H.,
+PROV OST, J., SIMMONS, J., TANDA, E., WANDERER, J., HOLZLE, U., STUART, S.,
+and VAHDAT , A.:s10 ‘‘Jupiter Rising: A Decade of Clos Topologies and Centralized Control in
+Google’s Datacenter Network,’’ Commun. ACM, Vol. 59, pp. 88–97, Sep. 2016.
+SMITH, D,K., and ALEXANDER, R.C.: Fumbling the Future: How Xerox Invented, Then
+Ignored, the First Personal Computer, New York: William Morrow, 1988.
+SNIR, M., OTTO, S.W., HUSS-LEDERMAN, S., WALKER, D.W., and DONGARRA, J.: MPI:
+The Complete Reference Manual, Cambridge, MA: M.I.T. Press, 1996. IEEE, pp.
+574–588, 2013.
+SNOW, K., MONROSE, F., DAVI, L., DMITRIENKO, A., LIEBCHEN, C., and SADEGHI,
+A.-R.: ‘‘Just-In-Time Code Reuse: On the Effectiveness of Fine-Grained Address
+Space Layout Randomization,’’ Proc. IEEE Symp. on Security and Privacy, IEEE, pp.
+574–588, 2013.
+SOBELL, M.: A Practical Guide to Fedora and Red Hat Enterprise Linux, 7th ed., 
+Hoboken, NJ: Pearson, 2014.
+SPAFFORD, E., HEAPHY, K., and FERBRACHE, D.: Computer Viruses, Arlington, VA:
+ADAPSO, 1989.
+SRIRAMAN, A., and WENISCH, T.F.: ‘‘Tune: Auto-Tuned Threading for OLDI 
+Microservices,’’ Proc. 13th USENIX Symp. on Operating Syst. Design and Implementation,
+USENIX, 2018.
+STALLINGS, W.: Operating Syst., 9th ed., Hoboken, NJ: Pearson, 2017.
+STAN, M.R., and SKADRON, K: ‘‘Power-Aware Computing,’’ Computer, Vol. 36, pp.
+35–38, Dec. 2003.
+STEVENS, R.W., and RAGO, S.A.: Advanced Programming in the UNIX Environment,
+Boston: Addison-Wesley, 2013.
+STONE, H.S., and BOKHARI, S.H.: ‘‘Control of Distributed Processes,’’ Computer, Vol. 11,
+pp. 97–106, July 1978.
+STRATTON, J.A., RODRIGUES, C., SUNG, I.-J., CHANG, L.-W., ANSSARI, N., LIU, G.,
+HWU, W.-M., and OBEID, N.: ‘‘ Algorithm and Data Optimization Techniques for 
+Scaling to Massively Threaded Systems,’’ Computer, Vol. 45, pp. 26–32, Aug. 2012.
+SUGERMAN, J., VENKITACHALAM , G., and LIM, B.-H: ‘‘Virtualizing I/O Devices on
+VMware Workstation’s Hosted Virtual Machine Monitor,’’ Proc. USENIX Ann. Tech.
+Conf., USENIX, pp. 1–14, 2001.
+SWANSON, S., and CAULFIELD, A.M.: ‘‘Refactor, Reduce, Recycle: Restructuring the I/O
+Stack for the Future of Storage,’’ Computer, Vol. 46, pp. 52–59, Aug. 2013.
+TA CK LIM, J., DALL, C., LI, S.-W., NIEH, J. and ZYNGIER, M.: ‘‘NEVE: Nested 
+Virtualization Extensions for ARM,’’ Proc. 26th Symp. on Operating Syst. Prin., ACM, pp.
+201–217, 2017.
+TAIABUL HAQUE, S.M., WRIGHT, M., and SCIELZO, S.: ‘‘ A Study of User Password
+Strategy for Multiple Accounts,’’ Proc. Third Conf. on Data and Appl. Security and
+Privacy, ACM, pp. 173–176, 2013.

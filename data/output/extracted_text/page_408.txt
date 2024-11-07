@@ -1,0 +1,43 @@
+SEC. 5.4
+MASS STORAGE: DISK AND SSD
+379
+really tell whether cylinder 40 or cylinder 200 is closer to cylinder 39. On the
+other hand, if the disk controller can accept multiple outstanding requests, it can
+use these scheduling algorithms internally. In that case, the algorithms are still
+valid, but one level down, inside the controller.
+Error Handling
+Disk manufacturers are constantly pushing the limits of the technology by
+increasing linear bit densities. The IronWolf hard disk of our examples packs as
+many a 2470 Kbits per inch on average. Recording that many bits per inch
+requires an extremely uniform substrate and a very fine oxide coating. 
+Unfortunately, it is not possible to manufacture a disk to such specifications without defects.
+As soon as manufacturing technology has improved to the point where it is 
+possible to operate flawlessly at such densities, disk designers will go to higher 
+densities to increase the capacity. Doing so will probably reintroduce defects.
+Manufacturing defects introduce bad sectors, that is, sectors that do not 
+correctly read back the value just written to them. If the defect is very small, say, only
+a few bits, it is possible to use the bad sector and just let the ECC correct the errors
+ev ery time. If the defect is bigger, the error cannot be masked.
+There are two general approaches to bad blocks: deal with them in the 
+controller or deal with them in the operating system. In the former approach, before
+the disk is shipped from the factory, it is tested and a list of bad sectors is written
+onto the disk. For each bad sector, one of the spares is substituted for it.
+There are two ways to do this substitution. In Fig. 5-24(a), we see a single
+disk track with 30 data sectors and two spares. Sector 7 is defective. What the 
+controller can do is remap one of the spares as sector 7 as shown in Fig. 5-24(b). The
+other way is to shift all the sectors up one, as shown in Fig. 5-24(c). In both cases
+the controller has to know which sector is which. It can keep track of this 
+information through internal tables (one per track) or by rewriting the preambles to give
+the remapped sector numbers. If the preambles are rewritten, the method of
+Fig. 5-24(c) is more work (because 23 preambles must be rewritten) but ultimately
+gives better performance because an entire track can still be read in one rotation.
+Errors can also develop during normal operation after the drive has been
+installed. The first line of defense upon getting an error that the ECC cannot handle
+is to just try the read again. Some read errors are transient, that is, are caused by
+specks of dust under the head and will go away on a second attempt. If the 
+controller notices that it is getting repeated errors on a certain sector, it can switch to a
+spare before the sector has died completely. In this way, no data are lost and the
+operating system and user do not even notice the problem. Usually, the method of
+Fig. 5-24(b) has to be used since the other sectors might now contain data. Using
+the method of Fig. 5-24(c) would require not only rewriting the preambles, but
+copying all the data as well.

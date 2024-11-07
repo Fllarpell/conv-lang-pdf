@@ -1,0 +1,150 @@
+SEC. 8.1
+MULTIPROCESSORS
+551
+to regard the threads doing the compilations as a single group and to take that into
+account when scheduling them.
+Moreoever, sometimes it is useful to schedule threads that communicate 
+extensively, say in a producer-consumer fashion, not just at the same time, but also close
+together in space. For instance, they may benefit from sharing caches. Likewise, in
+NUMA architectures, it may help if they access memory that is close by.
+Time Sharing
+Let us first address the case of scheduling independent threads; later we will
+consider how to schedule related threads. The simplest scheduling algorithm for
+dealing with unrelated threads is to have a single systemwide data structure for
+ready threads, possibly just a list, but more likely a set of lists for threads at 
+different priorities as depicted in Fig. 8-12(a). Here, the 16 CPUs are all currently
+busy, and a prioritized set of 14 threads are waiting to run. The first CPU to finish
+its current work (or have its thread block) is CPU 4, which then locks the 
+scheduling queues and selects the highest-priority thread, A, as shown in Fig. 8-12(b).
+Next, CPU 12 goes idle and chooses thread B, as illustrated in Fig. 8-12(c). As
+long as the threads are completely unrelated, doing scheduling this way is a 
+reasonable choice and it is very simple to implement efficiently.
+0
+4
+8
+12
+1
+5
+9
+13
+2
+6
+10
+14
+3
+7
+11
+15
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+M
+N
+7
+5
+4
+2
+1
+0
+Priority
+CPU
+0
+A
+8
+12
+1
+5
+9
+13
+2
+6
+10
+14
+3
+7
+11
+15
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+M
+N
+7
+5
+4
+2
+1
+0
+Priority
+CPU 4
+goes idle
+CPU 12
+goes idle
+0
+A
+8
+B
+1
+5
+9
+13
+2
+6
+10
+14
+3
+7
+11
+15
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+M
+N
+7
+5
+4
+2
+3
+3
+3
+6
+6
+6
+1
+0
+Priority
+(a)
+(b)
+(c)
+Figure 8-12. Using a single data structure for scheduling a multiprocessor.
+Having a single scheduling data structure used by all CPUs timeshares the
+CPUs, much as they would be in a uniprocessor system. It also provides automatic
+load balancing because it can never happen that one CPU is idle while others are
+overloaded. Two disadvantages of this approach are the potential contention for the
+scheduling data structure as the number of CPUs grows and the usual overhead in
+doing a context switch when a thread blocks for I/O.

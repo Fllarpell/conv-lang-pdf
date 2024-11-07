@@ -1,0 +1,45 @@
+246
+MEMORY MANAGEMENT 
+CHAP. 3
+An address in MULTICS consisted of two parts: the segment and the address
+within the segment. The address within the segment was further divided into a page
+number and a word within the page, as shown in Fig. 3-35. When a memory 
+reference occurred, the following algorithm was carried out.
+1. The segment number was used to find the segment descriptor.
+2. A check was made to see if the segment’s page table was in memory.
+If it was, it was located. If it was not, a segment fault occurred. If
+there was a protection violation, a fault (trap) occurred.
+3. The page table entry for the requested virtual page was examined. If
+the page itself was not in memory, a page fault was triggered. If it
+was in memory, the main-memory address of the start of the page was
+extracted from the page table entry.
+4. The offset was added to the page origin to give the main memory
+address where the word was located.
+5. The read or store finally took place.
+Segment number
+Page!
+number
+Offset within!
+the page
+18
+6
+10
+Address within!
+the segment
+Figure 3-35. A 34-bit MULTICS virtual address.
+This process is illustrated in Fig. 3-36. For simplicity, the fact that the 
+descriptor segment was itself paged has been omitted. What really happened was that a
+register (the descriptor base register) was used to locate the descriptor segment’s
+page table, which, in turn, pointed to the pages of the descriptor segment. Once the
+descriptor for the needed segment was been found, the addressing proceeded as
+shown in Fig. 3-36.
+As you have no doubt guessed by now, if the preceding algorithm were 
+actually carried out by the operating system on every instruction, programs would not
+run very fast and users would not be happy campers. In reality, the MULTICS
+hardware contained a 16-word high-speed TLB that could search all its entries in
+parallel for a given key. This was the first system to have a TLB, something used
+in all modern architectures. It is illustrated in Fig. 3-37. When an address was
+presented to the computer, the addressing hardware first checked to see if the 
+virtual address was in the TLB. If so, it got the page frame number directly from the
+TLB and formed the actual address of the referenced word without having to look
+in the descriptor segment or page table.

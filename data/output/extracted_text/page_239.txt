@@ -1,0 +1,43 @@
+210
+MEMORY MANAGEMENT 
+CHAP. 3
+Class 0: not referenced, not modified.
+Class 1: not referenced, modified.
+Class 2: referenced, not modified.
+Class 3: referenced, modified.
+Although class 1 pages seem to be impossible, they occur when a class 3 page has
+its R bit cleared by a clock interrupt. Clock interrupts do not clear the M bit
+because this information is needed to know whether the page has to be rewritten to
+disk later. Clearing R but not M leads to a class 1 page. In other words, a class 1
+page is one that was modified long ago and has not been touched since then.
+The NRU (Not Recently Used) algorithm removes a page at random from the
+lowest-numbered nonempty class. Implicit in this algorithm is the idea that it is
+better to remove a modified page that has not been referenced in at least one clock
+tick (typically about 20 msec) than a clean page that is in heavy use. The main
+attraction of NRU is that it is easy to understand, moderately efficient to 
+implement, and gives a performance that, while certainly not optimal, may be adequate.
+3.4.3 The First-In, First-Out (FIFO) Page Replacement Algorithm
+Another low-overhead paging algorithm is the FIFO (First-In, First-Out)
+algorithm. To illustrate how this works, consider a supermarket that has enough
+shelves to display exactly k different products. One day, some company introduces
+a new convenience food—instant, freeze-dried, organic yogurt that can be 
+reconstituted in a microwave oven. It is an immediate success, so our finite supermarket
+has to get rid of one old product in order to stock it.
+One possibility is to find the product that the supermarket has been stocking
+the longest (i.e., something it began selling 120 years ago) and get rid of it on the
+grounds that no one is interested any more. In effect, the supermarket maintains a
+linked list of all the products it currently sells in the order they were introduced.
+The new one goes on the back of the list; the one at the front of the list is dropped.
+As a page replacement algorithm, the same idea is applicable. The operating
+system maintains a list of all pages currently in memory, with the most recent 
+arrival at the tail and the least recent arrival at the head. On a page fault, the page at
+the head is removed and the new page added to the tail of the list. When applied to
+stores, FIFO might remove mustache wax, but it might also remove flour, salt, or
+butter. When applied to computers, the same problem arises: the oldest page may
+still be useful. For this reason, FIFO in its pure form is rarely used.
+3.4.4 The Second-Chance Page Replacement Algorithm
+A simple modification to FIFO that avoids the problem of throwing out a 
+heavily used page is to inspect the R bit of the oldest page. If it is 0, the page is both
+old and unused, so it is replaced immediately. If the R bit is 1, the bit is cleared,
+the page is put onto the end of the list of pages, and its load time is updated as
+though it had just arrived in memory. Then the search continues.

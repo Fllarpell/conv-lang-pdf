@@ -1,0 +1,43 @@
+SEC. 2.5
+SCHEDULING
+171
+magnitude slower. On the other hand, with kernel-level threads, having a thread
+block on I/O does not suspend the entire process as it does with user-level threads.
+Since the kernel knows that switching from a thread in process A to a thread in
+process B is more expensive than running a second thread in process A (due to 
+having to change the memory map and having the memory cache spoiled), it can take
+this information into account when making a decision. For example, given two
+threads that are otherwise equally important, with one of them belonging to the
+same process as a thread that just blocked and one belonging to a different process,
+preference could be given to the former.
+Another important factor is that user-level threads can employ an 
+application-specific thread scheduler. Consider, for example, the Web server of Fig. 2-8.
+Suppose that a worker thread has just blocked and the dispatcher thread and two
+worker threads are ready. Who should run next? The run-time system, knowing
+what all the threads do, can easily pick the dispatcher to run next, so that it can
+start another worker running. This strategy maximizes the amount of parallelism in
+an environment where workers frequently block on disk I/O. With kernel-level
+threads, the kernel would never know what each thread did (although they could be
+assigned different priorities). In general, however, application-specific thread
+schedulers can tune an application better than the kernel can.
+2.6 RESEARCH ON PROCESSES AND THREADS
+In Chap. 1, we looked at some of the current research in operating system
+structure. In this and subsequent chapters, we will look at more narrowly focused
+research, starting with processes. As will become clear in time, some subjects are
+much more settled than others. Most of the research tends to be on the new topics,
+rather than ones that have been around for decades.
+The concept of a process is an example of something that is fairly well settled.
+Almost every system has some notion of a process as a container for grouping
+together related resources such as an address space, threads, open files, protection
+permissions, and so on. Different systems do the grouping slightly differently, but
+these are just engineering differences. The basic idea is not very controversial any
+more, and there is little new research on the subject of processes.
+Threads are a newer idea than processes, but they, too, have been chewed over
+quite a bit. Still, the occasional paper about threads appears from time to time, for
+example, about core-aware thread management (Qin et al., 2019), or on how well
+modern operating systems like Linux scale with many threads and many cores
+(Boyd-Wickizer, 2010).
+Additionally, there is a lot of work trying to prove things do not break in the
+presence of concurrency, for instance in file systems (Chajed et al., 2019; and Zou
+et al., 2019) and other services (Setty et al., 2018; and Li et al., 2019). This is
+important work as researchers have shown that concurrency bugs are unfortunately

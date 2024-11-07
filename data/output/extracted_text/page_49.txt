@@ -1,0 +1,41 @@
+20
+INTRODUCTION 
+CHAP. 1
+Apple’s iOS (released for the first iPhone in 2007) started eating into Symbian’s
+market share. Many expected that RIM would dominate the business market, while
+iOS would dominate on consumer devices. Symbian’s market share plummeted. In
+2011, Nokia ditched Symbian and announced it would focus on Windows Phone as
+its primary platform. For some time, Apple and RIM were the toast of the town
+(although not nearly as dominant as Symbian had been), but it did not take very
+long for Android, a Linux-based operating system released by Google in 2008, to
+overtake all its rivals.
+For phone manufacturers, Android had the advantage that it was open source
+and available under a permissive license. As a result, they could tinker with it and
+adapt it to their own hardware with ease. Also, it has a huge community of 
+developers writing apps, mostly in the familiar Java programming language. Even so,
+the past years have shown that the dominance may not last, and Android’s 
+competitors are eager to claw back some of its market share. We will look at Android in
+detail in Sec. 10.8.
+1.3 COMPUTER HARDWARE REVIEW
+An operating system is intimately tied to the hardware of the computer it runs
+on. It extends the computer’s instruction set and manages its resources. To work,
+it must know a great deal about the hardware, at least about how the hardware
+appears to the programmer. For this reason, let us briefly review computer 
+hardware as found in modern personal computers. After that, we can start getting into
+the details of what operating systems do and how they work.
+Conceptually, a simple personal computer can be abstracted to a model 
+resembling that of Fig. 1-6. The CPU, memory, and I/O devices are all connected by a
+system bus and communicate with one another over it. Modern personal computers
+have a more complicated structure, involving multiple buses, which we will look at
+later. For the time being, this model will be sufficient. In the following sections,
+we will briefly review these components and examine some of the hardware issues
+that are of concern to operating system designers. Needless to say, this will be a
+very compact summary. Many books have been written on the subject of computer
+hardware and computer organization. Two well-known ones are by Tanenbaum
+and Austin (2012) and Patterson and Hennessy (2018).
+1.3.1 Processors
+The ‘‘brain’’ of the computer is the CPU. It fetches instructions from memory
+and executes them. The basic cycle of every CPU is to fetch the first instruction
+from memory, decode it to determine its type and operands, execute it, and then
+fetch, decode, and execute subsequent instructions. The cycle is repeated until the
+program finishes. In this way, programs are carried out.

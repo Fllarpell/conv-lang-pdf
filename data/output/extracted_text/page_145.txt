@@ -1,0 +1,43 @@
+116
+PROCESSES AND THREADS
+CHAP. 2
+These problems are certainly not insurmountable, but they do show that just
+introducing threads into an existing system without a fairly substantial system
+redesign is not going to work at all. The semantics of system calls may have to be
+redefined and libraries rewritten, at the very least. And all of these things must be
+done in such a way as to remain backward compatible with existing programs for
+the limiting case of a process with only one thread. For additional information
+about threads, see Cook (2008) and Rodrigues et al. (2010).
+2.3 EVENT-DRIVEN SERVERS
+In the previous section, we have seen two possible designs for a Web server: a
+fast multithreaded one and a slow single-threaded one. Suppose that threads are not
+available or not desirable but the system designers find the performance loss due to
+single threading, as described so far, unacceptable. If nonblocking versions of 
+system calls, such as read, are available, a third approach is possible. When a request
+comes in, the one and only thread examines it. If it can be satisfied from the cache,
+fine, but if not, a nonblocking disk operation is started.
+The server records the state of the current request in a table and then goes and
+gets the next event. The next event may either be a request for new work or a reply
+from the disk about a previous operation. If it is new work, that work is started. If
+it is a reply from the disk, the relevant information is fetched from the table and the
+reply processed. With nonblocking disk I/O, a reply probably will have to take the
+form of a signal or interrupt.
+In this design, the ‘‘sequential process’’ model that we had in the first two
+cases is lost. The state of the computation must be explicitly saved and restored in
+the table every time the server switches from working on one request to another. In
+effect, we are simulating the threads and their stacks the hard way. A design like
+this, in which each computation has a saved state, and there exists some set of
+ev ents that can occur to change the state, is called a finite-state machine. This
+concept is widely used throughout computer science.
+In fact, it is very popular in high-throughput servers where even threads are
+considered too expensive and instead an ev ent-driven programming paradigm is
+used. By implementing the server as a finite state machine that responds to events
+(e.g., the availability of data on a socket) and interacting with the operating system
+using non-blocking (or asynchronous) system calls, the implementation can be
+very efficient. Every event leads to a burst of activity, but it never blocks.
+Fig. 2-19 shows a pseudo-code example of an event-driven thank-you server
+(the server thanks every client that sends it a message) that uses the select call to
+monitor multiple network connections (line 17). The select determines which file
+descriptors are ready for receiving or sending data and, looping over them, receives
+all the messages it can and then tries to send thank-you messages on all 
+corresponding connections that are ready to receive data. In case the server could not

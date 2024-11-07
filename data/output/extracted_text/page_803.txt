@@ -1,0 +1,51 @@
+774
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+System call
+Description
+s = mkdir(path, mode)
+Create a new director y
+s = rmdir(path) 
+Remove a director y
+s = link(oldpath, newpath) 
+Create a link to an existing file
+s = unlink(path) 
+Unlink a file
+s = chdir(path) 
+Change the wor king director y
+dir = opendir(path)
+Open a directory for reading
+s = closedir(dir) 
+Close a director y
+dirent = readdir(dir)
+Read one directory entr y
+rewinddir(dir) 
+Rewind a directory so it can be reread
+Figure 10-29. Some system calls relating to directories. The return code s is <1
+if an error has occurred; dir identifies a directory stream, and dirent is a directory
+entry. The parameters should be self-explanatory.
+As we saw in Fig. 10-24, linking to a file creates a new directory entry that
+points to an existing file. The link system call creates the link. The parameters 
+specify the original and new names, respectively. Directory entries are removed with
+unlink. When the last link to a file is removed, the file is automatically deleted. For
+a file that has never been linked, the first unlink causes it to disappear.
+The working directory is changed by the chdir system call. Doing so has the
+effect of changing the interpretation of relative path names.
+The last four calls of Fig. 10-29 are for reading directories. They can be 
+opened, closed, and read, analogous to ordinary files. Each call to readdir returns 
+exactly one directory entry in a fixed format. There is no way for users to write in a
+directory (in order to maintain the integrity of the file system). Files can be added
+to a directory using creat or link and removed using unlink. There is also no way to
+seek to a specific file in a directory, but rewinddir allows an open directory to be
+read again from the beginning.
+10.6.3 Implementation of the Linux File System
+In this section, we will first look at the abstractions supported by the Virtual
+File System layer. The VFS hides from higher-level processes and applications the
+differences among many types of file systems supported by Linux, whether they
+are residing on local devices or are stored remotely and need to be accessed over
+the network. Devices and other special files are also accessed through the VFS
+layer. Next, we will describe the implementation of the first widespread Linux file
+system, ext2, or the second extended file system. Afterward, we will discuss the
+improvements in the ext4 file system. A wide variety of other file systems are also
+in use. All Linux systems can handle multiple disk partitions, each with a different
+file system on it.

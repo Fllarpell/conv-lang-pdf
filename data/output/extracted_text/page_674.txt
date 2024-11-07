@@ -1,0 +1,45 @@
+SEC. 9.4
+AUTHENTICATION
+645
+password in them that the reader would send to the central computer, but in 
+practoce this is rarely, if ever, done.
+Smart cards can be used to hold money, as do stored value cards, but with
+much better security and universality. The cards can be loaded with money at an
+ATM machine or at home over the telephone using a special reader supplied by the
+bank. When inserted into a merchant’s reader, the user can authorize the card to
+deduct a certain amount of money from the card (by typing YES), causing the card
+to send a little encrypted message to the merchant. The merchant can later turn the
+message over to a bank to be credited for the amount paid.
+An advantage of smart cards over, say, credit or debit cards, is that they do not
+need an online connection to a bank. If you do not believe this is an advantage, try
+the following experiment. Try to buy a single candy bar at a store and insist on
+paying by credit card. If the merchant objects, say you have no cash with you and
+besides, you need the frequent flyer miles. You will discover that the merchant is
+not enthusiastic about the idea (because the associated bank charges dwarf the
+profit on the item). This makes smart cards useful for small store purchases, 
+parking meters, vending machines, and many other devices that normally require coins.
+Smart cards have other potentially valuable uses (e.g., encoding the bearer’s
+allergies and other medical conditions in a secure way for use in emergencies), but
+this is not the place to tell that story. Our interest here is how they can be used for
+secure login authentication. The basic idea is simple: a smart card is a small, 
+tamperproof computer that can engage in a discussion, called a protocol, with a 
+central computer to authenticate the user. For example, a user wishing to buy things at
+an e-commerce Website could insert a smart card into a home reader attached to
+his PC. The e-commerce site would not only use the smart card to authenticate the
+user in a more secure way than a password, but could also deduct the purchase
+price from the smart card directly, eliminating a great deal of the overhead (and
+risk) associated with using a credit card for online purchases.
+Various authentication schemes can be used with a smart card. A particularly
+simple challenge-response works like this. The server sends a 1024-bit random
+number to the smart card, which then adds the user’s 1024-bit password stored in
+the card’s ROM to it. The sum is then squared and the middle 1024 bits are sent
+back to the server, which knows the user’s password and can compute whether the
+result is correct or not. The sequence is shown in Fig. 9-16. If a wiretapper sees
+both messages, he will not be able to make much sense out of them, and recording
+them for future use is pointless because on the next login, a different 1024-bit 
+random number will be sent. In practice, a much better algorithm is used.
+9.4.3 Authentication Using Biometrics
+The third authentication method measures physical characteristics of the user
+that are hard to forge. These are called biometrics (Boulgouris et al., 2010; and
+Campisi, 2013). For example, many operating systems for smart phones and 
+notebooks use face recognition and/or fingerprints to verify the user’s identity.

@@ -1,0 +1,44 @@
+786
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+into internal system tables. The read call contains the file handle of the file to read,
+the offset in the file to begin reading, and the number of bytes desired. Each such
+message is self-contained. The advantage of this scheme is that the server does not
+have to remember anything about open connections in between calls to it. Thus if a
+server crashes and then recovers, no information about open files is lost, because
+there is none. A server like this that does not maintain state information about
+open files is said to be stateless.
+Unfortunately, the NFS method makes it difficult to achieve the exact Linux
+file semantics. For example, in Linux a file can be opened and locked so that other
+processes cannot access it. When the file is closed, the locks are released. In a
+stateless server such as NFS, locks cannot be associated with open files, because
+the server does not know which files are open. NFS therefore needs a separate,
+additional mechanism to handle locking.
+NFS uses the standard UNIX protection mechanism, with the rwx bits for the
+owner, group, and others (mentioned in Chap. 1 and discussed in detail below).
+Originally, each request message simply contained the user and group IDs of the
+caller, which the NFS server used to validate the access. In effect, it trusted the 
+clients not to cheat. Several years’ experience abundantly demonstrated that such an
+assumption was—how shall we put it?—rather naive. Currently, public key 
+cryptography can be used to establish a secure key for validating the client and server on
+each request and reply. When this option is used, a malicious client cannot 
+impersonate another client because it does not know that client’s secret key.
+NFS Implementation
+Although the implementation of the client and server code is independent of
+the NFS protocols, most Linux systems use a three-layer implementation similar to
+that of Fig. 10-36. The top layer is the system-call layer. This handles calls like
+open, read, and close. After parsing the call and checking the parameters, it
+invokes the second layer, the Virtual File System (VFS) layer.
+The task of the VFS layer is to maintain a table with one entry for each open
+file. The VFS layer additionally has an entry, a virtual i-node, or v-node, for every
+open file. The term v-node comes from BSD. In Linux, v-nodes are (confusingly)
+referred to as generic i-nodes, in contrast to the file system-specific i-nodes stored
+on disk. V-nodes are used to tell whether the file is local or remote. For remote
+files, enough information is provided to be able to access them. For local files, the
+file system and i-node are recorded because modern Linux systems can support
+multiple file systems (e.g., ext4fs, /proc, XFS, etc.). Although VFS was invented
+to support NFS, most modern Linux systems now support it as an integral part of
+the operating system, even if NFS is not used.
+To see how v-nodes are used, let us trace a sequence of mount, open, and read
+system calls. To mount a remote file system, the system administrator (or /etc/rc)
+calls the mount program specifying the remote directory, the local directory on

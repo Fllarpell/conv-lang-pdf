@@ -1,0 +1,41 @@
+924
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+defined by the I/O manager). The device object is a leaf node in the
+part of the NT namespace that the object manager manages.
+3. The object manager then calls the Parse procedure for this object
+type, which happens to be IopParseDevice implemented by the I/O
+manager. It passes not only a pointer to the device object it found (for
+C:), but also the remaining string \ foo \ bar.
+4. The I/O manager will create an IRP (I/O Request Packet), allocate a
+file object, and send the request to the stack of I/O devices determined
+by the device object found by the object manager.
+5. The IRP is passed down the I/O stack until it reaches a device object
+representing the file-system instance for C:. At each stage, control is
+passed to an entry point into the driver object associated with the 
+device object at that level. The entry point used here is for CREATE
+operations, since the request is to create or open a file named
+\ foo \ bar on the volume.
+6. The device objects encountered as the IRP heads toward the file 
+system represent file-system filter drivers, which may modify the I/O
+operation before it reaches the file-system device object. Typically
+these intermediate devices represent system extensions like antivirus
+filters.
+7. The file-system device object has a link to the file-system driver
+object, say NTFS. So, the driver object contains the address of the
+CREATE operation within NTFS.
+8. NTFS will fill in the file object and return it to the I/O manager,
+which returns back up through all the devices on the stack until 
+IopParseDevice returns to the object manager (see Sec. 11.8).
+9. The object manager is finished with its namespace lookup. It received
+back an initialized object from the Parse routine (which happens to be
+a file object—not the original device object it found). So the object
+manager creates a handle for the file object in the handle table of the
+current process and returns the handle to its caller.
+10. The final step is to return back to the user-mode caller, which in this
+example is the Win32 API CreateFile, which will return the handle to
+the application.
+Executive components can create new types dynamically, by calling the
+ObCreateObjectType interface to the object manager. There is no definitive list of
+object types and they change from release to release. Some of the more common
+ones in Windows are listed in Fig. 11-21. Let us briefly go over them.

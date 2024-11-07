@@ -1,0 +1,44 @@
+364
+INPUT/OUTPUT 
+CHAP. 5
+usually there are only a small number of device types and even these are generally
+almost the same, or the differ in only minor ways.
+The way this works is as follows. For each class of devices, such as disks or
+printers, the operating system defines a set of functions that the driver must supply.
+For a disk these would naturally include read and write, but also turning the power
+on and off, formatting, and other disky things. Often the driver holds a table with
+pointers into itself for these functions. When the driver is loaded, the operating
+system records the address of this table of function pointers, so when it needs to
+call one of the functions, it can make an indirect call via this table. This table of
+function pointers defines the interface between the driver and the rest of the 
+operating system. All devices of a given class (disks, printers, etc.) must obey it.
+Another aspect of having a uniform interface is how I/O devices are named.
+The device-independent software takes care of mapping symbolic device names
+onto the proper driver. For example, in UNIX a device name, such as /dev/disk0,
+uniquely specifies the i-node for a special file, and this i-node contains the major
+device number, which is used to locate the appropriate driver. The i-node also
+contains the minor device number, which is passed as a parameter to the driver in
+order to specify the unit to be read or written. All devices have major and minor
+numbers, and all drivers are accessed by using the major device number to select
+the driver.
+Closely related to naming is protection. How does the system prevent users
+from accessing devices that they are not entitled to access? In both UNIX and
+Windows, devices appear in the file system as named objects, which means that the
+usual protection rules for files also apply to I/O devices. The system administrator
+can then set the proper permissions for each device.
+Buffering
+Buffering is also an issue, both for block and character devices, for a variety of
+reasons. To see one of them, consider a process that wants to read data from an
+(VDSL—Very High Bitrate Digital Subscriber Line) modem, something many
+people use at home to connect to the Internet. One possible strategy for dealing
+with the incoming characters is to have the user process do a read system call and
+block waiting for one character. Each arriving character causes an interrupt. The
+interrupt-service procedure hands the character to the user process and unblocks it.
+After putting the character somewhere, the process reads another character and
+blocks again. This model is indicated in Fig. 5-15(a).
+The trouble with this way of doing business is that the user process has to be
+started up for every incoming character. Allowing a process to run many times for
+short runs is inefficient, so this design is not a good one.
+An improvement is shown in Fig. 5-15(b). Here the user process provides an
+n-character buffer in user space and does a read of n characters. The 
+interrupt

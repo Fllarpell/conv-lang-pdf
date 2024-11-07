@@ -1,0 +1,43 @@
+1112
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+ORGANICK, E.I.: The Multics System, Cambridge, MA: M.I.T. Press, 1972.
+ORWICK, P., and SMITH, G.: Developing Drivers with the Windows Driver Foundation,
+Redmond, WA: Microsoft Press, 2007.
+OSTERLUND, S., KONING K., OLIVIER P., BARBALACE, A., BOS, H., and GIUFFRIDA,
+C.: ‘‘kMVX: Detecting Kernel Information Leaks with Multi-variant Execution,’’ Proc.
+24th Int. Conf. on Arc hitectural Support for Programming Languages and Operating
+Syst., ACM, 2019.
+OSTRAND, T.J., and WEYUKER, E.J.: ‘‘The Distribution of Faults in a Large Industrial
+Software System,’’ Proc. 2002 ACM SIGSOFT Int’l Symp. on Software Testing and
+Analysis, ACM, pp. 55–64, 2002.
+OSTROWICK, J.: Locking Down Linux—An Introduction to Linux Security, Raleigh, NC:
+Lulu Press, 2013.
+OUSTERHOUT, J.K.: ‘‘Scheduling Techniques for Concurrent Systems,’’ Proc. Third Int’l
+Conf. on Distrib. Computing Syst., IEEE, pp. 22–30, 1982.
+OUSTERHOUT, J.L.: ‘‘Why Threads Are a Bad Idea (for Most Purposes),’’ Presentation at
+Proc. USENIX Winter Conf., USENIX, 1996.
+PAPA GIANNIS, A., MARAZAKIS, M., and BILAS, A.: ‘‘Memory-Mapped I/O on Steroids,’’
+Proc. 16th European Conf. on Computer Syst., ACM, pp. 277–293, 2021.
+PARK, J., KI, M., CHUN, M., OROSA, L., KIM, J., and MUTLU, O.: ‘‘Reducing Solid State
+Drive Read Latency by Optimizing Read-Retry,’’ Proc. 26th ACM International Conf.
+on Architectural Support for Programming Languages and Operating Syst., ACM,
+2021.
+PASQUINI, D., CIANFRIGLIA, M., ATENIESE, G., and BERNASCHI, M.: ‘‘Reducing Bias
+in Modeling Real-world Password Strength via Deep Learning and Dynamic 
+Dictionaries,’’ Proc. 30th USENIX Security Symp., USENIX, pp. 821–838, 2021.
+PATE, S.D.: UNIX Filesystems: Evolution, Design, and Implementation, Hoboken, NJ: John
+Wiley & Sons, 2003.
+PATTERSON, D.A., GIBSON, G., and KATZ, R.: ‘‘ A Case for Redundant Arrays of 
+Inexpensive Disks (RAID),’’ Proc. ACM SIGMOD Int’l. Conf. on Management of Data, ACM,
+pp. 109–166, 1988.
+PATTERSON, D.A., and HENNESSY, J.L.: Computer Organization and Design, 5th ed.,
+Burlington, MA: Morgan Kaufman, 2013.
+PATTERSON, D.A., and HENNESSY, J.L.: Computer Organization and Design RISC V 
+Edition, Cambridge, MA: Morgan Kaufmann, 2018.
+PETERSON, G.L.: ‘‘Myths about the Mutual Exclusion Problem,’’ Inform. Proc. Letters,
+Vol. 12, pp. 115–116, June 1981.
+PETRUCCI, V., and LOQUES, O.: ‘‘Lucky Scheduling for Energy-Efficient Heterogeneous
+Multi-core Systems,’’ Proc. USENIX Workshop on Power-Aware Computing and Syst.,
+USENIX, 2012.
+PETZOLD, C.: Programming Windows, 6th ed., Redmond, WA: Microsoft Press, 2013.

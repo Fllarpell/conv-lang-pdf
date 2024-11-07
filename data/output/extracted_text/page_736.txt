@@ -1,0 +1,44 @@
+SEC. 10.1
+HISTORY OF UNIX AND LINUX
+707
+The port to the Interdata initially went slowly at first because the development
+work had to be done on the only working UNIX machine, a PDP-11, which was
+located on the fifth floor at Bell Labs. The Interdata was on the first floor. 
+Generating a new version meant compiling it on the fifth floor and then physically 
+carrying a magnetic tape down to the first floor to see if it worked. After several months
+of tape carrying, an unknown person said: ‘‘You know, we’re the phone company.
+Can’t we run a wire between these two machines?’’ Thus, was UNIX networking
+born. After the Interdata port, UNIX was ported to the VAX and later to other 
+computers.
+After AT&T was broken up in 1984 by the U.S. government, the company was
+legally free to set up a computer subsidiary, and did so. Shortly thereafter, AT&T
+released its first commercial UNIX product, System III. It was not well received,
+so it was replaced by an improved version, System V, a year later. Whatever 
+happened to System IV is one of the great unsolved mysteries of computer science.
+The original System V has since been replaced by System V, releases 2, 3, and 4,
+each one bigger and more complicated than its predecessor. In the process, the 
+original idea behind UNIX, of having a simple, elegant system, was gradually 
+diminished. Although Ritchie and Thompson’s group later produced an 8th, 9th, and
+10th edition of UNIX, these were never widely circulated, as AT&T put all its 
+marketing muscle behind System V. Howev er, some of the ideas from the 8th, 9th, and
+10th editions were eventually incorporated into System V. AT&T eventually 
+decided that it wanted to be a telephone company after all, not a computer company,
+and sold its UNIX business to Novell in 1993. Novell subsequently sold it to the
+Santa Cruz Operation in 1995. By then it was almost irrelevant who owned it,
+since all the major computer companies already had licenses.
+10.1.4 Berkeley UNIX
+One of the many universities that acquired UNIX Version 6 early on was the
+University of California at Berkeley. Because the full source code was available,
+Berkeley was able to modify the system substantially. Aided by grants from ARPA,
+the U.S. Dept. of Defense’s Advanced Research Projects Agency, Berkeley, 
+produced and released an improved version for the PDP-11 called 1BSD (First
+Berkeley Software Distribution). This tape was followed quickly by another, 
+called 2BSD, also for the PDP-11.
+More important were 3BSD and especially its successor, 4BSD for the VAX.
+Although AT&T had a VAX version of UNIX, called 32V, it was essentially 
+Version 7. In contrast, 4BSD contained a large number of major improvements. 
+Foremost among these was the use of virtual memory and paging, allowing programs to
+be larger than physical memory by paging parts of them in and out as needed.
+Another change allowed file names to be longer than 14 characters. The 
+implementation of the file system was also changed, making it considerably faster. 
+Signal handling was made more reliable. Networking was introduced, causing the

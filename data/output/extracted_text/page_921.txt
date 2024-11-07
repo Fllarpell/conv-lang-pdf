@@ -1,0 +1,63 @@
+892
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+boots, a hive named SYSTEM is loaded into memory by the boot program that
+loads the kernel and other boot files, such as boot drivers, from the boot volume.
+Windows keeps much crucial information in the SYSTEM hive, including 
+information about what drivers to use with what devices, what software to run 
+initially, and many parameters governing the operation of the system. This 
+information is used even by the boot program itself to determine which drivers are boot
+drivers, being needed immediately upon boot. Such drivers include those that
+understand the file system and disk drivers for the volume containing the operating
+system itself.
+Other configuration hives are used after the system boots to describe 
+information about the software installed on the system, particular users, and the classes
+of user-mode COM (Component Object-Model) objects that are installed on the
+system. Login information for local users is kept in the SAM (Security Access
+Manager) hiv e. Information for network users is maintained by the lsass service
+in the security hive and coordinated with the network directory servers so that
+users can have a common account name and password across an entire network. A
+list of the hives used in Windows is shown in Fig. 11-9.
+Hive file
+Mounted name
+Use
+SYSTEM 
+HKLM \SYSTEM 
+OS configuration infor mation, used by ker nel
+HARDWARE 
+HKLM \HARDWARE 
+In-memory hive recording hardware detected
+BCD 
+HKLM \BCD* 
+Boot Configuration Database
+SAM 
+HKLM \SAM 
+Local user account infor mation
+SECURITY 
+HKLM \SECURITY 
+lsass’ account and other security infor mation
+DEFAULT 
+HKEY USERS \.DEFAULT 
+Default hive for new users
+NTUSER.DAT 
+HKEY USERS \<user id> 
+User-specific hive, kept in home directory
+SOFTWARE 
+HKLM \SOFTWARE 
+Application classes registered by COM
+COMPONENTS 
+HKLM \COMPONENTS 
+Manifests and dependencies for sys. components
+Figure 11-9. The registry hives in Windows. HKLM is a shorthand for
+HKEY LOCAL MACHINE.
+Prior to the introduction of the registry, configuration information in Windows
+was kept in hundreds of .ini (initialization) files spread across the disk. The registry
+gathers these files into a central store, which is available early in the process of
+booting the system. This is important for implementing Windows plug-and-play
+functionality. Unfortunately, the registry has become very seriously disorganized
+over time as Windows has evolved. There are poorly defined conventions about
+how the configuration information should be arranged, and many applications take
+an ad hoc approach, leading to interference between them. Also, even though most
+applications do not, by default, run with administrative privileges, they can escalate
+to get full privileges and modify system parameters in the registry directly, 
+potentially destabilizing the system. Fixing the registry would break a lot of software.

@@ -1,0 +1,46 @@
+CHAP. 5  
+PROBLEMS
+435
+When the character has been printed, an interrupt occurs and a message is sent to the
+blocked driver, which outputs the next character and then blocks again. If the time to
+pass a message, output a character, and block is 100 µsec, what fraction of the CPU is
+eaten by the modem handling? Assume that each character has one start bit and one
+stop bit, for 10 bits in all.
+44. A smartphone screen contains 720 × 1280 pixels. To scroll a full screen of text, the
+CPU (or controller) must move all the lines of text upward by copying their bits from
+one part of the video RAM to another. A character’s box is 16 pixels wide by 32 pixels
+high (including intercharacter and interline spacing), Each pixel is 24 bits. How many
+characters fit on the screen? How long does it take to scroll the whole screen at a
+copying rate of 5 nsec per byte assuming there is no hardware assistance? What is the
+scrolling speed in lines/sec?
+45. A bitmap screen contains 1600 by 1200 pixels with 24 bits/pixel. To scroll a window,
+the CPU (or controller) must move all the lines of text upward by copying their bits
+from one part of the video RAM to another. If a particular window is 80 characters
+wide by 60 lines high and a character’s box is 8 pixels wide by 16 pixels high, how
+long does it take to scroll the whole window at a copying rate of 5 nsec per byte? How
+many lines/sec can be scrolled?
+46. After receiving a DEL (SIGINT) character, the display driver discards all output 
+currently queued for that display. Why?
+47. A user issues a command to an editor to delete the word on line 5 occupying character
+positions 7 through and including 12. Assuming the cursor is not on line 5 when the
+command is given, what ANSI escape sequence should the editor emit to delete the
+word?
+48. On the original IBM PC’s color display, writing to the video RAM at any time other
+than during the CRT beam’s vertical retrace caused ugly spots to appear all over the
+screen. A screen image is 25 by 80 characters, each of which fits in a box 8 pixels by 8
+pixels. Each row of 640 pixels is drawn on a single horizontal scan of the beam, which
+takes 63.6 µsec, including the horizontal retrace. The screen is redrawn 60 times a 
+second, each of which requires a vertical retrace period to get the beam back to the top.
+What fraction of the time is the video RAM available for writing in?
+49. The designers of a computer system expected that the mouse could be moved at a 
+maximum rate of 20 cm/sec. If a mickey is 0.1 mm and each mouse message is 3 bytes,
+what is the maximum data rate of the mouse assuming that each mickey is reported
+separately?
+50. The primary additive colors are red, green, and blue, which means that any color can
+be constructed from a linear superposition of these colors. Is it possible that someone
+could have a color photograph that cannot be represented using full 24-bit color?
+51. One way to place a character on a bitmapped screen is to use BitBlt from a font table.
+Assume that a particular font uses characters that are 16 × 24 pixels in true RGB color.
+(a) How much font table space does each character take?
+(b) If copying a byte takes 100 nsec, including overhead, what is the output rate to the
+screen in characters/sec?

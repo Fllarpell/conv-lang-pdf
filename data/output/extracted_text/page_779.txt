@@ -1,0 +1,61 @@
+750
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+node_zones[3]!
+node_mem_map!
+…!
+node_id
+ZONE_HIGHMEM
+ZONE_NORMAL
+ZONE_DMA
+free_pages!
+pages_low!
+pages_high!
+…!
+free_area[0]!
+free_area[1]!
+…!
+free_area[10]!
+…!
+active_list!
+inactive_list!
+name
+node descriptor
+zone descriptor
+Mem_map: array!
+of page descriptor
+Physical memory
+70
+80
+150
+200
+200 – 1 free page
+150 – mapped
+80 – free page
+70 – free page
+~~
+~~
+~~
+~~
+~~
+~~
+~~
+~~
+Mapping = address_space
+Figure 10-15. Linux’ main memory representation.
+Finally, since Linux is portable to NUMA architectures (where different 
+memory addresses have different access times), in order to differentiate between 
+physical memory on different nodes (and avoid allocating data structures across nodes),
+a node descriptor is used. Each node descriptor contains information about the
+memory usage and zones on that particular node. On UMA platforms, Linux 
+describes all memory via one node descriptor. The first few bits within each page
+descriptor are used to identify the node and the zone that the page frame belongs
+to.
+In order for the paging mechanism to be efficient on both 32- and 64-bit 
+architectures, Linux makes good use of a four-level paging scheme. A three-level 
+paging scheme, originally put into the system for the Alpha, was expanded after Linux
+2.6.10, and as of version 2.6.11 a four-level paging scheme is used. Each virtual
+address is broken up into fiv e fields, as shown in Fig. 10-16. The directory fields
+are used as an index into the appropriate page directory, of which there is a private
+one for each process. The value found is a pointer to one of the next-level 
+directories, which are again indexed by a field from the virtual address. The selected

@@ -1,0 +1,46 @@
+SEC. 10.6
+THE LINUX FILE SYSTEM
+777
+be contiguous on the disk. In fact, the blocks of a large file are likely to be spread
+all over the disk.
+I-nodes corresponding to directories are dispersed throughout the disk block
+groups. Ext2 makes an effort to collocate ordinary files in the same block group as
+the parent directory, and data files in the same block as the original file i-node, 
+provided that there is sufficient space. This idea was borrowed from the Berkeley Fast
+File System (McKusick et al., 1984). The bitmaps are used to make quick 
+decisions regarding where to allocate new file-system data. When new file blocks are
+allocated, ext2 also preallocates a number (eight) of additional blocks for that file,
+so as to minimize the file fragmentation due to future write operations. This
+scheme balances the file-system load across the entire disk. It also performs well
+due to its tendencies for collocation and reduced fragmentation.
+To access a file, it must first use one of the Linux system calls, such as open,
+which requires the file’s path name. The path name is parsed to extract individual
+directories. If a relative path is specified, the lookup starts from the process’ 
+current directory, otherwise it starts from the root directory. In either case, the i-node
+for the first directory can easily be located: there is a pointer to it in the process
+descriptor, or, in the case of a root directory, it is typically stored in a 
+predetermined block on disk.
+The directory file allows file names up to 255 characters and is illustrated in
+Fig. 10-32. Each directory consists of some integral number of disk blocks so that
+directories can be written atomically to the disk. Within a directory, entries for files
+and directories are in unsorted order, with each entry directly following the one
+before it. Entries may not span disk blocks, so often there are some number of
+unused bytes at the end of each disk block.
+Each directory entry in Fig. 10-32 consists of four fixed-length fields and one
+variable-length field. The first field is the i-node number, 19 for the file colossal,
+42 for the file voluminous, and 88 for the directory bigdir. Next comes a field
+rec len, telling how big the entry is (in bytes), possibly including some padding
+after the name. This field is needed to find the next entry for the case that the file
+name is padded by an unknown length. That is the meaning of the arrow in
+Fig. 10-32. Then comes the type field: file, directory, and so on. The last fixed
+field is the length of the actual file name in bytes, 8, 10, and 6 in this example.
+Finally, comes the file name itself, terminated by a 0 byte and padded out to a
+32-bit boundary. Additional padding may follow that.
+In Fig. 10-32(b) we can see the same directory after the entry for voluminous
+has been removed from the directory. All the removal has done is increase the size
+of the total entry field for colossal, turning the former field for voluminous into
+padding for the first entry. This padding can be used for a subsequent entry, of
+course.
+Since directories are searched linearly, it can take a long time to find an entry
+at the end of a large directory. Therefore, the system maintains a cache of recently
+accessed directories. This cache is searched using the name of the file, and if a hit

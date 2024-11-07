@@ -1,0 +1,57 @@
+666
+SECURITY 
+CHAP. 9
+programmer could check to see that the product of multiplying two positive 
+integers each greater than 1 was more than each of the factors, but programmers rarely
+do that.
+9.5.7 Command Injection Attacks
+Yet another exploit involves getting the target program to execute commands
+without realizing it is doing so. Consider a program that at some point needs to
+duplicate some user-supplied file under a different name (perhaps as a backup). If
+the programmer is too lazy to write the code, she could use the system function,
+which forks off a shell and executes its argument as a shell command. For 
+example, the C code
+system("ls >file-list")
+forks off a shell that executes the command
+ls >file-list
+listing all the files in the current directory and writing them to a file called file-list.
+The code that the lazy programmer might use to duplicate the file is given in
+Fig. 9-22.
+1. int main(int argc, char *argv[])
+2. {
+3. 
+char src[100], dst[100], cmd[205] = "cp ";
+/* declare 3 strings */
+4. 
+printf("Please enter name of source file: ");
+/* ask for source file */
+5. 
+gets(src);
+/* get input from the keyboard */
+6. 
+strcat(cmd, src); 
+/* concatenate src after cp */
+7. 
+strcat(cmd, " "); 
+/* add a space to the end of cmd */
+8. 
+printf("Please enter name of destination file: ");/* ask for output file name */
+9. 
+gets(dst);
+/* get input from the keyboard */
+10. 
+strcat(cmd, dst); 
+/* complete the commands string */
+11. 
+system(cmd);
+/* execute the cp command */
+12. }
+Figure 9-22. Code that might lead to a command injection attack.
+What the program does is ask for the names of the source and destination files,
+build a command line using cp, and then call system to execute it. Suppose that the
+user types in ‘‘abc’’ and ‘‘xyz’’, respectively, then the command that the shell will
+execute is
+cp abc xyz
+which indeed copies the file.
+Unfortunately this code is not just vulnerable to a buffer overflow, it also opens
+up an even simpler attack possibility through command injection. Suppose that

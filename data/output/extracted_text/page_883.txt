@@ -1,0 +1,23 @@
+854
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Figure 10-80. Android 11’s location permission settings.
+access as shown in Fig. 10-81. Note that these are essentially the same types of
+location access applications and the user could differentiate between back at the
+start in Android 1.0! They were hidden from the user, but were still options for the
+app, in Android 5.0. Android 12 again shows them explicitly to the user while also
+allowing them to override the app’s preference (if it is requesting fine access).
+Android 12 also introduced a new ‘‘privacy dashboard,’’ allowing users to see
+when apps are accessing their location and other personal data after they hav e
+granted that access. Fig. 10-82 shows an example of what a user may see about
+location access across their device. This provides a rich tool for users to monitor
+what their apps are doing, to reassure themselves they are comfortable with it and
+potentially change their decision about an app’s access based on what they see.
+The changes we have discussed (from the transition to runtime permissions,
+through evolution of location access, to privacy dashboard) all serve to illustrate
+how privacy has become a unique aspect of operating system design. Most 
+operating system features are better the less the user is aware of them. This is true not
+only for security, as we previously described, but generally the better solution for a
+problem is one where the operating system can do something so that the user does
+not need to think about it. We saw another example of this earlier, with Android 
+removing the need for users to think about explicitly starting and stopping their apps.

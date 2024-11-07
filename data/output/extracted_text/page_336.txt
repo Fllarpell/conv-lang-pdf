@@ -1,0 +1,42 @@
+SEC. 4.4
+FILE-SYSTEM MANAGEMENT AND OPTIMIZATION
+307
+When a user attempts to log in, the system examines the quota file to see if the
+user has exceeded the soft limit for either number of files or number of disk blocks.
+If either limit has been violated, a warning is displayed, and the count of warnings
+remaining is reduced by one. If the count ever gets to zero, the user has ignored
+the warning one time too many, and is not permitted to log in. Getting permission
+to log in again will require some discussion with the system administrator.
+This method has the property that users may go above their soft limits during a
+login session, provided they remove the excess before logging out. The hard limits
+may never be exceeded.
+4.4.2 File-System Backups
+Destruction of a file system is often a far greater disaster than destruction of a
+computer. If a computer is destroyed by fire, lightning surges, or a cup of coffee
+poured onto the keyboard, it is annoying and will cost money, but generally a
+replacement can be purchased with a minimum of fuss. Inexpensive personal 
+computers can even be replaced within an hour by just going to a computer store
+(except at universities, where issuing a purchase order takes three committees, fiv e
+signatures, and 90 days).
+If a computer’s file system is irrevocably lost, whether due to hardware or 
+software failures, restoring all the information will be difficult, time consuming, and in
+many cases, impossible. For the people whose programs, documents, tax records,
+customer files, databases, marketing plans, or other data are gone forever, the 
+consequences can be catastrophic. While the file system cannot offer any protection
+against physical destruction of the equipment and media, it can help protect the
+information. It is pretty straightforward: make backups. But that is not quite as
+simple as it sounds. Let us take a look.
+Most people do not think making backups of their files is worth the time and
+effort—until one fine day their disk abruptly dies, at which time most of them
+undergo an instantaneous change of heart. Companies, however, (usually) well
+understand the value of their data and generally do a backup at least once a day, to
+a large disk or even good old-fashioned tape. Tape is still very cost efficient, 
+costing less than $10/TB; no other medium comes close to that price. For companies
+with petabytes or exabytes of data, cost of the backup medium matters. 
+Nevertheless, making backups is not quite as trivial as it sounds, so we will examine some
+of the related issues below.
+Backups are generally made to handle one of two potential problems:
+1. Recover from disaster
+2. Recover from user mistakes
+The first one covers getting the computer running again after a disk crash, fire,
+flood, or some other natural catastrophe. In practice, these things do not happen

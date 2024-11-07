@@ -1,0 +1,38 @@
+598
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+subject line. Subscription is done by telling a tuple daemon process on the same
+machine that monitors published tuples what subjects to look for.
+Publish/subscribe is implemented as illustrated in Fig. 8-37. When a process
+has a tuple to publish, it broadcasts it out onto the local LAN. The tuple daemon
+on each machine copies all broadcasted tuples into its RAM. It then inspects the
+subject line to see which processes are interested in it, forwarding a copy to each
+one that is. Tuples can also be broadcast over a wide area network or the Internet
+by having one machine on each LAN act as an information router, collecting all
+published tuples and then forwarding them to other LANs for rebroadcasting. This
+forwarding can also be done intelligently, forwarding a tuple to a remote LAN only
+if that remote LAN has at least one subscriber who wants the tuple. Doing this
+requires having the information routers exchange information about subscribers.
+Information router
+Daemon
+Consumer
+LAN
+Producer
+WAN
+Figure 8-37. The publish/subscribe architecture.
+Various kinds of semantics can be implemented, including reliable delivery
+and guaranteed delivery, even in the presence of crashes. In the latter case, it is
+necessary to store old tuples in case they are needed later. One way to store them is
+to hook up a database system to the system and have it subscribe to all tuples. This
+can be done by wrapping the database system in an adapter, to allow an existing
+database to work with the publish/subscribe model. As tuples come by, the adapter
+captures all of them and puts them in the database.
+The publish/subscribe model fully decouples producers from consumers, as
+does Linda. However, sometimes it is useful to know who else is out there. This
+information can be acquired by publishing a tuple that basically asks: ‘‘Who out
+there is interested in x?’’ Responses come back in the form of tuples that say: ‘‘I
+am interested in x.’’
+8.4 RESEARCH ON MULTIPLE PROCESSOR SYSTEMS
+Research on multicores, multiprocessors, and distributed systems is extremely
+popular. Besides the direct problems of mapping operating system functionality on
+a system consisting of multiple processing cores, there are many open research

@@ -1,0 +1,43 @@
+SEC. 6.7
+OTHER ISSUES
+469
+system will look around and choose the process with the shortest file. If there is a
+constant stream of processes with short files, the process with the huge file will
+never be allocated the printer. It will simply starve to death (be postponed 
+indefinitely, even though it is not blocked).
+Starvation can be avoided by using a first-come, first-served resource 
+allocation policy. With this approach, the process waiting the longest gets served next.
+In due course of time, any giv en process will eventually become the oldest and thus
+get the needed resource.
+It is worth mentioning that some people do not make a distinction between
+starvation and deadlock because in both cases there is no forward progress. Others
+feel that they are fundamentally different because a process could easily be 
+programmed to try to do something n times and, if all of them failed, try something
+else. A blocked process does not have that choice.
+6.8 RESEARCH ON DEADLOCKS
+If ever there was a subject that was investigated mercilessly during the early
+days of operating systems (1960s and 1970s), it was deadlocks. The reason is that
+deadlock detection is a nice little graph-theory problem that one mathematically
+inclined graduate student could get his jaws around and chew on for 4 years.
+Many algorithms were devised, each one more exotic and less practical than the
+previous one. Most of that work has died out. Still, a few papers are still being
+published on deadlocks.
+Recent work on deadlocks includes new approaches to diagnose concurrency
+problems such as deadlocks. The challenge here is to reproduce the schedules, or
+‘‘thread interleavings,’’ that lead to the deadlock, livelock, and similar conditions.
+Unfortunately, recording in detail the scheduling decisions in production systems is
+too expensive. Instead, researchers are looking for ways to record the interleavings
+at a coarser granularity while guaranteeing reproducibility of the deadlock or
+livelock problem (Kasikci et al., 2017).
+Marino et al. (2013), on the other hand, use concurrency control to make sure
+that deadlocks cannot occur in the first place. In contrast, Duo et al. (2020) use 
+formal modeling to derive constraints on the scheduling to ensure deadlocks will not
+happen.
+Solutions for deadlock detection are not limited to a single system. For
+instance, Hu et al. (2017) give a method that prevents deadlocks due to the use of
+Remote DMA (RDMA) in data centers. RDMA is just like regular DMA as 
+discussed in Chap. 5, except that the DMA transfer is now initiated from a remote
+machine across the network. In a specific mode, known as priority flow control, the
+RDMA transfer requires the (exclusive) reservation of RDMA buffers in the 
+intermediate nodes in the network. It does so to make sure there can be no packet drops
+due to buffers overflowing. However, these buffers are just the sort of limited

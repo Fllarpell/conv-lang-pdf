@@ -1,0 +1,46 @@
+844
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+happen, resulting in significant security issues that are shipped and need to be
+fixed. It is thus also important to adopt a ‘‘defense in depth’’ strategy to minimize
+the impact of a single security bug.
+Sandboxing forms the foundation of Android’s security architecture and
+defense-in-depth approach. For example, Android provides a special kind of UID
+sandbox called an ‘‘isolated service.’’ This is a service that runs in its own 
+dedicated process, with a transient UID that is not associated with any capabilities: no
+access to any permissions, or most system services, or app filesystem, etc. This
+facility is used to render things like Web pages and PDF files, content that is
+extremely complicated to handle and thus often has bugs that allow such content,
+retrieved from an untrusted source, to deliver an exploit through bugs in the content
+handling code.
+Since the capabilities of an isolated process are minimized, exploits in that
+content often need to find a security hole in both the isolated sandbox that allow it
+to get out to the app sandbox, and then a hole in the app sandbox to exploit the 
+system itself.
+This restricted sandbox approach is used throughout Android. Of particular
+note is the media system, which initially suffered a significant number of exploits
+(given the name ‘‘stagefright’’ from the name of the core media library). Like Web
+pages and PDFs, media codecs deal with complicated formats of data that comes
+from untrusted sources, making them ripe for exploit. The solution here was to
+likewise isolate these codecs and other parts of the media system into highly 
+restricted sandboxes that only gav e them the capabilities needed for their operation
+and nothing more.
+Sandboxes do have limitations: their functionality, though limited, is still fairly
+significant. Vulnerabilities in the things they interact with (especially the kernel)
+can allow them to bypass most of the system’s security. In Android 5.0, SELinux
+was introduced as an additional security layer in the platform that works in 
+conjunction with its existing UID-based sandboxes as well as providing more 
+finegrained sandboxing for system components.
+The security mechanisms we have talked about so far use a model called 
+discretionary access control (DAC), meaning the entity creating a resource (such as a
+file) has the discretion to determine who has access to it. SELinux, in contrast, 
+provides mandatory access control (MAC), meaning all access to resources is defined
+statically and separately from the code. In SELinux, an entity starts without access
+to anything, and rules are written to explicitly specify what it is allowed to do.
+SELinux by itself cannot be used to implement Android’s security model,
+because it is not flexible enough: it would not allow one application to get access
+to a piece of data from another application only when the user says that is allowed.
+Rather, SELinux provides a parallel security mechanism with different capabilities
+and benefits. While some security restrictions are enforced via only UID or
+SELinux, where possible Android will utilize both mechanisms to provide 
+defensein-depth for security restrictions.

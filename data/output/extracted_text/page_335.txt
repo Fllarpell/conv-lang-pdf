@@ -1,0 +1,44 @@
+306
+FILE SYSTEMS
+CHAP. 4
+Since the bitmap is a fixed-size data structure, if the kernel is (partially) paged, the
+bitmap can be put in virtual memory and have pages of it paged in as needed.
+Disk Quotas
+To prevent people from hogging too much disk space, multiuser operating 
+systems often provide a mechanism for enforcing disk quotas. The idea is that the 
+system administrator assigns each user a maximum allotment of files and blocks, and
+the operating system makes sure that the users do not exceed their quotas. A 
+typical mechanism is described below.
+When a user opens a file, the attributes and disk addresses are located and put
+into an open-file table in main memory. Among the attributes is an entry telling
+who the owner is. Any increases in the file’s size will be charged to the owner’s
+quota.
+A second table contains the quota record for every user with a currently open
+file, even if the file was opened by someone else. This table is shown in Fig. 4-26.
+It is an extract from a quota file on disk for the users whose files are currently
+open. When all the files are closed, the record is written back to the quota file.
+Open file table
+Quota table
+Soft block limit
+Hard block limit
+Current # of blocks
+# Block warnings left
+Soft file limit
+Hard file limit
+Current # of files
+# File warnings left
+Attributes!
+disk addresses!
+User = 8!
+!Quota pointer
+Quota!
+record!
+for user 8
+Figure 4-26. Quotas are kept track of on a per-user basis in a quota table.
+When a new entry is made in the open-file table, a pointer to the owner’s quota
+record is entered into it, to make it easy to find the various limits. Every time a
+block is added to a file, the total number of blocks charged to the owner is 
+incremented, and a check is made against both the hard and soft limits. The soft limit
+may be exceeded, but the hard limit may not. An attempt to append to a file when
+the hard block limit has been reached will result in an error. Analogous checks also
+exist for the number of files to prevent a user from hogging all the i-nodes.

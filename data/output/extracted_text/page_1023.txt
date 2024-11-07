@@ -1,0 +1,44 @@
+994
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+name. If the actual file name conforms to the MS-DOS 8 + 3 naming rule, a 
+secondary MS-DOS name is not needed.
+In NT 4.0, security information was put in an attribute, but in Windows 2000
+and later, security information all goes into a single file so that multiple files can
+share the same security descriptions. This results in significant savings in space
+within most MFT records and in the file system overall because the security info
+for so many of the files owned by each user is identical.
+The attribute list is needed in case the attributes do not fit in the MFT record.
+This attribute then tells where to find the extension records. Each entry in the list
+contains a 48-bit index into the MFT telling where the extension record is and a
+16-bit sequence number to allow verification that the extension record and base
+records match up.
+NTFS files have an ID associated with them that is like the i-node number in
+UNIX. Files can be opened by ID, but the IDs assigned by NTFS are not always
+useful when the ID must be persisted because it is based on the MFT record and
+can change if the record for the file moves (e.g., if the file is restored from backup).
+NTFS allows a separate object ID attribute which can be set on a file and never
+needs to change. It can be kept with the file if it is copied to a new volume.
+The reparse point tells the procedure parsing the file name that it has do
+something special. This mechanism is used for explicitly mounting file systems
+and for symbolic links. The two volume attributes are used only for volume 
+identification. The next three attributes deal with how directories are implemented.
+Small ones are just lists of files but large ones are implemented using B+ trees. The
+logged utility stream attribute is used by the encrypting file system.
+Finally, we come to the attribute that is the most important of all: the data
+stream (or in some cases, streams). An NTFS file has one or more data streams
+associated with it. This is where the payload is. The default data stream is
+unnamed (i.e., dirpath \ file name::$DATA), but the alternate data streams each
+have a name, for example, dirpath \ file name:streamname:$DATA.
+For each stream, the stream name, if present, goes in this attribute header. 
+Following the header is either a list of disk addresses telling which blocks the stream
+contains, or for streams of only a few hundred bytes (and there are many of these),
+the stream itself. Putting the actual stream data in the MFT record is called an
+immediate file (Mullender and Tanenbaum, 1984).
+Of course, most of the time the data does not fit in the MFT record, so this
+attribute is usually nonresident. Let us now take a look at how NTFS keeps track
+of the location of nonresident attributes, in particular, data.
+Storage Allocation
+The model for keeping track of disk blocks is that they are assigned in runs of
+consecutive blocks, where possible, for efficiency reasons. For example, if the first
+logical block of a stream is placed in block 20 on the disk, then the system will try

@@ -1,0 +1,43 @@
+754
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+or read/write), whether it is pinned in memory (not pageable), and which direction
+it grows in (up for data segments, down for stacks).
+The vm area struct also records whether the area is private to the process or
+shared with one or more other processes. After a fork, Linux makes a copy of the
+area list for the child process, but sets up the parent and child to point to the same
+page tables. The areas are marked as read/write, but the pages themselves are
+marked as read only. If either process tries to write on a page, a protection fault
+occurs and the kernel sees that the area is logically writable but the page is not
+writeable, so it gives the process a copy of the page and marks it read/write. This
+mechanism is how copy on write is implemented.
+The vm area struct also records whether the area has backing storage on disk
+assigned, and if so, where. Text segments use the executable binary as backing
+storage and memory-mapped files use the disk file as backing storage. Other areas,
+such as the stack, do not have backing storage assigned until they hav e to be paged
+out.
+A top-level memory descriptor, mm struct, gathers information about all 
+virtual-memory areas belonging to an address space, information about the different
+segments (text, data, stack), about users sharing this address space, and so on. All
+vm area struct elements of an address space can be accessed through their 
+memory descriptor in two ways. First, they are organized in linked lists ordered by 
+virtual-memory addresses. This way is useful when all virtual-memory areas need to be
+accessed, or when the kernel is searching to allocate a virtual-memory region of a
+specific size. In addition, the vm area struct entries are organized in a binary
+‘‘red-black’’ tree, a data structure optimized for fast lookups. This method is used
+when a specific virtual memory needs to be accessed. By enabling access to 
+elements of the process address space via these two methods, Linux uses more state
+per process, but allows different kernel operations to use the access method which
+is more efficient for the task at hand.
+10.4.4 Paging in Linux
+Early UNIX systems relied on a swapper process to move entire processes
+between memory and disk whenever not all active processes could fit in the 
+physical memory. Linux, like other modern UNIX versions, no longer moves entire
+processes. The main memory management unit is a page, and almost all 
+memory-management components operate on a page granularity. The swapping 
+subsystem also operates on page granularity and is tightly coupled with the page frame
+reclaiming algorithm, described later in this section.
+The basic idea behind paging in Linux is simple: a process need not be entirely
+in memory in order to run. All that is actually required is the user structure and the
+page tables. If these are swapped in, the process is deemed ‘‘in memory’’ and can
+be scheduled to run. The pages of the text, data, and stack segments are brought in

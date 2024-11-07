@@ -1,0 +1,65 @@
+# Основные настройки для разработки
+DEBUG: true
+SECRET_KEY: 'your_dev_secret_key'
+
+# База данных (для разработки используем SQLite)
+DATABASE:
+  ENGINE: django.db.backends.sqlite3
+  NAME: db.sqlite3
+
+ALLOWED_HOSTS:
+  - 'localhost'
+  - '127.0.0.1'
+
+# Логирование с более подробной информацией для отладки
+LOGGING_LEVEL: 'DEBUG'
+
+# Пути для статических и медиа файлов
+STATIC_URL: '/static/'
+MEDIA_URL: '/media/'
+STATIC_ROOT: 'staticfiles'
+MEDIA_ROOT: 'static/media'
+
+# Пути для данных и моделей
+DATA_PATHS:
+  INPUT_DIR: 'data/input/'
+  OUTPUT_DIR: 'data/output/'
+  MODELS_DIR: 'resources/models/'
+  SAMPLES_DIR: 'data/samples/'
+
+# Настройки обработки PDF
+PDF_PROCESSING:
+  dpi: 300
+  PAGE_SPLIT_METHOD: 'image'  # Метод разделения страниц (image, text)
+  BLOCK_DETECTION: true       # Автоматическое обнаружение блоков
+  TEXT_BLOCK_THRESHOLD: 100   # Минимальная площадь для текстового блока
+  IMAGE_BLOCK_THRESHOLD: 500  # Минимальная площадь для блока с изображением
+
+TRANSLATION_MODEL:
+  MODEL_NAME: "Helsinki-NLP/opus-mt-en-ru"
+  MAX_SEQUENCE_LENGTH: 512
+  BATCH_SIZE: 8
+  DEVICE: "cpu"  # Используем CPU в разработке
+
+# Настройки для сохранения форматирования
+FORMATTING:
+  PRESERVE_TEXT_POSITION: true   # Сохранять исходные позиции текста
+  MAX_FONT_SIZE_CHANGE: 2        # Максимальное изменение размера шрифта
+  ALIGNMENT_TOLERANCE: 0.1       # Допустимое отклонение выравнивания текста
+
+# Настройки для синонимов и обработки текста
+TEXT_PROCESSING:
+  ENABLE_SYNONYMS: true
+  SYNONYM_THRESHOLD: 0.8         # Порог для поиска синонимов
+  SCIENTIFIC_SYNONYM_SET: 'resources/synonyms/scientific.json'
+  LITERARY_SYNONYM_SET: 'resources/synonyms/literary.json'
+
+# Конфигурация веб-интерфейса
+WEB_INTERFACE:
+  ENABLE_UI: true
+  HOST: '127.0.0.1'
+  PORT: 5000
+
+OUTPUT:
+  save_path: "data/output/translated_output.pdf"
+  log_path: "logs/pdf_translation.log"

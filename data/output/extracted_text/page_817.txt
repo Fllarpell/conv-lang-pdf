@@ -1,0 +1,46 @@
+788
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+which puts in its tables a v-node for the file that points to the r-node. Again here
+we see that every open file or directory has a v-node that points to either an r-node
+or an i-node.
+The caller is given a file descriptor for the remote file. This file descriptor is
+mapped onto the v-node by tables in the VFS layer. Note that no table entries are
+made on the server side. Although the server is prepared to provide file handles
+upon request, it does not keep track of which files happen to have file handles 
+outstanding and which do not. When a file handle is sent to it for file access, it checks
+the handle, and if it is valid, uses it. Validation can include verifying an 
+authentication key contained in the RPC headers, if security is enabled.
+When the file descriptor is used in a subsequent system call, for example, read,
+the VFS layer locates the corresponding v-node, and from that determines whether
+it is local or remote and also which i-node or r-node describes it. It then sends a
+message to the server containing the handle, the file offset (which is maintained on
+the client side, not the server side), and the byte count. For efficiency reasons,
+transfers between client and server are done in large chunks, normally 8192 bytes,
+ev en if fewer bytes are requested. The chunk size is configurable, up to a limit, and
+must be a multiple of 4 KB.
+When the request message arrives at the server, it is passed to the VFS layer
+there, which determines which local file system holds the requested file. The VFS
+layer then makes a call to that local file system to read and return the bytes. These
+data are then passed back to the client. After the client’s VFS layer has gotten the
+8-KB chunk it asked for, it automatically issues a request for the next chunk, so it
+will have it should it be needed shortly. This feature, known as read ahead,
+improves performance considerably.
+For writes, an analogous path is followed from client to server. Also, transfers
+are done in 8-KB chunks here, too. If a wr ite system call supplies fewer than 8 KB
+of data, the data are just accumulated locally. Only when the entire 8-KB chunk is
+full is it sent to the server. Howev er, when a file is closed, all of its data are sent to
+the server immediately.
+Another technique used to improve performance is caching, as in ordinary
+UNIX. Servers cache data to avoid disk accesses, but this is invisible to the clients.
+Clients maintain two caches, one for file attributes (i-nodes) and one for file data.
+When either an i-node or a file block is needed, a check is made to see if it can be
+satisfied out of the cache. If so, network traffic can be avoided.
+While client caching helps performance enormously, it also introduces some
+nasty problems. Suppose that two clients are both caching the same file block and
+one of them modifies it. When the other one reads the block, it gets the old (stale)
+value. The cache is not coherent.
+Given the potential severity of this problem, the NFS implementation does 
+several things to mitigate it. For one, associated with each cache block is a timer.
+When the timer expires, the entry is discarded. Normally, the timer is 3 sec for data
+blocks and 30 sec for directory blocks. Doing this reduces the risk somewhat. In

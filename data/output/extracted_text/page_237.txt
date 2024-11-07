@@ -1,0 +1,45 @@
+208
+MEMORY MANAGEMENT 
+CHAP. 3
+While it would be possible to pick a random page to evict at each page fault,
+system performance is much better if a page that is not heavily used is chosen. If a
+heavily used page is removed, it will probably have to be brought back in quickly,
+resulting in extra overhead. Much work has been done on the subject of page
+replacement algorithms, both theoretical and experimental. Below we will describe
+some of the most important ones.
+It is worth noting that the problem of ‘‘page replacement’’ occurs in other areas
+of computer design as well. For example, most computers have one or more 
+memory caches consisting of recently used 32-byte or 64-byte memory blocks. When
+the cache is full, some block has to be chosen for removal. This problem is 
+precisely the same as page replacement except on a shorter time scale (it has to be
+done in a few nanoseconds, not tens of microseconds or even milliseconds as with
+page replacement). The reason for the shorter time scale is that cache block misses
+are satisfied from main memory, which is considerably faster than a magnetic disk
+or even an SSD.
+A second example is in a Web server. The server can keep a certain number of
+heavily used Web pages in its memory cache. However, when the memory cache is
+full and a new page is referenced, a decision has to be made which Web page to
+evict. The considerations are similar to pages of virtual memory, except that the
+Web pages are never modified in the cache, so there is always a fresh copy ‘‘on
+nonvolatile storage.’’ In a virtual memory system, pages in main memory may be
+either clean or dirty.
+In all the page replacement algorithms to be studied below (and others), a 
+certain issue arises: when a page is to be evicted from memory, does it have to be one
+of the faulting process’ own pages, or can it be a page belonging to another 
+process? In the former case, we are effectively limiting each process to a fixed number
+of pages; in the latter case we are not. Both are possibilities. We will come back
+to this point in Sec. 3.5.1.
+3.4.1 The Optimal Page Replacement Algorithm
+The best possible page replacement algorithm is easy to describe but 
+impossible to actually implement. It goes like this. At the moment that a page fault
+occurs, some set of pages is in memory. One of these pages will be referenced on
+the very next instruction (the page containing that instruction). Other pages may
+not be referenced until 10, 100, 1000, or millions of instructions later. Or maybe
+never if the page is page of the initialization phase of the program and has now
+completed. Each page can be labeled with the number of instructions that will be
+executed before that page is first referenced.
+The optimal page replacement algorithm says that the page with the highest
+label should be removed. If one page will not be used for 8 million instructions
+and another page will not be used for 6 million instructions, removing the former
+pushes the page fault that will fetch it back as far into the future as possible. 
+Computers, like people, try to put off unpleasant events for as long as they can.

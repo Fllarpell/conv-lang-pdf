@@ -1,0 +1,43 @@
+SEC. 3.5
+DESIGN ISSUES FOR PAGING SYSTEMS
+225
+size and paging rate when deciding which process to swap out, but also its 
+characteristics, such as whether it is CPU bound or I/O bound, and what characteristics
+the remaining processes have.
+Before we close this section, we should mention that killing and swapping are
+not the only options. For instance, another common solution is to reduce the 
+memory usage by compaction and compression. Indeed, reducing a system’s memory
+footprint is pretty high up on the priority list for operating system designers 
+anywhere. One clever technique commonly used is known as deduplication or same
+page merging. The idea is straightforward: periodically sweep the memory to see
+if two pages (possibly in different processes) have the exact same content. If so,
+rather than storing that content on two physical page frames, the operating system
+removes one of the duplicates and modifies the page table mappings so that there
+are now two virtual pages that point to the same frame. The frame is shared 
+copyon-write: as soon as a process tries to write to the page, a fresh copy is made, so
+the write does not affect the other page. Some people call this ‘‘dededuplication.’’
+While they are not wrong, it is a cruel thing to do to the language of Shakespeare.
+3.5.3 Cleaning Policy
+Related to the topic of load control is the issue of cleaning. Aging works best
+when there is an abundant supply of free page frames that can be claimed as page
+faults occur. If every page frame is full, and furthermore modified, before a new
+page can be brought in, an old page must first be written to nonvolatile storage. To
+ensure a plentiful supply of free page frames, paging systems generally have a
+background process, called the paging daemon, that sleeps most of the time but is
+aw akened periodically to inspect the state of memory. If too few page frames are
+free, it begins selecting pages to evict using some page replacement algorithm. If
+these pages have been modified since being loaded, they are written to nonvolatile
+storage.
+In any event, the previous contents of the page are remembered. In the event
+one of the evicted pages is needed again before its frame has been overwritten, it
+can be reclaimed by removing it from the pool of free page frames. Keeping a 
+supply of page frames around yields better performance than using all of memory and
+then trying to find a frame at the moment it is needed. At the very least, the paging
+daemon ensures that all the free frames are clean, so they need not be written to
+nonvolatile storage in a big hurry when they are required.
+One way to implement this cleaning policy is with a two-handed clock. The
+front hand is controlled by the paging daemon. When it points to a dirty page, that
+page is written back to nonvolatile storage and the front hand is advanced. When it
+points to a clean page, it is just advanced. The back hand is used for page 
+replacement, as in the standard clock algorithm. Only now, the probability of the back
+hand hitting a clean page is increased due to the work of the paging daemon.

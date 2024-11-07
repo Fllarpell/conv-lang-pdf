@@ -1,0 +1,41 @@
+766
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+fully installed, the same as any statically installed driver. Other modern UNIX 
+systems now also support loadable modules.
+It is worth noting that loadable modules are a security nightmare. Putting a
+piece of foreign code that may or may not have been vetted carefully and which
+might contain security holes and backdoors into the kernel can create huge security
+problems. Loadable modules should only be fetched from a source known to be
+completely trustworthy.
+10.6 THE LINUX FILE SYSTEM
+The most visible part of any operating system, including Linux, is the file 
+system. In the following sections, we will examine the basic ideas behind the Linux
+file system, the system calls, and how the file system is implemented. Some of
+these ideas derive from MULTICS, and many of them have been copied by 
+MSDOS, Windows, and other systems, but others are unique to UNIX-based systems.
+The Linux design is especially interesting because it clearly illustrates the principle
+of Small is Beautiful. With minimal mechanism and a very limited number of 
+system calls, Linux nevertheless provides a powerful and elegant file system.
+10.6.1 Fundamental Concepts
+The initial Linux file system was the MINIX 1 file system. However, because
+it limited file names to 14 characters (in order to be compatible with UNIX Version
+7) and its maximum file size was 64 MB (which was overkill on the 10-MB hard
+disks of its era), there was interest in better file systems almost from the beginning
+of the Linux development, which began about 5 years after MINIX 1 was released.
+The first improvement was the ext file system, which allowed file names of 255
+characters and files of 2 GB, but it was slower than the MINIX 1 file system, so the
+search continued for a while. Eventually, the ext2 file system was invented, with
+long file names, long files, and better performance, and it has become the main file
+system. However, Linux supports several dozen file systems using the Virtual File
+System (VFS) layer (described in the next section). When Linux is linked, a
+choice is offered of which file systems should be built into the kernel. Others can
+be dynamically loaded as modules during execution, if need be.
+A Linux file is a sequence of 0 or more bytes containing arbitrary information.
+No distinction is made between ASCII files, binary files, or any other kinds of
+files. The meaning of the bits in a file is entirely up to the file’s owner. The system
+does not care. File names are limited to 255 characters, and all the ASCII 
+characters except NUL are allowed in file names, so a file name consisting of three 
+carriage returns is a legal file name (but not an especially convenient one).
+By convention, many programs (for example, compilers) expect file names to
+consist of a base name and an extension, separated by a dot (which counts as a

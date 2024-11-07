@@ -1,0 +1,64 @@
+280
+FILE SYSTEMS
+CHAP. 4
+EFI system partition (ESP). Rather than a single magic boot sector, the boot 
+process can now use a proper file system containing programs, configuration files, and
+anything else that may be useful during boot. Moreover, UEFI expects the
+firmware to be able to execute programs in a specific format, called PE (Portable
+Executable). In other words, the firmware under UEFI looks like a small operating
+system itself with an understanding of disk partitions, file systems, executables,
+etc.
+Partition 2
+...
+Partition 2
+Start
+End
+Start
+End 
+Block 1
+Block 2
+GPT
+Backup GPT
+Partition of many blocks
+...
+Block 0
+Space for legacy 
+systems that
+expect MBR here 
+Partition
+Table Header
+Partition 2
+...
+Partition 1
+Partition 0
+Partition n
+Block N
+Partition
+Table Header
+Partition 1
+Partition 0
+Partition n
+Figure 4-11. Layout for UEFI with partition table.
+4.3.2 Implementing Files
+Probably the most important issue in implementing file storage is keeping
+track of which disk blocks go with which file. Various methods are used in 
+different operating systems. In this section, we will examine a few of them.
+Contiguous Allocation
+The simplest allocation scheme is to store each file as a contiguous run of disk
+blocks. Thus on a disk with 1-KB blocks, a 50-KB file would be allocated 50 
+consecutive blocks. With 2-KB blocks, it would be allocated 25 consecutive blocks.
+We see an example of contiguous storage allocation in Fig. 4-12(a). Here the
+first 40 disk blocks are shown, starting with block 0 on the left. Initially, the disk
+was empty. Then a file A, of length four blocks, was written to disk starting at the
+beginning (block 0). After that a six-block file, B, was written starting right after
+the end of file A.
+Note that each file begins at the start of a new block, so that if file A was really
+3½ blocks, some space is wasted at the end of the last block. In the figure, a total
+of seven files are shown, each one starting at the block following the end of the
+previous one. Shading is used just to make it easier to tell the files apart. It has no
+actual significance in terms of storage.
+Contiguous disk-space allocation has two significant advantages. First, it is
+simple to implement because keeping track of where a file’s blocks are is reduced
+to remembering two numbers: the disk address of the first block and the number of
+blocks in the file. Given the number of the first block, the number of any other
+block can be found by a simple addition.

@@ -1,0 +1,44 @@
+1030
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+stacks hidden. When CET is enabled, the function call instruction pushes the return
+address to both the call stack and the shadow stack and the subsequent return 
+compares them. The shadow stack is identified to the processor by PTE entries and is
+not writable by regular store instructions. Windows 10 implemented support for
+CET in user-mode and Windows 11 extended protection to kernel-mode with
+KCET (Kernel-mode CET). Similar to KCFG, KCET relies on the Secure 
+Kernel to protect and maintain the shadow stack for each thread.
+An alternative approach to defending against return address hijacking is
+ARM’s PA C (Pointer Authentication) mechanism. Instead of maintaining a
+shadow stack, PAC cryptographically signs return addresses on the stack and 
+verifies the signature before returning. The same mechanism can be used to protect
+other function pointers to implement forward-edge code-flow integrity (which is
+handled through CFG on Windows). In general, PAC is considered to be a weaker
+protection than CET because it relies on the secrecy of the keys used for signing
+and authentication, but it also may be subject to substitution attacks when the same
+stack location is reused for a different call. Regardless, PAC is much stronger than
+having no protection, so Windows 11 is built with PAC instructions and supports
+PA C in user-mode. In its documentation, Microsoft refers to these return address
+protection mechanisms generically as HSP (Hardware-enforced Stack 
+Protection).
+So far, we described how Windows protects forward and backward 
+control-flow integrity using CFG and HSP. Defending against arbitrary code execution
+also requires that the code itself is protected. Attackers should not be able to 
+overwrite existing code and they should not be able to load unauthorized code or 
+generate new code in the address space. In fact, careful readers may have noticed that
+the protection offered by CFG/KCFG, CET/KCET, or PAC can trivially be
+defeated if the relevant instructions are simply overwritten by the attacker.
+CIG (Code Integrity Guard) is the Windows 10 security feature which
+allows a process to require that all code binaries loaded into the process be signed
+by a recognized entity, thus preventing arbitrary, attacker-controlled code from
+loading into the process. In kernel-mode, 64-bit Windows has always required
+drivers to be properly signed. The remaining attack vectors are closed off with
+ACG (Arbitrary Code Guard) which enforces two restrictions:
+1. Code is immutable: Also known as WˆX, it ensures that Writable and
+Executable page protections cannot both be enabled on a page.
+2. Data cannot become code: Executable pages can only be born; page
+protections cannot be changed to enable execution later.
+The kernel memory manager enforces CIG and ACG on processes that opt-in.
+Since many applications rely on code injection into other processes, CIG and ACG
+cannot be enabled globally due to compatibility concerns, but sensitive processes
+that do not do this (like browsers) do enable them.

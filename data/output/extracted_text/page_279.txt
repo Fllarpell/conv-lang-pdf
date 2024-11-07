@@ -1,0 +1,38 @@
+250
+MEMORY MANAGEMENT 
+CHAP. 3
+3.9 SUMMARY
+In this chapter, we hav e examined memory management. We saw that the 
+simplest systems do not swap or page at all. Once a program is loaded into memory, it
+remains there in place until it finishes. Some operating systems allow only one
+process at a time in memory, while others support multiprogramming. This model
+is still common in small, embedded real-time systems.
+The next step up is swapping. When swapping is used, the system can handle
+more processes than it has room for in memory. Processes for which there is no
+room are swapped out to the disk or SSD. Free space in memory and on 
+nonvolatile storage can be kept track of with a bitmap or a hole list.
+Modern computers often have some form of virtual memory. In the simplest
+form, each process’ address space is divided up into uniform-sized blocks called
+pages, which can be placed into any available page frame in memory. There are
+many page replacement algorithms; two of the better algorithms are aging and
+WSClock.
+To make paging systems work well, choosing an algorithm is not enough;
+attention to such issues as determining the working set, memory allocation policy,
+and page size is required.
+Segmentation helps in handling data structures that can change size during
+execution and simplifies linking and sharing. It also facilitates providing different
+protection for different segments. Sometimes segmentation and paging are 
+combined to provide a two-dimensional virtual memory. The MULTICS system and the
+32-bit Intel x86 support segmentation and paging. Still, it is clear that few 
+operating system developers care deeply about segmentation (because they are married to
+a different memory model).
+PROBLEMS
+1. The IBM 360 had a scheme of locking 2-KB blocks by assigning each one a 4-bit key
+and having the CPU compare the key on every memory reference to the 4-bit key in the
+PSW. Name two drawbacks of this scheme not mentioned in the text.
+2. In Fig. 3-3 the base and limit registers contain the same value, 16,384. Is this just an
+accident, or are they always the same? If it is not an accident, why are they the same in
+this example?
+3. A swapping system eliminates holes by compaction. Assuming a random distribution
+of many holes and many data segments and a time to read or write a 32-bit memory
+word of 4 nsec, about how long does it take to compact 4 GB? For simplicity, assume

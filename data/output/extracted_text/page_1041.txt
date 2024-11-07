@@ -1,0 +1,46 @@
+1012
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+in fact two types of Silos. The first is known as an Application Silo. App Silos
+provide namespace virtualization only. A job is converted into a silo via a 
+SetInformationJobObject API call to enable the namespace virtualization features on the
+job. Rather than require a separate call to promote a job object into a silo, 
+Microsoft could have just changed the implementation of job objects such that all jobs
+had namespace virtualization support. However, that would have caused all job
+objects to require more memory so instead a pay for play model was adopted. The
+second type of silo is known as a Server Silo. Server silos are used to implement
+Windows server containers (see below). Because server containers provide the
+illusion of a full machine, some kernel mode state needs to be instanced per 
+container. Server silos build on app silos in that in addition to namespace virtualization
+it also allows various kernel components to maintain separate copies of their state
+per container. Server silos require much more storage than an app silo so the 
+payfor-play model is again adopted so that this extra storage is only required for jobs
+promoted into full server silos.
+When a job is created and promoted into an app silo, it is considered a 
+namespace container. Prior to launching processes within the container, the various
+namespaces being virtualized must be configured. The most prominent namespaces
+are the file system and registry namespaces. Virtualizing these namespaces is done
+via filter drivers. During silo initialization, a user mode component will send
+IOCTLs to the various namespace filters to configure them for how to virtualize
+the given namespace. However, no container state is associated with the filters
+themselves. Instead, the model is to associate all state required to do namespace
+virtualization with the silo itself. During startup, namespace filter drivers request a
+silo slot index from the system and store it in a global variable. The silo then 
+provides a key/value store to the drivers. They can store any object manager object
+(see Sec. 11.3.3) in the slot associated with their index. If a driver wants to store
+state that is not in the form of an object manager object, it can use the new kernel
+API PsCreateSiloContext to create an object with storage of the required size and
+pool type. The namespace filter packages up the state required for virtualizing the
+namespace and stores it in the silo slot for future reference.
+Once all namespace providers are configured, the first application in the 
+container is launched. As that application starts to run, it will inevitably start to access
+various namespaces. When an IO request reaches a given namespace, the 
+namespace filter will check to see if virtualization is required. It will call the 
+PsGetSiloContext API passing its slot index to retrieve any configuration required to 
+virtualize the namespace. If the given namespace is not being virtualized for the 
+running thread, then the call will return a status code indicating there is nothing in the
+slot, and the namespace filter will simply pass the IO request to the next driver in
+the stack (see Sec. 11.7.3 for details on driver stacks). However, if configuration
+information was found in the slot, the namespace filter will use it to determine how
+to virtualize the namespace. For example, the filter may need to modify the name
+of the file being opened before passing the request down the stack.

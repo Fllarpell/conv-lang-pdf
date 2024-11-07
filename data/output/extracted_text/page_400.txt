@@ -1,0 +1,145 @@
+SEC. 5.4
+MASS STORAGE: DISK AND SSD
+371
+things have changed. First, the disk capacity of the old floppy disk was 360 KB, or
+about one third of the capacity needed to store the PDF of just this chapter. In 
+contrast, the IronWolf packs as much as 18 TB—an increase of give or take 8 orders of
+magnitude. The authors solemnly promise never to make the chapter that big. The
+transfer rate also went up from around 23 KB/sec to 250 MB/sec, a jump of 4
+orders of magnitude. The latency, howev er, improved more marginally, from
+around 100 msec to 4 msec. Better, but you may find it a bit underwhelming.
+One thing to be aware of in looking at the specifications of modern hard disks
+is that the geometry specified, and used by the driver software, is almost always
+different from the physical format. On old disks, the number of sectors per track
+was the same for all cylinders. For instance, the IBM PC floppy disk had 9 sectors
+of 512 bytes on every track. Modern disks, on the other hand, are divided into
+zones with more sectors on the outer zones than the inner ones. Figure 5-18(a) 
+illustrates a tiny disk with two zones. The outer zone has 32 sectors per track; the
+inner one has 16 sectors per track. A real disk easily has tens of zones, with the
+number of sectors increasing per zone as one goes out from the innermost to the
+outermost zone.
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+1
+0
+1
+1
+1
+2
+1
+3
+1
+4
+1
+5
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+1
+0
+1
+1
+1
+2
+1
+3
+1
+4
+1
+5
+1
+6
+1
+7
+1
+8
+1
+9
+2
+0
+2
+1
+2
+2
+2
+3
+2
+4
+2
+5
+2
+6
+2
+7
+2
+8
+2
+9
+3
+0
+3
+1
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+1
+0
+1
+1
+1
+2
+1
+3
+1
+4
+1
+5
+1
+6
+1
+7
+1
+8
+1
+9
+2
+0
+2
+1
+2
+2
+2
+3
+2
+4
+Figure 5-18. (a) Physical geometry of a disk with two zones. (b) A possible 
+virtual geometry for this disk.
+To hide the details of how many sectors each track has, most modern disks
+have a virtual geometry that is presented to the operating system. The software is
+instructed to act as though there are x cylinders, y heads, and z sectors per track.
+The controller then remaps a request for (x, y, z) onto the real cylinder, head, and
+sector. A possible virtual geometry for the physical disk of Fig. 5-18(a) is shown
+in Fig. 5-18(b). In both cases, the disk has 192 sectors, only the published 
+arrangement is different than the real one. Simplifying the addressing even more, modern

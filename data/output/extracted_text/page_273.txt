@@ -1,0 +1,92 @@
+244
+MEMORY MANAGEMENT 
+CHAP. 3
+(c)
+(b)
+(a)
+(d)
+(e)
+Segment 0!
+(4K)
+Segment 7!
+(5K)
+Segment 2!
+(5K)
+Segment 5!
+(4K)
+(3K)
+Segment 3!
+(8K)
+Segment 6!
+(4K)
+(3K)
+Segment 0!
+(4K)
+Segment 7!
+(5K)
+Segment 2!
+(5K)
+Segment 3!
+(8K)
+(3K)
+Segment 2!
+(5K)
+Segment 0!
+(4K)
+Segment 1!
+(8K)
+Segment 4!
+(7K)
+Segment 4!
+(7K)
+Segment 3!
+(8K)
+Segment 0!
+(4K)
+Segment 7!
+(5K)
+Segment 2!
+(5K)
+(3K)
+Segment 5!
+(4K)
+(3K)
+(4K)
+Segment 0!
+(4K)
+Segment 7!
+(5K)
+Segment 2!
+(5K)
+Segment 6!
+(4K)
+Segment 5!
+(4K)
+(10K)
+Figure 3-33. (a)–(d) Development of checkerboarding. (e) Removal of the
+checkerboarding by compaction.
+unmodified anywhere near that long. While operating systems called Windows
+have also been around that long, Windows 11 has absolutely nothing in common
+with Windows 1.0 except the name and the fact that it was written by Microsoft.
+Even more to the point, the ideas developed in MULTICS are as valid and useful
+now as they were in 1965, when the first paper was published (Corbato´ and 
+Vyssotsky, 1965). For this reason, we will now spend a little bit of time looking at the
+most innovative aspect of MULTICS, the virtual memory architecture. More 
+information about MULTICS can be found at www.multicians.org.
+MULTICS ran on the Honeywell 6000 machines and their descendants and
+provided each program with a virtual memory of up to 218 segments, each of which
+was up to 65,536 (36-bit) words long. To implement this, the MULTICS designers
+chose to treat each segment as a virtual memory and to page it, combining the
+advantages of paging (uniform page size and not having to keep the whole segment
+in memory if only part of it was being used) with the advantages of segmentation
+(ease of programming, modularity, protection, sharing).
+Each MULTICS program had a segment table, with one descriptor per 
+segment. Since there were potentially more than a quarter of a million entries in the
+table, the segment table was itself a segment and was paged. A segment descriptor
+contained an indication of whether the segment was in main memory or not. If any
+part of the segment was in memory, the segment was considered to be in memory,
+and its page table was in memory. If the segment was in memory, its descriptor
+contained an 18-bit pointer to its page table, as in Fig. 3-34(a). Because physical
+addresses were 24 bits and pages were aligned on 64-byte boundaries (implying
+that the low-order 6 bits of page addresses were 000000), only 18 bits were needed
+in the descriptor to store a page table address. The descriptor also contained the

@@ -1,0 +1,45 @@
+626
+SECURITY 
+CHAP. 9
+The second way is to keep the C-list inside the operating system. Capabilities
+are then referred to by their position in the capability list. A process might say:
+‘‘Read 1 KB from the file pointed to by capability 2.’’ This form of addressing is
+similar to using file descriptors in UNIX. Hydra (Wulf et al., 1974) worked this
+way.
+The third way is to keep the C-list in user space, but manage the capabilities
+cryptographically so that users cannot tamper with them. This approach is 
+particularly suited to distributed systems and works as follows. When a client process
+sends a message to a remote server, for example, a file server, to create an object
+for it, the server creates the object and generates a long random number, the check
+field, to go with it. A slot in the server’s file table is reserved for the object and the
+check field is stored there along with the addresses of the disk blocks. In UNIX
+terms, the check field is stored on the server in the i-node. It is not sent back to the
+user and never put on the network. The server then generates and returns a
+capability to the user of the form shown in Fig. 9-9.
+Server
+Object
+Rights
+f(Objects, Rights, Check)
+Figure 9-9. A cryptographically protected capability.
+The capability returned to the user contains the server’s identifier, the object
+number (the index into the server’s tables, essentially, the i-node number), and the
+rights, stored as a bitmap. For a newly created object, all the rights bits are turned
+on, of course, because the owner can do everything. The last field consists of the
+concatenation of the object, rights, and check field run through a cryptographically
+secure one-way function, f. A cryptographically secure one-way function is a 
+function y = f (x) that has the property that given x it is easy to find y, but given y it is
+computationally infeasible to find x. We will discuss them in detail in Section 9.5.
+For now, it suffices to know that with a good one-way function, even a determined
+attacker will not be able to guess the check field, even if he knows all the other
+fields in the capability.
+When the user wishes to access the object, she sends the capability to the 
+server as part of the request. The server then extracts the object number to index into
+its tables to find the object. It then computes f (Object, Rights, Check), taking the
+first two parameters from the capability itself and the third from its own tables. If
+the result agrees with the fourth field in the capability, the request is honored;
+otherwise, it is rejected. If a user tries to access someone else’s object, she will not
+be able to fabricate the fourth field correctly since she does not know the check
+field, and the request will be rejected.
+A user can ask the server to produce a weaker capability, for example, for 
+readonly access. First the server verifies that the capability is valid. If so, it computes
+f (Object, New rights, Check) and generates a new capability putting this value in

@@ -1,0 +1,46 @@
+CONTENTS
+xvii
+9.2 
+CONTROLLING ACCESS TO RESOURCES 618
+9.2.1 Protection Domains 619
+9.2.2 Access Control Lists 621
+9.2.3 Capabilities 625
+9.3 
+FORMAL MODELS OF SECURE SYSTEMS 628
+9.3.1 Multilevel Security 629
+9.3.2 Cryptography 632
+9.3.3 Trusted Platform Modules 636
+9.4 
+AUTHENTICATION 637
+9.4.1 Passwords 637
+9.4.2 Authentication Using a Physical Object 644
+9.4.3 Authentication Using Biometrics 645
+9.5 
+EXPLOITING SOFTWARE 647
+9.5.1 Buffer Overﬂow Attacks 648
+9.5.2 Format String Attacks 658
+9.5.3 Use-After-Free Attacks 661
+9.5.4 Type Confusion Vulnerabilities 662
+9.5.5 Null Pointer Dereference Attacks 664
+9.5.6 Integer Overﬂow Attacks 665
+9.5.7 Command Injection Attacks 666
+9.5.8 Time of Check to Time of Use Attacks 667
+9.5.9 Double Fetch Vulnerability 668
+9.6 
+EXPLOITING HARDWARE 668
+9.6.1 Covert Channels 669
+9.6.2 Side Channels 671
+9.6.3 Transient Execution Attacks 674
+9.7 
+INSIDER ATTA CKS 679
+9.7.1 Logic Bombs 679
+9.7.2 Back Doors 680
+9.7.3 Login Spooﬁng 681
+9.8 
+OPERATING SYSTEM HARDENING 681
+9.8.1 Fine-Grained Randomization 682
+9.8.2 Control-Flow Restrictions 683
+9.8.3 Access Restrictions 685
+9.8.4 Code and Data Integrity Checks 689
+9.8.5 Remote Attestation Using a Trusted Platform Module 690
+9.8.6 Encapsulating Untrusted Code 691

@@ -1,0 +1,49 @@
+SEC. 2.1
+PROCESSES
+93
+is fundamentally different from the first two in that the process cannot run, even if
+the CPU is idle and has nothing else to do.
+1
+2
+3
+4
+Blocked
+Running
+Ready
+1. Process blocks for input!
+2. Scheduler picks another process!
+3. Scheduler picks this process!
+4. Input becomes available
+Figure 2-2. A process can be in running, blocked, or ready state. Transitions 
+between these states are as shown.
+Four transitions are possible among these three states, as shown. Transition 1
+occurs when the operating system discovers that a process cannot continue right
+now. In some systems the process can execute a system call, such as pause, to get
+into blocked state. In other systems, including UNIX, when a process reads from a
+pipe or special file (e.g., a terminal) and there is no input available, the process is
+automatically blocked.
+Transitions 2 and 3 are caused by the process scheduler, a part of the operating
+system, without the process even knowing about them. Transition 2 occurs when
+the scheduler decides that the running process has run long enough, and it is time
+to let another process have some CPU time. Transition 3 occurs when all the other
+processes have had their fair share and it is time for the first process to get the CPU
+to run again. The subject of scheduling, that is, deciding which process should run
+when and for how long, is an important one; we will look at it later in this chapter.
+Many algorithms have been devised to try to balance the competing demands of
+efficiency for the system as a whole and fairness to individual processes. We will
+study some of them later in this chapter.
+Transition 4 occurs when the external event for which a process was waiting
+(such as the arrival of some input) happens. If no other process is running at that
+instant, transition 3 will be triggered and the process will start running. Otherwise
+it may have to wait in ready state for a little while until the CPU is available and its
+turn comes.
+Using the process model, it becomes much easier to think about what is going
+on inside the system. Some of the processes run programs that carry out commands
+typed in by a user. Other processes are part of the system and handle tasks such as
+carrying out requests for file services or managing the details of running a disk or a
+tape drive. When a disk interrupt occurs, the system makes a decision to stop 
+running the current process and run the disk process, which was blocked waiting for
+that interrupt. Thus, instead of thinking about interrupts, we can think about user
+processes, disk processes, terminal processes, and so on, which block when they
+are waiting for something to happen. When the disk has been read or the character
+typed, the process waiting for it is unblocked and is eligible to run again.

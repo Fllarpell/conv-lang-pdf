@@ -1,0 +1,53 @@
+SEC. 11.4
+PROCESSES AND THREADS IN WINDOWS
+933
+a kernel event is signaled. Synchronization can be used as triggers for queuing a
+task so threads are not assigned the task before it is ready to run.
+The implementation of the thread pool uses the same queue facility provided
+for synchronization with I/O completion, together with a kernel-mode thread 
+factory which adds more threads to the process as needed to keep the available 
+number of processors busy. Small tasks exist in many applications, but particularly in
+those that provide services in the client/server model of computing, where a stream
+of requests are sent from the clients to the server. Use of a thread pool for these
+scenarios improves the efficiency of the system by reducing the overhead of 
+creating threads and moving the decisions about how to manage the threads in the pool
+out of the application and into the operating system.
+A summary of CPU execution abstractions is given in Fig. 11-23.
+Name 
+Description
+Notes
+Job 
+Collection of processes that share quotas and limits
+Used in AppContainers
+Process 
+Container for holding resources
+Thread 
+Entity scheduled by the ker nel
+Fiber 
+Lightweight thread managed entirely in user space
+Rarely used
+Thread pool
+Task-or iented programming model
+Built on top of threads
+Figure 11-23. Basic concepts used for CPU and resource management.
+Threads
+Every process normally starts out with one thread, but new ones can be created
+dynamically. Threads form the basis of CPU scheduling, as the operating system
+always selects a thread to run, not a process. Consequently, every thread has a state
+(ready, running, blocked, etc.), whereas processes do not have scheduling states.
+Threads can be created dynamically by a Win32 call that specifies the address
+within the enclosing process’ address space at which it is to start running.
+Every thread has a thread ID, which is taken from the same space as the 
+process IDs, so a single ID can never be in use for both a process and a thread at the
+same time. Process and thread IDs are multiples of four because they are actually
+allocated by the executive using a special handle table set aside for allocating IDs.
+The system is reusing the scalable handle-management facility illustrated in
+Figs. 11-16 and 11-17. The handle table does not have references for objects, but
+does use the pointer field to point at the process or thread so that the lookup of a
+process or thread by ID is very efficient. FIFO ordering of the list of free handles is
+turned on for the ID table in recent versions of Windows so that IDs are not
+immediately reused. The problems with immediate reuse are explored in the 
+problems at the end of this chapter.
+A thread normally runs in user mode, but when it makes a system call it
+switches to kernel mode and continues to run as the same thread with the same
+properties and limits it had in user mode. Each thread has two stacks, one for use

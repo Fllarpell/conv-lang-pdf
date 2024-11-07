@@ -1,0 +1,99 @@
+INDEX
+1139
+NtWriteFile Windows API call, 920, 982
+NtWriteVirtualMemory Windows API call, 885
+Null pointer dereference attack, 664–665
+NUMA (see Nonuniform Memory Access)
+NUMA multiprocessor, 535–537
+NVDIA, 540
+NVMe (see Non-Volatile Memory Express)
+NX bit, 652
+O
+O(1) scheduler, 737
+ObCreateObjecttype Win32 call, 924
+Object, 594
+ACL, 622
+Object cache, 753
+Object file, 76
+Object handle, 885
+Windows, 917–919
+Object manager, 886, 906
+Object manager implementation, Windows, 914–926
+Object namespace, Windows, 919–922
+Object request broker, 595
+Object type, Windows, 923–926
+Object-based middleware, 594–595
+ObOpenObjectByName Win32 call, 923
+Omega network, 533–534
+One-shot mode, clock, 391
+One-time password, 642–643
+One-way function, 626
+One-way hash chain, 642
+Onecore, 878
+Ontogeny recapitulates phylogeny, 47–50
+OOM (see Out Of Memory killer)
+Ooperating system research, 78–79
+Open system call, 54, 269, 758, 771, 775, 777,
+785, 786, 789
+Open Win32 call, 982
+Open-file-description table, 780
+Opendir system call, 269, 277
+OpenGL, 540
+OpenSemaphore Win32 call, 917
+OpenXXX Win32 call, 1023
+Operating system
+Android, 793–863
+characterization, 4–7
+client-server, 68–69
+enlightened, 1003
+exokernel, 73–74
+Operating system (continued)
+fifth generation, 19–20
+first generation, 8
+fourth generation, 15–19
+guest, 72, 485, 514–515
+host, 72, 485, 517–520
+layered, 64–66
+Linux, 793–863
+mainframe, 36–38
+microkernel, 66–68
+MINIX 3, 15, 63–68, 342, 612, 709–712, 1047
+monolithic, 63–64
+multiprocessor, 541–545
+OS/2, 874, 926
+OS/360, 11
+real-time, 38–39
+second generation, 8–10
+server, 37
+smart card, 39
+smartphone, 37
+System V, 707
+THE, 64–65
+third generation, 10–15
+UNIX, 1, 4, 14–18, 39–51, 56–62, 76–80, 89–93, 105–107,
+261–277, 308–312, 328–330, 400–406, 620–621, 640–642,
+703–716, 1044–1055
+virtual machine, 69–72
+Windows 7, 877
+Windows 8, 877–978
+Windows 10, 878–879
+Windows 11, 871–1036
+Windows 95/98, 875
+Windows 2000, 17,875, 988, 994
+Windows NT, 17, 874–875, 909, 989–1000
+Windows XP, 875–877
+Operating system as extended machine, 4–6
+Operating system as resource manager, 6–7
+Operating system concepts, 39–50
+Operating system design, 1041–1082
+Operating system goals, 1042–1043
+Operating system hardening, 681–694
+Operating system Implementation, 1053–1070
+Operating system interface design, 1045–1053
+Operating system paradigm, 1048–1051
+data, 1050–1051
+execution, 1049–1050
+user-interface, 1048–1049
+Operating system performance, 1070–1078
+Operating system structure, 63–74, 1054–1057
+exokernel, 1055

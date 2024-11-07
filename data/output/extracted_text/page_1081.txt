@@ -1,0 +1,42 @@
+1052
+OPERATING SYSTEM DESIGN
+CHAP. 12
+to hide this fact from the programmers. For example, UNIX has a system call for
+overlaying a process’ virtual address space, exec. The most general call is
+exec(name, argp, envp);
+which loads the executable file name and gives it arguments pointed to by argp and
+environment variables pointed to by envp. Sometimes it is convenient to list the
+arguments explicitly, so the library contains procedures that are called as follows:
+execl(name, arg0, arg1, ..., argn, 0);
+execle(name, arg0, arg1, ..., argn, envp);
+All these procedures do is stick the arguments in an array and then call exec to do
+the real work. This arrangement is the best of both worlds: a single straightforward
+system call keeps the operating system simple, yet the programmer gets the 
+convenience of various ways to call exec.
+Of course, trying to have one call to handle every possible case can easily get
+out of hand. In UNIX creating a process requires two calls: fork followed by exec.
+The former has no parameters; the latter has three. In contrast, the WinAPI call for
+creating a process, CreateProcess, has 10 parameters, one of which is a pointer to
+a structure with an additional 18 parameters.
+A long time ago, someone should have asked whether something awful would
+happen if some of these had been omitted. The truthful answer would have been in
+some cases programmers might have to do more work to achieve a particular
+effect, but the net result would have been a simpler, smaller, and more reliable
+operating system. Of course, the person proposing the 10 + 18 parameter version
+might have added: ‘‘But users like all these features.’’ The rejoinder might have
+been they like systems that use little memory and never crash even more. 
+Tradeoffs between more functionality at the cost of more memory are at least visible and
+can be given a price tag (since the price of memory is known). However, it is hard
+to estimate the additional crashes per year some feature will add and whether the
+users would make the same choice if they knew the hidden price. This effect can be
+summarized in Tanenbaum’s first law of software:
+Adding more code adds more bugs.
+Adding more features adds more code and thus adds more bugs. Programmers who
+believe adding new features does not add new bugs either are new to computers or
+believe the tooth fairy is out there watching over them.
+Simplicity is not the only issue that comes out when designing system calls.
+An important consideration is Lampson’s (1984) slogan:
+Don’t hide power.
+If the hardware has an extremely efficient way of doing something, it should be
+exposed to the programmers in a simple way and not buried inside some other
+abstraction. The purpose of abstractions is to hide undesirable properties, not hide

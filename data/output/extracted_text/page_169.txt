@@ -1,0 +1,43 @@
+140
+PROCESSES AND THREADS
+CHAP. 2
+were reversed in order, so mutex was decremented before empty instead of after it.
+If the buffer were completely full, the producer would block, with mutex set to 0.
+Consequently, the next time the consumer tried to access the buffer, it would do a
+down on mutex, now 0, and block too. Both processes would stay blocked forever
+and no more work would ever be done. This unfortunate situation is called a 
+deadlock. We will study deadlocks in detail in Chap. 6.
+This problem is pointed out to show how careful you must be when using 
+semaphores. One subtle error and everything comes to a grinding halt. It is like 
+programming in assembly language, only worse, because the errors are race 
+conditions, deadlocks, and other forms of unpredictable and irreproducible behavior.
+To make it easier to write correct programs, Brinch Hansen (1973) and Hoare
+(1974) proposed a higher-level synchronization primitive called a monitor. Their
+proposals differed slightly, as described below. A monitor is a collection of 
+procedures, variables, and data structures that are all grouped together in a special kind
+of module or package. Processes may call the procedures in a monitor whenever
+they want to, but they cannot directly access the monitor’s internal data structures
+from procedures declared outside the monitor. Figure 2-34 illustrates a monitor
+written in an imaginary language, Pidgin Pascal. C cannot be used here because
+monitors are a language concept and C does not have them.
+monitor example
+integer i;
+condition c;
+procedure producer( );
+...
+end;
+procedure consumer( );
+.
+.
+.
+end;
+end monitor;
+Figure 2-34. A monitor.
+Monitors have an important property that makes them useful for achieving
+mutual exclusion: only one process can be active in a monitor at any instant. 
+Monitors are a programming-language construct, so the compiler knows they are special
+and can handle calls to monitor procedures differently from other procedure calls.
+Typically, when a process calls a monitor procedure, the first few instructions of
+the procedure will check to see if any other process is currently active within the
+monitor. If so, the calling process will be suspended until the other process has left
+the monitor. If no other process is using the monitor, the calling process may enter.

@@ -1,0 +1,58 @@
+536
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+consisting of one CPU and 16 MB of RAM connected to the CPU via a local bus.
+The total memory is 232 bytes and it is divided up into 226 cache lines of 64 bytes
+each. The memory is statically allocated among the nodes, with 0–16M in node 0,
+16M–32M in node 1, etc. The nodes are connected by an interconnection network,
+as shown in Fig. 8-6(a). Each node also holds the directory entries for the 218
+64-byte cache lines comprising its 224-byte memory. For the moment, we will
+assume that a line can be held in at most one cache.
+Directory
+Node 0
+Node 1
+Node 255
+(a)
+(b)
+Bits
+8
+18
+6
+(c)
+Interconnection network
+CPU Memory
+Local bus
+CPU Memory
+Local bus
+CPU Memory
+Local bus
+Node
+Block
+Offset
+0
+1
+2
+3
+4
+0
+0
+1
+0
+0
+218-1
+82
+…!
+Figure 8-6. (a) A 256-node directory-based multiprocessor. (b) Division of a
+32-bit memory address into fields. (c) The directory at node 36.
+To see how the directory works, let us trace a LOAD instruction from CPU 20
+that references a cached line. First the CPU issuing the instruction presents it to its
+MMU, which translates it to a physical address, say, 0x24000108. The MMU
+splits this address into the three parts shown in Fig. 8-6(b). In decimal, the three
+parts are node 36, line 4, and offset 8. The MMU sees that the memory word 
+referenced is from node 36, not node 20, so it sends a request message through the
+interconnection network to the line’s home node, 36, asking whether its line 4 is
+cached, and if so, where.
+When the request arrives at node 36 over the interconnection network, it is
+routed to the directory hardware. The hardware indexes into its table of 218 entries,
+one for each of its cache lines, and extracts entry 4. From Fig. 8-6(c), we see that
+the line is not cached, so the hardware issues a fetch for line 4 from the local RAM

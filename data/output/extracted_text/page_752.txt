@@ -1,0 +1,44 @@
+SEC. 10.2
+OVERVIEW OF LINUX
+723
+page mappings, maintaining a cache of recently accessed pages and implementing
+a good page-replacement policy, and on-demand bringing in new pages of needed
+code and data into memory.
+The key responsibility of the process-management component is the creation
+and termination of processes. It also includes the process scheduler, which chooses
+which process or, rather, thread to run next. As we shall see in the next section, the
+Linux kernel treats both processes and threads simply as executable entities, and
+will schedule them based on a global scheduling policy. Finally, code for signal
+handling also belongs to this component.
+While the three components are represented separately in the figure, they are
+highly interdependent. File systems typically access files through the block 
+devices. However, in order to hide the large latencies of disk accesses, files are 
+copied into the page cache in main memory. Some files may even be dynamically
+created and may have only an in-memory representation, such as files providing
+some run-time resource usage information. In addition, the virtual memory system
+may rely on a disk partition or in-file swap area to back up parts of the main 
+memory when it needs to free up certain pages, and therefore relies on the I/O 
+component. Numerous other interdependencies exist.
+In addition to the static in-kernel components, Linux supports dynamically
+loadable modules. These modules can be used to add or replace the default device
+drivers, file system, networking, or other kernel codes. The modules are not shown
+in Fig. 10-3.
+Finally, at the very top is the system call interface into the kernel. All system
+calls come here, causing a trap which switches the execution from user mode into
+protected kernel mode and passes control to one of the kernel components 
+described earlier.
+10.3 PROCESSES IN LINUX
+In the previous sections, we started out by looking at Linux as viewed from the
+keyboard, that is, what the user sees in an xterm window. We gav e examples of
+shell commands and utility programs that are frequently used. We ended with a
+brief overview of the system structure. Now it is time to dig deeply into the kernel
+and look more closely at the basic concepts Linux supports, namely, processes,
+memory, the file system, and input/output. These notions are important because the
+system calls—the interface to the operating system itself—manipulate them. For
+example, system calls exist to create processes and threads, allocate memory, open
+files, and do I/O.
+Unfortunately, with so many distributions of Linux in existence (and old 
+versions of the kernel still widely used), there are some differences between them. In
+this chapter, we will emphasize the features common to all of them rather than
+focus on any one specific version. Thus in certain sections (especially 
+implementation sections), the discussion may not apply equally to every version.

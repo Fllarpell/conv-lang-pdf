@@ -1,0 +1,44 @@
+SEC. 12.3
+IMPLEMENTATION
+1059
+data types, including arrays, structures, and unions. These ideas combine 
+independently, allowing arrays of integers, arrays of characters, structures, and union 
+members that are floating-point numbers, and so forth. In fact, once a new data type has
+been defined, such as an array of integers, it can be used as if it were a primitive
+data type, for example, as a member of a structure or a union. The ability to 
+combine separate concepts independently is called orthogonality. It is a direct 
+consequence of the simplicity and completeness principles.
+The concept of orthogonality also occurs in operating systems in various 
+disguises. One example is the Linux clone system call, which creates a new thread.
+The call has a bitmap as a parameter, which allows the address space, working
+directory, file descriptors, and signals to be shared or copied individually. If 
+everything is copied, we have a new process, the same as fork. If nothing is copied, a
+new thread is created in the current process. However, it is also possible to create
+intermediate forms of sharing not possible in traditional UNIX systems. By 
+separating out the various features and making them orthogonal, a finer degree of 
+control is possible.
+Another use of orthogonality is the separation of the process concept from the
+thread concept in Windows. A process is a container for resources, nothing more
+and nothing less. A thread is a schedulable entity. When one process is given a
+handle for another process, it does not matter how many threads it has. When a
+thread is scheduled, it does not matter which process it belongs to. These concepts
+are orthogonal.
+Our last example of orthogonality comes from UNIX. Process creation there is
+done in two steps: fork plus exec. Creating the new address space and loading it
+with a new memory image are separate, allowing things to be done in between
+(such as manipulating file descriptors). In Windows, these two steps cannot be
+separated, that is, the concepts of making a new address space and filling it in are
+not orthogonal there. The Linux sequence of clone plus exec is yet more 
+orthogonal, since even more fine-grained building blocks are available. As a general rule,
+having a small number of orthogonal elements that can be combined in many ways
+leads to a small, simple, and elegant system.
+12.3.4 Naming
+Most long-lived data structures used by an operating system have some kind of
+name or identifier by which they can be referred to. Obvious examples are login
+names, file names, device names, process IDs, and so on. How these names are
+constructed and managed is an important issue in system design and 
+implementation.
+Names that were primarily designed for human beings to use are 
+character-string names in ASCII or Unicode and are usually hierarchical. Directory paths,
+such as /usr/ast/books/mos5/chap-12, are clearly hierarchical, indicating a series of
+directories to search starting at the root. URLs are also hierarchical. For example,

@@ -1,0 +1,98 @@
+1124
+INDEX
+Block cache, file system, 315
+Block device, 338
+Block read ahead, 318–319
+Block special file, 45, 264, 758
+Block started by symbol, 744
+Blocking call, 566
+Blocking network, 534
+Blue screen of death, 907
+Bluetooth, 401
+BNO (see BaseNamedObjects)
+Boot block, 278
+Boot configuration database, 913
+Boot partition, Windows, 912
+Boot service, 912
+Booting, 34–36
+Linux, 741–743
+Windows, 910–914
+Bot, 616
+Botnet, 615
+Bottom-up implementation, 1063–1064
+Bounded-buffer problem, 128–132
+Bourne again shell (bash), 716
+Breaking exploitations, Windows, 1027–1031
+Bridge, Ethernet, 583
+Brk system call, 745, 747
+Broker process, 882
+Brooks, Fred, 12, 1078–1082
+Brute force, 1069
+BSD (see Berkeley Software Distribution)
+BSOD (see Blue Screen Of Death)
+BSS (see Block Started by Symbol)
+Buddy algorithm, 752
+Buffer cache, file system, 315
+Buffer-overflow attack, 648–658
+Buffering, 353, 364–367
+Burst mode, 346
+Bus, 33–34
+Bus-based multiprocessor, 530–531
+Busy waiting, 31, 121–127, 355
+Bypassing ASLR, 655
+Byron, Lord, 8
+C
+C preprocessor, 76
+C programming language, 74–78, 705
+C++, 49, 145, 648, 658
+C-list, 625
+C10k, 118
+Cache
+disk controller, 378
+file system, 315–318
+Linux, 763
+NFS, 388–389
+snooping, 538
+thread, 100
+Windows, 977–979
+write-through, 317
+Cache allocation technology, 689
+Cache hit, 25
+Cache line, 25, 531
+Cache manager, Windows, 908
+Cache slice, 539
+Cache-aware PushLock, Windows, 940
+Cache-coherence protocol, 531
+Caching, 1075–1076
+Calling convention, 51
+Can we build secure systems?, 617–618
+Canary
+stack, 651–652
+Windows, 1027
+Canonical address, Windows, 955
+Canonical mode, 398
+Capability, 625–628
+cryptographic, 626
+Capability list, 625
+Capacitive screen, 418
+Captain Crunch, 614
+CAT (see Cache Allocation Technology)
+Cathode ray tube, 340
+CC-NUMA (see Cache-Coherent NUMA)
+CDC 6600, 50
+CDD (see Compatibility Definition Document)
+CET (see Control-flow Enforcement Technology)
+CFG (see Control Flow Guard)
+CFI (see Control-Flow Integrity)
+CFS (see Completely Fair Scheduler)
+CFS (see Completely Fair Scheduling)
+Cgroup, 505
+Chain of trust, 912
+Challenge-response authentication, 643–644
+Character device, 338
+Character special file, 45, 264, 758
+Chdir system call, 54, 735, 774
+Check for errors first, 1070
+Checkerboarding, 243
+Checkpoint, 454
+Checkpointing, virtual machine migration, 504

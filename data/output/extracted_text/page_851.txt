@@ -1,0 +1,42 @@
+822
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Activity manager in system_server process
+Camera app process
+Email app process
+MailMainActivity
+CameraMainActivity
+Task: Camera
+ActivityRecord
+(CameraMainActivity)
+ActivityRecord
+(MailMainActivity)
+Saved state
+STOPPED
+RESUMED
+Task: Email
+Figure 10-53. Starting the camera application after email.
+state information representing what the user currently sees that it returns to the
+activity manager; the activity manager, running in the system server process,
+retains that state in its ActivityRecord for that activity. The saved state for an 
+activity is generally small, for example containing where you are scrolled in an email
+message; it would not contain data like the message itself, which the app would
+instead keep somewhere in its own persistent storage (so it remains around even if
+the user completely removes an activity).
+Recall that although Android does demand paging (it can page in and out clean
+RAM that has been mapped from files on disk, such as code), it does not rely on
+swap space. This means all dirty RAM pages in an application’s process must stay
+in RAM. Having the email’s main activity state safely stored away in the activity
+manager gives the system back some of the flexibility in dealing with memory that
+swap provides.
+For example, if the camera application starts to require a lot of RAM, the 
+system can simply get rid of the email process, as shown in Fig. 10-54. The 
+ActivityRecord, with its precious saved state, remains safely tucked away by the activity
+manager in the system server process. Since the system server process hosts all of
+Android’s core system services, it must always remain running, so the state saved
+here will remain around for as long as we might need it.
+Our example email application not only has an activity for its main UI, but
+includes another ComposeActivity. Applications can declare any number of 
+activities they want. This can help organize the implementation of an application, but
+more importantly it can be used to implement cross-application interactions. For
+example, this is the basis of Android’s cross-application sharing system, which the

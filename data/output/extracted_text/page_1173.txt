@@ -1,0 +1,98 @@
+1144
+INDEX
+Reparse point, 890, 998
+NT file system, 994
+Request matrix, 452
+Request-reply service, 586
+Requirements for virtualization, 480–482
+Research,
+deadlock, 469–470
+file system, 330
+input/output, 428–430
+memory management, 248–249
+multiple processor systems, 598–599
+operating systems, 78–79
+processes and threads, 171–172
+security, 694–695
+virtualization and the cloud, 523–524
+Reserved page, Windows, 958
+ResetEvent Win32 call, 938
+Resilient file system, 262, 989
+Resistive screen, 417
+Resolver activity, Android, 831
+Resource, 438–444
+X, 406
+Resource acquisition, 439–440
+Resource deadlock, 445
+Resource tracking, Windows, 977
+Resource trajectory, 456–457
+Resource vector, 451
+Restricted token, Windows, 931
+Return flow guard, Windows, 1029
+Return-oriented programming, 653–655
+Windows, 1028
+Return-to-libc attack, 653
+Reusability, 1068
+Rewinddir system call, 774
+RFG (see Return Flow Guard)
+Right, access, 619
+RIM Blackberry, 19
+Rivest, Ron, 634
+Rmb system call, 740
+Rmdir system call, 54, 773
+Role, access, 623
+ROM (see Read Only Memory)
+Root, 41, 790
+Root certificate, 912
+Root directory, 43, 272
+Root file system, 44
+Root of trust, 689
+Root partition, Hyper-V, 1003
+Root scheduler, Hyper-V, 1005
+Rootkit, 912
+ROP (see Return-Oriented Programming)
+Round-robin scheduling, 162–163
+Router, 466, 583
+Rowhammer vulnerability, 682
+RPC (see Remote Procedure Call)
+RSA public-key cryptography, 634
+Run-time model, 78
+Runqueue, 737
+RWX bits, 46
+S
+SAAS (see Software As A Service)
+SACL (see System Access Control list)
+Safe state, 457–458
+Safe-mode, Windows, 914
+Safety, hypervisor, 482
+Salt, 641
+Saltzer, Jerome, 609, 1045
+SAM (see Security Access Manager)
+Same page merging, 225
+Sandbox, Windows, 1016
+Sandboxing, 477, 692
+SATA (see Serial ATA)
+Scan code, 397
+Schedulable system, 168
+Scheduler, 152
+Scheduling algorithm
+affinity, 552
+aperiodic, 168
+batch systems, 160–161
+categories, 156–157
+co-scheduling, 555
+completely fair share, 167–168
+first-come first served, 160
+gang, 554–555
+goals, 157–159
+guaranteed, 166
+Hyper-V, 1005–1006
+interactive system, 162–168
+introduction, 153–159
+Linux, 736–740
+lottery, 166–167
+multicomputer, 575–576
+multiple queue, 164–165
+multiprocessor, 550–557
+nonpreemptive, 156
+periodic, 169

@@ -1,0 +1,43 @@
+910
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+The Device Drivers
+The final part of Fig. 11-11 consists of the device drivers. Device drivers in
+Windows are dynamic link libraries which are loaded by the NTOS executive.
+Though they are primarily used to implement the drivers for specific hardware,
+such as physical devices and I/O buses, the device-driver mechanism is also used
+as the general extensibility mechanism for kernel mode. As described earlier,
+much of the Win32 subsystem is loaded as a driver.
+The I/O manager organizes a data flow path for each instance of a device, as
+shown in Fig. 11-14. This path is called a device stack and consists of private
+instances of kernel device objects allocated for the path. Each device object in the
+device stack is linked to a particular driver object, which contains the table of 
+routines to use for the I/O request packets that flow through the device stack. In some
+cases, the devices in the stack represent drivers whose sole purpose is to filter I/O
+operations aimed at a particular device, bus, or network driver. Filtering is used for
+a number of reasons. Sometimes preprocessing or postprocessing I/O operations
+results in a cleaner architecture, while other times it is just pragmatic because the
+sources or rights to modify a driver are not available and so filtering is used to
+work around the inability to modify those drivers. Filters can also implement 
+completely new functionality, such as turning disks into partitions or multiple disks
+into RAID volumes.
+The file systems are loaded as device drivers. Each instance of a volume for a
+file system has a device object created as part of the device stack for that volume.
+This device object will be linked to the driver object for the file system appropriate
+to the volume’s formatting. Special filter drivers, called file-system filter drivers,
+can insert device objects before the file-system device object to apply functionality
+to the I/O requests being sent to each volume, such as handling encryption.
+The network protocols, such as Windows’ integrated IPv4/IPv6 TCP/IP 
+implementation, are also loaded as drivers using the I/O model. For compatibility with
+the older MS-DOS-based Windows, the TCP/IP driver implements a special 
+protocol for talking to network interfaces on top of the Windows I/O model. There are
+other drivers that also implement such arrangements, which Windows calls 
+miniports. The shared functionality is in a class driver. For example, common 
+functionality for SCSI or IDE disks or USB devices is supplied by a class driver, which
+miniport drivers for each particular type of such devices link to as a library.
+We will not discuss any particular device driver in this chapter, but will provide
+more detail about how the I/O manager interacts with device drivers in Sec. 11.7.
+11.3.2 Booting Windows
+Getting an operating system to run requires several steps. When a computer is
+turned on, the first processor is initialized by the hardware, and then set to start
+executing some program in memory. The only available code is in some form of

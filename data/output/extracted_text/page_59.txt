@@ -1,0 +1,46 @@
+30
+INTRODUCTION 
+CHAP. 1
+In many cases, the actual control of the device is complicated and detailed, so
+it is the job of the controller to present a simpler (but still very complex) interface
+to the operating system. For example, a hard disk controller might accept a 
+command to read sector 11,206 from disk 2. The controller then has to convert this 
+linear sector number to a cylinder, sector, and head. This conversion may be 
+complicated by the fact that outer cylinders have more sectors than inner ones and that
+some bad sectors have been remapped onto other ones. Then the controller has to
+determine which cylinder the disk arm is on and give it a command to move in or
+out the requisite number of cylinders. It has to wait until the proper sector has
+rotated under the head and then start reading and storing the bits as they come off
+the drive, removing the preamble and computing the checksum. Finally, it has to
+assemble the incoming bits into words and store them in memory. To do all this
+work, controllers often contain small embedded computers that are programmed to
+do their work.
+The other piece is the actual device itself. Devices have fairly simple 
+interfaces, both because they cannot do much and to make them standard. The latter is
+needed so that any SAT A disk controller can handle any SAT A disk, for example.
+SATA stands for Serial ATA and AT A in turn stands for AT Attachment. In case
+you are curious what AT stands for, this was IBM’s second generation ‘‘Personal
+Computer Advanced Technology’’ built around the then-extremely-potent 6-MHz
+80286 processor that the company introduced in 1984. What we learn from this is
+that the computer industry has a habit of continuously enhancing existing
+acronyms with new prefixes and suffixes. We also learned that an adjective like
+‘‘advanced’’ should be used with great care, or you will look silly 40 years down
+the line.
+SATA is currently the standard type of hard disk on many computers. Since the
+actual device interface is hidden behind the controller, all that the operating system
+sees is the interface to the controller, which may be quite different from the 
+interface to the device.
+Because each type of controller is different, different software is needed to
+control each one. The software that talks to a controller, giving it commands and
+accepting responses, is called a device driver. Each controller manufacturer has to
+supply a driver for each operating system it supports. Thus a scanner may come
+with drivers for macOS, Windows 11, and Linux, for example.
+To be used, the driver has to be put into the operating system so it can run in
+kernel mode. Drivers can actually run outside the kernel, and operating systems
+like Linux and Windows nowadays do offer some support for doing so, but the vast
+majority of the drivers still run below the kernel boundary. Only very few current
+systems, such as MINIX 3 run all drivers in user space. Drivers in user space must
+be allowed to access the device in a controlled way, which is not straightforward
+without some hardware support.
+There are three ways the driver can be put into the kernel. The first way is to
+relink the kernel with the new driver and then reboot the system. Many older UNIX

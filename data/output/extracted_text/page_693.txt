@@ -1,0 +1,44 @@
+664
+SECURITY 
+CHAP. 9
+workers have a function that allows their controllers to change their names (Line
+16). The names of supervisor robots never change. As is shown in their class 
+definitions, both robot types derive from the parent robot. This is nice because it means
+they automatically inherit some of the properties—such as the name buffer and the
+play piano() method. Beyond those, they can add their own new methods. 
+Moreover, since worker and supervisor robots are both specializations of robot, they can
+be used whenever a robot is needed. For instance, Lines 49–40 show that the 
+function test robot() can take both worker and supervisor robots. In both cases, it will
+make them play the piano.
+In other cases, a function looks like it will take either type of robot, but should
+only be called with one particular type. For instance, when we make a call to
+prompt user for name(), it looks very similar to test robot(). The method to
+change the name (called in Line 32) is only implemented for worker robots. For
+this reason, the function casts the function argument to a pointer to worker robot
+(using C++’s static casting). However, if the function prompt user for name() is
+accidentally called with a supervisor robot as the argument, as in Line 42, bad
+things happen. In particular, the call in Line 32 will execute the method for which
+it finds the address at the same offset where it expects the address for
+change name() to be. In this case, it finds the address of execute management 
+routine() there. Thus, instead of using the input string to change the name of the 
+robot, it will execute that string as a command. The system administrator will 
+discover this the first a user provides a name like ‘‘rm -rf /’’.
+9.5.5 Null Pointer Dereference Attacks
+A few hundred pages ago, in Chapter 3, we discussed memory management in
+detail. You may remember how modern operating systems virtualize the address
+spaces of the kernel and user processes. Before a program accesses a memory
+address, the MMU translates that virtual address to a physical address by means of
+the page tables. Pages that are not mapped cannot be accessed. It seems logical to
+assume that the kernel address space and the address space of a user process are
+completely different, but this is not always the case. In Linux, for example, the 
+kernel is simply mapped into every process’ address space and whenever the kernel
+starts executing to handle a system call, it will run in the process’ address space.
+On a 32-bit system, user space occupies the bottom 3 GB of the address space and
+the kernel the top 1 GB. The reason for this cohabitation is efficiency—switching
+between address spaces is expensive.
+Normally this arrangement does not cause any problems. The situation changes
+when the attacker can make the kernel call functions in user space. Why would the
+kernel do this? It is clear that it should not. However, remember we are talking
+about bugs. A buggy kernel may in rare and unfortunate circumstances 
+accidentally dereference a NULL pointer. For instance, it may call a function using a 
+function pointer that was not yet initialized. In recent years, many bugs like this have

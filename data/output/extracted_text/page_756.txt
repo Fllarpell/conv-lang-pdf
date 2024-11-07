@@ -1,0 +1,55 @@
+SEC. 10.3
+PROCESSES IN LINUX
+727
+System call
+Description
+pid = for k( )
+Create a child process identical to the parent
+pid = waitpid(pid, &statloc, opts) 
+Wait for a child to terminate
+s = execve(name, argv, envp) 
+Replace a process’ core image
+exit(status) 
+Ter minate process execution and return status
+s = sigaction(sig, &act, &oldact)
+Define action to take on signals
+s = sigretur n(&context) 
+Return from a signal
+s = sigprocmask(how, &set, &old)
+Examine or change the signal mask
+s = sigpending(set) 
+Get the set of blocked signals
+s = sigsuspend(sigmask) 
+Replace the signal mask and suspend the process
+s = kill(pid, sig)
+Send a signal to a process
+residual = alarm(seconds) 
+Set the alarm clock
+s = pause( )
+Suspend the caller until the next signal
+Figure 10-6. Some system calls relating to processes. The return code s is <1 if
+an error has occurred, pid is a process ID, and residual is the remaining time in
+the previous alarm. The parameters are what the names suggest.
+reads the next command when the child terminates. To wait for the child to finish,
+the parent executes a waitpid system call, which just waits until the child terminates
+(any child if more than one exists). Waitpid has three parameters. The first one
+allows the caller to wait for a specific child. If it is <1, any old child (i.e., the first
+child to terminate) will do. The second parameter is the address of a variable that
+will be set to the child’s exit status (normal or abnormal termination and exit
+value). This allows the parent to know the fate of its child. The third parameter
+determines whether the caller blocks or returns if no child is already terminated.
+In the case of the shell, the child process must execute the command typed by
+the user. It does this by using the exec system call, which causes its entire core
+image to be replaced by the file named in its first parameter. A highly simplified
+shell illustrating the use of fork, waitpid, and exec is shown in Fig. 10-7.
+In the most general case, exec has three parameters: the name of the file to be
+executed, a pointer to the argument array, and a pointer to the environment array.
+These will be described shortly. Various library procedures, such as execl, execv,
+execle, and execve, are provided to allow the parameters to be omitted or specified
+in various ways. All of these procedures invoke the same underlying system call.
+Although the system call is exec, there is no library procedure with this name; one
+of the others must be used.
+Let us consider the case of a command typed to the shell, such as
+cp file1 file2
+used to copy file1 to file2. After the shell has forked, the child locates and executes
+the file cp and passes it information about the files to be copied.

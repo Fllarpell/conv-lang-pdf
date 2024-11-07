@@ -1,0 +1,41 @@
+617
+sewage system and caused a million liters of raw sew age to spill into the parks,
+rivers and coastal waters (where fish promptly died)—as well as other places. A
+less smelly but perhaps dirtier and certainly scarier example of a cyberweapon
+interfering in physical affairs was Stuxnet—a highly sophisticated attack that 
+damaged the centrifuges in a uranium enrichment facility in Natanz, Iran, and is said to
+have caused a significant slowdown in Iran’s nuclear program. While no one has
+come forward to claim credit for this attack, something that sophisticated probably
+originated with the secret services of one or more countries hostile to Iran.
+9.1.6 Can We Build Secure Systems?
+Nowadays, it is hard to open a newspaper without reading yet another story
+about attackers breaking into computer systems, stealing information, or 
+controlling millions of computers. A naive person might logically ask two questions
+concerning this state of affairs:
+1. Is it possible to build a secure computer system?
+2. If so, why is it not done?
+The answer to the first one is: ‘‘In theory, yes.’’ In principle, software and hardware
+can be free of bugs and we can even verify that it is secure—as long as that 
+software or hardware is not too large or complicated. Unfortunately, computer systems
+today are horrendously complicated and this has a lot to do with the second 
+question. The second question, why secure systems are not being built, comes down to
+two fundamental reasons. First, current systems are not secure but users are 
+unwilling to throw them out. If Microsoft were to announce that in addition to Windows
+it had a new product, SecureOS, that was resistant to viruses but did not run 
+Windows applications, it is far from certain that every person and company would drop
+Windows like a hot potato and buy the new system immediately.
+In fact, Microsoft has had a highly secure operating system, Singularity, for
+years, but decided not to market it (Larus and Hunt, 2010). Since Windows 11 is
+based on a hypervisor, it would be easy to ship Windows 11 with two prebuilt 
+virtual machines, Windows 11 and Singularity, and over a period of years gradually
+migrate security-sensitive applications to Singularity, but management decided not
+to do this for reasons best known to it.
+The second issue is more subtle. The only known way to build a secure system
+is to keep it simple. Features are the sworn enemy of security. The good folks in
+the Marketing Dept. at most tech companies believe (rightly or wrongly, mostly
+wrongly) that what users desperately want is more features, bigger features, better
+features, sexier features, and ever more useless features. They make sure that the
+system architects designing their products get the word. However, all these mean
+more complexity, more code, more bugs, and more security errors.
+SEC. 9.1
+FUNDAMENTALS OF OPERATING SYSTEM SECURITY

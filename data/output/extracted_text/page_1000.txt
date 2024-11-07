@@ -1,0 +1,30 @@
+SEC. 11.5
+MEMORY MANAGEMENT
+971
+Pages are moved between the working sets and the various lists based on
+actions taken by the processes themselves as well as the working-set manager and
+other system threads. Let us examine the transitions. When the working-set 
+manager removes pages from a working set, or when a process unmaps a file from its
+address space, the removed pages goes on the bottom of the standby or modified
+list, depending on its cleanliness. This transition is shown as (1) in Fig. 11-37.
+Figure 11-37. The various page lists and the transitions between them.
+Pages on both lists are still live pages, so if a page fault occurs and one of these
+pages is needed, it is removed from the list and faulted back into the working set
+without any disk I/O (2). When a process exits, its private pages are not live 
+anymore, so they move to the free list regardless of whether they were in the working
+set or on the modified or standby lists (3). Any pagefile space in use by the process
+is also freed.
+Other transitions are caused by other system threads. Every 4 seconds the 
+balance set manager thread runs and looks for processes all of whose threads have
+been idle for a certain number of seconds. If it finds any such processes, their 
+kernel stacks are unpinned from physical memory and their pages are moved to the
+standby or modified lists, also shown as (1).
+Tw o other system threads, the mapped page writer and the modified page
+writer, wake up periodically to see if there are enough clean pages. If not, they
+take pages from the top of the modified list, write them back to disk, and then
+move them to the standby list (4). The former handles writes to mapped files and
+the latter handles writes to the pagefiles. The result of these writes is to transform
+modified (dirty) pages into standby (clean) pages.
+The reason for having two threads is that a mapped file might have to grow as
+a result of the write, and growing it requires access to on-disk data structures to
+allocate a free disk block. If there is no room in memory to bring them in when a

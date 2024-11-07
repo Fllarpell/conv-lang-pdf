@@ -1,0 +1,44 @@
+SEC. 10.3
+PROCESSES IN LINUX
+741
+level, Linux provides wrappers around the hardware-supported atomic instructions,
+via operations such as atomic set and atomic read. In addition, since modern
+hardware reorders memory operations, Linux provides memory barriers. Using
+operations like rmb and wmb guarantees that all read/write memory operations 
+preceding the barrier call have completed before any subsequent accesses take place.
+More commonly used synchronization constructs are the higher-level ones.
+Threads that do not wish to block (for performance or correctness reasons) use
+spinlocks and spin read/write locks. The current Linux version implements the
+so-called ‘‘ticket-based’’ spinlock, which has excellent performance on SMP and
+multicore systems. Threads that are allowed to or need to block use constructs like
+mutexes and semaphores. Linux supports nonblocking calls like mutex tr ylock and
+sem tr ywait to determine the status of the synchronization variable without 
+blocking. Other types of synchronization variables, like futexes, completions, 
+‘‘readcopy-update’’ (RCU) locks, etc., are also supported. Finally, synchronization 
+between the kernel and the code executed by interrupt-handling routines can also be
+achieved by dynamically disabling and enabling the corresponding interrupts.
+10.3.6 Booting Linux
+Details vary from platform to platform, but in general the following steps
+represent the boot process. When the computer starts, the BIOS performs 
+Power-On-Self-Test (POST) and initial device discovery and initialization, since the
+OS’ boot process may rely on access to disks, screens, keyboards, and so on. Next,
+the first sector of the boot disk, the MBR (Master Boot Record), is read into a
+fixed memory location and executed. This sector contains a small (512-byte) 
+program that loads a standalone program called boot from the boot device, such as a
+SATA or SCSI disk. The boot program first copies itself to a fixed high-memory
+address to free up low memory for the operating system.
+Once moved, boot reads the root directory of the boot device. To do this, it
+must understand the file system and directory format, which is the case with some
+bootloaders such as GRUB (GRand Unified Bootloader). Other bootloaders,
+such as Intel’s LILO, do not rely on any specific file system. Instead, they need a
+block map and low-level addresses, which describe physical sectors, heads, and
+cylinders, to find the relevant sectors to be loaded.
+Then boot reads in the operating system kernel and jumps to it. At this point,
+it has finished its job and the kernel is running.
+The kernel start-up code is written in assembly language and is highly machine
+dependent. Typical work includes setting up the kernel stack, identifying the CPU
+type, calculating the amount of RAM present, disabling interrupts, enabling the
+MMU, and finally calling the C-language main procedure to start the main part of
+the operating system.
+The C code also has considerable initialization to do, but this is more logical
+than physical. It begins by allocating a message buffer to help debug problems.

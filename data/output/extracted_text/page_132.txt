@@ -1,0 +1,46 @@
+SEC. 2.2
+THREADS
+103
+Thread
+Thread
+Kernel
+Kernel
+Process 1
+Process 2
+Process 3
+Process
+User!
+space
+Kernel!
+space
+(a)
+(b)
+Figure 2-10. (a) Three processes each with one thread. (b) One process with
+three threads.
+When a multithreaded process is run on a single-CPU system, the threads take
+turns running. In Fig. 2-1, we saw how multiprogramming of processes works. By
+switching back and forth among multiple processes, the system gives the illusion
+of separate sequential processes running in parallel. Multithreading works the same
+way. The CPU switches rapidly back and forth among the threads, providing the
+illusion that the threads are running in parallel, albeit on a slower CPU. With three
+compute-bound threads in a process, the threads would appear to be running in 
+parallel, each one on a CPU with one-third the speed of the real CPU.
+The ifferent threads in a process are not as independent as different processes.
+All threads have exactly the same address space, which means that they also share
+the same global variables. Since every thread can access every memory address
+within the process’ address space, one thread can read, write, or even wipe out 
+another thread’s stack. There is no protection between threads because (1) it is 
+impossible, and (2) it should not be necessary. Unlike different processes, which may
+be from different users and which may be mutually hostile to one another, a 
+process is always owned by a single user, who has presumably created multiple threads
+so that they can cooperate, not fight with each other. In addition to sharing an 
+address space, all the threads can share the same set of open files, child processes,
+signals, alarms, and so forth, as shown in Fig. 2-11. Thus, the organization of
+Fig. 2-10(a) would be used when the three processes are essentially unrelated,
+whereas Fig. 2-10(b) would be appropriate when the three threads are actually part
+of the same job and are actively and closely cooperating with each other.
+The items in the first column are process properties, not thread properties. For
+example, if one thread opens a file, that file is visible to the other threads in the
+process and they can read and write it. This is logical, since the process is the unit
+of resource management, not the thread. If each thread had its own address space,
+open files, pending alarms, and so on, it would be a separate process. What we are

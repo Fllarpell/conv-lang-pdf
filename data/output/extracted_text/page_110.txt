@@ -1,0 +1,81 @@
+SEC. 1.11
+METRIC UNITS
+81
+Exp. 
+Explicit
+Prefix 
+Exp.
+Explicit 
+Prefix
+10<3
+0.001 
+milli
+103
+1,000 
+Kilo
+10<6
+0.000001 
+micro
+106
+1,000,000 
+Mega
+10<9
+0.000000001 
+nano
+109
+1,000,000,000 
+Giga
+10<12
+0.000000000001 
+pico
+1012
+1,000,000,000,000 
+Tera
+10<15
+0.000000000000001 
+femto 
+1015
+1,000,000,000,000,000 
+Peta
+10<18
+0.000000000000000001 
+atto
+1018
+1,000,000,000,000,000,000 
+Exa
+10<21
+0.000000000000000000001 
+zepto 
+1021
+1,000,000,000,000,000,000,000 
+Zetta
+10<24
+0.000000000000000000000001 
+yocto 
+1024
+1,000,000,000,000,000,000,000,000 
+Yotta
+Figure 1-31. The principal metric prefixes.
+SSD or disk sizes. To avoid ambiguity, in this book, we will use the symbols KB,
+MB, and GB for 210, 220, and 230 bytes, respectively, and the symbols Kbps, Mbps,
+and Gbps for 103, 106, and 109 bits/sec, respectively.
+1.12 SUMMARY
+Operating systems can be viewed from two viewpoints: resource managers and
+extended machines. In the resource-manager view, the operating system’s job is to
+manage the different parts of the system efficiently. In the extended-machine view,
+the system provides the users with abstractions that are more convenient to use
+than the actual machine. These include processes, address spaces, and files.
+Operating systems have a long history, starting from the days when they
+replaced the operator, to modern multiprogramming systems. Highlights include
+early batch systems, multiprogramming systems, and personal computer systems.
+Since operating systems interact closely with the hardware, some knowledge
+of computer hardware is useful to understanding them. Computers are built up of
+processors, memories, and I/O devices. These parts are connected by buses.
+Operating systems can be structured as monolithic, layered, 
+microkernel/client-server, virtual machine, or exokernel/unikernel systems. Regardless, the basic
+concepts on which they are built are processes, memory management, I/O 
+management, the file system, and security. The main interface of an operating system is
+the set of system calls that it can handle. These tell us what it really does.
+PROBLEMS
+1. What are the two main functions of an operating system?
+2. In Sec. 1.4, nine different types of operating systems are described. Give a list of

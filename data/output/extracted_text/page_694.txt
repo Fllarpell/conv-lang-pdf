@@ -1,0 +1,44 @@
+SEC. 9.5
+EXPLOITING SOFTWARE
+665
+been discovered in the Linux kernel. A null pointer dereference is nasty business as
+it typically leads to a crash. It is bad enough in a user process, as it will crash the
+program, but it is even worse in the kernel, because it takes down the entire system.
+Sometimes it is worse still, when the attacker is able to trigger the null pointer
+dereference from the user process. In that case, she can crash the system whenever
+she wants. However, crashing a system does not get you any high fiv es from your
+cracker friends—they want to see a shell.
+The crash happens because there is no code mapped at page 0. So the attacker
+can use special function, mmap, to remedy this. With mmap, a user process can
+ask the kernel to map memory at a specific address. After mapping a page at 
+address 0, the attacker can write shellcode in this page. Finally, she triggers the null
+pointer dereference, causing the shellcode to be executed with kernel privileges.
+High fiv es all around.
+On modern kernels, it is no longer possible to mmap a page at address 0. Even
+so, many older kernels are still used in the wild. Moreover, the trick also works
+with pointers that have different values. With some bugs, the attacker may be able
+to inject her own pointer into the kernel and have it dereferenced. The lessons we
+learn from this exploit is that kernel–user interactions may crop up in unexpected
+places and that optimizations to improve performance may come to haunt you in
+the form of attacks later.
+9.5.6 Integer Overflow Attacks
+Computers do integer arithmetic on fixed-length numbers, usually 8, 16, 32, or
+64 bits long. If the sum of two numbers to be added or multiplied exceeds the
+maximum integer that can be represented, an overflow occurs. C programs do not
+catch this error; they just store and use the incorrect value. In particular, if the
+variables are signed integers, then the result of adding or multiplying two positive
+integers may be stored as a negative integer. If the variables are unsigned, the
+results will be positive, but may wrap around. For example, consider two unsigned
+16-bit integers each containing the value 40,000. If they are multiplied together
+and the result stored in another unsigned 16-bit integer, the apparent product is
+4096. Clearly this is incorrect but it is not detected.
+This ability to cause undetected numerical overflows can be turned into an
+attack. One way to do this is to feed a program two valid (but large) parameters in
+the knowledge that they will be added or multiplied and result in an overflow. For
+example, some graphics programs have command-line parameters giving the
+height and width of an image file, for example, the size to which an input image is
+to be converted. If the target width and height are chosen to force an overflow, the
+program will incorrectly calculate how much memory it needs to store the image
+and call malloc to allocate a much-too-small buffer for it. The situation is now ripe
+for a buffer overflow attack. Similar exploits are possible when the sum or product
+of positive integers results in a negative integer. Obviously a sufficiently paranoic

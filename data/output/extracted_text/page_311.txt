@@ -1,0 +1,72 @@
+282
+FILE SYSTEMS
+CHAP. 4
+terminate prematurely because the disk hole is full and there is no place to put the
+rest of the file. If the user tries to avoid this problem by giving an unrealistically
+large number as the final size, say, 100 GB, the editor may be unable to find such a
+large hole and announce that the file cannot be created. Of course, the user would
+be free to start the program again, say 50 GB this time, and so on until a suitable
+hole was located. Still, this scheme is not likely to lead to happy users.
+Linked-List Allocation
+The second method for storing files is to keep each one as a linked list of disk
+blocks, as shown in Fig. 4-13. The first part of each block is used as a pointer to
+the next one. The rest of the block is for data.
+File A
+Physical!
+block
+Physical!
+block
+4
+0
+7
+2
+10
+12
+File!
+block!
+0
+File!
+block!
+1
+File!
+block!
+2
+File!
+block!
+3
+File!
+block!
+4
+File B
+0
+6
+3
+11
+14
+File!
+block!
+0
+File!
+block!
+1
+File!
+block!
+2
+File!
+block!
+3
+Figure 4-13. Storing a file as a linked list of disk blocks.
+Unlike contiguous allocation, every disk block can be used in this method. No
+space is lost to disk fragmentation (except for internal fragmentation in the last
+block). Also, it is sufficient for the directory entry to merely store the disk address
+of the first block. The rest can be found starting there.
+On the other hand, although reading a file sequentially is straightforward, 
+random access is extremely slow. To get to block n, the operating system has to start
+at the beginning and read the n < 1 blocks prior to it, one at a time. Clearly, doing
+so many reads will be painfully slow.
+Also, the amount of data storage in a block is no longer a power of two 
+because the pointer takes up a few bytes. While not fatal, having a peculiar size is
+less efficient because many programs read and write in blocks whose size is a 
+power of two. With the first few bytes of each block occupied by a pointer to the next
+block, reads of the full block size require acquiring and concatenating information
+from two disk blocks, which generates extra overhead due to the copying.

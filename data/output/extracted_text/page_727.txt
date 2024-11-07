@@ -1,0 +1,69 @@
+698
+SECURITY 
+CHAP. 9
+8. Represent the ownerships and permissions shown in this UNIX directory listing as a
+protection matrix. (Note: asw is a member of two groups: users and devel; gmw is a
+member only of users.) Treat each of the two users and two groups as a domain, so
+that the matrix has four rows (one per domain) and four columns (one per file).
+– rw– r– – r– –
+2
+gmw 
+users
+908 
+May 26 16:45 
+PPP– Notes
+– rwx r– x  r– x  
+1
+asw
+dev el
+432 
+May 13 12:35 
+prog1
+– rw– rw– – – –
+1
+asw 
+users 
+50094
+May 30 17:51 
+project.t
+– rw– r– – – – –
+1
+asw 
+dev el
+13124 
+May 31 14:30 
+splash.gif
+9. Express the permissions shown in the directory listing of the previous problem as
+access-control lists.
+10. Modify the ACL from the previous problem for one file to grant or deny an access that
+cannot be expressed using the UNIX rwx system. Explain this modification.
+11. Suppose there are three security levels, 1, 2, and 3. Objects A and B are at level 1, C
+and D are at level 2, and E and F are at level 3. Processes 1 and 2 are at level 1, 3 and
+4 are at level 2, and 5 and 6 are at level 3. For each of the following operations, 
+specify whether they are permissible under Bell-LaPadula model, Biba model, or both.
+(a) Process 1 writes object D
+(b) Process 4 reads object A
+(c) Process 3 reads object C
+(d) Process 3 writes object C
+(e) Process 2 reads object D
+(f) Process 5 writes object F
+(g) Process 6 reads object E
+(h) Process 4 write object E
+(i) Process 3 reads object F
+12. In the Amoeba scheme for protecting capabilities, a user can ask the server to produce
+a new capability with fewer rights, which can then be given to a friend. What happens
+if the friend asks the server to remove even more rights so that the friend can give it to
+someone else?
+13. In Fig. 9-11, there is no arrow from process B to object 1. Would such an arrow be
+allowed? If not, what rule would it violate?
+14. If process-to-process messages were allowed in Fig. 9-11, what rules would apply to
+them? For process B in particular, to which processes could it send messages and
+which not?
+15. Break the following monoalphabetic cipher. The plaintext, consisting of letters only, is
+a well-known excerpt from a poem by Lewis Carroll.
+kfd ktbd fzm eubd kfd pzyiom mztx ku kzyg ur bzha kfthcm
+ur mfudm zhx mftnm zhx mdzythc pzq ur ezsszcdm zhx gthcm
+zhx pfa kfd mdz tm sutythc fuk zhx pfdkfdi ntcm fzld pthcm
+sok pztk z stk kfd uamkdim eitdx sdruid pd fzld uoi efzk
+rui mubd ur om zid uok ur sidzkf zhx zyy ur om zid rzk
+hu foiia mztx kfd ezindhkdi kfda kfzhgdx ftb boef rui kfzk

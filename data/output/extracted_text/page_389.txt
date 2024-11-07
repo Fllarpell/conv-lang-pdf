@@ -1,0 +1,41 @@
+360
+INPUT/OUTPUT 
+CHAP. 5
+MINIX 3 (www.minix3.org). However, since most other desktop operating systems
+run their drivers in the kernel, that is the model we will consider here.
+Since the designers of every operating system know that pieces of code 
+(drivers) written by outsiders will be installed in it, it needs to have an architecture that
+allows such installation. This means having a well-defined model of what a driver
+does and how it interacts with the rest of the operating system. Device drivers are
+normally positioned below the rest of the operating system, as is illustrated in
+Fig. 5-12.
+User
+space
+Kernel
+space
+User process
+User
+program
+Rest of the operating system
+Printer
+driver
+ driver
+ driver
+Printer controller
+Hardware
+Devices
+ 
+SSD
+SSD controller
+Camera
+Camera controller
+Figure 5-12. Logical positioning of device drivers. In reality, all communication
+between drivers and device controllers goes over the bus.
+Operating systems usually classify drivers into one of a small number of 
+categories. The most common categories are the block devices, such as disks, which
+contain multiple data blocks that can be addressed independently, and the character
+devices, such as keyboards and printers, which generate or accept a stream of 
+characters.
+Most operating systems define a standard interface that all block drivers must
+support and a second standard interface that all character drivers must support.
+These interfaces consist of a number of procedures that the rest of the operating

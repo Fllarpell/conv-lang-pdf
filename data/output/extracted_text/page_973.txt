@@ -1,0 +1,40 @@
+944
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+3. Memory Partitions: A memory partition represents a subset of 
+memory with its own isolated instance of memory management. It is used
+for subdividing memory for dedicated purposes and to run isolated
+workloads which should not interfere with one another due to 
+memory management mechanisms. Each memory partition comes with its
+minimal system process, called ‘‘PartitionSystem,’’ into which the
+memory manager can map executables that are being loaded in that
+partition. We will cover memory partitions in Sec. 11.5.
+Scheduling
+The Windows kernel does not use a central scheduling thread. Instead, when a
+thread cannot run any more, the thread is directed into the scheduler to see which
+thread to switch to. The following conditions invoke scheduling.
+1. A running thread blocks on an I/O, lock, event, semaphore, etc.
+2. The thread signals an object (e.g., calls SetEvent on an event).
+3. The quantum expires.
+In case 1, the thread is already in the kernel to carry out the operation on the 
+dispatcher or I/O object. It cannot possibly continue, so it calls the scheduler code to
+pick its successor and load that thread’s CONTEXT record to resume running it.
+In case 2, the running thread is in the kernel, too. However, after signaling
+some object, it can definitely continue because signaling an object never blocks.
+Still, the thread is required to call the scheduler to see if the result of its action has
+readied a thread with a higher scheduling priority that is now ready to run. If so, a
+thread switch occurs since Windows is fully preemptive (i.e., thread switches can
+occur at any moment, not just at the end of the current thread’s quantum). 
+However, if multiple CPUs are present, a thread that was made ready may be scheduled
+on a different CPU and the original thread can continue to execute on the current
+CPU even though its scheduling priority is lower.
+In case 3, an interrupt to kernel mode occurs, at which point the thread
+executes the scheduler code to see who runs next. Depending on what other threads
+are waiting, the same thread may be selected, in which case it gets a new quantum
+and continues running. Otherwise a thread switch happens.
+The scheduler is also called under two other conditions:
+1. An I/O operation completes.
+2. A timed wait expires.
+In the first case, a thread may have been waiting on this I/O and is now released to
+run. A check has to be made to see if it should preempt the running thread since
+there is no guaranteed minimum run time. The scheduler is not run in the interrupt

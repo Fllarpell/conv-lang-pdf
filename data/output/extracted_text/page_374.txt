@@ -1,0 +1,54 @@
+SEC. 5.1
+PRINCIPLES OF I/O HARDWARE
+345
+CPU
+DMA!
+controller
+Disk!
+controller
+Main!
+memory
+Buffer
+1. CPU!
+programs!
+the DMA!
+controller
+Interrupt when!
+done
+2. DMA requests!
+transfer to memory
+3. Data transferred
+Bus
+4. Ack
+Address
+Count
+Control
+Drive
+Figure 5-4. Operation of a DMA transfer.
+checksum to verify that no read errors have occurred. Then the controller causes
+an interrupt. When the operating system starts running, it can read the disk block
+from the controller’s buffer a byte or a word at a time by executing a loop, with
+each iteration reading one byte or word from a controller device register and 
+storing it in main memory.
+When DMA is used, the procedure is different. First the CPU programs the
+DMA controller by setting its registers so it knows what to transfer where (step 1
+in Fig. 5-4). It also issues a command to the disk controller telling it to read data
+from the disk into its internal buffer and verify the checksum. When valid data are
+in the disk controller’s buffer, DMA can begin.
+The DMA controller initiates the transfer by issuing a read request over the bus
+to the disk controller (step 2). This read request looks like any other read request,
+and the disk controller does not know (or care) whether it came from the CPU or
+from a DMA controller. Typically, the memory address to write to is on the bus’
+address lines, so when the disk controller fetches the next word from its internal
+buffer, it knows where to write it. The write to memory is another standard bus
+cycle (step 3). When the write is complete, the disk controller sends an 
+acknowledgement signal to the DMA controller, also over the bus (step 4). The DMA 
+controller then increments the memory address to use and decrements the byte count.
+If the byte count is still greater than 0, steps 2 through 4 are then repeated until the
+count reaches 0. At that time, the DMA controller interrupts the CPU to let it
+know that the transfer is now complete. When the operating system starts up, it
+does not have to copy the disk block to memory; it is already there.
+DMA controllers vary considerably in their sophistication. The simplest ones
+handle one transfer at a time, as described above. More complex ones can be 
+programmed to handle multiple transfers at the same time. Such controllers have 
+multiple sets of registers internally, one for each channel. The CPU starts by loading

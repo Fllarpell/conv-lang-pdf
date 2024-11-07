@@ -1,0 +1,41 @@
+CHAP. 10
+PROBLEMS
+865
+system call and copying the data and stack segments of the calling process grew
+proportionally. When fork is executed in Linux, the parent’s address space is not 
+copied, as traditional fork semantics would dictate. How does Linux prevent the child from
+doing something that would completely change the fork semantics?
+12. Why are negative arguments to nice reserved exclusively for the superuser?
+13. A non-real-time Linux process has priority levels from 100 to 139. What is the default
+static priority and how is the nice value used to change this?
+14. Does it make sense to take away a process’ memory when it enters zombie state? Why
+or why not?
+15. To what hardware concept is a signal closely related? Give two examples of how 
+signals are used.
+16. Why do you think the designers of Linux made it impossible for a process to send a
+signal to another process that is not in its process group?
+17. In general, do you think daemons have higher or lower priority than interactive 
+processes? Why?
+18. When a new process is forked off, it must be assigned a unique integer as its PID. Is it
+sufficient to have a counter in the kernel that is incremented on each process creation,
+with the counter used as the new PID? Discuss your answer.
+19. In every process’ entry in the task structure, the PID of the parent is stored. Why?
+20. The copy-on-write mechanism is used as an optimization in the fork system call, so that
+a copy of a page is created only when one of the processes (parent or child) tries to
+write on the page. Suppose a process p1 forks processes p2 and p3 in quick succession.
+Explain how a page sharing may be handled in this case.
+21. What combination of the sharing flags bits used by the Linux clone command 
+corresponds to a conventional UNIX fork call? To creating a conventional UNIX thread?
+22. Tw o tasks A and B need to perform the same amount of work. However, task A has
+higher priority, and needs to be given more CPU time. Explain how will this be
+achieved in each of the Linux schedulers described in this chapter, the O(1) and the
+CFS scheduler.
+23. Some UNIX systems are tickless, meaning they do not have periodic clock interrupts.
+Why is this done? Also, does ticklessness make sense on a computer (such as an
+embedded system) running only one process?
+24. When booting Linux (or most other operating systems for that matter), the bootstrap
+loader in sector 0 of the disk first loads a boot program which then loads the operating
+system. Why is this extra step necessary? Surely it would be simpler to have the 
+bootstrap loader in sector 0 just load the operating system directly.
+25. A certain editor has 100 KB of program text, 30 KB of initialized data, and 50 KB of
+BSS. The initial stack is 10 KB. Suppose that three copies of this editor are started

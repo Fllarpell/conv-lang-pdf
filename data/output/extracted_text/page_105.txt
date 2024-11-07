@@ -1,0 +1,40 @@
+76
+INTRODUCTION 
+CHAP. 1
+programming practice is to name every constant except 0, 1, and <1, and 
+sometimes even them. Macros can have parameters, such as
+#define max(a, b) (a > b ? a : b)
+which allows the programmer to write
+i = max(j, k+1)
+and get
+i = (j > k+1 ? j : k+1)
+to store the larger of j and k+1 in i. Headers can also contain conditional 
+compilation, for example
+#ifdef X86
+intel int ack();
+#endif
+which compiles into a call to the function intel int ack if the macro X86 is defined
+and nothing otherwise. Conditional compilation is heavily used to isolate 
+architecture-dependent code so that certain code is inserted only when the system is 
+compiled on the X86, other code is inserted only when the system is compiled on a
+SPARC, and so on. A .c file can bodily include zero or more header files using the
+#include directive. There are also many header files that are common to nearly
+ev ery .c and are stored in a central directory.
+1.8.3 Large Programming Projects
+To build the operating system, each .c is compiled into an object file by the C
+compiler. Object files, which have the suffix .o, contain binary instructions for the
+target machine. They will later be directly executed by the CPU. There is nothing
+like Java byte code or Python byte code in the C world.
+The first pass of the C compiler is called the C preprocessor. As it reads each
+.c file, every time it hits a #include directive, it goes and gets the header file named
+in it and processes it, expanding macros, handling conditional compilation (and
+certain other things) and passing the results to the next pass of the compiler as if
+they were physically included.
+Since operating systems are very large (fiv e million lines of code is not
+unusual), having to recompile the entire thing every time one file is changed would
+be unbearable. On the other hand, changing a key header file that is included in
+thousands of other files does require recompiling those files. Keeping track of
+which object files depend on which header files is completely unmanageable 
+without help.
+Fortunately, computers are very good at precisely this sort of thing. On UNIX
+systems, there is a program called make (with numerous variants such as gmake,

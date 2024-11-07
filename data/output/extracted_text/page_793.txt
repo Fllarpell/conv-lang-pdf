@@ -1,0 +1,46 @@
+764
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+avoid having blocks stay too long in the cache before being written to the disk, all
+dirty blocks are written to the disk every 30 seconds.
+New types of storage devices are memory-like, in that they can be accessed
+more quickly and at smaller block granularity (even few bytes or a cacheline). In
+such cases, moving data in-and-out between the storage device and an in-memory
+cache is an overkill. Starting with the 4.0 kernel, Linux supports DAX (Direct
+Access for files). With DAX, the cache is removed and reads and writes are 
+directly issued to the storage device.
+In order to reduce the latency of repetitive disk-head movements, or of random
+I/O accesses in general, Linux relies on an I/O scheduler. Its purpose is to reorder
+or bundle read/write requests to block devices. There are many scheduler variants,
+optimized for different types of workloads. The basic Linux scheduler is based on
+the original Linux elevator scheduler. The operations of the elevator scheduler
+can be summarized as follows: Disk operations are sorted in a doubly linked list,
+ordered by the address of the sector of the disk request. New requests are inserted
+in this list in a sorted manner. This prevents repeated costly disk-head movements.
+The request list is subsequently merged so that adjacent operations are issued via a
+single disk request. The basic elevator scheduler can lead to starvation. Therefore,
+the revised version of the Linux disk scheduler includes two additional lists, 
+maintaining read or write operations ordered by their deadlines. The default deadlines
+are 0.5 sec for reads and 5 sec for writes. If a system-defined deadline for the 
+oldest write operation is about to expire, that write request will be serviced before any
+of the requests on the main doubly linked list.
+In addition to regular disk files, there are also block special files, sometimes
+called raw block files. These files allow programs to access the disk using 
+absolute block numbers, without regard to the file system. They are most often used for
+things like paging and system maintenance.
+The interaction with character devices is simple. Since character devices 
+produce or consume streams of characters, or bytes of data, support for random access
+makes little sense. One exception is the use of line disciplines. A line discipline
+can be associated with a terminal device, represented via the structure tty struct,
+and it represents an interpreter for the data exchanged with the terminal device. For
+instance, local line editing can be done (i.e., erased characters and lines can be
+removed), carriage returns can be mapped onto line feeds, and other special 
+processing can be completed. However, if a process wants to interact on every 
+character, it can put the line in raw mode, in which case the line discipline will be 
+bypassed. Not all devices have line disciplines.
+Output works in a similar way, expanding tabs to spaces, converting line feeds
+to carriage returns + line feeds, adding filler characters following carriage returns
+on slow mechanical terminals, and so on. Like input, output can go through the line
+discipline (cooked mode) or bypass it (raw mode). Raw mode is especially useful
+when sending binary data to other computers over a serial line and for GUIs. Here,
+no conversions are desired.

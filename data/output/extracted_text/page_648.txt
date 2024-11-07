@@ -1,0 +1,45 @@
+SEC. 9.2
+CONTROLLING ACCESS TO RESOURCES
+619
+9.2.1 Protection Domains
+A computer system contains many resources, or ‘‘objects,’’ that need to be 
+protected. These objects can be hardware (e.g., CPUs, memory pages, disk drives, or
+printers) or software (e.g., processes, files, databases, or semaphores).
+Each object has a unique name by which it is referenced, and a finite set of
+operations that processes are allowed to carry out on it. The read and wr ite 
+operations are appropriate to a file; up and down make sense on a semaphore.
+It is obvious that a way is needed to prohibit processes from accessing objects
+that they are not authorized to access. Furthermore, this mechanism must also
+make it possible to restrict processes to a subset of the legal operations when that is
+needed. For example, process A may be entitled to read, but not write, file F. The
+mechanism must allow this.
+So far, we hav e casually wielded the term security domain to refer to virtual
+machines, operating system kernels, and processes that all need to be isolated from
+each other and that all have their own privileges. In order to discuss different 
+security mechanisms, it is useful to define slightly more formally, the related concept of
+protection domain. A protection domain is a set of (object, rights) pairs. Each pair
+specifies an object and some subset of the operations that can be performed on it.
+Protection and security domains are closely related. Every security domain, such as
+a process P or a virtual machine V is in a particular protection domain D that 
+determines what rights it has. A right in this context means permission to perform one
+of the operations. Often a protection domain corresponds to a single user, telling
+what the user can do and not do, but it can also be more general than just one user.
+For example, the members of a programming team working on some project might
+all belong to the same protection domain so that they can all access the project
+files.
+In some cases, protection domains are organized in a hierarchy. As long as a
+virtual machine (VM) is in a protection domain, no program in the VM may 
+perform operations that do not agree with the protection domain. However, it does not
+mean that all the programs in the VM can perform all operations in the protection
+domain; some will have only a subset of the access rights. In other words, the 
+higher-level protection domains will be constrained by the lower-level protection
+domain.
+How objects are allocated to protection domains depends on the specifics of
+who needs to perform what operations on what objects. However, one basic 
+concept, as we have seen, is the POLA or need to know. In general, security works
+best when each domain has the minimum objects and privileges to do its work—
+and no more.
+Figure 9-3 shows three domains, showing the objects in each domain and the
+rights (Read, Write, eXecute) available on each object. Note that Printer1 is in two
+domains at the same time, with the same rights in each. File1 is also in two
+domains, with different rights in each one.

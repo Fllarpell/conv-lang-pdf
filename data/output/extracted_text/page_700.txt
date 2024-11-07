@@ -1,0 +1,47 @@
+SEC. 9.6
+EXPLOITING HARDWARE
+671
+1
+1
+0
+1
+0
+1
+0
+0
+Server
+Server locks
+file to send 1
+Time
+Collaborator
+Server unlocks
+file to send 0
+Bit stream sent
+Figure 9-24. A covert channel using file locking.
+reliable, even in a busy system, and can proceed as fast as the two processes can
+get scheduled. To get higher bandwidth, why not use two files per bit time, or
+make it a byte-wide channel with eight signaling files, S0 through S7?
+Acquiring and releasing dedicated resources (tape drives, plotters, etc.) can
+also be used for signaling. The server acquires the resource to send a 1 and releases
+it to send a 0. In UNIX, the server could create a file to indicate a 1 and remove it
+to indicate a 0; the collaborator could use the access system call to see if the file
+exists. This call works even though the collaborator has no permission to use the
+file. Unfortunately, many other covert channels exist.
+Lampson also mentioned a way of leaking information to the (human) owner
+of the server process. Presumably the server process will be entitled to tell its
+owner how much work it did on behalf of the client, so the client can be billed. If
+the actual computing bill is, say, $100 and the client’s income is $53,000, the 
+server could report the bill as $100.53 to its owner.
+Just finding all the covert channels, let alone blocking them, is nearly hopeless.
+Introducing a process that causes page faults at random or otherwise spends its
+time degrading system performance in order to reduce the bandwidth of the covert
+channels is not an attractive idea.
+In the next section, we introduce a particularly insidious covert channel, based
+on hardware properties. In some ways, it is worse than the ones above, because it
+can also be used to steal sensitive information—a trick known as a side channel.
+9.6.2 Side Channels
+So far, we hav e assumed that two parties, a sender and a receiver, use a covert
+channel to transmit sensitive information, deliberately. Howev er, sometimes, we
+can use similar techniques to leak information from a victim process without the
+victim’s knowledge. In this case, we speak of side channels. Often a channel can
+function as a covert channel or as a side channel, depending on how it is used.

@@ -1,0 +1,51 @@
+SEC. 10.6
+THE LINUX FILE SYSTEM
+775
+The Linux Virtual File System
+In order to enable applications to interact with different file systems, 
+implemented on different types of local or remote devices, Linux takes an approach used
+in other UNIX systems: the Virtual File System (VFS). VFS defines a set of basic
+file-system abstractions and the operations which are allowed on these 
+abstractions. Invocations of the system calls described in the previous section access the
+VFS data structures, determine the exact file system where the accessed file
+belongs, and via function pointers stored in the VFS data structures invoke the 
+corresponding operation in the specified file system.
+Figure 10-30 summarizes the four main file-system structures supported by
+VFS. The superblock contains critical information about the layout of the file 
+system. Destruction of the superblock will render the file system unreadable. The 
+inodes (short for index-nodes, but never called that, although some lazy people
+drop the hyphen and call them inodes) each describe exactly one file. Note that in
+Linux, directories and devices are also represented as files, thus they will have 
+corresponding i-nodes. Both superblocks and i-nodes have a corresponding structure
+maintained on the physical disk where the file system resides.
+Object 
+Description
+Operation
+Superblock
+specific file-system
+read inode, sync fs
+Dentr y
+director y entr y, single component of a path
+d compare, d delete
+I-node 
+specific file 
+create, link
+File 
+open file associated with a process
+read, write
+Figure 10-30. File-system abstractions supported by the VFS.
+In order to facilitate certain directory operations and traversals of paths, such
+as /usr/ast/bin, VFS supports a dentry data structure which represents a directory
+entry. This data structure is created by the file system on the fly. Directory entries
+are cached in what is called the dentry cache. For instance, the dentry cache
+would contain entries for /, /usr, /usr/ast, and the like. If multiple processes access
+the same file through the same hard link (i.e., same path), their file object will
+point to the same entry in this cache.
+Finally, the file data structure is an in-memory representation of an open file,
+and is created in response to the open system call. It supports operations such as
+read, wr ite, sendfile, lock, and other system calls described in the previous section.
+The actual file systems implemented underneath the VFS need not use the
+exact same abstractions and operations internally. They must, however, implement
+file-system operations semantically equivalent to those specified with the VFS
+objects. The elements of the operations data structures for each of the four VFS
+objects are pointers to functions in the underlying file system.

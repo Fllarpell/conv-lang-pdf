@@ -1,0 +1,43 @@
+490
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+type 2) hypervisors do binary translation for performance reasons, even though the
+software will execute correctly without it. In recent years, this situation changed
+and state-of-the-art CPUs and hypervisors are quite efficient with hardware 
+virtualization. For instance, VMware no longer has a binary translator.
+With binary translation, the translated code itself may be either slower or faster
+than the original code. Suppose, for instance, that the guest operating system 
+disables hardware interrupts using the CLI instruction (‘‘clear interrupts’’). Depending
+on the architecture, this instruction can be very slow, taking many tens of cycles on
+certain CPUs with deep pipelines and out-of-order execution. It should be clear by
+now that the guest’s wanting to turn off interrupts does not mean the hypervisor
+should really turn them off and affect the entire machine. Thus, the hypervisor
+must turn them off for the guest without really turning them off. To do so, it may
+keep track of a dedicated IF (Interrupt Flag) in the virtual CPU data structure it
+maintains for each guest (making sure the virtual machine does not get any 
+interrupts until the interrupts are turned off again). Every occurrence of CLI in the guest
+will be replaced by something like ‘‘Vir tualCPU.IF = 0’’, which is a very cheap move
+instruction that may take as little as one to three cycles. Thus, the translated code is
+faster. Still, with modern VT hardware, usually the hardware beats the software.
+On the other hand, if the guest operating system modifies its page tables, this is
+very costly. The problem is that each guest operating system on a virtual machine
+thinks it ‘‘owns’’ the machine and is at liberty to map any virtual page to any 
+physical page in memory. Howev er, if one virtual machine wants to use a physical page
+that is already in use by another virtual machine (or the hypervisor), something has
+to give. We will see in Sec. 7.6 that the solution is to add an extra level of page
+tables to map ‘‘guest physical pages’’ to the actual physical pages on the host. Not
+surprisingly, mucking around with multiple levels of page tables is not cheap.
+7.5 ARE HYPERVISORS MICROKERNELS DONE RIGHT?
+Both type 1 and type 2 hypervisors work with unmodified guest operating 
+systems, but have to jump through hoops to get good performance. We hav e seen that
+paravirtualization takes a different approach by modifying the source code of the
+guest operating system instead. Rather than performing sensitive instructions, the
+paravirtualized guest executes hypercalls. In effect, the guest operating system is
+acting like a user program making system calls to the operating system (the 
+hypervisor). When this route is taken, the hypervisor must define an interface consisting
+of a set of procedure calls that guest operating systems can use. This set of calls
+forms what is effectively an API (Application Programming Interface) even
+though it is an interface for use by guest operating systems, not application 
+programs.
+Going one step further, by removing all the sensitive instructions from the
+operating system and just having it make hypercalls to get system services like I/O,

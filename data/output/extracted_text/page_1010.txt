@@ -1,0 +1,46 @@
+SEC. 11.7
+INPUT/OUTPUT IN WINDOWS
+981
+virtual volumes presented by dynamic disks). This property makes storage spaces
+much more straightforward to work with.
+Since its introduction, numerous features have been added to storage spaces
+beyond virtual disks. One interesting feature is called thin provisioning. This
+refers to the ability to create a virtual disk that is larger than the total size of the
+underlying storage pool. Actual physical storage is only allocated as the virtual
+disk is used. If the available space in the storage pool starts running low, the
+administrator is alerted and additional disks can be added to the pool at which
+point storage spaces will automatically redistribute allocated blocks between the
+new disks.
+The I/O to volumes can be filtered by a special Windows driver to produce 
+volume shadow copies. The filter driver creates a snapshot of the volume which can
+be separately mounted and represents a volume at a previous point in time. It does
+this by keeping track of changes after the snapshot point. This is very convenient
+for recovering files that were accidentally deleted, or traveling back in time to see
+the state of a file at periodic snapshots made in the past.
+But shadow copies are also valuable for making accurate backups of server
+systems. The operating system works with server applications to have them reach a
+convenient point for making a clean backup of their persistent state on the volume.
+Once all the applications are ready, the system initializes the snapshot of the 
+volume and then tells the applications that they can continue. The backup is made of
+the volume state at the point of the snapshot. And the applications were only
+blocked for a very short time rather than having to go offline for the duration of the
+backup.
+Applications participate in the snapshot process, so the backup reflects a state
+that is easy to recover in case there is a future failure. Otherwise, the backup might
+still be useful, but the state it captured would look more like the state if the system
+had crashed. Recovering from a system error at the point of a crash can be more
+difficult or even impossible since crashes occur at arbitrary times in the execution
+of the application. Murphy’s Law says that crashes are most likely to occur at the
+worst possible time, that is, when the application data is in a state where recovery
+is impossible.
+Another aspect of Windows is its support for asynchronous I/O. It is possible
+for a thread to start an I/O operation and then continue executing in parallel with
+the I/O. This feature is especially important on servers. There are various ways the
+thread can find out that the I/O has completed. One is to specify an event object at
+the time the call is made and then wait on it eventually. Another is to specify a
+queue to which a completion event will be posted by the system when the I/O is
+done. A third is to provide a callback procedure that the system calls when the I/O
+has completed. A fourth is to poll a location in memory that the I/O manager
+updates when the I/O completes.
+The final aspect that we will mention is prioritized I/O. I/O priority is 
+determined by the priority of the issuing thread, or it can be explicitly set. There are

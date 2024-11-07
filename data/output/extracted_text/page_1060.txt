@@ -1,0 +1,41 @@
+SEC. 11.11
+SECURITY IN WINDOWS
+1031
+In kernel-mode, ACG guarantees are provided by HVCI 
+(Hypervisor-enforced Code Integrity), which is a Virtualization-based Security component and lives
+in the Secure Kernel. It leverages SLAT protections to enforce WˆX and code 
+signing requirements for VTL1 kernel mode and for code that loads into IUM trustlets.
+Windows 11 enables HVCI by default. When VBS is not enabled, a kernel 
+component called PatchGuard is responsible for enforcing code integrity. With no VBS
+and therefore no SLAT protection, it is not possible to deterministically prevent
+attacks on code. PatchGuard relies on capturing hashes of pristine code pages and
+verifying the hash at random times in the future. As such, it does not prevent code
+modification, but will typically detect it over time, unless the attacker is able to
+restore things back to their original state in time. In order to evade detection and
+tamper, PatchGuard keeps itself hidden and its data structures obfuscated.
+Attackers who possess an arbitrary read/write primitive do not always attack
+code, or code-flow; they can also attack various data structures to gain execution or
+change system behavior. For that reason, PatchGuard also verifies the integrity of
+numerous kernel data structures, global variables, function pointers, and sensitive
+processor registers which can be used to take control of the system. With VBS
+enabled, HyperGuard, the VTL1 counterpart to PatchGuard is responsible for
+maintaining the integrity of kernel data structures. Many of these data structures
+can be protected deterministically via SLAT protections and secure intercepts that
+can be configured to fire when VTL0 modifies sensitive processor registers. And
+KCFG protects function pointers. Still, maintaining the integrity of writable data
+structures like the list of processes or object type descriptors cannot easily be done
+with SLAT protections, so even when HyperGuard is enabled, PatchGuard is still
+active, albeit in a reduced functionality mode. Figure 11-58 summarizes the 
+security facilities we have discussed.
+Containing Damage
+Despite all efforts to prevent exploits, it is possible (and likely) that malicious
+intrusions will happen sooner or later. In the security world, it is not wise to rely on
+a single layer of security. Damage containment mechanisms in Windows provide
+additional defense-in-depth against attacks that are able to work around existing
+mitigations. These are all the sandboxing mechanisms we have already covered in
+this chapter:
+1. AppContainers (Sec. 11.2.1)
+2. Browser Sandbox (Sec. 11.11.3)
+3. Microsoft Defender Application Guard (Sec. 11.10.2)
+4. Windows Sandbox (Sec. 11.10.2)
+5. IUM Trustlets (Sec. 11.10.3)

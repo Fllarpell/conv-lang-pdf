@@ -1,0 +1,44 @@
+SEC. 7.4
+TECHNIQUES FOR EFFICIENT VIRTUALIZATION
+489
+kernel. Any access to the kernel memory leads to a trap. In principle, it is possible
+to take the trap and emulate the appropriate actions, but doing so is expensive and
+typically requires installing the appropriate trap handler in the host kernel. Another
+(obvious) way to solve the two-kings problem is to reconfigure the system to
+remove the host operating system and actually give the guest the entire address
+space. However, doing so is clearly not possible from user space either.
+Likewise, the hypervisor needs to handle the interrupts to do the right thing,
+for instance when the disk sends an interrupt or a page fault occurs. Also, if the
+hypervisor wants to use trap-and-emulate for privileged instructions, it needs to
+receive the traps. Again, installing trap/interrupt handlers in the kernel is not 
+possible for user processes.
+Most modern type 2 hypervisors therefore have a kernel module operating in
+ring 0 that allows them to manipulate the hardware with privileged instructions. Of
+course, manipulating the hardware at the lowest level and giving the guest access
+to the full address space is all well and good, but at some point the hypervisor
+needs to clean it up and restore the original processor context. Suppose, for 
+instance, that the guest is running when an interrupt arrives from an external device.
+Since a type 2 hypervisor depends on the host’s device drivers to handle the 
+interrupt, it needs to reconfigure the hardware completely to run the host operating 
+system code. When the device driver runs, it finds everything just as it expected it to
+be. The hypervisor behaves just like teenagers throwing a party while their parents
+are away. It is okay to rearrange the furniture completely, as long as they put it
+back exactly as they found it before the parents come home. Going from a 
+hardware configuration for the host kernel to a configuration for the guest operating
+system is known as a world switch. We will discuss it in detail when we discuss
+VMware in Sec. 7.12.
+It should now be clear why these hypervisors work, even on unvirtualizable
+hardware: sensitive instructions in the guest kernel are replaced by calls to 
+procedures that emulate these instructions. No sensitive instructions issued by the guest
+operating system are ever executed directly by the true hardware. They are turned
+into calls to the hypervisor, which then emulates them.
+7.4.2 The Cost of Virtualization
+One might naively expect that CPUs with VT would greatly outperform 
+software techniques that resort to translation, but measurements showed a mixed 
+picture (Adams and Agesen, 2006). It turns out that the trap-and-emulate approach
+used by VT hardware generates a lot of traps, and traps are very expensive on 
+modern hardware because they ruin CPU caches, TLBs, and branch prediction tables
+internal to the CPU. In contrast, when sensitive instructions are replaced by calls
+to hypervisor procedures within the executing process, none of this 
+context-switching overhead is incurred. As Adams and Agesen show, depending on the 
+workload, sometimes software would beat hardware. For this reason, some type 1 (and

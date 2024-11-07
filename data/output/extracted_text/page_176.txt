@@ -1,0 +1,52 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+147
+#define N 100
+/* number of slots in the buffer */
+void producer(void)
+{
+int item;
+message m;
+/* message buffer */
+while (TRUE) {
+item = produce item( );
+/* generate something to put in buffer */
+receive(consumer, &m); 
+/* wait for an empty to arrive */
+build message(&m, item);
+/* constr uct a message to send */
+send(consumer, &m); 
+/* send item to consumer */
+}
+}
+void consumer(void)
+{
+int item, i;
+message m;
+for (i = 0; i < N; i++) send(producer, &m); /* send N empties */
+while (TRUE) {
+receive(producer, &m); 
+/* get message containing item */
+item = extract item(&m); 
+/* extract item from message */
+send(producer, &m); 
+/* send back empty reply */
+consume item(item); 
+/* do something with the item */
+}
+}
+Figure 2-37. The producer-consumer problem with N messages.
+of messages, typically specified when the mailbox is created. When mailboxes are
+used, the address parameters in the send and receive calls are mailboxes, not 
+processes. When a process tries to send to a mailbox that is full, it is suspended until a
+message is removed from that mailbox, making room for a new one.
+For the producer-consumer problem, both the producer and consumer would
+create mailboxes large enough to hold N messages. The producer would send 
+messages containing actual data to the consumer’s mailbox, and the consumer would
+send empty messages to the producer’s mailbox. When mailboxes are used, the
+buffering mechanism is clear: the destination mailbox holds messages that have
+been sent to the destination process but have not yet been accepted.
+The other extreme from having mailboxes is to eliminate all buffering. When
+this approach is taken, if the send is done before the receive, the sending process is
+blocked until the receive happens, at which time the message can be copied 
+directly from the sender to the receiver, with no buffering. Similarly, if the receive call is
+done first, the receiver is blocked until a send happens. This strategy is often

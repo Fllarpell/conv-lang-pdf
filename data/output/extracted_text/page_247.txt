@@ -1,0 +1,43 @@
+218
+MEMORY MANAGEMENT 
+CHAP. 3
+However, if R is 0 but the age is less than or equal to o , the page is still in the
+working set. The page is temporarily spared, but the page with the greatest age
+(smallest value of Time of last use) is noted. If the entire table is scanned without
+finding a candidate to evict, that means that all pages are in the working set. In
+that case, if one or more pages with R = 0 were found, the one with the greatest age
+is evicted. In the worst case, all pages have been referenced during the current
+clock tick (and thus all have R = 1), so one is chosen at random for removal, 
+preferably a clean page, if one exists.
+3.4.9 The WSClock Page Replacement Algorithm
+The basic working set algorithm is cumbersome, since the entire page table has
+to be scanned at each page fault until a suitable candidate is located. That is a
+time-consuming operation. An improved algorithm, which is based on the clock
+algorithm but also uses the working set information, is called WSClock (Carr and
+Hennessey, 1981). Due to its simplicity of implementation and good performance,
+it is widely used in practice.
+The data structure needed is a circular list of page frames, as in the clock 
+algorithm, and as shown in Fig. 3-20(a). Initially, this list is empty. When the first page
+is loaded, it is added to the list. As more pages are added, they go into the list to
+form a ring. Each entry contains the Time of last use field from the basic working
+set algorithm, as well as the R bit (shown) and the M bit (not shown).
+As with the clock algorithm, at each page fault the page pointed to by the hand
+is examined first. If the R bit is set to 1, the page has been used during the current
+tick so it is not an ideal candidate to remove. The R bit is then set to 0, the hand
+advanced to the next page, and the algorithm repeated for that page. The state after
+this sequence of events is shown in Fig. 3-20(b).
+Now consider what happens if the page pointed to has R = 0, as shown in
+Fig. 3-20(c). If the age is greater than o and the page is clean, it is not in the 
+working set and a valid copy exists on the disk or SSD. The page frame is simply
+claimed and the new page put there, as shown in Fig. 3-20(d). On the other hand,
+if the page is dirty, it cannot be claimed immediately since no valid copy is present
+on nonvolatile storage. To avoid a process switch, the write to nonvolatile storage
+is scheduled, but the hand is advanced and the algorithm continues with the next
+page. After all, there might be an old, clean page further down the line that can be
+used immediately.
+In principle, all pages might be scheduled for I/O to nonvolatile storage on one
+cycle around the clock. To reduce disk or SSD traffic, a limit might be set, 
+allowing a maximum of n pages to be written back. Once this limit has been reached, no
+new writes would be scheduled.
+What happens if the hand comes all the way around and back to its starting
+point? There are two cases we have to consider:

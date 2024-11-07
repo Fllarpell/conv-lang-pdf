@@ -1,0 +1,60 @@
+348
+INPUT/OUTPUT 
+CHAP. 5
+interrupts work as follows. When an I/O device has finished the work given to it, it
+causes an interrupt (assuming that interrupts have been enabled by the operating
+system), by asserting a signal on a bus line that it has been assigned. This signal is
+detected by the interrupt controller chip on the motherboard, which then decides
+what to do.
+CPU
+Interrupt!
+controller
+3. CPU acks!
+    interrupt
+2. Controller !
+    issues!
+    interrupt
+1. Device is finished
+Disk
+Keyboard
+Printer
+Clock
+Bus
+12
+6
+9
+3
+4
+8
+5
+7
+1
+11
+2
+10
+Figure 5-5. How an interrupt happens. The connections between the devices and
+the controller actually use interrupt lines on the bus rather than dedicated wires.
+If no other interrupts are pending, the interrupt controller handles the interrupt
+immediately. Howev er, if another interrupt is in progress, or another device has
+made a simultaneous request on a higher-priority interrupt request line on the bus,
+the device is just ignored for the moment. In this case, it continues to assert an
+interrupt signal on the bus until it is serviced by the CPU.
+To handle the interrupt, the controller puts a number on the address lines 
+specifying which device wants attention and asserts a signal to interrupt the CPU.
+The interrupt signal causes the CPU to stop what it is doing and start doing
+something else. The number on the address lines is used as an index into a table
+called the interrupt vector to fetch a new program counter. This program counter
+points to the start of the corresponding interrupt-service procedure. Typically traps,
+exceptions, and interrupts use the same mechanism from this point on, often 
+sharing the same interrupt vector. The location of the interrupt vector can be hardwired
+into the machine or it can be anywhere in memory, with a CPU register (loaded by
+the operating system) pointing to its origin.
+Shortly after it starts running, the interrupt-service procedure acknowledges
+the interrupt by writing a certain value to one of the interrupt controller’s I/O ports.
+This acknowledgement tells the controller that it is free to issue another interrupt.
+By having the CPU delay this acknowledgement until it is ready to handle the next
+interrupt, race conditions involving multiple (almost simultaneous) interrupts can
+be avoided. As an aside, some (older) computers do not have a centralized 
+interrupt controller, so each device controller requests its own interrupts.
+The hardware always saves certain information before starting the service 
+procedure. Which information is saved and where it is saved vary greatly from CPU to

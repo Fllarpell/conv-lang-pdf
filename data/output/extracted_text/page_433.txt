@@ -1,0 +1,45 @@
+404
+INPUT/OUTPUT 
+CHAP. 5
+The X Window System
+Nearly all UNIX systems base their user interface on the X Window System
+(often just called X), developed at M.I.T. as part of project Athena in the 1980s. It
+is very portable and runs entirely in user space. It was originally intended for 
+connecting a large number of remote user terminals with a central compute server, so
+it is logically split into client software and host software, which can potentially run
+on different computers. On modern personal computers, both parts can run on the
+same machine. On Linux systems, the popular Gnome and KDE desktop 
+environments run on top of X.
+When X is running on a machine, the software that collects input from the
+keyboard and mouse and writes output to the screen is called the X server. It has
+to keep track of which window is currently selected (where the mouse pointer is),
+so it knows which client to send any new keyboard input to. It communicates with
+running programs (usually over a network) called X clients. It sends them 
+keyboard and mouse input and accepts display commands from them.
+It may seem odd that the X server is always inside the user’s computer while
+the X client may be off on a remote compute server, but just think of the X server’s
+main job: displaying bits on the screen, so it makes sense to be near the user. From
+the program’s point of view, it is a client telling the server to do things, like display
+text and geometric figures. The server (in the local PC) just does what it is told, as
+do all servers.
+The arrangement of client and server is shown in Fig. 5-33 for the case where
+the X client and X server are on different machines. But when running Gnome or
+KDE on a single machine, the client is just some application program using the X
+library talking to the X server on the same machine (but using a TCP connection
+over sockets, the same as it would do in the remote case).
+The reason it is possible to run the X Window System on top of UNIX (or
+another operating system) on a single machine or over a network is that what X
+really defines is the X protocol between the X client and the X server, as shown in
+Fig. 5-33. It does not matter whether the client and server are on the same
+machine, separated by 100 meters over a local area network, or are thousands of
+kilometers apart and connected by the Internet. The protocol and operation of the
+system is identical in all cases.
+X is just a windowing system. It is not a complete GUI. To get a complete
+GUI, others layer of software are run on top of it. One layer is Xlib, which is a set
+of library procedures for accessing the X functionality. These procedures form the
+basis of the X Window System and are what we will examine below, but they are
+too primitive for most user programs to access directly. For example, each mouse
+click is reported separately, so that determining that two clicks really form a double
+click has to be handled above Xlib.
+To make programming with X easier, a toolkit consisting of the Intrinsics is
+supplied as a part of X. This layer manages buttons, scroll bars, and other GUI

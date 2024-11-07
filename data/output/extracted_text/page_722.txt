@@ -1,0 +1,58 @@
+SEC. 9.8
+OPERATING SYSTEM HARDENING
+693
+(a)
+(b)
+256
+224
+192
+160
+128
+96
+64
+32
+0
+Ref. Mon.
+Code 1
+Data 1
+Code 2
+Data 2
+Reference
+monitor for
+checking
+system
+MOV R1, S1
+SHR #24, S1
+CMP S1, S2
+TRAPNE
+J MP (R1)
+address
+in MB
+Virtual
+foreign code 1
+foreign code 2
+Figure 9-36. (a) Memory divided into 16-MB sandboxes. (b) One way of
+checking an instruction for validity.
+two sandboxes is to prevent a foreign program from modifying its code during
+execution to get around these restrictions. By preventing all stores into the code
+sandbox, we eliminate the danger of self-modifying code. As long as a foreign 
+program is confined this way, it cannot damage the browser or other programs, plant
+viruses in memory, or otherwise do any damage to memory.
+As soon as a foreign program is loaded, it is relocated to begin at the start of its
+sandbox. Then checks are made to see if code and data references are confined to
+the appropriate sandbox. In the discussion below, we will just look at code 
+references (i.e., JMP and CALL instructions), but the same story holds for data 
+references as well. Static JMP instructions that use direct addressing are easy to check:
+does the target address land within the boundaries of the code sandbox? Similarly,
+relative JMPs are also easy to check. If the foreign program has code that tries to
+leave the code sandbox, it is rejected and not executed. Similarly, attempts to touch
+data outside the data sandbox cause the foreign program to be rejected. This is the
+easy part.
+The hard part is dynamic/indirect JMP instructions. As we saw in our 
+discussion of CFI, most machines have an instruction in which the address to jump to
+is computed at run time, put in a register, and then jumped to indirectly, for 
+example by JMP (R1) to jump to the address held in register 1. The validity of such
+instructions must be checked at run time. This is done by inserting code directly
+before the indirect jump to test the target address. An example of such a test is
+shown in Fig. 9-36(b). Remember that all valid addresses have the same upper k
+bits, so this prefix can be stored in a scratch register, say S2. Such a register

@@ -1,0 +1,43 @@
+SEC. 3.6
+IMPLEMENTATION ISSUES
+233
+When a new process is created in a paging system, the operating system has to
+determine how large the program and data will be (initially) and create a page table
+for them. Space has to be allocated in memory for the page table and it has to be
+initialized. The page table need not be resident when the process is swapped out
+but has to be in memory when the process is running. In addition, space has to be
+allocated in the swap area on nonvolatile storage so that when a page is swapped
+out, it has somewhere to go. The swap area also has to be initialized with program
+text and data so that when the new process starts getting page faults, the pages can
+be brought in. Some systems page the program text directly from the executable
+file, thus saving space on disk or SSD and initialization time. Finally, information
+about the page table and swap area on nonvolatile storage must be recorded in the
+process table.
+When a process is scheduled for execution, the MMU has to be reset for the
+new process. In addition, unless the entries in the TLB are explicitly tagged with
+an identifier for the processes to which they belong (using so-called tagged TLBs),
+the TLB has to be flushed to get rid of traces of the previously executing process.
+After all, we do not want to have a memory access in one process to erroneously
+touch the page frame of another process. Further, the new process’ page table has
+to be made current, usually by copying it or a pointer to it to some hardware 
+register(s). Optionally, some or all of the process’ pages can be brought into memory to
+reduce the number of page faults initially (e.g., it is certain that the page pointed to
+by the program counter will be needed).
+When a page fault occurs, the operating system has to read out hardware 
+registers to determine which virtual address caused the fault. From this information, it
+must compute which page is needed and locate that page on nonvolatile storage. It
+must then find an available page frame in which to put the new page, evicting some
+old page if need be. Then it must read the needed page into the page frame. 
+Finally, it must back up the program counter to have it point to the faulting instruction
+and let that instruction execute again.
+When a process exits, the operating system must release its page table, its
+pages, and the nonvolatile storage space that the pages occupy when they are on
+disk or SSD. If some of the pages are shared with other processes, the pages in
+memory and on nonvolatile storage can be released only when the last process
+using them has terminated.
+3.6.2 Page Fault Handling
+We are finally in a position to describe in detail what happens on a page fault.
+Slightly simplified, the sequence of events is as follows:
+1. The hardware traps to the kernel, saving the program counter on the
+stack. On most machines, some information about the state of the
+current instruction is saved in special CPU registers.

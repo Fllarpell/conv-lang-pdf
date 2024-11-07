@@ -1,0 +1,39 @@
+1120
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+YU, M., GLIGOR, V., and JIA, L.: ‘‘ An I/O Separation Model for Formal Verification of
+Kernel Implementations,’’ Proc. 42nd Symp. on Security and Privacy, IEEE, 2021.
+ZACHARY, G.P.: Showstopper, New York: Maxwell Macmillan, 1994.
+ZAHORJAN, J., LAZOWSKA, E.D., and EAGER, D.L.: ‘‘The Effect of Scheduling 
+Discipline on Spin Overhead in Shared Memory Parallel Systems,’’ IEEE Trans. Parallel
+and Distr. Syst., Vol. 2, pp. 180–198, April 1991.
+ZHANG, C., WEI, T., CHEN, Z., DUAN, L., SZEKERES, L., MCCAMANT, S., SONG, D., and
+ZOU, W.: ‘‘Practical Control Flow Integrity and Randomization for Binary 
+Executables,’’ Proc. IEEE Symp. on Security and Privacy, IEEE, pp. 559–573, 2013b.
+ZHANG, W., SHENKER, S., and ZHANG, I.: ‘‘Persistent State Machines for Recoverable 
+Inmemory Storage Systems with NVRam,’’ Proc. 14th USENIX Symp. on Operating
+Syst. Design and Implementation, USENIX, 2020.
+ZHANG, Y., SOUNDARARAJAN, G., STORER, M.W., BAIRAVASUNDARAM, L., 
+SUBBIAH, S., ARPACI-DUSSEAU, A.C., and ARPACI-DUSSEAU, R.H.: ‘‘Warming Up 
+Storage-Level Caches with Bonfire,’’ Proc. 11th USENIX Conf. on File and Storage Tech.,
+USENIX, 2013a.
+ZHAO, K., S. GONG, S., and FONSECA, P.: ‘‘On-Demand-Fork: A Microsecond Fork for
+Memory-Intensive and Latency-Sensitive Applications,’’ Proc. 16th EuroSys Conf.,
+ACM, 2021.
+ZHAO, Z., SADOK, H., ATRE, N., HOE, J. C., SEKAR, V., and SHERRY, J.: ‘‘ Achieving
+100Gbps Intrusion Prevention on a Single Server,’’ Proc. 14th USENIX Symp. on
+Operating Syst. Design and Implementation, USENIX, pp. 1083–1100, 2020.
+ZHURAVLEV, S., SAEZ, J.C., BLAGODUROV, S., FEDOROVA, A., and PRIETO, M.: 
+‘‘Survey of Scheduling Techniques for Addressing Shared Resources in Multicore 
+Processors,’’ ACM Computing Surveys, ACM, Vol. 45, Number 1, Art. 4, 2012.
+ZOU, M., DING, H., DU, D., FU, M., GU, R., and CHEN, H.: ‘‘Using Concurrent Relational
+Logic with Helpers for Verifying the AtomFS File System,’’ Proc. 27th Symp. on
+Operating Syst. Prin., ACM, pp. 259–274, 2019.
+ZOU, X., YUAN, J., SHILANE, P., XIA, W., ZHANG, H., and WANG, X.: ‘‘The Dilemma
+between Deduplication and Locality: Can Both be Achieved?,’’ Proc. 19th USENIX
+Conf. on File and Storage Tech., USENIX, pp. 171–185, 2021.
+ZUBERI, K.M., PILLAI, P., and SHIN, K.G.: ‘‘EMERALDS: A Small-Memory Real-Time
+Microkernel,’’ Proc. 17th Symp. on Operating Syst. Prin., ACM, pp. 277–299, 1999.
+ZWICKY, E.D.: ‘‘Torture-Testing Backup and Archive Programs: Things You Ought to
+Know But Probably Would Rather Not,’’ Proc. Fifth Conf. on Large Installation Syst.
+Admin., USENIX, pp. 181–190, 1991.

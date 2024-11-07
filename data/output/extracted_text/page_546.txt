@@ -1,0 +1,43 @@
+SEC. 7.11
+CASE STUDY: VMWARE
+517
+customers to deploy their virtual machines on any available server, without having
+to worry of the details of the underlying hardware.
+The Role of the Host Operating System
+The final critical design decision in VMware Workstation was to deploy it ‘‘on
+top’’ of an existing operating system. This classifies it as a type 2 hypervisor. The
+choice had two main benefits.
+First, it would address the second part of peripheral diversity challenge.
+VMware implemented the front-end emulation of the various devices, but relied on
+the device drivers of the host operating system for the back end. For example,
+VMware Workstation would read or write a file in the host file system to emulate a
+virtual disk device, or draw in a window of the host’s desktop to emulate a video
+card. As long as the host operating system had the appropriate drivers, VMware
+Workstation could run virtual machines on top of it.
+Second, the product could install and feel like a normal application to a user,
+making adoption easier. Like any application, the VMware Workstation installer
+simply writes its component files onto an existing host file system, without 
+perturbing the hardware configuration (no reformatting of a disk, creating of a disk
+partition, or changing of BIOS settings). In fact, VMware Workstation could be
+installed and start running virtual machines without requiring even rebooting the
+host operating system, at least on Linux hosts.
+However, a normal application does not have the necessary hooks and APIs
+necessary for a hypervisor to multiplex the CPU and memory resources, which is
+essential to provide near-native performance. In particular, the core x86 
+virtualization technology described above works only when the VMM runs in kernel
+mode and can furthermore control all aspects of the processor without any 
+restrictions. This includes the ability to change the address space (to create shadow page
+tables), to change the segment tables, and to change all interrupt and exception
+handlers.
+A device driver has more direct access to the hardware, in particular if it runs
+in kernel mode. Although it could (in theory) issue any privileged instructions, in
+practice a device driver is expected to interact with its operating system using 
+welldefined APIs, and does not (and should never) arbitrarily reconfigure the hardware.
+And since hypervisors call for a massive reconfiguration of the hardware 
+(including the entire address space, segment tables, exception and interrupt handlers), 
+running the hypervisor as a device driver was also not a realistic option.
+Since none of these assumptions are supported by host operating systems, 
+running the hypervisor as a device driver (in kernel mode) was also not an option.
+These stringent requirements led to the development of the VMware Hosted
+Architecture. In it, as shown in Fig. 7-10, the software is broken into three 
+separate and distinct components.

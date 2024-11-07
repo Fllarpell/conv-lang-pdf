@@ -1,0 +1,43 @@
+SEC. 8.2
+MULTICOMPUTERS
+579
+An advantage of this algorithm is that it does not put extra load on the system
+at critical times. The sender-initiated algorithm makes large numbers of probes
+precisely when the system can least tolerate it—when it is heavily loaded. With the
+receiver-initiated algorithm, when the system is heavily loaded, the chance of a
+machine having insufficient work is small. However, when this does happen, it will
+be easy to find work to take over. Of course, when there is little work to do, the
+receiver-initiated algorithm creates considerable probe traffic as all the 
+unemployed machines desperately hunt for work. However, it is far better to have the
+overhead go up when the system is underloaded than when it is overloaded.
+It is also possible to combine both of these algorithms and have machines try
+to get rid of work when they hav e too much, and try to acquire work when they do
+not have enough. Furthermore, machines can perhaps improve on random polling
+by keeping a history of past probes to determine if any machines are chronically
+underloaded or overloaded. One of these can be tried first, depending on whether
+the initiator is trying to get rid of work or acquire it.
+8.3 DISTRIBUTED SYSTEMS
+Having now completed our study of multicores, multiprocessors, and 
+multicomputers we are now ready to turn to the last type of multiple processor system,
+the distributed system. These systems are similar to multicomputers in that each
+node has its own private memory, with no shared physical memory in the system.
+However, distributed systems are even more loosely coupled than are 
+multicomputers.
+To start with, each node of a multicomputer generally has a CPU, RAM, a 
+network interface, and possibly a disk for paging. In contrast, each node in a 
+distributed system is a complete computer, with a full complement of peripherals. Next,
+the nodes of a multicomputer are normally in a single room, so they can 
+communicate by a dedicated high-speed network, whereas the nodes of a distributed system
+may be spread around the world. Finally, all the nodes of a multicomputer run the
+same operating system, share a single file system, and are under a common 
+administration, whereas the nodes of a distributed system may each run a different 
+operating system, each of which has its own file system, and be under a different 
+administration. A typical example of a multicomputer is 1024 nodes in a single room
+at a company or university working on, say, pharmaceutical modeling, whereas a
+typical distributed system consists of thousands of machines loosely cooperating
+over the Internet. Figure 8-26 compares multiprocessors, multicomputers, and 
+distributed systems on the points mentioned above.
+Multicomputers are clearly in the middle using these metrics. An interesting
+question is: ‘‘Are multicomputers more like multiprocessors or more like 
+distributed systems?’’ Oddly enough, the answer depends strongly on your perspective.
+From a technical perspective, multiprocessors have shared memory and the other

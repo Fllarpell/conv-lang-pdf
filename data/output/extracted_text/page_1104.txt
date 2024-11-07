@@ -1,0 +1,41 @@
+SEC. 12.4
+PERFORMANCE
+1075
+For example, if there is a rectangular block of pixels all the same color in an
+image, a PostScript program for the image would carry instructions to place a 
+rectangle at a certain location and fill it with a certain color. Only a handful of bits are
+needed to issue this command. When the image is received at the printer, an 
+interpreter there must run the program to construct the image. Thus PostScript achieves
+data compression at the expense of more computation, a different trade-off than 
+table lookup, but a valuable one when memory or bandwidth is scarce.
+Other trade-offs often involve data structures. Doubly linked lists take up more
+memory than singly linked lists, but often allow faster access to items. Hash tables
+are even more wasteful of space, but faster still. In short, one of the main things to
+consider when optimizing a piece of code is whether using different data structures
+would make the best time-space trade-off.
+12.4.4 Caching
+A well-known technique for improving performance is caching. It is 
+applicable whenever it is likely the same result will be needed multiple times. The general
+approach is to do the full work the first time, and then save the result in a cache.
+On subsequent attempts, the cache is first checked. If the result is there, it is used.
+Otherwise, the full work is done again.
+We hav e already seen the use of caching within the file system to hold some
+number of recently used disk blocks, thus saving a disk read on each hit. However,
+caching can be used for many other purposes as well. For example, parsing path
+names is surprisingly expensive. Consider the UNIX example of Fig. 4-36 again.
+To look up /usr/ast/mbox requires the following disk accesses:
+1. Read the i-node for the root directory (i-node 1).
+2. Read the root directory (block 1).
+3. Read the i-node for /usr (i-node 6).
+4. Read the /usr directory (block 132).
+5. Read the i-node for /usr/ast (i-node 26).
+6. Read the /usr/ast directory (block 406).
+aIt takes six disk accesses just to discover the i-node number of the file. Then the 
+inode itself has to be read to discover the disk block numbers. If the file is smaller
+than the block size (e.g., 1024 bytes), it takes eight disk accesses to read the data.
+Some systems optimize path-name parsing by caching (path, i-node) 
+combinations. For the example of Fig. 4-36, the cache will certainly hold the first three
+entries of Fig. 12-9 after parsing /usr/ast/mbox. The last three entries come from
+parsing other paths.
+When a path has to be looked up, the name parser first consults the cache and
+searches it for the longest substring present in the cache. For example, if the path

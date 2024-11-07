@@ -1,0 +1,43 @@
+804
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Wake Locks
+Power management on mobile devices is different than on traditional 
+computing systems, so Android adds a new feature to Linux called wake locks (also called
+suspend blockers) for managing how the system goes to sleep. This is important
+in order to save energy and maximize the time before the battery is drained.
+On a traditional computing system, the system can be in one of two power
+states: running and ready for user input, or deeply asleep and unable to continue
+executing without an external interrupt such as pressing a power key. While 
+running, secondary pieces of hardware may be turned on or off as needed, but the
+CPU itself and core parts of the hardware must remain in a powered state to handle
+incoming network traffic and other such events. Going into the lower-power sleep
+state is something that happens relatively rarely: either through the user explicitly
+putting the system to sleep, or its going to sleep itself due to a relatively long 
+interval of user inactivity. Coming out of this sleep state requires a hardware interrupt
+from an external source, such as pressing a key on a keyboard, at which point the
+device will wake up and turn on its screen.
+Mobile device users have different expectations. Although the user can turn off
+the screen in a way that looks like putting the device to sleep, the traditional sleep
+state is not actually desired. While a device’s screen is off, the device still needs to
+be able to do work: it needs to be able to receive phone calls, receive and process
+data for incoming chat messages, and many other things.
+The expectations around turning a mobile device’s screen on and off are also
+much more demanding than on a traditional computer. Mobile interaction tends to
+be in many short bursts throughout the day: you receive a message and turn on the
+device to see it and perhaps send a one-sentence reply or you run into friends 
+walking their new dog and turn on the device to take a picture of her. In this kind of 
+typical mobile usage, any delay from pulling the device out until it is ready for use has
+a significant negative impact on the user experience.
+Given these requirements, one solution would be to just not have the CPU go
+to sleep when a device’s screen is turned off, so that it is always ready to turn back
+on again. The kernel does, after all, know when there is no work scheduled for any
+threads, and Linux (as well as most operating systems) will automatically make the
+CPU idle and use less power in this situation.
+An idle CPU, however, is not the same thing as true sleep. For example:
+1. On many chipsets, the idle state uses significantly more power than a
+true sleep state.
+2. An idle CPU can wake up at any moment if some work happens to
+become available, even if that work is not important.
+3. Just having the CPU idle does not tell you that you can turn off other
+hardware that would not be needed in a true sleep.

@@ -1,0 +1,41 @@
+SEC. 13.1
+SUGGESTIONS FOR FURTHER READING
+1097
+Wirth, ‘‘A Plea for Lean Software’’
+Another classic. Niklaus Wirth, a famous and experienced system designer,
+makes the case here for lean and mean software based on a few simple concepts,
+instead of the bloated mess that much commercial software is. He makes his point
+by discussing his Oberon system, a network-oriented, GUI-based operating system
+that fits in 200 KB, including the Oberon compiler and text editor.
+13.2 ALPHABETICAL BIBLIOGRAPHY
+ABDEL-HAMID, T., and MADNICK, S.: Software Project Dynamics: An Integrated
+Approach, Hoboken, NJ: Pearson, 1991.
+ACCETTA, M., BARON, R., GOLUB, D., RASHID, R., TEVANIAN, A., and YOUNG, M.:
+‘‘Mach: A New Kernel Foundation for UNIX Development,’’ Proc. USENIX Summer
+Conf., USENIX, pp. 93–112, 1986.
+ADAMS, G.B. III, AGRAWAL, D.P., and SIEGEL, H.J.: ‘‘ A Survey and Comparison of 
+FaultTolerant Multistage Interconnection Networks,’’ Computer, Vol. 20, pp. 14–27, June
+1987.
+ADAMS, K., and AGESEN, O.: ‘‘ A Comparison of Software and Hardware Techniques for
+X86 Virtualization,’’ Proc. 12th Int’l Conf. on Arc h. Support for Prog. Lang. and 
+Operating Syst., ACM, pp. 2–13, 2006.
+AGESEN, O., MATTSON, J., RUGINA, R., and SHELDON, J.: ‘‘Software Techniques for
+Av oiding Hardware Virtualization Exits,’’ Proc. USENIX Ann. Tech. Conf., USENIX,
+2012.
+ALAGAPPAN, R., GANESAN, A., LIU, J., ARPACI-DUSSEAU, A., and ARPACI-DUSSEAU,
+R.: ‘‘Fault-Tolerance, Fast and Slow: Exploiting Failure Asynchrony in Distributed
+Systems,’’ Proc. 13th USENIX Symp. on Operating Syst. Design and Implementation,
+USENIX, pp. 3901–408, 2018.
+ALEX, M., VARGAFTIK, S., KUPFER, G., PISMENY, B., AMIT, N., MORRISON, A., and
+TSAFRIR, D.: ‘‘Characterizing, Exploiting, and Detecting DMA Code Injection 
+vulnerabilities in the Presence of an IOMMU,’’ Proc. 16th European Conf. on Computer
+Syst., ACM, pp. 395–409, 2021.
+ALLIEVI, A., RUSSINOVICH, M., IONESCU, A., and SOLOMON, D: Windows Internals,
+Part 2, Amazon, 2021.
+ALVAREZ, C., HE, Z., ALONSO G., and SINGLA, A.: ‘‘Specializing the Network for
+Scatter-Gather Workloads,’’ Proc. ACM Symp. on Cloud Computing, ACM, pp.
+267–280, 2020.
+AMIT, N., WEI, M., and TSAFRIR, D.: ‘‘Dealing with (Some of) the Fallout from 
+Meltdown,’’ Proc. Systor ’21, ACM, Art. 13, pp. 1–6, June 2021.
+AMSDEN, Z., ARAI, D., HECHT, D., HOLLER, A., and SUBRAHMANYAM, P.: ‘‘VMI: An
+Interface for Paravirtualization,’’ Proc. 2006 Linux Symp., 2006.

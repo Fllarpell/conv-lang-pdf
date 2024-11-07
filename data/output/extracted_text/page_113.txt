@@ -1,0 +1,38 @@
+84
+INTRODUCTION 
+CHAP. 1
+28. To a programmer, a system call looks like any other call to a library procedure. Is it
+important that a programmer know which library procedures result in system calls?
+Under what circumstances and why?
+29. Figure 1-23 shows that a number of UNIX system calls have no Win32 API 
+equivalents. For each of the calls listed as having no Win32 equivalent, what are the 
+consequences for a programmer of converting a UNIX program to run under Windows?
+30. A portable operating system is one that can be ported from one system architecture to
+another without any modification. Explain why it is infeasible to build an operating
+system that is completely portable. Describe two high-level layers that you will have in
+designing an operating system that is highly portable.
+31. Explain how separation of policy and mechanism aids in building microkernel-based
+operating systems.
+32. Virtual machines have become very popular for a variety of reasons. Nevertheless,
+they hav e some downsides. Name one.
+33. Here are some questions for practicing unit conversions:
+(a) How long is a nanoyear in seconds?
+(b) Micrometers are often called microns. How long is a megamicron?
+(c) How many bytes are there in a 1-PB memory?
+(d) The mass of the earth is 6000 yottagrams. What is that in kilograms?
+34. Write a shell that is similar to Fig. 1-19 but contains enough code that it actually works
+so you can test it. You might also add some features such as redirection of input and
+output, pipes, and background jobs.
+35. If you have a personal UNIX-like system (Linux, MINIX 3, FreeBSD, etc.) available
+that you can safely crash and reboot, write a shell script that attempts to create an
+unlimited number of child processes and observe what happens. Before running the
+experiment, type sync to the shell to flush the file system buffers to disk to avoid 
+ruining the file system. You can also do the experiment safely in a virtual machine. Note:
+Do not try this on a shared system without first getting permission from the system
+administrator. The consequences will be instantly obvious so you are likely to be
+caught and sanctions may follow.
+36. Examine and try to interpret the contents of a UNIX-like or Windows directory with a
+tool like the UNIX od program. (Hint: How you do this will depend upon what the OS
+allows. One trick that may work is to create a directory on a USB stick with one 
+operating system and then read the raw device data using a different operating system that
+allows such access.)

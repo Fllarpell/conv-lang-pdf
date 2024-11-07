@@ -1,0 +1,43 @@
+SEC. 5.4
+MASS STORAGE: DISK AND SSD
+375
+interleaving, the controller should be able to buffer an entire track. With hundreds
+of MB of memory, most modern controllers can buffer many entire tracks.
+After low-level formatting is completed, the disk is partitioned. Logically, each
+partition is like a separate disk. Partitions are needed to allow multiple operating
+systems to coexist. Also, in some cases, a partition can be used for swapping. In
+older other computers, sector 0 contains the MBR (Master Boot Record), which
+contains some boot code plus the partition table at the end. The MBR, and thus
+support for partition tables, first appeared in IBM PCs in 1983 to support the 
+thenmassive 10-MB hard drive in the PC XT. Disks have grown a bit since then. As
+MBR partition entries in most systems are limited to 32 bits, the maximum disk
+size that can be supported with 512 B sectors is 2 TB. For this reason, most 
+operating since now also support the new GPT (GUID Partition Table), which supports
+disk sizes up to 9.4 ZB (9,444,732,965,739,290,426,880 bytes or some 8 ZiB). At
+the time this book went to press, this was considered a lot of bytes.
+The partition table gives the starting sector and size of each partition. You can
+see more about the GPT in UEFI in Sec. 4.3. If there are four partitions and all of
+them are for Windows, they will be called C:, D:, E:, and F: and treated as separate
+drives. If three of them are for Windows and one is for UNIX, then Windows will
+call its partitions C:, D:, and E:. If a USB drive is added, it will be F:. To be able
+to boot from the hard disk, one partition must be marked as active in the partition
+table.
+The final step in preparing a disk for use is to perform a high-level format of
+each partition (separately). This operation lays down a boot block, the free storage
+administration (free list or bitmap), root directory, and an empty file system. It
+also puts a code in the partition table entry telling which file system is used in the
+partition because many operating systems support multiple incompatible file 
+systems (for historical reasons). At this point the system can be booted.
+We already saw in Chap. 1 that when the power is turned on, the BIOS runs
+initially and reads the GPT. It then finds the appropriate bootloader and executes i
+to boot the operating system.
+Disk Arm Scheduling Algorithms
+In this section, we will look at some issues related to disk drivers in general.
+First, consider how long it takes to read or write a disk block. The time required is
+determined by three factors:
+1. Seek time (the time to move the arm to the proper cylinder).
+2. Rotational delay (how long for the proper sector to appear under the
+reading head).
+3. Actual data transfer time.
+For most disks, the seek time dominates the other two times, so reducing the mean
+seek time can improve system performance substantially.

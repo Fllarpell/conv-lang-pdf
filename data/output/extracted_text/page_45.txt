@@ -1,0 +1,46 @@
+16
+INTRODUCTION 
+CHAP. 1
+own computer, the microprocessor chip made it possible for a single individual to
+have his or her own personal computer.
+In 1974, when Intel came out with the 8080, the first general-purpose 8-bit
+CPU, it wanted an operating system for it, in part to be able to test it. Intel asked
+one of its consultants, Gary Kildall, to write one. Kildall and a friend first built a
+controller for the newly released Shugart Associates 8-inch floppy disk and hooked
+the floppy disk up to the 8080, thus producing the first microcomputer with a disk.
+Kildall then wrote a disk-based operating system called CP/M (Control Program
+for Microcomputers) for it. Since Intel did not think that disk-based 
+microcomputers had much of a future, when Kildall asked for the rights to CP/M, Intel 
+granted his request. Kildall then formed a company, Digital Research, to further develop
+and sell CP/M.
+In 1977, Digital Research rewrote CP/M to make it suitable for running on the
+many microcomputers using the 8080, Zilog Z80, and other CPU chips. Many
+application programs were written to run on CP/M, allowing it to completely 
+dominate the world of microcomputing for about 5 years.
+In the early 1980s, IBM designed the IBM PC and looked around for software
+to run on it. People from IBM contacted Bill Gates to license his BASIC 
+interpreter. They also asked him if he knew of an operating system to run on the PC.
+Gates suggested that IBM contact Digital Research, then the world’s dominant
+operating systems company. Making what was without a doubt the worst business
+decision in recorded history, Kildall refused to meet with IBM, sending a 
+subordinate instead. To make matters even worse, his lawyer even refused to sign IBM’s
+nondisclosure agreement covering the not-yet-announced PC. Consequently, IBM
+went back to Gates asking if he could provide them with an operating system.
+When IBM came back to him, Gates quickly realized that a local computer
+manufacturer, Seattle Computer Products, had a suitable operating system, DOS
+(Disk Operating System). He approached them and asked to buy it (allegedly for
+$75,000), which they readily accepted. Gates then offered IBM a DOS/BASIC
+package, which IBM accepted. IBM wanted certain modifications, so Gates hired
+the person who wrote DOS, Tim Paterson, as an employee of Gates’ fledgling
+company, Microsoft, to make them. The revised system was renamed MS-DOS
+(MicroSoft Disk Operating System) and quickly came to dominate the IBM PC
+market. A key factor here was Gates’ (in retrospect, extremely wise) decision to
+sell MS-DOS to computer companies for bundling with their hardware, compared
+to Kildall’s attempt to sell CP/M to end users one at a time (at least initially).
+After all this transpired, Kildall died suddenly and unexpectedly from causes that
+have not been fully disclosed.
+By the time the successor to the IBM PC, the IBM PC/AT, came out in 1983
+with the Intel 80286 CPU, MS-DOS was firmly entrenched and CP/M was on its
+last legs. MS-DOS was later widely used on the 80386 and 80486. Although the
+initial version of MS-DOS was fairly primitive, subsequent versions included more
+advanced features, including many taken from UNIX. (Microsoft was well aware

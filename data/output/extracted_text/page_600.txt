@@ -1,0 +1,44 @@
+SEC. 8.2
+MULTICOMPUTERS
+571
+printf, which may have any number of parameters (at least one), and they can be an
+arbitrary mixture of integers, shorts, longs, characters, strings, floating-point 
+numbers of various lengths, and other types. Trying to call printf as a remote procedure
+would be practically impossible because C is so permissive. Howev er, a rule saying
+that RPC can be used provided that you do not program in C (or C++) would not
+be popular.
+A fourth problem relates to the use of global variables. Normally, the calling
+and called procedures may communicate using global variables, in addition to
+communicating via parameters. If the called procedure is now moved to a remote
+machine, the code will fail because the global variables are no longer shared.
+These problems are not meant to suggest that RPC is hopeless. In fact, it is
+widely used, but some restrictions and care are needed to make it work well in
+practice.
+8.2.5 Distributed Shared Memory
+Although RPC has its attractions, many programmers still prefer a model of
+shared memory and would like to use it, even on a multicomputer. Surprisingly
+enough, it is possible to preserve the illusion of shared memory reasonably well,
+ev en when it does not actually exist, using a technique called DSM (Distributed
+Shared Memory) (Li, 1986; and Li and Hudak, 1989). Despite being an old topic,
+research on it is still going strong (Ruan et al., 2020; and Wang et al., 2021). DSM
+is a useful technique to study as it shows many of the issues and complications in
+distributed systems. Moreover, the idea itself has been very influential. With
+DSM, each page is located in one of the memories of Fig. 8-1(b). Each machine
+has its own virtual memory and page tables. When a CPU does a LOAD or STORE
+on a page it does not have, a trap to the operating system occurs. The operating
+system then locates the page and asks the CPU currently holding it to unmap the
+page and send it over the interconnection network. When it arrives, the page is
+mapped in and the faulting instruction restarted. In effect, the operating system is
+just satisfying page faults from remote RAM instead of from local disk. To the
+user, the machine looks as if it has shared memory.
+The difference between actual shared memory and DSM is illustrated in
+Fig. 8-21. In Fig. 8-21(a), we see a true multiprocessor with physical shared 
+memory implemented by the hardware. In Fig. 8-21(b), we see DSM, implemented by
+the operating system. In Fig. 8-21(c), we see yet another form of shared memory,
+implemented by yet higher levels of software. We will come back to this third
+option later in the chapter, but for now we will concentrate on DSM.
+Let us now look in some detail at how DSM works. In a DSM system, the
+address space is divided up into pages, with the pages being spread over all the
+nodes in the system. When a CPU references an address that is not local, a trap
+occurs, and the DSM software fetches the page containing the address and restarts
+the faulting instruction, which now completes successfully. This concept is shown

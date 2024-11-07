@@ -1,0 +1,43 @@
+332
+FILE SYSTEMS
+CHAP. 4
+7. In some systems it is possible to map part of a file into memory. What restrictions must
+such systems impose? How is this partial mapping implemented?
+8. A simple operating system supports only a single directory but allows it to have 
+arbitrarily many files with arbitrarily long file names. Can something approximating a 
+hierarchical file system be simulated? How?
+9. In UNIX and Windows, random access is done by having a special system call that
+moves the ‘‘current position’’ pointer associated with a file to a given byte in the file.
+Propose an alternative way to do random access without having this system call.
+10. Consider the directory tree of Fig. 4-9. If /usr/jim is the working directory, what is the
+absolute path name for the file whose relative path name is ../ast/x?
+11. Contiguous allocation of files leads to disk fragmentation, as mentioned in the text,
+because some space in the last disk block will be wasted in files whose length is not an
+integral number of blocks. Is this internal fragmentation or external fragmentation?
+Make an analogy with something discussed in the previous chapter.
+12. Describe the effects of a corrupted data block for a given file for: (a) contiguous, (b)
+linked, and (c) indexed (or table based).
+13. Some digital consumer devices need to store data, for example as files. Name a modern
+device that requires file storage and for which contiguous allocation would be a fine
+idea.
+14. Consider the i-node shown in Fig. 4-15. If it contains 10 direct addresses and these
+were 8 bytes each and all disk blocks were 1024 KB, what would the largest possible
+file be?
+15. For a giv en class, the student records are stored in a file. The records are randomly
+accessed and updated. Assume that each student’s record is of fixed size. Which of the
+three allocation schemes (contiguous, linked and table/indexed) will be most 
+appropriate?
+16. Consider a file whose size varies between 4 KB and 4 MB during its lifetime. Which
+of the three allocation schemes (contiguous, linked and table/indexed) will be most
+appropriate?
+17. It has been suggested that efficiency could be improved and disk space saved by 
+storing the data of a short file within the i-node. For the i-node of Fig. 4-15, how many
+bytes of data could be stored inside the i-node?
+18. Tw o computer science students, Carolyn and Elinor, are having a discussion about 
+inodes. Carolyn maintains that memories have gotten so large and so cheap that when a
+file is opened, it is simpler and faster just to fetch a new copy of the i-node into the 
+inode table, rather than search the entire table to see if it is already there. Elinor 
+disagrees. Who is right?
+19. Name one advantage of hard links over symbolic links and one advantage of symbolic
+links over hard links.
+20. Explain how hard links and soft links differ with respective to i-node allocations.

@@ -1,0 +1,43 @@
+958
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Virtual Address Allocation
+Each page of virtual addresses can be in one of three states: invalid, reserved,
+or committed. An invalid page is not currently mapped to a memory section object
+and a reference to it causes a page fault that results in an access violation. Once
+code or data is mapped onto a virtual page, the page is said to be committed. A
+committed page does not necessarily have a physical page allocated for it, but the
+operating system has ensured that a physical page is guaranteed to be available
+when necessary. A page fault on a committed page results in mapping the page
+containing the virtual address that caused the fault onto one of the pages 
+represented by the section object or stored in the pagefile. Often this will require 
+allocating a physical page and performing I/O on the file represented by the section object
+to read in the data from disk. But page faults can also occur simply because the
+page table entry needs to be updated, as the physical page referenced is still cached
+in memory, in which case I/O is not required. These are called soft faults. We will
+discuss them in more detail shortly.
+A virtual page can also be in the reserved state. A reserved virtual page is
+invalid but has the property that those virtual addresses will never be allocated by
+the memory manager for another purpose. As an example, when a new thread is
+created, many pages of user-mode stack space are reserved in the process’ virtual
+address space, but only one page is committed. As the stack grows, the virtual
+memory manager will automatically commit additional pages under the covers,
+until the reservation is almost exhausted. The reserved pages function as guard
+pages to keep the stack from growing too far and overwriting other process data.
+Reserving all the virtual pages means that the stack can eventually grow to its 
+maximum size without the risk that some of the contiguous pages of virtual address
+space needed for the stack might be given away for another purpose. In addition to
+the invalid, reserved, and committed attributes, pages also have other attributes,
+such as being readable, writable, and executable.
+Pagefiles
+An interesting trade-off occurs with assignment of backing store to committed
+pages that are not being mapped to specific files. These pages use the pagefile.
+The question is how and when to map the virtual page to a specific location in the
+pagefile. A simple strategy would be to assign each virtual page to a page in one of
+the paging files on disk at the time the virtual page was committed. This would
+guarantee that there was always a known place to write out each committed page
+should it be necessary to evict it from memory, but it would require a much larger
+pagefile than necessary and would not be able to support small pagefiles.
+Windows uses a just-in-time strategy. Committed pages that are backed by the
+pagefile are not assigned space in the pagefile until the time that they hav e to be
+paged out. The memory manager maintains a system-wide commit limit which is

@@ -1,0 +1,46 @@
+528
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+All in all, going from 1 MHz to 1 GHz simply required incrementally better 
+engineering of the chip manufacturing process. Going from 1 GHz to 1 THz is going to
+require a radically different approach.
+One approach to greater speed is through massively parallel computers. These
+machines consist of many CPUs, each of which runs at ‘‘normal’’ speed (whatever
+that may mean in a given year), but which collectively have far more computing
+power than a single CPU. Systems with tens of thousands of CPUs are now 
+commercially available. Systems with 1 million CPUs are already being built in the lab
+(Plana et al., 2020). While there are other potential approaches to greater speed,
+such as biological computers, in this chapter we will focus on systems with 
+multiple conventional CPUs.
+Highly parallel computers are frequently used for heavy-duty number 
+crunching. Problems such as predicting the weather, modeling airflow around an aircraft
+wing, simulating the world economy, or understanding drug-receptor interactions
+in the brain are all computationally intensive. Their solutions require long runs on
+many CPUs at once. The multiple processor systems discussed in this chapter are
+widely used for these and similar problems in science and engineering, among
+other areas.
+Another relevant development is the incredibly rapid growth of the Internet. It
+was originally designed as a prototype for a fault-tolerant military control system,
+then became popular among academic computer scientists, and long ago acquired
+many new uses. One of these is linking up thousands of computers all over the
+world to work together on large scientific problems. In a sense, a system 
+consisting of 1000 computers spread all over the world is no different than one consisting
+of 1000 computers in a single room, although the delay and other technical 
+characteristics are different. We will also consider these systems in this chapter.
+Putting 1 million unrelated computers in a room is easy to do provided that
+you have enough money and a sufficiently large room. Spreading 1 million 
+unrelated computers around the world is even easier since it finesses the second problem.
+The trouble comes in when you want them to communicate with one another to
+work together on a single problem. As a consequence, a great deal of work has
+been done on interconnection technology, and different interconnect technologies
+have led to qualitatively different kinds of systems and different software 
+organizations.
+All communication between electronic (or optical) components ultimately
+comes down to sending messages—well-defined bit strings—between them. The
+differences are in the time scale, distance scale, and logical organization involved.
+At one extreme are the shared-memory multiprocessors, in which somewhere
+between 2 and about 1000 CPUs communicate via a shared memory. In this
+model, every CPU has equal access to the entire physical memory, and can read
+and write individual words using LOAD and STORE instructions. Accessing a 
+memory word usually takes 1–10 nsec. As we shall see, it is now common to put more
+than one processing core on a single CPU chip, with the cores sharing access to

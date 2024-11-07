@@ -1,0 +1,41 @@
+679
+by inserting a memory fence (such as the one we saw in Sec. 2.5.9) right after the
+branch instruction in Line 1, which simply stops all speculation until the condition
+is resolved.
+Transient execution attacks such as Meltdown and Spectre have spawned a
+whole new domain of security research. New vulnerabilities are found every few
+months and new fixes are released by CPU vendors and operating system 
+developers at the same frequency. Unfortunately, all these mitigations chip away at 
+performance. You may find that some newer processors (with all defenses up) are
+slower than older processors. We hav e not seen that often in the past 50 years!
+9.7 INSIDER ATTA CKS
+A whole different category of attacks are what might be termed ‘‘inside jobs.’’
+These are executed by programmers and other employees of the company running
+the computer to be protected or making critical software. These attacks differ from
+external attacks because the insiders have specialized knowledge and access that
+outsiders do not have. Below we will give a few examples; all of them have
+occurred repeatedly in the past. Each one has a different flavor in terms of who is
+doing the attacking, who is being attacked, and what the attacker is trying to
+achieve.
+9.7.1 Logic Bombs
+In these times of massive outsourcing, programmers often worry about their
+jobs. Sometimes they even take steps to make their potential (involuntary) 
+departure less painful. For those who are inclined toward blackmail, one strategy is to
+write a logic bomb. This device is a piece of code written by one of a company’s
+(currently employed) programmers and secretly inserted into the production 
+system. As long as the programmer feeds it its daily password, it is happy and does
+nothing. However, if the programmer is suddenly fired and physically removed
+from the premises without warning, the next day (or next week) the logic bomb
+does not get fed its daily password, so it goes off. Many variants on this theme are
+also possible. In one famous case, the logic bomb checked the payroll. If the 
+personnel number of the programmer did not appear in it for two consecutive payroll
+periods, it went off (Spafford et al., 1989).
+Going off might involve clearing the disk, erasing files at random, carefully
+making hard-to-detect changes to key programs, or encrypting essential files. In
+the latter case, the company has a tough choice about whether to call the police
+(which may or may not result in a conviction many months later but certainly does
+not restore the missing files) or to give in to the blackmail and rehire the 
+ex-programmer as a ‘‘consultant’’ for an astronomical sum to fix the problem (and hope
+that he does not plant new logic bombs while doing so).
+SEC. 9.6
+EXPLOITING HARDWARE

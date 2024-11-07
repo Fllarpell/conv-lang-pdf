@@ -1,0 +1,70 @@
+SEC. 3.2
+A MEMORY ABSTRACTION: ADDRESS SPACES
+187
+when they are only partially in main memory. Below we will study swapping; in
+Sec. 3.3 we will examine virtual memory.
+The operation of a swapping system is illustrated in Fig. 3-4. Initially, only
+process A is in memory. Then processes B and C are created or swapped in from
+nonvolatile storage. In Fig. 3-4(d) A is swapped out to nonvolatile storage. Then D
+comes in and B goes out. Finally A comes in again. Since A is now at a different
+location, addresses contained in it must be relocated, either by software when it is
+swapped in or (more likely) by hardware during program execution. For example,
+base and limit registers would work fine here.
+(a)
+Operating!
+system
+A
+(b)
+Operating!
+system
+A
+B
+(c)
+Operating!
+system
+A
+B
+C
+(d)
+Time
+Operating!
+system
+B
+C
+(e)
+D
+Operating!
+system
+B
+C
+(f)
+D
+Operating!
+system
+C
+(g)
+D
+Operating!
+system
+A
+C
+Figure 3-4. Memory allocation changes as processes come into memory and
+leave it. The shaded regions are unused memory.
+When swapping creates multiple holes in memory, it is possible to combine
+them all into one big one by moving all the processes downward as far as possible.
+This technique is known as memory compaction. It is usually not done because it
+requires a lot of CPU time. For example, on a 16-GB machine that can copy 8
+bytes in 8 nsec, it would take about 16 sec to compact all of memory.
+A point that is worth making concerns how much memory should be allocated
+for a process when it is created or swapped in. If processes are created with a fixed
+size that never changes, then the allocation is simple: the operating system 
+allocates exactly what is needed, no more and no less.
+If, however, processes’ data segments can grow, for example, by dynamically
+allocating memory from a heap, as in many programming languages, a problem
+occurs whenever a process tries to grow. If a hole is adjacent to the process, it can
+be allocated and the process allowed to grow into the hole. On the other hand, if
+the process is adjacent to another process, the growing process will either have to
+be moved to a hole in memory large enough for it, or one or more processes will
+have to be swapped out to create a large enough hole. If a process cannot grow in
+memory and the swap area on the disk or SSD is full, the process will have to 
+suspended until some space is freed up (or it can be killed).

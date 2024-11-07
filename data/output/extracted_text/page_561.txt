@@ -1,0 +1,53 @@
+532
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+UMA Multiprocessors Using Crossbar Switches
+Even with the best caching, the use of a single bus limits the size of a UMA
+multiprocessor to about 16 or 32 CPUs. To go beyond that, a different kind of
+interconnection network is needed. The simplest circuit for connecting n CPUs to k
+memories is the crossbar switch, shown in Fig. 8-3. Crossbar switches have been
+used for decades in telephone switching exchanges to connect a group of incoming
+lines to a set of outgoing lines in an arbitrary way.
+At each intersection of a horizontal (incoming) and vertical (outgoing) line is a
+crosspoint. A crosspoint is a small electronic switch that can be electrically 
+opened or closed, depending on whether the horizontal and vertical lines are to be 
+connected or not. In Fig. 8-3(a), we see three crosspoints closed simultaneously,
+allowing connections between the (CPU, memory) pairs (010, 000), (101, 101),
+and (110, 010) at the same time. Many other combinations are also possible. In
+fact, the number of combinations is equal to the number of different ways eight
+rooks can be safely placed on a chess board.
+Memories
+CPUs
+Closed!
+crosspoint!
+switch
+Open!
+crosspoint!
+switch
+(a)
+(b)
+(c)
+Crosspoint!
+switch is closed
+Crosspoint!
+switch is open
+000
+001
+010
+011
+100
+101
+110
+111
+100
+101
+110
+111
+000
+001
+010
+011
+Figure 8-3. (a) An 8 × 8 crossbar switch. (b) An open crosspoint. (c) A closed
+crosspoint.
+One of the nicest properties of the crossbar switch is that it is a nonblocking
+network, meaning that no CPU is ever denied the connection it needs because

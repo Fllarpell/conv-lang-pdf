@@ -1,0 +1,44 @@
+SEC. 13.2
+ALPHABETICAL BIBLIOGRAPHY
+1113
+PIKE, R., PRESOTTO, D., THOMPSON, K., TRICKEY, H., and WINTERBOTTOM, P.:
+‘‘The Use of Name Spaces in Plan 9,’’ Proc. Fifth ACM SIGOPS European Workshop,
+ACM, pp. 1–5, 1992.
+PINA, L., ANDRONIDIS, A., HICKS, M., and CADAR, C.: ‘‘MVEDSUA : Higher 
+Availability Dynamic Software Updates via Multi-Version Execution,’’ Proc. 24th Int. Conf. on
+Architectural Support for Programming Languages and Operating Syst., ACM, 2019.
+PISMENNY, B., ERAN, H., YEHEZKEL, A., LISS, L., MORRISON, A., and TSAFRIR, D.:
+‘‘ Autonomous NIC Offloads,’’ Proc. 26th ACM International Conf. on Arc hitectural
+Support for Programming Languages and Operating Syst., ACM, 2021.
+PLANA, L. A., TEMPLE, S., HEATHCOTE, J., CLARK, D., PEPPER, J., GARSIDE, J., and
+FURBER, S.: ‘‘Building SpiNNaker Machines,’’ SpiNNaker: a spiking neural network
+architecture, Now Publishers, Inc., pp. 53–78, Dec. 2020.
+POPEK, G.J., and GOLDBERG, R.P.: ‘‘Formal Requirements for Virtualizable Third 
+Generation Architectures,’’ Commun. ACM, Vol. 17, pp. 412–421, July 1974.
+PORTNOY, M.: Virtualization Essentials, Hoboken, NJ: John Wiley & Sons, 2012.
+PRECHELT, L.: ‘‘ An Empirical Comparison of Seven Programming Languages,’’ 
+Computer, Vol. 33, pp. 23–29, Oct. 2000.
+PYLA, H., and VARADARAJAN, S.: ‘‘Transparent Runtime Deadlock Elimination,’’ Proc.
+21st Int’l Conf. on Parallel Architectures and Compilation Techniques, ACM, pp.
+477–478, 2012.
+QIN, H., LI, Q., SPEISER, J., KRAFT, P., and OUSTERHOUT, J.: ‘‘ Arachne: Core-Aware
+Thread Management,’’ Proc. 13th USENIX Symp. on Operating Syst. Design and
+Implementation, USENIX, pp. 145–160, 2018.
+RAGAB, H., BARBERIS, E., BOS, H., GIUFFRIDA, C.: ‘‘Rage Against the Machine Clear:
+A Systematic Analysis of Machine Clears and Their Implications for Transient 
+Execution Attacks,’’ Proc. 30th USENIX Security Symp., USENIX, 2021.
+RANDAL, A.: ‘‘The Ideal Versus the Real: Revisiting the History of Virtual Machines and
+Containers,’’ ACM Computing Surveys, Vol. 53, pp.1–31, May 2020.
+RECTOR, B.E., and NEWCOMER, J.M.: Win32 Programming, Boston: Addison-Wesley,
+1997.
+REEVES, R.D.: Windows 7 Device Driver, Boston: Addison-Wesley, 2010.
+REGHENZANI, F., MASSARI, G., FORNACIARI, W.: ‘‘The Real-Time Linux Kernel: A
+Survey on PREEMPT RT,’’ ACM Computing Surveys, Vol. 52, Art. 18, pp. 1–36, Feb.
+2019.
+RITCHIE, D.M., and THOMPSON, K.: ‘‘The UNIX Timesharing System,’’ Commun. ACM,
+Vol. 17, pp. 365–375, July 1974.
+RIVEST, R.L., SHAMIR, A., and ADLEMAN, L.: ‘‘On a Method for Obtaining Digital 
+Signatures and Public Key Cryptosystems,’’ Commun. ACM, Vol. 21, pp. 120–126, Feb.
+1978.
+RIZZO, L.: ‘‘Netmap: A Novel Framework for Fast Packet I/O,’’ Proc. USENIX Ann. Tech.
+Conf., USENIX, 2012.

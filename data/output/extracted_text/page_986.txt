@@ -1,0 +1,48 @@
+SEC. 11.5
+MEMORY MANAGEMENT
+957
+No Access
+Addresses not Canonical
+A's page tables
+Process A's private
+code and data
+OS code and 
+data structures
+OS code and 
+data structures
+Process A
+00000000'00000000
+00007FFF'FFFF0000
+FFFF8000'00000000
+FFFFFFFF'FFFFFFFF
+No Access
+Addresses not Canonical
+B's page tables
+Process B's private
+code and data
+OS code and 
+data structures
+OS code and 
+data structures
+Process B
+Bottom and top 64KB are no-access
+Figure 11-31. Virtual address space layout for three 64-bit user processes. The
+white areas are private per process. The shaded areas are shared among all 
+processes.
+only accessible while running in kernel-mode, so any access attempt from 
+usermode will result in an access violation. The reason for sharing the process’ virtual
+memory with the kernel is that when a thread makes a system call, it traps into 
+kernel mode and can continue running without changing the memory map by updating
+the special processor register. All that has to be done is switch to the thread’s 
+kernel stack. From a performance point of view, this is a big win, and something
+UNIX does as well. Because the process’ user-mode pages are still accessible, the
+kernel-mode code can read parameters and access buffers without having to switch
+back and forth between address spaces or temporarily double-mapping pages into
+both. The trade-off being made here is less private address space per process in
+return for faster system calls.
+Windows allows threads to attach themselves to other address spaces while
+running in the kernel. Attachment to an address space allows the thread to access
+all of the user-mode address space, as well as the portions of the kernel address
+space that are specific to a process, such as the self-map for the page tables. 
+Howev er, threads must switch back to their original address space before returning to
+user mode, of course.

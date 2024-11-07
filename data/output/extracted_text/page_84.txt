@@ -1,0 +1,50 @@
+SEC. 1.6
+SYSTEM CALLS
+55
+and child share a single physical copy of the memory until one of the two modifies
+a value at a location in memory—in which case the operating system makes a copy
+of the small chunk of memory containing that location. Doing so minimizes the
+amount of memory that needs to be copied a priori, as much can remain shared.
+Moreover, part of the memory, for instance, the program text does not change at, so
+it can always be shared between parent and child. The fork call returns a value,
+which is zero in the child and equal to the child’s PID (Process IDentifier) in the
+parent. Using the returned PID, the two processes can see which one is the parent
+process and which one is the child process.
+In most cases, after a fork, the child will need to execute different code from
+the parent. Consider the case of the shell. It reads a command from the terminal,
+forks off a child process, waits for the child to execute the command, and then
+reads the next command when the child terminates. To wait for the child to finish,
+the parent executes a waitpid system call, which just waits until the child terminates
+(any child if more than one exists). Waitpid can wait for a specific child, or for any
+old child by setting the first parameter to <1. When waitpid completes, the address
+pointed to by the second parameter, statloc, will be set to the child process’ exit
+status (normal or abnormal termination and exit value). Various options are also
+provided, specified by the third parameter. For example, returning immediately if
+no child has already exited.
+Now consider how fork is used by the shell. When a command is typed, the
+shell forks off a new process. This child process must execute the user command.
+It does this by using the execve system call, which causes its entire core image to
+be replaced by the file named in its first parameter. A highly simplified shell 
+illustrating the use of fork, waitpid, and execve is shown in Fig. 1-19.
+#define TRUE 1
+while (TRUE) {
+/* repeat forever */
+type prompt( );
+/* display prompt on the screen */
+read command(command, parameters); 
+/* read input from terminal */
+if (for k( ) != 0) {  
+/* fork off child process */
+/* Parent code. */
+waitpid(<1, &status, 0); 
+/* wait for child to exit */
+} else {
+/* Child code. */
+execve(command, parameters, 0); 
+/* execute command */
+}
+}
+Figure 1-19. A stripped-down shell. Throughout this book, TRUE is assumed to
+be defined as 1.
+In the most general case, execve has three parameters: the name of the file to
+be executed, a pointer to the argument array, and a pointer to the environment

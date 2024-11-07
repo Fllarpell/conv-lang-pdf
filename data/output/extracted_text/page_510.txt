@@ -1,0 +1,46 @@
+SEC. 7.1
+HISTORY
+481
+rakes in billions of dollars in revenue (Bugnion et al., 1997, Bugnion et al., 2012).
+Incidentally, the distinction between ‘‘type 1’’ and ‘‘type 2’’ hypervisors is also
+from the seventies (Goldberg, 1972). VMware introduced its first virtualization
+solution for x86 in 1999. In its wake other products followed: Xen, KVM, 
+VirtualBox, Hyper-V, Parallels, and many others. It seems the time was right for 
+virtualization, even though the theory had been nailed down in 1974 and for decades
+IBM had been selling computers that supported—and heavily used—virtualization.
+In 1999, it became popular among the masses, but new it was not, despite the 
+massive attention it suddenly gained.
+OS-level virtualization, while not as old as hypervisors, has a history that
+stretches back quite some time also. In 1979, UNIX v7 introduced a new system
+call: chroot (change root). The system call takes as its single argument a path
+name, for instance /home/hjb/my new root, which is where it will create a new
+‘‘root’’ directory for the current process and all of its children. Thus, when the
+process reads a file /README.txt (a file in the root directory), it really accesses
+/home/hjb/my new root/README.txt. In other words, the operating system has
+created a separate environment on disk to which the process is confined. It cannot
+access files from directories other than those in the subtree below the new root (and
+we had better make sure that all files the process ever needs will be in this subtree,
+because they are literally all it can access).
+A kind soul might consider this enough to be called a virtual environment, but
+clearly it is an exceedingly poor man’s version of that. For instance, while the 
+visibility of the file system is limited to a subtree, there is no isolation of processes or
+their privileges. Thus, a process inside the subtree can still send signals to 
+processes outside the subtree. Similarly, a process with administrator (or ‘‘root’’) 
+privileges cannot be properly locked inside the chroot subtree: having root privileges, it
+can do anything, including breaking out of the confined file name space. Another
+problem is that processes in different chroot subtrees still have access to all the IP
+addresses assigned to the machine and there is no isolation between packets sent
+from this process and those sent by processes in other subtrees. In other words,
+these are not virtual machines at all.
+In 2000, Poul-Henning Kamp and Robert Watson extended the chroot isolation
+in the FreeBSD operating system to create what they referred to as FreeBSD Jails
+(Kamp and Watson, 2000). They partitioned resources much more pervasively:
+Jails had their own file system name spaces, their own IP addresses, their own
+(limited) root processes, etc. Their elegant solution was hugely influential and soon
+similar features appeared in other operating systems, often partitioning even more
+resources, such as memory or CPU usage. In 2008, Linux Containers (LXC) was
+released. Based on an earlier resource partitioning project at Google, LXC offers
+partitioning of resources of a collection of processes through containers. However,
+the popularity of containers really exploded with the launch of Docker in 2013.
+Docker uses OS-level virtualization to allow software to be packaged in containers
+that hold all the code, libraries, and configuration files needed to run it.

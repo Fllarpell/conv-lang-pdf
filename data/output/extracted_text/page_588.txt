@@ -1,0 +1,31 @@
+SEC. 8.2
+MULTICOMPUTERS
+559
+(a)
+(d)
+(b)
+(e)
+(c)
+(f)
+Figure 8-16. Various interconnect topologies. (a) A single switch. (b) A ring.
+(c) A grid. (d) A double torus. (e) A cube. (f) A 4D hypercube.
+one going into the node on the right, as shown in Fig. 8-16(b). In this topology, no
+switches are needed and none are shown.
+The grid or mesh of Fig. 8-16(c) is a two-dimensional design that has been
+used in many commercial systems. It is highly regular and easy to scale up to large
+sizes. It has a diameter, which is the longest path between any two nodes, and
+which increases only as the square root of the number of nodes. A variant on the
+grid is the double torus of Fig. 8-16(d), which is a grid with the edges connected.
+Not only is it more fault tolerant than the grid, but the diameter is also less because
+the opposite corners can now communicate in only two hops.
+The cube of Fig. 8-16(e) is a regular three-dimensional topology. We hav e
+illustrated a 2 × 2 × 2 cube, but in the most general case it could be a k × k × k
+cube. In Fig. 8-16(f), we have a four-dimensional cube built from two 
+threedimensional cubes with the corresponding nodes connected. We could make a
+five-dimensional cube by cloning the structure of Fig. 8-16(f) and connecting the
+corresponding nodes to form a block of four cubes. To go to six dimensions, we
+could replicate the block of four cubes and interconnect the corresponding nodes,
+and so on. An n-dimensional cube formed this way is called a hypercube.
+Many parallel computers use a hypercube topology because the diameter
+grows linearly with the dimensionality. Put in other words, the diameter is the base
+2 logarithm of the number of nodes. For example, a 10-dimensional hypercube has

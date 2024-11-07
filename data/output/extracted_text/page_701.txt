@@ -1,0 +1,44 @@
+672
+SECURITY 
+CHAP. 9
+A good example is the cache side channel. Like all covert and side channels, it
+depends on a shared resource, in this case the cache. Suppose Andy receives a nice
+collection of ‘‘zebra and tree’’ pictures over a secure messenger tool. The tool
+encrypts all messages for a particular receiver with that receiver’s secret key before
+transmitting it (or delivering it to another user on the same computer). At the 
+destination, the messages are stored in encrypted form and can only be read by the user
+with that same key. Suppose also that Herbert, another user on the same machine,
+is interested in Andy’s messages (and especially the zebra pictures). He can dump
+the contents of the messages on disk, but since they are encrypted, all they contain
+is garbage. If only he had that blasted key!
+The messenger tool uses a well-known encryption routine Encrypt() from a
+shared crypto library. Like many encryption routines, it iterates over the bits in the
+secret key, doing one thing if the bit is a 0 and another thing if the bit is 1. See
+Fig. 9-25.
+for (i = 0; i < length (SecretKey); i++)
+if (SecretKey[i] == 0) do one thing (message, ...);
+else do another thing (message, ...);
+Figure 9-25. Structure of an encryption routine which iterates over the bits in the
+key, taking different actions depending on the value of the bit.
+We do not care about the details of the encryption routine (which probably involves
+the kind of clever math that makes your head spin). What is important here is that
+the code that is executed when the key bit is 0 is at a different location than the
+code that is executed when the bit is 1 (see also Fig. 9-26, top). When the 
+locations in memory are different, these instructions will also be placed at different
+locations in the cache. In other words, if Herbert can determine which location in
+the cache is used during each iteration, he also knows the value of that bit of the
+key.
+Unfortunately (for Herbert), this sounds difficult: the cache does not simply
+tell you which cachelines are used when. Nevertheless, this information can be still
+be observed indirectly. The property that we use is that accessing something that is
+in the cache is fast, while accessing something that is not yet in the cache takes
+considerably longer. In this example, we will assume that the cache is used for
+both code and data (e.g., the level 3 cache on Intel processors), but similar attacks
+are possible for other caches also.
+To discover the key, Herbert runs a program that also uses the crypto library
+and that continuously flushes the cachelines corresponding to the code of
+do one thing() and do another thing() from the cache (e.g., using the clflush
+instruction on x86 processors) and then immediately reads them back from 
+memory, each time measuring very accurately how long these reads take. See also
+Fig. 9-26. While this program is running and timing the reads, he sends a message
+to Andy so that the messenger tool will encrypt it with Andy’s key.

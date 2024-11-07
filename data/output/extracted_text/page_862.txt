@@ -1,0 +1,44 @@
+SEC. 10.8
+ANDROID
+833
+7. New process loads the code for the application being run.
+8. Activity manager sends to the new process any pending operations, in
+this case ‘‘start activity X.’’
+9. New process receives the command to start an activity, instantiates the
+appropriate Java class, and executes it.
+System_server process
+Application process
+Activity instance
+Application code
+Android framework
+PackageManagerService
+startActivity()
+ActivityManagerService
+"Who am I?"
+Load this app! s code
+Instantiate this class
+Zygote process
+Create a new process
+Resolve Intent
+2
+1
+3
+5
+6
+8
+9
+7
+4
+Figure 10-62. Steps in launching a new application process.
+Note that when we started this activity, the application’s process may already
+have been running. In that case, the activity manager will simply skip to the end,
+sending a new command to the process telling it to instantiate and run the 
+appropriate component. This can result in an additional activity instance running in the
+application, if appropriate, as we saw previously in Fig. 10-56.
+Process Lifecycle
+The activity manager is also responsible for determining when processes are
+no longer needed. It keeps track of all activities, receivers, services, and content
+providers running in a process; from this it can determine how important (or not)
+the process is.
+Recall that Android’s out-of-memory killer in the kernel uses a process’s
+importance as given to lmkd as a strict ordering to determine which processes it

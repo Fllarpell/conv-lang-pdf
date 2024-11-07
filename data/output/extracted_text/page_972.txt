@@ -1,0 +1,43 @@
+SEC. 11.4
+PROCESSES AND THREADS IN WINDOWS
+943
+17. If the application program was marked as needing to be shimmed to
+run compatibly with the current version of Windows, the specified
+shims are applied. Shims usually wrap library calls to slightly 
+modify their behavior, such as returning a fake version number or delaying
+the freeing of memory to work around bugs in applications.
+18. Finally, call NtResumeThread to unsuspend the thread and return the
+structure to the caller containing the IDs and handles for the process
+and thread that were just created.
+In earlier versions of Windows, much of the algorithm for process creation was
+implemented in the user-mode procedure which would create a new process in
+using multiple system calls and by performing other work using the NT native
+APIs that support implementation of subsystems. These steps were moved into the
+kernel to reduce the ability of the parent process to manipulate the child process in
+the cases where the child is running a protected program, such as one that 
+implements DRM to protect movies from piracy.
+The original native API, NtCreateProcess, is still supported by the system, so
+much of process creation could still be done within user mode of the parent 
+process—as long as the process being created is not a protected process.
+Generally, when kernel-mode component need to map files or allocate memory
+in a user-mode address space, they can use the system process. However, 
+sometimes a dedicated address space is desired for better isolation since the system
+process user-mode address space is accessible to all kernel-mode entities. For such
+needs, Windows supports the concept of a Minimal Process. A minimal process
+is just an address space; its creation skips over most of the steps described above
+since it is not intended for execution. It has no shared user page, or a PEB, or any
+user-mode threads. No DLLs are mapped in its address space; it is entirely empty
+at creation. And it certainly does not register with the Win32 subsystem. In fact,
+minimal processes are only exposed to operating system kernel components; not
+ev en drivers. Some examples of kernel components that use minimal processes are
+listed below:
+1. Registry: The registry creates a minimal process called ‘‘Registry’’
+and maps its registry hives into the user-mode address space of the
+process. This protects the hive data from potential corruption due to
+bugs in drivers.
+2. Memory Compression: The memory compression component uses a
+minimal process called ‘‘Memory Compression’’ to hold its 
+compressed data. Just like the registry, the goal is to avoid corruption.
+Also, having its own process allows setting of per-process policies
+like working set limits. We will discuss memory compression in more
+detail in Sec. 11.5.

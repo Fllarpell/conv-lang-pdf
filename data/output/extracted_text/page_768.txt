@@ -1,0 +1,46 @@
+SEC. 10.3
+PROCESSES IN LINUX
+739
+Since Linux does not know a priori whether a task is I/O- or CPU-bound, it
+relies on continuously maintaining interactivity heuristics. In this manner, Linux
+distinguishes between static and dynamic priority. The threads’ dynamic priority is
+continuously recalculated, so as to (1) reward interactive threads, and (2) punish
+CPU-hogging threads. In the O(1) scheduler, the maximum priority bonus is <5,
+since lower-priority values correspond to higher priority received by the scheduler.
+The maximum priority penalty is +5. The scheduler maintains a sleep avg 
+variable associated with each task. Whenever a task is awakened, this variable is 
+incremented. Whenever a task is preempted or when its quantum expires, this variable is
+decremented by the corresponding value. This value is used to dynamically map
+the task’s bonus to values from <5 to +5. The scheduler recalculates the new 
+priority level as a thread is moved from the active to the expired list.
+The O(1) scheduling algorithm refers to the scheduler made popular in the
+early versions of the 2.6 kernel, and was first introduced in the unstable 2.5 kernel.
+Prior algorithms exhibited poor performance in multiprocessor settings and did not
+scale well with an increased number of tasks. Since the description presented in the
+above paragraphs indicates that a scheduling decision can be made through access
+to the appropriate active list, it can be done in constant O(1) time, independent of
+the number of processes in the system. However, in spite of the desirable property
+of constant-time operation, the O(1) scheduler had significant shortcomings. Most
+notably, the heuristics used to determine the interactivity of a task, and therefore its
+priority level, were complex and imperfect, and resulted in poor performance for
+interactive tasks.
+To address this issue, Ingo Molnar, who also created the O(1) scheduler, 
+proposed a new scheduler called CFS (Completely Fair Scheduler). CFS was based
+on ideas originally developed by Con Kolivas for an earlier scheduler, and was first
+integrated into the 2.6.23 release of the kernel. It is still the default scheduler for
+the non-real-time tasks.
+The main idea behind CFS is to use a red-black tree as the runqueue data 
+structure. Tasks are ordered in the tree based on the amount of time they spend running
+on the CPU, called vruntime. CFS accounts for the tasks’ running time with
+nanosecond granularity. As shown in Fig. 10-10(b), each internal node in the tree
+corresponds to a task. The children to the left correspond to tasks which had less
+time on the CPU, and therefore will be scheduled sooner, and the children to the
+right on the node are those that have consumed more CPU time thus far. The
+leaves in the tree do not play any role in the scheduler.
+The scheduling algorithm can be summarized as follows. CFS always 
+schedules the task which has had least amount of time on the CPU, typically the leftmost
+node in the tree. Periodically, CFS increments the task’s vruntime value based on
+the time it has already run, and compares this to the current leftmost node in the
+tree. If the running task still has smaller vruntime, it will continue to run. 
+Otherwise, it will be inserted at the appropriate place in the red-black tree, and the CPU
+will be given to task corresponding to the new leftmost node.

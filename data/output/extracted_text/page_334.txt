@@ -1,0 +1,40 @@
+SEC. 4.4
+FILE-SYSTEM MANAGEMENT AND OPTIMIZATION
+305
+Getting back to the free list method for a moment, only one block of pointers
+need be kept in main memory. When a file is created, the needed blocks are taken
+from the block of pointers. When it runs out, a new block of pointers is read in
+from the disk. Similarly, when a file is deleted, its blocks are freed and added to
+the block of pointers in main memory. When this block fills up, it is written to
+disk.
+Under certain circumstances, this method leads to unnecessary disk I/O. 
+Consider the situation of Fig. 4-25(a), in which the block of pointers in memory has
+room for only two more entries. If a three-block file is freed, the pointer block
+overflows and has to be written to disk, leading to the situation of Fig. 4-25(b). If
+a three-block file is now written, the full block of pointers has to be read in again,
+taking us back to Fig. 4-25(a). If the three-block file just written was a temporary
+file, when it is freed, another disk write is needed to write the full block of pointers
+back to the disk. In short, when the block of pointers is almost empty, a series of
+short-lived temporary files can cause a lot of disk I/O.
+(a)
+Disk
+Main!
+memory
+(b)
+(c)
+Figure 4-25. (a) An almost-full block of pointers to free disk blocks in memory
+and three blocks of pointers on disk. (b) Result of freeing a three-block file.
+(c) An alternative strategy for handling the three free blocks. The shaded entries
+represent pointers to free disk blocks.
+An alternative approach that avoids most of this disk I/O is to split the full
+block of pointers. Thus instead of going from Fig. 4-25(a) to Fig. 4-25(b), we go
+from Fig. 4-25(a) to Fig. 4-25(c) when three blocks are freed. Now the system can
+handle a series of temporary files without doing any disk I/O. If the block in 
+memory fills up, it is written to the disk, and the half-full block from the disk is read in.
+The idea here is to keep most of the pointer blocks on disk full (to minimize disk
+usage), but keep the one in memory about half full, so it can handle both file 
+creation and file removal without disk I/O on the free list.
+With a bitmap, it is also possible to keep just one block in memory, going to
+disk for another only when it becomes completely full or empty. An additional
+benefit of this approach is that by doing all the allocation from a single block of the
+bitmap, the disk blocks will be close together, thus minimizing disk-arm motion.

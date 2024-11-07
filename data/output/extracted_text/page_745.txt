@@ -1,0 +1,42 @@
+716
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+When working on Linux systems through a graphical interface, users may use
+mouse clicks to run applications or open files, drag and drop to copy files from one
+location to another, and so on. In addition, users may invoke a terminal emulator
+program, or xterm, which provides them with the basic command-line interface to
+the operating system. Its description is given in the following section.
+10.2.3 The Shell
+Although Linux systems have a graphical user interface, most programmers
+and sophisticated users still prefer a command-line interface, called the shell.
+Often they start one or more shell windows from the graphical user interface and
+just work in them. The shell command-line interface is much faster to use, more
+powerful, easily extensible, and does not give the user RSI from having to use a
+mouse all the time. Below we will briefly describe the bash shell (bash). It is
+heavily based on the original UNIX shell, Bourne shell (written by Steve Bourne,
+then at Bell Labs). Its name is an acronym for Bourne Again SHell. Many other
+shells are also in use (ksh, csh, etc.), but bash is the default shell in most Linux
+systems.
+When the shell starts up, it initializes itself, then types a prompt character,
+often a percent or dollar sign, on the screen and waits for the user to type a 
+command line.
+When the user types a command line, the shell extracts the first word from it,
+where word here means a run of characters delimited by a space or tab. It then
+assumes this word is the name of a program to be run, searches for this program,
+and if it finds it, runs the program. The shell then suspends itself until the program
+terminates, at which time it tries to read the next command. What is important here
+is simply the observation that the shell is an ordinary user program. All it needs is
+the ability to read from the keyboard and write to the monitor and the power to
+execute other programs.
+Commands may take arguments, which are passed to the called program as
+character strings. For example, the command line
+cp src dest
+invokes the cp program with two arguments, src and dest. This program interprets
+the first one to be the name of an existing file. It makes a copy of this file and calls
+the copy dest.
+Not all arguments are file names. In
+head –20 file
+the first argument, –20, tells head to print the first 20 lines of file, instead of the
+default number of lines, 10. Arguments that control the operation of a command or
+specify an optional value are called flags, and by convention are indicated with a
+dash. The dash is required to avoid ambiguity, because the command

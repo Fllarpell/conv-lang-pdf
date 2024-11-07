@@ -1,0 +1,31 @@
+810
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Platform / Application
+Interface definitions
+Method calls
+Ilnterface / aidl
+transact()
+onTransact()
+IBinder / Binder
+Binder user space
+Result codes
+command Codes
+ioctl()
+Binder kernel module
+Figure 10-42. Binder IPC architecture.
+does not support most of the System V primitives for cross-process interaction
+(semaphores, shared memory segments, message queues) because they do not 
+provide robust semantics for cleaning up their resources from buggy or malicious
+applications.
+The basic IPC model Binder uses is the RPC (Remote Procedure Call). That
+is, the sending process is submitting a complete IPC operation to the kernel, which
+is executed in the receiving process; the sender may block while the receiver
+executes, allowing a result to be returned back from the call. (Senders optionally
+may specify they should not block, continuing their execution in parallel with the
+receiver.) Binder IPC is thus message based, like System V message queues, 
+rather than stream based as in Linux pipes. A message in Binder is referred to as a
+transaction, and at a higher level can be viewed as a function call across 
+processes.
+Each transaction that user space submits to the kernel is a complete operation:
+it identifies the target of the operation and identity of the sender as well as the

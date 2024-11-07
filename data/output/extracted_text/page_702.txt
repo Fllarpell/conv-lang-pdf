@@ -1,0 +1,85 @@
+SEC. 9.6
+EXPLOITING HARDWARE
+673
+for (i = 0; i < length (SecretKey); i++)
+ if (SecretKey[i]==0) do_one_thing (zebras,...);
+ else do_another_thing (zebras, ...);
+Cache
+511
+512
+513
+514
+515
+516
+517
+518
+511
+512
+513
+514
+515
+516
+517
+518
+Flush cachelines
+511
+512
+513
+514
+515
+516
+517
+518
+My key is: 0110100111...
+do_one_thing(...) is loaded in 
+511
+512
+513
+514
+515
+516
+517
+51
+Then measure 
+how long it takes 
+to reload these lines
+fast
+slow
+511
+512
+513
+514
+515
+516
+517
+518
+First bit was 0!
+}
+Now the next bit:
+Flush cachelines again. Etc.
+...
+I know
+Code for key bit value == 0
+and key bit value ==1 are
+cached at dierent cachelines
+That's not nice.
+  
+I have encrypted zebras!
+I have encrypted zebras!
+en encyption/decryption starts,
+he line 512 for key bit 0
+1
+2
+5
+6
+Figure 9-26. Cache side channel attack on Andy’s Messenger App.
+There are two possibilities for the timed reads: (1) the read is slow, or (2) the
+read is fast. The first case is what we expect. After all, Herbert’s code just flushed
+these addresses from the cache and loading them from memory takes time. If the
+access is fast, some other code must have loaded the code in the 
+cache—presumably the messenger tool. If the access of do one thing() is fast, the Encrypt() 
+routine in the messenger tool processed a key bit with the value 0. If do 
+another thing() is fast, Encrypt() processed a key bit with the value 0. Herbert’s code
+immediately flushes the cachelines again. Rinse and repeat.
+In this way, he obtains Andy’s secret key bit by bit without ever touching it
+directly. This particular cache side channel is known as Flush & Reload. There

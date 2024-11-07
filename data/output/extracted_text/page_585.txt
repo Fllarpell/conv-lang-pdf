@@ -1,0 +1,42 @@
+556
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+Scheduling for Security
+As we have seen, security issues complicate just about every operating system
+activity and scheduling is no exception. Since processes and threads running on the
+same core in different hardware threads (or hyper-threads) share the core’s
+resources (such as the cache and the TLB), the activity of one process on the core
+interferes with that of another. In this section, we briefly explain how an attacker
+process can learn a secret from a victim process on a core with a shared TLB for
+code pages. However, this is fairly advanced stuff and we will have more to say
+about such side channel attacks in Chap. 9.
+Suppose we have a core with a fully shared TLB and on one of the core’s
+hyper-threads we run a program that uses a secret key (which is just a sequence of
+bits) to encrypt blocks of data provided by the user, for instance in a file, and sends
+it to a remote server. An attacker on the second hyper-thread wants to know the
+secret key, but the process is owned by someone else and all she can do is feed the
+program with data blocks. How will she learn the key?
+The trick is to use knowledge about the algorithm. Many cryptographic 
+algorithms encrypt and decrypt data by means of clever mathematical operations that
+depend on each bit in the key. So, the encryption routine will iterate over the key
+and for each key bit, it will execute, say, function f0 if the key bit is 0, and function
+f1 otherwise. In pseudo-code:
+for (ev ery bit b in key) {
+if (b == 0) then f0( );
+else f1( );
+}
+If f0 and f1 are stored on different pages in memory, say P0 and P1, their 
+execution also reference different pages in the TLB. For an attacker, it would be 
+interesting to learn the sequence of pages used by the other process as it immediately
+reveals the secret key. Of course, the process will access other pages also, so there
+is some noise. Even so, suppose she is able to observe the following sequence:
+P5 P3 P7 P1 P7 P1 P7 P1 P0 P7 P1 P7 P0 P7 P0 P7 P1 P1 P7 P1 P1 P7 P1 ...
+There is a clear pattern. The first pages, P5 and P3 are probably related to
+start-up code, but after that we see a sequence where the process accesses either P0
+or P1 after accessing P7 (where P7 corresponds to the loop instructions).
+Although the attacker cannot see the pages that the victim accesses directly,
+she can use a side channel to observe them indirectly. The trick is to observe her
+own process’ memory accesses and see whether they are affected by interference
+from the victim process. To do so, she creates a program with a large number of
+virtual pages, enough to cover the entire TLB. The program does not take up much
+physical memory as each code page maps to a single physical page that contains

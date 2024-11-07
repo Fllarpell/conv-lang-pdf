@@ -1,0 +1,44 @@
+SEC. 5.1
+PRINCIPLES OF I/O HARDWARE
+349
+CPU. As a bare minimum, the program counter must be saved, so the interrupted
+process can be restarted. At the other extreme, all the visible registers and a large
+number of internal registers may be saved as well.
+Another issue is where to save this information. One option is to put it in 
+internal registers that the operating system can read out as needed. However, a problem
+with this approach is that the interrupt controller cannot be acknowledged until all
+potentially relevant information has been read out, lest a second interrupt overwrite
+the internal registers saving the state. This strategy leads to long dead times when
+interrupts are disabled and possibly to lost interrupts and lost data.
+Consequently, most CPUs save the information on the stack. However, this
+approach, too, has problems. To start with: whose stack? If the current stack is
+used, it may well be a user process stack. The stack pointer may not even be leg al,
+which would cause a fatal error when the hardware tried to write some words at the
+address pointed to. Also, it might point near the end of a page. After several 
+memory writes, the page boundary might be exceeded and a page fault generated. 
+Having a page fault occur during the hardware interrupt processing creates a bigger
+problem: where to save the state to handle the page fault?
+If the kernel stack is used, there is a much better chance of the stack pointer
+being legal and pointing to a pinned page. However, switching into kernel mode
+may require changing MMU contexts and will probably invalidate most or all of
+the cache and TLB. Reloading all of these, statically or dynamically, will increase
+the time to process an interrupt and thus waste CPU time at a critical moment.
+So far, we hav e discussed interrupt handling mostly from a hardware 
+perspective. Howev er, there is a lot of software involved in I/O also. We will look at the
+I/O software stack in detail in Sec. 5.3.
+Precise and Imprecise Interrupts
+Another problem is caused by the fact that most modern CPUs are heavily
+pipelined and often superscalar (internally parallel). In older systems, after each
+instruction was finished executing, the microprogram or hardware checked to see if
+there was an interrupt pending. If so, the program counter and PSW were pushed
+onto the stack and the interrupt sequence begun. After the interrupt handler ran, the
+reverse process took place, with the old PSW and program counter popped from
+the stack and the previous process continued.
+This model makes the implicit assumption that if an interrupt occurs just after
+some instruction, all the instructions up to and including that instruction have been
+executed completely, and no instructions after it have executed at all. On older
+machines, this assumption was always valid. On modern ones it may not be.
+For starters, consider the pipeline model of Fig. 1-7(a). What happens if an
+interrupt occurs while the pipeline is full (the usual case)? Many instructions are
+in various stages of execution. When the interrupt occurs, the value of the program
+counter may not reflect the correct boundary between executed instructions and

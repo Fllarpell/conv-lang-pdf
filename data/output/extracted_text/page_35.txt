@@ -1,0 +1,44 @@
+6
+INTRODUCTION 
+CHAP. 1
+line-oriented command prompt. Both are programs running on the Windows 
+operating system and use the abstractions Windows provides, but they offer very 
+different user interfaces. Similarly, a Linux user running Gnome or KDE sees a very
+different interface than a Linux user working directly on top of the underlying X
+Window System, but the underlying operating system abstractions are the same in
+both cases.
+In this book, we will study the abstractions provided to application programs in
+great detail, but say rather little about user interfaces. That is a large and important
+subject, but one only peripherally related to operating systems.
+1.1.2 The Operating System as a Resource Manager
+The concept of an operating system as primarily providing abstractions to
+application programs is a top-down view. An alternative, bottom-up, view holds
+that the operating system is there to manage all the pieces of a complex system.
+Modern computers consist of processors, memories, timers, disks, mice, network
+interfaces, printers, touch screens, touch pad, and a wide variety of other devices.
+In the bottom-up view, the job of the operating system is to provide for an orderly
+and controlled allocation of the processors, memories, and I/O devices among the
+various programs wanting them.
+Modern operating systems allow multiple programs to be in memory and run
+at the same time. Imagine what would happen if three programs running on some
+computer all tried to print their output simultaneously on the same printer. The first
+few lines of printout might be from program 1, the next few from program 2, then
+some from program 3, and so forth. The result would be utter chaos. The operating
+system can bring order to the potential chaos by buffering all the output destined
+for the printer on the disk or Flash drive. When one program is finished, the 
+operating system can then copy its output from the disk file where it has been stored for
+the printer, while at the same time the other program can continue generating more
+output, oblivious to the fact that the output is not really going to the printer (yet).
+When a computer (or network) has more than one user, managing and 
+protecting the memory, I/O devices, and other resources is even more important since the
+users might otherwise interfere with one another. In addition, users often need to
+share not only hardware, but information (files, databases, etc.) as well. In short,
+this view of the operating system holds that its primary task is to keep track of
+which programs are using which resource, to grant resource requests, to account
+for usage, and to mediate conflicting requests from different programs and users.
+Resource management includes multiplexing (sharing) resources in two 
+different ways: in time and in space. When a resource is time multiplexed, different
+programs or users take turns using it. First one of them gets to use the resource,
+then another, and so on. For example, with only one CPU and multiple programs
+that want to run on it, the operating system first allocates the CPU to one program,
+then, after it has run long enough, another program gets to use the CPU, then

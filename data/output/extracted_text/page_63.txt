@@ -1,0 +1,43 @@
+34
+INTRODUCTION 
+CHAP. 1
+a message through a single connection, known as a lane, much like a  network
+packet. This is much simpler because you do not have to ensure that all 32 bits
+arrive at the destination at exactly the same time. Parallelism is still used, because
+you can have multiple lanes in parallel. For instance, we may use 32 lanes to carry
+32 messages in parallel. As the speed of peripheral devices like network cards and
+graphics adapters increases rapidly, the PCIe standard is upgraded every 3–5 years.
+For instance, 16 lanes of PCIe 4.0 offer 256 gigabits per second. Upgrading to
+PCIe 5.0 will give you twice that speed and PCIe 6.0 will double that again.
+Meanwhile, we still have leg acy devices for the older PCI standard. These devices
+can be hooked up to a separate hub processor.
+In this configuration, the CPU talks to memory over a fast DDR4 bus, to an
+external graphics device over PCIe and to all other devices via a hub over a DMI
+(Direct Media Interface) bus. The hub in turn connects all the other devices,
+using the Universal Serial Bus to talk to USB devices, the SATA bus to interact
+with hard disks and DVD drives, and PCIe to transfer Ethernet frames. We hav e
+already mentioned the older PCI devices that use a traditional PCI bus.
+Moreover, each of the cores has a dedicated cache and a much larger cache that
+is shared between them. Each of these caches introduces yet another bus.
+The USB (Universal Serial Bus) was invented to attach all the slow I/O 
+devices, such as the keyboard and mouse, to the computer. Howev er, calling a 
+modern USB4 device humming along at 40 Gbps ‘‘slow’’ may not come naturally for
+the generation that grew up with 8-Mbps ISA as the main bus in the first IBM PCs.
+USB uses a small connector with 4–11 wires (depending on the version), some of
+which supply electrical power to the USB devices or connect to ground. USB is a
+centralized bus in which a root device polls all the I/O devices every 1 msec to see
+if they hav e any traffic. USB 1.0 could handle an aggregate load of 12 Mbps, USB
+2.0 increased the speed to 480 Mbps, USB 3.0 to 5 Gbps, USB 3.2 to 20 Gbps and
+USB 4 will double that. Any USB device can be connected to a computer and it
+will function immediately, without requiring a reboot, something pre-USB devices
+required, much to the consternation of a generation of frustrated users.
+1.3.6 Booting the Computer
+Very briefly, the boot process is as follows. Every PC contains a motherboard,
+which contains the CPU, slots for memory chips, and sockets for PCIe (or other)
+plug-in cards. On the motherboard a small amount of flash holds a program called
+the system firmware, which we commonly still refer to as the BIOS (Basic Input
+Output System), even though strictly speaking the name BIOS applies only to the
+firmware in somewhat older IBM PC compatible machines. Booting using the
+original BIOS was slow, architecture-dependent, and limited to smaller SSDs and
+disks (up to 2 TB). It was also very easy to understand. When Intel proposed what
+would become UEFI (Unified Extensible Firmware Interface) as a replacement,

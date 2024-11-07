@@ -1,0 +1,31 @@
+SEC. 11.10
+VIRTUALIZATION IN WINDOWS
+1015
+Figure 11-53. The contents of the VHD exposed to the container is backed by a
+set of host directories that are merged at runtime to make up the container file
+system contents.
+the request to shut down the machine reaches the kernel and if the request 
+originated in a container, the kernel terminates the container rather the shutting down
+the host. A container can also be shut down if a critical process within the 
+container crashes. This would normally result in a host blue screen, but if the critical
+process was in a container, the container will be terminated rather than causing a
+blue screen.
+Hyper-V Isolated Containers
+Server Silos provide a high degree of isolation based on namespace isolation.
+Microsoft advertises these containers as being suitable for enterprise multitenancy
+or non-hostile workloads. However, there are times when it is desirable to run 
+hostile workloads within a container. For those scenarios, Hyper-V isolated 
+containers are the solution. These containers leverage hardware-based virtualization
+mechanism to provide a very secure boundary between the container and its host.
+One of the primary design goals of Windows Containers was to not require an
+administrator to decide upfront what type of container to use. The same artifacts
+should be usable with either a Windows Server Container or a Hyper-V Isolated
+Container. The approach taken was to always run a server silo for the container, but
+in some cases, it is run on the host (Windows Server Containers) and in others, it is
+run within something known as a Utility VM (Hyper-V Isolated Containers). The
+Utility VM is created as a VA-backed VM to optimize memory usage and to allow
+in memory sharing of container base image binaries across running containers
+which significantly improves density.
+The utility VM also runs a very scaled down OS instance, designed to host
+nothing other than server silos so that it boots quickly and uses minimal memory.
+When the Hyper-V isolated container is instantiated, the Utility VM is started first.

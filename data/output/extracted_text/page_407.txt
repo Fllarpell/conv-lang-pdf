@@ -1,0 +1,46 @@
+378
+INPUT/OUTPUT 
+CHAP. 5
+lowest-numbered cylinder with a pending request and then continues moving in an
+upward direction. In effect, the lowest-numbered cylinder is thought of as being
+just above the highest-numbered cylinder.
+Some disk controllers provide a way for the software to inspect the current 
+sector number under the head. With such a controller, another optimization is 
+possible. If two or more requests for the same cylinder are pending, the driver can
+issue a request for the sector that will pass under the head next. Note that when
+multiple tracks are present in a cylinder, consecutive requests can be for different
+tracks with no penalty. The controller can select any of its heads almost 
+instantaneously (head selection involves neither arm motion nor rotational delay).
+If the disk has the property that seek time is much faster than the rotational
+delay, then a different optimization should be used. Pending requests should be
+sorted by sector number, and as soon as the next sector is about to pass under the
+head, the arm should be zipped over to the right track to read or write it.
+With a modern hard disk, the seek and rotational delays so dominate 
+performance that reading one or two sectors at a time is very inefficient. For this 
+reason, many disk controllers always read and cache multiple sectors, even when only
+one is requested. Typically any request to read a sector will cause that sector and
+much or all the rest of the current track to be read, depending upon how much
+space is available in the controller’s cache memory. The Seagate IronWolf hard
+disk described earlier has a 256-MB cache, for example. The use of the cache is
+determined dynamically by the controller. In the simplest case, the cache is divided
+into two sections, one for reads and one for writes. If a subsequent read can be 
+satisfied out of the controller’s cache, it can return the requested data immediately.
+It is worth noting that the disk controller’s cache is completely independent of
+the operating system’s cache. The controller’s cache usually holds blocks that have
+not actually been requested, but which were convenient to read because they just
+happened to pass under the head as a side effect of some other read. In contrast,
+any cache maintained by the operating system will consist of blocks that were
+explicitly read and which the operating system thinks might be needed again in the
+near future (e.g., a disk block holding a directory block).
+When several drives are present on the same controller, the operating system
+should maintain a pending request table for each drive separately. Whenever any
+drive is idle, a seek should be issued to move its arm to the cylinder where it will
+be needed next (assuming the controller allows overlapped seeks). When the 
+current transfer finishes, a check can be made to see if any drives are positioned on the
+correct cylinder. If one or more are, the next transfer can be started on a drive that
+is already on the right cylinder. If none of the arms is in the right place, the driver
+should issue a new seek on the drive that just completed a transfer and wait until
+the next interrupt to see which arm gets to its destination first.
+It is important to realize that all of the above disk-scheduling algorithms tacitly
+assume that the real disk geometry is the same as the virtual geometry. If it is not,
+then scheduling disk requests makes no sense because the operating system cannot

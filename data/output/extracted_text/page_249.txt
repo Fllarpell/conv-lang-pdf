@@ -1,0 +1,52 @@
+220
+MEMORY MANAGEMENT 
+CHAP. 3
+not necessarily the first write scheduled because the (disk) driver may reorder
+writes in order to optimize performance of nonvolatile storage.
+In the second case, all pages are in the working set, otherwise at least one write
+would have been scheduled. Lacking additional information, the simplest thing to
+do is claim any clean page and use it. The location of a clean page could be kept
+track of during the sweep. If no clean pages exist, then the current page is chosen
+as the victim and written back to nonvolatile storage.
+3.4.10 Summary of Page Replacement Algorithms
+We hav e now looked at a variety of page replacement algorithms. Now we
+will briefly summarize them. The list of algorithms discussed is given in Fig. 3-21.
+Algorithm 
+Comment
+Optimal 
+Not implementable, but useful as a benchmark
+NRU (Not Recently Used)
+Very crude approximation of LRU
+FIFO (First-In, First-Out)
+Might throw out important pages
+Second chance
+Big improvement over FIFO
+Clock
+Realistic
+LRU (Least Recently Used)
+Excellent, but difficult to implement exactly
+NFU (Not Frequently Used)
+Fair ly cr ude approximation to LRU
+Aging 
+Efficient algor ithm that approximates LRU well
+Working set
+Somewhat expensive to implement
+WSClock
+Good efficient algorithm
+Figure 3-21. Page replacement algorithms discussed in the text.
+The optimal algorithm evicts the page that will be referenced furthest in the
+future. Unfortunately, there is no way to determine which page this is, so in 
+practice this algorithm cannot be used. It is useful as a benchmark against which other
+algorithms can be measured, however.
+The NRU algorithm divides pages into four classes depending on the state of
+the R and M bits. A random page from the lowest-numbered class is chosen. This
+algorithm is easy to implement, but it is very crude. Better ones exist.
+FIFO keeps track of the order in which pages were loaded into memory by
+keeping them in a linked list. Removing the oldest page then becomes trivial, but
+that page might still be in use, so FIFO is a bad choice.
+Second chance is a change to FIFO that checks if a page is in use before 
+removing it. If it is, the page is spared. This modification greatly improves the 
+performance. Clock is simply a different implementation of second chance. It has the
+same performance properties, but takes a little less time to execute the algorithm.
+LRU is an excellent algorithm, but it cannot be implemented without special
+hardware. If this hardware is not available, LRU cannot be used. NFU is a crude

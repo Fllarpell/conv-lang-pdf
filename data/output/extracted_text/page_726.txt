@@ -1,0 +1,42 @@
+SEC. 9.10
+SUMMARY
+697
+Unfortunately, software bugs are no longer our only concern and hardware is
+often vulnerable too. Cache side channels and ancient execution issues are some of
+the issues on which attackers can build to launch an attack.
+To protect itself from compromise, an operating system may take additional
+measures. For instance, by restricting the control flow in a program with the help
+of control-flow integrity, secure boot processes, randomizing the address space at
+fine granularity, restricting trusting only drivers that are signed by a trusted party—
+or one of the other ways to harden the operating system.
+PROBLEMS
+1. Confidentiality, integrity, and availability are three components of security. Describe
+an application that requires integrity and availability but not confidentiality, an 
+application that requires confidentiality and integrity but not (high) availability, and an 
+application that requires confidentiality, integrity, and availability.
+2. One of the techniques to build a secure operating system is to minimize the size of the
+TCB. Which of the following functions needs to be implemented inside the TCB and
+which can be implemented outside TCB: (a) Process context switch; (b) Read a file
+from disk; (c) Add more swapping space; (d) Listen to music; (e) Get the GPS 
+coordinates of a smartphone.
+3. What is a covert channel? What is the basic requirement for a covert channel to exist?
+4. In a full access-control matrix, the rows are for domains and the columns are for
+objects. What happens if some object is needed in two domains?
+5. Suppose that a system has 5000 objects and 100 domains at some time. 1% of the
+objects are accessible (some combination of r, w and x) in all domains, 10% are 
+accessible in two domains, and the remaining 89% are accessible in only one domain. 
+Suppose one unit of space is required to store an access right (some combination of r, w,
+x), object ID, or a domain ID. How much space is needed to store the full protection
+matrix, protection matrix as ACL, and protection matrix as capability list?
+6. Explain which implementation of the protection matrix is more suitable for the 
+following operations:
+(a) Granting read access to a file for all users.
+(b) Revoking write access to a file from all users.
+(c) Granting write access to a file to John, Lisa, Christie, and Jeff.
+(d) Revoking execute access to a file from Jana, Mike, Molly, and Shane.
+7. Tw o different protection mechanisms that we have discussed are capabilities and
+access-control lists. For each of the following protection problems, tell which of these
+mechanisms can be used.
+(a) Ken wants his files readable by everyone except his office mate.
+(b) Mitch and Steve want to share some secret files.
+(c) Linda wants some of her files to be public.

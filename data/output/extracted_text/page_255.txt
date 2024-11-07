@@ -1,0 +1,45 @@
+226
+MEMORY MANAGEMENT 
+CHAP. 3
+3.5.4 Page Size
+The page size is a parameter that can be chosen by the operating system. Even
+if the hardware has been designed with, for example, 4096-byte pages, the 
+operating system can easily regard page pairs 0 and 1, 2 and 3, 4 and 5, and so on, as
+8-KB pages by always allocating two consecutive 8192-byte page frames for them.
+Determining the best page size requires balancing several competing factors.
+As a result, there is no overall optimum. To start with, two factors argue for a
+small page size. A randomly chosen text, data, or stack segment will not fill an
+integral number of pages. On the average, half of the final page will be empty.
+The extra space in that page is wasted. This wastage is called internal 
+fragmentation. With n segments in memory and a page size of p bytes, np/2 bytes will be
+wasted on internal fragmentation. This reasoning argues for a small page size.
+Another argument for a small page size becomes apparent if we think about a
+program consisting of eight sequential phases of 4 KB each. With a 32-KB page
+size, the program must be allocated 32 KB all the time. With a 16-KB page size, it
+needs only 16 KB. With a page size of 4 KB or smaller, it requires only 4 KB at
+any instant. In general, a large page size will cause more wasted space to be in
+memory than a small page size.
+On the other hand, small pages mean that programs will need many pages, and
+thus a large page table. A 32-KB program needs only four 8-KB pages, but 64
+512-byte pages. Transfers to and from the disk or SSD are generally a page at a
+time. If the nonvolatile storage is not an SSD but a magnetic disk, most of the time
+will be spent on the seek and rotational delay, so that transferring a small page
+takes almost as much time as transferring a large page. It might take 64 × 10 msec
+to load 64 512-byte pages, but only 4 × 12 msec to load four 8-KB pages.
+Perhaps more importantly, small pages use up much valuable space in the
+TLB. Say your program uses 1 MB of memory with a working set of 64 KB. With
+4-KB pages, the program would occupy at least 16 entries in the TLB. With 2-MB
+pages, a single TLB entry would be sufficient (in theory, it may be that you want to
+separate data and instructions). As TLB entries are scarce, and critical for 
+performance, it pays to use large pages wherever possible. To balance all these 
+tradeoffs, operating systems sometimes use different page sizes for different parts of the
+system. For instance, large pages for the kernel and smaller ones for user 
+processes. Indeed, some operating systems go out of their way to use large pages, even
+moving a process’ memory around to find or create contiguous ranges of memory
+suitable for backing by a large page—a feature sometimes referred to as 
+transparent huge pages.
+On some machines, the page table must be loaded (by the operating system)
+into hardware registers every time the CPU switches from one process to another.
+On these machines, having a small page size means that the time required to load
+the page registers gets longer as the page size gets smaller. Furthermore, the space
+occupied by the page table increases as the page size decreases.

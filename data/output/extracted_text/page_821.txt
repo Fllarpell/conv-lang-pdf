@@ -1,0 +1,50 @@
+792
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+sets newgame to rwxr–xr–x so that everyone can run it (note that 0755 is an octal
+constant, which is convenient, since the protection bits come in groups of 3 bits).
+Only the owner of a file and the superuser can change its protection bits.
+System call
+Description
+s = chmod(path, mode)
+Change a file’s protection mode
+s = access(path, mode)
+Check access using the real UID and GID
+uid = getuid( )
+Get the real UID
+uid = geteuid( )
+Get the effective UID
+gid = getgid( )
+Get the real GID
+gid = getegid( )
+Get the effective GID
+s = chown(path, owner, group) 
+Change owner and group
+s = setuid(uid) 
+Set the UID
+s = setgid(gid) 
+Set the GID
+Figure 10-38. Some system calls relating to security. The return code s is <1 if
+an error has occurred; uid and gid are the UID and GID, respectively. The 
+parameters should be self-explanatory.
+The access call tests to see if a particular access would be allowed using the
+real UID and GID. This system call is needed to avoid security breaches in 
+programs that are SETUID and owned by the root. Such a program can do anything,
+and it is sometimes needed for the program to figure out if the user is allowed to
+perform a certain access. The program cannot just try it, because the access will
+always succeed. With the access call, the program can find out if the access is
+allowed by the real UID and real GID.
+The next four system calls return the real and effective UIDs and GIDs. The
+last three are allowed only for the superuser. They change a file’s owner, and a
+process’ UID and GID.
+10.7.3 Implementation of Security in Linux
+When a user logs in, the login program, login (which is SETUID root) asks for
+a login name and a password. It hashes the password and then looks in the 
+password file, /etc/passwd, to see if the hash matches the one there (networked systems
+work slightly differently). The reason for using hashes is to prevent the password
+from being stored in unencrypted form anywhere in the system. If the password is
+correct, the login program looks in /etc/passwd to see the name of the user’s 
+preferred shell, possibly bash, but possibly some other shell such as csh or ksh. The
+login program then uses setuid and setgid to give itself the user’s UID and GID
+(remember, it started out as SETUID root). Then it opens the keyboard for 
+standard input (file descriptor 0), the screen for standard output (file descriptor 1), and

@@ -1,0 +1,44 @@
+746
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+is typed, the cp program is run with the string ‘‘cp src dest’’ on the stack, so it can
+find out the names of the source and destination files. The string is represented as
+an array of pointers to the symbols in the string, to make parsing easier.
+When two users are running the same program, such as the editor, it would be
+possible, but inefficient, to keep two copies of the editor’s program text in memory
+at once. Instead, Linux systems support shared text segments. In Fig. 10-12(a)
+and (c) we see two processes, A and B, that have the same text segment. In
+Fig. 10-12(b) we see a possible layout of physical memory, in which both 
+processes share the same piece of text. The mapping is done by the MMU hardware.
+Data and stack segments are never shared except after a fork, and then only
+those pages that are not modified. If either one needs to grow and there is no room
+adjacent to it to grow into, there is no problem since adjacent virtual pages do not
+have to map onto adjacent physical pages.
+On some computers, the hardware supports separate address spaces for 
+instructions and data. When this feature is available, Linux can use it. For example, on a
+computer with 32-bit addresses, if this feature is available, there would be 232
+bytes of address space for instructions and an additional 232 bytes of address space
+for the data and stack segments to share. A jump or branch to 0 goes to address 0
+of text space, whereas a move from 0 uses address 0 in data space. This feature
+doubles the address space available.
+In addition to dynamically allocating more memory, processes in Linux can
+access file data through memory-mapped files. This feature makes it possible to
+map a file onto a portion of a process’ address space so that the file can be read and
+written as if it were a byte array in memory. Mapping a file in makes random
+access to it much easier than using I/O system calls such as read and wr ite. Shared
+libraries are accessed by mapping them in using this mechanism. In Fig. 10-13, we
+see a file that is mapped into two processes, at different virtual addresses.
+An additional advantage of mapping a file in is that two or more processes can
+map in the same file at the same time. Writes to the file by any one of them are
+then instantly visible to the others. In fact, by mapping in a scratch file (which will
+be discarded after all the processes exit), this mechanism provides a 
+high-bandwidth way for multiple processes to share memory. In the most extreme case, two
+(or more) processes could map in a file that covers the entire address space, giving
+a form of sharing that is partway between separate processes and threads. Here the
+address space is shared (like threads), but each process maintains its own open files
+and signals, for example, which is not like threads. In practice, however, making
+two address spaces exactly correspond is never done.
+10.4.2 Memory Management System Calls in Linux
+POSIX does not specify any system calls for memory management. This topic
+was considered too ma chine dependent for standardization. Instead, the problem
+was nicely swept under the rug by saying that programs needing dynamic memory

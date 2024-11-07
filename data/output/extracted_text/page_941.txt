@@ -1,0 +1,46 @@
+912
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+IDentifier), which, in practice, is a 128-bit number generated to ensure 
+uniqueness. The Windows setup program initializes the boot disk in the GPT format and
+creates several partitions. The most important are the EFI system partition which
+is formatted with FAT32 and contains the Windows Boot Manager UEFI 
+application (bootmgrfw.efi) and the boot partition which is formatted with NTFS and
+contains the actual Windows installation. In addition, the setup program sets some
+well-known UEFI global variables that indicate to the firmware the location of
+Windows Boot Manager. These variables are stored in the system’s nonvolatile
+memory and persist across boots.
+Given a GPT-partitioned disk, the UEFI firmware locates the Windows Boot
+Manager in the EFI system partition and transfers control to it. It’s able to do this
+because the firmware supports the FAT32 file system (but not the NTFS file 
+system). The boot manager’s job is to select the appropriate OS loader application
+and execute it. The OS loader’s job is to load the actual operating system files into
+memory and start running the OS. Both the boot manager and the OS loader rely
+on the UEFI firmware facilities for basic memory management, disk I/O, textual
+and graphical console I/O. However, once all the required operating system files
+are loaded into memory and prepared for execution, ‘‘ownership’’ of the platform
+is transferred to the operating system kernel and these boot services provided by
+the firmware are discarded from memory. The kernel then initializes its own 
+storage and file system drivers to mount the boot partition and load the rest of the files
+necessary to boot Windows.
+Boot security is the foundation of OS security. The boot sequence must be 
+protected from a special type of malware called rootkits which are sophisticated 
+malicious software that inject themselves into the boot sequence, take control of the
+hardware, and hide themselves from the security mechanisms that load afterwards
+(such as anti-malware applications). As a countermeasure, UEFI supports a feature
+called Secure Boot which validates the integrity of every component loaded during
+the boot process including the UEFI firmware itself. This verification is performed
+by checking the digital signature of each component against a database of trusted
+certificates (or certificates issued by trusted certificates), thereby establishing a
+chain of trust rooted at the root certificate. As part of Secure Boot, the firmware
+validates the Windows Boot Manager before transferring control to it, which, then
+validates the OS loader, which, then validates the operating system files 
+(hypervisor, secure kernel, kernel, boot drivers, and so on).
+Digital signature verification involves calculating a cryptographic hash for the
+component to be verified. This hash value is also measured into the TPM (Trusted
+Platform Module) which is a secure cryptographic processor required to be 
+present by Windows 11. The TPM provides various security services such as 
+protection of encryption keys, boot measurements, and attestation. The act of measuring
+a hash value into the TPM cryptographically combines the hash value with the
+existing value in a PCR (Platform Configuration Register) in an operation called
+extending the PCR. The Windows Boot Manager and the OS loader measure not

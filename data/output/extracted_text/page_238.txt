@@ -1,0 +1,43 @@
+SEC. 3.4
+PA GE REPLACEMENT ALGORITHMS
+209
+The only problem with this algorithm is that it is unrealizable. At the time of
+the page fault, the operating system has no way of knowing when each of the pages
+will be referenced next. (We saw a similar situation earlier with the 
+shortest-job-first scheduling algorithm—how can the system tell which job is shortest?)
+Still, by running a program on a simulator and keeping track of all page references,
+it is possible to implement optimal page replacement on the second run by using
+the page-reference information collected during the first run.
+In this way, it is possible to compare the performance of realizable algorithms
+with the best possible one. If an operating system achieves a performance of, say,
+only 1% worse than the optimal algorithm, effort spent in looking for a better 
+algorithm will yield at most a 1% improvement.
+To avoid any possible confusion, it should be made clear that this log of page
+references refers only to the one program just measured and then with only one
+specific input. The page replacement algorithm derived from it is thus specific to
+that one program and input data. Although this method is useful for evaluating
+page replacement algorithms, it is of no use in practical systems. Below we will
+study algorithms that are useful on real systems.
+3.4.2 The Not Recently Used Page Replacement Algorithm
+In order to allow the operating system to collect useful page usage statistics,
+most computers with virtual memory have two status bits, R and M, associated
+with each page. R is set whenever the page is referenced (read or written). M is
+set when the page is written to (i.e., modified). The bits are contained in each page
+table entry, as shown in Fig. 3-11. It is important to realize that these bits must be
+updated on every memory reference, so it is essential that they be set by the 
+hardware. Once a bit has been set to 1, it stays 1 until the operating system resets it.
+If the hardware does not have these bits, they can be simulated using the 
+operating system’s page fault and clock interrupt mechanisms. When a process is 
+started up, all of its page table entries are marked as not in memory. As soon as any
+page is referenced, a page fault will occur. The operating system then sets the R bit
+(in its internal tables), changes the page table entry to point to the correct page,
+with mode READ ONLY, and restarts the instruction. If the page is subsequently
+modified, another page fault will occur, allowing the operating system to set the M
+bit and change the page’s mode to READ/WRITE.
+The R and M bits can be used to build a simple paging algorithm as follows.
+When a process is started up, both page bits for all its pages are set to 0 by the
+operating system. Periodically (e.g., on each clock interrupt), the R bit is cleared,
+to distinguish pages that have not been referenced recently from those that have
+been.
+When a page fault occurs, the operating system inspects all the pages and
+divides them into four categories based on the current values of their R and M bits:

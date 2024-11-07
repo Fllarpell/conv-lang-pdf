@@ -1,0 +1,50 @@
+SEC. 9.2
+CONTROLLING ACCESS TO RESOURCES
+625
+Windows similarly allows users to inspect and configure the access control
+lists from its PowerShell using the get-Acl and set-Acl commands. MacOS also
+supports ACLs, but it rolled the commands into the chmod command.
+9.2.3 Capabilities
+The other way of slicing up the matrix of Fig. 9-5 is by rows. When this 
+method is used, associated with each process (or, in general, security domain) is a list of
+objects that may be accessed, along with an indication of which operations are 
+permitted on each, in other words, its domain. This list is called a capability list (or
+C-list) and the individual items on it are called capabilities. This idea has been
+around for half a century but is still widely used (Dennis and Van Horn, 1966;
+Fabry, 1974). A set of three processes and their capability lists is shown in
+Fig. 9-8.
+A
+B
+C
+Process
+Owner
+F1
+F1:R
+F2:R
+F1:R
+F2:RW
+F3:RWX
+F2:R
+F3:RX
+F2
+F3
+User
+space
+Kernel
+space
+C-list
+Figure 9-8. When capabilities are used, each process has a capability list.
+Each capability grants the owner certain rights on a certain object. In Fig. 9-8,
+the process owned by user A can read files F1 and F2, for example. Usually, a
+capability consists of a file (or more generally, an object) identifier and a bitmap
+for the various rights. In a UNIX-like system, the file identifier would probably be
+the i-node number. Capability lists are themselves objects and may be pointed to
+from other capability lists, thus facilitating sharing of subdomains.
+It is fairly obvious that capability lists must be protected from user tampering.
+Three methods of protecting them are known. The first way requires a tagged
+architecture, a hardware design in which each memory word has an extra (or tag)
+bit that tells whether the word contains a capability or not. The tag bit is not used
+by arithmetic, comparison, or similar ordinary instructions, and it can be modified
+only by programs running in kernel mode (i.e., the operating system). 
+Taggedarchitecture machines have been built and can be made to work quite well (Feustal,
+1972). The IBM AS/400 is a popular example.

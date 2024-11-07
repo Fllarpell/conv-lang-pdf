@@ -1,0 +1,44 @@
+SEC. 9.5
+EXPLOITING SOFTWARE
+653
+Exclusive-OR X’’) or ‘‘W XOR X’’). It signifies that memory is either writable or
+executable, but not both. MacOS, Linux, and Windows have similar protection
+schemes. A generic name for this security measure is DEP (Data Execution 
+Prevention). Some hardware does not support the NX bit. In that case, DEP can still
+be made to work but the implementation will be less efficient.
+DEP prevents all of the attacks discussed so far. The attacker can inject as
+much shellcode into the process as much as she wants. Unless she is able to make
+the memory executable, there is no way to run it.
+Code Reuse Attacks
+DEP makes it impossible to execute code in a data region. Stack canaries make
+it harder (but not impossible) to overwrite return addresses and function pointers.
+Unfortunately, this is not the end of the story, because somewhere along the line,
+someone else had an epiphany too. The insight was roughly as follows: ‘‘Why
+inject code, when there is plenty of it in the binary already?’’ In other words, rather
+than introducing new code, the attacker simply constructs the necessary 
+functionality out of the existing functions and instructions in the binaries and libraries. We
+will first look at the simplest of such attacks, return to libc, and then discuss the
+more complex, but very popular, technique of return-oriented programming.
+Suppose that the buffer overflow of Fig. 9-18 has overwritten the return 
+address of the current function, but cannot execute attacker-supplied code on the
+stack. The question is: can it return somewhere else? It turns out it can. Almost all
+C programs are linked with the (usually shared) library libc, which contains key
+functions most C programs need. One of these functions is system, which takes a
+string as argument and passes it to the shell for execution. Thus, using the system
+function, an attacker can execute any program she wants. So, instead of executing
+shellcode, the attacker simply places a string containing the command to execute
+on the stack, and diverts control to the system function via the return address.
+The attack, known as return to libc, has several variants. The system function is
+not the only target that may be interesting to the attacker. For instance, attackers
+may also use the mprotect function to make part of the data segment executable. In
+addition, rather than jumping to the libc function directly, the attack may take a
+level of indirection. On Linux, for instance, the attacker may return to the PLT
+(Procedure Linkage Table) instead. The PLT is a structure to make dynamic 
+linking easier, and contains snippets of code that, when executed, in turn call the
+dynamically linked library functions. Returning to this code then indirectly 
+executes the library function.
+The concept of ROP (Return-Oriented Programming) takes the idea of
+reusing the program’s code to its extreme. Rather than return to (the entry points
+of) library functions, the attacker can return to any instruction in the text segment.
+For instance, she can make the code land in the middle, rather than the beginning,
+of a function. The execution will simply continue at that point, one instruction at a

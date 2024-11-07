@@ -1,0 +1,91 @@
+254
+MEMORY MANAGEMENT 
+CHAP. 3
+o = 400, will this page be removed? What about if o = 1000?
+33. Suppose that the WSClock page replacement algorithm uses a o of two ticks, and the
+system state is the following:
+Pa ge
+Time stamp
+V
+R
+M
+0
+6
+ 
+1
+0
+1
+1
+9
+ 
+1
+1
+0
+2
+9
+ 
+1
+1
+1
+3
+7
+ 
+1
+0
+0
+4
+4
+ 
+0
+0
+0
+where the three flag bits V, R, and M stand for Valid, Referenced, and Modified,
+respectively.
+(a) If a clock interrupt occurs at tick 10, show the contents of the new table entries.
+Explain. (You can omit entries that are unchanged.)
+(b) Suppose that instead of a clock interrupt, a page fault occurs at tick 10 due to a read
+request to page 4. Show the contents of the new table entries. Explain. (You can
+omit entries that are unchanged.)
+34. A student has claimed that ‘‘in the abstract, the basic page replacement algorithms
+(FIFO, LRU, optimal) are identical except for the attribute used for selecting the page
+to be replaced.’’
+(a) What is that attribute for the FIFO algorithm? LRU algorithm? Optimal algorithm?
+(b) Give the generic algorithm for these page replacement algorithms.
+35. How long does it take to load a 64-KB program from a disk whose average seek time is
+5 msec, whose rotation time is 5 msec, and whose tracks hold 1 MB
+(a) for a 2-KB page size?
+(b) for a 4-KB page size?
+The pages are spread randomly around the disk and the number of cylinders is so large
+that the chance of two pages being on the same cylinder is negligible.
+36. A computer has four page frames. The time of loading, time of last access, and the R
+and M bits for each page are as shown below (the times are in clock ticks):
+Pa ge
+Loaded 
+Last ref.
+R
+M
+0
+126 
+280
+1
+0
+1
+230 
+265
+0
+1
+2
+140 
+270
+0
+0
+3
+110 
+285
+1
+1
+(a) Which page will NRU replace?
+(b) Which page will FIFO replace?
+(c) Which page will LRU replace?
+(d) Which page will second chance replace?
+37. Suppose that two processes A and B share a page that is not in memory. If process A

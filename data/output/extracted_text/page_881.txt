@@ -1,0 +1,33 @@
+852
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Recall that in Android 6.0, the user experience for location access shown in the
+previous Fig. 10-75 was a simple ‘‘yes’’ or ‘‘no’’ question, hiding even the 
+difference between coarse and fine grained location access, to create a simple 
+experience. This provided significant new control for users, but as the ability to access
+the user’s location increasingly became a point of concern (both due to increased
+user awareness and increased problematic use by apps), demands for more control
+drove a series of changes from the initial simple runtime permission.
+The first change to location access was invisible to users: in Android 8.0 the
+concept of background vs. foreground location access was introduced. When an
+application is considered to be in the background, it is not able to get location
+updates at a high rate.
+The motivation for this was partly to improve the battery life of Android 
+devices, since applications constantly monitoring location in the background could
+consume significant power, but it also reduced the amount of information about the
+user that these apps could collect. (Applications that really need to closely monitor
+location while in the background can do this through the use of foreground 
+services, which are discussed later in Background Execution.)
+Android 10 took a more privacy-centric approach to this problem, making the
+difference between background and foreground location access an explicit part of
+the user’s experience. This was presented to the user in the form of a new runtime
+prompt, shown in Fig. 10-78, where the user could select the kind of access the app
+should have.
+Figure 10-78. Android 10’s background vs. foreground location prompt.
+Driven by growing demands for more privacy, this new permission prompt is
+the first time the platform used the concept of background vs. foreground 
+execution of apps in its core user experience. Note the careful wording here: foreground
+is described as ‘‘only while the app is in use’’ and background is ‘‘all the time,’’
+reflecting the actual underlying complexity of these concepts. For example, if you
+are currently using a mapping application to do navigation but are not actively in
+the app on the screen, is it considered foreground or background? From Android’s

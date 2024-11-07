@@ -1,0 +1,46 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+915
+namespace and file-system volumes. The configuration manager uses an object of
+type key to link in the registry hives. The object manager itself has objects it uses
+to manage the NT namespace and implement objects using a common facility.
+These are directory, symbolic link, and object-type objects.
+The uniformity provided by the object manager has various facets. All these
+objects use the same mechanism for how they are created, destroyed, and 
+accounted for in the quota system. They can all be accessed from user-mode processes
+using handles. There is a unified convention for managing pointer references to
+objects from within the kernel. Objects can be given names in the NT namespace
+(which is managed by the object manager). Dispatcher objects (objects that begin
+with the common data structure for signaling events) can use common 
+synchronization and notification interfaces, like WaitForMultipleObjects. There is the 
+common security system with ACLs enforced on objects opened by name, and access
+checks on each use of a handle. There are even facilities to help kernel-mode
+developers debug problems by tracing the use of objects.
+A key to understanding objects is to realize that an (executive) object is just a
+data structure in the virtual memory accessible to kernel mode. These data 
+structures are commonly used to represent more abstract concepts. As examples, 
+executive file objects are created for each instance of a file-system file that has been
+opened. Process objects are created to represent each process. Communication
+objects (e.g., semaphores) are another example.
+A consequence of the fact that objects are just kernel data structures is that
+when the system is rebooted (or crashes) all objects are lost. When the system
+boots, there are no objects present at all, not even the object-type descriptors. All
+object types, and the objects themselves, have to be created dynamically by other
+components of the executive layer by calling the interfaces provided by the object
+manager. When objects are created and a name is specified, they can later be 
+referenced through the NT namespace. So building up the objects as the system boots
+also builds the NT namespace.
+Objects have a structure, as shown in Fig. 11-15. Each object contains a 
+header with certain information common to all objects of all types. The fields in this
+header include the object’s name, the object directory in which it lives in the NT
+namespace, and a pointer to a security descriptor representing the ACL for the
+object.
+The memory allocated for objects comes from one of two heaps (or pools) of
+memory maintained by the executive layer. There are (malloc-like) utility functions
+in the executive that allow kernel-mode components to allocate either pageable or
+non-pageable kernel memory. Non-pageable memory is required for any data 
+structure or kernel-mode object that might need to be accessed from a CPU interrupt
+request level of 2 or more. This includes ISRs and DPCs (but not APCs) and the
+thread scheduler itself. The page-fault handler and the paging path through the file
+system and storage drivers also require their data structures to be allocated from
+non-pageable kernel memory to avoid recursion.

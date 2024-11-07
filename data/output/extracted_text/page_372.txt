@@ -1,0 +1,47 @@
+SEC. 5.1
+PRINCIPLES OF I/O HARDWARE
+343
+the loop given above, a fourth instruction has to be added, slightly slowing down
+the responsiveness of detecting an idle device.
+In computer design, practically everything involves trade-offs, and that is the
+case here, too. Memory-mapped I/O also has its disadvantages. First, most 
+computers nowadays have some form of caching of memory words. Caching a device
+control register would be disastrous. Consider the assembly-code loop given above
+in the presence of caching. The first reference to PORT 4 would cause it to be
+cached. Subsequent references would just take the value from the cache and not
+ev en ask the device. Then when the device finally became ready, the software
+would have no way of finding out. Instead, the loop would go on forever.
+To prevent this situation with memory-mapped I/O, the hardware has to be able
+to selectively disable caching, for example, on a per-page basis. This feature adds
+extra complexity to both the hardware and the operating system, which has to 
+manage the selective caching.
+Second, if there is only one address space, then all memory modules and all
+I/O devices must examine all memory references to see which ones to respond to.
+If the computer has a single bus, as in Fig. 5-3(a), having everyone look at every
+address is straightforward.
+CPU
+Memory
+I/O
+Bus
+All addresses (memory!
+and I/O) go here
+CPU
+Memory
+I/O
+CPU reads and writes of memory!
+go over this high-bandwidth bus
+This memory port is!
+to allow I/O devices!
+access to memory
+(a)
+(b)
+Figure 5-3. (a) A single-bus architecture. (b) A dual-bus memory architecture.
+However, the trend in modern personal computers is to have a dedicated 
+highspeed memory bus, as shown in Fig. 5-3(b). The bus is tailored to optimize 
+memory performance, with no compromises for the sake of slow I/O devices. x86 
+systems can have multiple buses (memory, PCIe, SCSI, and USB), as shown in
+Fig. 1-12.
+The trouble with having a separate memory bus on memory-mapped machines
+is that the I/O devices have no way of seeing memory addresses as they go by on
+the memory bus, so they hav e no way of responding to them. Again, special 
+measures have to be taken to make memory-mapped I/O work on a system with multiple

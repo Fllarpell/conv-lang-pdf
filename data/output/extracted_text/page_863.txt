@@ -1,0 +1,58 @@
+834
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+should kill first. The activity manager is responsible for setting each process’s
+importance appropriately based on the state of that process, by classifying them
+into major categories of use. Figure 10-63 shows the main categories, with the
+most important category first. The last column shows a typical importance value
+that is assigned to processes of this type.
+Categor y
+Description 
+Importance
+SYSTEM 
+The system and daemon processes
+<900
+PERSISTENT 
+Always-r unning application processes
+<800
+FOREGROUND 
+Currently interacting with user
+0
+VISIBLE 
+Visible to user
+100–199
+PERCEPTIBLE 
+Something the user is aware of
+200
+SERVICE 
+Running background services 
+500
+HOME 
+The home/launcher process (when not in foreground) 
+600
+CACHED 
+Processes not in use
+950–999
+Figure 10-63. Process importance categories.
+Now, when RAM is getting low, the system has configured the processes so
+that the out-of-memory killer will first kill cached processes to try to reclaim
+enough needed RAM, followed by home, service, and on up. Within a specific
+importance level, it will kill processes with a larger RAM footprint before smaller
+ones.
+We’v e now seen how Android decides when to start processes and how it 
+categorizes those processes in importance. Now we need to decide when to have 
+processes exit, right? Or do we really need to do anything more here? The answer is,
+we do not. On Android, application processes never cleanly exit. The system just
+leaves unneeded processes around, relying on the kernel to reap them as needed.
+Cached processes in many ways take the place of the swap space that Android
+lacks. As RAM is needed elsewhere, cached processes can be killed and their
+RAM quickly reclaimed. If an application later needs to run again, a new process
+can be created, restoring any previous state needed to return it to how the user last
+left it. Behind the scenes, the operating system is launching, killing, and 
+relaunching processes as needed so the important foreground operations remain running
+and cached processes are kept around as long as their RAM would not be better
+used elsewhere.
+Process Dependencies
+We now hav e a good overview of how individual Android processes are 
+managed. There is a further complication to this, however: dependencies between
+processes. Processes caninteract with other processes and that has to be managed.

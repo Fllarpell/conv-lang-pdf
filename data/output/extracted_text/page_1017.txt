@@ -1,0 +1,37 @@
+988
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+User process
+User
+program
+Win32
+Rest of windows
+Hardware abstraction layer
+Controller
+Controller
+Controller
+Filter
+Function
+Bus
+Function
+Bus
+Monolithic
+Driver
+stack
+Figure 11-43. Windows allows drivers to be stacked to work with a specific 
+instance of a device. The stacking is represented by device objects.
+drivers. Because kernel-mode device drivers all share the same address space with
+the kernel and executive layers, errors in the drivers can corrupt system data 
+structures, or worse, create security vulnerabilities. Some of these bugs are due to the
+astonishingly large numbers of device drivers that exist for Windows, or to the
+development of drivers by less-experienced system programmers. The bugs are
+also due to the enormous amount of detail involved in writing a correct driver for
+Windows.
+The I/O model is powerful and flexible, but all I/O is fundamentally 
+asynchronous, so race conditions can abound. Windows 2000 added the plug-and-play and
+device power management facilities from the Win9x systems to the NT-based 
+Windows for the first time. This put a large number of requirements on drivers to deal
+correctly with devices coming and going while I/O packets are in the middle of
+being processed. Users of PCs frequently dock/undock devices, close the lid and
+toss notebooks into briefcases, and generally do not worry at all about whether the
+little green activity light happens to still be on. Writing device drivers that work

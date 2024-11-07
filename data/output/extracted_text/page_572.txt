@@ -1,0 +1,56 @@
+SEC. 8.1
+MULTIPROCESSORS
+543
+problem is to eliminate the buffer caches. Doing so is not hard, but it hurts 
+performance considerably so operating systems always have a buffer cache.
+For these reasons, this model is rarely used in production systems any more,
+although it was used in the early days of multiprocessors, when the goal was to
+port existing operating systems to some new multiprocessor as fast as possible. In
+research, the model is making a comeback, but with all sorts of twists. There is
+something to be said for keeping the operating systems completely separate. If all
+of the state for each processor is kept local to that processor, there is little to no
+sharing to lead to consistency or locking problems. Conversely, if multiple 
+processors have to access and modify the same process table, the locking becomes
+complicated quickly (and crucial for performance). We will say more about this
+when we discuss the symmetric multiprocessor model below.
+Leader-Follower Multiprocessors
+A second model is shown in Fig. 8-8. Here, one copy of the operating system
+and its tables is present on CPU 1 and not on any of the others. All system calls are
+redirected to CPU 1 for processing there. CPU 1 may also run user processes if
+there is CPU time left over. This model is called leader-follower since CPU 1 is
+the leader and all the others are subordinate followers.
+runs
+OS
+CPU 1
+runs user
+processes
+CPU 2
+runs user
+processes
+CPU 3
+User
+processes
+OS
+CPU 4
+Memory
+I/O
+Bus
+runs user
+processes
+Leader
+Follower
+Follower
+Follower
+Figure 8-8. A leader-follower multiprocessor model.
+The leader-follower model solves most of the problems of the first model.
+There is a single data structure (e.g., one list or a set of prioritized lists) that keeps
+track of ready processes. When a CPU goes idle, it asks the operating system on
+CPU 1 for a process to run and is assigned one. Thus, it can never happen that one
+CPU is idle while another is overloaded. Similarly, pages can be allocated among
+all the processes dynamically and there is only one buffer cache, so inconsistencies
+never occur.
+The problem with this model is that with many CPUs, the leader will become a
+bottleneck. After all, it must handle all system calls from all CPUs. If, say, 10% of
+all time is spent handling system calls, then 10 CPUs will pretty much saturate the
+leader, and with 20 CPUs it will be completely overloaded. Thus this model is 
+simple and workable for small multiprocessors, but for large ones it fails.

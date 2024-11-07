@@ -1,0 +1,43 @@
+SEC. 13.2
+ALPHABETICAL BIBLIOGRAPHY
+1109
+LEVINE, G.N.: ‘‘Defining Deadlock,’’ ACM SIGOPS Operating Syst. Rev., Vol. 37, pp.
+54–64, Jan. 2003.
+LEVINE, J.G., GRIZZARD, J.B., and OWEN, H.L.: ‘‘Detecting and Categorizing 
+KernelLevel Rootkits to Aid Future Detection,’’ IEEE Security and Privacy, Vol. 4, pp.
+24–32, Jan./Feb. 2006.
+LEVY, A., CAMPBELL, B., GHENA, B., GIFFIN, D.B., PANNUTO, P., DUTTA, P., and
+LEVIS, P..: ‘‘Multiprogramming a 64kB Computer Safely and Efficiently,’’ Proc. 26th
+Symp. on Operating Syst. Prin., ACM, pp. 234–251, 2017.
+LI, B., RUAN, Z., XIAO, W., LU, Y., XIONG, Y., PUTNAM, A., CHEN, E., and ZHANG, L.:
+‘‘KV-Direct: High-Performance In-Memory Key-Value Store with Programmable
+NIC,’’ Proc. 26th Symp. on Operating Syst. Prin., ACM, pp. 137–152, 2017.
+LI, D., JIN, H., LIAO, X., ZHANG, Y., and ZHOU, B.: ‘‘Improving Disk I/O Performance in a
+Virtualized System,’’ J. Computer and Syst. Sci., Vol. 79, pp. 187–200, March 2013a.
+LI, G., LU, S., MUSUVATHI, M., NATH, S., and PADHYE, R.: ‘‘Efficient Scalable 
+ThreadSafety-Violation Detection: Finding Thousands of Concurrency Bugs During Testing,’’
+Proc. 27th Symp. on Operating Syst. Prin., ACM, pp. 162–180, 2019.
+LI, K., and HUDAK, P.: ‘‘Memory Coherence in Shared Virtual Memory Systems,’’ ACM
+Tr ans. Computer Syst., Vol. 7, pp. 321–359, Nov. 1989.
+LI, K., KUMPF, R., HORTON, P., and ANDERSON, T.: ‘‘ A Quantitative Analysis of Disk
+Drive Power Management in Portable Computers,’’ Proc. USENIX Winter Conf.,
+USENIX, pp. 279–291, 1994.
+LI, K.: Shared Virtual Memory on Loosely Coupled Multiprocessors, Ph.D. Thesis, Yale
+University, 1986.
+LI, S., WANG, X., ZHANG, X., KONTORINIS, V., KODAKARA, S., LO, D., and 
+RANGANATHAN, P.: ‘‘Thunderbolt: Throughput-Optimized, Quality-of-Service-Aware
+Power Capping at Scale,’’ Proc. 14th USENIX Symp. on Operating Syst. Design and
+Implementation, USENIX, pp. 1241–1255, 2020.
+LIAO, X., LU, Y., XU, E., and SHU, J.: ‘‘Max: A Multicore-Accelerated File System for
+Flash Storage,’’ USENIX Ann. Tech. Conf., USENIX, pp. 877–891, 2021.
+LIEDTKE, J.: ‘‘Improving IPC by Kernel Design,’’ Proc. 14th Symp. on Operating Syst.
+Prin., ACM, pp. 175–188, 1993.
+LIEDTKE, J.: ‘‘On Micro-Kernel Construction,’’ Proc. 15th Symp. on Operating Syst.
+Prin., ACM, pp. 237–250, 1995.
+LIEDTKE, J.: ‘‘To ward Real Microkernels,’’ Commun. ACM, Vol. 39, pp. 70–77, Sept.
+1996.
+LIN, Z., CHEN, Y., MU, D., YU, C., WU, Y., LI, K., and XING, X.: ‘‘GREBE: Unveiling
+Exploitation Potential for Linux Kernel Bugs,’’ Proc. 43rd Symp. on Security and 
+Privacy, IEEE, 2022.
+LION, D., CHIU, A., and Yuan, D.: ‘‘End-to-End Memory Management in Elastic System
+Software Stacks,’’ Proc. 16th EuroSys Conf., ACM, 2021.

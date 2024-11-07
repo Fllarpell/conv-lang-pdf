@@ -1,0 +1,42 @@
+120
+PROCESSES AND THREADS
+CHAP. 2
+4!
+5!
+6!
+7!
+abc!
+prog.c!
+prog.n
+Process A
+out = 4
+in = 7
+Process B
+Spooler!
+directory
+Figure 2-21. Tw o processes want to access shared memory at the same time.
+In jurisdictions where Murphy’s law† is applicable, the following could easily
+happen. Process A reads in and stores the value, 7, in a local variable called
+next free slot. Just then a clock interrupt occurs and the CPU decides that 
+process A has run long enough, so it switches to process B. Process B also reads in and
+also gets a 7. It, too, stores it in its local variable next free slot. At this instant,
+both processes think that the next available slot is 7.
+Process B now continues to run. It stores the name of its file in slot 7 and
+updates in to be an 8. Then it goes off and does other things.
+Eventually, process A runs again, starting from the place it left off. It looks at
+next free slot, finds a 7 there, and writes its file name in slot 7, erasing the name
+that process B just put there. Then it computes next free slot + 1, which is 8, and
+sets in to 8. The spooler directory is now internally consistent, so the printer 
+daemon will not notice anything wrong, but process B will never receive any output.
+User B will hang around the printer for years, wistfully hoping for output that
+never comes. Situations like this, where two or more processes are reading or 
+writing some shared data and the final result depends on who runs precisely when, are
+called race conditions. Debugging programs containing race conditions is no fun
+at all. The results of most test runs are fine, but once in a blue moon something
+weird and unexplained happens. Unfortunately, with increasing parallelism due to
+increasing numbers of cores, race conditions are becoming more common.
+2.4.2 Critical Regions
+How do we avoid race conditions? The key to preventing trouble here and in
+many other situations involving shared memory, shared files, and shared everything
+else is to find some way to prohibit more than one process from reading and
+† If something can go wrong, it will.

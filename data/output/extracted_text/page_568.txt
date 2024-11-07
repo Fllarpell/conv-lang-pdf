@@ -1,0 +1,46 @@
+SEC. 8.1
+MULTIPROCESSORS
+539
+While there is no hard threshold beyond which a multicore becomes a manycore,
+an easy distinction is that you probably have a manycore if you no longer care
+about losing one or two cores.
+Dual-processor versions of AMD’s EPYC Milan CPU already offer 128 cores
+in a single chip. Other vendors have also crossed the 100-core barrier with 
+hundreds of cores. A thousand general-purpose cores may be on their way. It is not
+easy to imagine what to do with a thousand cores, much less how to program them
+outside of niche applications. For example, a video-editing application working on
+a 60 frames/sec 2-hour movie might have to apply a complex Photoshop filter to all
+432,000 frames. Doing this in parallel on 1024 cores might make the rendering
+process go much faster.
+Another problem with really large numbers of cores is that the machinery
+needed to keep their caches coherent becomes very complicated and very 
+expensive. Many engineers worry that cache coherence may not scale to many hundreds
+of cores. Some even advocate that we should give it up altogether. They fear that
+the cost of coherence protocols in hardware will be so high that all those shiny new
+cores will not help performance much because the processor is too busy keeping
+the caches in a consistent state. Worse, it would need to spend way too much 
+memory on the (fast) directory to do so. This is known as the coherency wall.
+Consider, for instance, our directory-based cache-coherency solution discussed
+above. If each directory entry contains a bit vector to indicate which cores contain
+a particular cache line, the directory entry for a CPU with 1024 cores will be at
+least 128 bytes long. Since cache lines themselves are rarely larger than 128 bytes,
+this leads to the awkward situation that the directory entry is larger than the 
+cacheline it tracks. Probably not what we want.
+Some engineers argue that the only programming model that has proven to
+scale to very large numbers of processors is that which employs message passing
+and distributed memory—and that is what we should expect in future manycore
+chips also. On the other hand, other processors still provide consistency even at
+large core counts. Hybrid models are also possible. For instance, a 1024-core chip
+may be partitioned in 64 islands with 16 cache-coherent cores each, while 
+abandoning cache coherence between the islands.
+Thousands of cores are not even that special any more. The most common
+manycores today, graphics processing units, are found in just about any computer
+system that is not embedded and has a monitor. A GPU is a processor with 
+dedicated memory and, literally, thousands of itty-bitty cores. Compared to 
+general-purpose processors, GPUs spend more of their transistor budget on the circuits
+that perform calculations and less on caches and control logic. They are very good
+for many small computations done in parallel, like rendering polygons in graphics
+applications. They are not so good at serial tasks. They are also very difficult to
+program and debug. While GPUs can be useful for operating systems (e.g., 
+encryption or processing of network traffic), it is not likely that much of the operating
+system itself will run on the GPUs.

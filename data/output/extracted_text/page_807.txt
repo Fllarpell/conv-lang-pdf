@@ -1,0 +1,57 @@
+778
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+19
+(a)
+42
+F
+8
+F 10
+88
+D
+6
+bigdir
+colossal
+voluminous
+Unused
+19
+(b)
+F
+8
+88
+D
+6
+bigdir
+colossal
+Unused
+Unused
+I-node number
+Entry size
+Type
+File name length
+Figure 10-32. (a) A Linux directory with three files. (b) The same directory
+after the file voluminous has been removed.
+occurs, the costly linear search is avoided. A dentry object is entered in the dentry
+cache for each of the path components, and, through its i-node, the directory is
+searched for the subsequent path element entry, until the actual file i-node is
+reached.
+For instance, to look up a file specified with an absolute path name, such as
+/usr/ast/file, the following steps are required. First, the system locates the root
+directory, which generally uses i-node 2, especially when i-node 1 is reserved for
+bad-block handling. It places an entry in the dentry cache for future lookups of the
+root directory. Then it looks up the string ‘‘usr’’ in the root directory, to get the 
+inode number of the /usr directory, which is also entered in the dentry cache. This 
+inode is then fetched, and the disk blocks are extracted from it, so the /usr directory
+can be read and searched for the string ‘‘ast’’. Once this entry is found, the i-node
+number for the /usr/ast directory can be taken from it. Armed with the i-node 
+number of the /usr/ast directory, this i-node can be read and the directory blocks 
+located. Finally, ‘‘file’’ is looked up and its i-node number found. Thus, the use of a 
+relative path name is not only more convenient for the user, but it also saves a 
+substantial amount of work for the system.
+If the file is present, the system extracts the i-node number and uses it as an
+index into the i-node table (on disk) to locate the corresponding i-node and bring it
+into memory. The i-node is put in the i-node table, a kernel data structure that
+holds all the i-nodes for currently open files and directories. The format of the 
+inode entries, as a bare minimum, must contain all the fields returned by the stat
+system call so as to make stat work (see Fig. 10-28). In Fig. 10-33 we show some
+of the fields included in the i-node structure supported by the Linux file-system

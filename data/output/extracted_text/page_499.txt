@@ -1,0 +1,43 @@
+470
+DEADLOCKS 
+CHAP. 6
+resources that we discussed in this chapter. Suppose two hosts both want to 
+perform an RDMA transfer and both have to use buffers on intermediate nodes N1 and
+N2. If one of the hosts reserves the last buffer on N1 and the other the last buffer on
+N2, neither can make progress. By ensuring that the packets from different flows
+end up in different buffers, Hu et al. (2017) show that deadlocks are not possible.
+Another research direction is to try and detect deadlocks. For instance, Pyla
+and Varadarajan (2012) present a deadlock detection system that associates 
+memory updates with one or more locks guarding the updates and does not make the
+updates globally visible until all locks that protect the updates are released. All
+memory updates in a critical region are then performed atomically. By checking at
+the acquisition of the locks, it is possible to detect deadlocks early and start the
+recovery procedure . Recovery from a deadlock consists simply of picking one of
+the locks and discarding all pending memory updates associated with it. The work
+by Cai and Chan (2012) presents a new dynamic deadlock detection scheme that
+iteratively prunes lock dependencies that have no incoming or outgoing edges.
+Finally, there is a huge amount of theoretical work on distributed deadlock
+detection. However, we will not consider it here because (1) it is outside the scope
+of this book and (2) none of it is even remotely practical in real systems. Its main
+function seems to be keeping otherwise unemployed graph theorists off the streets.
+6.9 SUMMARY
+Deadlock is a potential problem in any operating system. It occurs when all
+the members of a set of processes are blocked waiting for an event that only other
+members of the same set can cause. This situation causes all the processes to wait
+forever. Commonly the event that the processes are waiting for is the release of
+some resource held by another member of the set. Another situation in which
+deadlock is possible is when a set of communicating processes are all waiting for a
+message and the communication channel is empty and no timeouts are pending.
+Resource deadlock can be avoided by keeping track of which states are safe
+and which are unsafe. A safe state is one in which there exists a sequence of
+ev ents that guarantee that all processes can finish. An unsafe state has no such
+guarantee. The banker’s algorithm avoids deadlock by not granting a request if
+that request will put the system in an unsafe state.
+Resource deadlock can be structurally prevented by building the system in
+such a way that it can never occur by design. For example, by allowing a process
+to hold only one resource at any instant, the circular wait condition required for
+deadlock is broken. Resource deadlock can also be prevented by numbering all the
+resources and making processes request them in strictly increasing order.
+Resource deadlock is not the only kind of deadlock. Communication deadlock
+is also a potential problem in some systems although it can often be handled by
+setting appropriate timeouts.

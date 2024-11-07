@@ -1,0 +1,41 @@
+SEC. 12.3
+IMPLEMENTATION
+1057
+based operating system turned an unreliable 3.5-GHz system into a reliable
+2.5-GHz system, probably few users would complain. Or even notice. After all,
+most of them were quite happy only a few years ago when they got their previous
+computer at the then-stupendous speed of 1 GHz. Also, it is not clear whether the
+cost of interprocess communication is still as much of an issue if cores are no 
+longer a scarce resource. If each device driver and each component of the operating
+system has its own dedicated core, there is no context switching during 
+interprocess communication. In addition, the caches, branch predictors, and TLBs will be
+all warmed up and ready to run at full speed. Some experimental work on a
+high-performance operating system based on a microkernel was presented by
+Hruby et al. (2013).
+It is noteworthy that while microkernels are not popular on the desktop, they
+are very widely used in cell phones, industrial systems, embedded systems, and
+military systems, where very high reliability is absolutely essential. Also, Apple’s
+MacOS consists of a modified version of FreeBSD running on top of a modified
+version of the Mach microkernel. Finally, MINIX 3 was adopted as the operating
+system of choice for Intel’s Management Engine, as a special subsystem in 
+basically all Intel CPUs since 2008.
+Kernel Threads
+Another issue relevant here no matter which structuring model is chosen is that
+of system threads. It is sometimes convenient to allow kernel threads to exist, 
+separate from any user process. These threads can run in the background, writing dirty
+pages to disk, swapping processes between main memory and disk, and so forth.
+In fact, the kernel itself can be structured entirely of such threads, so that when a
+user does a system call, instead of the user’s thread executing in kernel mode, the
+user’s thread blocks and passes control to a kernel thread that takes over to do the
+work.
+In addition to kernel threads running in the background, most operating 
+systems start up many daemon processes in the background. While these are not part
+of the operating system, they often perform ‘‘system’’ type activities. These might
+include getting and sending email and serving various kinds of requests, such as
+Web pages, for remote users.
+12.3.2 Mechanism vs. Policy
+Another principle that helps architectural coherence, along with keeping things
+small and well structured, is that of separating mechanism from policy. By putting
+the mechanism in the operating system and leaving the policy to user processes,
+the system itself can be left unmodified, even if there is a need to change policy.
+Even if the policy module has to be kept in the kernel, it should be isolated from

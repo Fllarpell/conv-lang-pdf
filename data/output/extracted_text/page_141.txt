@@ -1,0 +1,38 @@
+112
+PROCESSES AND THREADS
+CHAP. 2
+While kernel threads solve some problems, they do not solve all problems. For
+example, we still have to think about what happens when a multithreaded process
+forks. Does the new process have as many threads as the old one did, or does it
+have just one? In many cases, the best choice depends on what the process is 
+planning to do next. If it is going to call exec to start a new program, probably one
+thread is the correct choice, but if it continues to execute, reproducing all the
+threads is probably best.
+Another issue with threads is signals. Remember that signals are sent to 
+processes, not to threads, at least in the classical model. When a signal comes in, which
+thread should handle it? Possibly threads could register their interest in certain 
+signals, so when a signal came in it would be given to the thread that said it wants it.
+On Linux, for instance, a signal may be handled by any thread and the lucky 
+winner is selected by the operating system, but we can simply block the signal on all
+threads except one. If two or more threads register for the same signal, the 
+operating system picks a thread (say, at random) and lets it handle the signal. Anyway,
+these are only some of the problems threads introduce, and there are more. Unless
+the programmer is very careful, it is easy to make mistakes.
+2.2.6 Hybrid Implementations
+Various ways have been investigated to try to combine the advantages of 
+userlevel threads with kernel-level threads. One way is use kernel-level threads and
+then multiplex user-level threads onto some or all of them, as shown in Fig. 2-16.
+When this approach is used, the programmer can determine how many kernel
+threads to use and how many user-level threads to multiplex on each one. This
+model gives the ultimate flexibility.
+Multiple user threads!
+on a kernel thread
+User!
+space
+Kernel!
+space
+Kernel thread
+Kernel
+Figure 2-16. Multiplexing user-level threads onto kernel-level threads.
+With this approach, the kernel is aware of only the kernel-level threads and
+thus schedules those. Some of those threads may have multiple user-level threads

@@ -1,0 +1,48 @@
+INDEX
+* Property, 630
+/proc file system, 782–783
+A
+Absolute path, 767
+Absolute path name, 274
+Abstraction, system design, 1042
+Access control entry, 1021
+Access control list, 621–625, 891
+Access restriction, 685–689
+Access system call, 667, 671, 792
+Access to resources, 618–628
+Access token, Windows security, 1020
+Access violation, Windows, 964
+Accountability, 609
+ACEs (see Access Control Entries)
+ACG (see Arbitrary Code Guard)
+Acknowledged datagram service, 586
+Acknowledgement, 146
+Acknowledgement packet, 585
+ACL (see Access Control List)
+ACM Software System Award, 508
+ACPI (see Advanced Configuration and
+Power Interface)
+AcquireSRWLockShared Win32 call, 939
+Active attack, 616
+Active message, 568
+Activity, Android, 821–825
+Activity manager, Android, 820
+Ada programming language, 7
+Adapter, I/O, 338
+AddAccessAllowedAce Win32 call, 1023
+AddAccessDeniedAce Win32 call, 1023
+Adding a level of indirection, 509
+Adding code adds bugs, 1052
+Address sanitizer, 1026
+Address space, 39, 41–42, 183–192, 184
+Address space layout randomization, 655–656
+Address space layout randomization, Windows, 1028
+Address sanitizer, 657
+Adelson, Len, 634
+Administrator, Windows, 41
+Advanced configuration and power interface, 427, 898
+Advanced LPC, 909
+Adversary, 606, 614
+Affinitized thread, Windows, 930
+Affinity core, 563
+1121

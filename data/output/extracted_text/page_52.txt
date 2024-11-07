@@ -1,0 +1,44 @@
+SEC. 1.3
+COMPUTER HARDWARE REVIEW
+23
+Most CPUs, except very simple ones used in embedded systems, have (at least)
+two modes, kernel mode and user mode, as mentioned earlier. Usually, a bit in the
+PSW controls the mode. When running in kernel mode, the CPU can execute
+ev ery instruction in its instruction set and use every feature of the hardware. On
+desktop, notebook, and server machines, the operating system normally runs in
+kernel mode, giving it access to the complete hardware. On most embedded 
+systems, a small piece runs in kernel mode, with the rest of the operating system 
+running in user mode.
+User programs always run in user mode, which permits only a subset of the
+instructions to be executed and a subset of the features to be accessed. Generally,
+all instructions involving I/O and memory protection are disallowed in user mode.
+Setting the PSW mode bit to enter kernel mode is also forbidden, of course.
+To obtain services from the operating system, a user program must make a 
+system call, which traps into the kernel and invokes the operating system. The trap
+instruction (e.g., syscall on x86-64 processors) switches from user mode to kernel
+mode and starts the operating system. When the operating system is done, it
+returns control to the user program at the instruction following the system call. We
+will explain the details of the system call mechanism later in this chapter. For the
+time being, think of it as a special kind of procedure call that has the additional
+property of switching from user mode to kernel mode. As a note on typography,
+we will use the lower-case Helvetica font to indicate system calls in running text,
+like this: read.
+It is worth noting that computers have traps other than the instruction for
+executing a system call. Most of the other traps are caused by the hardware to warn
+of an exceptional situation such as an attempt to divide by 0 or a floating-point
+underflow. In all cases, the operating system gets control and must decide what to
+do. Sometimes the program must be terminated with an error. Other times the
+error can be ignored (an underflowed number can be set to 0). Finally, when the
+program has announced in advance that it wants to handle certain kinds of 
+conditions, control can be passed back to the program to let it deal with the problem.
+Multithreaded and Multicore Chips
+Moore’s law states that the number of transistors on a chip doubles every 18
+months. This ‘‘law’’ is not some kind of law of physics, like conservation of
+momentum, but is an observation by Intel cofounder Gordon Moore of how fast
+process engineers at the semiconductor companies are able to shrink their 
+transistors. Without wanting to enter the debate about when it will end and whether or not
+the exponential is already slowing down some, we simply observe that Moore’s
+law has held for half a century already and is expected to hold for at least a few
+years more. After that, the number of atoms per transistor will become too small
+and quantum mechanics will start to play a big role, preventing further shrinkage
+of transistor sizes. Outwitting quantum mechanics will be quite a challenge.

@@ -1,0 +1,45 @@
+SEC. 11.10
+VIRTUALIZATION IN WINDOWS
+1005
+belonging to a different partition. Or, it can decide to inject the interrupt into the
+currently running VP for the guest OS to handle. Guest partitions can explicitly
+call the hypervisor—similar to how a user-mode process can make a system call
+into the kernel—using a hypercall, which is a trap to the hypervisor, analogous to
+a system call, which traps to the kernel.
+For memory virtualization, the hypervisor takes advantage of SLAT (Second
+Level Address Translation) support provided by the CPU which essentially adds
+another level of page tables to translate GPAs (Guest Physical Addresses) to
+SPAs (Server Physical Addresses) This is known as EPT (Extended Page
+Tables) on Intel, NPT (Nested Page Tables) on AMD, and stage 2 translation on
+arm64. The hypervisor uses the SLAT to ensure that partitions cannot see each
+other’s or the hypervisor’s memory (unless explicitly desired). The SLAT for the
+root partition is set up in a 1:1 mapping such that root GPAs correspond to SPAs.
+The SLAT also allows the hypervisor to specify access rights (read, write, execute)
+on each translation which override any access rights the guest may have specified
+in it first-level page tables. This is important as we will see later.
+When it comes to scheduling VPs on physical processors, the hypervisor 
+supports three different schedulers:
+1. Classic scheduler: The classic scheduler is the default scheduler used
+by the hypervisor. It schedules all non-idle VPs in round-robin 
+fashion, but it allows adjustments such as setting affinity for VPs to a set
+of processors, reserving a percentage of processor capacity and 
+setting limits and relative weights which are used when deciding which
+VP should run next.
+2. Core scheduler: The core scheduler is relevant on CPUs that 
+implement SMT (Symmetric Multi-Threading). SMT exposes two LPs
+(Logical processors), which share the resources of a single processor
+core. This is done to maximize utilization of processor hardware
+resources, but has two potentially significant downsides (so far).
+First, one SMT thread can impact the performance of its sibling
+because they share hardware resources like caches. Also, one SMT
+thread can use hardware side-channel vulnerabilities to infer data
+accessed by its sibling. For these reasons, it is not a great idea, from a
+performance and security isolation perspective, to run VPs belonging
+to different partitions on SMT siblings. That’s the problem the core
+scheduler solves; it schedules an entire core, with all of its SMT
+threads to a single partition at a time. Typically, the partition is 
+SMTaw are, so it has two VPs corresponding to the LPs in that core. Azure
+exclusively uses the core scheduler.
+3. Root scheduler: When the root scheduler is enabled, the hypervisor
+itself does not do any VP scheduling. Instead, a virtualization stack
+component running in the root, known as the VID (Virtualization

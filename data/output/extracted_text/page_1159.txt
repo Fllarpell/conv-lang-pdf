@@ -1,0 +1,99 @@
+1130
+INDEX
+File system block size, 302–303
+File system cache, 315–318
+File system calls, Linux, 770–774
+File system dump, 308–312
+File system performance, caching, 315–318
+compression, 321
+deduplication, 322
+disk defragmentation, 320–321
+read ahead, 318–319
+reducing arm motion, 319–320
+File system read ahead, 318–319
+File system security, 322–323
+File system structure, Windows, 991–994
+File type, 264–266
+File-based middleware, 590–594
+File-sharing semantics, 593–594
+File-system backup, 307–312
+File-system consistency, 312–315
+File-system filter driver, 910
+File-system implementation, 278–301
+File-system layout, 278–280
+File-system management and optimization, 301–323
+File-system performance, 315–320
+Filter, Linux, 717
+Filter driver, Windows, 910, 987
+Fine-grained randomization, 682–683
+Finite-state machine, 116
+Firmware, 911
+First fit memory management algorithm, 190
+First-come, first-served disk scheduling, 160, 376
+First-in, first-out page replacement algorithm, 210
+Flag, 716
+Flash memory, 27
+Flash translation layer, 295
+Flash-based file system, 293–298
+Flashing boot ROM, 911
+Floppy disk, 370–371
+Flush & reload attack, 673
+FlushFileBuffer Win32 call, 979
+Fly-by mode, 346
+Folder, 42, 272
+Font, 416–417
+Fork system call, 54, 544, 724, 726, 727, 731, 733,
+734, 735, 753, 808, 831, 832, 930, 935, 936,
+1052, 1059, 1069
+Formal models of secure systems, 628–637
+Formal security model, 628–637
+Format-string attack, 658–661
+Formatting, disk, 372–375
+FORTRAN, 9–10, 1051–1052
+Forward patch, Windows, 1033
+Fragmentation
+external, 243
+internal, 226
+Free -block management, 303–306
+Free memory, 188–192
+FreeBSD, 1, 4, 18, 37, 703, 710
+Fsck program, 312
+Fstat system call, 773
+Fsync system call, 757
+FTL (see Flash Translation Layer)
+Full virtualization, 484
+Function as a service, 502
+Fundamentals of security, 607–618
+Futex, 135–136
+Fuzzer, 615, 1026
+G
+Gadget
+ROP, 654
+Windows, 1028
+Gang scheduling, 554–555
+Garbage collection, 295
+Gassee, Jean-Louis, 408
+Gates, Bill, 16
+GCS (see Guest Compute Service)
+GDI (see Graphics Device Interface)
+General purpose graphics processing unit, 540
+Generic right, 627
+Get-acl system call, 625
+Get-attributes system call, 269
+Getpid system call, 725
+GetTokenInformation Win32 call, 1020
+Getty, Linux, 742
+Ghosting, 418
+GID (see Group IDentification)
+GitHub, 882
+Global page replacement, 221–224
+Globally unique ID, 279
+Gnome, 18
+GNU public license, 712
+Goals of input/output software, 352–353
+Goldberg, Robert, 480
+Google and Android, 794
+Google play service, 798
+GPA (see s Guest Physical Addresses)
+GPGPU (see General Purpose Graphics Processing Unit)
+GPL (see GNU Public License)

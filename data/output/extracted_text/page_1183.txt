@@ -1,0 +1,102 @@
+1154
+INDEX
+Windows commit limit, 958
+Windows compare&swap, 897
+Windows condition variable, 939
+Windows configuration manager, 908
+Windows connected standby, 1002
+Windows container, 1011
+Windows containing security damage, 1031–1032
+Windows context record, 944
+Windows control flow guard, 1028
+Windows copy-on-write, 960
+Windows credential guard, 1025
+Windows critical section, 939
+Windows current priority, 945
+Windows data execution prevention, 1027
+Windows debugporthandle, 885
+Windows defender, 1035
+Windows defense-in-depth, 1031
+Windows deferred procedure call, 901–903
+Windows device driver, 910
+Windows device stack, 910, 987–989
+Windows direct map, 1009
+Windows dispatcher object, 904–905
+Windows driver foundation, 985
+Windows driver kit, 984
+Windows driver model, 984
+Windows dynamic disk, 980
+Windows dynamic fair-share scheduling, 950
+Windows elevation, 1024
+Windows event, 938
+Windows exceptporthandle, 885
+Windows executive, 894
+Windows executive layer, 905–909
+Windows exploitations, 1027–1031
+Windows extended flow guard, 1029
+Windows fastmutex, 940
+Windows fiber, 931
+Windows file compression, 998–999
+Windows file mapping, 889
+Windows file system, 989–1000
+Windows file system structure, 991–994
+Windows filter driver, 910, 987
+Windows forward patch, 1033
+Windows gadget, 1028
+Windows group policy, windows security, 1020
+Windows guarded stack, 1027
+Windows handle, windows object, 917–919
+Windows hard fault, 964
+Windows hardware-enforced stack protection, 1030
+Windows hello, 1020
+Windows hiberboot, 1001
+Windows hibernation, 1001
+Windows host container, 1013
+Windows hotpatch address table, 1033
+Windows hotpatching, 1033
+Windows huge page, 956
+Windows hyperguard, 1031
+Windows hypervisor, 1004
+Windows hypervisor-enforced code integrity, 1030
+Windows input/output, 979–989
+Windows input/output request packet, 986–987
+Windows impersonation, 1021
+Windows insider program, 879
+Windows integrity level, 1022
+Windows interprocess communication, 937
+Windows interrupt service routine, 901
+Windows invalid page, 958
+Windows jitting, 952
+Windows job, 931
+Windows job object, 1011
+Windows kernel, 894
+Windows kernel layer, 900–901
+Windows kernel-mode driver framework, 985
+Windows large page, 956
+Windows layers, 881
+Windows least-recently used algorithm, , 967
+Windows limiting toctou, windows1032
+Windows mailslot, 937
+Windows mapped page writer thread, 971
+Windows master file table, 991, 994–998
+Windows Me, 873
+Windows memory compression, 973–976
+Windows memory descriptor list, 986
+Windows memory management, 955–979
+Windows memory manager, 907
+Windows memory partition, 976
+Windows memory pressure, 969
+Windows minimal process, 943
+Windows modified page writer thread, 969, 971
+Windows mutant, 905
+Windows namespace redirection, 952
+Windows namespace virtualization, 1011
+Windows new technology, 874
+Windows notification facility, 909
+Windows notification facility, 909
+Windows notification service, 1002
+Windows NT, 17
+Windows NT file system, 989–1000
+Windows object handle, 917–919
+Windows object manager implementation, 914–926
+Windows object namespace, 919–922

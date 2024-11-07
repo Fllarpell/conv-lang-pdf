@@ -1,0 +1,47 @@
+SEC. 10.6
+THE LINUX FILE SYSTEM
+767
+character). Thus prog.c is typically a C program, prog.py is typically a Python 
+program, and prog.o is usually an object file (compiler output). These conventions are
+not enforced by the operating system but some compilers and other programs
+expect them. Extensions may be of any length, and files may have multiple 
+extensions, as in prog.java.gz, which is probably a gzip compressed Java program.
+Files can be grouped together in directories for convenience. Directories are
+stored as files and to a large extent can be treated like files. Directories can contain
+subdirectories, leading to a hierarchical file system. The root directory is called /
+and always contains several subdirectories. The / character is also used to separate
+directory names, so that the name /usr/ast/x denotes the file x located in the 
+directory ast, which itself is in the /usr directory. Some of the major directories near the
+top of the tree are shown in Fig. 10-23.
+Director y
+Contents
+bin 
+Binary (executable) programs
+dev
+Special files for I/O devices
+etc 
+Miscellaneous system files
+lib 
+Librar ies
+usr 
+User director ies
+Figure 10-23. Some important directories found in most Linux systems.
+There are two ways to specify file names in Linux, both to the shell and when
+opening a file from inside a program. The first way is by means of an absolute
+path, which means telling how to get to the file starting at the root directory. An
+example of an absolute path is /usr/ast/books/mos5/chap-10. This tells the system
+to look in the root directory for a directory called usr, then look there for another
+directory, ast. In turn, this directory contains a directory books, which contains the
+directory mos5, which contains the file chap-10.
+Absolute path names are often long and inconvenient. For this reason, Linux
+allows users and processes to designate the directory in which they are currently
+working as the working directory. Path names can also be specified relative to
+the working directory. A path name specified relative to the working directory is a
+relative path. For example, if /usr/ast/books/mos5 is the working directory, then
+the shell command
+cp chap-10 backup-10
+has exactly the same effect as the longer command
+cp /usr/ast/books/mos5/chap-10 /usr/ast/books/mos5/backup-10
+It frequently occurs that a user needs to refer to a file that belongs to another
+user, or at least is located elsewhere in the file tree. For example, if two users are
+sharing a file, it will be located in a directory belonging to one of them, so the

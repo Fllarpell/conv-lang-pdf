@@ -1,0 +1,60 @@
+SEC. 5.1
+PRINCIPLES OF I/O HARDWARE
+339
+Device 
+Data rate
+Ke yboard 
+10 bytes/sec
+Mouse 
+100 bytes/sec
+56K modem
+7 KB/sec
+Bluetooth 5 BLE
+256 KB/sec
+Scanner at 300 dpi
+1 MB/sec
+Digital video recorder
+3.5 MB/sec
+802.11n Wireless
+37.5 MB/sec
+USB 2.0
+60 MB/sec
+16x Blu-ray disc 
+72 MB/sec
+Gigabit Ethernet 
+125 MB/sec
+SATA 3 disk drive
+600 MB/sec
+USB 3.0
+625 MB/sec
+Single-lane PCIe 3.0 bus 
+985 MB/sec
+802.11ax Wireless
+1.25 GB/sec
+PCIe Gen 3.0 NVMe M.2 SSD (reading)
+3.5 GB/sec
+USB 4.0
+5 GB/sec
+PCI Express 6.0
+126 GB/sec
+Figure 5-1. Some typical device, network, and bus data rates.
+personal computers, it often takes the form of a chip on the motherboard or a
+printed circuit card that can be inserted into a (PCIe) expansion slot. The 
+mechanical component is the device itself. This arrangement is shown in Fig. 1-6.
+The controller card usually has a connector on it, into which a cable leading to
+the device itself can be plugged. Many controllers can handle two, four, eight, or
+ev en more identical devices. If the interface between the controller and device is a
+standard interface, either an official ANSI, IEEE, or ISO standard or a de facto
+one, then companies can make controllers or devices that fit that interface. Many
+companies, for example, make disk drives that match the SATA, SCSI, USB, or
+Thunderbolt, interfaces.
+The interface between the controller and the device is often a very low-level
+one. A disk, for example, might have 3,000,000 tracks, each formatted with 
+between 200 and 500 sectors of 4,096 bytes each. What actually comes off the drive,
+however, is a serial bit stream, starting with a preamble, then followed by the
+8 × 4, 096 = 32, 768 bits in a sector, and finally a checksum, or ECC 
+(Error-Correcting Code). The preamble is written when the disk is formatted and contains
+the cylinder and sector number, the sector size, and similar data, as well as 
+synchronization information.
+The controller’s job is to convert the serial bit stream into a block of bytes and
+perform any error correction that is necessary. The block of bytes is typically first

@@ -1,0 +1,40 @@
+SEC. 4.4
+FILE-SYSTEM MANAGEMENT AND OPTIMIZATION
+301
+...
+Process!
+table
+0
+File!
+descriptors
+...
+V-nodes
+open
+read
+write
+Function!
+pointers
+...
+2
+4
+VFS
+Read!
+function
+FS 1
+Call from!
+VFS into!
+FS 1
+Figure 4-22. A simplified view of the data structures and code used by the VFS
+and concrete file system to do a read.
+4.4 FILE-SYSTEM MANAGEMENT AND OPTIMIZATION
+Making the file system work is one thing; making it work efficiently and
+robustly in real life is something quite different. In the following sections, we will
+look at some of the issues involved in managing disks.
+4.4.1 Disk-Space Management
+Files are normally stored on disk, so management of disk space is a major 
+concern to file-system designers. Two general strategies are possible for storing an n
+byte file: n consecutive bytes of disk space are allocated, or the file is split up into
+a number of (not necessarily) contiguous blocks†. The same trade-off is present in
+memory-management systems between pure segmentation and paging.
+As we have seen, storing a file simply as a contiguous sequence of bytes has
+†Disk blocks, not flash blocks. In general, ‘‘block’’ means disk block, unless explicitly stated otherwise.

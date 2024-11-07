@@ -1,0 +1,42 @@
+SEC. 8.2
+MULTICOMPUTERS
+565
+dining philosophers to consider when they are not busy grabbing their forks. But
+not for this book. The point here is that if you manage to get the latency down, it is
+sure to make you very popular with your boss.
+In these scenarios, it pays to reduce the amount of copying. For this reason,
+some network interfaces support RDMA (Remote Direct Memory Access), a
+technique that allows one machine to perform a direct memory access from one
+computer to that of another. The RDMA does not involve either of the operating
+system and the data is directly fetched from, or written to, application memory.
+RDMA sounds great, but it is not without its disadvantages. Just like normal
+DMA, the operating system on the communicating nodes must pin the pages 
+involved in the data exchange. Also, just placing data in a remote computer’s memory
+will not reduce the latency much if the other program is not aware of it. A 
+successful RDMA does not automatically come with an explicit notification. Instead, a
+common solution is that a receiver polls on a byte in memory. When the transfer is
+done, the sender modifies the byte to signal the receiver that there is new data.
+While this solution works, it is not ideal and wastes CPU cycles.
+For really serious high-frequency trading, the network cards are custom built,
+often using field-programmable gate arrays. They hav e wire-to-wire latency, from
+receiving the bits on the network card to transmitting a message to buy a few 
+million worth of something, in well under a microsecond. Buying $1 million worth of
+stock in 1 µsec gives a performance of 1 terabuck/sec, which is nice if you can get
+the ups and downs right, but is not for the faint of heart. Operating systems do not
+play much of a role in such extreme settings as all the heavy lifting is done by 
+custom hardware.
+8.2.3 User-Level Communication Software
+Processes on different CPUs on a multicomputer communicate by sending
+messages to one another. In the simplest form, this message passing is exposed to
+the user processes. In other words, the operating system provides a way to send
+and receive messages, and library procedures make these underlying calls available
+to user processes. In a more sophisticated form, the actual message passing is 
+hidden from users by making remote communication look like a procedure call. We
+will study both of these methods below.
+Send and Receive
+At the barest minimum, the communication services provided can be reduced
+to two (library) calls, one for sending messages and one for receiving them. The
+call for sending a message might be
+send(dest, &mptr);
+and the call for receiving a message might be
+receive(addr, &mptr);

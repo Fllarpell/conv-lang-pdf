@@ -1,0 +1,44 @@
+68
+INTRODUCTION 
+CHAP. 1
+detected, it is automatically replaced without any user intervention. In this way,
+the system is self-healing and can achieve high reliability.
+The system has many restrictions limiting the power of each process. As 
+mentioned, drivers can touch only authorized I/O ports, but access to kernel calls is also
+controlled on a per-process basis, as is the ability to send messages to other 
+processes. Processes can also grant limited permission for other processes to have the
+kernel access their address spaces. As an example, a file system can grant 
+permission for the disk driver to let the kernel put a newly read-in disk block at a specific
+address within the file system’s address space. The sum total of all these 
+restrictions is that each driver and server has exactly the power to do its work and nothing
+more, thus greatly limiting the damage a buggy component can do. Restricting
+what a component can do to exactly that what it needs to do its work is known as
+the POLA (Principle of Least Authority) an important design principle for 
+building secure systems. We will discuss other such principles in Chap. 9.
+An idea somewhat related to having a minimal kernel is to put the mechanism
+for doing something in the kernel but not the policy. To make this point better,
+consider the scheduling of processes. A relatively simple scheduling algorithm is
+to assign a numerical priority to every process and then have the kernel run the
+highest-priority process that is runnable. The mechanism—in the kernel—is to
+look for the highest-priority process and run it. The policy—assigning priorities to
+processes—can be done by user-mode processes. In this way, policy and 
+mechanism can be decoupled and the kernel can be made smaller.
+1.7.4 Client-Server Model
+A slight variation of the microkernel idea is to distinguish two classes of 
+processes, the servers, each of which provides some service, and the clients, which use
+these services. This model is known as the client-server model. The essence is the
+presence of client processes and server processes.
+Communication between clients and servers is often by message passing. To
+obtain a service, a client process constructs a message saying what it wants and
+sends it to the appropriate service. The service then does the work and sends back
+the answer. If the client and server happen to run on the same machine, certain
+optimizations are possible, but conceptually, we are still talking about message
+passing here.
+A generalization of this idea is to have the clients and servers run on different
+computers, connected by a local or wide-area network, as depicted in Fig. 1-27.
+Since clients communicate with servers by sending messages, the clients need not
+know whether the messages are handled locally on their own machines, or whether
+they are sent across a network to servers on a remote. machine. As far as the 
+client is concerned, the same thing happens in both cases: requests are sent and
+replies come back. Thus, the client-server model is an abstraction that can be used
+for a single machine or for a network of machines.

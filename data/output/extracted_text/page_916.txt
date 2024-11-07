@@ -1,0 +1,44 @@
+SEC. 11.2
+PROGRAMMING WINDOWS
+887
+and a driver object is created holding its properties and providing pointers to the
+functions it implements for processing the I/O requests. Within the operating 
+system, the driver is then referred to by using its object. The driver can also be 
+accessed directly by name rather than indirectly through the devices it controls (e.g., to
+set parameters governing its operation from user mode).
+Unlike UNIX, which places the root of its namespace in the file system, the
+root of the NT namespace is maintained in the kernel’s virtual memory. This means
+that NT must recreate its top-level namespace every time the system boots. Using
+kernel virtual memory allows NT to store information in the namespace without
+first having to start the file system running. It also makes it much easier for NT to
+add new types of kernel-mode objects to the system because the formats of the file
+systems themselves do not have to be modified for each new object type.
+A named object can be marked permanent, meaning that it continues to exist
+until explicitly deleted or the system reboots, even if no process currently has a
+handle for the object. Such objects can even extend the NT namespace by 
+providing parse routines that allow the objects to function somewhat like mount points in
+UNIX. File systems and the registry use this facility to mount volumes and hives
+(parts of the registry) onto the NT namespace. Accessing the device object for a
+volume gives access to the raw volume, but the device object also represents an
+implicit mount of the volume into the NT namespace. The individual files on a 
+volume can be accessed by concatenating the volume-relative file name onto the end
+of the name of the device object for that volume.
+Permanent names are also used to represent synchronization objects and shared
+memory, so that they can be shared by processes without being continually 
+recreated as processes stop and start. Device objects and often driver objects are given
+permanent names, giving them some of the persistence properties of the special 
+inodes kept in the /dev directory of UNIX.
+We will describe many more of the features in the native NT API in the next
+section, where we discuss the Win32 APIs that provide wrappers around the NT
+system calls.
+11.2.4 The Win32 Application Programming Interface
+The Win32 function calls are collectively called the Win32 API. These 
+interfaces are publicly disclosed and fully documented. They are implemented as
+library procedures that either wrap the native NT system calls used to get the work
+done or, in some cases, do the work right in user mode. Though the native NT
+APIs are not published, most of the functionality they provide is accessible through
+the Win32 API. The existing Win32 API calls do not change with new releases of
+Windows to maintain application compatibility, though many new functions are
+added to the API.
+Figure 11-8 shows various low-level Win32 API calls and the native NT API
+calls that they wrap. What is interesting about the figure is how uninteresting the

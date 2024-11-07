@@ -1,0 +1,99 @@
+INDEX
+1151
+USB (see Universal Serial Bus)
+Use-after-free attack, 661–662
+Useful techniques, design 1065–1070
+User account control, Windows, 1024
+User datagram protocol, 760
+User friendly software, 17
+User ID, 41
+User identification, 41
+User interface, 395–419
+User mode, 2
+User shared data, Windows, 930
+User-interface paradigm, 1048–1049
+User-level communication software, 565–568
+User-mode device driver, 342
+User-mode driver framework, Windows, 985
+User-space input/output software, 368–370
+User-space thread, 107–111
+UTC (see Universal Coordinated Time)
+UWP (see Universal Windows Platform)
+V
+V-node, 786
+VA-backed VM, Hyper-V, 1008
+VAD (see Virtual Address Descriptor)
+ValidDataLength Win32 call, 979
+Vampire tap, 582
+VAX, 17
+VBS (see Virtualization-Based Security)
+VDEVs (see Virtual Devices)
+Vendor lock-in, 503
+Vertical integration, 509
+VFS (see Virtual File System)
+VHD (see Virtual Hard Disk)
+VID (see Virtualization Infrastructure Driver)
+Vid.sys, 1006
+Virtual address, 193
+guest, 495
+Virtual address allocation, Windows, 958
+Virtual address descriptor, Windows, 962
+Virtual address space, 193
+Virtual address-space representation, 753–754
+Virtual core, 541
+Virtual device, 1007
+Virtual disk, 485
+Windows, 980
+Virtual file system, 298–301, 720
+Virtual function, 500
+Virtual hard disk, Windows, 1014
+Virtual hardware platform, 515–517
+Virtual i-node, 786
+Virtual kernel mode, 486
+Virtual machine, 69–72, 485–486
+Java, 73
+secure, 483
+Virtual machine interface, 492
+Virtual machine management service, 1007
+Virtual machine migration, 503–504
+Virtual machine monitor, 69, 478
+Virtual machines on multicore CPUs, 501
+Virtual memory, 27, 50, 192, 192–207
+Linux, 753–757
+Windows, 958–969
+Virtual pagefile, Windows, 974
+Virtual processor, 896
+Virtual secure mode, 897
+Virtual trust level, Windows, 1017
+VirtualAlloc Win32 call, 963, 1009
+Virtualbox, 481
+Virtualization, 477–524, 478
+cost, 489–490
+efficient, 486–490
+full, 484
+history, 480–482
+I/O, 497–500
+memory, 493–497
+OS-level, 504–507
+process-level, 484
+requirements, 480–482
+research, 523–524
+Windows, 1003–1035
+x86, 509–511
+Virtualization infrastructure driver, Hyper-V, 1006
+Virtualization stack, 1003
+Hyper-V, 1006
+Virtualization technology, 483
+Virtualization-based security, 879
+Windows, 897
+Virtualizing the unvirtualizable, 487–489
+VirtuAlloc Win32 call, 975
+Virus, 607
+Vista, Windows, 876–877
+VM exit, 495
+VM/370, 69, 480
+Vmalloc system call, 753
+VMI (see Virtual Machine Interface)
+VMM (see Virtual Machine Monitor)
+Vmmem, 1009
+VMMS (see Virtual Machine Management Service)

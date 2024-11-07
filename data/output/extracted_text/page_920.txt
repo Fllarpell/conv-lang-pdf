@@ -1,0 +1,44 @@
+SEC. 11.2
+PROGRAMMING WINDOWS
+891
+the identity and privileges associated with the thread. Every object can have an
+ACL (Access Control List) telling in great detail precisely which users may
+access it and which operations they may perform on it. This approach provides for
+fine-grained security in which specific users can be allowed or denied specific
+access to every object. The security model is extensible, allowing applications to
+add new security rules, such as limiting the hours access is permitted.
+The Win32 namespace is different than the native NT namespace described in
+the previous section. Only parts of the NT namespace are visible to Win32 APIs
+(though the entire NT namespace can be accessed through a Win32 hack that uses
+special prefix strings, like ‘‘ \ \ .’ ’). In Win32, files are accessed relative to drive 
+letters. The NT directory \ DosDevices contains a set of symbolic links from drive 
+letters to the actual device objects. For example, \ DosDevices \ C: might be a link to
+\ Device \ HarddiskVolume1. This directory also contains links for other Win32 
+devices, such as COM1:, LPT:, and NUL: (for the serial and printer ports and the
+all-important null device). \ DosDevices is really a symbolic link to \ ?? which was
+chosen for efficiency. Another NT directory, \ BaseNamedObjects, is used to store
+miscellaneous named kernel-mode objects accessible through the Win32 API.
+These include synchronization objects like semaphores, shared memory, timers,
+communication ports, and device names.
+In addition to low-level system interfaces we have described, the Win32 API
+also supports many calls for GUI operations, including all the calls for managing
+the graphical interface of the system. There are calls for creating, destroying, 
+managing, and using windows, menus, tool bars, status bars, scroll bars, dialog boxes,
+icons, and many more items that appear on the screen. There are calls for drawing
+geometric figures, filling them in, managing the color palettes they use, dealing
+with fonts, and placing icons on the screen. In contrast, in Linux, none of this is in
+the kernel. Finally, there are calls for dealing with the keyboard, mouse, and other
+human-input devices as well as audio, printing, and other output devices.
+The GUI operations work directly with the win32k.sys driver using special
+interfaces to access these functions in kernel mode from user-mode libraries. Since
+these calls do not involve the core system calls in the NTOS executive, we will not
+say more about them.
+11.2.5 The Windows Registry
+The root of the NT namespace is maintained in the kernel. Storage, such as
+file-system volumes, is attached to the NT namespace. Since the NT namespace is
+constructed afresh every time the system boots, how does the system know about
+any specific details of the system configuration? The answer is that Windows 
+attaches a special kind of file system (optimized for small files) to the NT 
+namespace. This file system is called the registry. The registry is organized into 
+separate volumes called hives. Each hive is kept in a separate file (in the directory
+C: \ Windows \ system32 \ config \ of the boot volume). When a Windows system

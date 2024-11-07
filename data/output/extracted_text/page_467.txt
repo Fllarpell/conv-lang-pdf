@@ -1,0 +1,41 @@
+438
+DEADLOCKS 
+CHAP. 6
+Deadlocks can also occur in a variety of other situations. In a database system,
+for example, a program may have to lock several records it is using, to avoid race
+conditions. If process A locks record R1 and process B locks record R2, and then
+each process tries to lock the other one’s record, we also have a deadlock. Thus,
+deadlocks can occur on hardware resources or on software resources.
+In this chapter, we will look at several kinds of deadlocks, see how they arise,
+and study some ways of preventing or avoiding them. Although these deadlocks
+arise in the context of operating systems, they also occur in database systems, big
+data analytics and many other contexts in computer science, so this material is
+actually applicable to a wide variety of concurrent systems.
+6.1 RESOURCES
+A major class of deadlocks involves resources to which some process has been
+granted exclusive access. These resources include devices, data records, files, and
+so forth. To make the discussion of deadlocks as general as possible, we will refer
+to the objects granted as resources. A resource can be a hardware device (e.g., a
+printer) or a piece of information (e.g., a record in a database). A computer will
+normally have many different resources that a process can acquire. For some 
+resources, several identical instances may be available, such as three printers. When
+several copies of a resource are available, any one of them can be used to satisfy
+any request for the resource. In short, a resource is anything that must be acquired,
+used, and released over the course of time.
+6.1.1 Preemptable and Nonpreemptable Resources
+Resources come in two types: preemptable and nonpreemptable. A 
+preemptable resource is one that can be taken away from the process owning it with no ill
+effects. Memory is an example of a preemptable resource. Consider, for example,
+a system with 16 GB of user memory, one printer, and two 16-GB processes that
+each want to print something. Process A requests and gets the printer, then starts to
+compute the values to print. Before it has finished the computation, it exceeds its
+time quantum and is swapped out to SSD or disk.
+Process B now runs and tries, unsuccessfully as it turns out, to acquire the
+printer. Potentially, we now hav e a deadlock situation, because A has the printer
+and B has the memory, and neither one can proceed without the resource held by
+the other. Fortunately, it is possible to preempt (take away) the memory from B by
+swapping it out and swapping A in. Now A can run, do its printing, and then
+release the printer. No deadlock occurs.
+A nonpreemptable resource, in contrast, is one that cannot be taken away
+from its current owner without potentially causing failure. If a process has begun
+to scan an object with a 3D scanner, suddenly taking the scanner away from it and

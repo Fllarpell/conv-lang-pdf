@@ -1,0 +1,49 @@
+106
+PROCESSES AND THREADS
+CHAP. 2
+needed to get going properly again. Even so, it is important to note that many of
+these issues are design choices and different systems may opt for different 
+solutions. For now, the most important thing to remember is that the relation between
+threads and fork can be quite complex.
+Another class of problems is related to the fact that threads share many data
+structures. What happens if one thread closes a file while another one is still 
+reading from it? Suppose one thread notices that there is too little memory and starts
+allocating more memory. Partway through, a thread switch occurs, and the new
+thread also notices that there is too little memory and also starts allocating more
+memory. Memory will probably be allocated twice. These problems can be solved
+with some effort, but careful thought and design are needed to make multithreaded
+programs work correctly.
+2.2.3 POSIX Threads
+To make it possible to write portable threaded programs, IEEE has defined a
+standard for threads in IEEE standard 1003.1c. The threads package it defines is
+called Pthreads. Most UNIX systems support it. The standard defines over 60
+function calls, which is far too many to go over here. Instead, we will just describe
+a few of the major ones to give an idea of how it works. The calls we will describe
+below are listed in Fig. 2-13.
+Thread call
+Description
+pthread create 
+Create a new thread
+pthread exit 
+Ter minate the calling thread
+pthread join 
+Wait for a specific thread to exit
+pthread yield 
+Release the CPU to let another thread run
+pthread attr init 
+Create and initialize a thread’s attr ibute structure
+pthread attr destroy
+Remove a thread’s attr ibute structure
+Figure 2-13. Some of the Pthreads function calls.
+All Pthreads threads have certain properties. Each one has an identifier, a set of
+registers (including the program counter), and a set of attributes, which are stored
+in an attribute structure. The attributes include the stack size, scheduling 
+parameters, and other items needed to use the thread.
+A new thread is created using the pthread create call. The thread identifier of
+the newly created thread is returned as the function value. This call is intentionally
+very much like the fork system call (except with parameters), with the thread 
+identifier playing the role of the PID, mostly for identifying threads referenced in other
+calls. When a thread has finished the work it has been assigned, it can terminate by
+calling pthread exit. This call stops the thread and releases its stack.
+Often a thread has a need to wait for another thread to finish its work and exit
+before it can continue. The thread that is waiting calls pthread join to wait for a

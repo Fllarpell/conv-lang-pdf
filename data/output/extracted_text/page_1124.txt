@@ -1,0 +1,38 @@
+SEC. 13.1
+SUGGESTIONS FOR FURTHER READING
+1095
+ev erywhere. Unfortunately, the books that explain the code in detail are fairly
+scarce and many of them are a bit old and pertain to previous versions of the 
+kernel. Even so, this particular book is chock-full of information that is as relevant
+today as it was when it was written and is still probably the best overall discussion
+of the Linux kernel. It covers processes, memory management, file systems, 
+signals, and much more.
+Billimoria, Linux Kernel Programming—A comprehensive guide to kernel 
+internals, writing kernel modules, and kernel synchronization
+If you are looking for a more up-to-date book to learn programming in the 5.x
+kernels, this could be useful purchase. You will learn about Linux kernel modules,
+memory management, the scheduler and synchronization.
+ISO/IEC, Information Technology—Portable Operating System Interface (POSIX),
+Part 1: System Application Program Interface (API) [C Language]
+This is the standard. Some parts are actually quite readable, especially Annex
+B, ‘‘Rationale and Notes,’’ which often sheds light on why things are done as they
+are. One advantage of referring to the standards document is that, by definition,
+there are no errors. If a typographical error in a macro name makes it through the
+editing process, it is no longer an error, it is off icial.
+Fusco, The Linux Programmer’s Toolbox
+This book describes how to use Linux for the intermediate user, one who
+knows the basics and wants to start exploring how the many Linux programs work.
+It is intended for C programmers.
+Maxwell, Linux Core Kernel Commentary
+The first 400 pages of this book contain a subset of the Linux kernel code. The
+last 150 pages consist of comments on the code, very much in the style of John
+Lions’ classic book. If you want to understand the Linux kernel in all its gory
+detail, this is the place to begin, but be warned: reading 40,000 lines of C is not for
+ev eryone.
+13.1.11 Case Study 2: Windows
+Rector and Newcomer, Win32 Programming
+If you are looking for one of those 1500-page books giving a summary of how
+to write Windows programs, this is not a bad start. It covers windows, devices,
+graphical output, keyboard and mouse input, printing, memory management,
+libraries, and synchronization, among many other topics. It requires knowledge of
+C or C++.

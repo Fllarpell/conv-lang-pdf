@@ -1,0 +1,43 @@
+SEC. 5.4
+MASS STORAGE: DISK AND SSD
+381
+to move the arm as far out as it would go and reset the controller’s internal idea of
+the current cylinder to 0. Usually this solved the problem. If it did not, the drive
+had to be repaired.
+As we have just seen, the controller is really a specialized little computer, 
+complete with software, variables, buffers, and occasionally, bugs. Sometimes an
+unusual sequence of events, such as an interrupt on one drive occurring 
+simultaneously with a recalibrate command for another drive will trigger a bug and cause
+the controller to go into a loop or lose track of what it was doing. Controller
+designers usually plan for the worst and provide a pin on the chip which, when
+asserted, forces the controller to forget whatever it was doing and reset itself. If all
+else fails, the disk driver can set a bit to invoke this signal and reset the controller.
+If that does not help, all the driver can do is print a message and give up.
+Recalibrating a disk makes a funny noise but otherwise normally is not 
+disturbing. However, there is one situation where recalibration is a problem: systems with
+real-time constraints. When a video is being played off (or served from) a hard
+disk, or files from a hard disk are being burned onto a Blu-ray disc, it is essential
+that the bits arrive from the hard disk at a uniform rate. Under these circumstances,
+recalibrations insert gaps into the bit stream and are unacceptable. Special drives,
+called AV disks (Audio Visual disks), which never recalibrate are available for
+such applications.
+Anecdotally, a highly convincing demonstration of how advanced disk 
+controllers have become was given by the Dutch hacker Jeroen Domburg, who hacked
+a modern disk controller to make it run custom code. It turns out the disk controller
+is equipped with a fairly powerful multicore ARM processor and has easily enough
+resources to run Linux. If the bad guys hack your hard drive in this way, they will
+be able to see and modify all data you transfer to and from the disk. Even 
+reinstalling the operating from scratch will not remove the infection, as the disk 
+controller itself is malicious and serves as a permanent backdoor. Alternatively, you
+can collect a stack of broken hard drives from your local recycling center and build
+your own cluster computer for free.
+5.4.2 Solid State Drives (SSDs)
+As we saw in Sec. 4.3.7, SSDs are fast, have asymmetric read and write 
+performance, and contain no moving parts. They come in different guises. For
+instance, there are some that conform to the SATA standard for storage devices that
+is also used for magnetic disks. However, since SATA was designed for mechanical
+disks that are slow compared to flash technology, more and more SSDs now 
+interface to the rest of the system using NVMe (Non-Volatile Memory Express).
+NVMe is a standard to exploit better the speed of the fast PCI Express connection
+between the SSD and the rest of the system, as well as the parallelism available in
+the SSD itself.

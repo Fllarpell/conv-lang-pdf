@@ -1,0 +1,46 @@
+SEC. 9.9
+RESEARCH ON SECURITY
+695
+classify bugs better, e.g., on Linux (Lin et al., 2022) and Windows (Choi et al.,
+2021). Others implement techniques to detect memory errors and manifestations of
+undefined behavior by instrumenting the code with all manner of checks—an
+approach that became especially popular after the release of Google’s 
+AddressSanitizer (Serebryany, 2013). As an alternative, some projects try to formally verify
+that the OS is free from certain classes of bugs (Klein et al., 2009; Yu et al., 2021).
+In spite of what we see in the movies, kernel exploitation is not easy. Often the
+vulnerabilities build on complex heap overflows which require that objects are
+aligned in memory exactly right. Fortunately for the attacker, major advances are
+made in the automation of the exploitation process. For instance, researchers have
+developed techniques to manipulate the memory layout in the kernel to 
+automatically obtain the desired alignment of objects (Chen and Xing, 2019).
+Protecting sensitive state is challenging especially with low overhead, but
+sometimes hardware features help. An example is the recent wav e of use-cases for
+MPK (Memory Protection Keys), a hardware feature already present in the IBM
+360 more than half a century ago, but only recently added to Intel’s x86-64 
+processor architecture. Researchers have shown that MPKs can be used to isolate 
+sensitive state very efficiently (Vahldiek-Oberwagner, 2019). Hardware assistance is not
+the only way. Another way of protecting sensitive state is by hiding it at a random
+location in the enormous 64-bit address space, and maybe even throw in 
+continuous re-randomization for good measure (Wang et al., 2019).
+Capabilities and access control are still active research areas. Here also, 
+sometimes hardware features breathe new life in these old research topics. For instance
+(Davis et al., 2019) describe how hardware-supported capabilities can help to 
+provide very powerful access control and restrictions.
+A topic that has been all the rage since the original Meltdown and Spectre 
+vulnerabilities were disclosed is transient execution attacks (Xiong and Szefer, 2021).
+Unfortunately, there is a myriad of root causes for transient execution (Ragab et al.,
+2021) and many of them may lead to exploitable vulnerabilities. Not surprisingly,
+there are many efforts to remedy the situation, for instance using software 
+mitigations or formal methods (Duta et al., 2021; and Loughlin et al., 2019).
+Other hardware-related issues concern malicious devices performing DMA and
+accessing memory beyond the operating system’s control (Markettos, 2019), even
+in the presence of an MMU for such devices. Again, automatically finding and
+analyzing DMA-related issues is important to fix the vulnerabilities before the
+attackers can exploit them (Alex et al., 2019).
+While we are on the topic of hardware: recognizing the threats posed by 
+attackers, many devices nowadays have security features. The question is how good
+they are. For instance, many SSDs have encryption built in. Unfortunately, just
+because you have encryption does not mean that you are secure. For example, 
+Meijer and Van Gastel, 2019 show that the additional security guarantees provided by
+such devices are often zero. Unfortunately, also this is a fairly common thing to
+happen. Getting security right in the face of determined attackers is really hard.

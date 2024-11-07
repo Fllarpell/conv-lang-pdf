@@ -1,0 +1,46 @@
+418
+INPUT/OUTPUT 
+CHAP. 5
+plastic. However, a thin film of ITO (Indium Tin Oxide) or some similar 
+conducive material) is printed in thin lines onto the surface’s underside. Beneath it, but
+not quite touching it, is a second surface also coated with a layer of ITO. On the
+top surface, the charge runs in the vertical direction and there are conductive 
+connections at the top and bottom. In the bottom layer the charge runs horizontally and
+there are connections on the left and right. When you touch the screen, you dent
+the plastic so that the top layer of ITO touches the bottom layer. To find out the
+exact position of the finger or stylus touching it, all you need to do is measure the
+resistance in both directions at all the horizontal positions of the bottom and all the
+vertical positions of the top layer.
+Capacitive Screens have two hard surfaces, typically glass, each coated with
+ITO. A typical configuration is to have ITO added to each surface in parallel lines,
+where the lines in the top layer are perpendicular to those in the bottom layer. For
+instance, the top layer may be coated in thin lines in a vertical direction, while the
+bottom layer has a similarly striped pattern in the horizontal direction. The two
+charged surfaces, separated by air, form a grid of really small capacitors. Voltages
+are applied alternately to the horizontal and vertical lines, while the voltage values,
+which are affected by the capacitance of each intersection, are read out on the other
+ones. When you put your finger onto the screen, you change the local capacitance.
+By very accurately measuring the minuscule voltage changes everywhere, it is 
+possible to discover the location of the finger on the screen. This operation is repeated
+many times per second with the coordinates touched fed to the device driver as a
+stream of (x, y) pairs. Further processing, such as determining whether pointing,
+pinching, expanding, or swiping is taking place is done by the operating system.
+What is nice about resistive screens is that the pressure determines the outcome
+of the measurements. In other words, it will work even if you are wearing gloves in
+cold weather. This is not true of capacitive screens, unless you wear special gloves.
+For instance, you can sew a conductive thread (like silver-plated nylon) through the
+fingertips of the gloves, or if you are not a needling person, buy them ready-made.
+Alternatively, you cut off the tips of your gloves and be done in 10 seconds.
+What is not so nice about resistive screens is that they typically cannot support
+multitouch, a technique that detects multiple touches at the same time. It allows
+you to manipulate objects on the screen with two or more fingers. People (and 
+perhaps also orangutans) like multitouch because it enables them to use 
+pinch-andexpand gestures with two fingers to enlarge or shrink a picture or document. 
+Imagine that the two fingers are at (3, 3) and (8, 8). As a result, the resistive screen may
+notice a change in resistance on the x = 3 and x = 8 vertical lines, and the y = 3 and
+y = 8 horizontal lines. Now consider a different scenario with the fingers at (3, 8)
+and (8, 3), which are the opposite corners of the rectangle whose corners are (3, 3),
+(8, 3), (8, 8), and (3, 8). The resistance in precisely the same lines has changed, so
+the software has no way of telling which of the two scenarios holds. This problem
+is called ghosting. Because capacitive screens send a stream of (x, y) coordinates,
+they are more adept at supporting multitouch.

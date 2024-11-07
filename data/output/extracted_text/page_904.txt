@@ -1,0 +1,47 @@
+SEC. 11.1
+HISTORY OF WINDOWS THROUGH WINDOWS 11
+875
+Like the first version of MS-DOS-based Windows, NT-based Windows was
+not initially successful. NT required more memory, there were few 32-bit 
+applications available, and incompatibilities with device drivers and applications caused
+many customers to stick with MS-DOS-based Windows which Microsoft was still
+improving, releasing Windows 95 in 1995. Windows 95 provided native 32-bit
+programming interfaces like NT, but better compatibility with existing 16-bit 
+software and applications. Not surprisingly, NT’s early success was in the server 
+market, competing with VMS and NetWare.
+NT did meet its portability goals, with additional releases in 1994 and 1995
+adding support for (little-endian) MIPS and PowerPC architectures. The first major
+upgrade to NT came with Windows NT 4.0 in 1996. This system had the power,
+security, and reliability of NT, but also sported the same user interface as the 
+bythen very popular Windows 95.
+Figure 11-3 shows the relationship of the Win32 API to Windows. Having a
+common API across both the MS-DOS-based and NT-based Windows was 
+important to the success of NT.
+Win32 application program
+Win32 application programming interface
+Windows
+3.0/3.1
+Windows
+95/98/98SE/Me
+Windows
+NT/2000/Vista/7
+Windows
+Win32s
+8/10/11
+Figure 11-3. The Win32 API allows programs to run on almost all versions of
+Windows.
+This compatibility made it much easier for users to migrate from Windows 95
+to NT, and the operating system became a strong player in the high-end desktop
+market as well as servers. However, customers were not as willing to adopt other
+processor architectures, and of the four architectures Windows NT 4.0 supported in
+1996, only the x86 (i.e., Pentium family) was still actively supported by the time of
+the next major release, Windows 2000.
+Windows 2000 represented a significant evolution for NT. The key 
+technologies added were plug-and-play (for consumers who installed a new PCI card, 
+eliminating the need to fiddle with jumpers), network directory services (for enterprise
+customers), improved power management (for notebook computers), and an
+improved GUI (for everyone).
+The technical success of Windows 2000 led Microsoft to push toward the 
+deprecation of Windows 98 by enhancing the application and device compatibility of
+the next NT release, Windows XP. Windows XP included a friendlier new 
+look

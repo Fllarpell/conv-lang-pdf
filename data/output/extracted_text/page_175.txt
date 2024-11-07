@@ -1,0 +1,44 @@
+146
+PROCESSES AND THREADS
+CHAP. 2
+lost by the network. To guard against lost messages, the sender and receiver can
+agree that as soon as a message has been received, the receiver will send back a
+special acknowledgement message. If the sender has not received the 
+acknowledgement within a certain time interval, it retransmits the message.
+Now consider what happens if the message is received correctly, but the 
+acknowledgement back to the sender is lost. The sender will retransmit the message,
+so the receiver will get it twice. It is essential that the receiver be able to 
+distinguish a new message from the retransmission of an old one. This problem is solved
+by putting consecutive sequence numbers in each original message. If the receiver
+gets a message bearing the same sequence number as the previous message, it
+knows that the message is a duplicate that can be ignored. Successfully 
+communicating in the face of unreliable message passing is a major part of the study of
+computer networks. For more information, see Tanenbaum et al. (2020).
+Message systems also have to deal with the question of how processes are
+named, so that the process specified in a send or receive call is unambiguous.
+Authentication is also an issue in message systems: how can the client tell that it
+is communicating with the real file server, and not with an imposter?
+At the other end of the spectrum, there are also design issues that are important
+when the sender and receiver are on the same machine. One of these is 
+performance. Copying messages from one process to another is always slower than
+doing a semaphore operation or entering a monitor. Much work has gone into 
+making message passing efficient.
+The Producer-Consumer Problem with Message Passing
+Now let us see how the producer-consumer problem can be solved with 
+message passing and no shared memory. A solution is given in Fig. 2-37. We assume
+that all messages are the same size and that messages sent but not yet received are
+buffered automatically by the operating system. In this solution, a total of N 
+messages is used, analogous to the N slots in a shared-memory buffer. The consumer
+starts out by sending N empty messages to the producer. Whenever the producer
+has an item to give to the consumer, it takes an empty message and sends back a
+full one. In this way, the total number of messages in the system remains constant
+in time, so they can be stored in a given amount of memory known in advance.
+If the producer works faster than the consumer, all the messages will end up
+full, waiting for the consumer; the producer will be blocked, waiting for an empty
+to come back. If the consumer works faster, then the reverse happens: all the 
+messages will be empties waiting for the producer to fill them up; the consumer will be
+blocked, waiting for a full message.
+Many variants are possible with message passing. For starters, let us look at
+how messages are addressed. One way is to assign each process a unique address
+and have messages be addressed to processes. A different way is to invent a new
+data structure, called a mailbox. A mailbox is a place to buffer a certain number

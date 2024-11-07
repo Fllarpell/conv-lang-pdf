@@ -1,0 +1,40 @@
+SEC. 11.5
+MEMORY MANAGEMENT
+977
+1. Page lists: Each partition owns its isolated slice of physical memory,
+so it maintains its own free, zero, standby, and modified page lists.
+2. System process: Each partition creates its own minimal system 
+process called ‘‘PartitionSystem.’’ This process provides the address space
+to map executables during load as well as housing per-partition 
+system threads.
+3. System threads: Fundamental memory management threads such as
+the zero page thread, the working set manager thread, the modified
+and mapped page writer threads are all created per-partition. In 
+addition, other components such as the cache manager we will discuss in
+Sec. 11.6 also maintain per-partition threads. Finally, each partition
+has its dedicated system thread pool such that kernel components can
+queue work to it without worrying about contention from other 
+workloads.
+4. Pagefiles: Each partition has its own set of pagefiles and associated
+modified page writer thread. This is critical for maintaining its own
+commit.
+5. Resource tracking: Each partition holds its own memory 
+management resources such as commit and available memory to 
+independently drive policies such as working set trimming and pagefile 
+writing.
+Notably, a memory partition does not include its own PFN database. Instead, it
+maintains a data structure describing the memory ranges it is responsible for and
+uses the system global PFN database entries. Also, most threads and data 
+structures are initialized on demand. For example, the modified page writer thread is not
+necessary until a pagefile is created in the partition.
+All in all, memory management is a highly complex executive component with
+many data structures, algorithms, and heuristics. It attempts to be largely self 
+tuning, but there are also many knobs that administrators can tweak to affect system
+performance. A number of these knobs and the associated counters can be viewed
+using tools in the various tool kits mentioned earlier. Probably the most important
+thing to remember here is that memory management in real systems is a lot more
+than just one simple page replacement algorithm like clock or aging.
+11.6 CACHING IN WINDOWS
+The Windows cache improves the performance of file systems by keeping
+recently and frequently used regions of files in memory. Rather than cache physical
+addressed blocks from the disk, the cache manager manages virtually addressed

@@ -1,0 +1,41 @@
+422
+INPUT/OUTPUT 
+CHAP. 5
+Power management brings up a number of questions that the operating system
+has to deal with. Many of them relate to resource hibernation—selectively and
+temporarily turning off devices, or at least reducing their power consumption when
+they are idle. Questions that must be answered include these: Which devices can be
+controlled? Are they on/off, or are there intermediate states? How much power is
+saved in the low-power states? Is energy expended to restart the device? Must
+some context be saved when going to a low-power state? How long does it take to
+go back to full power? Of course, the answers to these questions vary from device
+to device, so the operating system must be able to deal with a range of possibilities.
+Various researchers have examined notebook computers to see where the 
+power goes. The top three energy sinks are the display, the hard disk (if present), and
+CPU, in that order. In other words, these components are obvious targets for saving
+energy. On devices like smartphones, there may be other power drains, like the
+radio and GPS. Although we focus on displays, disks, CPUs, and memory in this
+section, the principles are the same for other peripherals.
+5.8.2 Operating System Issues
+The operating system plays a key role in energy management. It controls all
+the devices, so it must decide what to shut down and when to shut it down. If it
+shuts down a device and that device is needed again quickly, there may be an
+annoying delay while it is restarted. On the other hand, if it waits too long to shut
+down a device, energy is wasted for nothing.
+The trick is to find algorithms and heuristics that let the operating system make
+good decisions about what to shut down and when. The trouble is that ‘‘good’’ is
+highly subjective. One user may find it acceptable that after 30 seconds of not
+using the computer it takes 2 seconds for it to respond to a keystroke. Another user
+may swear like a sailor under the same conditions. In the absence of audio input,
+the computer cannot tell these users apart.
+The Display
+Let us now look at the big spenders of the energy budget to see what can be
+done about each one. One of the biggest items in everyone’s energy budget is the
+display. To get a bright sharp image, the screen must be backlit and that takes 
+substantial energy. Many operating systems attempt to save energy here by shutting
+down the display when there has been no activity for some number of minutes.
+Often the user can decide what the shutdown interval is, thus pushing the trade-off
+between frequent blanking of the screen and draining the battery quickly back to
+the user (who probably really does not want it). Turning off the display is a sleep
+state because it can be regenerated (from the video RAM) almost instantaneously
+when any key is struck or the pointing device is moved.

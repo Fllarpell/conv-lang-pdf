@@ -1,0 +1,48 @@
+SEC. 4.1
+FILES
+263
+Conventions like this are especially useful when the same program can handle
+several different kinds of files. The C compiler, for example, can be given a list of
+several files to compile and link together, some of them C files and some of them
+assembly-language files. The extension then becomes essential for the compiler to
+tell which are C files, which are assembly files, and which are other files.
+In contrast, Windows is aware of the extensions and assigns meaning to them.
+Users (or processes) can register extensions with the operating system and specify
+for each one which program ‘‘owns’’ that extension. When a user double clicks on
+a file name, the program assigned to its file extension is launched with the file as
+parameter. For example, double clicking on file.docx starts Microsoft Word with
+file.docx as the initial file to edit. In contrast, Photoshop will not open file ending
+in .docx, no matter how often or hard you click on the file name, because it knows
+that .docx files are not image files.
+4.1.2 File Structure
+Files can be structured in any of sev eral ways. Three common possibilities are
+depicted in Fig. 4-2. The file in Fig. 4-2(a) is an unstructured sequence of bytes.
+In effect, the operating system does not know or care what is in the file. All it sees
+are bytes. Any meaning must be imposed by user-level programs. Both UNIX and
+Windows use this approach.
+(a)
+(b)
+(c)
+1 Record
+Ant
+Fox
+Pig
+Cat
+Cow
+Dog
+Goat
+Lion
+Owl
+Pony
+Rat
+Worm
+Hen
+Ibis
+Lamb
+1 Byte
+Figure 4-2. Three kinds of files. (a) Byte sequence. (b) Record sequence.
+(c) Tree.
+Having the operating system regard files as nothing more than byte sequences
+provides the maximum amount of flexibility. User programs can put anything they
+want in their files and name them any way that they find convenient. The operating
+system does not help, but it also does not get in the way. For users who want to do

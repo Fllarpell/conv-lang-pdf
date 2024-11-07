@@ -1,0 +1,74 @@
+738
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+F!l!a!g!s!
+C!P!U!
+S!t!a!t!i!c!_!p!r!i!o!
+<!…!>!
+A!c!t!i!ve!
+E!x!p!i!r!e!d!
+<!…!>!
+P!r!i!o!r!i!t!y! !0!
+A!r!r!a!y![!0!]!
+P!r!i!o!r!i!t!y! !1!3!9!
+P!r!i!o!r!i!t!y! !0!
+A!r!r!a!y![!1!]!
+P!r!i!o!r!i!t!y! !1!3!9!
+P!
+P!
+P!
+P!
+P!
+P!
+P!
+P!
+P!
+P!
+P!
+P!
+(!a!)! P!e!r! !C!P!U! !r!unque!u!e! !i!n! !t!h!e! !
+L!i!n!u!x! !O!(!1!)! !sc!h!e!d!u!l!e!r! !
+3!5!
+2!6!
+4!7!
+1!0!
+3!0!
+3!8!
+6!2!
+3!
+2!7!
+4!5!
+8!6!
+N!I!L!
+N!I!L!
+N!I!L!
+N!I!L!
+N!I!L!
+N!I!L!
+N!I!L!
+N!I!L!
+N!I!L!
+N!I!L!
+N!I!L!
+N!I!L!
+(!b!)! !P!e!r! !C!P!U! !r!e!d!-!b!l!a!ck! !t!r!e!e! !i!n! !
+t!h!e! !C!F!S! !sc!h!e!d!u!l!e!r!
+Figure 10-10. Illustration of Linux runqueue data structures for (a) the Linux
+O(1) scheduler, and (b) the Completely Fair Scheduler.
+reflect the CPU time it already used. Once its timeslice is fully exhausted, it, too,
+will be placed on the expired array. When there are no more tasks in the active
+array, the scheduler simply swaps the pointers, so the expired arrays now become
+active, and vice versa. This method ensures that low-priority tasks will not starve
+(except when real-time FIFO threads completely hog the CPU, which is unlikely).
+Here, different priority levels are assigned different timeslice values, with
+higher quanta assigned to higher-priority processes. For instance, tasks running at
+priority level 100 will receive time quanta of 800 msec, whereas tasks at priority
+level of 139 will receive 5 msec.
+The idea here is to get processes out of the kernel fast. If a process is trying to
+read a disk file, making it wait a second between read calls will slow it down 
+enormously. It is far better to let it run immediately after each request is completed, so
+that it can make the next one quickly. Similarly, if a process was blocked waiting
+for keyboard input, it is clearly an interactive process, and as such should be given
+a high priority as soon as it is ready in order to ensure that interactive processes get
+good service. In this light, CPU-bound processes basically get any service that is
+left over when all the I/O bound and interactive processes are blocked.

@@ -1,0 +1,44 @@
+SEC. 11.8
+THE WINDOWS NT FILE SYSTEM
+991
+among the components of the operating system in that much of its original design
+took place aboard a sailboat out on the Puget Sound (following a strict protocol of
+work in the morning, beer in the afternoon). Below we will examine a number of
+features of NTFS, starting with its structure, then moving on to file-name lookup,
+file compression, journaling, and file encryption.
+File System Structure
+Each NTFS volume (e.g., disk partition) contains files, directories, bitmaps,
+and other data structures. Each volume is organized as a linear sequence of blocks
+(clusters in Microsoft’s terminology), with the block size being fixed for each 
+volume and ranging from 512 bytes to 64 KB, depending on the volume size. Most
+NTFS disks use 4-KB blocks as a compromise between large blocks (for efficient
+transfers) and small blocks (for low internal fragmentation). Blocks are referred to
+by their offset from the start of the volume using 64-bit numbers.
+The principal data structure in each volume is the MFT (Master File Table),
+which is a linear sequence of fixed-size 1-KB records. Each MFT record describes
+one file or one directory. It contains the file’s attributes, such as its name and 
+timestamps, and the list of disk addresses where its blocks are located. If a file is
+extremely large, it is sometimes necessary to use two or more MFT records to 
+contain the list of all the blocks, in which case the first MFT record, called the base
+record, points to the additional MFT records. This overflow scheme dates back to
+CP/M, where each directory entry was called an extent. A bitmap keeps track of
+which MFT entries are free.
+The MFT is itself a file and as such can be placed anywhere within the volume,
+thus eliminating the problem with defective sectors in the first track. Furthermore,
+the file can grow as needed, up to a maximum size of 248 records.
+The MFT is shown in Fig. 11-44. Each MFT record consists of a sequence of
+(attribute header, value) pairs. Each attribute begins with a header telling which
+attribute this is and how long the value is. Some attribute values are variable
+length, such as the file name and the data. If the attribute value is short enough to
+fit in the MFT record, it is placed there. If it is too long, it is placed elsewhere on
+the disk and a pointer to it is placed in the MFT record. This makes NTFS very
+efficient for small files, that is, those that can fit within the MFT record itself.
+The first 16 MFT records are reserved for NTFS metadata files, as illustrated
+in Fig. 11-45. Each record describes a normal file that has attributes and data
+blocks, just like any other file. Each of these files has a name that begins with a
+dollar sign to indicate that it is a metadata file. The first record describes the MFT
+file itself. In particular, it tells where the blocks of the MFT file are located so that
+the system can find the MFT file. Clearly, Windows needs a way to find the first
+block of the MFT file in order to find the rest of the file-system information. The
+way it finds the first block of the MFT file is to look in the boot block, where its
+address is installed when the volume is formatted with the file system.

@@ -1,0 +1,49 @@
+932
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+job
+process
+process
+thread
+thread
+thread
+thread
+thread
+fiber
+fiber
+fiber
+fiber
+fiber
+fiber
+fiber
+fiber
+Figure 11-22. The relationship between jobs, processes, threads, and fibers. Jobs
+and fibers are optional; not all processes are in jobs or contain fibers.
+While fibers may sound promising on paper, they face many difficulties in
+practice. Most of the Win32 libraries are completely unaware of fibers, and 
+applications that attempt to use fibers as if they were threads will encounter various 
+failures. The kernel has no knowledge of fibers, and when a fiber enters the kernel,
+the thread it is executing on may block and the kernel will schedule an arbitrary
+thread on the processor, making it unavailable to run other fibers. For these 
+reasons, fibers are rarely used except when porting code from other systems that 
+explicitly need the functionality provided by fibers.
+Thread Pools
+The Win32 thread pool is a facility that builds on top of the Windows thread
+model to provide a better abstraction for certain types of programs. Thread creation
+is too expensive to be inv oked every time a program wants to execute a small task
+concurrently with other tasks in order to take advantage of multiple processors.
+Tasks can be grouped together into larger tasks but this reduces the amount of
+exploitable concurrency in the program. An alternative approach is for a program
+to allocate a limited number of threads and maintain a queue of tasks that need to
+be run. As a thread finishes the execution of a task, it takes another one from the
+queue. This model separates the resource-management issues (how many 
+processors are available and how many threads should be created) from the 
+programming model (what is a task and how are tasks synchronized). Windows 
+formalizes this solution into the Win32 thread pool, a set of APIs for automatically
+managing a dynamic pool of threads and dispatching tasks to them.
+Thread pools are not a perfect solution, because when a thread blocks for some
+resource in the middle of a task, the thread cannot switch to a different task. But,
+the thread pool will inevitably create more threads than there are processors 
+available, so that runnable threads are available to be scheduled even when other
+threads have blocked. The thread pool is integrated with many of the common 
+synchronization mechanisms, such as awaiting the completion of I/O or blocking until

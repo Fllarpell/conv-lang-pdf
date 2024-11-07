@@ -1,0 +1,44 @@
+SEC. 5.6
+USER INTERFACES: KEYBOARD, MOUSE, & MONITOR
+413
+Windows a program cannot assume that whatever it draws on the screen will stay
+there until it removes it. Other windows can be dragged on top of this one, menus
+can be pulled down over it, dialog boxes and tool tips can cover part of it, and so
+on. When these items are removed, the window has to be redrawn. The way 
+Windows tells a program to redraw a window is to send it a WM PA US message. As a
+friendly gesture, it also provides information about what part of the window has
+been overwritten, in case it is easier or faster to regenerate that part of the window
+instead of redrawing the whole thing from scratch.
+There are two ways Windows can get a program to do something. One way is
+to post a message to its message queue. This method is used for keyboard input,
+mouse input, and timers that have expired. The other way, sending a message to the
+window, inv olves having Windows directly call WndProc itself. This method is
+used for all other events. Since Windows is notified when a message is fully 
+processed, it can refrain from making a new call until the previous one is finished. In
+this way race conditions are avoided.
+There are many more message types. To avoid erratic behavior should an
+unexpected message arrive, the program should call DefWindowProc at the end of
+WndProc to let the default handler take care of the other cases.
+In summary, a Windows program normally creates one or more windows with
+a class object for each one. Associated with each program is a message queue and
+a set of handler procedures. Ultimately, the program’s behavior is driven by the
+incoming events, which are processed by the handler procedures. This is a very 
+different model of the world than the more procedural view that UNIX takes.
+Drawing to the screen is handled by a package consisting of hundreds of 
+procedures that are bundled together to form the GDI (Graphics Device Interface).
+It can handle text and graphics and is designed to be platform and device 
+independent. Before a program can draw (i.e., paint) in a window, it needs to acquire a 
+device context, which is an internal data structure containing properties of the 
+window, such as the font, text color, background color, and so on. Most GDI calls use
+the device context, either for drawing or for getting or setting the properties.
+Various ways exist to acquire the device context. A simple example of its
+acquisition and use is
+hdc = GetDC(hwnd);
+Te xtOut(hdc, x, y, psText, iLength);
+ReleaseDC(hwnd, hdc);
+The first statement gets a handle to a device content, hdc. The second one uses the
+device context to write a line of text on the screen, specifying the (x, y) coordinates
+of where the string starts, a pointer to the string itself, and its length. The third call
+releases the device context to indicate that the program is through drawing for the
+moment. Note that hdc is used in a way analogous to a UNIX file descriptor. Also
+note that ReleaseDC contains redundant information (the use of hdc uniquely

@@ -1,0 +1,48 @@
+SEC. 5.6
+USER INTERFACES: KEYBOARD, MOUSE, & MONITOR
+405
+Remote host
+Window
+manager
+Application
+program
+Motif
+Intrinsics
+Xlib
+X client
+UNIX
+Hardware
+X server
+UNIX
+Hardware
+Window
+User
+space
+Kernel
+space
+X protocol
+Network
+Figure 5-33. Clients and servers in the M.I.T. X Window System.
+elements, called widgets. To make a true GUI interface, with a uniform look and
+feel, another layer is needed (or several of them). One example is Motif, shown in
+Fig. 5-33, which is the basis of the Common Desktop Environment used on Solaris
+and other commercial UNIX systems Most applications make use of calls to Motif
+rather than Xlib. Gnome and KDE have a similar structure to Fig. 5-33, only with
+different libraries. Gnome uses the GTK+ library and KDE uses the Qt library.
+Whether having two GUIs is better than one is debatable.
+Also worth noting is that window management is not part of X itself. The
+decision to leave it out was fully intentional. Instead, a separate X client process,
+called a window manager, controls the creation, deletion, and movement of 
+windows on the screen. To manage windows, it sends commands to the X server 
+telling it what to do. It often runs on the same machine as the X client, but in theory
+can run anywhere. There have been over a hundred window managers for UNIX
+written and many are still in active use. Some were designed to be lean and mean,
+while others add fancy 3D graphics or try to create a look and feel of Windows on
+UNIX. For hardcore fans of the Emacs editors, there is even the Emacs X Window
+Manager, written in Lisp, that is sure to blow the minds of their misguided vi
+friends.
+Window managers control the appearance and placement of windows. On top
+of the window manager, most people use a desktop environment such as GNOME
+or KDE. The desktop environment provides a pre-configured, pleasant working
+environment that is more deeply integrated with applications, for instance with
+respect to drag-and-drop functionality, panels, and sidebars.

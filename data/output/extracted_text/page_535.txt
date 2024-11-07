@@ -1,0 +1,46 @@
+506
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+While fine-grained CPU control can also be used, core partitioning is actually very
+popular in practice. The mechanism goes back to the first years of this millennium.
+Back in 2004, programmers at Bull SA (the French company that distributed
+Multics from 1975 until 2000) came up with the notion of cpusets. Cpusets allow
+administrators to associate specific CPUs or cores and subsets of memory to a
+group of processes. Since then, cpusets have been extended and modified by 
+different programmers from different organizations, among them Paul Menage at
+Google who also played a leading role in the development of cgroups. This is no
+coincidence: cpusets match the controller model of cgroups to a t, allowing them to
+limit a cgroup’s usage of CPU and memory at a coarse granularity. In particular,
+cpusets allow one to assign to a cgroup a set of CPUs and memory nodes—where a
+memory node simply refers to a node that contains memory, for instance in a
+NUMA system. Thus, administrators can specify that this cgroup may use these
+CPU cores and that all its memory will be allocated from the memory at these
+nodes only. Coarse, but effective!
+Moreover, cpusets are hierarchical. In other words, it is possible to subpartition
+the resources in a parent cpuset into child cpusets. Thus, the root cpuset contains
+all CPUs and all memory nodes, all level-1 cpusets are subpartitions of its
+resources, all level-2 cpusets are subpartitions of their level-1 cpusets, and so on.
+Cgroups are similarly hierarchical. Given the example above, we can create two
+child cgroups in the parent cgroup CCPU+Mem. By attaching different subpartitions
+of the cpuset with each child cgroup, administrators can ensure that different
+groups of process keep out of each other’s hair.
+Using concepts such as cgroups, cpusets, and name spaces, OS-level 
+virtualization allows the creation of isolated containers without resorting to hypervisors
+or hardware virtualization. These containers have been around for many years, but
+they really started taking off after the introduction of convenient platforms such as
+Docker, Kubernetes, and Microsoft Azure Container Registry that help 
+administrators to build, deploy, and manage them.
+Compared to hypervisor-based virtual machines, containers are generally more
+lightweight: faster to start and more efficient in resource consumption. They hav e
+other advantages also. For instance, system administration is easier if we need to
+maintain only a single operating system rather than a separate operating system per
+virtual machine.
+However, there are downsides also. First, you cannot run multiple operating
+systems on the same machine. If you want to run Windows and UNIX at the same
+time, containers will not do you much good. Second, while the isolation is pretty
+good, it is by no means absolute, as the different containers still share the same
+operating system and may interfere with each other there. If the operating system
+has static limits on certain resources (such as the number of open files) and one
+container uses (almost) all of them, the other containers will be in trouble. 
+Similarly, a single vulnerability in the operating system endangers all the containers. In
+comparison, the isolation offered by hypervisors is considerably stronger. Also,

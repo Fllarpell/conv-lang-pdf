@@ -1,0 +1,44 @@
+640
+SECURITY 
+CHAP. 9
+Siemens computers controlling the centrifuges used a default password—one that
+had been circulating on the Internet for years.
+The growth of the Web has made the problem worse. Instead of having only
+one password, many people now hav e dozens or hundreds. Since remembering
+them all is too hard, they tend to choose simple, weak passwords and reuse them
+on many Websites (Florencio and Herley, 2007; and Taiabul Haque et al., 2013).
+Does it really matter if passwords are easy to guess? Yes, absolutely. In 1998,
+the San Jose Mercury News reported that a Berkeley resident, Peter Shipley, had
+set up several unused computers as war dialers, which dialed all 10,000 telephone
+numbers belonging to an exchange [e.g., (415) 770-xxxx], usually in random order
+to thwart telephone companies that frown upon such usage and try to detect it.
+After making 2.6 million calls, he located 20,000 computers in the Bay Area, 200
+of which had no security at all.
+The Internet has been a godsend to crackers. It takes all the drudgery out of
+their work. No more phone numbers to dial (and no more dial tones to wait for).
+‘‘War dialing’’ now works like this. A cracker may write a script ping (send a 
+network packet) to a set of IP addresses. If it receives any response at all, the script
+subsequently tries to set up a TCP connection to all the possible services that may
+be running on the machine. As mentioned earlier, this mapping out of what is 
+running on which computer is known as portscanning and instead of writing a script
+from scratch, the attacker may just as well use specialized tools like nmap that 
+provide a wide range of advanced portscanning techniques. Now that the attacker
+knows which servers are running on which machine, the next step is to launch the
+attack. For instance, if the attacker wanted to probe the password protection, he
+would connect to those services that use this method of authentication, like the 
+telnet or ssh servers, or even Web servers. We hav e already seen that default and
+otherwise weak password enable attackers to harvest a large number of accounts,
+sometimes with full administrator rights.
+UNIX Password Security
+Some (older) operating systems keep the password file on the disk in
+unencrypted form (plaintext), but protected by the usual system protection 
+mechanisms. Having all the passwords in a disk file in unencrypted form is just looking for
+trouble because all too often many people have access to it. These may include 
+system administrators, machine operators, maintenance personnel, programmers,
+management, and maybe even some secretaries.
+A better solution, used in UNIX systems, works like this. The login program
+asks the user to type his name and password. The password is immediately
+‘‘encrypted’’ by using it as a key to encrypt a fixed block of data. Effectively, a
+one-way function is being run, with the password as input and a function of the
+password as output. This process is not really encryption, but it is easier to speak
+of it as ‘‘encryption.’’ The login program then reads the password file, which is just

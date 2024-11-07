@@ -1,0 +1,44 @@
+1038
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+20. Windows uses a facility called Autoboost to temporarily raise the priority of a thread
+that holds the resource that is required by a higher-priority thread. How do you think
+this works?
+21. In Windows, it is easy to implement a facility where threads running in the kernel can
+temporarily attach to the address space of a different process. Why is this so much
+harder to implement in user mode? Why might it be interesting to do so?
+22. Name two ways to give better response time to the threads in important processes.
+23. Even when there is plenty of free memory available, and the memory manager does not
+need to trim working sets, the paging system can still often be writing to disk. Why?
+24. Windows swaps the processes for modern applications rather than reducing their 
+working set and paging them. Why would this be more efficient? (Hint: It makes much less
+of a difference when the disk is an SSD.)
+25. Why does the self-map used to access the physical pages of the page directory and
+page tables for a process always occupy the same 512 GB of kernel virtual addresses
+(with 4-level page tables mapping 48-bit address space on the x64)?
+26. On x64, with 4-level page tables, what would be the virtual address of the self-map
+entry if the self-map entry were at index 0x155 instead of 0x1ED?
+27. If a region of virtual address space is reserved but not committed, do you think a VAD
+is created for it? Defend your answer.
+28. Which of the transitions shown in Fig. 11-37 are policy decisions, as opposed to
+required moves forced by system events (e.g., a process exiting and freeing its pages)?
+29. Suppose that a page is shared and in two working sets at once. If it is evicted from one
+of the working sets, where does it go in Fig. 11-37? What happens when it is evicted
+from the second working set?
+30. What are the other ways workloads can interfere with one another on a machine even if
+we run them on different processor cores, use memory partitions and use different
+disks (or use disk io rate controls)?
+31. What are some other potential benefits of an infrastructure like memory compression
+beyond what has been mentioned in this chapter so far? What are some possibilities?
+32. Suppose that a dispatcher object representing some type of exclusive lock (like a
+mutex) is marked to use a notification event instead of a synchronization event to
+announce that the lock has been released. Why would this be bad? How much would
+the answer depend on lock hold times, the length of quantum, and whether the system
+was a multiprocessor?
+33. To support POSIX, the native NtCreateProcess API supports duplicating a process in
+order to support fork. In UNIX, fork is usually followed by an exec. One example
+where this was used historically was in the Berkeley dump program which would 
+backup disks to magnetic tape. Fork was used as a way of checkpointing the dump program
+so it could be restarted if there was an error with the tape device. Give an example of
+how Windows might do something similar using NtCreateProcess. (Hint: Consider
+processes that host DLLs to implement functionality provided by a third party.)

@@ -1,0 +1,44 @@
+CHAP. 2  
+PROBLEMS
+177
+(d) Q = S
+(e) Q nearly 0
+44. Five jobs are waiting to be run. Their expected run times are 9, 6, 3, 5, and X. In what
+order should they be run to minimize average response time? (Your answer will
+depend on X.)
+45. Five batch jobs, A through E, arrive at almost the same time. They hav e estimated 
+running times of 10, 6, 2, 4, and 8 minutes. Their (externally determined) priorities are 3,
+5, 2, 1, and 4, respectively, with 5 being the highest priority. For each of the following
+scheduling algorithms, determine the mean process turnaround time. Ignore process
+switching overhead.
+(a) Round robin.
+(b) Priority scheduling.
+(c) First-come, first-served (run in order 10, 6, 2, 4, 8).
+(d) Shortest job first.
+For (a), assume that the system is multiprogrammed, and that each job gets its fair
+share of the CPU. For (b) through (d), assume that only one job at a time runs, until it
+finishes. All jobs are completely CPU bound.
+46. A process running on CTSS needs 30 quanta to complete. How many times must it be
+swapped in, including the very first time (before it has run at all)?
+47. Consider a real-time system with two voice calls of periodicity 5 msec each with CPU
+time per call of 1 msec, and one video stream of periodicity 33 msec with CPU time
+per call of 11 msec. Is this system schedulable? Show how you derived your answer.
+48. For the above problem, can another video stream be added and have the system still be
+schedulable?
+49. The aging algorithm with a = 1/2 is being used to predict run times. The previous four
+runs, from oldest to most recent, are 40, 20, 40, and 15 msec. What is the prediction of
+the next time?
+50. A soft real-time system has four periodic events with periods of 50, 100, 200, and 250
+msec each. Suppose that the four events require 35, 20, 10, and x msec of CPU time,
+respectively. What is the largest value of x for which the system is schedulable?
+51. A real-time system needs to handle two voice calls that each run every 6 msec and 
+consume 1 msec of CPU time per burst, plus one video at 25 frames/sec, with each frame
+requiring 20 msec of CPU time. Is this system schedulable?
+52. Consider a system in which it is desired to separate policy and mechanism for the
+scheduling of kernel threads. Propose a means of achieving this goal.
+53. The readers and writers problem can be formulated in several ways with regard to
+which category of processes can be started when. Carefully describe three different
+variations of the problem, each one favoring (or not favoring) some category of 
+processes (e.g., readers or writers). For each variation, specify what happens when a reader
+or a writer becomes ready to access the database, and what happens when a process is
+finished.

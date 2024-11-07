@@ -1,0 +1,41 @@
+SEC. 11.11
+SECURITY IN WINDOWS
+1021
+used. The Groups field specifies the groups to which the process belongs. The
+default DACL (Discretionary ACL) is the access control list assigned to objects
+created by the process if no other ACL is specified. The user SID tells who owns
+the process. The restricted SIDs are to allow untrustworthy processes to take part
+in jobs with trustworthy processes but with less power to do damage.
+Figure 11-55. Structure of an access token.
+Finally, the privileges listed, if any, giv e the process special powers denied
+ordinary users, such as the right to shut the machine down or access files to which
+access would otherwise be denied. In effect, the privileges split up the power of
+the superuser into several rights that can be assigned to processes individually. In
+this way, a user can be given some superuser power, but not all of it. In summary,
+the access token tells who owns the process and which defaults and powers are
+associated with it.
+When a user logs in, winlogon gives the initial process an access token. 
+Subsequent processes normally inherit this token on down the line. A process’ access
+token initially applies to all the threads in the process. However, a thread can
+acquire a different access token during execution, in which case the thread’s access
+token overrides the process’ access token. In particular, a client thread can pass its
+access rights to a server thread to allow the server to access the client’s protected
+files and other objects. This mechanism is called impersonation. It is 
+implemented by the transport layers (i.e., ALPC, named pipes, and TCP/IP) and used by
+RPC to communicate from clients to servers. The transports use internal interfaces
+in the kernel’s security reference monitor component to extract the security context
+for the current thread’s access token and ship it to the server side, where it is used
+to construct a token which can be used by the server to impersonate the client.
+Another basic concept is the security descriptor. Every object has a security
+descriptor associated with it that tells who can perform which operations on it. The
+security descriptors are specified when the objects are created. The NTFS file 
+system and the registry maintain a persistent form of security descriptor, which is used
+to create the security descriptor for File and Key objects (the object-manager
+objects representing open instances of files and keys).
+A security descriptor consists of a header followed by a DACL with one or
+more ACEs (Access Control Entries). The two main kinds of elements are Allow
+and Deny. An Allow element specifies an SID and a bitmap that specifies which
+operations processes that SID may perform on the object. A Deny element works
+the same way, except a match means the caller may not perform the operation. For
+example, Ida has a file whose security descriptor specifies that everyone has read
+access, Elvis has no access. Cathy has read/write access, and Ida herself has full

@@ -1,0 +1,47 @@
+168
+PROCESSES AND THREADS
+CHAP. 2
+A B E C D E A B E C D E ...
+Numerous other possibilities exist, of course, and can be exploited, depending on
+what the notion of fairness is.
+2.5.4 Scheduling in Real-Time Systems
+A real-time system is one in which time plays an essential role. Typically, one
+or more physical devices external to the computer generate stimuli, and the 
+computer must react appropriately to them within a fixed amount of time. For example,
+the computer in a compact disc player gets the bits as they come off the drive and
+must convert them into music within a very tight time interval. If the calculation
+takes too long, the music will sound peculiar. Other real-time systems are patient
+monitoring in a hospital intensive-care unit, the autopilot in an aircraft, and robot
+control in an automated factory. In all these cases, having the right answer but 
+having it too late is often just as bad as not having it at all.
+Real-time systems are generally categorized as hard real time, meaning there
+are absolute deadlines that must be met—or else!—and soft real time, meaning
+that missing an occasional deadline is undesirable, but nevertheless tolerable. In
+both cases, real-time behavior is achieved by dividing the program into a number
+of processes, each of whose behavior is predictable and known in advance. These
+processes are generally short lived and can run to completion in well under a 
+second. When an external event is detected, it is the job of the scheduler to schedule
+the processes in such a way that all deadlines are met.
+The events that a real-time system may have to respond to can be further 
+categorized as periodic (meaning they occur at regular intervals) or aperiodic 
+(meaning they occur unpredictably). A system may have to respond to multiple 
+periodicev ent streams. Depending on how much time each event requires for processing,
+handling all of them may not even be possible. For example, if there are m periodic
+ev ents and event i occurs with period Pi and requires Ci sec of CPU time to handle
+each event, then the load can be handled only if
+m
+i=1Y
+Ci
+Pi
+) 1
+A real-time system that meets this criterion is said to be schedulable. This means
+it can actually be implemented. A process that fails to meet this test cannot be
+scheduled because the total amount of CPU time the processes want collectively is
+more than the CPU can deliver.
+As an example, consider a soft real-time system with three periodic events,
+with periods of 100, 200, and 500 msec, respectively. If these events require 50, 30,
+and 100 msec of CPU time per event, respectively, the system is schedulable
+because 0. 5 + 0. 15 + 0. 2 < 1. If a fourth event with a period of 1 sec is added, the
+system will remain schedulable as long as this event does not need more than 150
+msec of CPU time per event. Implicit in this calculation is the assumption that the
+context-switching overhead is so small that it can be ignored.

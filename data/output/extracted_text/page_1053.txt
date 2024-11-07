@@ -1,0 +1,46 @@
+1024
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+access found there is taken as definitive. If all the rights the caller needs are 
+available, the open succeeds; otherwise it fails.
+DACLs can have Deny entries as well as Allow entries, as we have seen. For
+this reason, it is usual to put entries denying access in front of entries granting
+access in the ACL, so that a user who is specifically denied access cannot get in via
+a back door by being a member of a group that has legitimate access.
+After an object has been opened, a handle to it is returned to the caller. On 
+subsequent calls, the only check that is made is whether the operation now being tried
+was in the set of operations requested at open time, to prevent a caller from 
+opening a file for reading and then trying to write on it. Additionally, calls on handles
+may result in entries in the audit logs, as required by the SACL.
+Windows added another security facility to deal with common problems 
+securing the system by ACLs. There are new mandatory integrity-level SIDs in the
+process token, and objects specify an integrity-level ACE in the SACL. The 
+integrity level prevents write-access to objects no matter what ACEs are in the DACL.
+There are fiv e major integrity levels: untrusted, low, medium, high, and system. In
+particular, the integrity-level scheme is used to protect against a web browser 
+process that has been compromised by an attacker (perhaps by the user ill-advisedly
+downloading code from an unknown Website). In addition to using severely
+restricted tokens, browser sandboxes run with an integrity level of low or 
+untrusted. By default all files and registry keys in the system have an integrity level of
+medium, so browsers running with lower integrity levels cannot modify them.
+Even though highly security-conscious applications like browsers make use of
+system mechanisms to follow the principle of least privilege, there are many 
+popular applications that do not. In addition, there is the chronic problem in Windows
+where most users run as administrators. The design of Windows does not require
+users to run as administrators, but many common operations unnecessarily required
+administrator rights and most user accounts ended up getting created as 
+administrators. This also led to many programs acquiring the habit of storing data in global
+registry and file system locations to which only administrators have write access.
+This neglect over many releases made it just about impossible to use Windows 
+successfully if you were not an administrator. Being an administrator all the time is
+dangerous. Not only can user errors easily damage the system, but if the user is
+somehow fooled or attacked and runs code that is trying to compromise the system,
+the code will have administrative access, and can bury itself deep in the system.
+In order to deal with this problem, Windows introduced UA C (User Account
+Control). With UAC, even administrator users run with standard user rights. If an
+attempt is made to perform an operation requiring administrator access, the system
+overlays a special desktop and takes control so that only input from the user can
+authorize the access (similarly to how CTRL-ALT-DEL works for C2 security).
+This is called an elevation. Under the covers, UAC creates two tokens for the user
+session during administrator user logon: one is a regular administrator token and
+the other is a restricted token for the same user, but with the administrator rights

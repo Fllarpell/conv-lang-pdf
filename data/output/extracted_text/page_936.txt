@@ -1,0 +1,46 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+907
+loaded and linked by the kernel on Windows, including network protocol stacks
+and file systems.
+Recent versions of Windows have a lot more support for running device drivers
+in user mode, and this is the preferred model for new device drivers. There are 
+hundreds of thousands of different device drivers for Windows working with more
+than a million distinct devices. This represents a lot of code to get correct. It is
+much better if bugs cause a device to become inaccessible by crashing in a 
+usermode process rather than causing the system to crash. Bugs in kernel-mode device
+drivers are the major source of the dreaded BSOD (Blue Screen Of Death) where
+Windows detects a fatal error within kernel mode and shuts down or reboots the
+system. BSOD’s are comparable to kernel panics on UNIX systems.
+Since device drivers make up something in the vicinity of 70% of the code in
+the kernel, the more drivers that can be moved into user-mode processes, where a
+bug will only trigger the failure of a single driver (rather than bringing down the
+entire system), the better. The trend of moving code from the kernel to user-mode
+processes for improved system reliability has been accelerating in recent years.
+The I/O manager also includes the plug-and-play and device 
+power-management facilities. Plug-and-play comes into action when new devices are 
+detected on the system. The plug-and-play subcomponent is first notified. It works with a
+service, the user-mode plug-and-play manager, to find the appropriate device driver
+and load it into the system. Getting the right one is not always easy and sometimes
+depends on sophisticated matching of the specific hardware device version to a
+particular version of the drivers. Sometimes a single device supports a standard
+interface which is supported by multiple different drivers, written by different 
+companies.
+We will study I/O further in Sec. 11.7 and the most important NT file system,
+NTFS, in Sec. 11.8.
+Device power management reduces power consumption when possible,
+extending battery life on notebooks, and saving energy on desktops and servers.
+Getting power management correct can be challenging as there are many subtle
+dependencies between devices and the buses that connect them to the CPU and
+memory. Power consumption is not affected just by what devices are powered-on,
+but also by the clock rate of the CPU, which is also controlled by the device power
+manager. We will take a more in-depth look at power management in Sec. 11.9.
+The process manager manages the creation and termination of processes and
+threads, including establishing the policies and parameters which govern them. But
+the operational aspects of threads are determined by the kernel layer, which 
+controls scheduling and synchronization of threads, as well as their interaction with
+the control objects, like APCs. Processes contain threads, an address space, and a
+handle table containing the handles the process can use to refer to kernel-mode
+objects. Processes also include information needed by the scheduler for switching
+between address spaces and managing process-specific hardware information (like
+segment descriptors). We will study process and thread management in Sec. 11.4.

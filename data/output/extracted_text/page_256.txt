@@ -1,0 +1,46 @@
+SEC. 3.5
+DESIGN ISSUES FOR PAGING SYSTEMS
+227
+This last point can be analyzed mathematically. Let the average process size be
+s bytes and the page size be p bytes. Furthermore, assume that each page entry
+requires e bytes. The approximate number of pages needed per process is then s/p,
+occupying se /p bytes of page table space. The wasted memory in the last page of
+the process due to internal fragmentation is p/2. The total overhead due to the
+page table and the internal fragmentation loss is the sum of these two terms:
+overhead = se /p + p/2
+The first term (page table size) is large when the page size is small. The second
+term (internal fragmentation) is large when the page size is large. The optimum
+must lie somewhere in between. By taking the first derivative with respect to p and
+equating it to zero, we get the equation
+<se /p2 + 1/2 = 0
+From this equation, we can derive a formula that gives the optimum page size
+(considering only memory wasted in fragmentation and page table size). The
+result is:
+p = 3} }}
+2se
+For s = 1MB and e = 8 bytes per page table entry, the optimum page size is 4 KB.
+Commercially available computers have used page sizes ranging from 512 bytes to
+64 KB. A typical value used to be 1 KB, but nowadays 4 KB is more common.
+3.5.5 Separate Instruction and Data Spaces
+Most computers have a single address space that holds both programs and data,
+as shown in Fig. 3-24(a). If this address space is large enough, everything works
+fine. However, if it’s too small, it forces programmers to stand on their heads to fit
+ev erything into the address space.
+Single address!
+space
+232
+0
+Data
+Program
+(a)
+I space
+D space
+232
+0
+Program
+Unused page
+Data
+(b)
+Figure 3-24. (a) One address space. (b) Separate I and D spaces.
+One solution, pioneered on the (16-bit) PDP-11, is to have separate address
+spaces for instructions (program text) and data, called I-space and D-space,

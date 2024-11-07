@@ -1,0 +1,46 @@
+922
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+called Global, pointing to the top-level \ BaseNamedObjects directory. That way,
+an application can call CreateEvent with ‘‘Global\MyEvent’’ to open \ 
+BaseNamedObjects\MyEvent. Similarly, sometimes a Session 0 service may need to open or
+create a named object in a particular user session. The BaseNamedObjects 
+directory contains another symbolic link called Session which points to \ 
+Sessions\BNOLINKS. That directory, in turn, contains a symbolic link for each active
+session, pointing to that session’s BaseNamedObjects directory. Therefore, a 
+Session 0 process can use the ‘‘Session\3\MyEvent’’ Win32 name to get redirected to
+\ Sessions\3\BaseNamedObjects\MyEvent.
+In the Universal Windows Platform section, we described how UWP apps run
+in a sandbox called an AppContainer. Namespace isolation for AppContainers is
+also achieved via BaseNamedObjects mapping. Each session, including Session 0,
+contains an AppContainerNamedObjects directory underneath \ Sessions\<ID>.
+Each AppContainer has a dedicated directory here for its BaseNamedObjects
+whose name is derived from the UWP application’s package identity. This gives
+each UWP app its own isolated Win32 namespace. This arrangement also avoids
+the namespace squatting problem where a malicious application creates a named
+object that it knows its victim will open when it runs. Most Win32 API calls to 
+create named objects will, by default, open the object if it already exists in order to
+facilitate sharing, but this behavior also allows a squatter to create the object first,
+ev en though it might not have had the required permissions to open the object had
+it been created by the victim application first.
+So far we discussed how the Win32 named object namespace is mapped to the
+global namespace using object manager facilities. The Win32 device namespace
+also relies on the object manager for proper instancing and isolation. The 
+interestingly named directory \ GLOBAL?? shown in Fig. 11-19 contains all Win32 
+device names, such as A: for the floppy disk and C: for the first hard disk. These
+names are actually symbolic links to the \ Device directory where the device
+objects live. For example, C: might be a symbolic link to \ Device\ 
+HarddiskVolume1.
+Windows allows each user to map Win32 drive letters to devices such as local
+or remote volumes. Such mappings need to be kept local to that user session to
+avoid interfering with other users’ mappings. This is achieved, again, by instancing
+the object manager directory containing Win32 devices. Session-local device 
+mappings are stored in the DosDevices directory for each session (e.g., \ 
+Sessions\1\DosDevices\Z:). The Win32 layer in user-mode always prepends \ ??\ to
+paths, indicating that these are Win32 device paths. The object manager has 
+specific handling for items under the \ ?? directory: it first searches for the item in the
+session-local DosDevices directory associated with the calling process. If the item
+is not found, then the \ GLOBAL?? directory is searched. For example, a CreateFile
+call for ‘‘C:’’ from a process in Session 2 will result in an NtCreateFile call to
+\ ??\ C: and the object manager will check \ Sessions\2\DosDevices\CZ: followed
+by \ GLOBAL??\C: to find the symbolic link.

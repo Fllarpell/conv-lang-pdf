@@ -1,0 +1,46 @@
+SEC. 1.3
+COMPUTER HARDWARE REVIEW
+31
+systems work like this. The second way is to make an entry in an operating system
+file telling it that it needs the driver and then reboot the system. At boot time, the
+operating system goes and finds the drivers it needs and loads them. Older versions
+of Windows work this way. The third way is for the operating system to be able to
+accept new drivers while running and install them on the fly without the need to
+reboot. This way used to be rare but is becoming much more common now. 
+Hotpluggable devices, such as USB and Thunderbolt devices (discussed below),
+always need dynamically loaded drivers.
+Every controller has a small number of registers that are used to communicate
+with it. For example, a minimal disk controller might have registers for specifying
+the disk address, memory address, sector count, and direction (read or write). To
+activate the controller, the driver gets a command from the operating system, then
+translates it into the appropriate values to write into the device registers. The 
+collection of all the device registers forms the I/O port space, a subject we will come
+back to in Chap. 5.
+On some computers, the device registers are mapped into the operating 
+system’s address space (the addresses it can use), so they can be read and written like
+ordinary memory words. On such computers, no special I/O instructions are
+required and user programs can be kept away from the hardware by not putting
+these memory addresses within their reach (e.g., by using base and limit registers).
+On other computers, the device registers are put in a special I/O port space, with
+each register having a port address. On these machines, special IN and OUT
+instructions are available in kernel mode to allow drivers to read and write the 
+registers. The former scheme eliminates the need for special I/O instructions but uses
+up some of the address space. The latter uses no address space but requires special
+instructions. Both systems are widely used.
+Input and output can be done in three different ways. In the simplest method, a
+user program issues a system call, which the kernel then translates into a procedure
+call to the appropriate driver. The driver then starts the I/O and sits in a tight loop
+continuously polling the device to see if it is done (usually there is some bit that
+indicates that the device is still busy). When the I/O has completed, the driver puts
+the data (if any) where they are needed and returns. The operating system then
+returns control to the caller. This method is called busy waiting and has the
+disadvantage of tying up the CPU polling the device until it is finished.
+The second method is for the driver to start the device and ask it to give an
+interrupt when it is finished. At that point, the driver returns. The operating 
+system then blocks the caller if need be and looks for other work to do. When the 
+controller detects the end of the transfer, it generates an interrupt to signal 
+completion.
+Interrupts are very important in operating systems, so let us examine the idea
+more closely. In Fig. 1-11(a) we see a three-step process for I/O. In step 1, the
+driver tells the controller what to do by writing into its device registers. The 
+controller then starts the device. When the controller has finished reading or writing

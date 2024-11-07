@@ -1,0 +1,38 @@
+SEC. 1.1
+WHAT IS AN OPERATING SYSTEM?
+5
+This abstraction is the key to managing all this complexity. Good abstractions
+turn a nearly impossible task into two manageable ones. The first is defining and
+implementing the abstractions. The second is using these abstractions to solve the
+problem at hand. One abstraction that almost every computer user understands is
+the file, as mentioned above. It is a useful piece of information, such as a digital
+photo, saved email message, song, or Web page. It is much easier to deal with 
+photos, emails, songs, and Web pages than with the details of SATA (or other) disks.
+The job of the operating system is to create good abstractions and then implement
+and manage the abstract objects thus created. In this book, we will talk a lot about
+abstractions. They are one of the keys to understanding operating systems.
+This point is so important that it is worth repeating but in different words. With
+all due respect to the industrial engineers who so very carefully designed the Apple
+Macintosh computers (now known simply as ‘‘Macs’’), hardware is grotesque.
+Real processors, memories, Flash drives, disks, and other devices are very 
+complicated and present difficult, awkward, idiosyncratic, and inconsistent interfaces to
+the people who have to write software to use them. Sometimes this is due to the
+need for backward compatibility with older hardware. Other times it is an attempt
+to save money. Often, however, the hardware designers do not realize (or care) how
+much trouble they are causing for the software. One of the major tasks of the 
+operating system is to hide the hardware and present programs (and their programmers)
+with nice, clean, elegant, consistent, abstractions to work with instead. Operating
+systems turn the awful into the beautiful, as shown in Fig. 1-2.
+Operating system
+Hardware
+Awful interface
+Beautiful interface
+Application programs
+Figure 1-2. Operating systems turn awful hardware into beautiful abstractions.
+It should be noted that the operating system’s real customers are the 
+application programs (via the application programmers, of course). They are the ones
+who deal directly with the operating system and its abstractions. In contrast, end
+users deal with the abstractions provided by the user interface, either a 
+command-line shell or a graphical interface. While the abstractions at the user interface
+may be similar to the ones provided by the operating system, this is not always the
+case. To make this point clearer, consider the normal Windows desktop and the

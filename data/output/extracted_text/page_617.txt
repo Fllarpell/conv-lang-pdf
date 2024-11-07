@@ -1,0 +1,42 @@
+588
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+an Ethernet header directing the packet to the router on the Ethernet. This router
+then injects the packet into the Internet, as depicted in Fig. 8-31.
+Internet
+Ethernet 1!
+header
+Headers
+Router
+Message
+Host
+Ethernet
+TCP
+Message
+IP
+Figure 8-31. Accumulation of packet headers.
+To establish a connection with a remote host (or even to send it a datagram), it
+is necessary to know its IP address. Since managing lists of 32-bit IP addresses is
+inconvenient for people, a scheme called DNS (Domain Name System) was
+invented as a database that maps ASCII names for hosts onto their IP addresses.
+Thus it is possible to use the DNS name star.cs.vu.nl instead of the corresponding
+IP address 130.37.24.6. DNS names are commonly known because Internet email
+addresses are of the form user-name@DNS-host-name.
+This naming system
+allows the mail program on the sending host to look up the destination host’s IP
+address in the DNS database, establish a TCP connection to the mail daemon 
+process there, and send the message as a file. The user-name is sent along to identify
+which mailbox to put the message in.
+8.3.3 Document-Based Middleware
+Now that we have some background on networks and protocols, we can start
+looking at different middleware layers that can overlay the basic network to 
+produce a consistent paradigm for applications and users. We will start with a simple
+but well-known example: the World Wide Web. The Web was invented by Tim
+Berners-Lee at CERN, the European Nuclear Physics Research Center, in 1989 and
+since then has spread like wildfire all over the world.
+The original paradigm behind the Web was quite simple: every computer can
+hold one or more documents, called Web pages. Each Web page contains text,
+images, icons, sounds, movies, and the like, as well as hyperlinks (pointers) to
+other Web pages. When a user requests a Web page using a program called a Web
+browser, the page is displayed on the screen. Clicking on a link causes the current
+page to be replaced on the screen by the page pointed to. Although many bells and

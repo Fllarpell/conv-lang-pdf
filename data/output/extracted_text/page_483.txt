@@ -1,0 +1,40 @@
+454
+DEADLOCKS 
+CHAP. 6
+Now consider a minor variation of the situation of Fig. 6-10. Suppose that
+process 3 needs a camera as well as the two tape drives and the plotter. None of
+the requests can be satisfied, so the entire system will eventually be deadlocked.
+Even if we give process 3 its two tape drives and one plotter, the system deadlocks
+when it requests the camera.
+Now that we know how to detect deadlocks (at least with static resource
+requests known in advance), the question of when to look for them comes up. One
+possibility is to check every time a resource request is made. This is certain to
+detect them as early as possible, but it is potentially expensive in terms of CPU
+time. An alternative strategy is to check every k minutes, or perhaps only when the
+CPU utilization has dropped below some threshold. The reason for considering the
+CPU utilization is that if enough processes are deadlocked, there will be few 
+runnable processes, and the CPU will often be idle.
+6.4.3 Recovery from Deadlock
+Suppose that our deadlock detection algorithm has succeeded and detected a
+deadlock. What next? Some way is needed to recover and get the system going
+again. In this section, we will discuss various ways of recovering from deadlock.
+None of them are especially attractive, howev er.
+Recovery through Preemption
+In some cases, it may be possible to temporarily take a resource away from its
+current owner and give it to another process. In many cases, manual intervention
+may be required, especially in batch-processing operating systems running on
+mainframes.
+For example, to take a  laser printer away from its owner, the operator can 
+collect all the sheets already printed and put them in a pile. Then the process can be
+suspended (marked as not runnable). At this point, the printer can be assigned to
+another process. When that process finishes, the pile of printed sheets can be put
+back in the printer’s output tray and the original process restarted.
+The ability to take a  resource away from a process, have another process use it,
+and then give it back without the process noticing it is highly dependent on the
+nature of the resource. Recovering this way is frequently difficult or impossible.
+Choosing the process to suspend depends largely on which ones have resources
+that can easily be taken back.
+Recovery through Rollback
+If the system designers and machine operators know that deadlocks are likely,
+they can arrange to have processes checkpointed periodically. Checkpointing a
+process means that its state is written to a file so that it can be restarted later. The

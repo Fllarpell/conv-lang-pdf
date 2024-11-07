@@ -1,0 +1,43 @@
+1084
+OPERATING SYSTEM DESIGN
+CHAP. 12
+x86 machines with an IDE disk as the only disk and x86 machines with a SCSI disk as
+the only disk? Would it be a good idea?
+14. Indirection is a way of making an algorithm more flexible. Does it have any 
+disadvantages, and if so, what are they?
+15. Can reentrant procedures have private static global variables? Discuss your answer.
+16. The macro of Fig. 12-7(b) is clearly much more efficient than the procedure of
+Fig. 12-7(a). One disadvantage, however, is that it is hard to read. Are there any other
+disadvantages? If so, what are they?
+17. Suppose that we need a way of computing whether the number of bits in a 32-bit word
+is odd or even. Devise an algorithm for performing this computation as fast as possible.
+You may use up to 256 KB of RAM for tables if need be. Write a macro to carry out
+your algorithm. Extra Credit: Write a procedure to do the computation by looping
+over the 32 bits. Measure how many times faster your macro is than the procedure.
+18. In Fig. 12-8, we saw how GIF files use 8-bit values to index into a color palette. The
+same idea can be used with a 16-bit-wide color palette. Under what circumstances, if
+any, might a 24-bit color palette be a good idea?
+19. One disadvantage of GIF is that the image must include the color palette, which
+increases the file size. What is the minimum image size for which an 8-bit-wide color
+palette breaks even? Now repeat this question for a 16-bit-wide color palette.
+20. In the text we showed how caching path names can result in a significant speedup
+when looking up path names. Another technique that is sometimes used is having a
+daemon program that opens all the files in the root directory and keeps them open 
+permanently, in order to force their i-nodes to be in memory all the time. Does pinning the
+i-nodes like this improve the path lookup even more?
+21. Even if a remote file has not been removed since a hint was recorded, it may have been
+changed since the last time it was referenced. What other information might it be 
+useful to record?
+22. Consider a system that hoards references to remote files as hints, for example, as
+(name, remote-host, remote-name) triples. It is possible that a remote file will quietly
+be removed and then replaced. The hint may then retrieve the wrong file. How can this
+problem be made less likely to occur?
+23. In the text it is stated that locality can often be exploited to improve performance. But
+consider a case where a program reads input from one source and continuously outputs
+to two or more files. Can an attempt to take advantage of locality in the file system lead
+to a decrease in efficiency here? Is there a way around this?
+24. Fred Brooks claims that a programmer can write 1000 lines of debugged code per year,
+yet the first version of MINIX (13,000 lines of code) was produced by one person in
+under three years. How do you explain this discrepancy?
+25. Using Brooks’ figure of 1000 lines of code per programmer per year, make an estimate
+of the amount of money it took to produce Windows 11. Assume that a programmer

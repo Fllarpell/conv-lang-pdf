@@ -1,0 +1,41 @@
+SEC. 11.9
+WINDOWS POWER MANAGEMENT
+1003
+to discriminate between traffic from different connections means the processor
+does not have to awaken for every random packet that arrives at the network 
+interface.
+11.10 VIRTUALIZATION IN WINDOWS
+In the early 2000s, as computers were getting larger and more powerful, the
+industry started turning to virtual machine technology to partition large machine
+into a number of smaller virtual machines sharing the same physical hardware.
+This technology was originally used primarily in data centers or hosting 
+environments. In the next decade, however, attention turned to more fine-grained software
+virtualization and containers came into fashion.
+Docker Inc. popularized the use of containers on Linux with its popular
+Docker container manager. Microsoft added support for these types of containers
+to Windows in Windows 10 and Windows Server 2016 and partnered with Docker
+Inc. so that customers could use the same popular management platform on 
+Windows. Additionally, Windows started shipping with the Microsoft Hyper-V 
+hypervisor so that the OS itself could leverage hardware virtualization to increase 
+security. In this section, we will first look at Hyper-V and its implementation of 
+hardware virtualization. Then we will study containers built purely from software and
+describe some of the OS features that leverage hardware virtualization features.
+11.10.1 Hyper-V
+Hyper-V is Microsoft’s virtualization solution for creating and managing 
+virtual machines. The hypervisor sits at the bottom of the Hyper-V software stack and
+provides the core hardware virtualization functionality. It is a Type-1 (bare metal)
+hypervisor that runs directly on top of the hardware. The hypervisor uses 
+virtualization extensions supported by the CPU to virtualize the hardware such that
+multiple guest operating systems can run concurrently, each in its own isolated 
+virtual machine, called a partition. The hypervisor works with the other Hyper-V
+components in the virtualization stack to provide virtual machine management
+(such as startup, shutdown, pause, resume, live migration, snapshots, and device
+support). The virtualization stack runs in a special privileged partition called the
+root partition. The root partition must be running Windows, but any operating
+system, such as Linux, can be running in guest partitions which are also called
+child partitions. While it is possible to run guest operating systems that are 
+completely unaware of virtualization, performance will suffer. Now adays, most 
+operating systems are enlightened to run as a guest and include guest counterparts to the
+root virtualization stack components which help provide higher-performance 
+paravirtualized disk or network I/O. An overview of Hyper-V components is given in
+Fig. 11-50. We will discuss these components in the upcoming sections.

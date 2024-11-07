@@ -1,0 +1,98 @@
+INDEX
+1135
+Linux goals, 713–714
+Linux header file, 720
+Linux init, 742
+Linux input/output, 757–766
+implementation, 762–765
+scheduler, 764
+system calls, 761
+Linux interfaces, 714–716
+Linux journaling file system, 781
+Linux kernel structure, 720–723
+Linux loadable module, 765
+Linux login, 742–743
+Linux memory allocation, 752–753
+Linux memory management, 743–757
+implementation, 748–754
+physical, 748–752
+system calls, 746–748
+Linux modules, 765
+Linux networking, 759–761
+Linux operating system, 793–863
+Linux page replacement algorithm, 755–757
+Linux page table, 751
+Linux paging, 754–757
+Linux pipe, 725
+Linux process management, 723–743
+implementation, 730–736
+system calls, 726–730
+Linux process, 723–743
+Linux process scheduling, 736–740
+Linux runqueue, 737
+Linux scheduling, 736–740
+Linux security, 789–793
+implementation, 792–793
+system calls, 791–792
+Linux shell, 716–719, 728
+Linux signal, 725
+Linux slab allocator, 752
+Linux synchronization, 740–741
+Linux threads, 723–743
+implementation, 730–736
+system calls, 726–730
+Linux utility programs, 719–720
+Linux virtual address space, 744–745, 748
+Linux virtual file system, 775
+Linux. overview, 713–723
+Listen system call, 760
+Little-endian machine, 1045
+Live migration, 504
+Livelock, 467–468
+LLVM, 711
+Load balancing, graph theoretic, 576–577
+multicomputer, 576–579
+receiver-initiated, 578–579
+sender-initiated, 577–578
+Load control in paging, 224–225
+Loadable module, Linux, 765
+Local area network, 581
+Local page replacement, 221–224
+Local procedure call, 884, 908
+Local vs. global paging, 221–224
+Locality of reference, 214
+Location transparency, 591–592
+Lock, file system, 769
+Lock system call, 775
+Lock variable, 123
+Lock-and-key memory protection, 183–184
+Log-structured file system, 290–292
+Logic bomb, 679
+Logical block addressing, 372
+Logical dump, 310
+Logical processor, Hyper-V, 1005
+Login, Linux, 742–743
+Login spoofing, 681
+Lookup system call, 785
+LookUpAccountSid Win32 call, 1022
+Loosely coupled system, 529
+Lord Byron, 8
+Lottery scheduling, 166–167
+Lovelace, Ada, 7
+Low-level communication software, 562–564
+Low-level disk format, 372–375
+LP (see Logical processors)
+LPC (see Local Procedure Call)
+LRU (see Least Recently Used page replacement algorithm)
+LRU (see Least-Recently Used)
+Lseek system call, 54, 734, 735, 772, 1047
+LSI (see Large Scale Integration)
+Lukasiewicz, J., 412
+M
+Machine physical address, 495
+Machine simulator, 72
+MacOS, 1, 4, 14, 17
+Macro, 75
+Magic character, 717
+Magic number, 265
+Magnetic disk, 370–381

@@ -1,0 +1,44 @@
+740
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+To account for differences in task priorities and ‘‘niceness,’’ CFS changes the
+effective rate at which a task’s virtual time passes when it is running on the CPU.
+For lower-priority tasks, time passes more quickly, their vruntime value will
+increase more rapidly, and, depending on other tasks in the system, they will lose
+the CPU and be reinserted in the tree sooner than if they had a higher priority
+value. In this manner, CFS avoids using separate runqueue structures for different
+priority levels.
+In summary, selecting a node to run can be done in constant time, whereas
+inserting a task in the runqueue is done in O(log(N)) time, where N is the number
+of tasks in the system. Given the levels of load in current systems, this continues to
+be acceptable, but as the compute capacity of the nodes, and the number of tasks
+they can run, increase, particularly in the server space, it is possible that new
+scheduling algorithms will be needed in the future.
+Besides the basic scheduling algorithm, the Linux scheduler includes special
+features particularly useful for multiprocessor or multicore platforms. First, the
+runqueue structure is associated with each CPU in the multiprocessing platform.
+The scheduler tries to maintain benefits from affinity scheduling, and to schedule
+tasks on the CPU on which they were previously executing. Second, a set of 
+system calls is available to further specify or modify the affinity requirements of a
+select thread. Finally, the scheduler performs periodic load balancing across 
+runqueues of different CPUs to ensure that the system load is well balanced, while
+still meeting certain performance or affinity requirements.
+The scheduler considers only runnable tasks, which are placed on the 
+appropriate runqueue. Tasks which are not runnable and are waiting on various I/O 
+operations or other kernel events are placed on another data structure, waitqueue. A
+waitqueue is associated with each event that tasks may wait on. The head of the
+waitqueue includes a pointer to a linked list of tasks and a spinlock. The spinlock is
+necessary so as to ensure that the waitqueue can be concurrently manipulated
+through both the main kernel code and interrupt handlers or other asynchronous
+invocations.
+10.3.5 Synchronization in Linux
+In the previous section, we mentioned that Linux uses spinlocks to prevent
+concurrent modifications to data structures like the waitqueues. In fact, the kernel
+code contains synchronization variables in numerous locations. We will next 
+briefly summarize the synchronization constructs available in Linux.
+Earlier Linux kernels had just one big kernel lock. This proved highly 
+inefficient, particularly on multiprocessor platforms, since it prevented processes on
+different CPUs from executing kernel code concurrently. Hence, many new 
+synchronization points were introduced at much finer granularity.
+Linux provides several types of synchronization variables, both used internally
+in the kernel, and available to user-level applications and libraries. At the lowest

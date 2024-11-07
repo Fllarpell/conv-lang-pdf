@@ -1,0 +1,22 @@
+CHAP. 10
+PROBLEMS
+869
+written and using different file sizes. What are your observations? What do you think
+happens inside the Linux kernel which results in this behavior?
+63. Implement a basic user-level threads library to run on top of Linux. The library API
+should contain function calls like mythreads init, mythreads create, mythreads join,
+mythreads exit, mythreads yield, mythreads self, and perhaps a few others. Next,
+implement these synchronization variables to enable safe concurrent operations:
+mythreads mutex init, mythreads mutex lock, mythreads mutex unlock. Before 
+starting, clearly define the API and specify the semantics of each of the calls. Next 
+implement the user-level library with a simple, round-robin preemptive scheduler. You will
+also need to write one or more multithreaded applications, which use your library, in
+order to test it. Finally, replace the simple scheduling mechanism with another one
+which behaves like the Linux 2.6 O(1) scheduler described in this chapter. Compare
+the performance your application(s) receive when using each of the schedulers.
+64. Write a shell script that displays some important system information such as what
+processes you are running, your home directory and current directory, processor type,
+current CPU utilization, etc.
+65. Using assembly language and BIOS calls, write a program that boots itself from a USB
+drive on an x86 computer. The program should use BIOS calls to read the keyboard
+and echo the characters typed, just to demonstrate that it is running.

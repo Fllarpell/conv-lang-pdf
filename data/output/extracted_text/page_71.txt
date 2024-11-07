@@ -1,0 +1,44 @@
+42
+INTRODUCTION 
+CHAP. 1
+More sophisticated operating systems allow multiple programs to be in 
+memory at the same time. To keep them from interfering with one another (and with the
+operating system), some kind of protection mechanism is needed. While the 
+hardware must provide this mechanism, it is the operating system that controls it.
+The above viewpoint is concerned with managing and protecting the 
+computer’s main memory. A different, but equally important, memory-related issue is
+managing the address space of the processes. Normally, each process has some set
+of addresses it can use, typically running from 0 up to some maximum. In the 
+simplest case, the maximum amount of address space a process has is less than the
+main memory. In this way, a process can fill up its address space and there will be
+enough room in main memory to hold it all.
+However, on many computers addresses are 32 or 64 bits, giving an address
+space of 232 or 264 bytes, respectively. What happens if a process has more address
+space than the computer has main memory and the process wants to use it all? In
+the first computers, such a process was just out of luck. Nowadays, a technique
+called virtual memory exists, as mentioned earlier, in which the operating system
+keeps part of the address space in main memory and part on SSD or disk and 
+shuttles pieces back and forth between them as needed. In essence, the operating 
+system creates the abstraction of an address space as the set of addresses a process
+may reference. The address space is decoupled from the machine’s physical 
+memory and may be either larger or smaller than the physical memory. Management of
+address spaces and physical memory forms an important part of what an operating
+system does, so all of Chap. 3 is devoted to this topic.
+1.5.3 Files
+Another key concept supported by virtually all operating systems is the file
+system. As noted before, a major function of the operating system is to hide the
+peculiarities of the SSDs, disks, and other I/O devices and present the programmer
+with a nice, clean abstract model of device-independent files. System calls are
+obviously needed to create files, remove files, read files, and write files. Before a
+file can be read, it must be located on the storage device and opened, and after
+being read it should be closed, so calls are provided to do these things.
+To provide a place to keep files, most PC operating systems have the concept
+of a directory, sometimes called a folder or a map, as a way of grouping files
+together. A student, for example, might have one directory for each course she is
+taking (for the programs needed for that course), another directory her email, and
+still another directory for her home page on the Web. System calls are then needed
+to create and remove directories. Calls are also provided to put an existing file in a
+directory and to remove a file from a directory. Directory entries may be either
+files or other directories, giving rise to a hierarchy—the file system—as shown in
+Fig. 1-14. Just like many other innovations in operating systems, hierarchical file
+systems were pioneered by Multics.

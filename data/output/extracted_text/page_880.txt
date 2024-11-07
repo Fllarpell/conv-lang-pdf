@@ -1,0 +1,40 @@
+SEC. 10.8
+ANDROID
+851
+‘‘no’’—that it prevents the app from exporting data—can lead them to make bad
+decisions for other permissions the app requests. The last point compromises the
+fundamental permission model: that saying ‘‘yes’’ to a permission prompt is
+expressioning trust in the app with that data.
+There are, finally, a few permissions that completely disappeared in the 
+runtime mode, such as WRITE SETTINGS and SYSTEM ALERT WINDOW. 
+Typically these were deemed too dangerous to just hide or even hav e as a simple 
+runtime prompt (or too hard to understand for the user to make a good decision in a
+simple runtime prompt). Typically these were transformed into an explicit user
+interface that the user must go in to manually enable access of the app to that 
+permission, as covered previously when discussing permissions and explicit user 
+interfaces for controlling them.
+This then provides a basic framework for deciding how a particular feature in
+the platform will be secured, in a privacy-oriented way:
+1. If it can be done as part of a larger user flow, where the users do not
+realize they are making a security/privacy decision, that is ideal. 
+Examples of such flows are the URI permission grants driven by share
+and android.intent.action.GET CONTENT experiences described 
+previously.
+2. If it is something that does not significantly impact the user’s privacy
+or put the device at risk, a normal auditable permission is a good
+choice.
+3. If it is associated with clear personal data, the user is likely to have a
+strong opinion about who can access it, so a runtime permission is
+probably a good choice.
+4. Otherwise, it may need to be a separate explicit user interface for 
+giving only certain apps that specific privilege. The more dangerous this
+is to the user, howev er, the more carefully it must be done. For 
+example, the WRITE SMS permission was changed to a separate interface
+where it is only given to one app that a user can designate as the 
+preferred text messaging app. This helps everyone make a  safer decision
+by instead thinking about which app should get this feature.
+Evolving Runtime Permissions
+The move to runtime permissions was only the start of Android’s privacy 
+journey, which will continue to be a core design consideration for operating systems
+just like security. To illustrate these changes, we will look specifically at the 
+location permission and how it evolved over later Android releases.

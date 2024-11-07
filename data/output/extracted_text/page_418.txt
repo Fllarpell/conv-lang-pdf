@@ -1,0 +1,46 @@
+SEC. 5.4
+MASS STORAGE: DISK AND SSD
+389
+However, for the case of a drive crashing, it provides full 1-bit error correction
+since the position of the bad bit is known. In the event that a drive crashes, the
+controller just pretends that all its bits are 0s. If a word has a parity error, the bit
+from the dead drive must have been a 1, so it is corrected. Although both RAID
+levels 2 and 3 offer very high data rates, the number of separate I/O requests per
+second they can handle is no better than for a single drive.
+RAID levels 4 and 5 work with strips again, not individual words with parity,
+and do not require synchronized drives. RAID level 4 [see Fig. 5-26(e)] is like
+RAID level 0, with a strip-for-strip parity written onto an extra drive. For example,
+if each strip is k bytes long, all the strips are EXCLUSIVE ORed together, 
+resulting in a parity strip k bytes long. If a drive crashes, the lost bytes can be 
+recomputed from the parity drive by reading the entire set of drives.
+This design protects against the loss of a drive but performs poorly for small
+updates. If one sector is changed, it is necessary to read all the drives in order to
+recalculate the parity, which must then be rewritten. Alternatively, it can read the
+old user data and the old parity data and recompute the new parity from them.
+Even with this optimization, a small update requires two reads and two writes.
+As a consequence of the heavy load on the parity drive, it may become a 
+bottleneck. This bottleneck is eliminated in RAID level 5  by distributing the parity
+bits uniformly over all the drives, round-robin fashion, as shown in Fig. 5-26(f).
+However, in the event of a drive crash, reconstructing the contents of the failed
+drive is a complex process.
+Raid level 6 is similar to RAID level 5, except that an additional parity block is
+used. In other words, the data are striped across the disks with two parity blocks
+instead of one. As a result, writes are bit more expensive because of the parity 
+calculations, but reads incur no performance penalty. It does offer more reliability
+(imagine what happens if RAID level 5 encounters a bad block just when it is
+rebuilding its array).
+Compared to magnetic disks, SSDs offer much better performance and much
+higher reliability. Do we still need RAID? The answer may still be yes. After all, a
+RAID of multiple SSDs can offer even better performance and reliability than a
+single SSD. For instance, RAID level 0 with two SSDs provides sequential read
+and write performance that is roughly double that of a single SSD. If sequential
+read/write performance is important in your storage stack, this may be a winner. Of
+course, RAID level 0 does not help and even diminishes reliability, but maybe that
+is less bad for SSDs than for magnetic disks that fail more easily. Moreover, for
+reliability we can opt for higher RAID levels, such as RAID level 1. RAID level 1
+may improve the read performance (since even if one SSD is busy, the other is still
+available), but not write performance as all data must be stored twice and errors
+verified. Also, since you can only use half of your storage capacity, RAID level 1
+is expensive—especially since compared to magnetic disks, SSDs are not cheap.
+Although RAID levels 5 and 6 are also used with SSD, with the benefit of
+some performance gains and increased reliability, they do hav e drawbacks. In

@@ -1,0 +1,57 @@
+864
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+PROBLEMS
+1. The first version of UNIX was written in assembly code. Explain how writing UNIX
+in C made it easier to port it to new machines.
+2. The POSIX interface defines a set of library procedures. Explain why POSIX 
+standardizes library procedures instead of the system-call interface.
+3. Linux depends on gcc compiler to be ported to new architectures. Describe one 
+advantage and one disadvantage of this dependency.
+4. A directory contains the following files:
+aardvark 
+ferret
+koala 
+porpoise
+unicorn
+bonefish 
+grunion
+llama 
+quacker 
+vicuna
+capybara 
+hyena 
+marmot
+rabbit 
+weasel
+dingo 
+ibex
+nuthatch 
+seahorse
+yak
+emu 
+jellyfish 
+ostrich
+tuna 
+zebu
+Which files will be listed by the command
+ls [abcde]*a*?
+5. What does the following Linux shell pipeline do?
+grep rt xyz | wc –l
+6. Write a Linux pipeline that prints the eighth line of file z on standard output.
+7. Why does Linux distinguish between standard output and standard error, when both
+default to the terminal?
+8. A user at a terminal types the following commands:
+a | b | c &
+d | e | f &
+After the shell has processed them, how many new processes are running?
+9. When the Linux shell starts up a process, it puts copies of its environment variables,
+such as HOME, on the process’ stack, so the process can find out what its home 
+directory is. If this process should later fork, will the child automatically get these 
+variables, too?
+10. About how long does it take a traditional UNIX system to fork off a child process
+under the following conditions: text size = 100 KB, data size = 20 KB, stack size = 10
+KB, task structure = 1 KB, user structure = 5 KB. The kernel trap and return takes 1
+msec, and the machine can copy one 32-bit word every 50 nsec. Text segments are
+shared, but data and stack segments are not.
+11. As multimegabyte programs became more common, the time spent executing the fork

@@ -1,0 +1,44 @@
+CHAP. 11
+PROBLEMS
+1037
+8. Why is \?? directory specially handled in the object manager rather than dealing with it
+in the Win32 layer in kernelbase.dll like BNO?
+9. Windows uses 2-MB large pages because it improves the effectiveness of the TLB,
+which can have a profound impact on performance. Why is this? Why are 2-MB large
+pages not used all the time?
+10. Is there any limit on the number of different operations that can be defined on an 
+executive object? If so, where does this limit come from? If not, why not?
+11. The Win32 API call WaitForMultipleObjects allows a thread to block on a set of 
+synchronization objects whose handles are passed as parameters. As soon as any one of
+them is signaled, the calling thread is released. Is it possible to have the set of 
+synchronization objects include two semaphores, one mutex, and one critical section?
+Why or why not? (Hint: This is not a trick question but it does require some careful
+thought.)
+12. When initializing a global variable in a multithreaded program, a common 
+programming error is to allow a race condition where the variable can be initialized twice.
+Why could this be a problem? Windows provides the InitOnceExecuteOnce API to 
+prevent such races. How might it be implemented?
+13. Why is it a bad idea to allow recursive lock acquisition even for shared acquires?
+14. How would you implement a bounded buffer using an SRW lock and a condition 
+variable? The operations to implement are Add( ) and Remove( )  where Add( ) adds an
+item to the buffer, blocking if space is not available. Remove( )  removes an item, 
+waiting until one is available.
+15. Name three reasons why a desktop process might be terminated. What additional 
+reason might cause a process running a modern application to be terminated?
+16. Modern applications must save their state to disk every time the user switches away
+from the application. This seems inefficient, as users may switch back to an application
+many times and the application simply resumes running. Why does the operating 
+system require applications to save their state so often rather than just giving them a
+chance at the point the application is actually going to be terminated?
+17. As described in Sec. 11.4, there is a special handle table used to allocate IDs for 
+processes and threads. The algorithms for handle tables normally allocate the first available
+handle (maintaining the free list in LIFO order). In recent releases of Windows, this
+was changed so that the ID table always keeps the free list in FIFO order. What is the
+problem that the LIFO ordering potentially causes for allocating process IDs, and why
+does not UNIX have this problem?
+18. Suppose that the quantum is set to 20 msec and the current thread, at priority 24, has
+just started a quantum. Suddenly an I/O operation completes and a priority 28 thread
+is made ready. About how long does it have to wait to get to run on the CPU?
+19. In Windows, the current priority is always greater than or equal to the base priority.
+Are there any circumstances in which it would make sense to have the current priority
+be lower than the base priority? If so, give an example. If not, why not?

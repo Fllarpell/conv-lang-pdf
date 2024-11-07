@@ -1,0 +1,43 @@
+607
+differently: while Carolyn may think she is the only user on the computer, she 
+really is not alone at all!
+Attackers abuse exploits manually or automatically, to run malicious software
+or malware. Malware appears in different guises and there is a lot of confusion
+about terminology. We refer to malware that infects computers by injecting itself
+into other (often executable) files as a virus. In other words, a virus needs another
+program and typically some form of user interaction to propagate. For instance,
+the user should click on an attachment to get infected. In contrast, a worm is 
+selfpropelled. It will propagate regardless of what the user does. Well-known worms in
+the past would randomly scan IP addresses on the Internet to see if they found a
+machine with vulnerable software, and if so infect it, rinse, and repeat. A Tr ojan,
+or Trojan horse, is malware that is hidden in something that looks legitimate and/or
+useful. By repackaging popular but expensive software (like a game or a word
+processor) and offering it for free on the Internet, the attackers get users to install it
+themselves. For many users, ‘‘free’’ is completely irresistible. However, installing
+the free game automatically also installs additional functionality, the kind that
+hands over the PC and everything in it to a cybercriminal far away.
+This chapter has two main parts. In the first part, we look at the topic of 
+security in a principled manner. This includes the fundamentals of security (Sec. 9.1),
+different approaches to provide access control (Sec. 9.2), and formal models of
+secure systems (Sec. 9.3), which includes formal models for access control and
+cryptography. Authentication (Sec. 9.4) also belongs in this part.
+So far, so good—in theory. Then reality kicks in and the second part introduces
+practical security problems that occur in daily life. We will talk about the tricks
+that attackers use to take control over a computer system using software 
+vulnerabilities, as well as some common countermeasures to prevent this from happening
+(Sec. 9.5). Unfortunately, software bugs are no longer our only concern and we
+will briefly look at hardware vulnerabilities—for instance, cache side channels and
+speculative execution attacks (Sec. 9.6). However, even if the hardware and 
+software are correct, there is still the human and we therefore briefly look at insider
+threats also (Sec. 9.7). Given the importance of security in operating systems, the
+security community has developed a variety of techniques to harden the operating
+system against attacks and we will review the most important ones (Sec. 9.8).
+9.1 FUNDAMENTALS OF OPERATING SYSTEM SECURITY
+Some people tend to use the terms ‘‘security’’ and ‘‘protection’’ 
+interchangeably. Nev ertheless, it is frequently useful to make a distinction between the general
+problems involved in making sure that files are not read or modified by 
+unauthorized persons, which include technical, administrative, leg al, and political issues,
+and the specific sets of rules maintained by the operating system to protect objects
+against unauthorized actions. To avoid confusion, we will use the term security to
+SEC. 9.1
+FUNDAMENTALS OF OPERATING SYSTEM SECURITY

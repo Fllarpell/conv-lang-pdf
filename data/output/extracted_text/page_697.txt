@@ -1,0 +1,43 @@
+668
+SECURITY 
+CHAP. 9
+The program looks secure, but is not. The problem is that the time of the
+access check for privileges and the time at which the privileges are used are not the
+same. Assume that a fraction of a second after the check by access, the attacker
+manages to create a symbolic link with the same file name to the password file. In
+that case, the open will open the wrong file, and the write of the attacker’s data will
+end up in the password file. To pull it off, the attacker has to race with the program
+to create the symbolic link at exactly the right time.
+The attack is known as a TOCTOU (Time of Check to Time of Use) attack.
+Another way of looking at this particular attack is to observe that the access system
+call is simply not safe. It would be much better to open the file first, and then check
+the permissions using the file descriptor instead—using the fstat function. File
+descriptors are safe, because they cannot be changed by the attacker between the
+fstat and write calls. It shows that designing a good API for operating system is
+extremely important and fairly hard. In this case, the designers got it wrong.
+9.5.9 Double Fetch Vulnerability
+A race condition very similar to TOCTOU occurs when the kernel fetches data
+from user processes twice. Consider a system call that takes a buffer from a user
+process (to send over the network, write to a file, or output to a printer). To copy
+the buffer into its own address space, the kernel first reads the length field from an
+address in the user process and allocates its own buffer of that size. Next, it uses
+the value at that same memory location again to copy the content of the user buffer
+into the newly allocated kernel buffer. What could possibly go wrong?
+Having seen TOCTOUs, you quickly realize that the answer is a race condition
+where another thread modifies the length field between the allocation and the copy
+operation. By making it larger, an attacker can cause a buffer overflow.
+A well-known example of a TOCTOU-like double fetch vulnerability was
+found in Windows, where untrusted software is subjected to security checks before
+it is allowed to perform sensitive operations. For instance, the security software in
+Windows would modify the entries of a table that contains the addresses of 
+(potentially sensitive) services that a program may call directly. By replacing these
+addresses with those of its own functions, the security software ensures that its own
+functions are always executed first. These functions perform some checks on the
+parameters and then call the original Windows services. This technique is known
+as hooking. Unfortunately, by calling the services first with parameters that pass
+the checks and then modifying the parameters to malicious values just before they
+are used, attackers could bypass the checks.
+9.6 EXPLOITING HARDWARE
+Just like software, hardware may contain vulnerabilities also. For a long time,
+security experts dismissed such vulnerabilities as impractical and complicated to
+exploit, but that attitude changed in a hurry when a new class of vulnerabilities was

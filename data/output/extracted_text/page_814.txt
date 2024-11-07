@@ -1,0 +1,46 @@
+SEC. 10.6
+THE LINUX FILE SYSTEM
+785
+The first NFS protocol handles mounting. A client can send a path name to a
+server and request permission to mount that directory somewhere in its directory
+hierarchy. The place where it is to be mounted is not contained in the message, as
+the server does not care where it is to be mounted. If the path name is legal and the
+directory specified has been exported, the server returns a file handle to the client.
+The file handle contains fields uniquely identifying the file-system type, the disk,
+the i-node number of the directory, and security information. Subsequent calls to
+read and write files in the mounted directory or any of its subdirectories use the file
+handle. It is somewhat analogous to the file descriptors returned by the creat and
+open calls on local files.
+When Linux boots, it runs the /etc/rc shell script before going multiuser. 
+Commands to mount remote file systems can be placed in this script, thus automatically
+mounting the necessary remote file systems before allowing any logins. 
+Alternatively, most versions of Linux also support automounting. This feature allows a
+set of remote directories to be associated with a local directory. None of these
+remote directories are mounted (or their servers even contacted) when the client is
+booted. Instead, the first time a remote file is opened, the operating system sends a
+message to each of the servers. The first one to reply wins, and its directory is
+mounted.
+Automounting has two principal advantages over static mounting via the
+/etc/rc file. First, if one of the NFS servers named in /etc/rc happens to be down, it
+is impossible to bring the client up, at least not without some difficulty, delay, and
+quite a few error messages. If the user does not even need that server at the
+moment, all that work is wasted. Second, by allowing the client to try a set of 
+servers in parallel, a degree of fault tolerance can be achieved (because only one of
+them needs to be up), and the performance can be improved (by choosing the first
+one to reply—presumably the least heavily loaded).
+On the other hand, it is tacitly assumed that all the file systems specified as
+alternatives for the automount are identical. Since NFS provides no support for file
+or directory replication, it is up to the user to arrange for all the file systems to be
+the same. Consequently, automounting is most often used for read-only file 
+systems containing system binaries and other files that rarely change.
+The second NFS protocol is for directory and file access. Clients can send
+messages to servers to manipulate directories and read and write files. They can
+also access file attributes, such as file mode, size, and time of last modification.
+Most Linux system calls are supported by NFS, with the perhaps surprising 
+exceptions of open and close.
+The omission of open and close is not an accident. It is fully intentional. It is
+not necessary to open a file before reading it, nor to close it when done. Instead, to
+read a file, a client sends the server a lookup message containing the file name,
+with a request to look it up and return a file handle, which is a structure that 
+identifies the file (i.e., contains a file system identifier and i-node number, among other
+data). Unlike an open call, this lookup operation does not copy any information

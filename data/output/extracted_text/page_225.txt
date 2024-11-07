@@ -1,0 +1,43 @@
+196
+MEMORY MANAGEMENT 
+CHAP. 3
+What happens if the program references an unmapped address, for example, by
+using the instruction
+MOV REG,32780
+which is byte 12 within virtual page 8 (starting at 32768)? The MMU sees that the
+page is unmapped (indicated by a cross in the figure) and causes the CPU to trap to
+the operating system, called a page fault. The operating system picks a little-used
+page frame and writes its contents back to the disk (if it is not already there). It
+then fetches (also from the disk) the page that was just referenced into the page
+frame just freed, changes the map, and restarts the trapped instruction.
+For example, if the operating system decided to evict page frame 1 from 
+memory, it would load virtual page 8 at physical address 4096 and make two changes to
+the MMU map. First, it would mark virtual page 1’s entry as unmapped, to trap any
+future accesses to virtual addresses between 4096 and 8191. Then it would replace
+the cross in virtual page 8’s entry with a 1, so that when the trapped instruction is
+reexecuted, it will map virtual address 32780 to physical address 4108 (4096 + 12).
+Now let us look inside the MMU to see how it works and why we hav e chosen
+to use a page size that is a power of 2. In Fig. 3-10 we see an example of a virtual
+address, 8196 (0010000000000100 in binary), being mapped using the MMU map
+of Fig. 3-9. The incoming 16-bit virtual address is split into a 4-bit page number
+and a 12-bit offset. With 4 bits for the page number, we can have 16 pages, and
+with 12 bits for the offset, we can address all 4096 bytes within a page.
+The page number is used as an index into the page table, yielding the number
+of the page frame that corresponds to that virtual page. If the Present/absent bit is
+0, a trap to the operating system is caused. If the bit is 1, the page frame number
+found in the page table is copied to the high-order 3 bits of the output register,
+along with the 12-bit offset, which is copied unmodified from the incoming virtual
+address. Together they form a 15-bit physical address. The output register is then
+put onto the memory bus as the physical memory address.
+In our examples, we are using 16-bit addresses to make the text and figures
+easier to understand. Modern PCs use 32-bit or 64-bit addresses. In principle, a
+computer with 32-bit addresses and 4-KB pages could use exactly the same 
+method discussed above. The page table would need 220 (1,048,576) entries. On a 
+computer with gigabytes of RAM, that is doable. However, 64-bit addresses and 4-KB
+pages would require 252 (roughly 4. 5 × 1015) entries in the page table, also known
+as a ‘‘hell of a lot’’. That is definitely not doable, so other techniques are needed.
+We will discuss them shortly.
+3.3.2 Page Tables
+In a simple implementation, the mapping of virtual addresses onto physical
+addresses can be summarized as follows: the virtual address is split into a virtual
+page number (high-order bits) and an offset (low-order bits). For example, with a

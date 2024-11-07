@@ -1,0 +1,62 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+131
+#define N 100
+/* number of slots in the buffer */
+typedef int semaphore;
+/* semaphores are a special kind of int */
+semaphore mutex = 1;
+/* controls access to critical region */
+semaphore empty = N;
+/* counts empty buffer slots */
+semaphore full = 0;
+/* counts full buffer slots */
+void producer(void)
+{
+int item;
+while (TRUE) {
+/* TRUE is the constant 1 */
+item = produce item( );
+/* generate something to put in buffer */
+down(&empty); 
+/* decrement empty count */
+down(&mutex); 
+/* enter critical region */
+inser t item(item); 
+/* put new item in buffer */
+up(&mutex); 
+/* leave critical region */
+up(&full); 
+/* increment count of full slots */
+}
+}
+void consumer(void)
+{
+int item;
+while (TRUE) {
+/* infinite loop */
+down(&full); 
+/* decrement full count */
+down(&mutex); 
+/* enter critical region */
+item = remove item( );
+/* take item from buffer */
+up(&mutex); 
+/* leave critical region */
+up(&empty); 
+/* increment count of empty slots */
+consume item(item); 
+/* do something with the item */
+}
+}
+Figure 2-28. The producer-consumer problem using semaphores.
+This solution uses three semaphores: one called full for counting the number of
+slots that are full, one called empty for counting the number of slots that are empty,
+and one called mutex to make sure the producer and consumer do not access the
+buffer at the same time. Full is initially 0, empty is initially equal to the number of
+slots in the buffer, and mutex is initially 1. Semaphores that are initialized to 1 and
+used by two or more processes to ensure that only one of them can enter its critical
+region at the same time are called binary semaphores. If each process does a
+down just before entering its critical region and an up just after leaving it, mutual
+exclusion is guaranteed.
+Now that we have a good interprocess communication and synchronization
+primitive at our disposal, let us go back and again look at the interrupt sequence of

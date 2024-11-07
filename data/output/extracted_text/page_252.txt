@@ -1,0 +1,38 @@
+SEC. 3.5
+DESIGN ISSUES FOR PAGING SYSTEMS
+223
+pages because the instruction itself, the source operand, and the destination 
+operand may all straddle page boundaries. With an allocation of only fiv e pages, 
+programs containing such instructions cannot execute at all.
+If a global algorithm is used, it may be possible to start each process up with
+some number of pages proportional to the process’ size, but the allocation has to be
+updated dynamically as the processes run. One way to manage the allocation is to
+use the PFF (Page Fault Frequency) algorithm. It tells when to increase or
+decrease a process’ page allocation but says nothing about which page to replace
+on a fault. It just controls the size of the allocation set.
+For a large class of page replacement algorithms, including LRU, it is known
+that the fault rate decreases as more pages are assigned, as we discussed above.
+This is the assumption behind PFF. This property is illustrated in Fig. 3-23.
+Page faults/sec
+Number of page frames assigned
+A
+B
+Figure 3-23. Page fault rate as a function of the number of page frames assigned.
+Measuring the page fault rate is straightforward: just count the number of
+faults per second, possibly taking a running mean over past seconds as well. One
+easy way to do this is to add the number of page faults during the immediately 
+preceding second to the current running mean and divide by two. The dashed line
+marked A corresponds to a page fault rate that is unacceptably high, so the faulting
+process is given more page frames to reduce the fault rate. The dashed line marked
+B corresponds to a page fault rate so low that we can assume the process has too
+much memory. In this case, page frames may be taken away from it. Thus, PFF
+tries to keep the paging rate for each process within acceptable bounds.
+It is important to note that some page replacement algorithms can work with
+either a local replacement policy or a  global one. For example, FIFO can replace
+the oldest page in all of memory (global algorithm) or the oldest page owned by
+the current process (local algorithm). Similarly, LRU or some approximation to it
+can replace the least recently used page in all of memory (global algorithm) or the
+least recently used page owned by the current process (local algorithm). The
+choice of local versus global is independent of the algorithm in some cases.
+On the other hand, for other page replacement algorithms, only a local strategy
+makes sense. In particular, the working set and WSClock algorithms refer to some

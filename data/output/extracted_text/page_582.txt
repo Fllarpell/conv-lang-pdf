@@ -1,0 +1,72 @@
+SEC. 8.1
+MULTIPROCESSORS
+553
+threads that work together. For example, if the threads of a process communicate a
+lot, it is useful to have them running at the same time. Scheduling multiple threads
+at the same time across multiple CPUs is called space sharing.
+The simplest space-sharing algorithm works like this. Assume that an entire
+group of related threads is created at once. At the time it is created, the scheduler
+checks to see if there are as many free CPUs as there are threads. If there are, each
+thread is given its own dedicated (i.e., nonmultiprogrammed) CPU and they all
+start. If there are not enough CPUs, none of the threads are started until enough
+CPUs are available. Each thread holds onto its CPU until it terminates, at which
+time the CPU is put back into the pool of available CPUs. If a thread blocks on
+I/O, it continues to hold the CPU, which is simply idle until the thread wakes up.
+When the next batch of threads appears, the same algorithm is applied.
+At any instant of time, the set of CPUs is statically partitioned into some 
+number of partitions, each one running the threads of one process. In Fig. 8-13, we
+have partitions of sizes 4, 6, 8, and 12 CPUs, with 2 CPUs unassigned, for 
+example. As time goes on, the number and size of the partitions will change as new
+threads are created and old ones finish and terminate.
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+4-CPU partition
+12-CPU partition
+Unassigned CPU
+6-CPU partition  
+8-CPU partition  
+Figure 8-13. A set of 32 CPUs split into four partitions, with two CPUs
+available.
+Periodically, scheduling decisions have to be made. In uniprocessor systems,
+shortest job first is a well-known algorithm for batch scheduling. The analogous
+algorithm for a multiprocessor is to choose the process needing the smallest 
+number of CPU cycles, that is, the thread whose CPU-count × run-time is the smallest
+of the candidates. However, in practice, this information is rarely available, so the
+algorithm is hard to carry out. In fact, studies have shown that, in practice, beating
+first-come, first-served is hard to do (Krueger et al., 1994).
+In this simple partitioning model, a thread just asks for some number of CPUs
+and either gets them all or has to wait until they are available. A different approach
+is for threads to actively manage the degree of parallelism. One method for 
+managing the parallelism is to have a central server that keeps track of which threads are
+running and want to run and what their minimum and maximum CPU requirements
+are (Tucker and Gupta, 1989). Periodically, each application sends a query to the

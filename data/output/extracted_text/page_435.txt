@@ -1,0 +1,43 @@
+406
+INPUT/OUTPUT 
+CHAP. 5
+This modular design, consisting of several layers and multiple programs,
+makes X highly portable and flexible. It has been ported to most versions of
+UNIX, including Solaris, all variants of BSD, AIX, Linux, and so on, making it
+possible for application developers to have a standard user interface for multiple
+platforms. It has also been ported to other operating systems. In contrast, in 
+Windows, the windowing and GUI systems are mixed together in the GDI and located
+in the kernel, which makes them harder to maintain, and of, course, not portable.
+Now let us take a brief look at X as viewed from the Xlib level. When an X
+program starts, it opens a connection to one or more X servers—let us call them
+workstations even though they might be collocated on the same machine as the X
+program itself. X considers this connection to be reliable in the sense that lost and
+duplicate messages are handled by the networking software and it does not have to
+worry about communication errors. Usually, TCP/IP is used between the client and
+server.
+Four kinds of messages go over the connection:
+1. Drawing commands from the program to the workstation.
+2. Replies by the workstation to program queries.
+3. Keyboard, mouse, and other event announcements.
+4. Error messages.
+Most drawing commands are sent from the program to the workstation as 
+oneway messages. No reply is expected. The reason for this design is that when the
+client and server processes are on different machines, it may take a substantial
+period of time for the command to reach the server and be carried out. Blocking
+the application program during this time would slow it down unnecessarily. On the
+other hand, when the program needs information from the workstation, it simply
+has to wait until the reply comes back.
+Like Windows, X is highly event driven. Events flow from the workstation to
+the program, usually in response to some human action such as keyboard strokes,
+mouse movements, or a window being uncovered. Each event message is 32 bytes,
+with the first byte giving the event type and the next 31 bytes providing additional
+information. Several dozen kinds of events exist, but a program is sent only those
+ev ents that it has said it is willing to handle. For example, if a program does not
+want to hear about key releases, it is not sent any key-release events. As in 
+Windows, events are queued, and programs read events from the input queue. However,
+unlike Windows, the operating system never calls procedures within the 
+application program on its own. It does not even know which procedure handles which
+ev ent.
+A key concept in X is the resource. A resource is a data structure that holds
+certain information. Application programs create resources on workstations.
+Resources can be shared among multiple processes on the workstation. Resources

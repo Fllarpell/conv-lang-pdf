@@ -1,0 +1,63 @@
+SEC. 9.5
+EXPLOITING SOFTWARE
+649
+Finally, it calls the (homegrown) writeLog function that presumably writes out the
+log entry in an attractive format (perhaps adding a date and time to the log message
+to make it easier to search the log later). Assume that function A is part of a 
+privileged process, for instance a program that is SETUID root. An attacker who is able
+to take control of such a process, essentially has root privileges herself.
+The code above has a severe bug, although it may not be immediately obvious.
+The problem is caused by the fact that gets reads characters from standard input
+until it encounters a newline character. It has no idea that buffer B can hold only
+128 bytes. Suppose the user types a line of 256 characters. What happens to the
+remaining 128 bytes? Since gets does not check for buffer bounds violations, the
+remaining bytes will be stored on the stack also, as if the buffer were 256 bytes
+long. Everything that was originally stored at the memory locations right after the
+end of the buffer is simply overwritten. The consequences are typically disastrous.
+In Fig. 9-17(a), we see the main program running, with its local variables on
+the stack. At some point it calls the procedure A, as shown in Fig. 9-17(b). The
+standard calling sequence starts out by pushing the return address (which points to
+the instruction following the call) onto the stack. It then transfers control to A,
+which decrements the stack pointer by 128 to allocate storage for its local variable
+(buffer B).
+Main’s
+local
+   variables
+Program
+(a)
+0xFFFF...
+Stack
+pointer
+Virtual address space
+Stack
+Main’s
+local
+variables
+Program
+Return addr
+(b)
+SP
+Virtual address space
+B
+Program
+(c)
+SP
+Virtual address space
+B
+A’s local
+variables
+Buffer B
+Main’s
+local
+variables
+Return addr
+A’s local
+variables
+Figure 9-17. (a) Situation when the main program is running. (b) After the 
+procedure A has been called. (c) Buffer overflow shown in gray
+So what exactly will happen if the user provides more than 128 characters?
+Figure 9-17(c) shows this situation. As mentioned, the gets function copies all the
+bytes into and beyond the buffer, overwriting possibly many things on the stack,
+but in particular overwriting the return address pushed there earlier. In other words,
+part of the log entry now fills the memory location that the system assumes to hold
+the address of the instruction to jump to when the function returns. As long as the

@@ -1,0 +1,43 @@
+1068
+OPERATING SYSTEM DESIGN
+CHAP. 12
+an ASCII character code, in a device register. Furthermore, when the key is
+released later, a  second interrupt is generated, also with the key number. This
+indirection allows the operating system the possibility of using the key number to
+index into a table to get the ASCII character, which makes it easy to handle the
+many keyboards used around the world in different countries. Getting both the
+depress and release information makes it possible to use any key as a shift key,
+since the operating system knows the exact sequence in which the keys were
+depressed and released.
+Indirection is also used on output. Programs can write ASCII characters to the
+screen, but these are interpreted as indices into a table for the current output font.
+The table entry contains the bitmap for the character. This indirection makes it
+possible to separate characters from fonts.
+Another example of indirection is the use of major device numbers in UNIX.
+Within the kernel there is a table indexed by major device number for the block 
+devices and another one for the character devices. When a process opens a special
+file such as /dev/hd0, the system extracts the type (block or character) and major
+and minor device numbers from the i-node and indexes into the appropriate driver
+table to find the driver. This indirection makes it easy to reconfigure the system,
+because programs deal with symbolic device names, not actual driver names.
+Yet another example of indirection occurs in message-passing systems that
+name a mailbox rather than a process as the message destination. By indirecting
+through mailboxes (as opposed to naming a process as the destination), 
+considerable flexibility can be achieved (e.g., having an assistant handle her boss’ 
+messages).
+In a sense, the use of macros, such as
+#define PROC TABLE SIZE 256
+is also a form of indirection, since the programmer can write code without having
+to know how big the table really is. It is good practice to give symbolic names to
+all constants (except sometimes <1, 0, and 1), and put these in headers with 
+comments explaining what they are for.
+Reusability
+It is frequently possible to reuse the same code in slightly different contexts.
+Doing so is a good idea as it reduces the size of the binary and means that the code
+has to be debugged only once. For example, suppose that bitmaps are used to keep
+track of free blocks on the disk. Disk-block management can be handled by having
+procedures alloc and free that manage the bitmaps.
+As a bare minimum, these procedures should work for any disk. But we can go
+further than that. The same procedures can also work for managing memory
+blocks, blocks in the file system’s block cache, and i-nodes. In fact, they can be
+used to allocate and deallocate any resources that can be numbered linearly.

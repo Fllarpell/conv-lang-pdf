@@ -1,0 +1,46 @@
+SEC. 1.6
+SYSTEM CALLS
+61
+Of course, Windows also has system calls. With UNIX, there is almost a 
+oneto-one relationship between the system calls (e.g., read) and the library procedures
+(e.g., read) used to invoke the system calls. In other words, for each system call,
+there is roughly one library procedure that is called to invoke it, as indicated in
+Fig. 1-17. Furthermore, POSIX has only on the order of 100 procedure calls.
+With Windows, the situation is radically different. To start with, the library
+calls and the actual system calls are highly decoupled. Microsoft has defined a set
+of procedures called the WinAPI, Win32 API, or Win64 API (Application 
+Programming Interface) that programmers are expected to use to get operating 
+system services. This interface is (partially) supported on all versions of Windows
+since Windows 95. By decoupling the API interface that programmer’s use from
+the actual system calls, Microsoft retains the ability to change the actual system
+calls in time (even from release to release) without invalidating existing programs.
+What actually constitutes Win32 is also slightly ambiguous because recent 
+versions of Windows have many new calls that were not previously available. In this
+section, Win32 means the interface supported by all versions of Windows. Win32
+provides compatibility among versions of Windows. Win64 is largely Win32 with
+bigger pointers so we will focus on Win32 here.
+The number of Win32 API calls is extremely large, numbering in the 
+thousands. Furthermore, while many of them do invoke system calls, a substantial 
+number are carried out entirely in user space. As a consequence, with Windows it is
+impossible to see what is a system call (i.e., performed by the kernel) and what is
+simply a user-space library call. In fact, what is a system call in one version of
+Windows may be done in user space in a different version, and vice versa. When
+we discuss the Windows system calls in this book, we will use the Win32 
+procedures (where appropriate) since Microsoft guarantees that these will be stable over
+time. But it is worth remembering that not all of them are true system calls (i.e.,
+traps to the kernel).
+The Win32 API has a huge number of calls for managing windows, geometric
+figures, text, fonts, scrollbars, dialog boxes, menus, and other features of the GUI.
+To the extent that the graphics subsystem runs in the kernel (true on some versions
+of Windows but not on all), these are system calls; otherwise they are just library
+calls. Should we discuss these calls in this book or not? Since they are not really
+related to the function of an operating system, we have decided not to, even though
+they may be carried out by the kernel. Readers interested in the Win32 API should
+consult one of the many books on the subject (e.g., Yosifovich, 2020).
+Even introducing all the Win32 API calls here is out of the question, so we will
+restrict ourselves to those calls that roughly correspond to the functionality of the
+UNIX calls listed in Fig. 1-18. These are listed in Fig. 1-23.
+Let us now briefly go through the list of Fig. 1-23. CreateProcess creates a
+new process. It does the combined work of fork and execve in UNIX. It has many
+parameters specifying the properties of the newly created process. Windows does
+not have a process hierarchy like UNIX does, so there is no concept of a parent

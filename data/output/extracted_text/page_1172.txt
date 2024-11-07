@@ -1,0 +1,97 @@
+INDEX
+1143
+Protection domain, 608, 619–621
+Protection hardware, 49
+Protection ring, 487
+Protocol, 466, 587, 645
+NFS, 784–786
+Protocol stack, 587
+PsCreateSiloContext Win32 call, 1012
+Pseudoparallelism, 86
+PsGetSiloContext Win32 call, 1012
+PSW (see Program Status Word)
+PTE (see Page Table Entry
+Pthread, 106–107
+Public-key cryptography, 634–635
+Publish/subscribe, 597–598
+Publishing, 597
+PulseEvent Win32 call, 938
+PushLock, Windows, 940
+Python, 49, 74
+Q
+QoS class, Windows, 949
+Quality of service, 585
+Quality-of-service class, Windows, 949
+Quantum, scheduling, 162
+QueueUserAPC Win32 call, 903–904
+Quick fit memory management algorithm, 191
+R
+R-node, 787
+Race condition, 119–120, 120, 667
+RAID (see Redundant Array of Inexpensive Disks)
+RAIL (see Remote Apps Integrated Locally)
+RAM (see Random Access Memory)
+Random access memory, 27
+Random boosting, 151
+Random-access file, 267
+Raw block file, 764
+Raw mode, 398
+RCU (see Read-Copy-Update)
+RDMA (see Remote Direct Memory Access)
+RDP (see Remote Desktop Protocol)
+Read ahead, 788
+block, 318–319
+Read only memory, 27
+Read system call, 31–32, 54, 269, 593, 619, 738,
+746, 757, 758, 772, 775, 779, 781, 786, 788, 793,
+1045, 1047, 1048, 1051
+Read Win32 call, 982, 985
+Read-ahead, Windows, 979
+Read-copy-update, 151–152
+Read-side critical section, 151
+Readdir system call, 277, 774
+Readers and writers problem, 132–133
+ReadFile Win32 call, 997
+Real time, clock, 392
+Real-time operating system, 38–39
+Real-time scheduling, 168–169
+Receive system call, 1047
+Receiver, Android, 827–828
+Reclaiming memory, 496–497
+Recovery from deadlock, 454–455
+killing processes, 455
+preemption, 454
+rollback, 454–455
+Recursive update problem, 297
+Recycle bin, 308
+Red queen effect, 647–658
+Reducing disk-arm motion, 319–320
+Redundant array of independent disks, 385–390, 386
+Redundant array of inexpensive disks, 385–390, 386
+Reentrancy, 1069
+Reentrant software, 362
+Reference monitor, 613, 694
+Referenced bit, 198
+Referenced pointer, 916
+ReFs (see Resilient File system)
+Regedit, 893
+Registry 891–894
+Registry hive, 891
+Regular file, 264
+Reincarnation server, 67
+Relative path, 767
+Relative path name, 275
+ReleaseMutex Win32 call, 938
+ReleaseSemaphore Win32 call, 938
+Remapping, interrupt, 499
+Remote apps integrated locally, 1016
+Remote attestation, 636, 690–691, 913
+Remote attestation using a trusted platform module, 690
+Remote desktop protocol, 1016
+Remote direct memory access, 564–565
+Remote node, 787
+Remote procedure call, 569–571, 880
+Android, 810
+Remote-access model, 590
+Rename system call, 270, 277
+Rendezvous, 148

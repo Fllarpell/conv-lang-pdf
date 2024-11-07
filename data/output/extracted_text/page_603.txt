@@ -1,0 +1,49 @@
+574
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+reference (main memory or cache, respectively). An important design issue is how
+big the chunk should be? In multiprocessors, the cache block size is usually 32 or
+64 bytes, to avoid tying up the bus with the transfer too long. In DSM systems, the
+unit has to be a multiple of the page size (because the MMU works with pages),
+but it can be 1, 2, 4, or more pages. In effect, doing this simulates a larger page
+size.
+There are advantages and disadvantages to a larger page size for DSM. The
+biggest advantage is that because the startup time for a network transfer is fairly
+substantial, it does not really take much longer to transfer 4096 bytes than it does
+to transfer 1024 bytes. By transferring data in large units, when a large piece of
+address space has to be moved, the number of transfers may often be reduced. This
+property is especially important because many programs exhibit locality of 
+reference, meaning that if a program has referenced one word on a page, it is likely to
+reference other words on the same page in the immediate future.
+On the other hand, the network will be tied up longer with a larger transfer,
+blocking other faults caused by other processes. Also, too large an effective page
+size introduces a new problem, called false sharing, illustrated in Fig. 8-23. Here
+we have a page containing two unrelated shared variables, A and B. Processor 1
+makes heavy use of A, reading and writing it. Similarly, process 2 uses B 
+frequently. Under these circumstances, the page containing both variables will constantly
+be traveling back and forth between the two machines.
+CPU 1
+Code using
+variable A
+A
+B
+Shared
+page
+CPU 2
+Code using
+variable B
+A
+B
+Network
+A and B are unrelated
+shared variables that just
+happen to be on the same page
+Figure 8-23. False sharing of a page containing two unrelated variables.
+The problem here is that although the variables are unrelated, they appear by
+accident on the same page, so when a process uses one of them, it also gets the
+other. The larger the effective page size, the more often false sharing will occur,
+and conversely, the smaller the effective page size, the less often it will occur.
+Nothing analogous to this phenomenon is present in ordinary virtual memory 
+systems.
+Clever compilers that understand the problem and place variables in the
+address space accordingly can help reduce false sharing and improve performance.

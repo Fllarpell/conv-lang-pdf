@@ -1,0 +1,55 @@
+SEC. 10.6
+THE LINUX FILE SYSTEM
+787
+Client kernel
+Server kernel
+System call layer
+Buffer cache
+Buffer cache
+Virtual file system layer 
+Virtual file system layer 
+Local
+FS 1
+Local
+FS 1
+Local
+FS 2
+Local
+FS 2
+NFS
+client
+NFS
+server
+Driver
+Driver
+Driver
+Driver
+Message
+to server
+Message
+from client
+Local disks
+Local disks
+V- node
+Figure 10-36. The NFS layer structure.
+which it is to be mounted, and other information. The mount program parses the
+name of the remote directory to be mounted and discovers the name of the NFS
+server on which the remote directory is located. It then contacts that machine, 
+asking for a file handle for the remote directory. If the directory exists and is available
+for remote mounting, the server returns a file handle for the directory. Finally, it
+makes a mount system call, passing the handle to the kernel.
+The kernel then constructs a v-node for the remote directory and asks the NFS
+client code in Fig. 10-36 to create an r-node (remote i-node) in its internal tables
+to hold the file handle. The v-node points to the r-node. Each v-node in the VFS
+layer will ultimately contain either a pointer to an r-node in the NFS client code, or
+a pointer to an i-node in one of the local file systems (shown as dashed lines in
+Fig. 10-36). Thus, from the v-node it is possible to see if a file or directory is local
+or remote. If it is local, the correct file system and i-node can be located. If it is
+remote, the remote host and file handle can be located.
+When a remote file is opened on the client, at some point during the parsing of
+the path name, the kernel hits the directory on which the remote file system is
+mounted. It sees that this directory is remote and in the directory’s v-node finds
+the pointer to the r-node. It then asks the NFS client code to open the file. The
+NFS client code looks up the remaining portion of the path name on the remote
+server associated with the mounted directory and gets back a file handle for it. It
+makes an r-node for the remote file in its tables and reports back to the VFS layer,

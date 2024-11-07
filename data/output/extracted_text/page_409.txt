@@ -1,0 +1,118 @@
+380
+INPUT/OUTPUT 
+CHAP. 5
+Spare!
+sectors
+Bad!
+sector
+0 1 2 3
+4
+5
+6
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+2829
+(a)
+Replacement!
+sector
+0 1 2 3
+4
+5
+6
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+2829 7
+(b)
+0 1 2 3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+272829
+(c)
+Figure 5-24. (a) A disk track with a bad sector. (b) Substituting a spare for the
+bad sector. (c) Shifting all the sectors to bypass the bad one.
+Earlier we said there were two general approaches to handling errors: handle
+them in the controller or in the operating system. If the controller does not have
+the capability to transparently remap sectors as we have discussed, the operating
+system must do the same thing in software. This means that it must first acquire a
+list of bad sectors, either by reading them from the disk, or simply testing the entire
+disk itself. Once it knows which sectors are bad, it can build remapping tables. If
+the operating system wants to use the approach of Fig. 5-24(c), it must shift the
+data in sectors 7 through 29 up one sector.
+If the operating system is handling the remapping, it must make sure that bad
+sectors do not occur in any files and also do not occur in the free list or bitmap.
+One way to do this is to create a secret file consisting of all the bad sectors. If this
+file is not entered into the file system, users will not accidentally read it (or worse
+yet, free it).
+However, there is still another problem: backups. If the disk is backed up file
+by file, it is important that the backup utility not try to copy the bad block file. To
+prevent this, the operating system has to hide the bad block file so well that even a
+backup utility cannot find it. If the disk is backed up sector by sector rather than
+file by file, it will be difficult, if not impossible, to prevent read errors during 
+backup. The only hope is that the backup program has enough smarts to give up after 10
+failed reads and continue with the next sector.
+Bad sectors are not the only source of errors. Seek errors caused by mechanical
+problems in the arm also occur. The controller keeps track of the arm position
+internally. To perform a seek, it issues a command to the arm motor to move the
+arm to the new cylinder. When the arm gets to its destination, the controller reads
+the actual cylinder number from the preamble of the next sector. If the arm is in the
+wrong place, a seek error has occurred.
+Most hard disk controllers correct seek errors automatically, but most of the
+old floppy controllers used in the 1980s and 1990s just set an error bit and left the
+rest to the driver. The driver handled this error by issuing a recalibrate command,

@@ -1,0 +1,54 @@
+1022
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+access. This simple example is illustrated in Fig. 11-56. The SID Everyone refers
+to the set of all users, but it is overridden by any explicit ACEs that follow.
+Security
+descriptor
+Header
+Owner's SID
+Group SID
+DACL
+SACL
+Header
+Audit
+Marilyn
+111111
+Security
+descriptor
+Header
+Allow
+Everyone
+Deny
+ Elvis
+111111
+Allow
+Cathy
+110000
+Allow
+  Ida
+ACE
+ACE
+File
+100000
+111111
+Figure 11-56. An example security descriptor for a file.
+In addition to the DACL, a security descriptor also has a SACL (System
+Access Control list), which is like a DACL except that it specifies not who may
+use the object, but which operations on the object are recorded in the systemwide
+security event log. In Fig. 11-56, every operation that Marilyn performs on the file
+will be logged. The SACL also contains the integrity level, which we will
+describe shortly.
+11.11.2 Security API Calls
+Most of the Windows access-control mechanism is based on security 
+descriptors. The usual pattern is that when a process creates an object, it provides a 
+security descriptor as one of the parameters to the CreateProcess, CreateFile, or other
+object-creation call. This security descriptor then becomes the security descriptor
+attached to the object, as we saw in Fig. 11-56. If no security descriptor is 
+provided in the object-creation call, the default security in the caller’s access token
+(see Fig. 11-55) is used instead.
+Many of the Win32 API security calls relate to the management of security
+descriptors, so we will focus on those here. The most important calls are listed in
+Fig. 11-57. To create a security descriptor, storage for it is first allocated and then
+initialized using InitializeSecur ityDescr iptor. This call fills in the header. If the
+owner SID is not known, it can be looked up by name using LookupAccountSid. It

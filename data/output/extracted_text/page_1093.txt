@@ -1,0 +1,44 @@
+1064
+OPERATING SYSTEM DESIGN
+CHAP. 12
+write different modules. Each one tests its own work in isolation. When all the
+pieces are ready, they are integrated and tested. The problem with this line of
+attack is that if nothing works initially, it may be hard to isolate whether one or
+more modules are malfunctioning, or one group misunderstood what some other
+module was supposed to do. Nevertheless, with large teams, this approach is often
+used to maximize the amount of parallelism in the programming effort.
+12.3.8 Synchronous vs. Asynchronous Communication
+Another issue that often creeps up in conversations between operating system
+designers is whether the interactions between the system components should be
+synchronous or asynchronous (and, related, whether threads are better than events).
+The issue frequently leads to heated arguments between proponents of the two
+camps, although it does not leave them foaming at the mouth quite as much as
+when deciding really important matters—like which is the best editor, vi or emacs.
+We use the term ‘‘synchronous’’ in the (loose) sense of Sec. 8.2 to denote calls that
+block until completion. Conversely, with ‘‘asynchronous’’ calls the caller keeps
+running. There are advantages and disadvantages to either model.
+Some systems, like Amoeba, really embrace the synchronous design and
+implement communication between processes as blocking client-server calls. Fully
+synchronous communication is conceptually very simple. A process sends a 
+request and blocks waiting until the reply arrives—what could be simpler? It 
+becomes a little more complicated when there are many clients all crying for the 
+server’s attention at the same time. Each individual request may block for a long time
+waiting for other requests to complete first. This can be solved by making the 
+server multi-threaded so that each thread can handle one client. The model is tried and
+tested in many real-world implementations, in operating systems as well as user
+applications.
+Things get more complicated still if the threads frequently read and write 
+shared data structures. In that case, locking is unavoidable. Unfortunately, getting the
+locks right is not easy. The simplest solution is to throw a single big lock on all
+shared data structures (similar to the big kernel lock). Whenever a thread wants to
+access the shared data structures, it has to grab the lock first. For performance 
+reasons, a single big lock is a bad idea, because threads end up waiting for each other
+all the time even if they do not conflict at all. The other extreme, lots of micro
+locks for (parts) of individual data structures, is much faster, but conflicts with our
+guiding principle number one: simplicity.
+Other operating systems build their interprocess communication using 
+asynchronous primitives. In a way, asynchronous communication is even simpler than
+its synchronous cousin. A client process sends a message to a server, but rather
+than wait for the message to be delivered or a reply to be sent back, it just 
+continues executing. Of course, this means that it also receives the reply 
+asynchronously and should remember which request corresponded to it when it arrives. The

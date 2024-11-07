@@ -1,0 +1,45 @@
+550
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+8.1.4 Multiprocessor Scheduling
+Before looking at how scheduling is done on multiprocessors, it is necessary to
+determine what is being scheduled. Back in the old days, when all processes were
+single threaded, processes were scheduled—there was nothing else schedulable.
+All modern operating systems support multithreaded processes, which makes
+scheduling more complicated.
+It matters whether the threads are kernel threads or user threads. If threading is
+done by a user-space library and the kernel knows nothing about the threads, then
+scheduling happens on a per-process basis as it always did. If the kernel does not
+ev en know threads exist, it can hardly schedule them.
+With kernel threads, the picture is different. Here, the kernel is aware of all the
+threads and can pick and choose among the threads belonging to a process. In these
+systems, the trend is for the kernel to pick a thread to run, with the process it
+belongs to having only a small role (or maybe none) in the thread-selection 
+algorithm. Below we will talk about scheduling threads, but of course, in a system
+with single-threaded processes or threads implemented in user space, it is the 
+processes that are scheduled.
+Process vs. thread is not the only scheduling issue. On a uniprocessor, 
+scheduling is one dimensional. The only question that must be answered (repeatedly) is:
+‘‘Which thread should be run next?’’ On a multiprocessor, scheduling has two
+dimensions. The scheduler has to decide which thread to run and which CPU to
+run it on. This extra dimension greatly complicates scheduling on multiprocessors.
+Another complicating factor is that in some systems all of the threads are
+unrelated, belonging to different processes and having nothing to do with one
+another. In others, they come in groups, all belonging to the same application and
+working together. An example of the former situation is a server system in which
+independent users start up separate, independent processes. The threads of different
+processes are unrelated, and each one can be scheduled without regard to the other
+ones.
+An example of the latter situation occurs regularly in program development
+environments. Large systems often consist of some number of header files 
+containing macros, type definitions, and variable declarations that are used by the
+actual code files. When a header file is changed, all the code files that include it
+must be recompiled. The program make is commonly used to manage 
+development. When make is invoked, it starts the compilation of only those code files that
+must be recompiled on account of changes to the header or code files. Object files
+that are still valid are not regenerated.
+The original version of make did its work sequentially, but newer versions
+designed for multiprocessors can start up all the compilations at once. If 10 
+compilations are needed, it does not make sense to schedule 9 of them to run
+immediately and leave the last one until much later since the user will not perceive
+the work as completed until the last one has finished. In this case, it makes sense

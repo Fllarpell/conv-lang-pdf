@@ -1,0 +1,27 @@
+410
+INPUT/OUTPUT 
+CHAP. 5
+Figure 5-35. A sample window on the authors’ machine on a 1920 × 1080 display.
+their windows and must be prepared to redraw the contents of their windows at any
+time, even when they least expect it.
+As a consequence, Windows programs are message oriented. User actions
+involving the keyboard or mouse are captured by Windows and converted into
+messages to the program owning the window being addressed. Each program has a
+message queue to which messages relating to all its windows are sent. The main
+loop of the program consists of fishing out the next message and processing it by
+calling an internal procedure for that message type. In some cases, Windows itself
+may call these procedures directly, bypassing the message queue. This model is
+quite different from the UNIX model of procedural code that makes system calls to
+interact with the operating system. X, however, is also event oriented.
+To make this programming model clearer, consider the example of Fig. 5-36.
+Here we see the skeleton of a main program for Windows. It is not complete and
+does no error checking, but it shows enough detail for our purposes. It starts by
+including a header file, windows.h, which contains many macros, data types, 
+constants, function prototypes, and other information needed by Windows programs.
+The main program starts with a declaration giving its name and parameters.
+The WINAPI macro is an instruction to the compiler to use a certain 
+parameter-passing convention and will not be of further concern to us. The first parameter, h, is
+an instance handle and is used to identify the program to the rest of the system. To
+some extent, Win32 is object oriented, which means that the system contains
+objects (e.g., programs, files, and windows) that have some state and associated
+code, called methods, that operate on that state. Objects are referred to using

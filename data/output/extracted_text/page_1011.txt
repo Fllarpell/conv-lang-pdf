@@ -1,0 +1,44 @@
+982
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+five priorities specified: critical, high, normal, low, and very low. Critical is
+reserved for the memory manager to avoid deadlocks that could otherwise occur
+when the system experiences extreme memory pressure. Low and very low 
+priorities are used by background processes, like the disk defragmentation service and
+spyware scanners and desktop search, which are attempting to avoid interfering
+with normal operations of the system. Most I/O gets normal priority, but 
+multimedia applications can mark their I/O as high to avoid glitches. Multimedia 
+applications can alternatively use bandwidth reservation to request guaranteed 
+bandwidth to access time-critical files, like music or video. The I/O system will provide
+the application with the optimal transfer size and the number of outstanding I/O
+operations that should be maintained to allow the I/O system to achieve the
+requested bandwidth guarantee.
+11.7.2 Input/Output API Calls
+The system call APIs provided by the I/O manager are not very different from
+those offered by most other operating systems. The basic operations are open,
+read, wr ite, ioctl, and close, but there are also plug-and-play and power operations,
+operations for setting parameters, as well as calls for flushing system buffers, and
+so on. At the Win32 layer, these APIs are wrapped by interfaces that provide 
+higher-level operations specific to particular devices. At the bottom, though, these
+wrappers open devices and perform these basic types of operations. Even some
+metadata operations, such as file rename, are implemented without specific system
+calls. They just use a special version of the ioctl operations. This will make more
+sense when we explain the implementation of I/O device stacks and the use of
+IRPs by the I/O manager.
+The native NT I/O system calls, in keeping with the general philosophy of
+Windows, take numerous parameters and include many variations. Figure 11-40
+lists the primary system-call interfaces to the I/O manager. NtCreateFile is used to
+open existing or new files. It provides security descriptors for new files, a rich
+description of the access rights requested, and gives the creator of new files some
+control over how blocks will be allocated. NtReadFile and NtWr iteFile take a file
+handle, buffer, and length. They also take an explicit file offset and allow a key to
+be specified for accessing locked ranges of bytes in the file. Most of the parameters
+are related to specifying which of the different methods to use for reporting 
+completion of the (possibly asynchronous) I/O, as described earlier.
+NtQuer yDirector yFile is an example of a standard paradigm in the executive
+where various Query APIs exist to access or modify information about specific
+types of objects. In this case, it is file objects that refer to directories. A parameter
+specifies what type of information is being requested, such as a list of the names in
+the directory or detailed information about each file that is needed for an extended
+directory listing. Since this is really an I/O operation, all the standard ways of
+reporting that the I/O completed are supported. NtQuer yVolumeInfor mationFile is

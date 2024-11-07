@@ -1,0 +1,44 @@
+934
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+when it is in user mode and one for use when it is in kernel mode. Whenever a
+thread enters the kernel, it switches to the kernel-mode stack. The values of the
+user-mode registers are saved in a CONTEXT data structure at the base of the
+kernel-mode stack. Since the only way for a user-mode thread to not be running is
+for it to enter the kernel, the CONTEXT for a thread always contains its register
+state when it is not running. The CONTEXT for each thread can be examined and
+modified from any process with a handle to the thread.
+Threads normally run using the access token of their containing process, but in
+certain cases related to client/server computing, a thread running in a service 
+process can impersonate its client, using a temporary access token based on the client’s
+token so it can perform operations on the client’s behalf. (In general, a service 
+cannot use the client’s actual token as the client and server may be running on 
+different systems.)
+Threads are also the normal focal point for I/O. Threads block when 
+performing synchronous I/O, and the outstanding I/O request packets for 
+asynchronous I/O are linked to the thread. When a thread is finished executing, it can exit.
+Any I/O requests pending for the thread will be canceled. When the last thread still
+active in a process exits, the process terminates.
+Please remember that threads are a scheduling concept, not a 
+resource-ownership concept. Any thread is able to access all the objects that belong to its process.
+All it has to do is use the handle value and make the appropriate Win32 call. There
+is no restriction on a thread that it cannot access an object because a different
+thread created or opened it. The system does not even keep track of which thread
+created which object. Once an object handle has been put in a process’ handle 
+table, any thread in the process can use it, even it if is impersonating a different user.
+As described previously, in addition to the normal threads that run within user
+processes Windows has a number of system threads that run only in kernel mode
+and are not associated with any user process. All such system threads run in a 
+special process called the system process. This process has its own user-mode 
+address space which can be used by system threads as necessary. It provides the 
+environment that threads execute in when they are not operating on behalf of a specific
+user-mode process. We will study some of these threads later when we come to
+memory management. Some perform administrative tasks, such as writing dirty
+pages to the disk, while others form the pool of worker threads that are assigned to
+run specific short-term tasks delegated by executive components or drivers that
+need to get some work done in the system process.
+11.4.2 Job, Process, Thread, and Fiber Management API Calls
+New processes are created using the Win32 API function CreateProcess. This
+function has many parameters and lots of options. It takes the name of the file to be
+executed, the command-line strings (unparsed), and a pointer to the environment
+strings. There are also some flags and values that control many details such as how

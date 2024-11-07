@@ -1,0 +1,60 @@
+690
+SECURITY 
+CHAP. 9
+these stages. For instance, the UEFI firmware will protect the integrity of the 
+bootloaders by checking their signatures using the key information embedded in the
+firmware. Boot loaders or drivers without the appropriate signatures will never
+ev en run. In the next stage, the bootloader checks the signature of the operating
+system kernel. Again, unless the signature is correct, the kernel will not run. 
+Finally, the other components of the kernel, as well as all the drivers are checked by the
+kernel in a similar fashion. All attempts to change any component in any stage in
+the boot process will lead to a verification error. And the verification chain need
+not stop there. For instance, the operating system may start an anti-malware 
+program to check all subsequent programs.
+Root of Trust
+(e.g., ﬁrmware in ROM)
+Boot Loader
+Signature
+Public key
+Kernel
+Signature
+Public key
+Other OS components
+Signature
+Public key
+Check and run
+Check and run
+Check and run
+TPM
+Extend PCR-0 with 
+hash of code/data
+Extend PCR-0 with 
+hash of code/data
+Extend PCR-0 with 
+hash of code/data
+(a)
+(b)
+Remote computer
+(c)
+"What is PCR-0?
+(Nonce =1234)"
+"PCR-0: 0xac34de50
+ Signature: 0xca3e"
+Figure 9-35. Securing and verifying the boot process.
+9.8.5 Remote Attestation Using a Trusted Platform Module
+Let us now go back to the issue of remote attestation and TPM and see how
+they fit in the store. The question was: once the operating system is booted, how
+can we tell if it was booted correctly and securely? Whatever is on the screen 
+cannot necessarily be trusted. After all, the attacker could have installed a new 
+operating system that displays whatever the attacker wants it to display. To verify that a
+system was booted in the appropriate manner, we can use remote attestation. The
+idea is that we use another computer to verify the trustworthiness of a target
+machine. Special cryptographic hardware on that we called trusted platform 
+module on the machine that needs to be verified, allows it to prove to a remote party
+that all the right steps in the secure boot process were taken. The TPM has a 
+number of Platform Configuration Registers (PCR-0, PCR-1, ...) that are set to a known
+value on every boot. Nobody can write directly to these registers. The only thing
+one can do is ‘‘extend’’ it. In particular, if you ask the TPM to extend the PCR-0
+register with a value X, it will calculate a hash of the concatenation of the current
+value PCR-0 and the value X and store the result in PCR-0. By extending the value
+in PCR-0 with new values, you get a hash chain of arbitrary length.

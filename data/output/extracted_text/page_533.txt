@@ -1,0 +1,41 @@
+504
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+Instead, what modern virtualization solutions offer is something known as live
+migration. In other words, they move the virtual machine while it is still 
+operational. For instance, they employ techniques like pre-copy memory migration.
+This means that they copy memory pages while the machine is still serving
+requests. Most memory pages are not written much, so copying them over is safe.
+Remember, the virtual machine is still running, so a page may be modified after it
+has already been copied. When memory pages are modified, we have to make sure
+that the latest version is copied to the destination, so we mark them as dirty. They
+will be recopied later. When most memory pages have been copied, we are left
+with a small number of dirty pages. We now pause very briefly to copy the
+remaining pages and resume the virtual machine at the new location. While there
+is still a pause, it is so brief that applications typically are not affected. When the
+downtime is not noticeable, it is known as a seamless live migration.
+7.9.3 Checkpointing
+Decoupling of virtual machine and physical hardware has additional 
+advantages. In particular, we mentioned that we can pause a machine. This in itself is
+useful. If the state of the paused machine (e.g., CPU state, memory pages, and 
+storage state) is stored on disk, we have a snapshot of a running machine. If the 
+software makes a royal mess of the still-running virtual machine, it is possible to just
+roll back to the snapshot and continue as if nothing happened.
+The most straightforward way to make a snapshot is to copy everything,
+including the full file system. However, copying a multiterabyte disk may take a
+while, even if it is a fast disk. And again, we do not want to pause for long while
+we are doing it. The solution is to use copy on write solutions, so that data are
+copied only when absolutely necessary.
+Snapshotting works quite well, but there are issues. What to do if a machine is
+interacting with a remote computer? We can snapshot the system and bring it up
+again at a later stage, but the communicating party may be long gone. Clearly, this
+is a problem that cannot be solved.
+7.10 OS-LEVEL VIRTUALIZATION
+So far, we studied hypervisor-based virtualization, but in the beginning of this
+chapter we mentioned that there is this thing called OS-level virtualization also.
+Instead of presenting the illusion of a machine, the idea is to create isolated user
+space environments, also known as a containers or jails, as mentioned earlier.
+As much as possible, each container and all the processes in it are isolated
+from the other containers and the rest of the system. For instance, they may all
+have their own file system ‘‘name space’’: a subtree that starts from a root that the
+administrator created with the chroot system call. A process in this name space

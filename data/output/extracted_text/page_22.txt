@@ -1,0 +1,35 @@
+CONTENTS
+xxi
+11.10 VIRTUALIZATION IN WINDOWS 1003
+11.10.1 Hyper-V 1003
+11.10.2 Containers 1011
+11.10.3 Virtualization-Based Security 1017
+11.11 SECURITY IN WINDOWS 1018
+11.11.1 Fundamental Concepts 1020
+11.11.2 Security API Calls 1022
+11.11.3 Implementation of Security 1023
+11.11.4 Security Mitigations 1025
+11.12 SUMMARY 1035
+12 OPERATING SYSTEM DESIGN
+1041
+12.1 THE NATURE OF THE DESIGN PROBLEM 1042
+12.1.1 Goals 1042
+12.1.2 Why Is It Hard to Design an Operating System? 1043
+12.2 INTERFACE DESIGN 1045
+12.2.1 Guiding Principles 1045
+12.2.2 Paradigms 1048
+12.2.3 The System-Call Interface 1051
+12.3 IMPLEMENTATION 1053
+12.3.1 System Structure 1054
+12.3.2 Mechanism vs. Policy 1057
+12.3.3 Orthogonality 1058
+12.3.4 Naming 1059
+12.3.5 Binding Time 1061
+12.3.6 Static vs. Dynamic Structures 1062
+12.3.7 Top-Down vs. Bottom-Up Implementation 1063
+12.3.8 Synchronous vs. Asynchronous Communication 1064
+12.3.9 Useful Techniques 1065
+12.4 PERFORMANCE 1070
+12.4.1 Why Are Operating Systems Slow? 1071
+12.4.2 What Should Be Optimized? 1071
+12.4.3 Space-Time Trade-offs 1072

@@ -1,0 +1,46 @@
+SEC. 10.1
+HISTORY OF UNIX AND LINUX
+711
+roughly similar to MINIX version in size and also comparable in functionality. De
+facto, it was a rewrite of MINIX, the only system Torvalds had source code for.
+Linux rapidly grew in size and evolved into a full, production UNIX clone, as
+virtual memory, a more sophisticated file system, and many other features were
+added. Although it originally ran only on the 386 (and even had embedded 386
+assembly code in the middle of C procedures), it was quickly ported to other 
+platforms and now runs on a wide variety of machines, just as UNIX does. One 
+difference with UNIX does stand out, however: Linux makes use of so many special
+features of the gcc compiler and would need a lot of work before it would compile
+with an ANSI standard C compiler. The shortsighted idea that gcc is the only 
+compiler the world will ever see is already becoming a problem because the 
+opensource LLVM compiler from the University of Illinois is rapidly gaining many
+adherents due to its flexibility and code quality. Since LLVM did not support all
+the nonstandard gcc extensions to C, it could not compile the Linux kernel without
+a lot of patches to the kernel to replace non-ANSI code when it was released.
+LLVM eventually supported some of the gcc extensions.
+The next major release of Linux was version 1.0, issued in 1994. It was about
+165,000 lines of code and included a new file system, memory-mapped files, and
+BSD-compatible networking with sockets and TCP/IP. It also included many new
+device drivers. Several minor revisions followed in the next two years.
+By this time, Linux was sufficiently compatible with UNIX that a vast amount
+of UNIX software was ported to Linux, making it far more useful than it would
+have otherwise been. In addition, a large number of people were attracted to Linux
+and began working on the code and extending it in many ways under Torvalds’
+general supervision.
+The next major release, 2.0, was made in 1996. It consisted of about 470,000
+lines of C and 8000 lines of assembly code. It included support for 64-bit 
+architectures, symmetric multiprogramming, new networking protocols, and numerous
+other features. A large fraction of the total code mass was taken up by an extensive
+collection of device drivers for an ever-growing set of supported peripherals. 
+Additional releases followed frequently.
+The version numbers of the Linux kernel consist of four numbers, A.B.C.D,
+such as 2.6.9.11. The first number denotes the kernel version. The second number
+denotes the major revision. Prior to the 2.6 kernel, even revision numbers 
+corresponded to stable kernel releases, whereas odd ones corresponded to unstable 
+revisions, under development. With the 2.6 kernel, that is no longer the case. The third
+number corresponds to minor revisions, such as support for new drivers. The fourth
+number corresponds to minor bug fixes or security patches. In July 2011, Linus
+Torvalds announced the release of Linux 3.0, not in response to major technical
+advances, but rather in honor of the 20th anniversary of the kernel. By early 2021,
+Linux 5.11 kernel version was released with over 30 million lines of code.
+A large amount of standard UNIX software has been ported to Linux, 
+including the popular X Window System and a great deal of networking software. Two

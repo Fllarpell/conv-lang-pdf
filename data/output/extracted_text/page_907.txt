@@ -1,0 +1,44 @@
+878
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+ev olution than with Windows Vista, resulting in Windows 8. Howev er, this time
+Microsoft applied the lessons from Windows 7 to create a well-engineered, 
+performant product with less bloat.
+Windows 8 built on the modular OneCore operating system composition
+approach to produce a small operating system core that could be extended onto 
+different devices. The goal was for each of the operating systems for specific devices
+to be built by extending this core with new user interfaces and features, yet provide
+as common an experience for users as possible. This approach was successfully
+applied to Windows Phone 8, which shares most of the core binaries with desktop
+and server Windows. Support of phones and tablets by Windows required support
+for the popular ARM architecture (arm32), as well as new Intel processors 
+targeting those devices. What makes Windows 8 part of the Modern Windows era are the
+fundamental changes in the programming models, as we will examine in the next
+section.
+Windows 8 was not received to universal acclaim. In particular, the lack of the
+Start Button on the taskbar (and its associated menu) was viewed by many users as
+a huge mistake. Others objected to using a tablet-like, touch-first interface on a
+desktop machine with a large monitor and a mouse. Over the following two years,
+Microsoft responded to this and other criticisms by releasing an update in 2013
+called Windows 8.1 which itself was refreshed again in the spring of 2014. This
+version made significant progress toward fixing these problems while at the same
+time introducing a host of new features, such as better cloud integration, improved
+functionality for apps bundled with Windows, and numerous performance 
+improvements which actually lowered the minimum system requirements for 
+Windows for the first time ever.
+11.1.6 Windows 10
+Windows 10 was the culmination of Microsoft’s multi-device OS vision which
+started with Windows 8. It provided a single, unified operating system and 
+application development platform for desktop/laptop computers, tablets, smartphones, 
+allin-one devices, Xbox, Hololens, and the Surface Hub collaboration device. Apps
+written for the new UWP (Universal Windows Platform) could target multiple
+device families with the same underlying code and be distributed from the 
+Windows Store. Up until that time, developer interest in Windows 8’s modern 
+application platform was low and Microsoft wanted to shift developer mindshare from the
+competing iOS and Android platforms to Windows.
+Internally, teams working on Windows and Windows Phone were merged into
+a single organization and produced a converged OS which unified the application
+development platform under UWP. Windows Mobile 10 was the mobile edition of
+Windows 10 targeted at smartphones and tablets, built out of a single code base.
+OneCore-based OS composition allowed each Windows edition to share a common
+core, but provided its own unique user-interface and features.

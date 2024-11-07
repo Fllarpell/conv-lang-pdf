@@ -1,0 +1,53 @@
+162
+PROCESSES AND THREADS
+CHAP. 2
+2.5.3 Scheduling in Interactive Systems
+We will now look at some algorithms that can be used in interactive systems.
+These are common on personal computers, servers, and other kinds of systems as
+well.
+Round-Robin Scheduling
+One of the oldest, simplest, fairest, and most widely used algorithms is round
+robin. Each process is assigned a time interval, called its quantum, during which
+it is allowed to run. If the process is still running at the end of the quantum, the
+CPU is preempted and given to another process. If the process has blocked or 
+finished before the quantum has elapsed, the CPU switching is done when the process
+blocks, of course. Round robin is easy to implement. All the scheduler needs to do
+is maintain a list of runnable processes, as shown in Fig. 2-43(a). When the 
+process uses up its quantum, it is put on the end of the list, as shown in Fig. 2-43(b).
+(a)
+Current!
+process
+Next!
+process
+B
+F
+D
+G
+A
+(b)
+Current!
+process
+F
+D
+G
+A
+B
+Figure 2-43. Round-robin scheduling. (a) The list of runnable processes.
+(b) The list of runnable processes after B uses up its quantum.
+The only really interesting issue with round robin is the length of the quantum.
+Switching from one process to another requires a certain amount of time for doing
+the administration—saving and loading registers and memory maps, updating 
+various tables and lists, flushing and reloading the memory cache, and so on. Suppose
+that this context switch takes 1 msec, including switching memory maps, flushing
+and reloading the cache, etc. Also suppose that the quantum is set at 4 msec. With
+these parameters, after doing 4 msec of useful work, the CPU will have to spend
+(i.e., waste) 1 msec on process switching. Thus, 20% of the CPU time will be
+thrown away on administrative overhead. Clearly, this is too much.
+To improve the CPU efficiency, we could set the quantum to, say, 100 msec.
+Now the wasted time is only 1%. But consider what happens on a server system if
+50 requests come in within a very short time interval and with widely varying CPU
+requirements. Fifty processes will be put on the list of runnable processes. If the
+CPU is idle, the first one will start immediately, the second one may not start until
+100 msec later, and so on. The unlucky last one may have to wait 5 sec before 
+getting a chance, assuming all the others use their full quanta. Most users will 
+perceive a 5-sec response to a short command as sluggish. This situation is especially

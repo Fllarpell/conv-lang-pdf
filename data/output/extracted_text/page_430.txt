@@ -1,0 +1,43 @@
+SEC. 5.6
+USER INTERFACES: KEYBOARD, MOUSE, & MONITOR
+401
+CTRL-\ is similar to DEL, except that it sends the SIGQUIT signal, which
+forces a core dump if not caught or ignored. When either of these keys is struck,
+the driver should echo a carriage return and line feed and discard all accumulated
+input to allow for a fresh start. The default value for INTR is often CTRL-C instead
+of DEL, since many programs use DEL interchangeably with the backspace for
+editing.
+Another special character is EOF (CTRL-D), which in UNIX causes any 
+pending read requests for the terminal to be satisfied with whatever is available in the
+buffer, even if the buffer is empty. Typing CTRL-D at the start of a line causes the
+program to get a read of 0 bytes, which is conventionally interpreted as end-of-file
+and causes most programs to act the same way as they would upon seeing 
+end-offile on an input file.
+Mouse Software
+Most desktop PCs have a mouse, or sometimes a trackball, which is just a
+mouse lying on its back. Notebooks usually have a trackpad, but some people use
+a mouse with them instead. Whenever a mouse has moved a certain minimum 
+distance in either direction or a button is pressed or released, a message is sent to the
+computer. The minimum distance is about 0.1 mm (although it can be set in 
+software). Some people call this unit a mickey. Mice (or occasionally, mouses) can
+have one, two, or three buttons, depending on the designers’ estimate of the users’
+intellectual ability to keep track of more than one button. Some mice have wheels
+that can send additional data back to the computer. Wireless mice are the same as
+wired mice except that instead of sending their data back to the computer over a
+wire, they use low-power radios, for example, using the Bluetooth standard.
+The message to the computer contains three items: 6x, 6y, buttons. The first
+item is the change in x position since the last message. Then comes the change in
+y position since the last message. Finally, the status of the buttons is included. The
+format of the message depends on the system and the number of buttons the mouse
+has. Usually, it takes 3 bytes. Most mice report back a maximum of 40 times/sec,
+so the mouse may have moved multiple mickeys since the last report.
+Note that the mouse indicates only changes in position, not absolute position
+itself. If the mouse is picked up and put down gently, no messages will be sent.
+Many GUIs distinguish between single clicks and double clicks of a mouse
+button. If two clicks are close enough in space (mickeys) and also close enough in
+time (milliseconds), a double click is signaled. The maximum for ‘‘close enough’’
+is up to the software, with both parameters usually being user settable.
+Trackpads
+Notebook computers are generally equipped with a trackpad (also called a
+touchpad), for moving the cursor around the screen. Trackpads commonly also
+have buttons around the edge, which are used like mouse buttons. Some trackpads

@@ -1,0 +1,39 @@
+818
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+other processes to make calls to it. Tw o AIDL interfaces are involved here: one for
+the service manager and one for the package manager. For example, Fig. 10-50
+shows the basic AIDL description for the service manager; it contains the 
+getService method, which other processes use to retrieve the IBinder of system service
+interfaces like the package manager.
+package android.os
+interface IServiceManager {
+IBinder getService(Str ing name);
+void addService(Str ing name, IBinder binder);
+}
+Figure 10-50. Basic service manager AIDL interface.
+10.8.8 Android Applications
+Android provides an application model that is very different from a typical
+command-line environment in the Linux shell or even applications launched from a
+graphical user interface such as Gnome or KDE.
+An application is not an
+executable file with a main entry point; it is a container of everything that makes
+up that app: its code, graphical resources, declarations about what it is to the 
+system, and other data.
+An Android application by convention is a file with the apk extension, for
+Android Package. This file is actually a normal zip archive, containing everything
+about the application. The important contents of an apk are as follows:
+1. A manifest describing what the application is, what it does, and how
+to run it. The manifest must provide a package name for the 
+application, a Java-style scoped string (such as com.android.app.calculator),
+which uniquely identifies it.
+2. Resources needed by the application, including strings it displays to
+the user, XML data for layouts and other descriptions, graphical 
+bitmaps, etc.
+3. The code itself, which may be ART bytecode as well as native library
+code.
+4. Signing information, securely identifying the author.
+The key part of the application for our purposes here is its manifest, which
+appears as a precompiled XML file named AndroidManifest.xml in the root of the
+apk’s zip namespace. A complete example manifest declaration for a hypothetical
+email application is shown in Fig. 10-51: it allows you to view and compose emails

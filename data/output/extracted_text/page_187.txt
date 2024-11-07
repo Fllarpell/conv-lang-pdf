@@ -1,0 +1,40 @@
+158
+PROCESSES AND THREADS
+CHAP. 2
+All systems
+Fair ness—giving each process a fair share of the CPU
+Policy enforcement—seeing that stated policy is carried out
+Balance—keeping all parts of the system busy
+Batch systems
+Throughput—maximize jobs per hour
+Turnaround time—minimize time between submission and termination
+CPU utilization—keep the CPU busy all the time
+Interactive systems
+Response time—respond to requests quickly
+Propor tionality—meet users’ expectations
+Real-time systems
+Meeting deadlines—avoid losing data
+Predictability—avoid quality degradation in multimedia systems
+Figure 2-41. Some goals of the scheduling algorithm under different circumstances.
+Another general goal is keeping all parts of the system busy when possible. If
+the CPU and all the I/O devices can be kept running all the time, more work gets
+done per second than if some of the components are idle. In a batch system, for
+example, the scheduler has control of which jobs are brought into memory to run.
+Having some CPU-bound processes and some I/O-bound processes in memory
+together is a better idea than first loading and running all the CPU-bound jobs and
+then, when they are finished, loading and running all the I/O-bound jobs. If the 
+latter strategy is used, when the CPU-bound processes are running, they will fight for
+the CPU and the disk will be idle. Later, when the I/O-bound jobs come in, they
+will fight for the disk and the CPU will be idle. Better to keep the whole system
+running at once by a careful mix of processes.
+The managers of large data centers that run many batch jobs typically look at
+three metrics to see how well their systems are performing: throughput, turnaround
+time, and CPU utilization. Throughput is the number of jobs per hour that the
+system completes. All things considered, finishing 50 jobs per hour is better than
+finishing 40 jobs per hour. Turnaround time is the statistically average time from
+the moment that a batch job is submitted until the moment it is completed. It 
+measures how long the average user has to wait for the output. Here the rule is: Small is
+Beautiful.
+A scheduling algorithm that tries to maximize throughput may not necessarily
+minimize turnaround time. For example, given a  mix of short jobs and long jobs, a
+scheduler that always ran short jobs and never ran long jobs might achieve an

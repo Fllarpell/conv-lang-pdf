@@ -1,0 +1,39 @@
+637
+the TPM. If you would like to learn more about this subject, the article on Trusted
+Computing in the Wikipedia is a good place to start.
+9.4 AUTHENTICATION
+Every secured computer system must require all users to be authenticated at
+login time. After all, if the operating system cannot be sure who the user is, it 
+cannot know which files and other resources he or she can access. While 
+authentication may sound like a trivial topic, it is a bit more complicated than you might 
+expect. Read on.
+User authentication is one of those things we meant by ‘‘ontogeny 
+recapitulates phylogeny’’ in Sec. 1.5.7. Early mainframes, such as the ENIAC, did not
+have an operating system, let alone a login procedure. Later mainframe batch and
+timesharing systems generally did have a login procedure for authenticating jobs
+and users.
+Early minicomputers (e.g., PDP-1 and PDP-8) did not have a login procedure,
+but with the spread of UNIX on the PDP-11 minicomputer, logging in was again
+needed. Early personal computers (e.g., Apple II and the original IBM PC) did not
+have a login procedure, but more sophisticated personal computer operating 
+systems, such as Linux and Windows, do (although foolish users can disable it).
+Machines on corporate LANs almost always have a login procedure configured so
+that users cannot bypass it. Finally, many people nowadays (indirectly) log into
+remote computers to do Internet banking, engage in e-shopping, download music,
+and other commercial activities. All of these things require authenticated login, so
+user authentication is once again an important topic.
+Having determined that authentication is often important, the next step is to
+find a good way to achieve it. Most methods of authenticating users when they
+attempt to log in are based on one of three general principles, namely identifying
+1. Something the user knows.
+2. Something the user has.
+3. Something the user is.
+Sometimes two of these are required for additional security. These principles lead
+to different authentication schemes with different complexities and security 
+properties. In the following sections, we will examine each of these in turn.
+9.4.1 Passwords
+The most widely used form of authentication is to require the user to type a
+login name and a password. Password protection is easy to understand and easy to
+implement. The simplest implementation just keeps a central list of (login-name,
+SEC. 9.3
+FORMAL MODELS OF SECURE SYSTEMS

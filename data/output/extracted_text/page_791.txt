@@ -1,0 +1,77 @@
+762
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+10.5.4 Implementation of Input/Output in Linux
+I/O in Linux is implemented by a collection of device drivers, one per device
+type. The function of the drivers is to isolate the rest of the system from the 
+idiosyncrasies of the hardware. By providing standard interfaces between the drivers
+and the rest of the operating system, most of the I/O system can be put into the
+machine-independent part of the kernel.
+When the user accesses a special file, the file system determines the major and
+minor device numbers belonging to it and whether it is a block special file or a
+character special file. The major device number is used to index into one of two
+internal hash tables containing data structures for character or block devices. The
+structure thus located contains pointers to the procedures to call to open the device,
+read the device, write the device, and so on. The minor device number is passed as
+a parameter. Adding a new device type to Linux means adding a new entry to one
+of these tables and supplying the corresponding procedures to handle the various
+operations on the device.
+Some of the operations which may be associated with different character 
+devices are shown in Fig. 10-21. Each row refers to a single I/O device (i.e., a single
+driver). The columns represent the functions that all character drivers must 
+support. Several other functions also exist. When an operation is performed on a 
+character special file, the system indexes into the hash table of character devices to
+select the proper structure, then calls the corresponding function to have the work
+performed. Thus each of the file operations contains a pointer to a function 
+contained in the corresponding driver.
+Device 
+Open
+Close 
+Read
+Write 
+Ioctl
+Other
+Null 
+null 
+null 
+null 
+null 
+null 
+...
+Memor y
+null 
+null 
+mem read 
+mem wr ite
+null 
+...
+Ke yboard 
+k open 
+k close 
+k read 
+error
+k ioctl 
+...
+Tty 
+tty open 
+tty close 
+tty read 
+tty wr ite
+tty ioctl 
+...
+Pr inter
+lp open 
+lp close 
+error
+lp wr ite
+lp ioctl 
+...
+Figure 10-21. Some of the file operations supported for typical character devices.
+Each driver is split into two parts, both of which are part of the Linux kernel
+and both of which run in kernel mode. The top half runs in the context of the caller
+and interfaces to the rest of Linux. The bottom half runs in kernel context and
+interacts with the device. Drivers are allowed to make calls to kernel procedures
+for memory allocation, timer management, DMA control, and other things. The set
+of kernel functions that may be called is defined in a document called the 
+DriverKernel Interface. Writing device drivers for Linux is covered in detail in 
+Cooperstein (2009) and Corbet et al. (2009).

@@ -1,0 +1,48 @@
+456
+DEADLOCKS 
+CHAP. 6
+only when it is safe. Thus, the question arises: Is there an algorithm that can
+always avoid deadlock by making the right choice all the time? The answer is a
+qualified yes—we can avoid deadlocks, but only if certain information is available
+in advance. In this section, we examine ways to avoid deadlock by careful
+resource allocation.
+6.5.1 Resource Trajectories
+The main algorithms for deadlock avoidance are based on the concept of safe
+states. Before describing them, we will make a slight digression to look at the 
+concept of safety in a graphic and easy-to-understand way. Although the graphical
+approach does not translate directly into a usable algorithm, it gives a  good 
+intuitive feel for the nature of the problem.
+In Fig. 6-11, we see a model for dealing with two processes and two resources,
+for example, a printer and a plotter. The horizontal axis represents the number of
+instructions executed by process A. The vertical axis represents the number of
+instructions executed by process B. At I1 A requests a printer; at I2 it needs a 
+plotter. The printer and plotter are released at I3 and I4, respectively. Process B needs
+the plotter from I5 to I7 and the printer from I6 to I8.
+Plotter
+Printer
+Printer
+Plotter
+B
+A
+u (Both processes"
+finished)
+p
+q
+r
+s
+t
+I8
+I7
+I6
+I5
+I4
+I3
+I2
+I1
+Figure 6-11. Tw o process resource trajectories.
+Every point in the diagram represents a joint state of the two processes. 
+Initially, the state is at p, with neither process having executed any instructions. If the
+scheduler chooses to run A first, we get to the point q, in which A has executed
+some number of instructions, but B has executed none. At point q the trajectory
+becomes vertical, indicating that the scheduler has chosen to run B. With a single
+processor, all paths must be horizontal or vertical, never diagonal. Furthermore,

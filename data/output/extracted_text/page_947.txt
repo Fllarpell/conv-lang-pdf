@@ -1,0 +1,32 @@
+918
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Figure 11-17. Handle-table data structures for a maximal table of up to 16 
+million handles.
+process has only read permission to an object, all the other rights bits in the mask
+will be 0s, giving the operating system the ability to reject any operation on the
+object other than reads.
+In order to manage lifetime, the object manager keeps a separate handle count
+in every object. This count is never larger than the referenced pointer count
+because each valid handle has a referenced pointer to the object in its handle-table
+entry. The reason for the separate handle count is that many types of objects may
+need to have their state cleaned up when the last user-mode reference disappears,
+ev en though they are not yet ready to have their memory deleted.
+One example is file objects, which represent an instance of an opened file. In
+Windows, files can be opened for exclusive access. When the last handle for a file
+object is closed, it is important to delete the exclusive access at that point rather
+than wait for any incidental kernel references to eventually go away (e.g., after the
+last flush of data from memory). Otherwise closing and reopening a file from user
+mode may not work as expected because the file still appears to be in use.
+Though the object manager has comprehensive mechanisms for managing
+object lifetimes within the kernel, neither the NT APIs nor the Win32 APIs provide
+a reference mechanism for dealing with the use of handles across multiple 
+concurrent threads in user mode. Thus, many multithreaded applications have race 
+conditions and bugs where they will close a handle in one thread before they are finished
+with it in another. Or they may close a handle multiple times, or close a handle that
+another thread is still using and reopen it to refer to a different object.
+Perhaps the Windows APIs should have been designed to require a close API
+per object type rather than the single generic NtClose operation. That would have
+at least reduced the frequency of bugs due to user-mode threads closing the wrong
+handles. Another solution might be to embed a sequence field in each handle in
+addition to the index into the handle table.

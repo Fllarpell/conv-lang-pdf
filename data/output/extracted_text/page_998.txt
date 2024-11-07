@@ -1,0 +1,42 @@
+SEC. 11.5
+MEMORY MANAGEMENT
+969
+Working sets come into play only when the available physical memory is 
+getting low in the system. Otherwise processes are allowed to consume memory as
+they choose, often far exceeding the working-set maximum. But when the system
+comes under memory pressure, the memory manager starts to squeeze processes
+back into their working sets, starting with processes that are over their maximum
+by the most. There are three levels of activity by the working-set manager, all of
+which is periodic based on a timer. New activity is added at each level:
+1. Lots of memory available: Scan pages resetting access bits and
+using their values to represent the age of each page. Keep an estimate
+of the unused pages in each working set.
+2. Memory getting tight: For any process with a significant proportion
+of unused pages, stop adding pages to the working set and start
+replacing the oldest pages whenever a new page is needed. The
+replaced pages go to the standby or modified list.
+3. Memory is tight: Trim (i.e., reduce) working sets by removing the
+oldest pages.
+The working set manager runs every second, called from the balance set 
+manager thread. The working-set manager throttles the amount of work it does to keep
+from overloading the system. It also monitors the writing of pages on the modified
+list to disk to be sure that the list does not grow too large, waking the 
+ModifiedPageWr iter thread as needed.
+Physical Memory Management
+Above we mentioned three different lists of physical pages, the free list, the
+standby list, and the modified list. There is a fourth list which contains free pages
+that have been zeroed. The system frequently needs pages that contain all zeros.
+When new pages are given to processes, or the final partial page at the end of a file
+is read, a zero page is needed. It is time consuming to fill a page with zeros on
+demand, so it is better to create zero pages in the background using a low-priority
+thread. There is also a fifth list used to hold pages that have been detected as 
+having hardware errors (i.e., through hardware error detection).
+All pages in the system are managed using a data structure called the PFN
+database (Page Frame Number database), as shown in Fig. 11-36. The PFN
+database is a table indexed by physical page frame number where each entry
+represents the state of the corresponding physical page, using different formats for
+different page types (e.g., sharable vs. private). For pages that are in use, the PFN
+entry contains information about how many references exist to the page and how
+many page table entries reference it such that the system can track when the page
+is no longer in use. There is also a pointer to the PTE which references the physical
+page. For private pages, this is the address of the hardware PTE but for shareable

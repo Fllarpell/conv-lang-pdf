@@ -1,0 +1,46 @@
+SEC. 9.6
+EXPLOITING HARDWARE
+677
+So far the good news. The bad news is that related vulnerabilities still pop up
+from time to time. They hav e different names and the details always vary, but the
+principle remains that a faulting instruction raises an exception, but in the 
+meantime transient execution has already accessed and used the secret data.
+Transient Execution Attacks Based on Speculation
+There is another cause of transient execution: speculation. Consider the code in
+Fig. 9-29. Assume that the code runs inside the victim (for instance, the operating
+system) and that input is an unsigned integer value that is provided by an untrusted
+user process. Clearly the programmer has tried to do the right thing. Before using
+input as an index into an array, the program verifies that it is in bounds. Only if this
+is the case will it execute Lines 2 and 3. At least, that is what you would think.
+1. if (input < MaxArrayElements) {// security check: do not allow buffer overflow?
+2. 
+char x = A [input]; 
+// read a char from the array
+3. 
+char y = B [x * 4096]; 
+// use the result as an index
+4. }
+Figure 9-29. Speculative execution: the CPU mispredicts the condition in Line 1 and
+executes Lines 2–3 speculatively, accessing memory that should be off-limits.
+Reality is very different and the CPU may decide to execute the instructions
+transiently ev en if the index is out of bounds. The reason may be that the condition
+in Line 1 takes a long time to resolve. For instance, variable MaxArrayElements
+may not be in the cache and that means that the processor has to fetch it all the way
+from main memory, an operation that takes many cycles. In the meantime, the CPU
+with all its execution units has nothing to do. Stalling the CPU for such long 
+periods would be disastrous for performance, so the hardware vendors came up with a
+clever trick. They said: what if we try to guess the outcome of the if condition? Or
+better still, can we somehow predict this value? If we predict the condition to be
+true, we can then execute the instructions in Lines 2–3 speculatively while waiting
+for the actual outcome of the condition to be resolved. The prediction is often
+based on history. For instance, if the outcome was true the last 100 times, it will
+probably be true again the 101st time. In reality, branch predictors in modern CPUs
+are much more complicated and very accurate.
+Suppose we predicted the value to be true and speculatively executed the other
+two instructions. At some point the true outcome of the condition becomes 
+available. If we guessed right and the prediction matched the actual outcome, we
+already have the results of the next two instructions and the CPU can simply 
+commit them and move on to the next instruction. In case the prediction was wrong, no
+harm is done—we simply do not commit the results and undo all architecturally
+visible effects of these instructions. Since the speculatively executed instructions
+are now made transient, it will be as if they nev er executed.

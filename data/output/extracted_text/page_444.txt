@@ -1,0 +1,67 @@
+SEC. 5.6
+USER INTERFACES: KEYBOARD, MOUSE, & MONITOR
+415
+Bitmaps
+The GDI procedures are examples of vector graphics. They are used to place
+geometric figures and text on the screen. They can be scaled easily to larger or
+smaller screens (provided the number of pixels on the screen is the same). They
+are also relatively device independent.
+Not all the images that computers manipulate can be generated using vector
+graphics. Photographs and videos, for example, do not use vector graphics. 
+Instead, these items are scanned in by overlaying a grid on the image. The average
+red, green, and blue values of each grid square are then sampled and saved as the
+value of one pixel. Such a file is called a bitmap. There are extensive facilities in
+Windows for manipulating bitmaps.
+Another use for bitmaps is for text. One way to represent a particular character
+in some font is as a small bitmap. Adding text to the screen then becomes a matter
+of moving bitmaps. One general way to use bitmaps is through a procedure called
+BitBlt. It is called as follows:
+BitBlt(dsthdc, dx, dy, wid, ht, srchdc, sx, sy, rasterop);
+In its simplest form, it copies a bitmap from a rectangle in one window to a 
+rectangle in another window (or the same one). The first three parameters specify the
+destination window and position. Then come the width and height. Next come the
+source window and position. Note that each window has its own coordinate 
+system, with (0, 0) in the upper left-hand corner of the window. The last parameter
+will be described below. The effect of
+BitBlt(hdc2, 1, 2, 5, 7, hdc1, 2, 2, SRCCOPY);
+is shown in Fig. 5-38. Notice carefully that the entire 5 × 7 area of the letter A has
+been copied, including the background color.
+0
+2 4 6
+8
+0
+2
+4
+6
+8
+0
+2 4 6
+8
+0
+2
+4
+6
+8
+Window 1
+Window 2
+0
+2 4 6
+8
+0
+2
+4
+6
+8
+0
+2 4 6
+8
+0
+2
+4
+6
+8
+Window 1
+Window 2
+(a)
+(b)
+Figure 5-38. Copying bitmaps using BitBlt. (a) Before. (b) After.

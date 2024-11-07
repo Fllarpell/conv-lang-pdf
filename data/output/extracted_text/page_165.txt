@@ -1,0 +1,44 @@
+136
+PROCESSES AND THREADS
+CHAP. 2
+contention, it is therefore more efficient to block the process and let the kernel
+unblock it only when the lock is free. Unfortunately, this has the inverse problem:
+it works well under heavy contention, but continuously switching to the kernel is
+expensive if there is very little contention to begin with. To make matters worse, it
+may not be easy to predict the amount of lock contention. One nice solution that
+tries to combine the best of both worlds is the futex, or ‘‘fast user space mutex.’’
+A futex is a feature of Linux that implements basic locking (much like a
+mutex) but avoids dropping into the kernel unless it really has to. Since switching
+to the kernel and back is quite expensive, doing so improves performance 
+considerably. While we focus our discussion on mutex-style locking, futexes are very 
+versatile and used to implement a range of synchronization primitives, from mutexes
+to condition variables. They are also a very low-level feature of the kernel that
+most users will never use directly—instead they are wrapped by standard libraries
+that offer higher-level primitives. It is only when you lift the hood that you see the
+futex mechanism powering many different kinds of synchronization.
+A futex is a construct supported by the kernel to let user space processes 
+synchronize on shared events. It consists of two parts: a kernel service and a user 
+library. The kernel service provides a ‘‘wait queue’’ that allows multiple processes to
+wait on a lock. They will not run, unless the kernel explicitly unblocks them. For a
+process to be put on the wait queue requires an (expensive) system call. If possible,
+it should be avoided. In the absence of any contention, therefore, the futex works
+entirely in user space. Specifically, the processes or threads share a common lock
+variable—a fancy name for an integer in shared memory that serves as the lock.
+Suppose we have multithreaded program and the lock is initially—1 which we
+assume to mean that the lock is free. A thread may grab the lock by performing an
+atomic ‘‘decrement and test’’ (atomic functions in Linux consist of inline assembly
+wrapped in C functions and are defined in header files). Next, the thread inspects
+the result to see whether or not the lock was free. If it was not in the locked state,
+all is well and our thread has successfully grabbed the lock.
+However, if the lock is held by another thread, our thread has to wait. In that
+case, the futex library does not spin, but uses a system call to put the thread on the
+wait queue in the kernel. Hopefully, the cost of the switch to the kernel is now 
+justified, because the thread was blocked anyway. When a thread is done with the
+lock, it releases the lock with an atomic ‘‘increment and test’’ and checks the result
+to see if any processes are still blocked on the kernel wait queue. If so, it will let
+the kernel know that it may wake up (unblock) one or more of these processes. In
+other words, if there is no contention, the kernel is not involved at all.
+Mutexes in Pthreads
+Pthreads provides a number of functions for synchronizing threads. The basic
+mechanism uses a mutex variable, which can be locked or unlocked, to guard each
+critical region. The implementation of a mutex varies from operating system to

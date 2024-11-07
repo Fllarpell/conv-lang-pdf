@@ -1,0 +1,97 @@
+222
+MEMORY MANAGEMENT 
+CHAP. 3
+(a)
+(b)
+(c)
+A0
+A1
+A2
+A3
+A4
+A5
+B0
+B1
+B2
+B3
+B4
+B5
+B6
+C1
+C2
+C3
+A0
+A1
+A2
+A3
+A4
+A6
+B0
+B1
+B2
+B3
+B4
+B5
+B6
+C1
+C2
+C3
+A0
+A1
+A2
+A3
+A4
+A5
+B0
+B1
+B2
+A6
+B4
+B5
+B6
+C1
+C2
+C3
+Age
+10
+7
+5
+4
+6
+3
+9
+4
+6
+2
+5
+6
+12
+3
+5
+6
+Figure 3-22. Local versus global page replacement. (a) Original configuration.
+(b) Local page replacement. (c) Global page replacement.
+algorithm, whereas that of Fig. 3-22(c) is said to be a global algorithm. Local 
+algorithms effectively correspond to allocating every process a fixed fraction of the
+memory. Global algorithms dynamically allocate page frames among the runnable
+processes. Thus the number of page frames assigned to each process varies in time.
+In general, global algorithms work better, especially when the working set size
+can vary a lot over the lifetime of a process. If a local algorithm is used and the
+working set grows, thrashing will result, even if there are a sufficient number of
+free page frames. If the working set shrinks, local algorithms waste memory. If a
+global algorithm is used, the system must continually decide how many page
+frames to assign to each process. One way is to monitor the working set size as
+indicated by the aging bits, but this approach does not necessarily prevent 
+thrashing. The working set may change size in milliseconds, whereas the aging bits are a
+very crude measure spread over a number of clock ticks.
+Another approach is to have an algorithm for allocating page frames to 
+processes. One way is to periodically determine the number of running processes and
+allocate each process an equal share. Thus with 12,416 available (i.e., nonoperating
+system) page frames and 10 processes, each process gets 1241 frames. The 
+remaining six go into a pool to be used when page faults occur.
+Although this method may seem fair, it makes little sense to give equal shares
+of the memory to a 10-KB process and a 300-KB process. Instead, pages can be
+allocated in proportion to each process’ total size, with a 300-KB process getting
+30 times the allotment of a 10-KB process. It is probably wise to give each process
+some minimum number, so that it can run no matter how small it is. On some 
+machines, for example, a single two-operand instruction might need as many as six

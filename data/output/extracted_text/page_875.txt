@@ -1,0 +1,15 @@
+846
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Figure 10-71. The only thing most users care about security.
+being with someone and thus always having potential access to sensitive 
+information such as their location. This makes the evolution of Android around privacy
+an interesting case-study in how these issues have been evolving in the industry.
+Android’s initial approach to privacy was security-focused: every application
+needed to declare in its manifest the sensitive data and capabilities it needed access
+to, and the platform strictly enforced this. The user experience revolved around
+showing the users what the app would have access to before it was installed, 
+allowing them to decide if they were okay with it having that information before going
+forward to install (and with confidence it would not get any other information once
+installed). An example of this user experience is shown in Fig. 10-72.
+Figure 10-72. Confirming permissions at install time (circa 2010)

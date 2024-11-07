@@ -1,0 +1,43 @@
+1108
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+KLEIN, G., ELPHINSTONE, K., HEISER, G., ANDRONICK, J., COCK, D., DERRIN, P.,
+ELKADUWE, D., ENGELHARDT, K., KOLANSKI, R., NORRISH, M., SEWELL, T.,
+TUCH, H., and WINWOOD, S.: ‘‘seL4: Formal Verification of an OS Kernel,’’ Proc.
+22nd Symp. on Operating Syst. Primciples, ACM, pp. 207–220, 2009.
+KNUTH, D.E.: The Art of Computer Programming, Vol. Boston: Addison-Wesley, 1997.
+KOCHAN, S., and WOOD, P.: Shell Programming in Unix, Linux, and OS X, Boston: 
+Addison-Wesley, 2017.
+KONOTH, R.K., OLIVERIO, M., TAT AR, A., ANDRIESSE, D., BOS, H., GIUFFRIDA, C.,
+and RAZAVI, K.: ‘‘ZebRAM: Comprehensive and Compatible Software Protection
+against Rowhammer Attacks,’’ Proc. 13th USENIX Symp. of Operating Syst. Design
+and Implementation, USENIX, pp. 697–710, 2018.
+KRAVETS, R., and KRISHNAN, P.: ‘‘Power Management Techniques for Mobile 
+Communication,’’ Proc. Fourth ACM/IEEE Int’l Conf. on Mobile Computing and Networking,
+ACM/IEEE, pp. 157–168, 1998.
+KRUEGER, P., LAI, T.-H., and DIXIT-RADIYA, V.A.: ‘‘Job Scheduling Is More Important
+Than Processor Allocation for Hypercube Computers,’’ IEEE Trans. Parallel and Distr.
+Syst., Vol. 5, pp. 488–497, May 1994.
+KUMAR, V.P., and REDDY, S.M.: ‘‘ Augmented Shuffle-Exchange Multistage 
+Interconnection Networks,’’ Computer, Vol. 20, pp. 30–40, June 1987.
+KURTH, M., GRAS, B., ANDRIESSE, D., GIUFFRIDA, C., BOS, H., and RAZAVI, K.: 
+‘‘NetCAT: Practical Cache Attacks from the Network,’’ Proc. 41st IEEE Symp. on Security
+and Privacy, IEEE, 2020.
+LAMPORT, L.: ‘‘Password Authentication with Insecure Communication,’’ Commun. ACM,
+Vol. 24, pp. 770–772, Nov. 1981.
+LAMPSON, B.W., and STURGIS, H.E.: ‘‘Crash Recovery in a Distributed Data Storage 
+System,’’ Xerox Palo Alto Research Center Technical Report, June 1979.
+LAMPSON, B.W.: ‘‘ A Note on the Confinement Problem,’’ Commun. ACM, Vol. 10, pp.
+613–615, Oct. 1973.
+LAMPSON, B.W.: ‘‘Hints for Computer System Design,’’ IEEE Software, Vol. 1, pp. 11–28,
+Jan. 1984.
+LANDWEHR, C.E.: ‘‘Formal Models of Computer Security,’’ ACM Computing Surveys,
+Vol. 13, pp. 247–278, Sept. 1981.
+LARUS, J., and HUNT, G.: ‘‘The Singularity System,’’ Commun. ACM, Vol. 53, pp. 72–79,
+Aug. 2010.
+LEE, S.K., MOHAN, J., KASHYAP, S., KIM, T., and CHIDAMBARAM, V.: ‘‘Recipe: 
+Converting Concurrent DRAM Indexes to Persistent-Memory Indexes,’’ Proc. 27th Symp.
+on Operating Syst. Prin., ACM, 2019.
+LEVIN, R., COHEN, E.S., CORWIN, W.M., POLLACK, F.J., and WULF, W.A.: 
+‘‘Policy/Mechanism Separation in Hydra,’’ Proc. Fifth Symp. on Operating Syst. Prin.,
+ACM, pp. 132–140, 1975.

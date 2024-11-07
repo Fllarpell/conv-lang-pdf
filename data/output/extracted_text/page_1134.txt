@@ -1,0 +1,43 @@
+SEC. 13.2
+ALPHABETICAL BIBLIOGRAPHY
+1105
+GREENGARD, S.: ‘‘The Future of Data Storage,’’ Commun. ACM, Vol. 62, p.12, April
+2019.
+GROPP, W., LUSK, E., and SKJELLUM, A.: Using MPI: Portable Parallel Programming
+with the Message Passing Interface, Cambridge, MA: M.I.T. Press, 1994.
+HAERTIG, H., HOHMUTH, M., LIEDTKE, J., and SCHONBERG, S.: ‘‘The Performance of
+Kernel-Based Systems,’’ Proc. 16th Symp. on Operating Syst. Prin., ACM, pp. 66–77,
+1997.
+HAFNER, K., and MARKOFF, J.: Cyberpunk, New York: Simon and Schuster, 1991.
+HALSEY, M. and BETTANY, A.: Windows Registry Troubleshooting, New York: Apress,
+2015.
+HAND, S.M., WARFIELD, A., FRASER, K., KOTTSOVINOS, E., and MAGENHEIMER, D.:
+‘‘ Are Virtual Machine Monitors Microkernels Done Right?,’’ Proc. 10th Workshop on
+Hot Topics in Operating Syst., USENIX, pp. 1–6, 2005.
+HARNIK, D., HERSHCOVITCH, M., SHATSKY, Y., EPSTEIN, A., and KAT, R.: ‘‘Sketching
+Volume Capacities in Deduplicated Storage,’’ Proc. 19th USENIX Conf. on File and
+Storage Tech., USENIX, pp. 107–119, 2019.
+HARRISON, M.A., RUZZO, W.L., and ULLMAN, J.D.: ‘‘Protection in Operating Systems,’’
+Commun. ACM, Vol. 19, pp. 461–471, Aug. 1976.
+HASSAN, H., TUGRUL, Y.C., KIM, J., and VAN DER VEEN, V.: ‘‘Uncovering In-DRAM
+RowHammer Protection Mechanisms: A Methodology, Custom RowHammer Patterns,
+and Implications,’’ Proc. 54th Int’l Symp. of Microarch., IEEE/ACM, pp. 1198–1213,
+2021.
+HAVENDER, J.W.: ‘‘ Avoiding Deadlock in Multitasking Systems,’’ IBM Syst. J., Vol. 7, pp.
+74–84, 1968.
+HEISER, G., UHLIG, V., and LEVASSEUR, J.: ‘‘ Are Virtual Machine Monitors 
+Microkernels Done Right?’’ ACM SIGOPS Operating Syst. Rev., Vol. 40, pp. 95–99, 2006.
+HERDER, J.N., BOS, H., GRAS, B., HOMBURG, P., and TANENBAUM, A.S.: ‘‘Construction
+of a Highly Dependable Operating System,’’ Proc. Sixth European Dependable 
+Computing Conf., pp. 3–12, 2006.
+HERDER, J.N., MOOLENBROEK, D. VAN, APPUSWAMY, R., WU, B., GRAS, B., and
+TANENBAUM, A.S.: ‘‘Dealing with Driver Failures in the Storage Stack ,’’ Proc.
+Fourth Latin American Symp. on Dependable Computing, pp. 119–126, 2009.
+HILDEBRAND, D.: ‘‘ An Architectural Overview of QNX,’’ Proc. Workshop on 
+Microkernels and Other Kernel Arch., ACM, pp. 113–136, 1992.
+HIPSON, P.: Mastering Windows XP Registry, New York: Sybex, 2002.
+HOARE, C.A.R.: ‘‘Monitors, An Operating System Structuring Concept,’’ Commun. ACM,
+Vol. 17, pp. 549–557, Oct. 1974.
+HOHMUTH, M., PETER, M., HAERTIG, H., and SHAPIRO, J.: ‘‘Reducing TCB Size by
+Using Untrusted Components: Small Kernels Versus Virtual-Machine Monitors,’’ Proc.
+11th ACM SIGOPS European Workshop, ACM, Art. 22, 2004.

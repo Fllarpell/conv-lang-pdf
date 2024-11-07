@@ -1,0 +1,27 @@
+954
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+adjustments. As such, other than x64 assembly code which may be linked into
+these binaries, there’s no need for any instruction emulation and they run at native
+speed.
+Figure 11-29. Comparison of x86 and x64 emulation infrastructure on an arm64
+machine. Shaded areas indicate emulated code.
+There are also some big differences between x86 and x64 emulation. First of
+all, x64 emulation does not rely at all on the WoW64 infrastructure because no
+32-bit to 64-bit thunking or redirection of file system or registry paths is necessary;
+these are already 64-bit applications and use 64-bit types and data structures. In
+fact, ARM64EC binaries which do not contain any x64 code can run just like
+native arm64 binaries with no intervention by the emulator; ARM64EC is 
+effectively a second native architecture supported on arm64. The remaining role of the
+WoW64 abstraction layer has been moved into the ARM64EC ntdll.dll which
+loads in x64 processes. This ntdll is enlightened to allow loading x64 binaries and
+summon the xtajit64 jitter to emulate x64 machine code.
+At this point, careful readers might be asking themselves: given that no file
+system redirection exists for x64 applications on arm64, would not an x64 process
+end up loading the arm64 native DLL if, for example, it tries to load 
+c:\windows\system32\kernelbase.dll? The answer is yes and no. Yes, the x64 process will
+load the kernelbase.dll under the system32 directory (which normally contains
+native binaries), but the DLL will be transformed in memory depending on 
+whether it gets loaded into an x64 process or an arm64 process. This is possible because
+arm64 uses a new type of portable executable (PE) binary called ARM64X for
+user-mode OS binaries. ARM64X binaries contain both native arm64 code as well

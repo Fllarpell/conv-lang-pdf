@@ -1,0 +1,74 @@
+SEC. 10.8
+ANDROID
+813
+Process 1
+Process 1
+Process 2
+Object1b
+Object2a
+Object2a
+Object1b
+Handle 2
+Handle 2
+Handle 1
+Handle 2
+Handle 3
+Handle 3
+Handle 1
+1
+3
+4
+6
+5
+6
+8
+Transaction
+Transaction
+Transaction
+Transaction
+To: Handle 2
+To: Handle 2
+To: Object2a
+From: Process 1
+From: Process 1
+To: Object2a
+From: Process 1
+Data
+Data
+Object1b
+Data
+Data
+Data
+Data
+Object1b
+Handle 3
+Data
+Data
+Handle 3
+Process 2
+Kernel
+7
+2
+Figure 10-45. Transferring Binder objects between processes.
+The key steps shown in Fig. 10-45 are as follows:
+1. Process 1 creates the initial transaction structure, which contains the
+local address Object1b.
+2. Process 1 submits the transaction to the kernel.
+3. The kernel looks at the data in the transaction, finds the address
+Object1b, and creates a new entry for it since it did not previously
+know about this address.
+4. The kernel uses the target of the transaction, Handle 2, to determine
+that this is intended for Object2a which is in Process 2.
+5. The kernel now rewrites the transaction header to be appropriate for
+Process 2, changing its target to address Object2a.
+6. The kernel likewise rewrites the transaction data for the target 
+process; here it finds that Object1b is not yet known by Process 2, so a
+new Handle 3 is created for it.
+7. The rewritten transaction is delivered to Process 2 for execution.
+8. Upon receiving the transaction, the process discovers there is a new
+Handle 3 and adds this to its table of available handles.
+If an object within a transaction is already known to the receiving process, the
+flow is similar, except that now the kernel only needs to rewrite the transaction so
+that it contains the previously assigned handle or the receiving process’s local
+object pointer. This means that sending the same object to a process multiple times
+will always result in the same identity, unlike Linux file descriptors where opening

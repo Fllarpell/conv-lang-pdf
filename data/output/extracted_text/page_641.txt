@@ -1,0 +1,44 @@
+612
+SECURITY 
+CHAP. 9
+Unfortunately, there is a lot of code there. Operating systems such as Linux
+and Windows consist of millions of lines of program code. A vulnerability in any
+of these lines could be fatal. This is bad enough for code that is part of the core
+operating system as that is generally carefully scrutinized for bugs, but it gets
+worse when we talk about device drivers and other extensions to the kernel. Often
+written by third parties, they tend to be more buggy than the core operating system
+code. If you buy a nifty new 3D printer, almost certainly you will have to download
+and install in your kernel a large piece of software about which you know nothing
+and which could contain many bugs and exploits. This should not be necessary.
+An alternative design we discussed is to split up the operating system in many
+small components that each runs in a separate security domain. This is the
+approach taken by MINIX 3, shown in Fig. 1.26. Such a multiserver operating
+system design may have security domains for the process management code, the
+memory management functions, the network stack, the file system, and every 
+driver in the system—with a very small microkernel running with higher privileges to
+implement the isolation at the lowest level. The model is less efficient than the
+monolithic one, because even the operating system components must now 
+communicate with each other using IPC. On the other hand, adhering to the security
+principles is much easier. While a compromised printer driver may still embellish
+the pages coming out of the printer with hilarious messages and emojis, it is no
+longer able to pass the keys to the kingdom to the bad people.
+Unikernels, finally, take yet another approach. Here, a minimal kernel is
+responsible only for partitioning the resources at the lowest level, but all operating
+system functionality required for the single application is implemented in the
+application’s security domain in the form of a minimal ‘‘LibOS.’’ The design 
+allows applications to customize the operating system functionality exactly 
+according to their needs and leave out everything that they do not need anyway. Doing so
+reduces the attack surface. While you may object that running everything in the
+same security domain is bad for security, do not forget that there is only a single
+application in that domain—any compromise will effect only that application.
+9.1.4 Trusted Computing Base
+Let us dig into this a little deeper. In the security world, people often talk about
+trusted systems rather than secure systems. These are systems that have formally
+stated security requirements and meet these requirements. At the heart of every
+trusted system is a minimal TCB (Trusted Computing Base) consisting of the
+hardware and software necessary for enforcing all the security rules. If the trusted
+computing base is working to specification, the system security cannot be 
+compromised, no matter what else is wrong.
+The TCB typically consists of most of the hardware (except I/O devices that do
+not affect security), a portion of the operating system kernel, and most or all of the
+user programs that have superuser power (e.g., SETUID root programs in UNIX).

@@ -1,0 +1,44 @@
+298
+FILE SYSTEMS
+CHAP. 4
+disk. The advantage is that the file update in the example above only leads to an
+update of the indirect block and the global mapping, but not of any of the 
+intermediate mappings. This solution was adopted in the popular Flash-Friendly File 
+System (F2FS) supported by the Linux kernel.
+In summary, while people may think of flash as a drop-in replacement for
+magnetic disks, it has led to many changes in the file system. This is nothing new.
+When magnetic disks started replacing magnetic tape, they led to many changes
+also. For instance, the seek operation was introduced and researchers started 
+worrying about disk scheduling algorithms. In general, the introduction of new 
+technology often leads to a flurry of activity and changes in the operating system to make
+optimal use of the new capabilities.
+4.3.8 Virtual File Systems
+Many different file systems are in use—often on the same computer—even for
+the same operating system. A Windows system may have a main NTFS file 
+system, but also a legacy FAT -32 or FAT -16 drive or partition that contains old, but
+still needed, data, and from time to time, a flash drive with its own unique file 
+system may be required as well. Windows handles these disparate file systems by
+identifying each one with a different drive letter, as in C:, D:, etc. When a process
+opens a file, the drive letter is explicitly or implicitly present so Windows knows
+which file system to pass the request to. There is no attempt to integrate 
+heterogeneous file systems into a unified whole.
+In contrast, all modern UNIX systems make a very serious attempt to integrate
+multiple file systems into a single structure. A Linux system could have ext4 as
+the root file system, with an ext3 partition mounted on /usr and a second hard disk
+with a ReiserFS file system mounted on /home as well as an F2FS flash file system
+temporarily mounted on /mnt. From the user’s point of view, there is a single 
+filesystem hierarchy. That it happens to encompass multiple (incompatible) file 
+systems is not visible to users or processes.
+However, the presence of multiple file systems is very definitely visible to the
+implementation, and since the pioneering work of Sun Microsystems (Kleiman,
+1986), most UNIX systems have used the concept of a VFS (Virtual File System)
+to try to integrate multiple file systems into an orderly structure. The key idea is to
+abstract out that part of the file system that is common to all file systems and put
+that code in a separate layer that calls the underlying concrete file systems to 
+actually manage the data. The overall structure is illustrated in Fig. 4-21. The 
+discussion below is not specific to Linux or FreeBSD or any other version of UNIX, but
+gives the general flavor of how virtual file systems work in UNIX systems.
+All system calls relating to files are directed to the virtual file system for initial
+processing. These calls, coming from user processes, are the standard POSIX calls,
+such as open, read, wr ite, lseek, and so on. Thus the VFS has an ‘‘upper’’ interface
+to user processes and it is the well-known POSIX interface.

@@ -1,0 +1,40 @@
+SEC. 5.8
+POWER MANAGEMENT
+427
+Thermal Management
+A somewhat different, but still energy-related issue, is thermal management.
+Modern CPUs get extremely hot due to their high speed. Desktop machines 
+normally have an internal electric fan to blow the hot air out of the chassis. Since
+reducing power management is usually not a driving issue with desktop machines,
+the fan is usually on all the time.
+With notebooks, the situation is different. The operating system has to monitor
+the temperature continuously. When it gets close to the maximum allowable 
+temperature, the operating system has a choice. It can switch on the fan, which makes
+noise and consumes power. Alternatively, it can reduce power consumption by
+reducing the backlighting of the screen, slowing down the CPU, being more
+aggressive about spinning down the disk, and so on.
+Some input from the user may be valuable as a guide. For example, a user
+could specify in advance that the noise of the fan is objectionable, so the operating
+system would reduce power consumption instead.
+Battery Management
+In ye olde days, a battery just provided current until it was fully drained, at
+which time it stopped. Not any more. Mobile devices now use smart batteries now,
+which can communicate with the operating system. Upon request from the 
+operating system, they can report on things like their maximum voltage, current voltage,
+maximum charge, current charge, maximum drain rate, current drain rate, and
+more. Most mobile devices have programs that can be run to query and display all
+these parameters. Smart batteries can also be instructed to change various 
+operational parameters under control of the operating system.
+Some notebooks have multiple batteries. When the operating system detects
+that one battery is about to go, it has to arrange for a graceful cutover to the next
+one, without causing any glitches during the transition. When the final battery is on
+its last legs, it is up to the operating system to warn the user and then cause an
+orderly shutdown, for example, making sure that the file system is not corrupted.
+Driver Interface
+Several operating systems have an elaborate mechanism for doing power 
+management called ACPI (Advanced Configuration and Power Interface). The
+operating system can send any conformant driver commands asking it to report on
+the capabilities of its devices and their current states. This feature is especially
+important when combined with plug and play because just after it is booted, the
+operating system does not even know what devices are present, let alone their
+properties with respect to energy consumption or power manageability.

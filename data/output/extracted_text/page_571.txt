@@ -1,0 +1,62 @@
+542
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+Each CPU Has Its Own Operating System
+The simplest possible way to organize a multiprocessor operating system is to
+statically divide memory into as many partitions as there are CPUs and give each
+CPU its own private memory and its own private copy of the operating system. In
+effect, the n CPUs then operate as n independent computers. One obvious 
+optimization is to allow all the CPUs to share the operating system code and make 
+private copies of only the operating system data structures, as shown in Fig. 8-7.
+Has
+private
+OS
+CPU 1
+Has
+private
+OS
+CPU 2
+Has
+private
+OS
+CPU 3
+Has
+private
+OS
+CPU 4
+Memory
+I/O
+1
+2
+Data Data
+3
+4
+Data Data
+OS code
+Bus
+Figure 8-7. Partitioning multiprocessor memory among four CPUs, but sharing a
+single copy of the operating system code. The boxes marked Data are the 
+operating system’s private data for each CPU.
+This scheme is still better than having n separate computers since it allows all
+the machines to share a set of disks and other I/O devices, and it also allows the
+memory to be shared flexibly. For example, even with static memory allocation,
+one CPU can be given an extra-large portion of the memory so it can handle large
+programs efficiently. In addition, processes can efficiently communicate with one
+another by allowing a producer to write data directly into memory and allowing a
+consumer to fetch it from the place the producer wrote it. Still, from an operating
+systems’ perspective, having each CPU have its own operating system is as 
+primitive as it gets.
+It is worth mentioning four aspects of this design that may not be obvious.
+First, when a process makes a system call, the system call is caught and handled on
+its own CPU using the data structures in that operating system’s tables.
+Second, since each operating system has its own tables, it also has its own set
+of processes that it schedules by itself. There is no sharing of processes. If a user
+logs into CPU 1, all of his processes run on CPU 1. As a consequence, it can 
+happen that CPU 1 is idle while CPU 2 is loaded with work.
+Third, there is no sharing of physical pages. It can happen that CPU 1 has
+pages to spare while CPU 2 is paging continuously. There is no way for CPU 2 to
+borrow some pages from CPU 1 since the memory allocation is fixed.
+Fourth, and worst, if the operating system maintains a buffer cache of recently
+used disk blocks, each operating system does this independently of the other ones.
+Thus it can happen that a certain disk block is present and dirty in multiple buffer
+caches at the same time, leading to inconsistent results. The only way to avoid this

@@ -1,0 +1,77 @@
+836
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Process 
+State
+Impor tance
+system 
+Core par t of operating system
+SYSTEM
+phone 
+Always running for telephony stack
+PERSISTENT
+email 
+Current foreground application
+FOREGROUND
+camera
+In use by email to load attachment
+FOREGROUND
+music 
+Running background service playing music 
+PERCEPTIBLE
+media 
+In use by music app for accessing user’s music 
+PERCEPTIBLE
+download 
+Downloading a file for the user
+SERVICE
+launcher 
+App launcher not current in use
+HOME
+maps 
+Previously used mapping application
+CACHED
+Figure 10-64. Typical state of process importance.
+Process 
+State
+Impor tance
+system 
+Core par t of operating system
+SYSTEM
+phone 
+Always running for telephony stack
+PERSISTENT
+email 
+Current foreground application
+FOREGROUND
+music 
+Running background service playing music 
+PERCEPTIBLE
+media 
+In-use by music app for accessing user’s music 
+PERCEPTIBLE
+download 
+Downloading a file for the user
+SERVICE
+launcher 
+App launcher not current in use
+HOME
+camera
+Previously used by email 
+CACHED
+maps 
+Previously used mapping application
+CACHED+1
+Figure 10-65. Process state after email stops using camera.
+These two examples give a final illustration of the importance of cached 
+processes. If the email application again needs to use the camera provider, the 
+provider’s process will typically already be left as a cached process. Using it again is
+then just a matter of setting the process back to the foreground and reconnecting
+with the content provider that is already sitting there with its database initialized.
+10.8.11 Security and Privacy
+When Android was being designed, the security protections users have from
+their applications was an area of rapidly evolving expectations that needed to be
+addressed. Since then, privacy has become an increasingly important area driving
+significant evolution to how Android manages applications. We will now look at
+these two topics, focusing first on the various aspects of security before looking at
+the newer world of privacy.

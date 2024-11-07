@@ -1,0 +1,40 @@
+SEC. 4.4
+FILE-SYSTEM MANAGEMENT AND OPTIMIZATION
+315
+Furthermore, each i-node has a mode, some of which are legal but strange,
+such as 007, which allows the owner and his group no access at all, but allows 
+outsiders to read, write, and execute the file. It might be useful to at least report files
+that give outsiders more rights than the owner. Directories with more than, say,
+1000 entries are also suspicious. Files located in user directories, but which are
+owned by the superuser and have the SETUID bit on, are potential security 
+problems because such files acquire the powers of the superuser when executed by any
+user. With a little effort, one can put together a fairly long list of technically legal
+but still peculiar situations that might be worth reporting.
+The previous paragraphs have discussed the problem of protecting the user
+against crashes. Some file systems also worry about protecting the user against
+himself. If the user intends to type
+rm *.o
+to remove all the files ending with .o (compiler-generated object files), but 
+accidentally types
+rm * .o
+(note the space after the asterisk), rm will remove all the files in the current 
+directory and then complain that it cannot find .o. This is a catastrophic error from
+which recovery is virtually impossible without heroic efforts and special software.
+In Windows, files that are removed are placed in the recycle bin (a special 
+directory), from which they can later be retrieved if need be. Of course, no storage is
+reclaimed until they are actually deleted from this directory.
+4.4.4 File-System Performance
+Access to hard disk is much slower than access to flash storage and much
+slower still than access to memory. Reading a 32-bit memory word might take 10
+nsec. Reading from a hard disk might proceed at 100 MB/sec, which is four times
+slower per 32-bit word, but to this must be added 5–10 msec to seek to the track
+and then wait for the desired sector to arrive under the read head. If only a single
+word is needed, the memory access is on the order of a million times as fast as disk
+access. As a result of this difference in access time, many file systems have been
+designed with various optimizations to improve performance. In this section, we
+will cover three of them.
+Caching
+The most common technique used to reduce disk accesses is the block cache
+or buffer cache. (Cache is pronounced ‘‘cash’’ and is derived from the French
+cacher, meaning to hide.) In this context, a cache is a collection of blocks that 
+logically belong on the disk but are being kept in memory for performance reasons.

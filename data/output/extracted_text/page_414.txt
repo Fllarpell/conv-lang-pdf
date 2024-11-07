@@ -1,0 +1,44 @@
+SEC. 5.4
+MASS STORAGE: DISK AND SSD
+385
+huge improvement is to keep track of which block was being written during a 
+stable write so that only one block has to be checked during recovery. Many 
+computers have a small amount of nonvolatile RAM, which is a special CMOS 
+memory powered by a lithium battery. Such batteries last for years, possibly even the
+whole life of the computer. Unlike main memory, which is lost after a crash, 
+nonvolatile RAM is not lost after a crash. The time of day is normally kept here (and
+incremented by a special circuit), which is why computers still know what time it
+is even after having been unplugged.
+Suppose that a few bytes of nonvolatile RAM are available for operating 
+system purposes. The stable write can put the number of the block it is about to update
+in nonvolatile RAM before starting the write. After successfully completing the
+stable write, the block number in nonvolatile RAM is overwritten with an invalid
+block number, for example, <1. Under these conditions, after a crash the recovery
+program can check the nonvolatile RAM to see if a stable write happened to be in
+progress during the crash, and if so, which block was being written when the
+crashed happened. The two copies of the block can then be checked for correctness
+and consistency.
+If nonvolatile RAM is not available, it can be simulated as follows. At the start
+of a stable write, a fixed disk block on drive 1 is overwritten with the number of
+the block to be stably written. This block is then read back to verify it. After 
+getting it correct, the corresponding block on drive 2 is written and verified. When the
+stable write completes correctly, both blocks are overwritten with an invalid block
+number and verified. Again here, after a crash it is easy to determine whether or
+not a stable write was in progress during the crash. Of course, this technique
+requires eight extra disk operations to write a stable block, so it should be used
+exceedingly sparingly.
+One last point is worth making. We assumed that only one spontaneous decay
+of a good block to a bad block happens per block pair per day. If enough days go
+by, the other one might go bad, too. Therefore, once a day a complete scan of both
+disks must be done, repairing any damage. That way, every morning both disks are
+always identical. Even if both blocks in a pair go bad within a period of a few
+days, all errors are repaired correctly.
+5.4.3 RAID
+One technique that now helps improve the reliability of storage systems in 
+general originally became popular as a measure to boost the performance of magnetic
+disk storage systems. Before SSDs came along, CPU performance had been
+increasing exponentially for decades, for a long time roughly doubling every 18
+months. Not so with disk performance. In the 1970s, average seek times on 
+minicomputer disks were 50 to 100 msec. Today seek times on magnetic disks are still
+a few msec. In most technical industries (say, automobiles, aviation, or trains), a
+factor 10 performance improvement in two decades would be major news (imagine

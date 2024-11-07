@@ -1,0 +1,70 @@
+SEC. 3.3
+VIRTUAL MEMORY
+195
+Virtual!
+address!
+space
+Physical!
+memory!
+address!
+!60K–64K!
+56K–60K!
+52K–56K!
+48K–52K!
+44K–48K!
+40K–44K!
+36K–40K!
+32K–36K!
+28K–32K!
+24K–28K!
+20K–24K!
+16K–20K!
+12K–16K!
+8K–12K!
+4K–8K!
+0K–4K
+28K–32K!
+24K–28K!
+20K–24K!
+16K–20K!
+12K–16K!
+8K–12K!
+4K–8K!
+     0K–4K!
+Virtual page
+Page frame
+X!
+X!
+X!
+X!
+7!
+X!
+5!
+X!
+X!
+X!
+3!
+4!
+0!
+6!
+1!
+2
+Figure 3-9. The relation between virtual addresses and physical memory 
+addresses is given by the page table. Every page begins on a multiple of 4096 and ends
+4095 addresses higher, so 4K–8K really means 4096–8191 and 8K–12K means
+8192–12287.
+Similarly, the instruction
+MOV REG,8192
+is effectively transformed into
+MOV REG,24576
+because virtual address 8192 (in virtual page 2) is mapped onto 24576 (in physical
+page frame 6). As a third example, virtual address 20500 is 20 bytes from the start
+of virtual page 5 (virtual addresses 20480 to 24575) and maps onto physical
+address 12288 + 20 = 12308.
+By itself, this ability to map the 16 virtual pages onto any of the eight page
+frames by setting the MMU’s map appropriately does not solve the problem that
+the virtual address space is larger than the physical memory. Since we have only
+eight physical page frames, only eight of the virtual pages in Fig. 3-9 are mapped
+onto physical memory. The others, shown as a cross in the figure, are not mapped.
+In the actual hardware, a Present/absent bit keeps track of which pages are 
+physically present in memory.

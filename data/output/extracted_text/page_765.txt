@@ -1,0 +1,41 @@
+736
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+which case the new thread is a sibling of the caller) or it can be the calling thread
+itself, in which case the new thread is a child of the caller. There are a few other
+bits that control other items, but they are less important.
+This fine-grained sharing is possible because Linux maintains separate data
+structures for the various items listed in Sec. 10.3.3 (scheduling parameters, 
+memory image, and so on). The task structure just points to these data structures, so it
+is easy to make a new task structure for each cloned thread and have it point either
+to the old thread’s scheduling, memory, and other data structures or to copies of
+them. The fact that such fine-grained sharing is possible does not mean that it is
+useful, however, especially since traditional UNIX versions do not offer this 
+functionality. A Linux program that takes advantage of it is then no longer portable to
+UNIX.
+The Linux thread model raises another difficulty. UNIX systems associate a
+single PID with a process, independent of whether it is single- or multithreaded. In
+order to be compatible with other UNIX systems, Linux distinguishes between a
+process identifier (PID) and a task identifier (TID). Both fields are stored in the
+task structure. When clone is used to create a new process that shares nothing with
+its creator, PID is set to a new value; otherwise, the task receives a new TID, but
+inherits the PID. In this manner, all threads in a process will receive the same PID
+as the first thread in the process.
+10.3.4 Scheduling in Linux
+We will now look at the Linux scheduling algorithm. To start with, Linux
+threads are kernel threads, so scheduling is based on threads, not processes.
+Linux distinguishes the following classes of threads for scheduling purposes:
+1. Real-time FIFO.
+2. Real-time round robin.
+3. Sporadic.
+4. Timesharing.
+Real-time FIFO threads are the highest priority and are not preemptable except by
+a newly readied real-time FIFO thread with even higher priority. Real-time 
+roundrobin threads are the same as real-time FIFO threads except that they hav e time
+quanta associated with them, and are preemptable by the clock. If multiple 
+realtime round-robin threads are ready, each one is run for its quantum, after which it
+goes to the end of the list of real-time round-robin threads. Neither of these classes
+is actually real time in any sense. Deadlines cannot be specified and guarantees are
+not given. The sporadic scheduling class is used for sporadic or aperiodic threads,
+and makes it possible to limit their execution time within a period, so as not to
+jeopardize other real-time threads. These classes are simply higher priority than

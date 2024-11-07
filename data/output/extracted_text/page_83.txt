@@ -1,0 +1,64 @@
+54
+INTRODUCTION 
+CHAP. 1
+Process management
+Call 
+Description
+pid = for k( )
+Create a child process identical to the parent
+pid = waitpid(pid, &statloc, options) 
+Wait for a child to terminate
+s = execve(name, argv, environp) 
+Replace a process’ core image
+exit(status) 
+Ter minate process execution and return status
+File management
+Call 
+Description
+fd = open(file, how, ...) 
+Open a file for reading, writing, or both
+s = close(fd) 
+Close an open file
+n = read(fd, buffer, nbytes) 
+Read data from a file into a buffer
+n = write(fd, buffer, nbytes) 
+Write data from a buffer into a file
+position = lseek(fd, offset, whence)
+Move the file pointer
+s = stat(name, &buf) 
+Get a file’s status infor mation
+Director y- and file-system management
+Call 
+Description
+s = mkdir(name, mode) 
+Create a new director y
+s = rmdir(name) 
+Remove an empty directory
+s = link(name1, name2)
+Create a new entr y, name2, pointing to name1
+s = unlink(name) 
+Remove a director y entr y
+s = mount(special, name, flag) 
+Mount a file system
+s = umount(special) 
+Unmount a file system
+Miscellaneous
+Call 
+Description
+s = chdir(dir name)
+Change the wor king director y
+s = chmod(name, mode) 
+Change a file’s protection bits
+s = kill(pid, signal)
+Send a signal to a process
+seconds = time(&seconds)
+Get the elapsed time since Jan. 1, 1970
+Figure 1-18. Some of the major POSIX system calls. The return code s is <1 if
+an error has occurred. The return codes are as follows: pid is a process id, fd is a
+file descriptor, n is a byte count, position is an offset within the file, and seconds
+is the elapsed time. The parameters are explained in the text.
+descriptors, registers—everything. After the fork, the original process and the copy
+(the parent and child) go their separate ways. All the variables have identical 
+values at the time of the fork, but since the parent’s data are copied to create the child,
+subsequent changes in one of them do not affect the other one. In fact, the memory
+of the child may be shared copy-on-write with the parent. This means that parent

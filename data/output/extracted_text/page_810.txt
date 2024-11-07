@@ -1,0 +1,44 @@
+SEC. 10.6
+THE LINUX FILE SYSTEM
+781
+Thus the whole point of the open-file-description table is to allow a parent and
+child to share a file position, but to provide unrelated processes with their own 
+values.
+Getting back to the problem of doing the read, we hav e now shown how the
+file position and i-node are located. The i-node contains the disk addresses of the
+first 12 blocks of the file. If the file position falls in the first 12 blocks, the block is
+read and the data are copied to the user. For files longer than 12 blocks, a field in
+the i-node contains the disk address of a single indirect block, as shown in
+Fig. 10-34. This block contains the disk addresses of more disk blocks. For 
+example, if a block is 1 KB and a disk address is 4 bytes, the single indirect block can
+hold 256 disk addresses. Thus this scheme works for files of up to 268 KB.
+Beyond that, a double indirect block is used. It contains the addresses of 256
+single indirect blocks, each of which holds the addresses of 256 data blocks. This
+mechanism is sufficient to handle files up to 10 + 216 blocks (67,119,104 bytes). If
+ev en this is not enough, the i-node has space for a triple indirect block. Its 
+pointers point to many double indirect blocks. This addressing scheme can handle file
+sizes of 224 1-KB blocks (16 GB). For 8-KB block sizes, the addressing scheme
+can support file sizes up to 64 TB.
+The Linux Ext4 File System
+In order to prevent all data loss after system crashes and power failures, the
+ext2 file system would have to write out each data block to disk as soon as it was
+created. The latency incurred during the required disk-head seek operation would
+be so high that the performance would be intolerable. Therefore, writes are 
+delayed, and changes may not be committed to disk for up to 30 sec, which is a very
+long time interval in the context of modern computer hardware.
+To improve the robustness of the file system, Linux relies on journaling file
+systems. Ext3, a successor of the ext2 file system, is an example of a journaling
+file system. Ext4, a follow-on of ext3, is also a journaling file system, but unlike
+ext3, it changes the block addressing scheme used by its predecessors, thereby 
+supporting both larger files and larger overall file-system sizes. Today, it is considered
+to be the most popular among the Linux file systems. We will describe some of its
+features next.
+The basic idea behind a journaling file system is to maintain a journal, which
+describes all file-system operations in sequential order. By sequentially writing out
+changes to the file-system data or metadata (i-nodes, superblock, etc.), the 
+operations do not suffer from the overheads of disk-head movement during random disk
+accesses. Eventually, the changes will be written out, committed, to the appropriate
+disk location, and the corresponding journal entries can be discarded. If a system
+crash or power failure occurs before the changes are committed, during restart the
+system will detect that the file system was not unmounted properly, traverse the
+journal, and apply the file-system changes described in the journal log.

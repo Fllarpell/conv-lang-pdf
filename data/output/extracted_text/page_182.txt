@@ -1,0 +1,44 @@
+SEC. 2.5
+SCHEDULING
+153
+Many of the same issues that apply to process scheduling also apply to thread
+scheduling, although some are different. When the kernel manages threads, 
+scheduling is usually done per thread, with little or no regard to which process the thread
+belongs. Initially we will focus on scheduling issues that apply to both processes
+and threads. Later on we will explicitly look at thread scheduling and some of the
+unique issues it raises. We will deal with multicore chips in Chap. 8.
+2.5.1 Introduction to Scheduling
+Back in the old days of batch systems with input in the form of card images on
+a magnetic tape, the scheduling algorithm was simple: just run the next job on the
+tape. With multiprogramming, the scheduling algorithm became more complex
+because there were usually multiple users waiting for service. Some mainframes
+still combine batch and timesharing service, requiring the scheduler to decide
+whether a batch job or an interactive user at a terminal should go next. (As an
+aside, a batch job may be a request to run multiple programs in succession, but for
+this section, we will just assume it is a request to run a single program.) Because
+CPU time is a scarce resource on these machines, a good scheduler can make a big
+difference in perceived performance and user satisfaction. Consequently, a lot of
+work has gone into devising clever and efficient scheduling algorithms.
+With the advent of personal computers, the situation changed in two ways.
+First, most of the time there is only one active process. A user entering a document
+on a word processor is unlikely to be simultaneously compiling a program in the
+background. When the user types a command to the word processor, the scheduler
+does not have to do much work to figure out which process to run—the word 
+processor is the only candidate.
+Second, computers have become so much faster over the years that the CPU is
+rarely a scarce resource any more. Most programs for personal computers are 
+limited by the rate at which the user can present input (by typing or clicking), not by
+the rate the CPU can process it. Even compilations, a major sink of CPU cycles in
+the past, take just a few seconds in most cases nowadays. Even when two programs
+are actually running at once, such as a word processor and a spreadsheet, it hardly
+matters which goes first since the user is probably waiting for both of them to 
+finish (except that they generally complete their tasks so quickly that the user will not
+be doing much waiting much anyway). As a consequence, scheduling does not
+matter much on simple PCs. Of course, there are applications that practically eat
+the CPU alive. For instance, rendering one hour of high-resolution video while
+tweaking the colors in each of the 107,892 frames (in NTSC) or 90,000 frames (in
+PAL) requires serious computing power. Howev er, similar applications are the
+exception rather than the rule.
+When we turn to networked servers, the situation changes appreciably. Here
+multiple processes often do compete for the CPU, so scheduling matters again. For
+example, when the CPU has to choose between running a process that gathers the

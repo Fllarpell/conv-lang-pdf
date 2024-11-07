@@ -1,0 +1,39 @@
+320
+FILE SYSTEMS
+CHAP. 4
+I-nodes are!
+located near!
+the start!
+of the disk
+Disk is divided into!
+cylinder groups, each!
+with its own i-nodes
+(a)
+(b)
+Cylinder group
+Figure 4-31. (a) I-nodes placed at the start of the disk. (b) Disk divided into 
+cylinder groups, each with its own blocks and i-nodes.
+One easy performance improvement is to put the i-nodes in the middle of the
+disk, rather than at the start, thus reducing the average seek between the i-node and
+the first block by a factor of two. Another idea, shown in Fig. 4-31(b), is to divide
+the disk into cylinder groups, each with its own i-nodes, blocks, and free list
+(McKusick et al., 1984). When creating a new file, any i-node can be chosen, but
+an attempt is made to find a block in the same cylinder group as the i-node. If
+none is available, then a block in a nearby cylinder group is used.
+Of course, disk-arm movement and rotation time are relevant only if the disk
+has them and are not relevant for SSDs, which have no moving parts whatsoever.
+For these drives, built on the same technology as flash cards, random (read)
+accesses are just as fast as sequential ones and many of the problems of traditional
+disks go away (only for new ones emerge).
+4.4.5 Defragmenting Disks
+When the operating system is initially installed, the programs and files it needs
+are installed consecutively starting at the beginning of the disk, each one directly
+following the previous one. All free disk space is in a single contiguous unit 
+following the installed files. However, as time goes on, files are created and removed
+and typically the disk becomes badly fragmented, with files and holes all over the
+place. As a consequence, when a new file is created, the blocks used for it may be
+spread all over the disk, giving poor performance.
+The performance can be restored by moving files around to make them 
+contiguous and to put all (or at least most) of the free space in one or more large 
+contiguous regions on the disk. Windows has a program, defrag, that does precisely this.
+Windows users should run it regularly, except on SSDs.

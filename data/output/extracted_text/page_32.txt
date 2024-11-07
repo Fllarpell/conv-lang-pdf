@@ -1,0 +1,45 @@
+INTRODUCTION
+3
+protected by hardware against attempts by users to modify it. This distinction,
+however, is sometimes blurred, for instance in embedded systems (which may not
+have kernel mode) or interpreted systems (such as Java-based systems that use
+interpretation, not hardware, to separate the components).
+Also, in many systems there are programs that run in user mode but help the
+operating system or perform privileged functions. For example, there is often a
+program that allows users to change their passwords. It is not part of the operating
+system and does not run in kernel mode, but it clearly carries out a sensitive 
+function and has to be protected in a special way. In some systems, this idea is carried
+to an extreme, and pieces of what is traditionally considered to be the operating
+system (such as the file system) run in user mode. In such systems, it is difficult to
+draw a clear boundary. Everything running in kernel mode is clearly part of the
+operating system, but some programs running outside it are arguably also part of it,
+or at least closely associated with it.
+Operating systems differ from user (i.e., application) programs in ways other
+than where they reside. In particular, they are huge, complex, and very long-lived.
+The source code for Windows is over 50 million lines of code. The source code for
+Linux is over 20 million lines of code. Both are still growing. To conceive of what
+this means, think of printing out 50 million lines in book form, with 50 lines per
+page and 1000 pages per volume (about the size of this book). Each book would
+contain 50,000 lines of code. It would take 1000 volumes to list an operating 
+system of this size. Now imagine a bookcase with 20 books per shelf and seven
+shelves or 140 books in all. It would take a bit over sev en bookcases to hold the
+full code of Windows 10. Can you imagine getting a job maintaining an operating
+system and on the first day having your boss bring you to a room with these seven
+bookcases of code and say: ‘‘Go learn that.’’ And this is only for the part that runs
+in the kernel. No one at Microsoft understands all of Windows and probably most
+programmers there, even kernel programmers, understand only a small part of it.
+When essential shared libraries are included, the source code base gets much 
+bigger. And this excludes basic application software (things like the browser, the
+media player, and so on).
+It should be clear now why operating systems live a long time—they are very
+hard to write, and having written one, the owner is loath to throw it out and start
+again. Instead, such systems evolve over long periods of time. Windows 95/98/Me
+was basically one operating system and Windows NT/2000/XP/Vista/Windows
+7/8/10 is a different one. They look similar to the users because Microsoft made
+very sure that the user interface of Windows 2000/XP/Vista/Windows 7 was quite
+similar to that of the system it was replacing, mostly Windows 98. This was not
+necessarily the case for Windows 8 and 8.1 which introduced a variety of changes
+in the GUI and promptly drew criticism from users who liked to keep things the
+same. Windows 10 reverted some of these changes and introduced a number of
+improvements. Windows 11 is built upon the framework of Windows 10. We will
+study Windows in detail in Chap. 11.

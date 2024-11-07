@@ -1,0 +1,44 @@
+1098
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+ANDERSON, D.: SATA Storage Technology: Serial ATA, Mindshare, 2007.
+ANDERSON, R.: Security Engineering, Hoboken, NJ: John Wiley & Sons, 2020.
+ANDERSON, T.E., BERSHAD, B.N., LAZOWSKA, E.D., and LEVY, H.M.: ‘‘Scheduler 
+Activations: Effective Kernel Support for the User-Level Management of Parallelism,’’
+ACM Trans. Computer Syst., Vol. 10, pp. 53–79, Feb. 1992.
+ANDERSON, T.E.: ‘‘The Performance of Spin Lock Alternatives for Shared-Memory 
+Multiprocessors,’’ IEEE Trans. Parallel and Distr. Syst., Vol. 1, pp. 6–16, Jan. 1990.
+ANDREWS, G.R., and SCHNEIDER, F.B.: ‘‘Concepts and Notations for Concurrent 
+Programming,’’ ACM Computing Surveys, Vol. 15, pp. 3–43, March 1983.
+ANDREWS, G.R.: Concurrent Programming—Principles and Practice, Redwood City, CA:
+Benjamin/Cummings, 1991.
+ARNAUTOV, S., TRACH, B., GREGOR, F., KNAUTH, T., MARTIN, A., PRIEBE, C., LIND,
+J., MUTHUKUMARAN, D., O’KEEFFE, D., STILLWELL, M., GOLTZSCHE, D.,
+EYERS, D.M., KAPITZA, R., PIETZUCH, P.R., and FETZER, C.: ‘‘SCONE: Secure
+Linux Containers with Intel SGX,’’ Proc. 10th USENIX Symp. on Operating Syst.
+Design and Implementation, USENIX, pp. 689–703, 2016.
+ARON, M., and DRUSCHEL, P.: ‘‘Soft Timers: Efficient Microsecond Software Timer 
+Support for Network Processing,’’ Proc. 17th Symp. on Operating Syst. Prin., ACM, pp.
+223–246, 1999.
+ARPACI-DUSSEAU, R. and ARPACI-DUSSEAU, A.: Operating Syst.: Three Easy Pieces,
+Madison, WI: Arpacci-Dusseau, 2013.
+BAKER, F.T.: ‘‘Chief Programmer Team Management of Production Programming,’’ IBM
+Syst. J., Vol. 11, pp. 1, 1972.
+BARHAM, P., DRAGOVIC, B., FRASER, K., HAND, S., HARRIS, T., HO, A., 
+NEUGEBAUER, R., PRATT, I., and WARFIELD, A.: ‘‘Xen and the Art of Virtualization,’’ Proc.
+19th Symp. on Operating Syst. Prin., ACM, pp. 164–177, 2003.
+BARR, J.: ‘‘Firecracker: Lightweight Virtualization for Serverless Computing,’’ Amazon
+Blog. 
+
+https://aws.amazon.com/blogs/aws/firecracker-lightweight-virtualization-forserverless-computing/, Amazon, 2018.
+BARR, K., BUNGALE, P., DEASY, S., GYURIS, V., HUNG, P., NEWELL, C., TUCH, H., and
+ZOPPIS, B.: ‘‘The VMware Mobile Virtualization Platform: Is That a Hypervisor in
+Your Pocket?’’ ACM SIGOPS Operating Syst. Rev., Vol. 44, pp. 124–135, Dec. 2010.
+BASILLI, V.R., and PERRICONE, B.T.: ‘‘Software Errors and Complexity: An Empirical
+Study,’’ Commun. ACM, Vol. 27, pp. 42–52, Jan. 1984.
+BAUMANN, A., BARHAM, P., DAGAND, P., HARRIS, T., ISAACS, R., PETER, S., ROSCOE,
+T., SCHUPBACH, A., and SINGHANIA, A.: ‘‘The Multikernel: A New OS Architecture
+for Scalable Multicore Systems,’’ Proc. 22nd Symp. on Operating Syst. Prin., ACM,
+pp. 29–44, 2009.
+BAUMANN, A., PEINADO, M. and HUNT, G.C.: ‘‘Shielding Applications from an Untrusted
+Cloud with Haven,’’ Tr ans. Computer Syst., ACM, Vol. 33(3), pp. 8:1–8:26, 2015.

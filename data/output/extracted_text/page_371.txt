@@ -1,0 +1,47 @@
+342
+INPUT/OUTPUT 
+CHAP. 5
+How do these schemes actually work in practice? In all cases, when the CPU
+wants to read a word, either from memory or from an I/O port, it puts the address it
+needs on the bus’ address lines and then asserts a READ signal on a bus’ control
+line. A second signal line is used to tell whether I/O space or memory space is
+needed. If it is memory space, the memory responds to the request. If it is I/O
+space, the I/O device responds to the request. If there is only memory space [as in
+Fig. 5-2(b)], ev ery memory module and every I/O device compares the address
+lines to the range of addresses that it services. If the address falls in its range, it
+responds to the request. Since no address is ever assigned to both memory and an
+I/O device, there is no ambiguity and no conflict.
+These two schemes for addressing the controllers have different strengths and
+weaknesses. Let us start with the advantages of memory-mapped I/O. First of all,
+if special I/O instructions are needed to read and write the device control registers,
+access to them requires the use of assembly code since there is no way to execute
+an IN or OUT instruction in C or C++. Calling such a procedure adds overhead to
+controlling I/O. In contrast, with memory-mapped I/O, device control registers are
+just variables in memory and can be addressed in C the same way as any other
+variables. Thus, with memory-mapped I/O, an I/O device driver can be written
+entirely in C. Without memory-mapped I/O, some assembly code is needed.
+Second, with memory-mapped I/O, no special protection mechanism is needed
+to keep user processes from performing I/O. All the operating system has to do is
+refrain from putting that portion of the address space containing the control 
+registers in any user’s virtual address space. Even better yet, if each device has its 
+control registers on a different page of the address space, the operating system can
+give a user control over specific devices but not others by simply including the 
+desired pages in its page table. Such a scheme can allow different device drivers to be
+run in different user-mode address spaces, not only reducing kernel size but also
+keeping one driver from interfering with others. This also prevents a driver crash
+from taking down the entire system. Some microkernels (e.g., MINIX 3) work like
+this.
+Third, with memory-mapped I/O, every instruction that can reference memory
+can also reference control registers. For example, if there is an instruction, TEST,
+that tests a memory word for 0, it can also be used to test a control register for 0,
+which might be the signal that the device is idle and can accept a new command.
+The assembly language code might look like this:
+LOOP: TEST PORT 4
+// check if por t 4 is 0
+BEQ READY
+// if it is 0, go to ready
+BRANCH LOOP
+// otherwise, continue testing
+READY:
+If memory-mapped I/O is not present, the control register must first be read into
+the CPU, then tested, requiring two instructions instead of just one. In the case of

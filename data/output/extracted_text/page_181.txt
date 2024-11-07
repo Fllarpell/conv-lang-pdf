@@ -1,0 +1,74 @@
+152
+PROCESSES AND THREADS
+CHAP. 2
+RCU data structures are not so common in user processes, but quite popular in
+operating system kernels for data structures that are accessed by multiple threads
+and require high efficiency. The Linux kernel has thousands of uses of its RCU
+API, spread across most of its subsystems. The network stack, the file system, 
+drivers, and memory management all use RCU for concurrent reading and writing.
+(a) Original tree.
+(b) Initialize node X and !
+connect E to X. Any readers !
+in A and E are not affected.
+X
+A
+B
+E
+D
+C
+D
+C
+D
+C
+D
+C
+D
+C
+A
+B
+E
+(c) When X is completely initialized,!
+connect X to A. Readers currently!
+in E will have read the old version,!
+while readers in A will pick up the !
+new version of the tree.
+X
+A
+B
+E
+(d) Decouple B from A. Note !
+that there may still be readers !
+in B. All readers in B will see !
+the old version of the tree, !
+while all readers currently!
+in A will see the new version.
+X
+A
+B
+E
+(e) Wait until we are sure !
+that all readers have left B !
+and C. These nodes cannot !
+be accessed any more.
+X
+A
+B
+E
+C
+E
+(f) Now we can safely !
+remove B and D
+X
+A
+Adding a node:
+Removing nodes:
+Figure 2-39. Read-Copy-Update: inserting a node in the tree and then removing
+a branch—all without locks.
+2.5 SCHEDULING
+When a computer is multiprogrammed, it frequently has multiple processes or
+threads competing for the CPU at the same time. This situation occurs whenever
+two or more of them are simultaneously in the ready state. If only one CPU is
+available, a choice has to be made which process to run next. The part of the 
+operating system that makes the choice is called the scheduler, and the algorithm it
+uses is called the scheduling algorithm. These topics form the subject matter of
+the following sections.

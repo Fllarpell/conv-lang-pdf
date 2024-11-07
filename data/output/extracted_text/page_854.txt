@@ -1,0 +1,41 @@
+SEC. 10.8
+ANDROID
+825
+Activity manager in system_server process
+Email app process
+Camera app process
+MailMainActivity
+ComposeActivity
+CameraMainActivity
+Saved state
+Saved state
+STOPPED
+STOPPED
+RESUMED
+Task: Email
+Task: Camera
+ActivityRecord
+(MailMainActivity)
+ActivityRecord
+(ComposeActivity)
+ActivityRecord
+(CameraMainActivity)
+Figure 10-56. Returning to the email application.
+Services
+A service has two distinct identities:
+1. It can be a self-contained long-running background operation. 
+Common examples of using services in this way are performing 
+background music playback, maintaining an active network connection
+(such as with an IRC server) while the user is in other applications,
+downloading or uploading data in the background, etc.
+2. It can serve as a connection point for other applications or the system
+to perform rich interaction with the application. This can be used by
+applications to provide secure APIs for other applications, such as to
+perform image or audio processing, provide a text to speech, etc.
+The example email manifest shown in Fig. 10-51 contains a service that is used
+to perform synchronization of the user’s mailbox. A common implementation
+would schedule the service to run at a regular interval, such as every 15 minutes,
+starting the service when it is time to run, and stopping itself when done.
+This is a typical use of the first style of service, a long-running background
+operation. Figure 10-57 shows the state of the system in this case, which is quite
+simple. The activity manager has created a ServiceRecord to keep track of the

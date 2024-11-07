@@ -1,0 +1,40 @@
+402
+INPUT/OUTPUT 
+CHAP. 5
+do not have buttons, but pressing the trackpad down hard acts like a button press.
+Apple MacBooks work this way.
+There are two kinds of trackpads in common use. The first one uses conductive
+sensing. With these devices there is a series of very fine parallel wires running
+from the front edge of the device toward the screen. Below it is an insulating layer.
+Below that is another set of very fine wires running perpendicular to the other set,
+from left to right. In some devices the layers are reversed.
+When the user presses down on the trackpad, the gap between them gets 
+smaller, allowing electricity to flow at the contact point. The hardware in the trackpad
+can detect this and pass the coordinates where contact is made to the device driver.
+The other kind of trackpad uses capacitance. This type is more common in
+modern notebooks. In this system, tiny capacitors are constantly charging and 
+discharging. When a finger touches the surface, the capacitance increases locally at
+the point where the finger is and the hardware outputs the coordinates to the driver.
+For this type of trackpad, pressing it with a pencil, pen, eraser, or piece of plastic
+has no effect because these objects do not have capacitance, as the human body
+does. So if you want to write all over your trackpad with a pen, you can (although
+we do not recommend it), but doing so will not move the cursor. As a homework
+exercise, try licking your trackpad. It should move the cursor as tongues have
+capacitance.
+The touch screens used on smartphones are similar to trackpads. We will 
+discuss them later in this chapter.
+5.6.2 Output Software
+Now let us consider output software. First we will look at simple output to a
+text window, which is what programmers normally prefer to use. Then we will
+consider graphical user interfaces, which other users often prefer.
+Text Windows
+Output is simpler than input when the output is sequentially in a single font,
+size, and color. For the most part, the program sends characters to the current 
+window and they are displayed there. Usually, a block of characters, for example, a
+line, is written in one system call.
+Screen editors and many other sophisticated programs need to be able to
+update the screen in complex ways such as replacing one line in the middle of the
+screen. To accommodate this need, most output drivers support a series of 
+commands to move the cursor, insert and delete characters or lines at the cursor, and so
+on. These commands are often called escape sequences. In the heyday of the 
+simple text-only 25 × 80 ASCII terminal, there were hundreds of terminal types, each

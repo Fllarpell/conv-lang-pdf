@@ -1,0 +1,44 @@
+998
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+subsequent ReadFile calls, an application can provide the handle, specifying that
+this file object for C: \ foo \ bar should be included in the read request that gets 
+passed down the C: device stack to NTFS.
+In addition to regular files and directories, NTFS supports hard links in the
+UNIX sense, and also symbolic links using a mechanism called reparse points.
+NTFS supports tagging a file or directory as a reparse point and associating a block
+of data with it. When the file or directory is encountered during a file-name parse,
+the operation fails and the block of data is returned to the object manager. The
+object manager can interpret the data as representing an alternative path name and
+then update the string to parse and retry the I/O operation. This mechanism is used
+to support both symbolic links and mounted file systems, redirecting the search to
+a different part of the directory hierarchy or even to a different partition.
+Reparse points are also used to tag individual files for file-system filter drivers.
+In Fig. 11-20, we showed how file-system filters can be installed between the I/O
+manager and the file system. I/O requests are completed by calling 
+IoCompleteRequest, which passes control to the completion routines each driver 
+represented in the device stack inserted into the IRP as the request was being made. A
+driver that wants to tag a file associates a reparse tag and then watches for 
+completion requests for file open operations that failed because they encountered a reparse
+point. From the block of data that is passed back with the IRP, the driver can tell if
+this is a block of data that the driver itself has associated with the file. If so, the
+driver will stop processing the completion and continue processing the original I/O
+request. Generally, this will involve proceeding with the open request, but there is a
+flag that tells NTFS to ignore the reparse point and open the file.
+File Compression
+NTFS supports transparent file compression. A file can be created in 
+compressed mode, which means that NTFS automatically tries to compress the blocks
+as they are written to disk and automatically uncompresses them when they are
+read back. Processes that read or write compressed files are completely unaware
+that compression and decompression are going on.
+Compression works as follows. When NTFS writes a file marked for 
+compression to disk, it examines the first 16 (logical) blocks in the file, irrespective of how
+many runs they occupy. It then runs a compression algorithm on them. If the 
+resulting compressed data can be stored in 15 or fewer blocks, they are written to the
+disk, preferably in one run, if possible. If the compressed data still take 16 blocks,
+the 16 blocks are written in uncompressed form. Then blocks 16–31 are examined
+to see if they can be compressed to 15 blocks or fewer, and so on.
+Figure 11-49(a) shows a file in which the first 16 blocks have successfully
+compressed to eight blocks, the second 16 blocks failed to compress, and the third
+16 blocks have also compressed by 50%. The three parts have been written as three
+runs and stored in the MFT record. The ‘‘missing’’ blocks are stored in the MFT

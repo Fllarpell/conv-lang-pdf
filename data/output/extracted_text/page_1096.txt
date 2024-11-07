@@ -1,0 +1,48 @@
+SEC. 12.3
+IMPLEMENTATION
+1067
+#include "config.h"
+#include "config.h"
+init( )
+#if (WORD LENGTH == 32)
+{
+typedef int Register;
+#if (CPU == IA32)
+#endif
+/* IA32 initialization here. */
+#endif 
+#if (WORD LENGTH == 64)
+typedef long Register;
+#if (CPU == ULTRASPARC) 
+#endif
+/* UltraSPARC initialization here. */
+#endif 
+Register R0, R1, R2, R3;
+(a) 
+(b)
+}
+Figure 12-6. (a) CPU-dependent conditional compilation. (b) 
+Word-length-dependent conditional compilation.
+To compile the system for the UltraSPARC, a different config.h would be used,
+with the correct values for the UltraSPARC, probably something like
+#define CPU ULTRASPARC
+#define WORD LENGTH 64
+Some readers may be wondering why CPU and WORD LENGTH are handled
+by different macros. We could easily have bracketed the definition of Register
+with a test on CPU, setting it to 32 bits for the IA32 and 64 bits for the 
+UltraSPARC. However, this is not a good idea. Consider what happens when we later
+port the system to the 32-bit ARM. We would have to add a third conditional to
+Fig. 12-6(b) for the ARM. By doing it as we have, all we have to do is include the
+line
+#define WORD LENGTH 32
+to the config.h file for the ARM.
+This example illustrates the orthogonality principle we discussed earlier. Those
+items that are CPU dependent should be conditionally compiled based on the CPU
+macro, and those that are word-length dependent should use the WORD LENGTH
+macro. Similar considerations hold for many other parameters.
+Indirection
+It is sometimes said that there is no problem in computer science that cannot
+be solved with another level of indirection. While something of an exaggeration,
+there is definitely a grain of truth here. Let us consider some examples. On
+x86-based systems, before USB keyboards became the norm, when a key is
+depressed, the hardware generates an interrupt and puts the key number, rather than

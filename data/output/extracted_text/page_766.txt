@@ -1,0 +1,46 @@
+SEC. 10.3
+PROCESSES IN LINUX
+737
+threads in the standard timesharing class. The reason Linux calls them real time is
+that Linux is conformant to the P1003.4 standard (‘‘real-time’’ extensions to
+UNIX) which uses those names. The real-time threads are internally represented
+with priority levels from 0 to 99, 0 being the highest and 99 the lowest real-time
+priority level.
+The conventional, non-real-time threads form a separate class and are 
+scheduled by a separate algorithm so they do not compete with the real-time threads.
+Internally, these threads are associated with priority levels from 100 to 139, that is,
+Linux internally distinguishes among 140 priority levels (for real-time and 
+nonreal-time tasks). As for the real-time round-robin threads, Linux allocates CPU
+time to the non-real-time tasks based on their requirements and their priority levels.
+In Linux, time is measured as the number of clock ticks. In older Linux 
+versions, the clock ran at 1000 Hz and each tick was 1 ms, called a jiffy. In newer
+versions, the tick frequency can be configured to 500, 250 or even 1 Hz. In order
+to avoid wasting CPU cycles for servicing the timer interrupt, the kernel can even
+be configured in ‘‘tickless’’ mode. This is useful when there is only one process
+running in the system, or when the CPU is idle and needs to go into power-saving
+mode. Finally, on newer systems, high-resolution timers allow the kernel to keep
+track of time in sub-jiffy granularity.
+Like most UNIX systems, Linux associates a nice value with each thread. The
+default is 0, but this can be changed using the nice(value) system call, where value
+ranges from <20 to +19. This value determines the static priority of each thread. A
+user computing / to a billion places in the background might put this call in his
+program to be nice to the other users. Only the system administrator may ask for
+better than normal service (meaning values from <20 to <1). Deducing the reason
+for this rule is left as an exercise for the reader.
+Next, we will describe in more detail two of the Linux scheduling algorithms.
+Their internals are closely related to the design of the runqueue, a key data 
+structure used by the scheduler to track all runnable tasks in the system and select the
+next one to run. A runqueue is associated with each CPU in the system.
+Historically, a popular Linux scheduler was the Linux O(1) scheduler. It
+received its name because it was able to perform task-management operations,
+such as selecting a task or enqueueing a task on the runqueue, in constant time,
+independent of the total number of tasks in the system. In the O(1) scheduler, the
+runqueue is organized in two arrays, called active and expired. As depicted in
+Fig. 10-10(a), each of these is an array of 140 list heads, each corresponding to a
+different priority. Each list head points to a doubly linked list of processes at a
+given priority. The basic operation of the scheduler can be described as follows.
+The scheduler selects a task from the highest-priority list in the active array. If
+that task’s timeslice (quantum) expires, it is moved to the expired list (potentially
+at a different priority level). If the task blocks, for instance to wait on an I/O event,
+before its timeslice expires, once the event occurs and its execution can resume, it
+is placed back on the original active array, and its timeslice is decremented to

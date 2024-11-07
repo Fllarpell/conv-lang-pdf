@@ -1,0 +1,43 @@
+SEC. 12.2
+INTERFACE DESIGN
+1047
+Let us briefly consider two examples from our own experience: MINIX 
+(Tanenbaum, 2016) and Amoeba (Tanenbaum et al., 1990). For all intents and 
+purposes, MINIX initially had only three kernel calls: send, receive, and sendrec.
+The system is structured as a collection of processes, with the memory manager,
+the file system, and each device driver being a separate schedulable process. To a
+first approximation, all the kernel does is schedule user-space processes and handle
+message passing between them. Consequently, only two system calls were needed:
+send, to send a message, and receive, to receive one. The third call, sendrec, is
+simply an optimization for efficiency reasons to allow a message to be sent and the
+reply to be requested with only one kernel trap. Everything else is done by 
+requesting some other process (e.g., the file-system process or the disk driver) to do the
+work. The most recent version of MINIX added two additional calls, both for 
+asynchronous communication. The senda call sends an asynchronous message. The
+kernel will attempt to deliver the message, but the application does not wait for
+this; it just keeps running. Similarly, the system uses the notify call to deliver short
+notifications. For instance, the kernel can notify a device driver in user space that
+something happened—much like an interrupt. There is no message associated with
+a notification. When the kernel delivers a notification to process, all it does is flip a
+bit in a per-process bitmap indicating that something happened. Because it is so
+simple, it can be fast and the kernel does not need to worry about what message to
+deliver if the process receives the same notification twice. It is worth observing
+that while the number of calls is still very small, it is growing. Bloat is inevitable.
+Resistance is futile.
+Of course, these are just the kernel calls. Running a POSIX compliant system
+on top of it requires implementing a lot of POSIX system calls. But the beauty of
+it is that they all map on just a tiny set of kernel calls. With a system that is (still)
+so simple, there is a chance we may even get it right.
+Amoeba is even simpler. It has only one system call: perform remote 
+procedure call. This call sends a message and waits for a reply. It is essentially the
+same as MINIX’ sendrec. Everything else is built on this one call. Whether or not
+synchronous communication is the way to go is another matter, one that we will
+return to in Sec. 12.3.
+Principle 3: Efficiency
+The third guideline is efficiency of implementation. If a feature or system call
+cannot be implemented efficiently, it is probably not worth having. It should also
+be intuitively obvious to the programmer about how much a system call costs. For
+example, UNIX programmers expect the lseek system call to be cheaper than the
+read system call because the former just changes a pointer in memory while the
+latter performs disk I/O. If the intuitive costs are wrong, programmers will write
+inefficient programs.

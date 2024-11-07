@@ -1,0 +1,55 @@
+274
+FILE SYSTEMS
+CHAP. 4
+a third group containing the code of an advanced compiler-writing system she is
+building, a fourth group containing grant proposals, as well as other files for 
+electronic mail, minutes of meetings, papers she is writing, games, and so on.
+What is needed is a hierarchy (i.e., a tree of directories). With this approach,
+there can be as many directories as are needed to group the files in natural ways.
+Furthermore, if multiple users share a common file server, as is the case on many
+company networks, each user can have a private root directory for his or her own
+hierarchy. This approach is shown in Fig. 4-8. Here, the directories A, B, and C
+contained in the root directory each belong to a different user, two of whom have
+created subdirectories for projects they are working on.
+User!
+directory
+User subdirectories
+C
+C
+C
+C
+C
+C
+B
+B
+A
+A
+B
+B
+C
+C
+C
+B
+Root directory
+User file
+!Figure 4-8. A hierarchical directory system.
+The ability for users to create an arbitrary number of subdirectories provides a
+powerful structuring tool for users to organize their work. For this reason, all 
+modern file systems are organized in this manner. It is worth noting that an hierarchical
+file system is one of many things that was pioneered by Multics in the 1960s.
+4.2.3 Path Names
+When the file system is organized as a directory tree, some way is needed for
+specifying file names. Two different methods are commonly used. In the first
+method, each file is given an absolute path name consisting of the path from the
+root directory to the file. As an example, the path /usr/ast/mailbox means that the
+root directory contains a subdirectory usr, which in turn contains a subdirectory
+ast, which contains the file mailbox. Absolute path names always start at the root
+directory and are unique. In UNIX the components of the path are separated by /.
+In Windows the separator is \ . In MULTICS it was >. Thus, the same path name
+would be written as follows in these three systems:
+Windows 
+\usr\ast\mailbox
+UNIX 
+/usr/ast/mailbox
+MULTICS 
+>usr>ast>mailbox

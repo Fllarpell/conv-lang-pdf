@@ -1,0 +1,42 @@
+800
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+10.8.3 Design Goals
+A number of key design goals for the Android platform evolved during its
+development:
+1. Provide a complete open-source platform for mobile devices. The
+open-source part of Android is a bottom-to-top operating system
+stack, including a variety of applications, that can ship as a complete
+product.
+2. Strongly support proprietary third-party applications with a robust
+and stable API. As previously discussed, it is challenging to maintain
+a platform that is both truly open source and also stable enough for
+proprietary third-party applications. Android uses a mix of technical
+solutions (specifying a very well-defined SDK and division between
+public APIs and internal implementation) and policy requirements
+(through the CDD) to address this.
+3. Allow all third-party applications, including those from Google, to
+compete on a level playing field. The Android open source code is
+designed to be neutral as much as possible to the higher-level system
+features built on top of it, from access to cloud services (such as data
+sync or cloud-to-device messaging APIs), to libraries (such as
+Google’s mapping library) and rich services like application stores.
+4. Provide an application security model in which users do not have to
+deeply trust third-party applications and do not need to rely on a 
+gatekeeper (like a carrier) to control which applications can be installed
+on the device in order to protect them. The operating system itself
+must protect the user from misbehavior of applications, not only
+buggy applications that can cause it to crash, but more subtle misuse
+of the device and the user’s data on it. The less users need to trust
+applications or the sources of those applications, the more freedom
+they hav e to try out and install them.
+5. Support typical mobile user interaction, where the user often spends
+short amounts of time in many apps. The mobile experience tends to
+involve brief interactions with applications: glancing at new received
+email, receiving and sending an SMS message or IM, going to 
+contacts to place a call, etc. The system needs to optimize for these cases
+with fast app launch and switch times; the goal for Android has 
+generally been 200 msec to cold start a basic application up to the point
+of showing a full interactive UI.
+6. Manage application processes for users, simplifying the user 
+experience around applications so that users do not have to worry about

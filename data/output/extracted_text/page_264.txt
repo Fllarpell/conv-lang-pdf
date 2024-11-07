@@ -1,0 +1,51 @@
+SEC. 3.6
+IMPLEMENTATION ISSUES
+235
+To see the nature of this problem at its worst, consider a CPU that has 
+instructions with two addresses, such as the Motorola 680x0, widely used in embedded
+systems. The instruction
+MOV.L #6(A1),2(A0)
+is 6 bytes, for example (see Fig. 3-27). In order to restart the instruction, the 
+operating system must determine where the first byte of the instruction is. The value of
+the program counter at the time of the trap depends on which operand faulted and
+how the CPU’s microcode has been implemented.
+MOVE
+6
+2
+1000
+1002
+1004
+Opcode
+First operand
+Second operand
+16 Bits
+MOVE.L #6(A1), 2(A0)
+}
+}
+}
+Figure 3-27. An instruction causing a page fault.
+In Fig. 3-27, we have an instruction starting at address 1000 that makes three
+memory references: the instruction word and two offsets for the operands. 
+Depending on which of these three memory references caused the page fault, the program
+counter might be 1000, 1002, or 1004 at the time of the fault. It is often impossible
+for the operating system to determine unambiguously where the instruction began.
+If the program counter is 1002 at the time of the fault, the operating system has no
+way of telling whether the word in 1002 is a memory address associated with an
+instruction at 1000 (e.g., the address of an operand) or an opcode.
+Bad as this problem may be, it could have been worse. Some 680x0 addressing
+modes use autoincrementing, which means that a side effect of executing the
+instruction is to increment one (or more) registers. Instructions that use 
+autoincrement mode can also fault. Depending on the details of the microcode, the 
+increment may be done before the memory reference, in which case the operating 
+system must decrement the register in software before restarting the instruction. Or,
+the autoincrement may be done after the memory reference, in which case it will
+not have been done at the time of the trap and must not be undone by the operating
+system. Autodecrement mode also exists and causes a similar problem. The 
+precise details of whether autoincrements and autodecrements have or hav e not been
+done before the corresponding memory references may differ from instruction to
+instruction and from CPU model to CPU model.
+Fortunately, on some machines the CPU designers provide a solution, usually
+in the form of a hidden internal register into which the program counter is copied
+just before each instruction is executed. These machines may also have a second
+register telling which registers have already been autoincremented or 
+autodecremented, and by how much. Given this information, the operating system can

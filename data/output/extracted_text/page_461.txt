@@ -1,0 +1,46 @@
+432
+INPUT/OUTPUT 
+CHAP. 5
+9. CPU architects know that operating system writers hate imprecise interrupts. One way
+to please the OS folks is for the CPU to stop issuing new instructions when an interrupt
+is signaled, but allow all the instructions currently being executed to finish, then force
+the interrupt. Does this approach have any disadvantages? Explain your answer.
+10. In Fig. 5-9(b), the interrupt is not acknowledged until after the next character has been
+output to the printer. Could it have equally well been acknowledged right at the start of
+the interrupt service procedure? If so, give one reason for doing it at the end, as in the
+text. If not, why not?
+11. A computer has a three-stage pipeline as shown in Fig. 1-7(a). On each clock cycle,
+one new instruction is fetched from memory at the address pointed to by the PC and
+put into the pipeline and the PC advanced. Each instruction occupies exactly one 
+memory word. The instructions already in the pipeline are each advanced one stage. When
+an interrupt occurs, the current PC is pushed onto the stack, and the PC is set to the
+address of the interrupt handler. Then the pipeline is shifted right one stage and the
+first instruction of the interrupt handler is fetched into the pipeline. Does this machine
+have precise interrupts? Defend your answer.
+12. A typical printed page of text contains 50 lines of 80 characters each. Imagine that a
+certain printer can print 6 pages per minute and that the time to write a character to the
+printer’s output register is so short it can be ignored. Does it make sense to run this
+printer using interrupt-driven I/O if each character printed requires an interrupt that
+takes 50 µsec all-in to service?
+13. What is ‘‘device independence’’?
+14. Explain how an OS can facilitate installation of a new device without any need for
+recompiling the OS.
+15. In which of the four I/O software layers is each of the following done?
+(a) Computing the track, sector, and head for a disk read.
+(b) Writing commands to the device registers.
+(c) Checking to see if the user is permitted to use the device.
+(d) Converting binary integers to ASCII for printing.
+16. A local area network is used as follows. The user issues a system call to write data
+packets to the network. The operating system then copies the data to a kernel buffer.
+Then it copies the data to the network controller board. When all the bytes are safely
+inside the controller, they are sent over the network at a rate of 10 megabits/sec. The
+receiving network controller stores each bit a microsecond after it is sent. When the
+last bit arrives, the destination CPU is interrupted, and the kernel copies the newly 
+arrived packet to a kernel buffer to inspect it. Once it has figured out which user the packet
+is for, the kernel copies the data to the user space. If we assume that each interrupt and
+its associated processing takes 1 msec, that packets are 1024 bytes (ignore the 
+headers), and that copying a byte takes 1 µsec, what is the maximum rate at which one
+process can pump data to another? Assume that the sender is blocked until the work is
+finished at the receiving side and an acknowledgement comes back. For simplicity,
+assume that the time to get the acknowledgement back is so small it can be ignored.
+17. Why are output files for the printer normally spooled on disk before being printed?

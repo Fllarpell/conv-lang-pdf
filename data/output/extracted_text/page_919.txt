@@ -1,0 +1,46 @@
+890
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+The third facility maps views of file mappings into a process’ address space.
+Win32 allows only a view to be created for the current process, but the underlying
+NT facility is more general, allowing views to be created for any process for which
+you have a handle with the appropriate permissions. Separating the creation of a
+file mapping from the operation of mapping the file into the address space is a 
+different approach than used in the mmap function in UNIX.
+In Windows, the file mappings are kernel-mode objects represented by a 
+handle. Like most handles, file mappings can be duplicated into other processes. Each
+of these processes can map the file mapping into its own address space as it sees
+fit. This is useful for sharing memory between processes without having to create
+files for sharing. At the NT layer, file mappings (sections) can also be made 
+persistent in the NT namespace and accessed by name.
+An important area for many programs is file I/O. In the basic Win32 view, a
+file is just a linear sequence of bytes. Win32 provides over 70 calls for creating
+and destroying files and directories, opening and closing files, reading and writing
+them, requesting and setting file attributes, locking ranges of bytes, and many more
+fundamental operations on both the organization of the file system and access to
+individual files.
+There are also various advanced facilities for managing data in files. In 
+addition to the primary data stream, files stored on the NTFS file system can have 
+additional data streams. Files (and even entire volumes) can be encrypted. Files can be
+compressed and/or represented as a sparse stream of bytes where missing regions
+of data in the middle occupy no storage on disk. File-system volumes can be
+organized out of multiple separate disk partitions using different levels of RAID
+storage. Modifications to files or directory subtrees can be detected through a 
+notification mechanism or by reading the journal that NTFS maintains for each 
+volume.
+Each file-system volume is implicitly mounted in the NT namespace, 
+according to the name given to the volume, so a file \ foo \ bar might be named, for 
+example, \ Device \ HarddiskVolume1 \ foo \ bar. Internal to each NTFS volume, mount
+points (called reparse points in Windows) and symbolic links are supported to help
+organize the individual volumes.
+The low-level I/O model in Windows is fundamentally asynchronous. Once an
+I/O operation is begun, the system call can return and allow the thread which 
+initiated the I/O to continue in parallel with the I/O operation. Windows supports 
+cancellation, as well as a number of different mechanisms for threads to synchronize
+with I/O operations when they complete. Windows also allows programs to specify
+that I/O should be synchronous when a file is opened, and many library functions,
+such as the C library and many Win32 calls, specify synchronous I/O for 
+compatibility or to simplify the programming model. In these cases, the executive will
+explicitly synchronize with I/O completion before returning to user mode.
+Another area for which Win32 provides calls is security. Every thread is 
+associated with a kernel-mode object, called a token, which provides information about

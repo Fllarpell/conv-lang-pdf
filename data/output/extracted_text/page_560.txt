@@ -1,0 +1,54 @@
+SEC. 8.1
+MULTIPROCESSORS
+531
+CPU
+CPU
+M
+Shared memory
+Shared
+memory
+Bus
+(a)
+CPU
+CPU
+M
+Private memory
+(b)
+CPU
+CPU
+M
+(c)
+Cache
+Figure 8-2. Three bus-based multiprocessors. (a) Without caching. (b) With
+caching. (c) With caching and private memories.
+If the bus is busy when a CPU wants to read or write memory, the CPU just
+waits until the bus becomes idle. Herein lies the problem with this design. With
+two or three CPUs, contention for the bus will be manageable; with 32 or 64 it will
+be unbearable. The system will be totally limited by the bandwidth of the bus, and
+most of the CPUs will be idle most of the time.
+The solution to this problem is to add a cache to each CPU, as depicted in
+Fig. 8-2(b). The cache can be inside the CPU chip, next to the CPU chip, on the
+processor board, or some combination of all three. Since many reads can now be
+satisfied out of the local cache, there will be much less bus traffic, and the system
+can support more CPUs. In general, caching is not done on an individual word
+basis but on the basis of 32- or 64-byte blocks. When a word is referenced, its
+entire block, called a cache line, is fetched into the cache of the CPU touching it.
+Each cache block is marked as being either read only (in which case it can be
+present in multiple caches at the same time) or read-write (in which case it may not
+be present in any other caches). If a CPU attempts to write a word that is in one or
+more remote caches, the bus hardware detects the write and puts a signal on the
+bus informing all other caches of the write. If other caches have a ‘‘clean’’ copy,
+that is, an exact copy of what is in memory, they can just discard their copies and
+let the writer fetch the cache block from memory before modifying it. If some
+other cache has a ‘‘dirty’’ (i.e., modified) copy, it must either write it back to 
+memory before the write can proceed or transfer it directly to the writer over the bus.
+This set of rules is called a cache-coherence protocol and is one of many.
+Yet another possibility is the design of Fig. 8-2(c), in which each CPU has not
+only a cache, but also a local, private memory which it accesses over a dedicated
+(private) bus. To use this configuration optimally, the compiler should place all the
+program text, strings, constants, and other read-only data, stacks, and local 
+variables in the private memories. The shared memory is then used only for writable
+shared variables. In most cases, this careful placement will reduce bus traffic, but
+it does require active cooperation from the compiler. It can be done, for example,
+by allocating part of the address space to the shared memory, the rest to each
+CPU’s private memory, and putting variables and data structures in the right part.

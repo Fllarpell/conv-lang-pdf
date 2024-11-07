@@ -1,0 +1,102 @@
+1142
+INDEX
+Portable UNIX, 706–707
+Portscanning, 640
+Position-independent code, 232
+POSIX, 15, 51
+POSIX thread, 106–107
+Power management, 420–428
+application issues, 428
+battery, 427
+CPU, 423–426
+disk, 423
+display, 422
+driver interface, 427–428
+hardware issues, 421–422
+memory, 425–426
+operating system issues, 422–428
+thermal, 427
+Windows, 1000–1003
+wireless communication, 426
+Power manager, Windows, 1000
+Powershell, 893
+Pre-copy memory migration, 504
+Preamble, disk, 339
+Precise interrupt, 349–351
+Preemptable resource, 438
+Preemptive scheduling, 156
+Prefetch, background, 966
+Windows, 965
+Prepaging, 215
+Windows, 965
+Present/absent bit, 195, 198
+Principal, ACL, 622
+Principle of least authority, 68
+Principles of system design, 1045–1047
+completeness, 1046–1047
+efficiency, 1047
+simplicity, 1046
+Printer daemon, 119
+Priority boost, Windows, 948
+Priority ceiling, 150
+Priority floor, Windows, 948
+Priority inheritance, 150
+Priority inversion, 150–151
+Windows, 948
+Priority inversion problem, 127
+Priority scheduling, 163–164
+Privacy, Android, 836–856
+Privacy and permission, Android, 845–851
+Privileged instruction, 482
+Proc file system, 782–783
+Procedure linkage table, 653
+Process, 39–41, 85–172
+compute-bound, 154–155
+I/O-bound, 154–155
+implementation, 94–95
+lightweight, 102
+Linux, 723–743
+scheduling, 152–171
+synchronization, 119–152
+Windows, 929–955
+Process API calls, Windows, 934–940
+Process behavior, 154
+Process control block, 94
+Process creation, 88–90
+Process dependency, Android, 834–836
+Process environment block, Windows, 929
+Process group, 725
+Process hierarchy, 91–92
+Process identifier, 55, 725
+Process lifecycle, Android, 833
+Process management system calls, 53–57
+Process manager, Windows, 907
+Process model, 86–88
+Android, 831–836
+Process scheduling
+Linux, 736–740
+Windows, 944–950
+Process state, 92–94
+Process swapping, 185–188
+Process switch, 154
+Process table, 40, 94
+Process termination, 90–91
+Process-level virtualization, 484
+Process-management system calls in Linux, 726–730
+Processor allocation algorithm, 576
+ProcHandle, Windows, 885
+Producer-consumer problem, 128–132
+Java, 143–144
+message-passing, 146–147
+Program counter, 21
+Program status word, 21, 181
+Programmed input/output, 354
+Programming multiple core chips, 540–541
+Programming Windows, 880–894
+Project management, 1078–1082
+Project reunion, 882
+Prompt, 716
+shell, 46
+Protected process, Windows, 936, 1025
+Protection, file, 46
+Protection command, 628

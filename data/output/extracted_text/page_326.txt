@@ -1,0 +1,46 @@
+SEC. 4.3
+FILE-SYSTEM IMPLEMENTATION
+297
+command still works (and indeed some operating systems have worked without
+TRIM for years), but less efficiently. In this case, the SSD would only discover that
+the flash pages are invalid when the file system tries to overwrite them. We say that
+the TRIM command helps bridge the semantic gap between the FTL and the file
+system—the FTL does not have sufficient visibility to do its job efficiently without
+some help. It is a major difference between file systems for hard disks and file 
+systems for SSD.
+Let us recap what we have learned about SSDs so far. We saw that flash 
+devices have excellent sequential read, but also very good random read performance,
+while random writes are slow (although still much faster than read or write
+accesses to a disk). Also, we know that frequent writes to the same flash cells 
+rapidly reduces their lifetimes. Finally, we saw that doing complex things at the FTL
+is difficult due to the semantic gap.
+The reason that we want a new file system for flash is not really the presence
+or absence of a TRIM command, but rather that the unique properties of flash
+make it a poor match for existing file systems such as NTFS or ext4. So what file
+system would be a good match? Since most reads can be served from the cache, we
+should look at the writes. We also know that we should avoid random writes and
+spread the writes evenly for wear-leveling. By now you may be thinking: ‘‘Wait,
+that sounds like a match for a log-structured file system,’’ and you would be right.
+Log-structured file systems, with their immutable logs and sequential writes appear
+to be a perfect fit for flash-based storage.
+Of course, a log-structured file system on flash does not automatically solve all
+problems. In particular, consider what happens when we update a large file. In
+terms of Fig. 4-15, a large file will use the disk block containing additional disk
+addresses that we see in the bottom right and that we will refer to as a (single) 
+indirect block. Besides writing the updated flash page to a new block, the file system
+also needs to update the indirect block, since the logical (disk) address of the file
+data has changed. The update means that the flash page corresponding to the 
+indirect block must be moved to another flash block. In addition, because the logical
+address of the indirect block has now changed, the file system should also update
+the i-node itself—leading to a new write to a new flash block. Finally, since the 
+inode is now in a new logical disk block, the file system must also update the i-node
+map, leading to another write on the SSD. In other words, a single file update leads
+to a cascade of writes of the corresponding meta-data. In real log-structured file
+systems, there may be more than one level of indirection (with double or even
+triple indirect blocks), so there will be even more writes. The phenomenon is
+known as the recursive update problem or wandering tree problem.
+While recursive updates cannot be avoided altogether, it is possible to reduce
+the impact. For instance, instead of storing the actual disk address of the i-node or
+indirect block (in the i-node map and i-node, respectively), some file systems store
+the i-node / indirect block number and then maintain, at a fixed logical disk 
+location, a global mapping of these (constant) numbers to logical block addresses on

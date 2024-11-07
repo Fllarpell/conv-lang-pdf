@@ -1,0 +1,46 @@
+SEC. 2.2
+THREADS
+115
+bufptr = read global("bufptr");
+It returns the address stored in the global variable, so its data can be accessed.
+The next problem in turning a single-threaded program into a multithreaded
+one is that many library procedures are not reentrant. That is, they were not
+designed to have a second call made to any giv en procedure while a previous call
+has not yet finished. For example, sending a message over the network may well be
+programmed to assemble the message in a fixed buffer within the library, then to
+trap to the kernel to send it. What happens if one thread has assembled its message
+in the buffer, then a clock interrupt forces a switch to a second thread that
+immediately overwrites the buffer with its own message?
+Similarly, memory-allocation procedures such as malloc in UNIX, maintain
+crucial tables about memory usage, for example, a linked list of available chunks
+of memory. While malloc is busy updating these lists, they may temporarily be in
+an inconsistent state, with pointers that point nowhere. If a thread switch happens
+to occur while the tables are inconsistent and a new call comes in from a different
+thread, an invalid pointer may be used, leading to a program crash. Fixing all these
+problems effectively means rewriting the entire library. Doing so is a nontrivial
+activity with a real possibility of introducing subtle errors.
+A different solution is to provide each procedure with a wrapper that sets a bit
+to mark the library as being in use. Any attempt for another thread to use a library
+procedure while a previous call has not yet completed is blocked. Although this
+approach can be made to work, it greatly eliminates potential parallelism.
+Next, consider signals. Some signals are logically thread specific; others are
+not. For example, if a thread calls alar m, it makes sense for the resulting signal to
+go to the thread that made the call. However, when threads are implemented 
+entirely in user space, the kernel does not even know about threads and can hardly direct
+the signal to the right one. An additional complication occurs if a process may only
+have one alarm pending at a time and several threads call alar m independently.
+Other signals, such as keyboard interrupt, are not thread specific. Who should
+catch them? One designated thread? All the threads? Furthermore, what happens
+if one thread changes the signal handlers without telling other threads about it?
+And what happens if one thread wants to catch a particular signal (say, the user 
+hitting CTRL-C), and another thread wants this signal to terminate the process? This
+situation can arise if one or more threads run standard library procedures and 
+others are user-written. Clearly, these wishes are incompatible. In general, signals are
+difficult enough to manage even in a single-threaded environment. Going to a 
+multithreaded environment does not make them any easier to handle.
+One last problem introduced by threads is stack management. In many 
+systems, when a process’ stack overflows, the kernel just provides that process with
+more stack automatically. When a process has multiple threads, it must also have
+multiple stacks. If the kernel is not aware of all these stacks, it cannot grow them
+automatically upon stack fault. In fact, it may not even realize that a memory fault
+is related to the growth of some thread’s stack.

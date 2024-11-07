@@ -1,0 +1,44 @@
+SEC. 4.4
+FILE-SYSTEM MANAGEMENT AND OPTIMIZATION
+321
+Defragmentation works better on file systems that have a lot of free space in a
+contiguous region at the end of the partition. This space allows the defragmentation
+program to select fragmented files near the start of the partition and copy all their
+blocks to the free space. Doing so frees up a contiguous block of space near the
+start of the partition into which the original or other files can be placed 
+contiguously. The process can then be repeated with the next chunk of disk space, etc.
+Some files cannot be moved, including the paging file, the hibernation file, and
+the journaling log, because the administration that would be required to do this is
+more trouble than it is worth. In some systems, these are fixed-size contiguous
+areas anyway, so they do not have to be defragmented. The one time when their
+lack of mobility is a problem is when they happen to be near the end of the 
+partition and the user wants to reduce the partition size. The only way to solve this
+problem is to remove them altogether, resize the partition, and then recreate them
+afterward.
+Linux file systems (especially ext3 and ext4) generally suffer less from 
+defragmentation than Windows systems due to the way disk blocks are selected, so 
+manual defragmentation is rarely required. Also, SSDs do not suffer from 
+fragmentation at all. In fact, defragmenting an SSD is counterproductive. Not only is
+there no gain in performance, but SSDs wear out, so defragmenting them merely
+shortens their lifetimes.
+4.4.6 Compression and Deduplication
+In the ‘‘Age of Data,’’ people tend to have, well, a lot of data. All these data
+must find a home on a storage device and often that home fills up quickly with cat
+pictures, cat videos, and other essential information. Of course, we can always buy
+a new and bigger SSD, but it would be nice if we could prevent it from filling up
+quite so quickly.
+The simplest technique to use scarce storage space more efficiently is 
+compression. Besides manually compressing files or folders, we can use a file system
+that compresses specific folders or even all data automatically. File systems such as
+NTFS (on Windows), Btrfs (Linux), and ZFS (on a variety of operating systems)
+all offer compression as an option. The compression algorithms commonly look
+for repeating sequences of data which they then encode efficiently. For instance,
+when writing file data they may discover that the 133 bytes at offset 1737 in the
+file are the same as the 133 bytes at offset 1500, so instead of writing the same
+bytes again, they insert a marker (237,133)—indicating that these 133 bytes can be
+found at a distance of 237 before the current offset.
+Besides eliminating redundancy within a single file, several popular file 
+systems also remove redundancy across files. On systems that store data from many
+users, for instance in a cloud or server environment, it is common to find files that
+contain the same data, as multiple users store the same documents, binaries, or
+videos. Such data duplication is even more pronounced in backup storage. If users

@@ -1,0 +1,24 @@
+4
+FILE SYSTEMS
+All computer applications need to store and retrieve information. While a 
+process is running, it can store a limited amount of information in physical RAM. For
+many applications, the amount of memory is far too small and some even need
+many terabytes of storage.
+A second problem with keeping information in RAM is that when the process
+terminates, the information is lost. For many applications (e.g., for databases), the
+information must be retained for weeks, months, or even forever. Having it vanish
+when the process using it terminates is unacceptable. Furthermore, it must not go
+aw ay when a computer crash kills the process or power goes off during an 
+electrical storm.
+A third problem is that it is frequently necessary for multiple processes to
+access (parts of) the information at the same time. If we have an online telephone
+directory stored inside the address space of a single process, only that process can
+access it, unless it is shared explicitly. The way to solve this problem is to make the
+information itself independent of any one process.
+Thus, we have three essential requirements for long-term information storage:
+1. It must be possible to store a very large amount of information.
+2. The information must survive the termination of the process using it.
+3. Multiple processes must be able to access the information at once.
+Magnetic disks have been used for years for this long-term storage. While such
+disks are still used extensively, solid-state drives (SSDs) have also become hugely
+259

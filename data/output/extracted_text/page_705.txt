@@ -1,0 +1,51 @@
+676
+SECURITY 
+CHAP. 9
+1. char *kaddr = ...
+// a ker nel address
+2. reg0 = kaddr[0] 
+// read byte from ker nel address: not allowed
+3. reg1 = array [reg0 * 4096] // (transiently) use the value as an index
+Figure 9-27. Meltdown: a user access kernel memory and uses it as an index.
+are used for other stuff. This means, that after executing the above code, there is
+exactly one array element in the cache. By reading every array element (in steps of
+4096) and measuring how long it takes to do the access, the attacker will find that
+one array element is considerably faster than the others. If the fast read occurred
+for the array element at, say, offset 7 * 4096, the attacker knows that the secret byte
+read from the kernel was 7. In this way, attackers can leak each and every byte in
+the operating system kernel. Not a pleasant thought!
+non transient
+Code
+Data / Array
+Access is fast, because this 
+element is now in the cache.
+User pages
+(access allowed)
+Kernel pages
+(no access)
+Full Address Space
+3
+The index of the fast array
+element (divided by 4096) is
+the value that was read from
+the kernel!
+4
+2
+Figure 9-28. A value read by a faulting instruction still leaves a trace in the cache.
+If you are curious about the multiplication with 4096, this is a common trick.
+Since a cache line is 64B on most architectures, if the attack had used the value in
+reg0 as an index by itself without multiplication, the same cacheline would be used
+for all the values from 0 to 7. While the attacker could have used a different value
+for the multiplication, the factor 4096 ensures that each byte value lands on a
+unique cache line (and that related loads by the CPU’s prefetcher do not matter).
+The attack is known as Meltdown and led to a major change in operating 
+system design. The fact that the Linux kernel developers originally proposed to call
+their patch ‘‘Forcefully Unmap Complete Kernel With Interrupt Trampolines,’’
+while flaunting their proclivity for clever acronyms, suggests that they were not
+entirely filled with joy about the achievements of chip vendors. Another suggested
+name was ‘‘User Address Space Separation,’’ another gem. Eventually, the 
+solution came to be known as KPTI (Kernel Page Table Isolation). By completely
+separating the address spaces of the kernel and the user processes and giving the
+kernel its own set of page tables, it was no longer possible to leak kernel 
+information. However, the cost in performance is significant. In newer processors, 
+Meltdown is fixed in silicon but that does not help users with old hardware.

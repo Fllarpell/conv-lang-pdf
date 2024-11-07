@@ -1,0 +1,41 @@
+60
+INTRODUCTION 
+CHAP. 1
+1.6.4 Miscellaneous System Calls
+A variety of other system calls exist as well. We will look at just four of them
+here. The chdir call changes the current working directory. After the call
+chdir("/usr/ast/test");
+an open on the file xyz will open /usr/ast/test/xyz. The concept of a working 
+directory eliminates the need for typing (long) absolute path names all the time.
+In UNIX every file has a mode used for protection. The mode includes the
+read-write-execute bits for the owner, group, and others. The chmod system call
+makes it possible to change the mode of a file. For example, to make a file 
+readonly by everyone except the owner, one could execute
+chmod("file", 0644);
+The kill system call is the way users and user processes send signals. If a 
+process is prepared to catch a particular signal, then when it arrives, a signal handler is
+run. If the process is not prepared to handle a signal, then its arrival kills the 
+process (hence the name of the call).
+POSIX defines a number of procedures for dealing with time. For example,
+time just returns the current time in seconds, with 0 corresponding to Jan. 1, 1970
+at midnight (just as the day was starting, not ending). On computers using 32-bit
+words, the maximum value time can return is 232 < 1 seconds (assuming an 
+unsigned integer is used). This value corresponds to a little over 136 years. Thus in
+the year 2106, 32-bit UNIX systems will go berserk, not unlike the famous Y2K
+problem that would have wreaked havoc with the world’s computers in 2000, were
+it not for the massive effort the IT industry put into fixing the problem. If you 
+currently have a 32-bit UNIX system, you are advised to trade it in for a 64-bit one
+sometime before the year 2106.
+1.6.5 The Windows API
+So far we have focused primarily on UNIX. Now it is time to look briefly at
+Windows. Windows and UNIX differ in a fundamental way in their respective 
+programming models. A UNIX program consists of code that does something or
+other, making system calls to have certain services performed. In contrast, a 
+Windows program is normally event driven. The main program waits for some event to
+happen, then calls a procedure to handle it. Typical events are keys being struck,
+the mouse being moved, a mouse button being pushed, or a USB drive inserted or
+removed from the computer. Handlers are then called to process the event, update
+the screen, and update the internal program state. All in all, this leads to a 
+somewhat different style of programming than with UNIX, but since the focus of this
+book is on operating system function and structure, these different programming
+models will not concern us much more.

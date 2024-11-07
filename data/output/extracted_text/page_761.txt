@@ -1,0 +1,46 @@
+732
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+When a fork system call is executed, the calling process traps to the kernel and
+creates a task structure and few other accompanying data structures, such as the
+kernel-mode stack and a thread info structure. This structure is allocated at a fixed
+offset from the process’ end-of-stack, and contains few process parameters, along
+with the address of the process descriptor. By storing the process descriptor’s
+address at a fixed location, Linux needs only few eff icient operations to locate the
+task structure for a running process.
+The majority of the process-descriptor contents are filled out based on the 
+parent’s descriptor values. Linux then looks for an available PID, that is, not one 
+currently in use by any process, and updates the PID hash-table entry to point to the
+new task structure. In case of collisions in the hash table, process descriptors may
+be chained. It also sets the fields in the task struct to point to the corresponding
+previous/next process on the task array.
+In principle, it should now allocate memory for the child’s data and stack 
+segments, and to make exact copies of the parent’s segments, since the semantics of
+fork say that no memory is shared between parent and child. The text segment may
+be either copied or shared since it is read only. At this point, the child is ready to
+run.
+However, copying memory is expensive, so all modern Linux systems cheat.
+They giv e the child its own page tables, but have them point to the parent’s pages,
+only marked read only. Whenever either process (the child or the parent) tries to
+write on a page, it gets a protection fault. The kernel sees this and then allocates a
+new copy of the page to the faulting process and marks it read/write. In this way,
+only pages that are actually written have to be copied. This mechanism is called
+COW (Copy On Write). It has the additional benefit of not requiring two copies
+of the program in memory, thus saving RAM.
+After the child process starts running, the code running there (a copy of the
+shell in our example) does an exec system call giving the command name as a
+parameter. The kernel now finds and verifies the executable file, copies the 
+arguments and environment strings to the kernel, and releases the old address space and
+its page tables.
+Now the new address space must be created and filled in. If the system 
+supports mapped files, as Linux and virtually all other UNIX-based systems do, the
+new page tables are set up to indicate that no pages are in memory, except perhaps
+one stack page, but that the address space is backed by the executable file on disk.
+When the new process starts running, as soon as it touches memory to fetch the
+first instruction, it will immediately get a page fault, which will cause the first page
+of code to be paged in from the executable file. In this way, nothing has to be 
+loaded in advance, so programs can start quickly and fault in just those pages they need
+and no more. (This strategy is really just demand paging in its most pure form, as
+we discussed in Chap. 3.) Finally, the arguments and environment strings are 
+copied to the new stack, the signals are reset, and the registers are initialized to all
+zeros. At this point, the new command can start running.

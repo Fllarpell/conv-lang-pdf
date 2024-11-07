@@ -1,0 +1,48 @@
+SEC. 6.6
+DEADLOCK PREVENTION
+463
+6.6.4 Attacking the Circular Wait Condition
+Only one condition is left. The circular wait can be eliminated in several ways.
+One way is simply to have a rule saying that a process is entitled only to a single
+resource at any moment. If it needs a second one, it must release the first one. For
+a process that needs to copy a huge file from a tape to a printer, this restriction is
+unacceptable.
+Another way to avoid the circular wait is to provide a global numbering of all
+the resources, as shown in Fig. 6-16(a). Now the rule is this: processes can request
+resources whenever they want to, but all requests must be made in numerical order.
+A process may request first a printer and then a tape drive, but it may not request
+first a plotter and then a printer.
+(a)
+(b)
+1. Imagesetter
+2. Printer
+3. Plotter
+4. Tape drive
+5. Blu-ray drive
+A
+i
+B
+j
+Figure 6-16. (a) Numerically ordered resources. (b) A resource graph.
+With this rule, the resource allocation graph can never hav e cycles. Let us see
+why this is true for the case of two processes, in Fig. 6-16(b). We can get a 
+deadlock only if A requests resource j and B requests resource i. Assuming i and j are
+distinct resources, they will have different numbers. If i > j, then A is not allowed
+to request j because that is lower than what it already has. If i < j, then B is not
+allowed to request i because that is lower than what it already has. Either way,
+deadlock is impossible.
+With more than two processes, the same logic holds. At every instant, one of
+the assigned resources will be highest. The process holding that resource will
+never ask for a resource already assigned. It will either finish, or at worst, request
+ev en higher-numbered resources, all of which are available. Eventually, it will 
+finish and free its resources. At this point, some other process will hold the highest
+resource and can also finish. In short, there exists a scenario in which all processes
+finish, so no deadlock is present.
+A minor variation of this algorithm is to drop the requirement that resources be
+acquired in strictly increasing sequence and merely insist that no process request a
+resource lower than what it is already holding. If a process initially requests 9 and
+10, and then releases both of them, it is effectively starting all over, so there is no
+reason to prohibit it from now requesting resource 1.
+Although numerically ordering the resources eliminates the problem of 
+deadlocks, it may be impossible to find an ordering that satisfies everyone. When the
+resources include process-table slots, disk spooler space, locked database records,

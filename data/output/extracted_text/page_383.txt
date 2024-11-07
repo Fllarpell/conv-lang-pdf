@@ -1,0 +1,53 @@
+354
+INPUT/OUTPUT 
+CHAP. 5
+5.2.2 Programmed I/O
+There are three fundamentally different ways that I/O can be performed. In
+this section we will look at the first one (programmed I/O). In the next two 
+sections we will examine the others (interrupt-driven I/O and I/O using DMA). The
+simplest form of I/O is to have the CPU do all the work. This method is called 
+programmed I/O.
+It is simplest to illustrate how programmed I/O works by means of an example.
+Consider a user process that wants to print the eight-character string 
+‘‘ABCDEFGH’’ on the printer via a serial interface. Displays on small embedded systems
+sometimes work this way. The software first assembles the string in a buffer in
+user space, as shown in Fig. 5-7(a).
+String to!
+be printed
+User!
+space
+Kernel!
+space
+ABCD!
+EFGH
+Printed!
+page
+(a)
+ABCD!
+EFGH
+ABCD!
+EFGH
+Printed!
+page
+(b)
+A
+Next
+(c)
+AB
+Next
+Figure 5-7. Steps in printing a string.
+The user process then acquires the printer for writing by making a system call
+to open it. If the printer is currently in use by another process, this call will fail
+and return an error code or will block until the printer is available, depending on
+the operating system and the parameters of the call. Once it has the printer, the user
+process makes a system call telling the operating system to print the string.
+The operating system then (usually) copies the buffer with the string to an
+array, in kernel space, where it is more easily accessed (because the kernel may
+have to change the memory map to get at user space) and also safe from 
+modification by the user process. It then checks to see if the printer is currently available.
+If not, it waits until it is. As soon as the printer is available, the operating system
+copies the first character to the printer’s data register, in this example using 
+memory-mapped I/O. This action activates the printer. The character may not appear yet
+because some printers buffer a line or a page before printing anything. In
+Fig. 5-7(b), however, we see that the first character has been printed and that the
+system has marked the ‘‘B’’ as the next character to be printed.

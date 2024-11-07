@@ -1,0 +1,37 @@
+SEC. 11.11
+SECURITY IN WINDOWS
+1019
+Drivers
+NTOS
+Normal Kernel
+VTL0 SLAT
+Hypervisor
+VTL1 SLAT
+CPU
+Memory
+I/O Devices
+Normal Mode
+Processes
+Normal Mode (VTL0)
+Secure Mode (VTL1)
+User
+Kernel
+Secure Kernel
+Trustlets
+Figure 11-54. Virtual Secure Mode architecture with NT kernel in VTL0 and 
+Secure Kernel in VTL1. VTLs share memory, CPUs, and devices, but each VTL has
+its own access protections for these resources, controlled by higher VTLs.
+Let us review these items briefly. Secure login means that the system 
+administrator can require all users to have a password in order to log in. Spoofing is when
+a malicious user writes a program that displays the login prompt or screen and then
+walks away from the computer in the hope that an innocent user will sit down and
+enter a name and password. The name and password are then written to disk and
+the user is told that login has failed. Windows prevents this attack by instructing
+users to hit CTRL-ALT-DEL to log in. This key sequence is always captured by
+the keyboard driver, which then invokes a system program that puts up the genuine
+login screen. This procedure works because there is no way for user processes to
+disable CTRL-ALT-DEL processing in the keyboard driver. But NT can and does
+disable use of the CTRL-ALT-DEL secure attention sequence in some cases, 
+particularly for consumers and in systems that have accessibility for the disabled
+enabled, on phones, tablets, and the Xbox, where there is almost never a physical
+keyboard with a user entering commands.

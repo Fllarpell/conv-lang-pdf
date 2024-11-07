@@ -1,0 +1,43 @@
+618
+SECURITY 
+CHAP. 9
+One of the worst offenders is Apple, which is actually one of the tech 
+companies that takes security extremely seriously. Apple devices have a feature called
+handoff, which allows you to start typing an email on a MacBook and then switch
+over to an iPhone to finish it. Did any user demand this before it was available? We
+doubt it. But Apple did it anyway, despite the large amount of potentially buggy
+code it required to implement this. So the downside of this more-or-less useless
+feature is thousands of lines of new code in the operating system, potentially with
+usable exploits, which also affect users who are not even aware of this feature, let
+alone who use it.
+Here are two fairly simple examples. The first email systems sent messages as
+ASCII text. They were simple and could be made fairly secure. Unless there are
+really dumb bugs in the email program, there is little an incoming ASCII message
+can do to damage a computer system (we will actually see some attacks that may
+be possible later in this chapter). Then people got the idea to expand email to
+include other types of documents, for example, Word files, which can contain 
+programs in macros. Reading such a document means running somebody else’s 
+program on your computer. No matter how much sandboxing is used, running a 
+foreign program on your computer is inherently more dangerous than looking at
+ASCII text. Did users demand the ability to change email from passive documents
+to active programs? Probably not, but somebody thought it would be a nifty idea,
+without worrying too much about the security implications.
+The second example is the same thing for Web pages. When the Web consisted
+of passive HTML pages, it did not pose a major security problem. Now that many
+Web pages contain programs (such as JavaScript) that the user has to run to view
+the content, one security leak after another pops up. As soon as one is fixed,
+another takes its place. When the Web was entirely static, were users up in arms
+demanding dynamic content? Not that the authors remember, but its introduction
+brought with it a raft of security problems. It looks like the 
+Vice-President-InCharge-of-Saying-No was asleep at the wheel.
+Actually, there are some organizations that think good security is more 
+important than nifty new features, the military being the prime example. In the following
+sections we will look some of the issues involved, but they can be summarized in
+one sentence. To build a secure system, have a security model at the core of the
+operating system that is simple enough that the designers can actually understand
+it, and resist all pressure to deviate from it in order to add new features.
+9.2 CONTROLLING ACCESS TO RESOURCES
+Security is easier to achieve if there is a clear model of what is to be protected
+and who is allowed to do what. Quite a bit of work has been done in this area, so
+we can only scratch the surface in this brief treatment. We will focus on a few 
+general models and the mechanisms for enforcing them.

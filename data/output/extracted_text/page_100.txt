@@ -1,0 +1,57 @@
+SEC. 1.7
+OPERATING SYSTEM STRUCTURE
+71
+different operating systems. They see virtualization as a way to run them all on the
+same machine without having a crash of one server bring down the rest.
+Virtualization is also popular in the Web hosting world. Without virtualization,
+Web hosting customers are forced to choose between shared hosting (which just
+gives them a login account on a Web server, but no control over the server 
+software) and dedicated hosting (which gives them their own machine, which is very
+flexible but not cost effective for small to medium Websites). When a Web hosting
+company offers virtual machines for rent, a single physical machine can run many
+virtual machines, each of which appears to be a complete machine. Customers who
+rent a virtual machine can run whatever operating system and software they want
+to, but at a fraction of the cost of a dedicated server (because the same physical
+machine supports many virtual machines at the same time).
+Another use of virtualization is for end users who want to be able to run two or
+more operating systems at the same time, say Windows and Linux, because some
+of their favorite application packages run on one and some run on the other. This
+situation is illustrated in Fig. 1-29(a), where the term ‘‘virtual machine monitor’’
+has been renamed type 1 hypervisor, which is commonly used nowadays because
+‘‘virtual machine monitor’’ requires more keystrokes than people are prepared to
+put up with now. Note that many authors use the terms interchangeably though.
+Type 1 hypervisor
+Host operating system
+(a)
+(b)
+...
+Linux
+Windows
+Excel Word Mplayer Apollon
+Machine simulator
+ 
+ 
+Guest OS
+Guest
+Host OS
+process
+OS process
+Host operating system
+(c)
+Type 2 hypervisor
+Guest OS
+Guest OS process
+Kernel
+module
+Figure 1-29. (a) A type 1 hypervisor. (b) A pure type 2 hypervisor. (c) A 
+practical type 2 hypervisor.
+While no one disputes the attractiveness of virtual machines today, the problem
+then was implementation. In order to run virtual machine software on a computer,
+its CPU must be virtualizable (Popek and Goldberg, 1974). In a nutshell, here is
+the problem. When an operating system running on a virtual machine (in user
+mode) executes a privileged instruction, such as modifying the PSW or doing I/O,
+it is essential that the hardware trap to the virtual-machine monitor so the 
+instruction can be emulated in software. On some CPUs—notably the Pentium, its 
+predecessors, and its clones—attempts to execute privileged instructions in user mode
+are just ignored. This property made it impossible to have virtual machines on this
+hardware, which explains the lack of interest in the x86 world. Of course, there

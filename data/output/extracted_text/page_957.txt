@@ -1,0 +1,46 @@
+928
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+single program can host two different dynamic code libraries, each of which may
+want to load the same Windows library—yet have different version requirements
+for that library.
+A better solution would be hosting code in separate processes. But 
+out-of-process hosting of code results has lower performance and makes for a more 
+complicated programming model in many cases. Microsoft has yet to develop a good 
+solution for all of this complexity in user mode. It makes one yearn for the relative 
+simplicity of kernel mode.
+One of the reasons that kernel mode has less complexity than user mode is that
+it supports relatively few extensibility opportunities outside of the device-driver
+model. In Windows, system functionality is extended by writing user-mode 
+services. This worked well enough for subsystems, and works even better when only a
+few new services are being provided rather than a complete operating system 
+personality. There are few functional differences between services implemented in the
+kernel and services implemented in user-mode processes. Both the kernel and
+process provide private address spaces where data structures can be protected and
+service requests can be scrutinized.
+However, there can be significant performance differences between services in
+the kernel vs. services in user-mode processes. Entering the kernel from user mode
+is slow on modern hardware, but not as slow as having to do it twice because you
+are switching back and forth to another process. Also cross-process 
+communication has lower bandwidth. Unfortunately, the cost of switching between user-mode
+and kernel-mode has been increasing especially with security mitigations that were
+implemented against CPU side-channel vulnerabilities like Spectre and Meltdown,
+disclosed in 2018.
+Kernel-mode code can (carefully) access data at the user-mode addresses 
+passed as parameters to its system calls. With user-mode services, either those data
+must be copied to the service process, or some games be played by mapping 
+memory back and forth (the ALPC facilities in Windows handle this under the covers).
+Windows makes significant use of user-mode service processes to extend the
+functionality of the system. Some of these services are strongly tied to the 
+operation of kernel-mode components, such as lsass.exe which is the local security
+authentication service which manages the token objects that represent user-identity,
+as well as managing encryption keys used by the file system. The user-mode 
+plugand-play manager is responsible for determining the correct driver to use when a
+new hardware device is encountered, installing it, and telling the kernel to load it.
+Many facilities provided by third parties, such as antivirus and digital rights 
+management, are implemented as a combination of kernel-mode drivers and user-mode
+services.
+The Windows taskmgr.exe has a tab which identifies the services running on
+the system. Multiple services can be seen to be running in the same process
+(svchost.exe). Windows does this for many of its own boot-time services to reduce
+the time needed to start up the system and to lower memory usage. Services can be

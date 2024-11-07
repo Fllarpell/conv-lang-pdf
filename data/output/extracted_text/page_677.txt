@@ -1,0 +1,50 @@
+648
+SECURITY 
+CHAP. 9
+beating the other in the hunt; both of them still exist in the wild. Still, lions and
+zebras are locked in an arms race. They are running to stand still. The Red Queen
+effect also applies to program exploitation. Attacks become ever more 
+sophisticated to deal with increasingly advanced security measures.
+Although every exploit involves a specific bug in a specific program, there are
+several general categories of bugs that occur over and over and are worth studying
+to see how attacks work. In the following sections we will examine not only a
+number of these methods, but also countermeasures to stop them, and counter
+countermeasures to evade these measures, and even some counter counter 
+countermeasures to counter these tricks, and so on. It will give you a good idea of the
+arms race between attackers and defenders—and what it is like to go jogging with
+the Red Queen.
+We will start our discussion with the venerable buffer overflow, one of the
+most important exploitation techniques in the history of computer security. It was
+already used in the very first Internet worm, written by Robert Morris Jr. in 1988,
+and it is still widely used today. Despite all countermeasures, it is safe to predict
+that buffer overflows will be with us for quite some time yet. Buffer overflows are
+ideally suited for introducing three of the most important protection mechanisms
+available in most modern systems: stack canaries, data execution protection, and
+address-space layout randomization. After that, we will look at other exploitation
+techniques, like format string attacks, integer overflows, and dangling pointer
+exploits.
+9.5.1 Buffer Overflow Attacks
+One rich source of attacks is due to the fact that virtually all operating systems
+and most systems programs are written in the C or C++ programming languages
+(because programmers like them and they can be compiled to extremely efficient
+object code). Unfortunately, no C or C++ compiler does array bounds checking. As
+an example, the C library function gets, which reads a string (of unknown size)
+into a fixed-size buffer, but without checking for overflow, is notorious for being
+subject to this kind of attack (some compilers even detect the use of gets and warn
+about it). Consequently, the following code sequence is also not checked:
+01. void A( ) {
+02. 
+char B[128]; 
+/* reser ve a buffer with space for 128 bytes on the stack */
+03. 
+printf ("Type log message: ");
+04. 
+gets (B); 
+/* read log message from standard input into buffer */
+05. 
+writeLog (B);
+/* output the string in a pretty for mat to the log file */
+06. }
+Function A represents a logging procedure—somewhat simplified. Every time
+the function executes, it invites the user to type in a log message and then reads
+whatever the user types in the buffer B, using the gets function from the C library.

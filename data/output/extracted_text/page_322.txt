@@ -1,0 +1,43 @@
+SEC. 4.3
+FILE-SYSTEM IMPLEMENTATION
+293
+to point to it, hence to the wrong file. If the blocks are released first, then a crash
+before the i-node is cleared will mean that a valid directory entry points to an 
+inode listing blocks now in the free storage pool and which are likely to be reused
+shortly, leading to two or more files randomly sharing the same blocks. None of
+these outcomes are good.
+What the journaling file system does is first write a log entry listing the three
+actions to be completed. The log entry is then written to disk (and for good 
+measure, possibly read back from the disk to verify that it was, in fact, written 
+correctly). Only after the log entry has been written, do the various operations begin.
+After the operations complete successfully, the log entry is erased. If the system
+now crashes, upon recovery the file system can check the log to see if any 
+operations were pending. If so, all of them can be rerun (multiple times in the event of
+repeated crashes) until the file is correctly removed.
+To make journaling work, the logged operations must be idempotent, which
+means they can be repeated as often as needed without harm. Operations such as
+‘‘Update the bitmap to mark i-node k or block n as free’’ can be repeated until the
+cows come home with no danger. Similarly, searching a directory and removing
+any entry called foobar is also idempotent. On the other hand, adding the newly
+freed blocks from i-node K to the end of the free list is not idempotent since they
+may already be there. The more-expensive operation ‘‘Search the list of free blocks
+and add block n to it if it is not already present’’ is idempotent. Journaling file 
+systems have to arrange their data structures and loggable operations so they all are
+idempotent. Under these conditions, crash recovery can be made fast and secure.
+For added reliability, a file system can introduce the database concept of an
+atomic transaction. When this concept is used, a group of actions can be 
+bracketed by the begin transaction and end transaction operations. The file system then
+knows it must complete either all the bracketed operations or none of them, but not
+any other combinations.
+NTFS has an extensive journaling system and its structure is rarely corrupted
+by system crashes. It has been in development since its first release with Windows
+NT in 1993. The first Linux file system to do journaling was ReiserFS, but its 
+popularity was impeded by the fact that it was incompatible with the then-standard
+ext2 file system. In contrast, ext3 which was a less ambitious project than 
+ReiserFS, also does journaling while maintaining compatibility with the previous ext2
+system. Its successor, ext4 was similarly developed initially as a series of 
+backward-compatible extensions to ext3.
+4.3.7 Flash-based File Systems
+SSDs uses flash memory and operates quite differently from hard disk drives.
+Generally, NAND-based flash is used (rather than NOR-based flash) in SSDs.
+Much of the difference is related to the physics that underpins the storage, which,

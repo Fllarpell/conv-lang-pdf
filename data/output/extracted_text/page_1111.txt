@@ -1,0 +1,47 @@
+1082
+OPERATING SYSTEM DESIGN
+CHAP. 12
+C
+Test"
+modules
+Code
+Test"
+system
+(a)
+Deploy
+Dummy"
+procedure"
+1
+(b)
+Plan
+Dummy"
+procedure"
+2
+Dummy"
+procedure"
+3
+Main"
+program
+Figure 12-11. (a) Traditional software design progresses in stages. (b) 
+Alternative design produces a working system (that does nothing) starting on day 1.
+12.5.4 No Silver Bullet
+In addition to The Mythical Man Month, Brooks also wrote an influential paper
+called ‘‘No Silver Bullet’’ (Brooks, 1987). In it, he argued that none of the many
+nostrums being hawked by various people at the time was going to generate an
+order-of-magnitude improvement in software productivity within a decade. 
+Experience shows that he was right.
+Among the silver bullets that were proposed were better high-level languages,
+object-oriented programming, artificial intelligence, expert systems, automatic 
+programming, graphical programming, program verification, and programming 
+environments. Perhaps the next decade will see a silver bullet, but maybe we will have
+to settle for gradual, incremental improvements.
+PROBLEMS
+1. Moore’s Law describes a phenomenon of exponential growth similar to the population
+growth of an animal species introduced into a new environment with abundant food
+and no natural enemies. In nature, an exponential growth curve is likely eventually to
+become a sigmoid curve with an asymptotic limit when food supplies become limiting
+or predators learn to take advantage of new prey. Discuss some factors that may 
+eventually limit the rate of improvement of computer hardware.
+2. In Fig. 12-1, two paradigms are shown, algorithmic and event driven. For each of the
+following kinds of programs, which of the following paradigms is likely to be easiest
+to use?

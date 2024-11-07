@@ -1,0 +1,46 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+899
+These procedures read and write unsigned 8-, 16-, and 32-bit integers, respectively,
+to the specified port. It is up to the hardware abstraction layer to decide whether
+memory-mapped I/O is needed here. In this way, a driver can be moved without
+modification between machines that differ in the way the device registers are
+implemented.
+Drivers frequently need to access specific I/O devices for various purposes. At
+the hardware level, a device has one or more addresses on a certain bus. Since
+modern computers often have multiple buses (PCIe, USB, IEEE 1394, etc.), it can
+happen that more than one device may have the same address on different buses, so
+some way is needed to distinguish them. The HAL provides a service for 
+identifying devices by mapping bus-relative device addresses onto systemwide logical
+addresses. In this way, drivers do not have to keep track of which device is 
+connected to which bus. This mechanism also shields higher layers from properties of
+alternative bus structures and addressing conventions.
+Interrupts have a similar kind of problem—they are also bus dependent. Here,
+too, the HAL provides services to name interrupts in a systemwide way and also
+provides ways to allow drivers to attach interrupt service routines to interrupts in a
+portable way, without having to know anything about which interrupt vector is for
+which bus. Interrupt request level management is also handled in the HAL.
+Another HAL service is setting up and managing DMA transfers in a 
+deviceindependent way. Both the systemwide DMA engine and DMA engines on 
+specific I/O cards can be handled. Devices are referred to by their logical addresses.
+The HAL implements software scatter/gather (writing or reading from 
+noncontiguous blocks of physical memory).
+The HAL also manages clocks and timers in a portable way. Time is kept track
+of in units of 100 nanoseconds starting at midnight at the start of Jan. 1, 1601,
+which is the first date in the previous quadricentury, which simplifies leap-year
+computations. (Quick Quiz: Was 1800 a leap year? Quick Answer: No. QQ2: Was
+2000 a leap year? QA2: Yes. Until 3999, century years are not leap years except
+400 years). Under the current rules, 4000 should be a leap year, but in the current
+model isn’t quite right and making 4000 a nonleap year would help. Not everyone
+agrees however. The time services decouple the drivers from the actual 
+frequencies at which the clocks run.
+Kernel components sometimes need to synchronize at a very low lev el, 
+especially to prevent race conditions in multiprocessor systems. The HAL provides
+primitives to manage this synchronization, such as spin locks, in which one CPU
+simply waits for a resource held by another CPU to be released, particularly in
+situations where the resource is typically held only for a few machine instructions.
+Finally, after the system has been booted, the HAL talks to the computer’s
+firmware (BIOS or UEFI) and inspects the system configuration to find out which
+buses and I/O devices the system contains and how they hav e been configured.
+This information is then put into the registry. A brief summary of some of the
+things the HAL does is given in Fig. 11-12.

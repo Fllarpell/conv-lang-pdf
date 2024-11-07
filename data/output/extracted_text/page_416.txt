@@ -1,0 +1,46 @@
+SEC. 5.4
+MASS STORAGE: DISK AND SSD
+387
+is up to the controller to split the request up and feed the proper commands to the
+proper disks in the right sequence and then assemble the results in memory 
+correctly. Performance is excellent and the implementation is straightforward.
+RAID level 0 works worst with operating systems that habitually ask for data
+one sector at a time. The results will be correct, but there is no parallelism and
+hence no performance gain. Another disadvantage of this organization is that the
+reliability is potentially worse than having a SLED. If a RAID consists of four
+disks, each with a mean time to failure of 20,000 hours, about once every 5000
+hours a drive will fail and all the data will be completely lost. A SLED with a
+mean time to failure of 20,000 hours would be four times more reliable. Because
+no redundancy is present in this design, it is not really a true RAID. Remember,
+the ‘‘R’’ in RAID stands for ‘‘Redundant.’’
+The next option, RAID level 1, shown in Fig. 5-26(b), is a true RAID. It 
+duplicates all the disks, so there are four primary disks and four backup disks. On a
+write, every strip is written twice. On a read, either copy can be used, distributing
+the load over more drives. Consequently, write performance is no better than for a
+single drive, but read performance can be up to twice as good. Fault tolerance is
+excellent: if a drive crashes, the copy is simply used instead. Recovery consists of
+simply installing a new drive and copying the entire backup drive to it.
+Unlike lev els 0 and 1, which work with strips of sectors, RAID level 2 works
+on a word basis, possibly even a byte basis. Imagine splitting each byte of the 
+single virtual disk into a pair of 4-bit nibbles, then adding a Hamming code to each
+one to form a 7-bit word, of which bits 1, 2, and 4 were parity bits. Further imagine
+that the seven drives of Fig. 5-26(c) were synchronized in terms of arm position
+and rotational position. Then it would be possible to write the 7-bit Hamming
+coded word over the seven drives, one bit per drive.
+The Thinking Machines CM-2 computer used this scheme, taking 32-bit data
+words and adding 6 parity bits to form a 38-bit Hamming word, plus an extra bit
+for word parity, and spread each word over 39 disk drives. The total throughput
+was immense, because in one sector time it could write 32 sectors worth of data.
+Also, losing one drive did not cause problems, because loss of a drive amounted to
+losing 1 bit in each 39-bit word read, something the Hamming code could handle
+on the fly.
+On the down side, this scheme requires all the drives to be rotationally 
+synchronized, and it only makes sense with a substantial number of drives (ev en with
+32 data drives and 6 parity drives, the overhead is 19%). It also asks a lot of the
+controller, since it must do a Hamming checksum every bit time.
+RAID level 3 is a simplified version of RAID level 2. It is illustrated in
+Fig. 5-26(d). Here a single parity bit is computed for each data word and written to
+a parity drive. As in RAID level 2, the drives must be exactly synchronized, since
+individual data words are spread over multiple drives.
+At first thought, it might appear that a single parity bit gives only error 
+detection, not error correction. For the case of random undetected errors, this is true.

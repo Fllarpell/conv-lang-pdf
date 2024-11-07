@@ -1,0 +1,42 @@
+600
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+8.5 SUMMARY
+Computer systems can be made faster and more reliable by using multiple
+CPUs. Four organizations for multi-CPU systems are multiprocessors, 
+multicomputers, virtual machines, and distributed systems. Each of these has its own 
+properties and issues.
+A multiprocessor consists of two or more CPUs that share a common RAM.
+Often these CPUs themselves consists of multiple cores. The cores and CPUs can
+be interconnected by a bus, a crossbar switch, or a multistage switching network.
+Various operating system configurations are possible, including giving each CPU
+its own operating system, having one leader operating system with the rest being
+follower, or having a symmetric multiprocessor, in which there is one copy of the
+operating system that any CPU can run. In the latter case, locks are needed to 
+provide synchronization. When a lock is not available, a CPU can spin or do a context
+switch. Various scheduling algorithms are possible, including time sharing, space
+sharing, and gang scheduling.
+Multicomputers also have two or more CPUs, but these CPUs each have their
+own private memory. They do not share any common RAM, so all communication
+uses message passing. In some cases, the network interface board has its own
+CPU, in which case the communication between the main CPU and the 
+interface-board CPU has to be carefully organized to avoid race conditions. User-level
+communication on multicomputers often uses remote procedure calls, but 
+distributed shared memory can also be used. Load balancing of processes is an issue here,
+and the various algorithms used for it include sender-initiated algorithms, 
+receiverinitiated algorithms, and bidding algorithms.
+Distributed systems are loosely coupled systems each of whose nodes is a
+complete computer with a complete set of peripherals and its own operating 
+system. Often these systems are spread over a large geographical area. Middleware is
+often put on top of the operating system to provide a uniform layer for applications
+to interact with. The various kinds include document-based, file-based, 
+objectbased, and coordination-based middleware. Some examples are the World Wide
+Web, CORBA, and Linda.
+PROBLEMS
+1. What happens if four CPUs in a multiprocessor attempt to access exactly the same
+word of memory at exactly the same instant?
+2. If a CPU issues one memory request every instruction and the computer runs at 200
+MIPS, about how many CPUs will it take to saturate a 400-MHz bus? Assume that a
+memory reference requires one bus cycle. Now repeat this problem for a system in
+which caching is used and the caches have a 90% hit rate. Finally, what cache hit rate
+would be needed to allow 32 CPUs to share the bus without overloading it?

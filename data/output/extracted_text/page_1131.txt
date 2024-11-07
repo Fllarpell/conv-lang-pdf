@@ -1,0 +1,46 @@
+1102
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+CORBET, J., RUBINI, A., and KROAH-HARTMAN, G.: Linux Device Drivers, Sebastopol,
+CA: O’Reilly & Associates, 2009.
+CORNWELL, M.: ‘‘ Anatomy of a Solid-State Drive,’’ ACM Queue, Vol. 10, pp. 30–37,
+2012.
+COURTOIS, P.J., HEYMANS, F., and PARNAS, D.L.: ‘‘Concurrent Control with Readers and
+Writers,’’ Commun. ACM, Vol. 10, pp. 667–668, Oct. 1971.
+DAI, T., KARVE, A., KOPER, G., and ZENG, S.: ‘‘ Automatically Detecting Risky Scripts in
+Infrastructure Code,’’ Proc. ACM Symp. on Cloud Computing, ACM, pp. 358–371,
+2020.
+DALEY, R.C., and DENNIS, J.B.: ‘‘Virtual Memory, Process, and Sharing in MULTICS,’’
+Commun. ACM, Vol. 11, pp. 306–312, May 1968.
+DALL, C., LI, S.-W., LIM, J., NIEH, J., and KOLOVENTZOS, G.: ‘‘ ARM virtualization: 
+Performance and architectural implications,’’ Proc. 43rd International Symp. on Computer
+Architecture (ISCA) , ACM/IEEE, June 2016.
+DAVIS, B., WATSON, R.N.M., RICHARDSON A., NEUMANN, P., MOORE S., BALDWIN S.,
+CHISNALL, D., CLARKE, J., GUDKA, K., JOANNOU A., LAURIE, B., MARKETTOS,
+A.T., MASTE, E., NAPIERALA, E.T., NORTON, R., ROE, M., SEWELL, P., SON, S.,
+WOODRUFF,
+J., and FILARDO, N.W.:
+‘‘CheriABI: Enforcing Valid Pointer
+Provenance and Minimizing Pointer Privilege in the POSIX C Run-time 
+Environment,’’ Proc. 24th Int. Conf. on Arc hitectural Support for Programming Languages
+and Operating Syst., ACM, 2019.
+DE BRUIJN, W., and BOS, H.: ‘‘Beltway Buffers: Avoiding the OS Traffic Jam,’’ Proc. 27th
+Int’l Conf. on Computer Commun., April 2008.
+DE BRUIJN, W., BOS, H., and BAL, H.: ‘‘ Application-Tailored I/O with Streamline,’’ ACM
+Tr ans. Computer Syst., Vol. 29, number 2, pp.1–33, May 2011.
+DEMING, D.A.: The Essential Guide to Serial ATA and SATA Express, Milton Park,
+Oxfordshire, U.K.: CRC Press, 2014.
+DEMING, D.A.: The Essential Guide to Serial ATA and SATA Express, Milton Park,
+Oxfordshire, U.K.: CRC Press, 2014.
+DENNING, P.J.: ‘‘The Working Set Model for Program Behavior,’’ Commun. ACM, Vol. 11,
+pp. 323–333, 1968a.
+DENNING, P.J.: ‘‘Thrashing: Its Causes and Prevention,’’ Proc. AFIPS National Computer
+Conf., AFIPS, pp. 915–922, 1968b.
+DENNING, P.J.: ‘‘Virtual Memory,’’ ACM Computing Surveys, Vol. 2, pp. 153–189, Sept.
+1970.
+DENNING, P.J.: ‘‘Working Sets Past and Present,’’ IEEE Trans. Software Eng., Vol. SE-6,
+pp. 64–84, Jan. 1980.
+DENNIS, J.B., and VAN HORN, E.C.: ‘‘Programming Semantics for Multiprogrammed
+Computations,’’ Commun. ACM, Vol. 9, pp. 143–155, March 1966.
+DIFFIE, W., and HELLMAN, M.E.: ‘‘New Directions in Cryptography,’’ IEEE Trans.
+Inform. Theory, Vol. IT-22, pp. 644–654, Nov. 1976.

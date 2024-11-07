@@ -1,0 +1,46 @@
+308
+FILE SYSTEMS
+CHAP. 4
+very often, which is why many people do not bother with backups. These people
+also tend not to have fire insurance on their houses for the same reason.
+The second reason is that users often accidentally remove files that they later
+need again. This problem occurs so often that when a file is ‘‘removed’’ in 
+Windows, it is not deleted at all, but just moved to a special directory, the recycle bin,
+so it can be fished out and restored easily later. Backups take this principle further
+and allow files that were removed days, even weeks, ago to be restored from old
+backup tapes.
+Making a backup takes a long time and occupies a large amount of space, so
+doing it efficiently and conveniently is important. These considerations raise the
+following issues. First, should the entire file system be backed up or only part of
+it? At many installations, the executable (binary) programs are kept in a limited
+part of the file-system tree. It is not necessary to back up these files if they can all
+be reinstalled from the manufacturer’s Website. Also, most systems have a 
+directory for temporary files. There is usually no reason to back it up either. In UNIX,
+all the special files (I/O devices) are kept in a directory /dev. Not only is backing
+up this directory not necessary, it is downright dangerous because the backup 
+program would hang forever if it tried to read each of these to completion. In short, it
+is usually desirable to back up only specific directories and everything in them
+rather than the entire file system.
+Second, it is wasteful to back up files that have not changed since the previous
+backup, which leads to the idea of incremental dumps. The simplest form of
+incremental dumping is to make a  complete dump (backup) periodically, say
+weekly or monthly, and to make a daily dump of only those files that have been
+modified since the last full dump. Even better is to dump only those files that have
+changed since they were last dumped. While this scheme minimizes dumping time,
+it makes recovery more complicated, because first the most recent full dump has to
+be restored, followed by all the incremental dumps in reverse order. To ease 
+recovery, more sophisticated incremental dumping schemes are often used.
+Third, since immense amounts of data are typically dumped, it may be 
+desirable to compress the data before writing them to backup storage. However, with
+many compression algorithms, a single bad spot on the backup storage can foil the
+decompression algorithm and make an entire file or even an entire backup storage
+unreadable. Thus the decision to compress the backup stream must be carefully
+considered.
+Fourth, it is difficult to perform a backup on an active file system. If files and
+directories are being added, deleted, and modified during the dumping process, the
+resulting dump may be inconsistent. However, since making a dump may take
+hours, it may be necessary to take the system offline for much of the night to make
+the backup, something that is not always acceptable. For this reason, algorithms
+have been devised for making rapid snapshots of the file-system state by copying
+critical data structures, and then requiring future changes to files and directories to
+copy the blocks instead of updating them in place (Hutchinson et al., 1999). In this

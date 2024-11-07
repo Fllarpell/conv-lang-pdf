@@ -1,0 +1,46 @@
+SEC. 11.5
+MEMORY MANAGEMENT
+959
+the sum of RAM size and the total size of all pagefiles. As non-paged or 
+pagefilebacked virtual memory is committed, system-wide commit charge is increased
+until it reaches the commit limit at which point commit requests start failing. This
+strict commit tracking ensures that pagefile space will be available when a 
+committed page needs to be paged out. No disk space is allocated for pages that are never
+paged out. If the total virtual memory is less than the available physical memory, a
+pagefile is not needed at all. This is convenient for embedded systems based on
+Windows. It is also the way the system is booted, since pagefiles are not initialized
+until the first user-mode process, smss.exe, begins running.
+With demand-paging, requests to read pages from disk need to be initiated
+right away, as the thread that encountered the missing page cannot continue until
+this page-in operation completes. The possible optimizations for faulting pages
+into memory involve attempting to prepage additional pages in the same I/O 
+operation, called page fault clustering. Howev er, operations that write modified pages
+to disk are not normally synchronous with the execution of threads. The 
+just-intime strategy for allocating pagefile space takes advantage of this to boost the 
+performance of writing modified pages to the pagefile. Modified pages are grouped
+together and written in big chunks. Since the allocation of space in the pagefile
+does not happen until the pages are being written, the number of seeks required to
+write a batch of pages can be optimized by allocating the pagefile pages to be near
+each other, or even making them contiguous.
+While grouping modified pages into bigger chunks before writing to pagefile is
+beneficial for disk write efficiency, it does not necessarily help make in-page 
+operations any faser. In fact, if pages from different processes or discontiguous virtual
+addresses are combined together, it becomes impossible to cluster pagefile reads
+during in-page operations since subsequent virtual addresses belonging to the 
+faulting process may be scattered across the pagefile. In order to optimize pagefile read
+efficiency for groups of virtual pages that are expected to be used together, 
+Windows supports the concept of pagefile reservations. Ranges of pagefile can be
+soft-reserved for process virtual memory pages such that when those pages are
+about to be written to the pagefile, they are written to their reserved locations 
+instead. While this can make pagefile writing less efficient compared to not having
+such reservations, subsequent page-in operations proceed much quicker because of
+improved clustering and sequential disk reads. Since in-page operations directly
+block application progress, they are generally more important for system 
+performance than pagefile write efficiency. These are soft reservations, so if the 
+pagefile is full and no other space is available, the memory manager will overwrite
+unoccupied reserved space.
+When pages stored in the pagefile are read into memory, they keep their 
+allocation in the pagefile until the first time they are modified. If a page is never 
+modified, it will go onto a list of cached physical pages, called the standby list, where it
+can be reused without having to be written back to disk. If it is modified, the 
+memory manager will free the pagefile space and the only copy of the page will be in

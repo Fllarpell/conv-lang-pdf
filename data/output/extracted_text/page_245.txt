@@ -1,0 +1,35 @@
+216
+MEMORY MANAGEMENT 
+CHAP. 3
+w(k,t)
+k
+Figure 3-18. The working set is the set of pages used by the k most recent 
+memory references. The function w(k, t) is the size of the working set at time t.
+immediately leads to a possible page replacement algorithm: when a page fault
+occurs, find a page not in the working set and evict it. To implement such an 
+algorithm, we need a precise way of determining which pages are in the working set.
+By definition, the working set is the set of pages used in the k most recent memory
+references (some authors use the k most recent page references, but the choice is
+arbitrary). To implement any working set algorithm, some value of k must be 
+chosen in advance. Then, after every memory reference, the set of pages used by the
+most recent k memory references is uniquely determined.
+Of course, having an operational definition of the working set does not mean
+that there is an efficient way to compute it during program execution. One could
+imagine a shift register of length k, with every memory reference shifting the 
+register left one position and inserting the most recently referenced page number on the
+right. The set of all k page numbers in the shift register would be the working set.
+In theory, at a page fault, the contents of the shift register could be read out and
+sorted. Duplicate pages could then be removed. The result would be the working
+set. However, maintaining the shift register and processing it at a page fault would
+both be prohibitively expensive, so this technique is never used.
+Instead, various approximations are used. One common approximation is to
+drop the idea of counting back k memory references and use execution time
+instead. For example, instead of defining the working set as those pages used 
+during the previous 10 million memory references, we can define it as the set of pages
+used during the past 100 msec of execution. In practice, such a definition is just as
+good and easier to work with. Note that for each process, only its own execution
+time counts. Thus if a process starts running at time T and has had 40 msec of
+CPU time at real time T + 100 msec, for working set purposes its time is 40 msec.
+The amount of CPU time a process has actually used since it started is often called
+its current virtual time. With this approximation, the working set of a process is
+the set of pages it has referenced during the past o seconds of virtual time.

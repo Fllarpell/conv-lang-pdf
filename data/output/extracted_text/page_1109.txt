@@ -1,0 +1,53 @@
+1080
+OPERATING SYSTEM DESIGN
+CHAP. 12
+their stamp on the project to carry out the initial architect’s plans. The result is an
+architectural coherence unmatched in other European cathedrals.
+In the 1970s, Harlan Mills combined the observation that some programmers
+are much better than others with the need for architectural coherence to propose
+the chief programmer team paradigm (Baker, 1972). His idea was to organize a
+programming team like a surgical team rather than like a hog-butchering team.
+Instead of everyone hacking away like mad, one person wields the scalpel. 
+Everyone else is there to provide support. For a 10-person project, Mills suggested the
+team structure of Fig. 12-10.
+Title 
+Duties
+Chief programmer 
+Perfor ms the architectural design and writes the code
+Copilot 
+Helps the chief programmer and serves as a sounding board
+Administrator 
+Manages the people, budget, space, equipment, reporting, etc.
+Editor 
+Edits the documentation, which must be written by the chief programmer
+Secretar ies
+The administrator and editor each need a secretary
+Program cler k
+Maintains the code and documentation archives
+Toolsmith 
+Provides any tools the chief programmer needs
+Tester 
+Tests the chief programmer’s code
+Language lawyer 
+Par t timer who can advise the chief programmer on the language
+Figure 12-10. Mills’ proposal for populating a 10-person chief programmer team.
+Three decades have gone by since this was proposed and put into production.
+Some things have changed (such as the need for a language lawyer—C is simpler
+than PL/I), but the need to have only one mind controlling the design is still true.
+And that one mind should be able to work 100% on designing and programming,
+hence the need for the support staff, although with help from the computer, a 
+smaller staff will suffice now. But in its essence, the idea is still valid.
+Any large project needs to be organized as a hierarchy. At the bottom level are
+many small teams, each headed by a chief programmer. At the next level, groups
+of teams must be coordinated by a manager. Experience shows that each person
+you manage costs you 10% of your time, so a full-time manager is needed for each
+group of 10 teams. These managers must be managed, and so on.
+Brooks observed that bad news does not travel up the tree well. Jerry Saltzer of
+M.I.T. called this effect the bad-news diode. No chief programmer or his manager
+wants to tell the big boss that the project is 4 months late and has no chance 
+whatsoever of meeting the deadline because there is a 2000-year-old tradition of
+beheading the messenger who brings bad news. As a consequence, top 
+management is generally in the dark about the state of the project because the actual
+project manager wants to keep it that way. When it becomes undeniably obvious
+that the deadline cannot be met under any conditions, top management panics and
+responds by adding people, at which time Brooks’ Law kicks in.

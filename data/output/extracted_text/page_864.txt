@@ -1,0 +1,47 @@
+SEC. 10.8
+ANDROID
+835
+As an example, consider our previous camera application holding the pictures
+that have been taken. These pictures are not part of the operating system; they are
+implemented by a content provider in the camera application. Other applications
+may want to access that picture data, becoming a client of the camera application.
+Dependencies between processes can happen with both content providers
+(through simple access to the provider) and services (by binding to a service). In
+either case, the operating system must keep track of these dependencies and 
+manage the processes appropriately.
+Process dependencies impact two key things: when processes will be created
+(and the components created inside of them), and what the importance of the 
+process will be. Recall that the importance of a process is that of the most important
+component in it. Its importance is also that of the most important process that is
+dependent on it.
+For example, in the case of the camera application, its process and thus its 
+content provider is not normally running. It will be created when some other process
+needs to access that content provider. While the camera’s content provider is being
+accessed, the camera process will be considered at least as important as the process
+that is using it.
+To compute the final importance of every process, the system needs to 
+maintain a dependency graph between those processes. Each process has a list of all
+services and content providers currently running in it. Each service and content
+provider itself has a list of each process using it. (These lists are maintained in
+records inside the activity manager, so it is not possible for applications to lie about
+them.) Walking the dependency graph for a process involves walking through all
+of its content providers and services and the processes using them.
+Figure 10-64 illustrates a typical state processes can be in, taking into account
+dependencies between them. Part of this example contains two dependencies,
+where a content provider in a camera app is being used by a separate email app to
+add a picture attachment.
+(An illustration of this situation appears later in
+Fig. 10-70 and is discussed in more detail there.)
+In this figure, after the regular system processes, is first that current foreground
+email application. The email application is making use of the camera content 
+provider, raising the camera process up to the same importance as the email app. Next
+in the figure is a similar situation, a music application is playing music in the 
+background with a service, and while doing so has a dependency on the media process
+for accessing the user’s music media, which similarly raises the media process up
+to the same importance as the music app.
+Consider what happens if the state of Fig. 10-64 changes so that the email
+application is done loading the attachment, and no longer uses the camera content
+provider. Figure 10-65 illustrates how the process state will change. Note that the
+camera application is no longer needed, so it has dropped out of the foreground
+importance, and down to the cached level. Making the camera cached has also
+pushed the old maps application one step down in the cached LRU list.

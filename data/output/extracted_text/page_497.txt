@@ -1,0 +1,44 @@
+468
+DEADLOCKS 
+CHAP. 6
+void process A(void) {
+acquire lock(&resource 1);
+while (try lock(&resource 2) == FAIL) {
+release lock(&resource 1);
+wait fixed time();
+acquire lock(&resource 1);
+}
+use both resources( );
+release lock(&resource 2);
+release lock(&resource 1);
+}
+void process B(void) {
+acquire lock(&resource 2);
+while (try lock(&resource 1) == FAIL) {
+release lock(&resource 2);
+wait fixed time();
+acquire lock(&resource 2);
+}
+use both resources( );
+release lock(&resource 1);
+release lock(&resource 2);
+}
+Figure 6-19. Polite processes that may cause livelock.
+one of everything. If these problems could be eliminated for free, there would not
+be much discussion. The problem is that the price is high, mostly in terms of 
+putting inconvenient restrictions on processes. Thus, we are faced with an unpleasant
+trade-off between convenience and correctness, and a great deal of discussion
+about which is more important, and to whom.
+6.7.4 Starvation
+We already saw that a problem closely related to deadlock and livelock is 
+starvation. In a dynamic system, requests for resources happen all the time. Some
+policy is needed to make a  decision about who gets which resource when. This
+policy, although seemingly reasonable, may lead to some processes never getting
+service even though they are not deadlocked.
+As an example, consider allocation of the printer. Imagine that the system uses
+some algorithm to ensure that allocating the printer does not lead to deadlock.
+Now suppose that several processes all want it at once. Who should get it?
+One possible allocation algorithm is to give it to the process with the smallest
+file to print (assuming this information is available). This approach maximizes the
+number of happy customers and seems fair. Now consider what happens in a busy
+system when one process has a huge file to print. Every time the printer is free, the

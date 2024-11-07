@@ -1,0 +1,45 @@
+SEC. 11.4
+PROCESSES AND THREADS IN WINDOWS
+937
+Interprocess Communication
+Threads can communicate in a wide variety of ways, including pipes, named
+pipes, mailslots, sockets, remote procedure calls, and shared files. Pipes have two
+modes: byte and message, selected at creation time. Byte-mode pipes work the
+same way as in UNIX. Message-mode pipes are somewhat similar but preserve
+message boundaries, so that four writes of 128 bytes will be read as four 128-byte
+messages, and not as one 512-byte message, as might happen with byte-mode
+pipes. Named pipes also exist and have the same two modes as regular pipes.
+Named pipes can also be used over a network but regular pipes cannot.
+Mailslots are a feature of the now-defunct OS/2 operating system 
+implemented in Windows for compatibility. They are similar to pipes in some ways, but
+not all. For one thing, they are one way, whereas pipes are two way. They could be
+used over a network but do not provide guaranteed delivery. Finally, they allow the
+sending process to broadcast a message to many receivers, instead of to just one
+receiver. Both mailslots and named pipes are implemented as file systems in 
+Windows, rather than executive functions. This allows them to be accessed over the
+network using the existing remote file-system protocols.
+Sockets are like pipes, except that they normally connect processes on 
+different machines. For example, one process writes to a socket and another one on a
+remote machine reads from it. Sockets can be used on a single machine, but they
+are less efficient than pipes. Sockets were originally designed for Berkeley UNIX,
+and the implementation was made widely available. Some of the Berkeley code
+and data structures are still present in Windows today, as acknowledged in the
+release notes for the system.
+RPCs are a way for process A to have process B call a procedure in B’s address
+space on A’s behalf and return the result to A. Various restrictions on the 
+parameters exist. For example, it makes no sense to pass a pointer to a different process,
+so data structures have to be packaged up and transmitted in a nonprocess-specific
+way. RPC is normally implemented as an abstraction layer on top of a transport
+layer. In the case of Windows, the transport can be TCP/IP sockets, named pipes,
+or ALPC. ALPC is a message-passing facility in the kernel-mode executive. It is
+optimized for communicating between processes on the local machine and does
+not operate across the network. The basic design is for sending messages that 
+generate replies, implementing a lightweight version of remote procedure call which
+the RPC package can build on top of to provide a richer set of features than 
+available in ALPC. ALPC is implemented using a combination of copying parameters
+and temporary allocation of shared memory, based on the size of the messages.
+Finally, processes can share objects. Among these are section objects, which
+can be mapped into the virtual address space of different processes at the same
+time. All writes done by one process then appear in the address spaces of the other
+processes. Using this mechanism, the shared buffer used in producer-consumer
+problems can easily be implemented.

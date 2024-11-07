@@ -1,0 +1,41 @@
+SEC. 8.1
+MULTIPROCESSORS
+535
+Since it is highly desirable to spread the memory references uniformly across
+the modules, one common technique is to use the low-order bits as the module
+number. Consider, for example, a byte-oriented address space for a computer that
+mostly accesses full 32-bit words. The 2 low-order bits will usually be 00, but the
+next 3 bits will be uniformly distributed. By using these 3 bits as the module 
+number, consecutively words will be in consecutive modules. A memory system in
+which consecutive words are in different modules is said to be interleaved. 
+Interleaved memories maximize parallelism because most memory references are to
+consecutive addresses. It is also possible to design switching networks that are
+nonblocking and offer multiple paths from each CPU to each memory module to
+spread the traffic better.
+NUMA Multiprocessors
+Single-bus UMA multiprocessors are generally limited to no more than a few
+dozen CPUs, and crossbar or switched multiprocessors need a lot of (expensive)
+hardware and are not that much bigger. To get to more than 100 CPUs, something
+has to give. Usually, what gives is the idea that all memory modules have the same
+access time. This concession leads to the idea of NUMA multiprocessors, as 
+mentioned above. Like their UMA cousins, they provide a single address space across
+all the CPUs, but unlike the UMA machines, access to local memory modules is
+faster than access to remote ones. Thus all UMA programs will run without change
+on NUMA machines, but the performance will be worse than on a UMA machine.
+NUMA machines have three key characteristics that all of them possess and
+that together distinguish them from other multiprocessors:
+1. There is a single address space visible to all CPUs.
+2. Access to remote memory is via LOAD and STORE instructions.
+3. Access to remote memory is slower than access to local memory.
+When the access time to remote memory is not hidden (because there is no 
+caching), the system is called NC-NUMA (Non Cache-coherent NUMA). When the
+caches are coherent, the system is called CC-NUMA (Cache-Coherent NUMA).
+A popular approach for building large CC-NUMA multiprocessors is the
+directory-based multiprocessor. The idea is to maintain a database telling where
+each cache line is and what its status is. When a cache line is referenced, the 
+database is queried to find out where it is and whether it is clean or dirty. Since this
+database is queried on every instruction that touches memory, it must be kept in
+extremely fast special-purpose hardware that can respond in a fraction of a bus
+cycle.
+To make the idea of a directory-based multiprocessor somewhat more concrete,
+let us consider as a simple (hypothetical) example, a 256-node system, each node

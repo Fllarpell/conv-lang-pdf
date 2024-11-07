@@ -1,0 +1,40 @@
+SEC. 1.5
+OPERATING SYSTEM CONCEPTS
+47
+The user can specify that standard output be redirected to a file, for example,
+date >file
+Similarly, standard input can be redirected, as in
+sor t <file1 >file2
+which invokes the sort program with input taken from file1 and output sent to file2.
+The output of one program can be used as the input for another program by
+connecting them with a pipe. Thus
+cat file1 file2 file3 | sort >/dev/lp
+invokes the cat program to concatenate three files and send the output to sort to
+arrange all the lines in alphabetical order. The output of sort is redirected to the file
+/dev/lp, typically the printer.
+If a user puts an ampersand after a command, the shell does not wait for it to
+complete. Instead it just gives a prompt immediately. Consequently,
+cat file1 file2 file3 | sort >/dev/lp &
+starts up the sort as a background job, allowing the user to continue working 
+normally while the sort is going on. The shell has a number of other interesting 
+features, which we do not have space to discuss here. Most books on UNIX discuss
+the shell at some length (e.g., Kochan and Wood, 2016; and Shotts, 2019).
+Most personal computers these days use a GUI. In fact, the GUI is just a 
+program running on top of the operating system, like a shell. In Linux systems, this
+fact is made obvious because the user has a choice of multiple GUIs: Gnome, KDE
+or even none at all (using a terminal window on X11). In Windows, replacing the
+standard GUI desktop is not typically done.
+1.5.7 Ontogeny Recapitulates Phylogeny
+After Charles Darwin’s book On the Origin of the Species was published, the
+German zoologist Ernst Haeckel stated that ‘‘ontogeny recapitulates phylogeny.’’
+By this he meant that the development of an embryo (ontogeny) repeats (i.e., 
+recapitulates) the evolution of the species (phylogeny). In other words, after 
+fertilization, a human egg goes through stages of being a fish, a pig, and so on before 
+turning into a human baby. Modern biologists regard this as a gross simplification, but
+it still has a kernel of truth in it.
+Something vaguely analogous has happened in the computer industry. Each
+new species (mainframe, minicomputer, personal computer, handheld, embedded
+computer, smart card, etc.) seems to go through the development that its ancestors
+did, both in hardware and in software. We often forget that much of what happens
+in the computer business and a lot of other fields is technology driven. The reason
+the ancient Romans lacked automobiles is not that they enjoyed walking so much.

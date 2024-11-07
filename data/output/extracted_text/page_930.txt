@@ -1,0 +1,44 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+901
+If the next thread to be run is in a different address space (i.e., process) than
+the thread being switched from, the scheduler must also change address spaces.
+The details of the scheduling algorithm itself will be discussed later in this chapter
+when we come to processes and threads.
+In addition to providing a higher-level abstraction of the hardware and 
+handling thread switches, the kernel layer also has another key function: providing
+low-level support for two classes of synchronization mechanisms: control objects
+and dispatcher objects. Control objects are the data structures that the kernel
+layer provides as abstractions to the executive layer for managing the CPU. They
+are allocated by the executive but they are manipulated with routines provided by
+the kernel layer. Dispatcher objects are the class of ordinary executive objects
+that use a common data structure for synchronization.
+Deferred Procedure Calls
+Control objects include primitive objects for threads, interrupts, timers, 
+synchronization, profiling, and two special objects for implementing DPCs (Deferred
+Procedure Calls) and APCs (see below). DPC objects are used to reduce the time
+taken to execute ISRs (Interrupt Service Routines) in response to an interrupt
+from a particular device. Limiting time spent in ISRs reduces the chance of losing
+an interrupt.
+The system hardware assigns a hardware priority level to interrupts. The CPU
+also associates a priority level with the work it is performing. The CPU responds
+only to interrupts at a higher-priority level than it is currently using. Normal 
+priority level, including the priority level of all user-mode work, is 0. Device interrupts
+occur at priority 3 or higher, and the ISR for a device interrupt normally executes
+at the same priority level as the interrupt in order to keep other less important 
+interrupts from occurring while it is processing a more important one.
+If an ISR executes too long, the servicing of lower-priority interrupts will be
+delayed, perhaps causing data to be lost or slowing the I/O throughput of the 
+system. Multiple ISRs can be in progress at any one time, with each successive ISR
+being due to interrupts at higher and higher-priority levels.
+To reduce the time spent processing ISRs, only the critical operations are 
+performed, such as capturing the result of an I/O operation and reinitializing the 
+device. Further processing of the interrupt is deferred until the CPU priority level is
+lowered and no longer blocking the servicing of other interrupts. The DPC object
+is used to represent the further work to be done and the ISR calls the kernel layer
+to queue the DPC to the list of DPCs for a particular processor. If the DPC is the
+first on the list, the kernel registers a special request with the hardware to interrupt
+the CPU at priority 2 (which NT calls DISPATCH level). When the last of any
+executing ISRs completes, the interrupt level of the processor will drop back below
+2, and that will unblock the interrupt for DPC processing. The ISR for the DPC
+interrupt will process each of the DPC objects that the kernel had queued.

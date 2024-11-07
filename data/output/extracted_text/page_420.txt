@@ -1,0 +1,40 @@
+SEC. 5.5
+CLOCKS
+391
+Programmable clocks typically have sev eral modes of operation. In one-shot
+mode, when the clock is started, it copies the value of the holding register into the
+counter and then decrements the counter at each pulse from the crystal. When the
+counter gets to zero, it causes an interrupt and stops until it is explicitly started
+again by the software. In square-wave mode, after getting to zero and causing the
+interrupt, the holding register is automatically copied into the counter, and the
+whole process is repeated again indefinitely. These periodic interrupts are called
+clock ticks.
+The advantage of the programmable clock is that its interrupt frequency can be
+controlled by software. If a 500-MHz crystal is used, then the counter is pulsed
+ev ery 2 nsec. With (unsigned) 32-bit registers, interrupts can be programmed to
+occur at intervals from 2 nsec to 8.6 sec. Programmable clock chips usually 
+contain two or three independently programmable clocks and have many other options
+as well (e.g., counting up instead of down, interrupts disabled, and more).
+To prevent the current time from being lost when the computer’s power is
+turned off, most computers have a battery-powered backup clock, implemented
+with the kind of low-power circuitry used in digital watches. The battery clock can
+be read at startup. If the backup clock is not present, the software may ask the user
+for the current date and time. There is also a standard way for a networked system
+to get the current time from a remote host. In any case, the time is then translated
+into the number of clock ticks since 12 A.M. UTC (Universal Coordinated Time)
+(formerly known as Greenwich Mean Time) on January 1, 1970, as UNIX does, or
+since some other benchmark moment. The origin of time for Windows is January
+1, 1980. At every clock tick, the real time is incremented by one count. Usually
+utility programs are provided to manually set the system clock and the backup
+clock and to synchronize the two clocks.
+5.5.2 Clock Software
+All the clock hardware does is generate interrupts at known intervals. 
+Everything else involving time must be done by the software, the clock driver. The exact
+duties of the clock driver vary among operating systems, but usually include most
+of the following:
+1. Maintaining the time of day.
+2. Preventing processes from running longer than they are allowed to.
+3. Accounting for CPU usage.
+4. Handling the alar m system call made by user processes.
+5. Providing watchdog timers for parts of the system itself.
+6. Doing profiling, monitoring, and statistics gathering.

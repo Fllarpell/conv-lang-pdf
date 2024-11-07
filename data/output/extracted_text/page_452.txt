@@ -1,0 +1,43 @@
+SEC. 5.8
+POWER MANAGEMENT
+423
+The Hard Disk
+Another major villain is the hard disk, assuming your machine has one. It
+takes substantial energy to keep it spinning at high speed, even if there are no
+accesses. Many computers, especially notebooks, spin the disk down after a certain
+number of minutes of being idle. When it is next needed, it is spun up again.
+Unfortunately, a stopped disk is hibernating rather than sleeping because it takes
+quite a few seconds to spin it up again, which causes noticeable delays for the user.
+In addition, restarting the disk consumes considerable energy. As a 
+consequence, every disk has a characteristic time, Td, that is its break-even point, often
+in the range 5 to 15 sec. Suppose that the next disk access is expected to come
+some time t in the future. If t < Td, it takes less energy to keep the disk spinning
+rather than spin it down and then spin it up so quickly. If t > Td, the energy saved
+makes it worth spinning the disk down and then up again much later. If a good
+prediction could be made (e.g., based on past access patterns), the operating 
+system could make good shutdown predictions and save energy. In practice, most 
+systems are conservative and stop the disk only after a few minutes of inactivity.
+Another way to save disk energy is to have a substantial disk cache in RAM or
+flash. If a needed block is in the cache, an idle disk does not have to be restarted to
+satisfy the read. Similarly, if a write to the disk can be buffered in the cache, a
+stopped disk does not have to restarted just to handle the write. The disk can
+remain off until the cache fills up or a read miss happens.
+Another way to avoid unnecessary disk starts is for the operating system to
+keep running programs informed about the disk state by sending them messages or
+signals. Some programs have discretionary writes that can be skipped or delayed.
+For example, a word processor may be set up to write the file being edited to disk
+ev ery few minutes. If at the moment it would normally write the file out, the word
+processor knows that the disk is off, it can delay this write until it is turned on.
+The CPU
+The CPU can also be managed to save energy. In particular, a CPU can be put
+to sleep in software, reducing power usage to almost zero. The only thing it can do
+in this state is wake up when an interrupt occurs. Therefore, whenever the CPU
+goes idle, either waiting for I/O or because there is no work to do, it goes to sleep.
+On many computers, there is a relationship between CPU voltage, clock cycle,
+and power usage. The CPU voltage can often be reduced in software, which saves
+energy but also reduces the clock cycle (approximately linearly). Since power 
+consumed is proportional to the square of the voltage, cutting the voltage in half makes
+the CPU about half as fast but at 1/4 the power.
+This property can be exploited for programs with well-defined deadlines, such
+as multimedia viewers that have to decompress and display a frame every 40 msec,
+but go idle if they do it faster. Suppose that a CPU uses x joules while running full

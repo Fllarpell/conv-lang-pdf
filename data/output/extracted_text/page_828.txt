@@ -1,0 +1,43 @@
+SEC. 10.8
+ANDROID
+799
+5. Android 6.0 (2015): Permission model changed from install-time to
+runtime, reflecting a shift in focus from security to privacy and the
+increasing complexity of mobile applications with a growing number
+of secondary features. Introduced the original ‘‘doze mode’’ to take a
+stronger hand in what apps can do in the background. Security is
+about protected the device and the user from harm caused by 
+outsiders whereas privacy is focused on protecting the user’s information
+from snooping. They are quite different and need different 
+approaches.
+6. Android 7.0 (2016): Extended ‘‘doze mode’’ to cover most situations
+when the screen is off. On all battery-powered devices, managed
+energy usage to avoid draining the battery too fast is crucial to the
+user experience, so in Android 7.0 there was more attention to it.
+7. Android 8.0 (2017): A new abstraction, called Treble, was introduced
+between the Android system and lower-level hardware touched by the
+kernel and drivers. Similar to the HAL (Hardware Abstraction Layer)
+in the Windows kernel, Treble provides a stable interface between the
+bulk of Android and hardware-specific kernel and drivers. It is 
+structured like a microkernel with Treble drivers running in separate 
+userspace processes and Binder IPC (covered later) used to communicate
+with them. It also placed strong limits on how applications could run
+in the background, as well as differentiation between background vs.
+foreground for location access.
+8. Android 9 (2018): Limited the ability of applications to launch into
+their foreground interface while running in the background. 
+Introduced ‘‘adaptive battery,’’ where a machine-learning system helps
+guide the system in deciding the importance of background work 
+across applications.
+9. Android 10 (2019): Provided user control over an app’s ability to
+access location information while in the background. Introduced
+‘‘scoped storage’’ to better control data access across applications that
+are putting data on external storage (such as SD cards).
+10. Android 11 (2020): Allowed the user to select ‘‘only this once’’ for
+permissions that provide access to continuous personal data: location,
+camera, and microphone.
+11. Android 12 (2021): Gav e the user control over coarse vs. fine 
+location access. Introduced a ‘‘permissions hub’’ allowing users to see
+how applications have been accessing their personal data. Limited
+other cases (using foreground services) where applications could go
+into a foreground state from the background.

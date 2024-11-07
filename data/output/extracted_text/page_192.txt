@@ -1,0 +1,44 @@
+SEC. 2.5
+SCHEDULING
+163
+bad if some of the requests near the end of the queue required only a few 
+milliseconds of CPU time. With a short quantum, they would have gotten better service.
+Another factor is that if the quantum is set longer than the mean CPU burst,
+preemption will not happen very often. Instead, most processes will perform a
+blocking operation before the quantum runs out, causing a process switch. 
+Eliminating preemption improves performance because process switches then happen
+only when they are logically necessary, that is, when a process blocks and cannot
+continue.
+The conclusion can be formulated as follows: setting the quantum too short
+causes too many process switches and lowers the CPU efficiency, but setting it too
+long may cause poor response to short interactive requests. A quantum around
+20–50 msec is often a reasonable compromise.
+Priority Scheduling
+Round-robin scheduling makes the implicit assumption that all processes are
+equally important. Frequently, the people who own and operate multiuser 
+computers have quite different ideas on that subject. At a university, for example, the
+pecking order may be the president first, the faculty deans next, then professors,
+secretaries, janitors, and finally students. The need to take external factors into 
+account leads to priority scheduling. The basic idea is straightforward: each 
+process is assigned a priority, and the runnable process with the highest priority is
+allowed to run.
+Even on a PC with a single owner, there may be multiple processes, some of
+them more important than others. For example, a daemon process sending 
+electronic mail in the background should be assigned a lower priority than a process
+displaying a video film on the screen in real time.
+To prevent high-priority processes from running indefinitely, the scheduler
+may decrease the priority of the currently running process at each clock tick (i.e.,
+at each clock interrupt). If this action causes its priority to drop below that of the
+next highest process, a process switch occurs. Alternatively, each process may be
+assigned a maximum time quantum that it is allowed to run. When this quantum is
+used up, the next-highest-priority process is given a chance to run. After a process
+has been punished long enough, its priority needs to be raised by some algorithm,
+to let it run again. Otherwise all processes will eventually end up at 0.
+Priorities can be assigned to processes statically or dynamically. On a military
+computer, processes started by generals might begin at priority 100, processes
+started by colonels at 90, majors at 80, captains at 70, lieutenants at 60, and so on
+down the totem pole. Alternatively, at a commercial data center, high-priority jobs
+might cost $100 an hour, medium priority $75 an hour, and low priority $50 an
+hour. The UNIX system has a command, nice, which allows a user to voluntarily
+reduce the priority of his process, in order to be nice to the other users. Not 
+surprisingly, nobody ever uses it.

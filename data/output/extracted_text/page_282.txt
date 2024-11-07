@@ -1,0 +1,44 @@
+CHAP. 3  
+PROBLEMS
+253
+Jump if equal to 5152
+22. A computer whose processes have 1024 pages in their address spaces keeps its page
+tables in memory. The overhead required for reading a word from the page table is 5
+nsec. To reduce this overhead, the computer has a TLB, which holds 32 (virtual page,
+physical page frame) pairs, and can do a lookup in 1 nsec. What hit rate is needed to
+reduce the mean overhead to 2 nsec?
+23. How can the associative memory device needed for a TLB be implemented in 
+hardware, and what are the implications of such a design for expandability?
+24. A machine has 48-bit virtual addresses and 32-bit physical addresses. Pages are 8 KB.
+How many entries are needed for a single-level linear page table?
+25. A computer with an 8-KB page, a 256-KB main memory, and a 64-GB virtual address
+space uses an inverted page table to implement its virtual memory. How big should the
+hash table be to ensure a mean hash chain length of less than 1? Assume that the 
+hashtable size is a power of two.
+26. A student in a compiler design course proposes to the professor a project of writing a
+compiler that will produce a list of page references that can be used to implement the
+optimal page replacement algorithm. Is this possible? Why or why not? Is there 
+anything that could be done to improve paging efficiency at run time?
+27. Suppose that the virtual page reference stream contains repetitions of long sequences
+of page references followed occasionally by a random page reference. For example, the
+sequence: 0, 1, ... , 511, 431, 0, 1, ... , 511, 332, 0, 1, ... consists of repetitions of the
+sequence 0, 1, ... , 511 followed by a random reference to pages 431 and 332.
+(a) Why will the standard replacement algorithms (LRU, FIFO, clock) not be effective
+in handling this workload for a page allocation that is less than the sequence
+length?
+(b) If this program were allocated 500 page frames, describe a page replacement
+approach that would perform much better than the LRU, FIFO, or clock algorithms.
+28. If FIFO page replacement is used with four page frames and eight pages, how many
+page faults will occur with the reference string 0172327103 if the four frames are 
+initially empty? Now repeat this problem for LRU.
+29. Consider the page sequence of Fig. 3-15(b). Suppose that the R bits for the pages B
+through A are 11011011, respectively. Which page will second chance remove?
+30. A small computer on a smart card has four page frames. At the first clock tick, the R
+bits are 0111 (page 0 is 0, the rest are 1). At subsequent clock ticks, the values are
+1011, 1010, 1101, 0010, 1010, 1100, and 0001. If the aging algorithm is used with an
+8-bit counter, giv e the values of the four counters after the last tick.
+31. Give a simple example of a page reference sequence where the first page selected for
+replacement will be different for the clock and LRU page replacement algorithms.
+Assume that a process is allocated 3=three frames, and the reference string contains
+page numbers from the set 0, 1, 2, 3.
+32. In the WSClock algorithm of Fig. 3-20(c), the hand points to a page with R = 0. If

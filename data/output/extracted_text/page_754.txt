@@ -1,0 +1,46 @@
+SEC. 10.3
+PROCESSES IN LINUX
+725
+code? The secret is that the fork system call returns a 0 to the child and a nonzero
+value, the child’s PID (Process Identifier), to the parent. Both processes normally
+check the return value and act accordingly, as shown in Fig. 10-4.
+pid = for k( ); 
+/* if the for k succeeds, pid > 0 in the parent */
+if (pid < 0) {
+handle error( );
+/* fork failed (e.g., memory or some table is full) */
+} else if (pid > 0) {
+/* parent code goes here. /*/
+} else {
+/* child code goes here. /*/
+}
+Figure 10-4. Process creation in Linux.
+Processes are named by their PIDs. When a process is created, the parent is
+given the child’s PID, as mentioned above. If the child wants to know its own PID,
+there is a system call, getpid, that provides it. PIDs are used in a variety of ways.
+For example, when a child terminates, the parent is given the PID of the child that
+just finished. This can be important because a parent may have many children.
+Since children may also have children, an original process can build up an entire
+tree of children, grandchildren, and further descendants.
+Processes in Linux can communicate with each other using a form of message
+passing. It is possible to create a channel between two processes into which one
+process can write a stream of bytes for the other to read. These channels are called
+pipes. Synchronization is possible because when a process tries to read from an
+empty pipe it is blocked until data are available.
+Shell pipelines are implemented with pipes. When the shell sees a line like
+sor t <f | head
+it creates two processes, sort and head, and sets up a pipe between them in such
+a way that sort’s standard output is connected to head’s standard input. In this
+way, all the data that sort writes go directly to head, instead of going to a file. If
+the pipe fills, the system stops running sort until head has removed some data from
+it.
+Processes can also communicate in another way besides pipes: software 
+interrupts. A process can send what is called a signal to another process. Processes can
+tell the system what they want to happen when an incoming signal arrives. The
+choices available are to ignore it, to catch it, or to let the signal kill the process.
+Terminating the process is the default for most signals. If a process elects to catch
+signals sent to it, it must specify a signal-handling procedure. When a signal
+arrives, control will abruptly switch to the handler. When the handler is finished
+and returns, control goes back to where it came from, analogous to hardware I/O
+interrupts. A process can send signals only to members of its process group,
+which consists of its parent (and further ancestors), siblings, and children (and

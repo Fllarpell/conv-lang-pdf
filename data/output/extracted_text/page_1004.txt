@@ -1,0 +1,46 @@
+SEC. 11.5
+MEMORY MANAGEMENT
+975
+and the PTE associated with the page is updated with pagefile index and offset
+exactly as it is done for a regular pagefile write. When pages in the virtual pagefile
+are modified or freed and corresponding pagefile space marked free, a system
+thread called the store eviction thread is notified to evict the corresponding keys
+from store manager via SmPageEvict. One difference between regular pagefiles
+and the store manager virtual pagefile is that whereas clean pages faulted into
+working sets are not removed from regular pagefiles, they are evicted from the
+store manager to avoid keeping both the uncompressed and the compressed copy of
+the page in memory.
+As indicated in Fig. 11-38, the store manager can manage multiple stores. A
+system store is created at boot time as the default store for modified pages. 
+Additional, per-process stores can also be created for individual processes. In practice,
+this is done for UWP applications. The store manager picks the appropriate store
+for an incoming modified page based on the owning process.
+When the store manager initializes at boot time, it creates the 
+MemCompression system process which provides the user-mode address space for all stores to
+allocate their backing memory into which incoming pages are compressed. This
+backing store is regular private pageable memory, allocated with a variant of Vir 
+tualAlloc. As such, the memory manager may choose to trim these pages from the
+MemCompression process working set or a store may decide to explicitly remove
+them. Once removed, these pages go to the modified list as usual, but since they
+are coming from the MemCompression process, and thus, are already compressed,
+the memory manager writes them directly to the pagefile. That’s why, when 
+memory compression is enabled, all writes to the pagefile contain compressed data from
+the MemCompression process.
+We mentioned above how UWP applications get their own stores rather than
+using the system store. This is done to optimize the working set in-swap operation
+we described earlier. When a per-process store is present, the out-swap proceeds
+normally at UWP application suspend time except that no pagefile reservation is
+made. This is because the pages will go to the store manager virtual pagefile and
+sequentiality is not important since the allocated offsets are only used to construct
+keys to associate with pages. Later, when the UWP process working set is emptied
+due to memory pressure, all pages are compressed into the per-process store.
+At this point, the compressed pages of the per-process store are out-swapped,
+reserving sequential space in the swapfile. If memory pressure continues, these
+compressed pages may be explicitly emptied or trimmed from the 
+MemCompression process working set, get written out to the pagefile and remain cached on the
+standby list or leave memory. When the UWP application is about to be resumed,
+during working set in-swap, the system carefully choreographs disk read and
+decompression operations to maximize parallelism and efficiency. First, a store 
+inswap is kicked off to bring the compressed pages belonging to the store into the
+MemCompression process working set from the swapfile using large, sequential
+I/Os. Of course, if the compressed pages never left memory (which is very likely),

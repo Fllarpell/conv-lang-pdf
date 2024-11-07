@@ -1,0 +1,83 @@
+62
+INTRODUCTION 
+CHAP. 1
+UNIX 
+Win32
+Description
+fork 
+CreateProcess 
+Create a new process
+waitpid 
+WaitForSingleObject Can wait for a process to exit
+execve
+(none) 
+CreateProcess = for k + execve
+exit 
+ExitProcess
+Terminate execution
+open 
+CreateFile
+Create a file or open an existing file
+close 
+CloseHandle
+Close a file
+read 
+ReadFile
+Read data from a file
+wr ite
+Wr iteFile
+Wr ite data to a file
+lseek 
+SetFilePointer 
+Move the file pointer
+stat 
+GetFileAttributesEx 
+Get various file attributes
+mkdir 
+CreateDirectory
+Create a new director y
+rmdir 
+RemoveDirector y
+Remove an empty directory
+link 
+(none)
+Win32 does not support links
+unlink 
+DeleteFile
+Destroy an existing file
+mount 
+(none)
+Win32 does not support mount
+umount 
+(none)
+Win32 does not support mount, so no umount
+chdir 
+SetCurrentDirectory
+Change the current wor king director y
+chmod 
+(none)
+Win32 does not support secur ity (although NT does)
+kill 
+(none)
+Win32 does not support signals
+time 
+GetLocalTime
+Get the current time
+Figure 1-23. The Win32 API calls that roughly correspond to the UNIX calls of
+Fig. 1-18. It is worth emphasizing that Windows has a very large number of 
+other system calls, most of which do not correspond to anything in UNIX.
+process and a child process. After a process is created, the creator and createe are
+equals. WaitForSingleObject is used to wait for an event. Many possible events can
+be waited for. If the parameter specifies a process, then the caller waits for the
+specified process to exit, which is done using ExitProcess.
+The next six calls operate on files and are functionally similar to their UNIX
+counterparts although they differ in the parameters and details. Still, files can be
+opened, closed, read, and written pretty much as in UNIX. The SetFilePointer and
+GetFileAttr ibutesEx calls set the file position and get some of the file attributes.
+Windows has directories and they are created with CreateDirector y and
+RemoveDirector y API calls, respectively. There is also a notion of a current 
+directory, set by SetCurrentDirector y. The current time of day is acquired using 
+GetLocalTime.
+The Win32 interface does not have links to files, mounted file systems, 
+security, or signals, so the calls corresponding to the UNIX ones do not exist. Of course,
+Win32 has a huge number of other calls that UNIX does not have, especially for

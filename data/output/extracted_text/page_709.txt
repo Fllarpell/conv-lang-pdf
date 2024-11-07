@@ -1,0 +1,55 @@
+680
+SECURITY 
+CHAP. 9
+There have been recorded cases in which a virus planted a logic bomb on the
+computers it infected. Generally, these were programmed to go off all at once at
+some date and time in the future. However, since the programmer has no idea in
+advance of which computers will be hit, logic bombs planted by viruses cannot be
+used for job protection or blackmail. Often they are set to go off on a date that has
+some political significance. Sometimes these are called time bombs.
+9.7.2 Back Doors
+Another security hole caused by an insider is the back door. This problem is
+created by code inserted into the system by a system programmer to bypass some
+normal check. For example, a programmer could add code to the login program to
+allow anyone to log in using the login name ‘‘zzzzz’’ no matter what was in the
+password file. The normal code in the login program might look something like
+Fig. 9-31(a). The back door would be the change to Fig. 9-31(b).
+while (TRUE) {
+while (TRUE) {
+pr intf("login: "); 
+printf("login: ");
+get str ing(name);
+get str ing(name);
+disable echoing( );
+disable echoing( );
+pr intf("password: ");
+pr intf("password: ");
+get str ing(password); 
+get str ing(password);
+enable echoing( );
+enable echoing( );
+v = check validity(name, password); 
+v = check validity(name, password);
+if (v) break;
+if (v || strcmp(name, "zzzzz") == 0) break;
+}
+}
+execute shell(name); 
+execute shell(name);
+(a) 
+(b)
+Figure 9-31. (a) Normal code. (b) Code with a back door inserted.
+What the call to strcmp does is check if the login name is ‘‘zzzzz’’. If so, the
+login succeeds, no matter what password is typed. If this back-door code were
+inserted by a programmer working for a computer manufacturer and then shipped
+with its computers, the programmer could log into any computer made by his 
+company, no matter who owned it or what was in the password file. The same holds for
+a programmer working for the OS vendor. The back door simply bypasses the
+whole authentication process.
+One way for companies to prevent backdoors is to have code reviews as 
+standard practice. With this technique, once a programmer has finished writing and
+testing a module, the module is checked into a code database. Periodically, all the
+programmers in a team get together and each one gets up in front of the group to
+explain what his code does, line by line. Not only does this greatly increase the
+chance that someone will catch a back door, but it raises the stakes for the 
+programmer, since being caught red-handed is probably not a plus for his career. If

@@ -1,0 +1,49 @@
+620
+SECURITY 
+CHAP. 9
+Domain 1
+Domain 2
+Domain 3
+File1[R]
+File2[RW]
+File1[RW]
+File4[RWX]
+File5[RW]
+Printer1[W]
+File6[RWX]
+Plotter [W]
+1
+Figure 9-3. Three protection domains.
+At every instant of time, each process (or in general, security domain) runs in
+some protection domain. In other words, there is some collection of objects it can
+access, and for each object it has some set of rights. Processes can also switch from
+protection domain to protection domain during execution. The rules for protection
+domain switching are highly system dependent.
+To make the idea of a protection domain more concrete, let us look at UNIX
+(including Linux, FreeBSD, and friends). In UNIX, the domain of a process is
+defined by its UID and GID. When users log in, their shells get the UID and GID
+contained in their entry in the password file and these are inherited by all its 
+children. Given any (UID, GID) combination, it is possible to make a  complete list of
+all objects (files, including I/O devices represented by special files, etc.) that can be
+accessed, and whether they can be accessed for reading, writing, or executing. Two
+processes with the same (UID, GID) combination will have access to exactly the
+same set of objects. Processes with different (UID, GID) values will have access to
+a different set of files, although there may be considerable overlap.
+Furthermore, each process in UNIX has two halves: the user part and the 
+kernel part. When the process does a system call, it switches from the user part to the
+kernel part. The kernel part has access to a different set of objects from the user
+part. For example, the kernel can access all the pages in physical memory, the
+entire disk, and all the other protected resources. Thus, a system call causes a 
+protection domain switch.
+When a process does an exec on a file with the SETUID or SETGID bit on, it
+acquires a new effective UID or GID. With a different (UID, GID) combination, it
+has a different set of files and operations available. Running a program with
+SETUID or SETGID is also a protection domain switch, since the rights available
+change.
+This is another point where the concepts of security domain and protection
+domain differ. In our use of the term security domain, we simply refer to the
+SETUID process and that security domain does not change. In contrast, the 
+protection domain changes when a process changes the effective UID.
+In this section, we are interested in access rights. In the remainder of this 
+section, whenever we say domain, we mean protection domain. If we do want to talk
+about security domains, we will say so explicitly.

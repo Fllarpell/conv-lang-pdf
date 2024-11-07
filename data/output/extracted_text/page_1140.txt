@@ -1,0 +1,43 @@
+SEC. 13.2
+ALPHABETICAL BIBLIOGRAPHY
+1111
+MEIJER, C. and VAN GASTEL, B: ‘‘Self-Encrypting Deception: Weaknesses in the 
+Encryption of Solid State Drives,’’ Proc. IEEE Symp. on Security and Privacy, IEEE, 2019.
+MELLOR-CRUMMEY, J.M., and SCOTT, M.L.: ‘‘ Algorithms for Scalable Synchronization
+on Shared-Memory Multiprocessors,’’ ACM Trans. Computer Syst., Vol. 9, pp. 21–65,
+Feb. 1991.
+MICROSOFT.: Protect your Windows devices against speculative execution side-channel
+attacks, Microsoft Support, 2018.
+MILLER, S., KAIYUAN ZHANG, K., CHEN, M., RYAN JENNINGS, R., CHEN, A., ZHUO,
+D., and ANDERSON, T.: ‘‘High Velocity Kernel File Systems with Bento,’’ Proc. 19th
+USENIX Conf. on File and Storage Tech., USENIX, 2021.
+MOODY, G.: Rebel Code, Cambridge. MA: Perseus Publishing, 2001.
+MORRIS, R., and THOMPSON, K.: ‘‘Password Security: A Case History,’’ Commun. ACM,
+Vol. 22, pp. 594–597, Nov. 1979.
+MOSELEY, R.: Advanced Cybersecurity Tech., London: CRC Press, 2021.
+MULLENDER, S.J., and TANENBAUM, A.S.: ‘‘Immediate Files,’’ Software Practice and
+Experience, Vol. 14, pp. 365–368, 1984.
+NEAL, I., GEFEI ZUO, G., SHIPLE, E., AHMED KHAN, T.A., KWON, Y., PETER, S., and
+KASIKCI, B.: ‘‘Rethinking File Mapping for Persistent Memory,’’ Proc. 19th USENIX
+Conf. on File and Storage Tech., USENIX, pp. 97–111, 2021.
+NEAL, I., REEVES, D., STOLER, B., QUINN, A., KWON, Y., PETER, S., and KASIKCI, B.:
+‘‘ AGAMOTTO: How Persistent is your Persistent Memory Application?’’ Proc. 14th
+USENIX Symp. on Operating Syst. Design and Implementation, USENIX, 2020.
+NELSON, M., LIM, B.-H., and HUTCHINS, G.: ‘‘Fast Transparent Migration for Virtual
+Machines,’’ Proc. USENIX Ann. Tech. Conf., USENIX, pp. 391–394, 2005.
+NEMETH, E., SNYDER, G., HEIN, T.R., and WHALEY, B.: UNIX and Linux System 
+Administration Handbook, 4th ed., Hoboken, NJ: Pearson, 2013.
+NEWTON, G.: ‘‘Deadlock Prevention, Detection, and Resolution: An Annotated 
+Bibliography,’’ ACM SIGOPS Operating Syst. Rev., Vol. 13, pp. 33–44, April 1979.
+NGOIE, I: Windows Registry for Syst. Administration, Amazon, 2021.
+NIST (National Institute of Standards and Technology): FIPS Pub. 180–1, 1995.
+NIST (National Institute of Standards and Technology): ‘‘The NIST Definition of Cloud
+Computing,’’ Special Publication 800–145, Recommendations of the National Institute
+of Standards and Technology, 2011.
+NOWA TZKI, T., GANGADHAR, V., and SANKARALINGAM, K.: ‘‘Heterogeneous Von 
+Neumann/Dataflow Microprocessors,’’ Commun. ACM, Vol. 62, pp. 83–91, June 2019.
+OKI, B., PFLUEGL, M., SIEGEL, A., and SKEEN, D.: ‘‘The Information Bus—An 
+Architecture for Extensible Distributed Systems,’’ Proc. 14th Symp. on Operating Syst. Prin.,
+ACM, pp. 58–68, 1993.
+OLIVERIO, M., RAZAVI, K., BOS, H., and GIUFFRIDA, C.: ‘‘Secure Page Fusion with
+VUsion,’’ Proc. 26th Symp. on Operating Syst. Prin., ACM, pp. 531–545, 2017.

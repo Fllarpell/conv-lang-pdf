@@ -1,0 +1,43 @@
+964
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+1. The page referenced is not committed.
+2. Access to a page has been attempted in violation of the permissions.
+3. A shared copy-on-write page was about to be modified.
+4. The stack needs to grow.
+5. The page referenced is committed but not currently mapped in.
+The first and second cases are due to programming errors. If a program 
+attempts to use an address which is not supposed to have a valid mapping, or 
+attempts an invalid operation (like attempting to write a read-only page), this is 
+called an access violation and causes the memory manager to raise an exception,
+which, if not handled, results in termination of the process. Access violations are
+often the result of bad pointers, including accessing memory that was freed and
+unmapped from the process.
+The third case has the same symptoms as the second one (an attempt to write
+to a read-only page), but the treatment is different. Because the page has been
+marked as copy-on-write, the memory manager does not report an access violation,
+but instead makes a private copy of the page for the current process and then
+returns control to the thread that attempted to write the page. The thread will retry
+the write, which will now complete without causing a fault.
+The fourth case occurs when a thread pushes a value onto its stack and crosses
+onto a page which has not been allocated yet. The memory manager is 
+programmed to recognize this as a special case. As long as there is still room in the
+virtual pages reserved for the stack, the memory manager will supply a new 
+physical page, zero it, and map it into the process. When the thread resumes running, it
+will retry the access and succeed this time around.
+Finally, the fifth case is a normal page fault. However, it has several subcases.
+If the page is mapped by a file, the memory manager must search its data 
+structures, such as the prototype page table associated with the section object to be sure
+that there is not already a copy in memory. If there is, say in another process or on
+the standby or modified page lists, it will just share it—perhaps marking it as 
+copyon-write if changes are not supposed to be shared. If there is not already a copy, the
+memory manager will allocate a free physical page and arrange for the file page to
+be copied in from disk, unless another page is already transitioning in from disk, in
+which case it is only necessary to wait for the transition to complete.
+When the memory manager can satisfy a page fault by finding the needed page
+in memory rather than reading it in from disk, the fault is classified as a soft fault.
+If the copy from disk is needed, it is a hard fault. Soft faults are much cheaper
+and have little impact on application performance compared to hard faults. Soft
+faults can occur because a shared page has already been mapped into another 
+process, or the needed page was trimmed from the process’ working set but is being
+requested again before it has had a chance to be reused. A common sub-category

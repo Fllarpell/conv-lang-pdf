@@ -1,0 +1,39 @@
+358
+INPUT/OUTPUT 
+CHAP. 5
+was previously blocked will now be able to run. This model works best if drivers
+are structured as processes (either in kernel mode or user mode), with their own
+states, stacks, and program counters.
+Of course, reality is not quite so simple. Processing an interrupt is not just a
+matter of taking the interrupt, doing an up on some semaphore, and then executing
+an IRET instruction to return from the interrupt to the previous process. There is a
+great deal more work involved for the operating system. We will now giv e an 
+outline of this work as a series of steps that must be performed in software after the
+hardware interrupt discussed earlier has completed. It should be noted that the
+details are highly system dependent, so some of the steps listed below may not be
+needed on a particular machine, and steps not listed may be required. Also, the
+steps that do occur may be in a different order on some machines.
+1. Save any registers (including the PSW) that have not already been
+saved by the interrupt hardware.
+2. Set up a context for the interrupt-service procedure. Doing this may
+involve setting up the TLB, MMU, and a page table.
+3. Set up a stack for the interrupt service-procedure.
+4. Acknowledge the interrupt controller. If there is no centralized 
+interrupt controller, reenable interrupts.
+5. Copy the registers from where they were saved (possibly some stack)
+to the process table.
+6. Run the interrupt-service procedure. Typically, it will extract 
+information from the interrupting device controller’s registers.
+7. Choose which process to run next. If the interrupt has caused some
+high-priority process that was blocked to become ready, it may be
+chosen to run now.
+8. Set up the MMU context for the process to run next. Some TLB 
+setup may also be needed.
+9. Load the new process’ registers, including its PSW.
+10. Start running the new process.
+As can be seen, interrupt processing is far from trivial. It also takes a considerable
+number of CPU instructions, especially on machines in which virtual memory is
+present and page tables have to be set up or the state of the MMU stored (e.g., the
+R and M bits). On some machines, the TLB and CPU cache may also have to be
+managed when switching between user and kernel modes, which takes additional
+machine cycles if many entries need to be purged.

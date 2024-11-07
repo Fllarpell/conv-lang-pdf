@@ -1,0 +1,42 @@
+SEC. 6.5
+DEADLOCK AVOIDANCE
+461
+The banker’s algorithm was first published by Dijkstra in 1965. Since that
+time, nearly every book on operating systems has described it in detail. 
+Innumerable papers have been written about various aspects of it. Unfortunately, few
+authors have had the audacity to point out that although in theory the algorithm is
+wonderful, in practice it is essentially useless because processes rarely know in
+advance what their maximum resource needs will be. In addition, the number of
+processes is not fixed, but dynamically varying as new users log in and out. 
+Furthermore, resources that were thought to be available can suddenly vanish (tape
+drives can break). Thus, in practice, few, if any, existing systems use the banker’s
+algorithm for avoiding deadlocks. Some systems, however, use heuristics similar to
+those of the banker’s algorithm to prevent deadlock. For instance, networks may
+throttle traffic when buffer utilization reaches higher than, say, 70%—estimating
+that the remaining 30% will be sufficient for current users to complete their service
+and return their resources.
+6.6 DEADLOCK PREVENTION
+Having seen that deadlock avoidance is essentially impossible, because it
+requires information about future requests, which is not known, how do real 
+systems avoid deadlock? The answer is to go back to the four conditions stated by
+Coffman et al. (1971) to see if they can provide a clue. If we can ensure that at
+least one of these conditions is never satisfied, then deadlocks will be structurally
+impossible (Havender, 1968).
+6.6.1 Attacking the Mutual-Exclusion Condition
+First let us attack the mutual exclusion condition. If no resource were ever
+assigned exclusively to a single process, we would never hav e deadlocks. For data,
+the simplest method is to make data read only, so that processes can use the data
+concurrently. Howev er, it is equally clear that allowing two processes to write on
+the printer at the same time will lead to chaos. By spooling printer output, several
+processes can generate output at the same time. In this model, the only process
+that actually requests the physical printer is the printer daemon. Since the daemon
+never requests any other resources, we can eliminate deadlock for the printer.
+If the daemon is programmed to begin printing even before all the output is
+spooled, the printer might lie idle if an output process decides to wait several hours
+after the first burst of output. For this reason, daemons are normally programmed
+to print only after the complete output file is available. However, this decision
+itself could lead to deadlock. What would happen if two processes each filled up
+one half of the available spooling space with output and neither was finished 
+producing its full output? In this case, we would have two processes that had each 
+finished part, but not all, of their output, and could not continue. Neither process will
+ev er finish, so we would have a deadlock on the disk.

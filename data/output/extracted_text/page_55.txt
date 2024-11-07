@@ -1,0 +1,42 @@
+26
+INTRODUCTION 
+CHAP. 1
+Cache hits normally take only a few clock cycles. Cache misses have to go to
+memory, with a substantial time penalty of tens to hundreds of cycles. Cache 
+memory is limited in size due to its high cost. Some machines have two or even three
+levels of cache, each one slower and bigger than the one before it.
+Caching plays a major role in many areas of computer science, not just caching
+lines of RAM. Whenever a resource can be divided into pieces, some of which are
+used much more heavily than others, caching is often used to improve 
+performance. Operating systems use it all the time. For example, most operating 
+systems keep (pieces of) heavily used files in main memory to avoid having to fetch
+them from stable storage repeatedly. Similarly, the results of converting long path
+names like
+/home/ast/projects/minix3/src/kernel/clock.c
+into a ‘‘disk address’’ for the SSD or disk where the file is located can be cached to
+avoid repeated lookups. Finally, when the address of a Web page (URL) is 
+converted to a network address (IP address), the result can be cached for future use.
+Many other uses exist.
+In any caching system, several questions come up fairly soon, including:
+1. When to put a new item into the cache.
+2. Which cache line to put the new item in.
+3. Which item to remove from the cache when a slot is needed.
+4. Where to put a newly evicted item in the larger memory.
+Not every question is relevant to every caching situation. For caching lines of main
+memory in the CPU cache, a new item will generally be entered on every cache
+miss. The cache line to use is generally computed by using some of the high-order
+bits of the memory address referenced. For example, with 4096 cache lines of 64
+bytes and 32 bit addresses, bits 6 through 17 might be used to specify the cache
+line, with bits 0 to 5 the byte within the cache line. In this case, the item to remove
+is the same one as the new data goes into, but in other systems it might not be.
+Finally, when a cache line is rewritten to main memory (if it has been modified
+since it was cached), the place in memory to rewrite it to is uniquely determined by
+the address in question.
+Caches are such a good idea that modern CPUs have two or more of them. The
+first level or L1 cache is always inside the CPU and usually feeds decoded 
+instructions into the CPU’s execution engine. Most chips have a second L1 cache for very
+heavily used data words. The L1 caches are typically 32 KB each. In addition,
+there is often a second cache, called the L2 cache, that holds several megabytes of
+recently used memory words. The difference between the L1 and L2 caches lies in
+the timing. Access to the L1 cache is done without any delay, whereas access to
+the L2 cache involves a delay of several clock cycles.

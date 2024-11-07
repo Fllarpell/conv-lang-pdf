@@ -1,0 +1,46 @@
+688
+SECURITY 
+CHAP. 9
+the hypervisor or operating system is hacked, the sysadmin is bribed, or the cloud
+provider proves untrustworthy.
+Similarly, if an org anization provides an smartphone app that is important to
+the customer and a high-value target for attackers, it may not trust the operating
+system on a user’s smartphone. For instance, banking apps do not want an iPhone,
+ev en if completely compromised, to be able to steal from their customers.
+Neither SMEP not SMAP will help here. After all, the operating system itself
+is not trusted and may turn off any restriction as it sees fit. We need something that
+ev en the operating system can touch.
+For this reason, CPU vendors have dev eloped CPU extensions called TEE
+(Trusted Execution Environments). A TEE is a secure ‘‘enclave’’ on your CPU
+where you can perform secret computations on sensitive data and the hardware
+guarantees that not even operating systems can access them. For instance, ARM
+TrustZone is a security extension for ARM processors that allows the CPU to
+switch between two worlds: normal world and secure world. The regular operating
+systems (e.g., Linux) and all the regular applications run in normal world. If the
+operating system cannot be trusted, the applications in normal world are toast.
+However, the applications in secure world are still safe.
+Applications that care a lot about security, such as banks or companies selling
+fizzy drinks, can run a small part of their functionality in the TEE (e.g., their wallet
+or the code processing their secret formula). Some TEEs even hav e a separate,
+minimalistic, secure operating system to run these trusted (parts of) applications.
+The processor enters a secure world by means of a special instruction which 
+operates a bit like a system call: by executing the instruction, the CPU traps into the
+secure world to perform the appropriate service. While the applications in the
+secure world may access all of the memory, the TEE’s memory is physically 
+protected from all accesses by code running in normal world. After doing whatever
+needs to be done, the trusted applications transition back to normal world.
+There is a lot more to say about TEEs and Confidential Computing. Each 
+vendor has its own solution and some vendors even hav e more than one. To name an
+example, Intel initially deployed a solution called SGX (Software Guard 
+Extension) and when that turn out to be vulnerable to microarchitectural attacks, pushed
+an improved design called TDX (Trust Domain Extensions) which caters more to
+virtualization. There are significant differences between the different TEEs. For
+instance, some TEEs do not run a separate operating system while others do. These
+topics are beyond this book. We just want you to be aware of their existence and
+that they are used to implement what is now known as Confidential Computing.
+TEEs has been a mixed success, as researchers found various vulnerabilities in the
+design and implementation of both hardware and software. It appears that security
+is hard to get right even if multibillion dollar chip vendors set out to develop 
+features with the explicit goal of doing so.
+It should come as no surprise that many of the vulnerabilities in TEEs were
+related to transient execution and side channel attacks. Given how indirect these

@@ -1,0 +1,46 @@
+72
+INTRODUCTION 
+CHAP. 1
+were interpreters for the Pentium, such as Bochs, that ran on the Pentium, but with
+a performance loss of one to two orders of magnitude, they were not useful for 
+serious work.
+This situation changed as a result of several academic research projects in the
+1990s and early years of this millennium, notably Disco at Stanford (Bugnion et
+al., 1997) and Xen at Cambridge University (Barham et al., 2003). These research
+papers led to several commercial products (e.g., VMware Workstation and Xen)
+and a revival of interest in virtual machines. Besides VMware and Xen, popular
+hypervisors today include KVM (for the Linux kernel), VirtualBox (by Oracle),
+and Hyper-V (by Microsoft).
+Some of the early research projects improved the performance over interpreters
+like Bochs by translating blocks of code on the fly, storing them in an internal
+cache, and then reusing them if they were executed again. This improved the 
+performance considerably, and led to what we will call machine simulators, as
+shown in Fig. 1-29(b). However, although this technique, known as binary 
+translation, helped improve matters, the resulting systems, while good enough to 
+publish papers about in academic conferences, were still not fast enough to use in
+commercial environments where performance matters a lot.
+The next step in improving performance was to add a kernel module to do
+some of the heavy lifting, as shown in Fig. 1-29(c). In practice now, all 
+commercially available hypervisors, such as VMware Workstation, use this hybrid strategy
+(and have many other improvements as well). They are called type 2 hypervisors
+by everyone, so we will (somewhat grudgingly) go along and use this name in the
+rest of this book, even though we would prefer to called them type 1.7 hypervisors
+to reflect the fact that they are not entirely user-mode programs. In Chap. 7, we
+will describe in detail how VMware Workstation works and what the various
+pieces do.
+In practice, the real distinction between a type 1 hypervisor and a type 2 
+hypervisor is that a type 2 makes uses of a host operating system and its file system to
+create processes, store files, and so on. A type 1 hypervisor has no underlying 
+support and must perform all these functions itself.
+After a type 2 hypervisor is started, it reads the installation image file for the
+chosen guest operating system and installs the guest OS on a virtual disk, which
+is just a big file in the host operating system’s file system. Type 1 hypervisors 
+cannot do this because there is no host operating system to store files on. They must
+manage their own storage on a raw disk partition.
+When the guest operating system is booted, it does the same thing it does on
+the actual hardware, typically starting up some background processes and then a
+GUI. To the user, the guest operating system behaves the same way it does when
+running on the bare metal even though that is not the case here.
+A different approach to handling control instructions is to modify the operating
+system to remove them. This approach is not true virtualization. Instead it is
+called paravirtualization. We will discuss virtualization in Chap. 7.

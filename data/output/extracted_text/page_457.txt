@@ -1,0 +1,40 @@
+428
+INPUT/OUTPUT 
+CHAP. 5
+It can also send commands to drivers instructing them to cut their power levels
+(based on the capabilities that it learned earlier, of course). There is also some 
+traffic the other way. In particular, when a device such as a keyboard or a mouse
+detects activity after a period of idleness, this is a signal to the system to go back to
+(near) normal operation.
+5.8.3 Application Program Issues
+So far we have looked at ways the operating system can reduce energy usage
+by various kinds of devices. But there is another approach as well: tell the 
+programs to use less energy, even if this means providing a poorer user experience
+(better a poorer experience than no experience when the battery dies and the lights
+go out). Typically, this information is passed on when the battery charge is below
+some threshold. It is then up to the programs to decide between degrading 
+performance to lengthen battery life or to maintain performance and risk running out
+of energy.
+The question is: how can a program degrade its performance to save energy?
+The answer is application-specific. For instance, a video player that normally plays
+video in full color at 30 frames/sec could save energy by abandoning the color
+information and displaying the video in black and white. Another form of 
+degradation is to reduce the frame rate, which leads to flicker and gives the movie a jerky
+quality. Still another form of degradation is to reduce the number of pixels in both
+directions, either by lowering the spatial resolution or making the displayed image
+smaller. Measures of this type saved about 30% of the energy.
+Another solution is to alternate between local and remote processing. For
+instance, we may save power by pushing a computationally expensive operation to
+the cloud rather than executing it on, say, a smartphone. Whether this is a good
+idea is a tradeoff between the cost of executing things locally versus the energy
+cost of operating the radio. Of course, other considerations such as performance
+(will the delay go up?), security (do we trust the cloud with our computation?), and
+reliability (what if we do not have connectivity?) also play a role.
+There are many other things that applications could do. Of course, they 
+generally mean that the application must be designed with power management in mind.
+Doing do is especially interesting for battery-powered devices, where accepting
+some quality degradation means that the user can run longer on a given battery.
+5.9 RESEARCH ON INPUT/OUTPUT
+Improvement of input/output is an active research domain. Many projects
+focus solely on efficiency, but there is also much research on other important
+objectives, such as security or power consumption.

@@ -1,0 +1,42 @@
+984
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+names, so a file first must be opened before being renamed or deleted. They can
+also be used to rename the alternative data streams on NTFS (see Sec. 11.8).
+Separate APIs, NtLockFile and NtUnlockFile, exist to set and remove 
+byterange locks on files. NtCreateFile allows access to an entire file to be restricted by
+using a sharing mode. An alternative is these lock APIs, which apply mandatory
+access restrictions to a range of bytes in the file. Reads and writes must supply a
+key matching the key provided to NtLockFile in order to operate on the locked
+ranges.
+Similar facilities exist in UNIX, but there it is discretionary whether 
+applications heed the range locks. NtFsControlFile is much like the preceding Query and
+Set operations, but is a more generic operation aimed at handling file-specific 
+operations that do not fit within the other APIs. For example, some operations are 
+specific to a particular file system.
+Finally, there are miscellaneous calls such as NtFlushBuffersFile. Like the
+UNIX sync call, it forces file-system data to be written back to disk. 
+NtCancelIoFile cancels outstanding I/O requests for a particular file, and 
+NtDeviceIoControlFile implements ioctl operations for devices. The list of operations is actually
+much longer. There are system calls for deleting files by name, and for querying
+the attributes of a specific file—but these are just wrappers around the other I/O
+manager operations we have listed and did not really need to be implemented as
+separate system calls. There are also system calls for dealing with I/O completion
+ports, a queuing facility in Windows that helps multithreaded servers make
+efficient use of asynchronous I/O operations by readying threads by demand and
+reducing the number of context switches required to service I/O on dedicated
+threads.
+11.7.3 Implementation of I/O
+The Windows I/O system consists of the plug-and-play services, the device
+power manager, the I/O manager, and the device-driver model. Plug-and-play
+detects changes in hardware configuration and builds or tears down the device
+stacks for each device, as well as causing the loading and unloading of device 
+drivers. The device power manager adjusts the power state of the I/O devices to reduce
+system power consumption when devices are not in use. The I/O manager provides
+support for manipulating I/O kernel objects, and IRP-based operations like
+IoCallDr ivers and IoCompleteRequest. But most of the work required to support
+Windows I/O is implemented by the device drivers themselves.
+Device Drivers
+To make sure that device drivers work well with the rest of Windows, 
+Microsoft has defined the WDM (Windows Driver Model) that device drivers are 
+expected to conform with. The WDK (Windows Driver Kit) contains examples and

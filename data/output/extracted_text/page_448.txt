@@ -1,0 +1,43 @@
+SEC. 5.6
+USER INTERFACES: KEYBOARD, MOUSE, & MONITOR
+419
+Manipulating a touch screen with just a single finger is still fairly WIMPy—
+you just replace the mouse pointer with your stylus or index finger. Multitouch is a
+bit more complicated. Touching the screen with fiv e fingers is like pushing fiv e
+mouse pointers across the screen at the same time and clearly changes things for
+the window manager. Multitouch screens have become ubiquitous and increasingly
+sensitive and accurate. Nevertheless, it is unclear whether the Five Point Palm
+Exploding Heart Technique has any effect on the CPU.
+5.7 THIN CLIENTS
+Over the years, the main computing paradigm has oscillated between 
+centralized and decentralized computing. The first computers, such as the ENIAC,
+were, in fact, personal computers, albeit large ones, because only one person could
+use one at once. Then came timesharing systems, in which many remote users at
+simple terminals shared a big central computer. Next came the PC era, in which the
+users had their own personal computers again.
+While the decentralized PC model has advantages, it also has some severe
+disadvantages. Probably the biggest problem is that each PC has a large SSD or
+hard disk and complex software that must be maintained. For example, when a new
+release of the operating system comes out, a great deal of work has to be done to
+perform the upgrade on each machine separately. At most corporations, the labor
+costs of doing this kind of software maintenance dwarf the actual hardware and
+software costs. For home users, the labor is technically free, but few people are
+capable of doing it correctly and fewer still enjoy doing it. With a centralized 
+system, only one or a few machines have to be updated and those machines have a
+staff of experts to do the work.
+A related issue is that users should make regular backups of their terabyte file
+systems, but few of them do. When disaster strikes, a great deal of moaning and
+wringing of hands tends to follow. With a centralized system, backups can be made
+ev ery night, to disk or even tape (by automated tape robots).
+Another advantage is that resource sharing is easier with centralized systems.
+A system with 256 remote users, each with 16 GB of RAM (or 4 TB in total), will
+have most of that RAM idle most of the time. With a centralized system with just 1
+TB of RAM, it never happens that some user temporarily needs a lot of RAM but
+cannot get it because it is on someone else’s PC. The same argument holds for disk
+space and other resources.
+Finally, we are starting to see a shift from PC-centric computing to 
+Web-centric computing. One area where this shift is very far along is email. People used to
+get their email delivered to their home machine and read it there. Nowadays, many
+people log into Gmail, Hotmail, or Yahoo and read their mail there. In addition,
+many people log into other Websites to do word processing, build spreadsheets,
+and other things that used to require PC software. It is even possible that eventually

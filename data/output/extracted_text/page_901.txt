@@ -1,0 +1,89 @@
+872
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Year 
+MSïDOS
+Notes
+MS-DOS
+based
+Windows
+NT-based
+Windows
+Modern
+Windows
+1981 
+1.0
+Initial release for IBM PC
+1983 
+2.0
+Suppor t for PC/XT
+1984 
+3.0
+Suppor t for PC/AT
+1990 
+3.0
+Ten million copies in 2 years
+1991 
+5.0
+Added memory management
+1992 
+3.1
+Ran only on 286 and later
+1993 
+NT 3.1 
+Supported 32-bit x86, MIPS, and Alpha
+1995 
+7.0
+95 
+NT 3.51
+MS-DOS embedded in Win 95
+NT supports Pow erPC
+1996 
+NT 4.0 
+NT has Windows 95 look and feel
+1998 
+98
+2000 
+8.0
+Me 
+2000
+Win Me was infer ior to Win 98
+NT supports IA-64
+2001 
+XP
+Replaced Win 98. NT supports x64
+2006 
+Vista
+Vista could not supplant XP
+2009 
+7
+Significantly improved upon Vista
+2012 
+8
+First Modern version, supports ARM
+2013 
+8.1
+Addressed complaints about Windows 8
+10
+2015ï
+2020
+Unified OS for multiple device for m factors
+Rapid releases every 6 months
+Reached 1.3B devices
+2021 
+11
+Fresh new UI
+Broader application support
+Higher security baseline
+Figure 11-1. Major releases in the history of Microsoft operating systems for
+desktop PCs.
+11.1.1 1980s: MS-DOS
+In the early 1980s IBM, at the time the biggest and most powerful computer
+company in the world, was developing a personal computer based the Intel 8088
+microprocessor. Since the mid-1970s, Microsoft had become the leading provider
+of the BASIC programming language for 8-bit microcomputers based on the 8080
+and Z-80. When IBM approached Microsoft about licensing BASIC for the new
+IBM PC, Microsoft readily agreed to the deal and suggested that IBM contact 
+Digital Research to license its CP/M operating system since Microsoft was not then in
+the operating system business. IBM did that, but the president of Digital Research,
+Gary Kildall, was too busy to meet with IBM. This was probably the worst blunder

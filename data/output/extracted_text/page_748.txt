@@ -1,0 +1,38 @@
+SEC. 10.2
+OVERVIEW OF LINUX
+719
+commands are called shell scripts. Shell scripts may assign values to shell 
+variables and then read them later. They may also have parameters, and use if, for,
+while, and case constructs. Thus a shell script is really a program written in shell
+language. The Berkeley C shell is an alternative shell designed to make shell
+scripts (and the command language in general) look like C  programs in many
+respects. Since the shell is just another user program, other people have written and
+distributed a variety of other shells. Users are free to choose whatever shells they
+like.
+10.2.4 Linux Utility Programs
+The command-line (shell) user interface to Linux consists of a large number of
+standard utility programs. Roughly speaking, these programs can be divided into
+six categories, as follows:
+1. File and directory manipulation commands.
+2. Filters.
+3. Program development tools, such as editors and compilers.
+4. Text processing.
+5. System administzration.
+6. Miscellaneous.
+The POSIX 1003.1-2017 standard specifies the syntax and semantics of 160 of
+these, primarily in the first three categories. The idea of standardizing them is to
+make it possible for anyone to write shell scripts that use these programs and work
+on all Linux systems.
+In addition to these standard utilities, there are many application programs as
+well, of course, such as Web browsers, media players, image viewers, office suites,
+games, and so on.
+Let us consider some examples of these programs, starting with file and 
+directory manipulation.
+cp a b
+copies file a to b, leaving the original file intact. In contrast,
+mv a b
+copies a to b but removes the original. In effect, it moves the file rather than really
+making a copy in the usual sense. Several files can be concatenated using cat,
+which reads each of its input files and copies them all to standard output, one after
+another. Files can be removed by the rm command. The chmod command allows
+the owner to change the rights bits to modify access permissions. Directories can

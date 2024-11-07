@@ -1,0 +1,43 @@
+SEC. 7.11
+CASE STUDY: VMWARE
+509
+7.11.2 VMware Workstation
+VMware Workstation was the first virtualization product for 32-bit x86 
+computers. The subsequent adoption of virtualization had a profound impact on the
+industry and on the computer science community: in 2009, the ACM awarded its
+authors the ACM Software System Award for VMware Workstation 1.0 for
+Linux. The original VMware Workstation is described in a detailed technical 
+article (Bugnion et al., 2012). Here we provide a summary of that paper.
+The idea was that a virtualization layer could be useful on commodity 
+platforms built from x86 CPUs and primarily running the Microsoft Windows 
+operating systems (a.k.a. the WinTel platform). The benefits of virtualization could help
+address some of the known limitations of the WinTel platform, such as application
+interoperability, operating system migration, reliability, and security. In addition,
+virtualization could easily enable the coexistence of operating system alternatives,
+in particular, Linux.
+Although there existed decades’ worth of research and commercial 
+development of virtualization technology on mainframes, the x86 computing environment
+was sufficiently different that new approaches were necessary. For example, 
+mainframes were vertically integrated, meaning that a single vendor engineered the
+hardware, the hypervisor, the operating systems, and most of the applications.
+In contrast, the x86 industry was (and still is) disaggregated into at least four
+different categories: (a) Intel and AMD make the processors; (b) Microsoft offers
+Windows and the open source community offers Linux; (c) a third group of 
+companies builds the I/O devices and peripherals and their corresponding device 
+drivers; and (d) a fourth group of system integrators such as HP and Dell put together
+computer systems for retail sale. For the x86 platform, virtualization would first
+need to be inserted without the support of any of these industry players.
+Because this disaggregation was a fact of life, VMware Workstation differed
+from classic virtual machine monitors that were designed as part of single-vendor
+architectures with explicit support for virtualization. Instead, VMware Workstation
+was designed for the x86 architecture and the industry built around it. VMware
+Workstation addressed these new challenges by combining well-known 
+virtualiza4G tion techniques, techniques from other domains, and new techniques into a
+single solution.
+We now discuss the specific technical challenges in building VMware 
+Workstation.
+7.11.3 Challenges in Bringing Virtualization to the x86
+Recall our definition of hypervisors and virtual machines: hypervisors apply
+the well-known principle of adding a level of indirection to the domain of 
+computer hardware. They provide the abstraction of virtual machines: multiple copies
+of the raw underlying hardware, each running an independent operating system

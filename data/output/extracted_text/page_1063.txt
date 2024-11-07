@@ -1,0 +1,21 @@
+1034
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Figure 11-59. Hotpatch application for mylib.dll. Functions foo( ) and baz( ) are
+updated in the patch binary, mylib patch.dll.
+itself) and the hypervisor patches itself. As such, VBS is a prerequisite for 
+hotpatching. NTOS is responsible for validating proper signing for user-mode 
+hotpatches and SK validates all other types of hotpatches such that a malicious actor
+cannot just hotpatch the kernel.
+Hotpatching is vital for the Azure fleet and has been in use since mid-2010s.
+Every month, millions of machines in datacenters are hotpatched with various fixes
+and feature updates, with zero downtime for customer virtual machines. 
+Hotpatching is also supported on the Azure Edition of Windows Server 2019 and 2022.
+These operating systems can be configured to receive cumulative hotpatch 
+packages from Windows Update for multiple months followed by a reboot-required,
+non-hotpatch update. A regular reboot-required update is necessary every few
+months because it is not always possible to fix every issue with a hotpatch.
+Antimalware
+In addition to all the security mechanisms we described in this section, another
+layer of defense is antimalware software which has become a critical tool for 
+combating malicious code. Antimalware can detect and quarantine malicious code even

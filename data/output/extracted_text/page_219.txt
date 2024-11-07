@@ -1,0 +1,57 @@
+190
+MEMORY MANAGEMENT 
+CHAP. 3
+Memory Management with Linked Lists
+Another way of keeping track of memory is to maintain a linked list of 
+allocated and free memory segments, where a segment either contains a process or is
+an empty hole between two processes. The memory of Fig. 3-6(a) is represented in
+Fig. 3-6(c) as a linked list of segments. Each entry in the list specifies a hole (H) or
+process (P), the address at which it starts, the length, and a pointer to the next item.
+In this example, the segment list is kept sorted by address. Sorting this way has
+the advantage that when a process terminates or is swapped out, updating the list is
+straightforward. A terminating process normally has two neighbors (except when
+it is at the very top or bottom of memory). These may be either processes or holes,
+leading to the four combinations shown in Fig. 3-7. In Fig. 3-7(a) updating the list
+requires replacing a P by an H. In Fig. 3-7(b) and (c), two entries are coalesced
+into one, and the list becomes one entry shorter. In Fig. 3-7(d), three entries are
+merged and two items are removed from the list.
+Since the process table slot for the terminating process will normally point to
+the list entry for the process itself, it may be more convenient to have the list as a
+double-linked list, rather than the single-linked list of Fig. 3-6(c). This structure
+makes it easier to find the previous entry and to see if a merge is possible.
+becomes
+becomes
+becomes
+becomes
+(a)
+A
+X
+B
+(b)
+A
+X
+(c)
+X
+B
+(d)
+X
+Before X terminates
+A
+B
+A
+B
+After X terminates
+Figure 3-7. Four neighbor combinations for the terminating process, X.
+When the processes and holes are kept on a list sorted by address, several 
+algorithms can be used to allocate memory for a created process (or an existing process
+being swapped in from disk or SSD). We assume that the memory manager knows
+how much memory to allocate. The simplest algorithm is first fit. The memory
+manager scans along the list of segments until it finds a hole that is big enough.
+The hole is then broken up into two pieces, one for the process and one for the
+unused memory, except in the statistically unlikely case of an exact fit. First fit is a
+fast algorithm because it searches as little as possible.
+A minor variation of first fit is next fit. It works the same way as first fit,
+except that it keeps track of where it is whenever it finds a suitable hole. The next
+time it is called to find a hole, it starts searching the list from the place where it left
+off last time, instead of always at the beginning, as first fit does. Simulations by
+Bays (1977) show that next fit gives slightly worse performance than first fit.

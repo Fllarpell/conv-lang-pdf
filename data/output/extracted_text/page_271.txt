@@ -1,0 +1,44 @@
+242
+MEMORY MANAGEMENT 
+CHAP. 3
+We emphasize here that a segment is a logical entity, which the programmer is
+aw are of and uses as a logical entity. A segment might contain a procedure, or an
+array, or a stack, or a collection of scalar variables, but usually it does not contain a
+mixture of different types.
+A segmented memory has other advantages besides simplifying the handling of
+data structures that are growing or shrinking. If each procedure occupies a 
+separate segment, with address 0 as its starting address, the linking of procedures 
+compiled separately is greatly simplified. After all the procedures that constitute a 
+program have been compiled and linked up, a procedure call to the procedure in 
+segment n will use the two-part address (n, 0) to address word 0 (the entry point).
+If the procedure in segment n is subsequently modified and recompiled, no
+other procedures need be changed (because no starting addresses have been 
+modified), even if the new version is larger than the old one. With a one-dimensional
+memory, the procedures are packed tightly right up next to each other, with no 
+address space between them. Consequently, changing one procedure’s size can affect
+the starting address of all the other (unrelated) procedures in the segment. This, in
+turn, requires modifying all procedures that call any of the moved procedures, in
+order to incorporate their new starting addresses. If a program contains hundreds
+of procedures, this process can be costly.
+Segmentation also facilitates sharing procedures or data between several 
+processes. A common example is the shared library. Modern workstations that run
+advanced window systems often have extremely large graphical libraries compiled
+into nearly every program. In a segmented system, the graphical library can be put
+in a segment and shared by multiple processes, eliminating the need for having it in
+ev ery process’ address space. While it is also possible to have shared libraries in
+pure paging systems, it is more complicated. In effect, these systems do it by 
+simulating segmentation.
+Since each segment forms a logical entity that programmers know about, such
+as a procedure, or an array, different segments can have different kinds of 
+protection. A procedure segment can be specified as execute only, prohibiting attempts
+to read from or store into it. A floating-point array can be specified as read/write
+but not execute, and attempts to jump to it will be caught. Such protection is 
+helpful in catching bugs. Paging and segmentation are compared in Fig. 3-32.
+3.7.1 Implementation of Pure Segmentation
+The implementation of segmentation differs from paging in an essential way:
+pages are of fixed size and segments are not. Figure 3-33(a) shows an example of
+physical memory initially containing fiv e segments. Now consider what happens if
+segment 1 is evicted and segment 7, which is smaller, is put in its place. We arrive
+at the memory configuration of Fig. 3-33(b). Between segment 7 and segment 2 is
+an unused area—that is, a hole. Then segment 4 is replaced by segment 5, as in
+Fig. 3-33(c), and segment 3 is replaced by segment 6, as in Fig. 3-33(d). After the

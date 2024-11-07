@@ -1,0 +1,44 @@
+SEC. 1.9
+RESEARCH ON OPERATING SYSTEMS
+79
+1960s. Computers were all text-based until Doug Engelbart invented the mouse
+and the graphical user interface at Stanford Research Institute in the late 1960s.
+Who knows what will come next?
+In this section, and in comparable sections throughout the book, we will take a
+brief look at some of the research in operating systems that has taken place during
+the past 5–10 years, just to give a flavor of what might be on the horizon. This
+introduction is certainly not comprehensive. It is based largely on papers that have
+been published in the top research conferences because these ideas have at least
+survived a rigorous peer review process in order to get published. Note that in 
+computer science—in contrast to other scientific fields—most research is published in
+conferences, not in journals. Most of the papers cited in the research sections were
+published by either ACM, the IEEE Computer Society, or USENIX and are 
+available over the Internet to (student) members of these organizations. For more 
+information about these organizations and their digital libraries, see
+ACM
+http://www.acm.org
+IEEE Computer Society
+http://www.computer.org
+USENIX 
+http://www.usenix.org
+All operating systems researchers realize that current operating systems are
+massive, inflexible, unreliable, insecure, and loaded with bugs, certain ones more
+than others (names withheld to protect the guilty). Consequently, there is a lot of
+research on how to build better ones. Work has recently been published about bugs
+and debugging (Kasikci et al., 2017; Pina et al., 2019; Li et al., 2019), crashes and
+recovery (Chen et al., 2017; and Bhat et al., 2021), energy management (Petrucci
+and Loques, 2012; Shen et al., 2013; and Li et al., 2020), file and storage systems
+(Zhang et al., 2013a; Chen et al., 2017; Maneas et al., 2020; Ji et al., 2021; and
+Miller et al., 2021), high-performance I/O (Rizzo, 2012; Li et al., 2013a; and Li et
+al., 2017); hyperthreading and multithreading (Li et al., 2019), dynamic updates
+(Pina et al., 2019), managing GPUs (Volos et al., 2018), memory management
+(Jantz et al., 2013; and Jeong et al., 2013), embedded systems (Levy et al., 2017),
+operating system correctness and reliability (Klein et al., 2009; and Chen et al.,
+2017), operating system reliability (Chen et al., 2017; Chajed et al., 2019; and Zou
+et al., 2019), security (Oliverio et al., 2017; Konoth et al., 2018; Osterlund et al.,
+2019; Duta et al. 2021), virtualization and containers (Tack Lim et al., 2017;
+Manco et al., 2017; and Tarasov et al., 2013) among many other topics.
+1.10 OUTLINE OF THE REST OF THIS BOOK
+We hav e now completed our introduction and bird’s-eye view of the operating
+system. It is time to get down to the details. As mentioned, from the 
+programmer’s point of view, the primary purpose of an operating system is to provide some

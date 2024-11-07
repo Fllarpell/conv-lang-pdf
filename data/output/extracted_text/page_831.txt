@@ -1,0 +1,47 @@
+802
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+appN
+phone
+system_server
+Dalvik
+Dalvik
+Dalvik
+zygote
+Daemons
+System
+processes
+App
+processes
+app1
+app2
+Dalvik
+Dalvik
+installd
+servicemanager
+init
+adbd
+Kernel
+Dalvik
+Figure 10-39. Android process hierarchy.
+access, forking shell processes for them as needed. These parts are always there,
+no matter which platform is being used or what features it has.
+Since most of Android is written in the Java language, the zygote daemon and
+processes it starts are central to the system. The first process zygote always starts
+is called system server, which contains all of the core operating system services.
+Ke y parts of this are the power manager, package manager, window manager, and
+activity manager.
+Other processes will be created from zygote as needed. Some of these are
+‘‘persistent’’ processes that are part of the basic operating system, such as the 
+telephony stack in the phone process, which must remain always running. Additional
+application processes will be created and stopped as needed while the system is
+running.
+Applications interact with the operating system through calls to libraries 
+provided by it, which together compose the Android framework. Some of these
+libraries can perform their work within that process, but many will need to perform
+interprocess communication with other processes, often services in the 
+system server process.
+Figure 10-40 shows the typical design for Android framework APIs that 
+interact with system services, in this case the package manager. The package manager
+provides a framework API for applications to call in their local process, here the
+PackageManager class. Internally, this class needs to get a connection to the

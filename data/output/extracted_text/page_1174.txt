@@ -1,0 +1,102 @@
+INDEX
+1145
+Scheduling algorithm (continued)
+preemptive, 156
+priority, 163–164
+real-time, 168–169
+response time, 159
+round-robin, 162–163
+shortest job first, 160–161
+shortest process next, 165–166
+shortest remaining time next, 161
+smart, 552
+space sharing, 552–554
+thread, 169–171
+time sharing, 551–552
+two-level, 552
+when to do, 155–156
+Windows, 944–950
+Scheduling for proportionality, 159
+Scheduling for security, 556–557
+Scheduling for throughput, 158
+Scheduling for turnaround time, 158
+Scheduling group, Windows, 950
+Scheduling mechanism, 169
+Scheduling policy, 169
+Scheduling quantum, 162
+Schroeder, Michael, 609, 1045
+Scroll bar, 409
+SDK (see Software Development Kit)
+Sealing, 913
+Seamless live migration, 504
+Second level address translation, 1005
+Second system effect, 1081
+Second-chance page replacement algorithm, 210–211
+Secret-key cryptography, 633–634
+Section, Windows, 885
+SectionHandle, Windows, 885
+Secure boot, 36, 912
+Secure file deletion and disk encryption, 322
+Secure kernel, Windows, 897
+Secure virtual machine, 483
+Security, 605–697
+Android, 836–856
+file system, 322–323
+formal model, 628–637
+implementation in Linux, 792–793
+Linux 789–793
+multiserver operating system, 612
+multilevel, 630
+Windows, 1018–1035
+Windows virtualization, 1017–1018
+Security access manager, 892
+Security API calls, Windows, 1022–1023
+Security attack
+back door, 680–681
+buffer-overflow, 648–658
+code-reuse, 653–655
+command-injection, 666–667
+covert-channel, 669–671
+denial-of-service, 608
+diverting attack, 656–657
+double fetch, 668
+exploiting hardware, 668–679
+exploiting software, 647–668
+flush & reload, 673
+format-string, 658–661
+insider, 679–681
+integer overflow, 665–666
+logic bomb, 679–680
+login spoofing, 681
+Meltdown, 676
+null pointer dereferencing, 664–665
+passive, 616
+return-oriented programming, 653–655
+return-to-libc, 653
+rowhammer, 682
+side channel, 671–674
+Spectre, 678–679
+speculation, 677–679
+Stuxnet, 639–640
+time bomb, 680
+time of check to time of use, 667–668
+transient execution, 674–679
+type-confusion, 662–664
+use-after-free, 661–662
+Security by obscurity, 632
+Security descriptor, 885
+Windows, 1021
+Security domain, 608
+Security fundamentals, 607–618
+Security mechanism, 608
+Security mitigation, Windows, 1025–1026
+Security model, 628–632
+Bell-LaPadula, 630–631
+Biba, 631–632
+Security of the operating system structure, 611–612
+Security principles, 609–611
+complete mediation, 610
+east common mechanism, 610
+economy of mechanism, 609–610
+fail-safe default, 610
+least authority, 610

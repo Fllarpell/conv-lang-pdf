@@ -1,0 +1,44 @@
+CHAP. 12
+PROBLEMS
+1083
+(a) A compiler.
+(b) A photo-editing program.
+(c) A payroll program.
+3. On some of the early Apple Macintoshes, the GUI code was in ROM. Why?
+4. Hierarchical file names always start at the top of the tree. Consider, for example, the
+file name /usr/ast/books/mos5/chap-12 rather than chap-12/mos2/books/ast/usr.
+In
+contrast, DNS names start at the bottom of the tree and work up. Is there some 
+fundamental reason for this difference?
+5. Corbato´’s dictum is that the system should provide minimal mechanism. Here is a list
+of POSIX calls that were also present in UNIX Version 7. Which ones are redundant,
+that is, could be removed with no loss of functionality because simple combinations of
+other ones could do the same job with about the same performance? Access, alar m,
+chdir, chmod, chown, chroot, close, creat, dup, exec, exit, fcntl, fork, fstat, ioctl, kill, link,
+lseek, mkdir, mknod, open, pause, pipe, read, stat, time, times, umask, unlink, utime,
+wait, and wr ite.
+6. Suppose that layers 3 and 4 in Fig. 12-2 were exchanged. What implications would
+that have for the design of the system?
+7. In a microkernel-based client-server system, the microkernel just does message passing
+and nothing else. Is it possible for user processes to nevertheless create and use 
+semaphores? If so, how? If not, why not?
+8. Careful optimization can improve system-call performance. Consider the case in which
+one system call is made every 10 msec. The average time of a call is 2 msec. If the
+system calls can be speeded up by a factor of two, how long does a process that took
+10 sec to run now take?
+9. Give a short discussion of mechanism vs. policy in the context of retail stores.
+10. Operating systems often do naming at two different levels: external and internal. What
+are the differences between these names with respect to
+(a) Length?
+(b) Uniqueness?
+(c) Hierarchies?
+11. One way to handle tables whose size is not known in advance is to make them fixed,
+but when one fills up, to replace it with a bigger one, copy the old entries over to the
+new one, then release the old one. What are the advantages and disadvantages of 
+making the new one 2× the size of the original one as compared to making it only 1.5× as
+big?
+12. In Fig. 12-5, a flag, found, is used to tell whether the PID was located. Would it be 
+possible to forget about found and just test p at the end of the loop to see whether it got to
+the end or not?
+13. In Fig. 12-6, the differences between the x86 and the UltraSPARC are hidden by 
+conditional compilation. Could the same approach be used to hide the difference between

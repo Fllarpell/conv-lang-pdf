@@ -1,0 +1,54 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+911
+C: File-system Filter 
+C: File-system Filter
+C: File system 
+C: Volume
+C: Disk class device
+C: Disk partition(s)
+IRP
+File-system filter driver 
+File-system filter driver 
+NTFS driver 
+Volume manager driver 
+Disk class driver 
+Disk miniport driver 
+D: File-system filter
+D: File-system filter
+D: File system
+D: Volume
+D: Disk class device
+D: Disk partition(s)
+IRP
+Device stack
+consisting of device
+objects for C:
+Device stack
+consisting of device
+objects for D:
+Each device object
+links to a driver
+object with function
+entry points
+I/O manager
+Figure 11-14. Simplified depiction of device stacks for two NTFS file volumes.
+The I/O request packet is passed from down the stack. The appropriate routines
+from the associated drivers are called at each level in the stack. The device stacks
+themselves consist of device objects allocated specifically to each stack.
+nonvolatile CMOS memory that is initialized by the computer manufacturer (and
+sometimes updated by the user, in a process called flashing). Because the software
+persists in (read-only) memory, and is only rarely updated, it is referred to as
+firmware. It is held in a special chip whose contents are not lost when power is
+turned off. The firmware is loaded on PCs by the manufacturer of either the 
+motherboard or the computer system. Historically, PC firmware was a program called
+BIOS (Basic Input/Output System), but most new computers use UEFI (Unified
+Extensible Firmware Interface). UEFI improves over BIOS by supporting 
+modern hardware, providing a more modular CPU-independent architecture, much
+improved security mechanisms and supporting an extension model which 
+simplifies booting over networks, provisioning new machines, and running diagnostics.
+Windows 11 supports only UEFI-based machines.
+The main purpose of any firmware is to bring up the operating system by 
+locating and running the bootstrap application. UEFI firmware achieves this by first
+requiring that the boot disk be formatted in the GPT (GUID partition table)
+scheme where each disk partition is identified by a GUID (Globally-Unique

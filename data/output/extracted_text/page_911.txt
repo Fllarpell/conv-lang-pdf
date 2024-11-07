@@ -1,0 +1,46 @@
+882
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+First, unlike traditional Win32 processes, the processes running UWP 
+applications have their lifetimes managed by the operating system. When a user switches
+aw ay from an application, the system gives it a couple of seconds to save its state
+and then ceases to give it further processor resources until the user switches back
+to the application. If the system runs low on resources, the operating system may
+terminate the application’s processes without the application ever running again.
+When the user switches back to the application at some time in the future, it will be
+restarted by the operating system. Applications that need to run tasks in the 
+background must specifically arrange to do so using a new set of WinRT APIs. 
+Background activity is carefully managed by the system to improve battery life and 
+prevent interference with the foreground application the user is currently using. These
+changes were made to make Windows function better on mobile devices, where
+users frequently switch from app to app and back quickly and often.
+Second, in the Win32 desktop world, applications are deployed by running an
+installer that is part of the application. This scheme leaves clean up in the hands of
+the application and frequently results in leftover files or settings when the 
+application is uninstalled, leading to ‘‘winrot.’’ UWP applications come in an MSIX
+package which is basically a zip file containing application binaries along with a
+manifest that declares the components of the application and how they should 
+integrate with the system. That way, the operating system can install and uninstall the
+application cleanly and reliably. Typically, UWP applications are distributed and
+deployed via the Microsoft Store, similar to the model on iOS and Android 
+devices.
+Finally, when a modern application is running, it always executes in a sandbox
+called an AppContainer. Sandboxing process execution is a security technique
+for isolating less trusted code so that it cannot freely tamper with the system or
+user data. The Windows AppContainer treats each application as a distinct user,
+and uses Windows security facilities to keep the application from accessing 
+arbitrary system resources. When an application does need access to a system resource,
+there are WinRT APIs that communicate to broker processes which do have
+access to more of the system, such as a user’s files.
+Despite its many advantages, UWP did not gain widespread traction with
+developers. This is primarily because the cost of switching existing apps to UWP
+outweighed the benefits of getting access to the WinRT API and being able to run
+on multiple Windows device families. Restricted access to the Win32 API and the
+restructuring necessary to work with the UWP application model meant that apps
+essentially needed to be rewritten.
+To remedy these drawbacks and ‘‘bridge the gap’’ between Win32 desktop app
+development and UWP, Microsoft is on a path to unify these application models
+with the Windows App SDK (Software Dev elopment Kit) previously called
+Project Reunion. Windows App SDK is a set of open-source libraries on GitHub,
+providing a modern, uniform API surface available to all Windows applications. It
+allows developers to add new functionality previously only exposed to UWP,

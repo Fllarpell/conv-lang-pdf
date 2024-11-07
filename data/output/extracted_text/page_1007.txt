@@ -1,0 +1,27 @@
+978
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Figure 11-39. Memory partition data structures.
+blocks, that is, regions of files. This approach fits well with the structure of the
+native NT File System (NTFS), as we will see in Sec. 11.8. NTFS stores all of its
+data as files, including the file-system metadata.
+The cached regions of files are called views because they represent regions of
+kernel virtual addresses that are mapped onto file-system files. Thus, the actual
+management of the physical memory in the cache is provided by the memory 
+manager. The role of the cache manager is to manage the use of kernel virtual 
+addresses for views, arrange with the memory manager to pin pages in physical memory,
+and provide interfaces for the file systems.
+The Windows cache-manager facilities are shared among all the file systems.
+Because the cache is virtually addressed according to individual files, the cache
+manager is easily able to perform read-ahead on a per-file basis. Requests to access
+cached data come from each file system. Virtual caching is convenient because the
+file systems do not have to first translate file offsets into physical block numbers
+before requesting a cached file page. Instead, the translation happens later when
+the memory manager calls the file system to access the page on disk.
+Besides management of the kernel virtual address and physical memory
+resources used for caching, the cache manager also has to coordinate with file 
+systems regarding issues like coherency of views, flushing to disk, and correct 
+maintenance of the end-of-file marks—particularly as files expand. One of the most 
+difficult aspects of a file to manage between the file system, the cache manager, and
+the memory manager is the offset of the last byte in the file, called the 
+ValidDataLength. If a program writes past the end of the file, the blocks that were

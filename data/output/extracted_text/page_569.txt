@@ -1,0 +1,43 @@
+540
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+Other computing tasks are increasingly handled by the GPU (or similar 
+processors), especially computationally demanding ones that are common in scientific
+computing. The term used for general-purpose processing on GPUs is (surprise):
+GPGPU. Unfortunately, programming GPUs efficiently is extremely difficult and
+requires special programming languages such as OpenGL, or NVIDIA’s 
+proprietary CUDA. An important difference between programming GPUs and 
+programming general-purpose processors is that GPUs are essentially ‘‘single instruction
+multiple data’’ machines, which means that a large number of cores execute 
+exactly the same instruction but on different pieces of data. This model is great for data
+parallelism, but poor for task parallelism.
+GPUs proved useful for many applications, not just scientific computing or
+games. For instance, machine learning grew to be an important application. In fact,
+it grew to be so important that Google started developing a special-purpose 
+processor, known as the TPU (Tensor Processing Unit) although some people prefer
+the more generic NPU (Neural Processing Unit). It derives from the TensorFlow
+software that drives many of the machine learning solutions. TPUs combine many
+simple processing units in such a way as to perform matrix multiplications very
+efficiently—operations that are common in machine learning. As their impact on
+operating systems is limited, we will not discuss them further. In the same vein, we
+do not discuss Network Processing Units (brilliantly abbreviated to NPU also) or
+the raft of other types application-specific coprocesors around today.
+Heterogeneous Multicores
+Some chips integrate a GPU, a TPU, and a number of general-purpose cores on
+the same die. Similarly, SoCs may contain different types of general-purpose core.
+Systems that integrate multiple different breeds of processors in a single chip are
+collectively known as heterogeneous multicore processors.
+Some of these systems are very heterogeneous in the sense that the different
+cores have different instruction sets. For instance, this is true for SoCs that have a
+GPU and/or TPU in addition to general-purpose cores. However, it is also possible
+to introduce heterogeneity while maintaining the same instruction set. For instance,
+a CPU can have a small number of ‘‘big’’ cores, with deep pipelines and possibly
+high clock speeds, and a larger number of ‘‘little’’ cores that are simpler, less 
+powerful, and perhaps run at lower frequencies. The powerful cores are needed for 
+running code that requires fast sequential processing while the little cores are useful
+for power-efficiency and for tasks that can be executed efficiently in parallel.
+Examples include ARM’s big.LITTLE and Intel’s Alder Lake architectures.
+Programming with Multiple Cores
+As has often happened in the past, the hardware is way ahead of the software.
+While multicore chips are here now, our ability to write applications for them is
+not. Current programming languages are poorly suited for writing highly parallel

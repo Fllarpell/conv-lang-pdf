@@ -1,0 +1,44 @@
+24
+INTRODUCTION 
+CHAP. 1
+The abundance of transistors is leading to a problem: what to do with all of
+them? We saw one approach above: superscalar architectures, with multiple 
+functional units. But as the number of transistors increases, even more is possible. One
+obvious thing to do is put bigger caches on the CPU chip. That is definitely 
+happening, but eventually the point of diminishing returns will be reached.
+The obvious next step is to replicate not only the functional units, but also
+some of the control logic. The Intel Pentium 4 introduced this property, called
+multithreading or hyperthreading (Intel’s name for it), to the x86 processor, and
+several other CPU chips also have it—including the SPARC, the Power5, and some
+ARM processors. To a first approximation, what it does is allow the CPU to hold
+the state of two different threads and then switch back and forth on a nanosecond
+time scale. (A thread is a kind of lightweight process, which, in turn, is a running
+program; we will get into the details in Chap. 2.) For example, if one of the 
+processes needs to read a word from memory (which takes many clock cycles), a 
+multithreaded CPU can just switch to another thread. Multithreading does not offer true
+parallelism. Only one process at a time is running, but thread-switching time is
+reduced to the order of a nanosecond.
+Multithreading has implications for the operating system because each thread
+appears to the operating system as a separate CPU. Consider a system with two
+actual CPUs, each with two threads. The operating system will see this as four
+CPUs. If there is only enough work to keep two CPUs busy at a certain point in
+time, it may inadvertently schedule two threads on the same CPU, with the other
+CPU completely idle. This is far less efficient than using one thread on each CPU.
+Beyond multithreading, many CPU chips now hav e four, eight, or more 
+complete processors or cores on them. The multicore chips of Fig. 1-8 effectively carry
+four minichips on them, each with its own independent CPU. (The caches will be
+explained later in the book.) Some models of popular processors like Intel Xeon
+and AMD Ryzen come with more than 50 cores, but there are also CPUs with core
+counts in the hundreds. Making use of such a multicore chip will definitely require
+a multiprocessor operating system.
+Incidentally, in terms of sheer numbers, nothing beats a modern GPU 
+(Graphics Processing Unit). A GPU is a processor with, literally, thousands of tiny cores.
+They are very good for many small computations done in parallel, like rendering
+polygons in graphics applications. They are not so good at serial tasks. They are
+also hard to program. While GPUs can be useful for operating systems (e.g., for
+encryption or processing of network traffic), it is not likely that much of the 
+operating system itself will run on the GPUs.
+1.3.2 Memory
+The second major component in any computer is the memory. Ideally, memory
+should be extremely fast (faster than executing an instruction so that the CPU is not
+held up by the memory), abundantly large, and dirt cheap. No current technology

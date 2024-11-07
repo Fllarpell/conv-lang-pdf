@@ -1,0 +1,43 @@
+647
+fingerprints online, may be unacceptable to people because they associate 
+fingerprints with criminals. Using fingerprints to unlock a phone is all right though.
+9.5 EXPLOITING SOFTWARE
+One of the main ways to break into a user’s computer is by exploiting 
+vulnerabilities in the software running on the system to make it do something different
+than the programmer intended. For instance, a common attack is to infect a user’s
+browser by means of a drive-by-download. In this attack, the cybercriminal 
+infects the user’s browser by placing malicious content on a Web server. As soon as
+the user visits the Website, the browser is infected. Sometimes, the Web servers are
+completely run by the attackers, in which case the attackers should find a way to
+lure users to their Website (spamming people with promises of free software, 
+movies, or naughty pictures might do the trick). However, it is also possible that 
+attackers are able to put malicious content on a legitimate Website (perhaps in the ads, or
+on a discussion board). Some years ago, the Website of the Miami Dolphins was
+compromised in this way, just days before the Dolphins hosted the Super Bowl,
+one of the most anticipated sporting events of the year. Just days before the event,
+the Website was extremely popular and many users visiting the Website were 
+infected. After the initial infection in a drive-by-download, the attacker’s code 
+running in the browser downloads the real zombie software (malware), executes it,
+and makes sure it is always started when the system boots.
+Since this is a book on operating systems, the focus is on how to subvert the
+operating system. The many ways one can exploit software bugs to attack Websites
+and databases are not covered here. The typical scenario is that somebody 
+discovers a bug in the operating system and then finds a way to exploit it to compromise
+computers that are running the defective code. Drive-by-downloads are not really
+part of the picture either, but we will see that many of the vulnerabilities and
+exploits in user applications are applicable to the kernel also.
+In Lewis Caroll’s famous book Through the Looking Glass, the Red Queen
+takes Alice on a crazy run. They run as fast as they can, but no matter how fast they
+run, they always stay in the same place. That is odd, thinks Alice, and she says so.
+‘‘In our country you’d generally get to somewhere else—if you ran very fast for a
+long time as we’ve been doing.’’ ‘‘A slow sort of country!’’ said the Queen. ‘‘Now,
+here, you see, it takes all the running you can do, to keep in the same place. If you
+want to get somewhere else, you must run at least twice as fast as that!’’
+The Red Queen effect is typical for evolutionary arms races. In the course of
+millions of years, the ancestors of zebras and lions both evolved. Zebras became
+faster and better at seeing, hearing, and smelling predators—useful, if you want to
+outrun the lions. But in the meantime, lions also became faster, bigger, stealthier,
+and better camouflaged—useful, if you like zebra for dinner. So, although the lion
+and the zebra both ‘‘improved’’ their designs, neither became more successful at
+SEC. 9.4
+AUTHENTICATION

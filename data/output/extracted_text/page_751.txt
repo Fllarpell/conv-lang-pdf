@@ -1,0 +1,67 @@
+722
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+System calls
+Interrupts
+Dispatcher
+Virtual file system
+Terminals
+Sockets
+File!
+systems
+Network!
+protocols
+Network!
+device!
+drivers
+Block!
+device!
+drivers
+Character!
+device!
+drivers
+I/O scheduler
+Generic!
+block layer
+Line!
+discipline
+Page!
+cache
+Paging!
+page!
+replacement
+Virtual!
+memory
+Signal!
+handling
+Process/thread!
+creation &!
+termination
+CPU!
+scheduling
+I/O component
+Memory mgt !
+component
+Process mgt!
+component
+Figure 10-3. Structure of the Linux kernel.
+Networking software is often modular, with different devices and protocols
+supported. The layer above the network drivers handles a kind of routing function,
+making sure that the right packet goes to the right device or protocol handler. Most
+Linux systems contain the full functionality of a hardware router within the kernel,
+although the performance is less than that of a hardware router. Above the router
+code is the actual protocol stack, including IP and TCP, but also many additional
+protocols. Overlaying all the network is the socket interface, which allows 
+programs to create sockets for particular networks and protocols, getting back a file
+descriptor for each socket to use later.
+On top of the disk drivers is the I/O scheduler, which is responsible for 
+ordering and issuing disk-operation requests in a way that tries to conserve wasteful disk
+head movement or to meet some other system policy.
+At the very top of the block-device column are the file systems. Linux may,
+and in fact does, have multiple file systems coexisting concurrently. In order to
+hide the gruesome architectural differences of various hardware devices from the
+file system implementation, a generic block-device layer provides an abstraction
+used by all file systems.
+In the right half of Fig. 10-3 are the other two key components of the Linux
+kernel. These two are responsible for the memory and process management tasks.
+Memory-management tasks include maintaining the virtual to physical-memory

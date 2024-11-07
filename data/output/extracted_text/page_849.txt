@@ -1,0 +1,46 @@
+820
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Android applications do not have a simple main entry point that is executed
+when the user launches them. Instead, they publish under the manifest’s 
+<application> tag a variety of entry points describing the various things the application can
+do. These entry points are expressed as four distinct types, defining the core types
+of behavior that applications can provide: activity, receiver, service, and content
+provider. The example we have presented shows a few activities and one 
+declaration of the other component types, but an application may declare zero or more of
+any of these.
+Each of the different four component types an application can contain has 
+different semantics and uses within the system. In all cases, the android:name
+attribute supplies the Java class name of the application code implementing that
+component, which will be instantiated by the system when needed.
+The package manager is the part of Android that keeps track of all application
+packages. When a user downloads an app, it comes in a package containing 
+everything the app needs. It parses every application’s manifest, collecting and indexing
+the information it finds in them. With that information, it then provides facilities
+for clients to query it about the app information those clients are allowed to access,
+such as whether an app is currently installed and the kinds of things an app can do.
+It is also responsible for installing applications (creating storage space for the
+application and ensuring the integrity of the apk) as well as everything needed to
+uninstall an app, which includes cleaning up everything associated with a 
+previously installed version of the app.
+Applications statically declare their entry points in their manifest so they do
+not need to execute code at install time that registers them with the system. This
+design makes the system more robust in many ways: since installing an application
+does not run any application code and the top-level capabilities of the application
+can always be determined by looking at its manifest, there is no need to keep a 
+separate database of this information about the application which can get out of sync
+(such as across updates) with the application’s actual capabilities, and it guarantees
+no information about an application can be left around after it is uninstalled. This
+decentralized approach was taken to avoid many of these types of problems caused
+by Windows’ centralized Registry.
+Breaking an application into finer-grained components also serves our goal of
+supporting interoperation and collaboration between applications. Applications
+can publish pieces of themselves that provide specific functionality, which other
+applications can make use of either directly or indirectly. This will be illustrated as
+we look in more detail at the four kinds of components that can be published.
+Above the package manager sits another important system service, the activity
+manager. While the package manager is responsible for maintaining static 
+information about all installed applications, the activity manager determines when,
+where, and how those applications should run. Despite its name, it is actually
+responsible for running all four types of application components and implementing
+the appropriate behavior for each of them.

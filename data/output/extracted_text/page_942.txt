@@ -1,0 +1,44 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+913
+only the hashes of components to be executed, but also important pieces of boot
+configuration such as the boot device, code signing requirements, and whether
+debugging is enabled. The TPM does not allow the PCR values to be manipulated
+in any way other than extending. As a result, PCRs provide a tamper-proof 
+mechanism to record the OS boot sequence. This is called Measured Boot. Injection of
+a rootkit or a change in boot configuration will result in a different final PCR
+value. This property allows the TPM to support two important scenarios:
+1. Attestation. Organizations may want to ensure that a computer is
+free of rootkits before allowing it access to the enterprise network. A
+trusted remote attestation server can request from each client a TPM
+Quote which is a signed collection of PCR values that can be checked
+against a database of acceptable values to determine whether the 
+client is healthy.
+2. Sealing. The TPM supports storing a secret key using PCR values
+such that it can be unsealed in a later boot session only if those PCRs
+have the same values. The BitLocker volume encryption solution uses
+the boot sequence PCR values to seal its encryption key into the TPM
+such that the key can only be revealed if the boot sequence is not 
+tampered with.
+The Windows Boot Manager orchestrates the steps to boot Windows. It first
+loads from the EFI system partition the BCD (Boot Configuration Database)
+which is registry hive containing descriptors for all boot applications and their
+parameters. It then checks whether the system had previously been hibernated (a
+special power-saving mode where the operating system state is saved to disk). If
+so, the boot manager runs the winresume.efi boot application which ‘‘resumes’’
+Windows from the saved snapshot. Otherwise, it loads and executes the OS loader
+boot application, winload.efi, to perform a fresh boot. Both of these UEFI 
+applications are generally located on the NTFS-formatted boot volume. The boot manager
+understands a wide selection of file system formats in order to support booting
+from various devices. Also, since the boot volume may be encrypted with 
+BitLocker, the boot manager must request the TPM to unseal the BitLocker volume
+decryption key in order to access winresume or winload.
+The Windows OS loader is responsible for loading the remaining boot 
+components into memory: the hypervisor loader (hvloader.dll), the secure kernel
+(securekernel.exe), the NT kernel/executive/HAL (ntoskrnl.exe), the stub HAL
+(hal.dll), the SYSTEM hive as well as all boot drivers listed in the SYSTEM hive.
+It executes the hypervisor loader which picks the appropriate hypervisor binary
+based on the underlying system and starts it. Then the Secure Kernel is initialized
+and finally, winload transfers control to the NT Kernel entry point. NT Kernel 
+initialization happens in several phases. Phase 0 initialization runs on the boot 
+processor and initializes the processor structures, locks, kernel address space, and data

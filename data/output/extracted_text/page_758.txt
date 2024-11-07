@@ -1,0 +1,46 @@
+SEC. 10.3
+PROCESSES IN LINUX
+729
+PID and status set to 0x0400 (0x as a prefix means hexadecimal in C). The 
+loworder byte of status relates to signals; the next one is the value the child returned in
+its call to exit.
+If a process exits and its parent has not yet waited for it, the process enters a
+kind of suspended animation called the zombie state—the living dead. When the
+parent finally waits for it, the process terminates.
+Several system calls relate to signals, which are used in a variety of ways. For
+example, if a user accidentally tells a text editor to display the entire contents of a
+very long file, and then realizes the error, some way is needed to interrupt the 
+editor. The usual choice is for the user to hit some special key (e.g., DEL or 
+CTRLC), which sends a signal to the editor. The editor catches the signal and stops.
+To announce its willingness to catch this (or any other) signal, the process can
+use the sigaction system call. The first parameter is the signal to be caught (see
+Fig. 10-5). The second is a pointer to a structure giving a pointer to the 
+signal-handling procedure, as well as some other bits and flags. The third one points to a
+structure where the system returns information about signal handling currently in
+effect, in case it must be restored later.
+The signal handler may run for as long as it wants to. In practice, though, 
+signal handlers are usually fairly short. When the signal-handling procedure is done,
+it returns to the point from which it was interrupted.
+The sigaction system call can also be used to cause a signal to be ignored, or to
+restore the default action, which is killing the process.
+Hitting the DEL or CTRL key is not the only way to send a signal. The kill 
+system call allows a process to signal another related process. The choice of the name
+‘‘kill’’ for this system call is not an especially good one, since most processes send
+signals to other ones with the intention that they be caught. However, a signal that
+is not caught, does, indeed, kill the recipient.
+For many real-time applications, a process needs to be interrupted after a 
+specific time interval to do something, such as to retransmit a potentially lost packet
+over an unreliable communication line. To handle this situation, the alar m system
+call has been provided. The parameter specifies an interval, in seconds, after which
+a SIGALRM signal is sent to the process. A process may have only one alarm 
+outstanding at any instant. If an alar m call is made with a parameter of 10 seconds,
+and then 3 seconds later another alar m call is made with a parameter of 20 
+seconds, only one signal will be generated, 20 seconds after the second call. The first
+signal is canceled by the second call to alar m. If the parameter to alar m is zero,
+any pending alarm signal is canceled. If an alarm signal is not caught, the default
+action is taken and the signaled process is killed. Technically, alarm signals may be
+ignored, but that is a pointless thing to do. Why would a program ask to be 
+signaled later on and then ignore the signal?
+It sometimes occurs that a process has nothing to do until a signal arrives. For
+example, consider a computer-aided instruction program that is testing reading
+speed and comprehension. It displays some text on the screen and then calls alar m

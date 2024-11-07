@@ -1,0 +1,44 @@
+972
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+page has to be written, a deadlock could result. The other thread can solve the
+problem by writing out pages to a paging file.
+The other transitions in Fig. 11-37 are as follows. If a process takes an action
+to end the lifetime of a group of pages, for example, by decommitting private pages
+or closing the last handle on a pagefile-backed section or deleting a file, the 
+associated pages become free (5). When a page fault requires a page frame to hold the
+page about to be read in, the page frame is taken from the free list (6), if possible.
+It does not matter that the page may still contain confidential information because
+it is about to be overwritten in its entirety.
+The situation is different during demand-zero faults, for example, when a stack
+grows or when a process takes a page fault on a newly committed private page. In
+that case, an empty page frame is needed and the security rules require the page to
+contain all zeros. For this reason, another kernel system thread, the ZeroPage
+thread, runs at the lowest priority (see Fig. 11-26), erasing pages that are on the
+free list and putting them on the zeroed page list (7). Whenever the CPU is idle and
+there are free pages, they might as well be zeroed since a zeroed page is potentially
+more useful than a free page and it costs nothing to zero the page when the CPU is
+idle. On big servers with terabytes of memory distributed across multiple processor
+sockets, it can take a long time to zero all that memory. Even though zeroing 
+memory might be thought of as a background activity, when a cloud provider needs to
+start a new VM and give it terabytes of memory, zeroing pages can easily be the
+bottleneck. For this reason, the ZeroPage thread is actually composed of multiple
+threads assigned to each processor and carefully managed to maximize throughput.
+The existence of all these lists leads to some subtle policy choices. For 
+example, suppose that a page has to be brought in from disk and the free list is empty.
+The system is now forced to choose between taking a clean page from the standby
+list (which might otherwise have been faulted back in later) or an empty page from
+the zeroed page list (throwing away the work done in zeroing it). Which is better?
+The memory manager has to decide how aggressively the system threads
+should move pages from the modified list to the standby list. Having clean pages
+around is better than having dirty pages around (since clean ones can be reused
+instantly), but an aggressive cleaning policy means more disk I/O and there is some
+chance that a newly cleaned page may be faulted back into a working set and 
+dirtied again anyway. In general, Windows resolves these kinds of trade-offs through
+algorithms, heuristics, guesswork, historical precedent, rules of thumb, and
+administrator-controlled parameter settings.
+Page Combining
+One of the interesting optimizations the memory manager performs to 
+optimize system memory usage is called page combining. UNIX systems do this, too,
+but they call it ‘‘deduplication,’’ as discussed in Chap. 3. Page combining is the act
+of single-instancing identical pages in memory and freeing the redundant ones.

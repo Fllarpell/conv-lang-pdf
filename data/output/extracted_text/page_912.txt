@@ -1,0 +1,41 @@
+SEC. 11.2
+PROGRAMMING WINDOWS
+883
+without having to rewrite their applications from scratch. Windows App SDK 
+contains the following major components:
+1. WinUI, a XAML-based modern UI framework.
+2. C++, Rust, C# language projections to expose WinRT API to all apps.
+3. MSIX SDK, which allows any application to be packaged and
+deployed via MSIX.
+We briefly covered some of the programming frameworks that developers can
+use to develop applications for Windows. While these applications built on 
+different frameworks rely on different libraries at higher levels, they ultimately depend
+on the Win32 subsystem and the native NT API. We will study those shortly.
+11.2.2 Windows Subsystems
+As shown in Fig. 11-5, NT subsystems are constructed out of four 
+components: a subsystem process, a set of libraries, hooks in CreateProcess, and support
+in the kernel. A subsystem process is really just a service. The only special 
+property is that it is started by the smss.exe (session manager) program—the initial
+user-mode program started by NT—in response to a request from CreateProcess
+in Win32 or the corresponding API in a different subsystem. Although Win32 is
+the only remaining subsystem supported, Windows still maintains the subsystem
+model, including the csrss.exe Win32 subsystem process.
+Subsystem process
+Program process
+Subsystem
+libraries
+Subsystem run-time library
+(CreateProcess hook)
+Subsystem
+kernel support
+NTOS Executive
+Local procedure
+call (LPC)
+Native NT
+system services
+User-mode
+Kernel-mode
+Native NT API, C/C++ run-time
+Figure 11-5. The components used to build NT subsystems.
+The set of libraries both implements higher-level operating-system functions
+specific to the subsystem and also contains the stub routines which communicate

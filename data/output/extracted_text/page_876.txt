@@ -1,0 +1,68 @@
+SEC. 10.8
+ANDROID
+847
+There were a wide variety of permissions, organized into categories to help
+users understand the major classes of operations the app may do. A summary of
+these permissions and their categories is shown in Fig. 10-73. The permissions
+listed here are all dangerous permissions, meaning they were considered important
+enough to always show to users to let them decide whether to proceed with an
+install.
+Permission 
+Group
+SEND SMS 
+COST MONEY
+CALL PHONE 
+COST MONEY
+RECEIVE SMS 
+MESSAGES
+READ SMS 
+MESSAGES
+WRITE SMS 
+MESSAGES
+READ CONTACTS 
+PERSONAL INFO
+WRITE CONTACTS 
+PERSONAL INFO
+READ CALENDAR 
+PERSONAL INFO
+WRITE CALENDAR 
+PERSONAL INFO
+BODY SENSORS 
+PERSONAL INFO
+ACCESS FINE LOCATION 
+LOCATION
+ACCESS COARSE LOCATION 
+LOCATION
+INTERNET 
+NETWORK
+BLUETOOTH 
+NETWORK
+MANAGE ACCOUNTS 
+ACCOUNTS
+MODIFY AUDIO SETTINGS 
+HARDWARE CONTROLS
+RECORD AUDIO 
+HARDWARE CONTROLS
+CAMERA 
+HARDWARE CONTROLS
+PROCESS OUTGOING CALLS 
+PHONE CALLS
+MODIFY PHONE STATE
+PHONE CALLS
+READ PHONE STATE
+PHONE CALLS
+WRITE SETTINGS 
+SYSTEM TOOLS
+SYSTEM ALERT WINDOW
+SYSTEM TOOLS
+WAKE LOCK 
+SYSTEM TOOLS
+READ EXTERNAL STORAGE 
+STORAGE
+WRITE EXTERNAL STORAGE 
+STORAGE
+Figure 10-73. Select list of install-time dangerous permissions.
+There were an additional set of normal permissions, which the application still
+needed to request in its manifest to be able to use, but would only be shown to the
+users if they explicitly asked to see more details before installing. A representative
+list of these permissions is shown in Fig. 10-74. Note for example that access to

@@ -1,0 +1,44 @@
+636
+SECURITY 
+CHAP. 9
+accident). The value of this scheme is that it applies (very slow) public-key 
+cryptography only to a relatively small piece of data, the hash. To use this signature
+scheme, the receiver must know the sender’s public key. Many users therefore 
+publish their public key on their Web page.
+9.3.3 Trusted Platform Modules
+All cryptography requires keys. If the keys are compromised, all the security
+based on them is also compromised. Storing the keys securely is thus essential.
+How does one store keys securely on a system that is not secure?
+One proposal that the industry has come up with is a chip called the TPM
+(Trusted Platform Module), which is a cryptoprocessor with some nonvolatile
+storage inside it for keys. The TPM can perform cryptographic operations such as
+encrypting blocks of plaintext or decrypting blocks of ciphertext in main memory.
+It can also verify digital signatures. When all these operations are done in 
+specialized hardware, they become much faster and are likely to be used more widely.
+Many computers already have TPM chips and many more are likely to have them
+in the future.
+TPM is controversial because different parties have different ideas about who
+will control the TPM and what it will protect from whom. Microsoft has been a big
+advocate of this concept and has developed a series of technologies to use it,
+including Palladium, NGSCB, and BitLocker. In its view, the operating system
+controls the TPM and uses it for instance to encrypt the disk. However, it also
+wants to use the TPM to prevent unauthorized software from being run. 
+‘‘Unauthorized software’’ might be pirated (i.e., illegally copied) software or just software
+the operating system does not authorize. If the TPM is involved in the booting
+process, it might start only operating systems signed by a secret key placed inside
+the TPM by the manufacturer and disclosed only to selected operating system 
+vendors (e.g., Microsoft). Thus the TPM could be used to limit users’ choices of 
+software to those approved by the computer manufacturer (possibly in return for a
+large fee).
+The music and movie industries are also very keen on TPM as it could be used
+to prevent piracy of their content. It could also open up new business models, such
+as renting songs or movies for a specific period of time by refusing to decrypt them
+after the expiration date.
+One interesting use for TPMs is known as remote attestation. It allows an
+external party to verify that the computer with the TPM runs the software it should
+be running, and not something that cannot be trusted. We will look at remote
+attestation later when we introduce secure booting.
+TPM has a variety of other uses that we do not have space to get into. 
+Interestingly enough, the one thing TPM does not do is make computers more secure
+against external attacks. What it really focuses on is using cryptography to prevent
+users from doing anything not approved directly or indirectly by whoever controls

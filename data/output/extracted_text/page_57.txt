@@ -1,0 +1,38 @@
+28
+INTRODUCTION 
+CHAP. 1
+in memory. It frees up some memory (e.g., by writing some data that have not
+been used recently back to SSD or disk) and then loads the new data at this 
+location. Because the physical address for the data and code is now no longer fixed, the
+scheme remaps memory addresses on the fly to convert the address the program
+generated to the physical address in RAM where the data are currently located.
+This mapping is done by a part of the CPU called the MMU (Memory 
+Management Unit), as shown in Fig. 1-6.
+The MMU can have a major impact on performance as every memory access
+by the program must be remapped using special data structures that are also in
+memory. In a multiprogramming system, when switching from one program to
+another, sometimes called a context switch, these data structures must change as
+the mappings differ from process to process. Both the on-the-fly address 
+translation and the context switch can be expensive operations.
+1.3.3 Nonvolatile Storage
+Next in the hierarchy are magnetic disks (hard disks), solid state drives (SSDs),
+and persistent memory. Starting with the oldest and slowest, hard disk storage is
+two orders of magnitude cheaper than RAM per bit and often two orders of 
+magnitude larger as well. The only problem is that the time to randomly access data on it
+is close to three orders of magnitude slower. The reason is that a disk is a 
+mechanical device, as shown in Fig. 1-10.
+Surface 2
+Surface 1
+Surface 0
+Read/write head (1 per surface)
+Direction of arm motion 
+Surface 3
+Surface 5
+Surface 4
+Surface 7
+Surface 6
+Figure 1-10. Structure of a disk drive.
+A disk consists of one or more metal platters that rotate at 5400, 7200, 10,800,
+15,000 RPM or more. A mechanical arm pivots over the platters from the corner,
+similar to the pickup arm on an old 33-RPM phonograph for playing vinyl records.
+Information is written onto the disk in a series of concentric circles. At any giv en

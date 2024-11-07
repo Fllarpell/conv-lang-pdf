@@ -1,0 +1,81 @@
+182
+MEMORY MANAGEMENT 
+CHAP. 3
+first program starts out by jumping to address 24, which contains a MOV 
+instruction. The second program starts out by jumping to address 28, which contains a
+CMP instruction. The instructions that are not relevant to this discussion are not
+shown. When the two programs are loaded consecutively in memory starting at
+address 0, we have the situation of Fig. 3-2(c). For this example, we assume the
+operating system is in high memory and thus not shown.
+0
+4
+8
+12
+16
+20
+24
+28
+0
+4
+8
+12
+16
+20
+24
+28
+(a)
+(b)
+0
+4
+8
+12
+16
+20
+24
+28
+ADD
+JMP 24
+MOV
+(c)
+16384
+16388
+16392
+16396
+16400
+16404
+16408
+16412
+ADD
+JMP 24
+MOV
+0
+16380
+JMP 28
+CMP
+0
+16380
+...
+...
+...
+16380
+...
+JMP 28
+CMP
+0
+0
+32764
+Figure 3-2. Illustration of the relocation problem. (a) A 16-KB program.
+(b) Another 16-KB program. (c) The two programs loaded consecutively
+into memory.
+After the programs are loaded, they can be run. Since they hav e different 
+memory keys, neither one can damage the other. But the problem is of a different
+nature. When the first program starts, it executes the JMP 24 instruction, which
+jumps to the instruction, as expected. This program functions normally.
+However, after the first program has run long enough, the operating system
+may decide to run the second program, which has been loaded above the first one,
+at address 16,384. The first instruction executed is JMP 28, which jumps to the
+ADD instruction in the first program, instead of the CMP instruction it is supposed
+to jump to. The program will most likely crash in well under 1 sec.
+The core problem here is that the two programs both reference absolute 
+physical memory. That is not what we want at all. What we want is that each program
+can reference a private set of addresses local to it. We will show how this can be

@@ -1,0 +1,42 @@
+SEC. 9.4
+AUTHENTICATION
+643
+it is easy to compute the previous one in the numerical sequence but impossible to
+compute the next one. For example, given P2 it is easy to find P1 but impossible to
+find P3.
+The server is initialized with P0, which is just f (P1). This value is stored in
+the password file entry associated with the user’s login name along with the integer
+1, indicating that the next password required is P1. When the user wants to log in
+for the first time, he sends his login name to the server, which responds by sending
+the integer in the password file, 1. The user’s machine responds with P1, which
+can be computed locally from s, which is typed in on the spot. The server then
+computes f (P1) and compares this to the value stored in the password file (P0). If
+the values match, the login is permitted, the integer is incremented to 2, and P1
+overwrites P0 in the password file.
+On the next login, the server sends the user a 2, and the user’s machine 
+computes P2. The server then computes f (P2) and compares it to the entry in the
+password file. If the values match, the login is permitted, the integer is 
+incremented to 3, and P2 overwrites P1 in the password file. The property that makes
+this scheme work is that even though an intruder may capture Pi, he has no way to
+compute Pi+1 from it, only Pi<1 which has already been used and is now worthless.
+When all n passwords have been used up, the server is reinitialized with a new
+secret key.
+Challenge-Response Authentication
+A variation on the password idea is to have each new user provide a long list of
+questions and answers that are then stored on the server securely (e.g., in encrypted
+form). The questions should be chosen so that the user does not need to write them
+down. Possible questions that could be asked are:
+1. Who is Marjolein’s sister?
+2. On what street was your elementary school?
+3. What did Mrs. Ellis teach?
+At login, the server asks one of them at random and checks the answer. To make
+this scheme practical, though, many question-answer pairs would be needed.
+Another variation is challenge-response. When this is used, the user picks an
+algorithm when signing up as a user, for example x2. When the user logs in, the
+server sends the user an argument, say 7, in which case the user types 49. The
+algorithm can be different in the morning and afternoon, on different days of the
+week, and so on.
+If the user’s device has real computing power, such as a personal computer, a
+personal digital assistant, or a cell phone, a more powerful form of 
+challengeresponse can be used. In advance, the user selects a secret key, k, which is initially
+brought to the server system by hand. A copy is also kept (securely) on the user’s

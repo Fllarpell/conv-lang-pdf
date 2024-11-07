@@ -1,0 +1,42 @@
+100
+PROCESSES AND THREADS
+CHAP. 2
+An analogous situation exists with many other interactive programs. For 
+example, an electronic spreadsheet is a program that allows a user to maintain a matrix,
+some of whose elements are data provided by the user. Other elements are 
+computed based on the input data using potentially complex formulas. A spreadsheet
+that computes the predicted annual profit of a substantial company might have 
+hundreds of pages and thousands of complex formulas based on hundreds of input
+variables. When a user changes one input variable, many cells may have to be
+recomputed. By having a background thread do the recomputation, the interactive
+thread can allow the user to make additional changes while the computation is
+going on. Similarly, a third thread can handle periodic backups to disk on its own.
+Now consider yet another example of where threads can be useful: a server for
+a Website. Requests for pages come in and the requested page is sent back to the
+client. At most Websites, some pages are more commonly accessed than other
+pages. For example, Samsung’s home page is accessed far more than a page deep
+in the tree containing the detailed technical specifications of any smartphone 
+model. Web servers use this fact to improve performance by maintaining a collection
+of heavily used pages in main memory to eliminate the need to go to disk to get
+them. Such a collection is called a cache and is used in many other contexts as
+well. We saw CPU caches in Chap. 1, for example.
+One way to organize the Web server is shown in Fig. 2-8(a). Here one thread,
+the dispatcher, reads incoming requests for work from the network. After 
+examining the request, it chooses an idle (i.e., blocked) worker thread and hands it the
+request, possibly by writing a pointer to the message into a special word associated
+with each thread. The dispatcher then wakes up the sleeping worker, moving it
+from blocked state to ready state.
+Dispatcher thread
+Worker thread
+Web page cache
+Kernel
+Network!
+connection
+Web server process
+User!
+space
+Kernel!
+space
+Figure 2-8. A multithreaded Web server.
+When the worker wakes up, it checks to see if the request can be satisfied from
+the Web page cache, to which all threads have access. If not, it starts a read

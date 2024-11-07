@@ -1,0 +1,43 @@
+SEC. 12.3
+IMPLEMENTATION
+1055
+thread that was blocked on the mutex. MINIX 3 uses this approach, but in UNIX,
+Linux, and Windows the interrupt handlers run in a kind of no-man’s land, rather
+than as proper threads like other threads that can be scheduled, suspended, and the
+like. Since a huge amount of the complexity of any operating system is in the I/O,
+any technique for making it more tractable and encapsulated is worth considering.
+Above layer 4, we would expect to find virtual memory, one or more file 
+systems, and the system-call handlers. These layers are focused on providing services
+to applications. If the virtual memory is at a lower level than the file systems, then
+the block cache can be paged out, allowing the virtual memory manager to 
+dynamically determine how the real memory should be divided among user pages and
+kernel pages, including the cache. Windows works this way.
+Exokernels
+While layering has its supporters among system designers, another camp has
+precisely the opposite view (Engler et al., 1995). Their view is based on the 
+endto-end argument (Saltzer et al., 1984). This concept says that if something has to
+be done by the user program itself, it is wasteful to do it in a lower layer as well.
+Consider an application of that principle to remote file access. If a system is
+worried about data being corrupted in transit, it should arrange for each file to be
+checksummed at the time it is written and the checksum stored along with the file.
+When a file is transferred over a network from the source disk to the destination
+process, the checksum is transferred, too, and also recomputed at the receiving end.
+If the two disagree, the file is discarded and transferred again.
+This check is more accurate than using a reliable network protocol since it also
+catches disk errors, memory errors, software errors in the routers, and other errors
+besides bit transmission errors. The end-to-end argument says that using a reliable
+network protocol is then not necessary, since the endpoint (the receiving process)
+has enough information to verify the correctness of the file. The only reason for
+using a reliable network protocol in this view is for efficiency, that is, catching and
+repairing transmission errors earlier.
+The end-to-end argument can be extended to almost all of the operating 
+system. It argues for not having the operating system do anything that the user 
+program can do itself. For example, why hav e a file system? Just let the user read and
+write a portion of the raw disk in a protected way. Of course, most users like 
+having files, but the end-to-end argument says that the file system should be a library
+procedure linked with any program that needs to use files. This approach allows
+different programs to have different file systems. This line of reasoning says that
+all the operating system should do is securely allocate resources (e.g., the CPU and
+the disks) among the competing users. The Exokernel is an operating system built
+according to the end-to-end argument (Engler et al., 1995). The Unikernel is the
+modern manifestation of the same idea.

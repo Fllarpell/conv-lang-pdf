@@ -1,0 +1,42 @@
+46
+INTRODUCTION 
+CHAP. 1
+1.5.5 Protection
+Computers contain large amounts of information that users often want to 
+protect and keep confidential. This information may include email, business plans, tax
+returns, and much more. It is up to the operating system to manage the system
+security so that files, for example, are accessible only to authorized users.
+As a simple example, just to get an idea of how security can work, consider
+UNIX. Files in UNIX are protected by assigning each one a 9-bit binary 
+protection code. The protection code consists of three 3-bit fields, one for the owner, one
+for other members of the owner’s group (users are divided into groups by the 
+system administrator), and one for everyone else. Each field has a bit for read access,
+a bit for write access, and a bit for execute access. These 3 bits are known as the
+rwx bits. For example, the protection code rwxr-x--x means that the owner can
+read, write, or execute the file, other group members can read or execute (but not
+write) the file, and everyone else can execute (but not read or write) the file. For a
+directory, x indicates search permission. A dash means that the corresponding 
+permission is absent.
+In addition to file protection, there are many other security issues. Protecting
+the system from unwanted intruders, both human and nonhuman (e.g., viruses), is
+one of them. We will look at various security issues in Chap. 9.
+1.5.6 The Shell
+The operating system is the code that carries out the system calls. Editors,
+compilers, assemblers, linkers, utility programs, and command interpreters 
+definitely are not part of the operating system, even though they are important and 
+useful. At the risk of confusing things somewhat, in this section we will look briefly
+at the UNIX command interpreter, the shell. Although it is not part of the 
+operating system, it makes heavy use of many operating system features and thus serves
+as a good example of how the system calls are used. It is also the main interface
+between a user sitting at his terminal and the operating system, unless the user is
+using a graphical user interface. Many shells exist, including sh, csh, ksh, bash, and
+zsh. All of them support the functionality described below, which derives from the
+original shell (sh).
+When any user logs in, a shell is started up. The shell has the terminal as 
+standard input and standard output. It starts out by typing the prompt, a character
+such as a dollar sign, which tells the user that the shell is waiting to accept a 
+command. If the user now types
+date
+for example, the shell creates a child process and runs the date program as the
+child. While the child process is running, the shell waits for it to finish. When the
+child finishes, the shell types the prompt again and tries to read the next input line.

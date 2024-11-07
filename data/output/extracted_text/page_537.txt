@@ -1,0 +1,46 @@
+508
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+And so, VMware, Inc. was founded in 1998 with the specific goal of bringing
+virtualization to the x86 architecture and the personal computer industry.
+VMware’s first product (VMware Workstation) was the first virtualization solution
+available for 32-bit x86-based platforms. The product was first released in 1999,
+and came in two variants: VMware Workstation for Linux, a type 2 hypervisor
+that ran on top of Linux host operating systems, and VMware Workstation for
+Windows, which similarly ran on top of Windows NT. Both variants had identical
+functionality: users could create multiple virtual machines by specifying first the
+characteristics of the virtual hardware (such as how much memory to give the 
+virtual machine, or the size of the virtual disk) and could then install the operating
+system of their choice within the virtual machine, typically from the (virtual) 
+CDROM.
+VMware Workstation was largely aimed at developers and IT professionals.
+Before the introduction of virtualization, a developer routinely had two computers
+on his desk, a stable one for development and a second one where he could 
+reinstall the system software as needed. With virtualization, the second test system
+became a virtual machine.
+Soon, VMware started developing a second and more complex product, which
+would be released as ESX Server in 2001. ESX Server leveraged the same 
+virtualization engine as VMware Workstation, but packaged it as part of a type 1 
+hypervisor. In other words, ESX Server ran directly on the hardware without requiring a
+host operating system. The ESX hypervisor was designed for intense workload
+consolidation and contained many optimizations to ensure that all resources (CPU,
+memory, and I/O) were efficiently and fairly allocated among the virtual machines.
+For example, it was the first to introduce the concept of ballooning to rebalance
+memory between virtual machines (Waldspurger, 2002).
+ESX Server was aimed at the server consolidation market. Before the 
+introduction of virtualization, IT administrators would typically buy, install, and configure
+a new server for every new task or application that they had to run in the data 
+center. The result was that the infrastructure was very inefficiently utilized: servers at
+the time were typically used at 10% of their capacity (during peaks). With ESX
+Server, IT administrators could consolidate many independent virtual machines
+into a single server, saving time, money, rack space, and electrical power.
+In 2002, VMware introduced its first management solution for ESX Server,
+originally called Virtual Center, and today called vSphere. It provided a single
+point of management for a cluster of servers running virtual machines: an IT
+administrator could now simply log into the Virtual Center application and control,
+monitor, or provision thousands of virtual machines running throughout the 
+enterprise. With Virtual Center came another innovation, VMotion (Nelson et al.,
+2005), which allowed the live migration of a running virtual machine over the 
+network. For the first time, an IT administrator could move a running computer from
+one location to another without having to reboot the operating system, restart
+applications, or even lose network connections.

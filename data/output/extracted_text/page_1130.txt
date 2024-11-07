@@ -1,0 +1,44 @@
+SEC. 13.2
+ALPHABETICAL BIBLIOGRAPHY
+1101
+CHAJED, T., TASSAROTTI, J., FRANS KAASHOEK, M.F., and ZELDOVICH, N.: 
+‘‘Verifying Concurrent, Crash-Safe Systems with Perennial,’’ Proc. 27th Symp. on Operating
+Syst. Prin., ACM, pp. 243–258, 2019.
+CHEN, H. CHAJED, T., KONRADI, A., WANG, S., ILERI, A., CHLIPALA, A., KAASHOEK,
+M.F., and ZELDOVICH, N.: ‘‘Verifying a High-Performance Crash-Safe File System
+Using a Tree Specification,’’ Proc. 26th Symp. on Operating Syst. Prin., ACM, pp.
+270–286, 2017.
+CHEN, M.-S., YANG, B.-Y., and CHENG, C.-M.: ‘‘RAIDq: A Software-Friendly, 
+MultipleParity RAID,’’ Proc. Fifth Workshop on Hot Topics in File and Storage Syst., USENIX,
+2013.
+CHEN, Y., LU Y, ZHU B., ARPACI-DUSSEAU, A., ARPACI-DUSSEAU, R., and SHU, J.:
+‘‘Scalable Persistent Memory File System with Kernel-Userspace Collaboration,’’
+Proc. 19th USENIX Conf. on File and Storage Tech., USENIX, pp. 81–95, 2021.
+CHEN, Y., and XING, X.: ‘‘SLAKE: Facilitating Slab Manipulation for Exploiting 
+Vulnerabilities in the Linux Kernel,’’ Proc. 26th ACM Conf. on Computer and 
+Communications Security, ACM, 2019.
+CHENG, H., LI, W., WANG, P., CHU, C-H., and LIANG: ‘‘Incrementally Updateable Honey
+Password Vaults,’’ Proc. 30th USENIX Security Symp., USENIX, pp.857–874,2021.
+CHERVENAK, A., VELLANKI, V., and KURMAS, Z.: ‘‘Protecting File Systems: A Survey
+of Backup Techniques,’’ Proc. 15th IEEE Symp. on Mass Storage Syst., IEEE, 1998.
+CHOI, J., KIM, K., LEE, D., and CHA, S.K.: ‘‘NTFUZZ: Enabling Type-Aware Kernel
+Fuzzing on Windows with Static Binary Analysis,’’ Proc. 42nd Symp. on Security and
+Privacy, IEEE, 2021.
+CHOI, S., and JUNG, S.: ‘‘ A Locality-Aware Home Migration for Software Distributed
+Shared Memory,’’ Proc. 2013 Conf. on Research in Adaptive and Convergent Syst.,
+ACM, pp. 79–81, 2013.
+CHOW, T.C.K., and ABRAHAM, J.A.: ‘‘Load Balancing in Distributed Systems,’’ IEEE
+Tr ans. Software Eng., Vol. SE-8, pp. 401–412, July 1982.
+COFFMAN, E.G., ELPHICK, M.J., and SHOSHANI, A.: ‘‘System Deadlocks,’’ ACM 
+Computing Surveys, Vol. 3, pp. 67–78, June 1971.
+COOK, R.P. Operating Syst. Concepts with Linux and POSIX Threads, Amazon, 2008.
+COOKE, D., URBAN, J., and HAMILTON, S.: ‘‘UNIX and Beyond: An Interview with Ken
+Thompson,’’ Computer, Vol. 32, pp. 58–64, May 1999.
+COOPERSTEIN, J.: Writing Linux Device Drivers: A Guide with Exercises, Seattle: 
+CreateSpace, 2009.
+CORBAT O, F.J.: ‘‘On Building Systems That Will Fail,’’ Commun. ACM, Vol. 34, pp.
+72–81, June 1991.
+CORBAT O, F.J., MERWIN-DAGGETT, M., and DALEY, R.C.: ‘‘ An Experimental 
+TimeSharing System,’’ Proc. AFIPS Fall Joint Computer Conf., AFIPS, pp. 335–344, 1962.
+CORBAT O, F.J., and VYSSOTSKY, V.A.: ‘‘Introduction and Overview of the MULTICS
+System,’’ Proc. AFIPS Fall Joint Computer Conf., AFIPS, pp. 185–196, 1965.

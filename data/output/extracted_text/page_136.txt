@@ -1,0 +1,43 @@
+SEC. 2.2
+THREADS
+107
+specific other thread to terminate. The thread identifier of the thread to wait for is
+given as a parameter.
+Sometimes it happens that a thread is not logically blocked, but feels that it has
+run long enough and wants to give another thread a chance to run. It can 
+accomplish this goal by calling pthread yield. There is no such call for processes 
+because the assumption there is that processes are fiercely competitive and each
+wants all the CPU time it can get (although a very public-spirited process could
+call sleep to yield the CPU briefly). However, since the threads of a process are
+working together and their code is invariably written by the same programmer,
+sometimes the programmer wants them to give each other another chance.
+The next two thread calls deal with attributes. Pthread attr init creates the
+attribute structure associated with a thread and initializes it to the default values.
+These values (such as the priority) can be changed by manipulating fields in the
+attribute structure.
+Finally, pthread attr destroy removes a thread’s attribute structure, freeing up
+its memory. It does not affect threads using it; they continue to exist.
+To get a better feel for how Pthreads works, consider the simple example of
+Fig. 2-14. Here the main program loops NUMBER OF THREADS times, creating
+a new thread on each iteration, after announcing its intention. If the thread creation
+fails, it prints an error message and then exits. After creating all the threads, the
+main program exits.
+When a thread is created, it prints a one-line message announcing itself, then it
+exits. The order in which the various messages are interleaved is nondeterminate
+and may vary on consecutive runs of the program.
+The Pthreads calls described above are not the only ones. We will examine
+some of the others after we have discussed process and thread synchronization.
+2.2.4 Implementing Threads in User Space
+There are two main places to implement threads: user space and the kernel.
+The choice is a bit controversial, and a hybrid implementation is also possible. We
+will now describe these methods, along with their advantages and disadvantages.
+The first method is to put the threads package entirely in user space. The 
+kernel knows nothing about them. As far as the kernel is concerned, it is managing
+ordinary, single-threaded processes. The first, and most obvious, advantage is that
+a user-level threads package can be implemented on an operating system that does
+not support threads. All operating systems used to fall into this category, and even
+now some still do. With this approach, threads are implemented by a library.
+All of these implementations have the same general structure, illustrated in
+Fig. 2-15(a). The threads run on top of a run-time system, which is a collection of
+procedures that manage threads. We hav e seen four of these already: pthread 
+create, pthread exit, pthread join, and pthread yield, but usually there are more.

@@ -1,0 +1,36 @@
+1090
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+Arpaci-Dusseau and Arpaci-Dusseau, ‘‘Operating Systems: Three Easy Pieces’’
+This book has a rich section on virtual memory in Chapters 12–23 and
+includes a nice overview of page replacement policies.
+13.1.4 File Systems
+McKusick et al., ‘‘A Fast File System for UNIX’’
+The UNIX file system was completely redone for 4.2 BSD. This paper
+describes the design of the new file system, with emphasis on its performance.
+Silberschatz et al., Operating System Concepts, 10th ed.
+Chapters 10–12 are about storage hardware and file systems. They cover file
+operations, interfaces, access methods, directories, and implementation, among
+other topics.
+Stallings, Operating Systems, 9th ed.
+Chapter 12 contains a fair amount of material about file systems and little bit
+about their security.
+Cornwell, ‘‘Anatomy of a Solid-state Drive’’
+If you are interested in solid state drives, Michael Cornwell’s introduction is a
+good starting point. In particular, the author succinctly describes the way in way
+traditional hard drives and SSDs differ.
+Timmer, ‘‘Inching Closer to a DNA-Based File System’’
+We explained how disks are in the process of being replaced by SSD in many
+areas of computing, but flash memory is not the end of history either. Researchers
+are looking at storage in other media, such as glass, or even DNA!
+Waddington and Harris, ‘‘Software Challenges for the Changing Storage 
+Landscape’’
+Operating systems are struggling to keep up with new dev elopments in storage.
+In this article, Waddington and Harris talk us through some of the software 
+challenges for monolithic operating systems.
+13.1.5 Input/Output
+Geist and Daniel, ‘‘A Continuum of Disk Scheduling Algorithms’’
+A generalized disk-arm scheduling algorithm is presented. Extensive 
+simulation and experimental results are given.
+Scheible, ‘‘A Survey of Storage Options’’
+There are many ways to store bits these days: DRAM, SRAM, SDRAM, flash

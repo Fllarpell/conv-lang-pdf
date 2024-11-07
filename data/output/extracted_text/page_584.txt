@@ -1,0 +1,95 @@
+SEC. 8.1
+MULTIPROCESSORS
+555
+get the reply until it runs again at 200 msec. The net result is one request-reply
+sequence every 200 msec. Not very good performance.
+The solution to this problem is gang scheduling, which is an outgrowth of 
+coscheduling (Ousterhout, 1982). Gang scheduling has three parts:
+1. Groups of related threads are scheduled as a unit, a gang.
+2. All members of a gang run at once on different timeshared CPUs.
+3. All gang members start and end their time slices together.
+The trick that makes gang scheduling work is that all CPUs are scheduled 
+synchronously. Doing this means that time is divided into discrete quanta as we had in
+Fig. 8-14. At the start of each new quantum, all the CPUs are rescheduled, with a
+new thread being started on each one. At the start of the next quantum, another
+scheduling event happens. In between, no scheduling is done. If a thread blocks,
+its CPU stays idle until the end of the quantum.
+An example of how gang scheduling works is given in Fig. 8-15. Here, we
+have a multiprocessor with six CPUs being used by fiv e processes, A through E,
+with a total of 24 ready threads. During time slot 0, threads A0 through A6 are
+scheduled and run. During time slot 1, threads B0, B1, B2, C0, C1, and C2 are
+scheduled and run. During time slot 2, D’s fiv e threads and E0 get to run. The
+remaining six threads belonging to thread E run in time slot 3. Then the cycle
+repeats, with slot 4 being the same as slot 0, and so on.
+0
+1
+2
+3
+4
+5
+6
+7
+0
+1
+2
+3
+4
+5
+A0
+B0
+B1
+D1
+E2
+A1
+B1
+D1
+E2
+A1
+A2
+B2
+D2
+E3
+A2
+B2
+D2
+E3
+A3
+D3
+E4
+A3
+C0
+D3
+E4
+C1
+D4
+E5
+A4
+C1
+D4
+E5
+C2
+E0
+E6
+A5
+C2
+E0
+E6
+C0
+A4
+A5
+D0
+E1
+A0
+B0
+D0
+E1
+CPU
+Time!
+slot
+Figure 8-15. Gang scheduling.
+The idea of gang scheduling is to have all the threads of a process run together,
+at the same time, on different CPUs, so that if one of them sends a request to
+another one, it will get the message almost immediately and be able to reply almost
+immediately. In Fig. 8-15, since all the A threads are running together, during one
+quantum, they may send and receive a very large number of messages in one
+quantum, thus eliminating the problem of Fig. 8-14.

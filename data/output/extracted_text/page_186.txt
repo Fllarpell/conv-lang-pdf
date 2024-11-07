@@ -1,0 +1,42 @@
+SEC. 2.5
+SCHEDULING
+157
+1. Batch
+2. Interactive
+3. Real time
+Batch systems are still in widespread use in the business world for doing payroll,
+inventory, accounts receivable, accounts payable, interest calculation (at banks),
+claims processing (at insurance companies), and other periodic tasks. In batch 
+systems, there are no users impatiently waiting at their terminals for a quick response
+to a short request. Consequently, nonpreemptive algorithms, or preemptive 
+algorithms with long time periods for each process, are often acceptable. This approach
+reduces process switches and thus improves performance. The batch algorithms are
+actually fairly general and often applicable to other situations as well, which makes
+them worth studying, even for people not involved in corporate mainframe 
+computing.
+In an environment with interactive users, preemption is essential to keep one
+process from hogging the CPU and denying service to the others. Even if no 
+process intentionally ran forever, one process might shut out all the others indefinitely
+due to a program bug. Preemption is needed to prevent this behavior. Servers also
+fall into this category, since they normally serve multiple (remote) users, all of
+whom are in a big hurry. Computer users are always in a big hurry.
+In systems with real-time constraints, preemption is, oddly enough, sometimes
+not needed because the processes know that they may not run for long periods of
+time and usually do their work and block quickly. The difference with interactive
+systems is that real-time systems run only programs that are intended to further the
+application at hand. Interactive systems are general purpose and may run arbitrary
+programs that are not cooperative and even possibly malicious.
+Scheduling Algorithm Goals
+In order to design a scheduling algorithm, it is necessary to have some idea of
+what a good algorithm should do. Some goals depend on the environment (batch,
+interactive, or real time), but some are desirable in all cases. Some goals are listed
+in Fig. 2-41. We will discuss these in turn below.
+Under all circumstances, fairness is important. Comparable processes should
+get comparable service. Giving one process much more CPU time than an 
+equivalent one is not fair. Of course, different categories of processes may be treated 
+differently. Think of safety control and doing the payroll on a nuclear reactor’s 
+computer.
+Somewhat related to fairness is actually enforcing the system’s policies. If the
+local policy is that safety control processes get to run whenever they want to, even
+if it means the payroll is 30 sec late, the scheduler has to make sure this policy is
+enforced. That may take some extra effort.

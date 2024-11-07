@@ -1,0 +1,44 @@
+SEC. 1.3
+COMPUTER HARDWARE REVIEW
+29
+arm position, each of the heads can read an annular region known as a track. 
+Together, all the tracks for a given arm position form a cylinder.
+Each track is divided into some number of sectors, typically 512 bytes per 
+sector. On modern disks, the outer cylinders contain more sectors than the inner ones.
+Moving the arm from one cylinder to the next takes about 1 msec. Moving it to a
+random cylinder typically takes 5–10 msec, depending on the drive. Once the arm
+is on the correct track, the drive must wait for the needed sector to rotate under the
+head, an additional delay of 5–10 msec, depending on the drive’s RPM. Once the
+sector is under the head, reading or writing occurs at a rate of 50 MB/sec on 
+lowend disks to 160–200 MB/sec on faster ones.
+Many people also refer to SSDs as disks, even though they are physically not
+disks at all and do not have platters or moving arms. They store data in electronic
+(Flash) memory. The only way in which they resemble disks in terms of hardware
+is that they also store a lot of data which is not lost when the power is off. But from
+the operating system’s point of view, they are somewhat disk-like. SSDs are much
+more expensive than rotating disks in terms of cost per byte stored, which is why
+they are not so much used in data centers for bulk storage. However, they are much
+faster than magnetic disks and since they hav e no mechanical arm to move, they
+are better at accessing data at random locations. Reading data from an SSD takes
+tens of microseconds instead of milliseconds as with hard disks. Writes are more
+complicated as they require a full data block to be erased first and take more time.
+But even if a  write takes a few hundred microseconds, this is still better than a hard
+disk’s performance.
+The youngest and fastest member of the stable storage family is known as 
+persistent memory. The best known example is Intel Optane which became available
+in 2016. In many ways, persistent memory can be seen as an additional layer
+between SSDs (or hard disks) and memory: it is both fast, only slightly slower than
+regular RAM, and it holds its content across power cycles. While it can be used to
+implement really fast SSDs, manufacturers may also attach it directly to the 
+memory bus. In fact, it can be used like normal memory to store an application’s data
+structures, except that the data will still be there when the power goes off. In that
+case, accessing it requires no special driver and may happen at byte granularity,
+obviating the need to transfer data in large blocks as in hard disks and SSDs.
+1.3.4 I/O Devices
+It should now be clear that CPU and memory are not the only resources that
+the operating system must manage. There are many other ones. Besides disks
+there many other I/O devices that interact heavily with the operating system. As
+we saw in Fig. 1-6, I/O devices generally consist of two parts: a controller and the
+device itself. The controller is a chip (or a set of chips) that physically controls the
+device. It accepts commands from the operating system, for example, to read data
+from the device, and carries them out.

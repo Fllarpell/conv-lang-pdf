@@ -1,0 +1,37 @@
+316
+FILE SYSTEMS
+CHAP. 4
+Various algorithms can be used to manage the cache, but a common one is to
+check all read requests to see if the needed block is in the cache. If it is, the read
+request can be satisfied without a disk access. If the block is not in the cache, it is
+first read into the cache and then copied to wherever it is needed. Subsequent
+requests for the same block can be satisfied from the cache.
+Operation of the cache is illustrated in Fig. 4-30. Since there are many (often
+thousands of) blocks in the cache, some way is needed to determine quickly if a
+given block is present. The usual way is to hash the device and disk address and
+look up the result in a hash table. All the blocks with the same hash value are
+chained together on a linked list so that the collision chain can be followed.
+Rear (MRU)
+Hash table
+Front (LRU)
+Figure 4-30. The buffer cache data structures.
+When a block has to be loaded into a full cache, some block has to be removed
+(and rewritten to the disk if it has been modified since being brought in). This
+situation is very much like paging, and all the usual page-replacement algorithms
+described in Chap. 3, such as FIFO, second chance, and LRU, are applicable. One
+pleasant difference between paging and caching is that cache references are 
+relatively infrequent, so that it is feasible to keep all the blocks in exact LRU order
+with linked lists.
+In Fig. 4-30, we see that in addition to the collision chains starting at the hash
+table, there is also a bidirectional list running through all the blocks in the order of
+usage, with the least recently used block on the front of this list and the most
+recently used block at the end. When a block is referenced, it can be removed from
+its position on the bidirectional list and put at the end. In this way, exact LRU
+order can be maintained.
+Unfortunately, there is a catch. Now that we have a situation in which exact
+LRU is possible, it turns out that LRU is undesirable. The problem has to do with
+the crashes and file-system consistency discussed in the previous section. If a 
+critical block, such as an i-node block, is read into the cache and modified, but not
+rewritten to the disk, a crash will leave the file system in an inconsistent state. If
+the i-node block is put at the end of the LRU chain, it may be quite a while before
+it reaches the front and is rewritten to the disk.

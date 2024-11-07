@@ -1,0 +1,34 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+917
+Handles
+User-mode references to kernel-mode objects cannot use pointers because they
+are too difficult to validate and, more importantly, user-mode does not have 
+visibility into kernel-mode address-space layout due to security reasons. Instead, 
+kernelmode objects must be referred to via an indirection layer. Windows uses handles
+to refer to kernel-mode objects. Handles are opaque values which are converted by
+the object manager into references to the specific kernel-mode data structure
+representing an object. Figure 11-16 shows the handle-table data structure used to
+translate handles into object pointers. The handle table is expandable by adding
+extra layers of indirection. Each process has its own table, including the system
+process which contains all the kernel threads not belonging to a user-mode process.
+Figure 11-16. Handle table data structures for a minimal table using a single
+page for up to 512 handles.
+Figure 11-17 shows a handle table with two extra levels of indirection, the
+maximum supported. It is sometimes convenient for code executing in kernel mode
+to be able to use handles rather than referenced pointers. These are called kernel
+handles and are specially encoded so that they can be distinguished from 
+usermode handles. Kernel handles are kept in the system processes’ handle table and
+cannot be accessed from user mode. Just as most of the kernel virtual address
+space is shared across all processes, the system handle table is shared by all kernel
+components, no matter what the current user-mode process is.
+Users can create new objects or open existing objects by making Win32 calls
+such as CreateSemaphore or OpenSemaphore. These are calls to library 
+procedures that ultimately result in the appropriate system calls being made. The result
+of any successful call that creates or opens an object is a handle-table entry that is
+stored in the process’ private handle table in kernel memory. The 32-bit index of
+the handle’s logical position in the table is returned to the user to use on 
+subsequent calls. The handle-table entry in the kernel contains a referenced pointer to
+the object, some flags (e.g., whether the handle should be inherited by child 
+processes), and an access rights mask. The access rights mask is needed because
+permissions checking is done only at the time the object is created or opened. If a

@@ -1,0 +1,46 @@
+SEC. 4.3
+FILE-SYSTEM IMPLEMENTATION
+291
+To see where all the small writes come from, consider creating a new file on a
+UNIX system. To write this file, the i-node for the directory, the directory block,
+the i-node for the file, and the file itself must all be written. While these writes can
+be delayed, doing so exposes the file system to serious consistency problems if a
+crash occurs before the writes are done. For this reason, the i-node writes are 
+generally done immediately.
+From this reasoning, the LFS designers decided to reimplement the UNIX file
+system in such a way as to achieve the full bandwidth of the disk, even in the face
+of a workload consisting in large part of small random writes. The basic idea is to
+structure the entire disk as a great big log.
+Periodically, and when there is a special need for it, all the pending writes
+being buffered in memory are collected into a single segment and written to the
+disk as a single contiguous segment at the end of the log. A single segment may
+thus contain i-nodes, directory blocks, and data blocks, all mixed together. At the
+start of each segment is a segment summary, telling what can be found in the 
+segment. If the average segment can be made to be about 1 MB, almost the full 
+bandwidth of the disk can be utilized.
+In this design, i-nodes still exist and even hav e the same structure as in UNIX,
+but they are now scattered all over the log, instead of being at a fixed position on
+the disk. Nevertheless, when an i-node is located, locating the blocks is done in the
+usual way. Of course, finding an i-node is now much harder, since its address 
+cannot simply be calculated from its i-number, as in UNIX. To make it possible to
+find i-nodes, an i-node map, indexed by i-number, is maintained. Entry i in this
+map points to i-node i on the disk. The map is kept on disk, but it is also cached,
+so the most heavily used parts will be in memory most of the time.
+To summarize what we have said so far, all writes are initially buffered in
+memory, and periodically all the buffered writes are written to the disk in a single
+segment, at the end of the log. Opening a file now consists of using the map to
+locate the i-node for the file. Once the i-node has been located, the addresses of
+the blocks can be found from it. All of the blocks will themselves be in segments,
+somewhere in the log.
+If disks were infinitely large, the above description would be the entire story.
+However, real disks are finite, so eventually the log will occupy the entire disk, at
+which time no new segments can be written to the log. Fortunately, many existing
+segments may have blocks that are no longer needed. For example, if a file is 
+overwritten, its i-node will now point to the new blocks, but the old ones will still be
+occupying space in previously written segments.
+To deal with this problem, LFS has a cleaner thread that spends its time 
+scanning the log circularly to compact it. It starts out by reading the summary of the
+first segment in the log to see which i-nodes and files are there. It then checks the
+current i-node map to see if the i-nodes are still current and file blocks are still in
+use. If not, that information is discarded. The i-nodes and blocks that are still in
+use go into memory to be written out in the next segment. The original segment is

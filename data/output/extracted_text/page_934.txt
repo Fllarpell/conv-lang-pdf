@@ -1,0 +1,44 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+905
+data are available on a port, or a thread or process terminates, the associated 
+dispatcher object is signaled, waking all threads waiting for that event.
+Since Windows uses a single unified mechanism for synchronization with 
+kernel-mode objects, specialized APIs, such as wait3, for waiting for child processes
+in UNIX, are not needed to wait for events. Often threads want to wait for multiple
+ev ents at once. In UNIX a process can wait for data to be available on any of 64
+network sockets using the select system call. In Windows, there is a similar API
+WaitForMultipleObjects, but it allows for a thread to wait on any type of 
+dispatcher object for which it has a handle. Up to 64 handles can be specified to 
+WaitForMultipleObjects, as well as an optional timeout value. The thread becomes
+ready to run whenever any of the events associated with the handles is signaled or
+the timeout occurs.
+There are actually two different procedures the kernel uses for making the
+threads waiting on a dispatcher object runnable. Signaling a notification object
+will make every waiting thread runnable. Synchronization objects make only the
+first waiting thread runnable and are used for dispatcher objects that implement
+locking primitives, like mutexes. When a thread that is waiting for a lock begins
+running again, the first thing it does is to retry acquiring the lock. If only one
+thread can hold the lock at a time, all the other threads made runnable might
+immediately block, incurring lots of unnecessary context switching. The difference
+between dispatcher objects using synchronization vs. notification is a flag in the
+dispatcher header structure.
+As a little aside, mutexes in Windows are called ‘‘mutants’’ in the code 
+because they were required to implement the OS/2 semantics of not automatically
+unlocking themselves when a thread holding one exited, something Cutler 
+considered bizarre.
+The Executive Layer
+As shown in Fig. 11-11, below the kernel layer of NTOS there is the executive.
+The executive layer is written in C, is mostly architecture independent (the 
+memory manager being a notable exception), and has been ported with only modest
+effort to new processors (MIPS, x86, PowerPC, Alpha, IA64, x64, arm32, and
+arm64). The executive contains a number of different components, all of which run
+using the control abstractions provided by the kernel layer.
+Each component is divided into internal and external data structures and 
+interfaces. The internal aspects of each component are hidden and used only within the
+component itself, while the external aspects are available to all the other 
+components within the executive. A subset of the external interfaces are exported from
+the ntoskrnl.exe executable and device drivers can link to them as if the executive
+were a library. Microsoft calls many of the executive components ‘‘managers,’’
+because each is charge of managing some aspect of the operating services, such as
+I/O, memory, processes, and objects.

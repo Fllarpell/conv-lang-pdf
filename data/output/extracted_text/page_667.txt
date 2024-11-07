@@ -1,0 +1,52 @@
+638
+SECURITY 
+CHAP. 9
+password) pairs. The login name typed in is looked up in the list and the typed
+password is compared to the stored password. If they match, the login is allowed;
+if they do not match, the login is rejected.
+It goes almost without saying that while a password is being typed in, the 
+computer should not display the typed characters, to keep them from prying eyes near
+the monitor. With Windows, as each character is typed, an asterisk is displayed.
+With most UNIX systems, nothing at all is displayed while the password is being
+typed. These schemes have different properties. The Windows scheme may make
+it easy for absent-minded users to see how many characters they hav e typed so far,
+but it also discloses the password length to ‘‘eavesdroppers’’ (for some reason,
+English has a word for auditory snoopers but not for visual snoopers, other than
+perhaps Peeping Tom, which does not seem right in this context). From a security
+perspective, silence is golden.
+Another area in which not quite getting it right has serious security 
+implications is illustrated in Fig. 9-14. In Fig. 9-14(a), a successful login is shown, with
+system output in uppercase and user input in lowercase. In Fig. 9-14(b), a failed
+attempt by a cracker to log into System A is shown. In Fig. 9-14(c) a failed attempt
+by a cracker to log into System B is shown.
+LOGIN: mitch
+LOGIN: carol
+LOGIN: carol
+PASSWORD: FooBar!-7 
+INVALID LOGIN NAME
+PASSWORD: Idunno
+SUCCESSFUL LOGIN
+LOGIN: 
+INVALID LOGIN
+LOGIN:
+(a) 
+(b)
+(c)
+Figure 9-14. (a) A successful login. (b) Login rejected after name is entered.
+(c) Login rejected after name and password are typed.
+In Fig. 9-14(b), the system complains as soon as it sees an invalid login name.
+This is a megamistake, as it allows the cracker to keep trying login names until she
+finds a valid one. In Fig. 9-14(c), the cracker is always asked for a password and
+gets no feedback about whether the login name itself is valid. All she learns is that
+the login name plus password combination tried is wrong.
+As an aside on login procedures, most notebook computers are configured to
+require a login name and password to protect their contents in the event they are
+lost or stolen. While better than nothing, it is not much better than nothing. 
+Anyone who gets hold of the notebook can turn it on and immediately go into the
+BIOS setup program by hitting DEL or F8 or some other BIOS-specific key 
+(usually displayed on the screen) before the operating system is started. Once there, he
+can change the boot sequence, telling it to boot from a USB stick before trying the
+hard disk. The finder then inserts a USB stick containing a complete operating 
+system and boots from it. Once running, the disk can be mounted (in UNIX) or 
+accessed as the D: drive (Windows). To prevent this kind of situation, most BIOSes
+allow the user to password protect the BIOS setup program so that only the owner

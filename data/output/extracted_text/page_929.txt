@@ -1,0 +1,58 @@
+900
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Device
+registers
+Device
+addresses
+Interrupts
+DMA
+Timers
+Spin
+locks
+Firmware
+Disk
+RAM
+Printer
+1.
+2.
+3.
+ MOV EAX,ABC
+ADD EAX,BAX
+BNE LABEL
+MOV EAX,ABC
+MOV EAX,ABC
+ADD EAX,BAX
+BNE LABEL
+MOVE AX,ABC
+ADD EAX,BAX
+BNE LABEL
+Hardware abstraction layer
+Figure 11-12. Some of the hardware functions the HAL manages.
+The Kernel Layer
+Above the hardware abstraction layer is NTOS, consisting of two layers: the
+kernel and the executive. ‘‘Kernel’’ is a confusing term in Windows. It can refer to
+all the code that runs in the processor’s kernel mode. It can also refer to the
+ntoskrnl.exe file which contains NTOS, the core of the Windows operating system.
+Or it can refer to the kernel layer within NTOS, which is how we use it in this 
+section. It is even used to name the user-mode Win32 library that provides the 
+wrappers for the native system calls: kernelbase.dll.
+In the Windows operating system, the kernel layer, illustrated above the 
+executive layer in Fig. 11-11, provides a set of abstractions for managing the CPU. The
+most central abstraction is threads, but the kernel also implements exception 
+handling, traps, and several kinds of interrupts. Creating and destroying the data 
+structures which support threading is implemented in the executive layer. The kernel
+layer is responsible for scheduling and synchronization of threads. Having support
+for threads in a separate layer allows the executive layer to be implemented using
+the same preemptive multithreading model used to write concurrent code in user
+mode, though the synchronization primitives in the executive are much more 
+specialized.
+The kernel’s thread scheduler is responsible for determining which thread is
+executing on each CPU in the system. Each thread executes until a timer interrupt
+signals that it is time to switch to another thread (quantum expired), or until the
+thread needs to wait for something to happen, such as an I/O to complete or for a
+lock to be released, or a higher-priority thread becomes runnable and needs the
+CPU. When switching from one thread to another, the scheduler runs on the CPU
+and ensures that the registers and other hardware state have been saved. The 
+scheduler then selects another thread to run on the CPU and restores the state that was
+previously saved from the last time that thread ran.

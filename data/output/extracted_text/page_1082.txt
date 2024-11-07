@@ -1,0 +1,42 @@
+SEC. 12.2
+INTERFACE DESIGN
+1053
+desirable ones. For example, suppose the hardware has a special way to move large
+bitmaps around the screen (i.e., the video RAM) at high speed. It would be 
+justified to have a new system call to get at this mechanism, rather than just provide
+ways to read video RAM into main memory and write it back again. The new call
+should just move bits and nothing else. It should mirror the underlying hardware
+capability. If a system call is fast, users can always build more convenient 
+interfaces on top of it. If it is slow, nobody will use it.
+Another design issue is connection-oriented vs. connectionless calls. The 
+Windows and UNIX system calls for reading a file are connection-oriented, like using
+the telephone. First you open a file, then you read it, finally you close it. Some
+remote file-access protocols are also connection-oriented. For example, to use FTP,
+the user first logs in to the remote machine, reads the files, and then logs out.
+On the other hand, some remote file-access protocols are connectionless. The
+Web protocol (HTTP) is connectionless. To read a Web page you just ask for it;
+there is no advance setup required (a TCP connection is required, but this is at a
+lower level of protocol. HTTP itself is connectionless).
+The trade-off between any connection-oriented mechanism and a 
+connectionless one is the additional work required to set up the mechanism (e.g., open
+the file), and the gain from not having to do it on (possibly many) subsequent calls.
+For file I/O on a single machine, where the setup cost is low, probably the standard
+way (first open, then use) is the best way. For remote file systems, a case can be
+made both ways.
+Another issue relating to the system-call interface is its visibility. The list of
+POSIX-mandated system calls is easy to find. All UNIX systems support these, as
+well as a small number of other calls, but the complete list is always public. In
+contrast, Microsoft has never made the list of Windows system calls public. Instead
+the WinAPI and other APIs have been made public, but these contain vast numbers
+of library calls (over 10,000) but only a small number are true system calls. The
+argument for making all the system calls public is that it lets programmers know
+what is cheap (functions performed in user space) and what is expensive (kernel
+calls). The argument for not making them public is that it gives the implementers
+the flexibility of changing the actual underlying system calls to make them better
+without breaking user programs. As we saw in Sec. 9.7.7, the original designers
+simply got it wrong with the access system call, but now we are stuck with it.
+12.3 IMPLEMENTATION
+Turning away from the user and system-call interfaces, let us now look at how
+to implement an operating system. In the following sections, we will examine
+some general conceptual issues relating to implementation strategies. After that we
+will look at some low-level techniques that are often helpful.

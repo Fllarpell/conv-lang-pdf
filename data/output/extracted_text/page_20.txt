@@ -1,0 +1,36 @@
+CONTENTS
+xix
+10.5.3 Input/Output System Calls in Linux 761
+10.5.4 Implementation of Input/Output in Linux 762
+10.5.5 Modules in Linux 765
+10.6 THE LINUX FILE SYSTEM 766
+10.6.1 Fundamental Concepts 766
+10.6.2 File-System Calls in Linux 770
+10.6.3 Implementation of the Linux File System 774
+10.6.4 NFS: The Network File System 783
+10.7 SECURITY IN LINUX 789
+10.7.1 Fundamental Concepts 789
+10.7.2 Security System Calls in Linux 791
+10.7.3 Implementation of Security in Linux 792
+10.8 ANDROID 793
+10.8.1 Android and Google 794
+10.8.2 History of Android 794
+10.8.3 Design Goals 800
+10.8.4 Android Architecture 801
+10.8.5 Linux Extensions 803
+10.8.6 ART 807
+10.8.7 Binder IPC 809
+10.8.8 Android Applications 818
+10.8.9 Intents 830
+10.8.10 Process Model 831
+10.8.11 Security and Privacy 836
+10.8.12 Background Execution and Social Engineering 856
+10.9 SUMMARY 863
+11 CASE STUDY 2: WINDOWS 11
+871
+11.1 HISTORY OF WINDOWS THROUGH WINDOWS 11 871
+11.1.1 1980s: MS-DOS 872
+11.1.2 1990s: MS-DOS-based Windows 873
+11.1.3 2000s: NT-based Windows 873
+11.1.4 Windows Vista 876
+11.1.5 Windows 8 877

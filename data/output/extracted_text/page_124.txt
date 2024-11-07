@@ -1,0 +1,54 @@
+SEC. 2.1
+PROCESSES
+95
+Process management 
+Memory management 
+File management
+Registers 
+Pointer to text segment info
+Root directory
+Program counter 
+Pointer to data segment info
+Wor king director y
+Program status word 
+Pointer to stack segment info
+File descriptors
+Stack pointer 
+User ID
+Process state
+Group ID
+Pr ior ity
+Scheduling parameters
+Process ID
+Parent process
+Process group
+Signals
+Time when process started
+CPU time used
+Children’s CPU time
+Time of next alarm
+Figure 2-4. Some of the fields of a typical process-table entry.
+All interrupts start by saving the registers, often in the process table entry for
+the current process. Then the information pushed onto the stack by the interrupt is
+removed and the stack pointer is set to point to a temporary stack used by the 
+process handler. Actions such as saving the registers and setting the stack pointer 
+cannot even be expressed in high-level languages such as C, so they are performed by
+a small assembly-language routine, usually the same one for all interrupts since the
+work of saving the registers is identical, no matter the cause of the interrupt.
+When this routine is finished, it calls a C procedure to do the rest of the work
+for this specific interrupt type. (We assume the operating system is written in C,
+the usual choice for all operating systems used in production.) When it has done
+its job, possibly making some process now ready, the scheduler is called to see
+what to run next. After that, control is passed back to the assembly-language code
+to load up the registers and memory map for the now-current process and start it
+running. Interrupt handling and scheduling are summarized in Fig. 2-5. It is worth
+noting that the details vary somewhat from system to system.
+A process may be interrupted thousands of times during its execution, but the
+key idea is that after each interrupt the interrupted process returns to precisely the
+same state it was in before the interrupt occurred.
+2.1.7 Modeling Multiprogramming
+When multiprogramming is used, the CPU utilization can be improved.
+Crudely put, if the average process computes only 20% of the time it is sitting in
+memory, then with fiv e processes in memory at once the CPU should be busy all
+the time. This model is unrealistically optimistic, however, since it tacitly assumes
+that all fiv e processes will never be waiting for I/O at the same time.

@@ -1,0 +1,28 @@
+xxvi
+PREFACE
+We were also fortunate to have sev eral reviewers who read the manuscript and
+also suggested new end-of-chapter problems. They were Jeremiah Blanchard
+(University of Florida), Kate Holdener (St. Louis University), Liting Hu (Virginia
+Tech), Jiang-Bo Liu (Bradley University), and Mai Zheng (Iowa State University).
+We remain responsible for any remaining errors, of course.
+Several people at the VUSec group at Vrije Universiteit Amsterdam also
+played an important role in this edition. We are grateful to Cristiano Giuffrida for
+his many excellent suggestions of things to add to or remove from the previous
+text. Meanwhile, Erik van der Kouwe, Sebastian Osterlund, Johannes Blaser were
+amazing in how fast they provided fantastic feedback on all the new bits in the
+security chapter.
+We would also like to thank our editor, Tracy Johnson, for keeping the project
+on track and herding all the cats, albeit virtually this time. Erin Sullivan managed
+the review process and Carole Snyder handled production.
+Finally, last but not least, Barbara, Marvin, and Matilde are still wonderful, as
+usual, each in a unique and special way. Aron and Nathan are great kids and
+Olivia and Mirte are treasures. And of course, I would like to thank Suzanne for
+her love and patience, not to mention all the druiven, kersen, and sinaasappelsap,
+as well as other agricultural products. (AST)
+As always, I owe a massive thank you to Marieke, Duko, and Jip. Marieke for
+just being there and for bearing with me in the countless hours that I was working
+on this book, and Duko and Jip for tearing me away from it to play hoops, day and
+night! I am also grateful to the neighbors for putting up with our midnight 
+basketball games. (HB)
+Andrew S. Tanenbaum
+Herbert Bos

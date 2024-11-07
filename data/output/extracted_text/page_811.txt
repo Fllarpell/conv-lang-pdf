@@ -1,0 +1,44 @@
+782
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Ext4 is designed to be highly compatible with ext2 and ext3, although its core
+data structures and disk layout are modified. Regardless, a file system which has
+been unmounted as an ext2 system can be subsequently mounted as an ext4 system
+and offer the journaling capability.
+The journal is a file managed as a circular buffer. The journal may be stored on
+the same or a separate device from the main file system. Since the journal 
+operations are not ‘‘journaled’’ themselves, these are not handled by the same ext4 file
+system. Instead, a separate JBD (Journaling Block Device) is used to perform the
+journal read/write operations.
+JBD supports three main data structures: log record, atomic operation handle,
+and transaction. A log record describes a low-level file-system operation, typically
+resulting in changes within a block. Since a system call such as wr ite includes
+changes at multiple places—i-nodes, existing file blocks, new file blocks, list of
+free blocks, etc.—related log records are grouped in atomic operations. Ext4 
+notifies JBD of the start and end of system-call processing, so that JBD can ensure that
+either all log records in an atomic operation are applied, or none of them. Finally,
+primarily for efficiency reasons, JBD treats collections of atomic operations as
+transactions. Log records are stored consecutively within a transaction. JBD will
+allow portions of the journal file to be discarded only after all log records 
+belonging to a transaction are safely committed to disk.
+Since writing out a log entry for each disk change may be costly, ext4 may be
+configured to keep a journal of all disk changes, or only of changes related to the
+file-system metadata (the i-nodes, superblocks, etc.). Journaling only metadata
+gives less system overhead and results in better performance but does not make any
+guarantees against corruption of file data. Several other journaling file systems
+maintain logs of only metadata operations (e.g., SGI’s XFS). In addition, the
+reliability of the journal can be further improved via checksumming.
+Ke y modification in ext4 compared to its predecessors is the use of extents.
+Extents represent contiguous blocks of storage, for instance 128 MB of contiguous
+4-KB blocks vs. individual storage blocks, as referenced in ext2. Unlike its 
+predecessors, ext4 does not require metadata operations for each block of storage. This
+scheme also reduces fragmentation for large files. As a result, ext4 can provide
+faster file system operations and support larger files and file system sizes. For
+instance, for a block size of 1 KB, ext4 increases the maximum file size from 16
+GB to 16 TB, and the maximum file system size to 1 EB (Exabyte).
+The /proc File System
+Another Linux file system is the /proc (process) file system, an idea originally
+devised in the 8th edition of UNIX from Bell Labs and later copied in 4.4BSD and
+System V. Howev er, Linux extends the idea in several ways. The basic concept is
+that for every process in the system, a directory is created in /proc. The name of
+the directory is the process PID expressed as a decimal number. For example,

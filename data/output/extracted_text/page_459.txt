@@ -1,0 +1,43 @@
+430
+INPUT/OUTPUT 
+CHAP. 5
+really uses more than 300 W. By capping the amount of power each server can
+draw to 300 W, we can pack an additional 3333 servers in our datacenter. Of
+course, power capping and increasing workloads make it challenging to ensure low
+latency for those tasks that need it, while providing sufficient throughput for batch
+jobs (Li et al., 2020).
+5.10 SUMMARY
+Input/output is an often neglected, but important, topic. A substantial fraction
+of any operating system is concerned with I/O. I/O can be accomplished in one of
+three ways. First, there is programmed I/O, in which the main CPU inputs or 
+outputs each byte or word and sits in a tight loop waiting until it can get or send the
+next one. Second, there is interrupt-driven I/O, in which the CPU starts an I/O
+transfer for a character or word and goes off to do something else until an interrupt
+arrives signaling completion of the I/O. Third, there is DMA, in which a separate
+chip manages the complete transfer of a block of data, given an interrupt only
+when the entire block has been transferred.
+I/O can be structured in four levels: the interrupt-service procedures, the device
+drivers, the device-independent I/O software, and the I/O libraries and spoolers that
+run in user space. The device drivers handle the details of running the devices and
+providing uniform interfaces to the rest of the operating system. The 
+device-independent I/O software does things like buffering and error reporting.
+Secondary storage comes in a variety of types, including magnetic disks,
+RAIDs, and flash drives. On rotating disks, disk arm scheduling algorithms can
+often be used to improve performance, but the presence of virtual geometries 
+complicates matters. By pairing two disks or SSDs, a stable storage medium with 
+certain useful properties can be constructed.
+Clocks are used for keeping track of the real time, limiting how long processes
+can run, handling watchdog timers, and doing accounting.
+Character-oriented terminals have a variety of issues concerning special 
+characters that can be input and special escape sequences that can be output. Input can
+be in raw mode or cooked mode, depending on how much control the program
+wants over the input. Escape sequences on output control cursor movement and
+allow for inserting and deleting text on the screen.
+Most UNIX systems use the X Window System as the basis of the user 
+interface. It consists of programs that are bound to special libraries that issue drawing
+commands and an X server that writes on the display.
+Many personal computers use GUIs for their output. These are based on the
+WIMP paradigm: windows, icons, menus, and a pointing device. GUI-based 
+programs are generally event driven, with keyboard, mouse, and other events being
+sent to the program for processing as soon as they happen. In UNIX systems, the
+GUIs almost always run on top of X.

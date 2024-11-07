@@ -1,0 +1,50 @@
+SEC. 9.3
+FORMAL MODELS OF SECURE SYSTEMS
+635
+communicating parties in a secure manner. Why would anyone ever use it? The
+answer is simple. The main problem with public-key cryptography is that it is a
+thousand times slower than symmetric cryptography.
+Digital Signatures
+Frequently it is necessary to sign a document digitally. For example, suppose a
+bank customer instructs the bank to buy some stock for him by sending the bank an
+email message. An hour after the order has been sent and executed, the stock
+crashes. The customer now denies ever having sent the email. The bank can 
+produce the email, of course, but the customer can claim the bank forged it in order to
+get a commission. How does a judge know who is telling the truth?
+Digital signatures make it possible to sign emails and other digital documents
+in such a way that they cannot be repudiated by the sender later. One common way
+is to first run the document through a one-way cryptographic hash algorithm.
+Such a function has the property that given f and its parameter x, computing
+y = f (x) is easy to do, but given only f (x), finding x is computationally infeasible.
+The hash function typically produces a fixed-length result independent of the 
+original document size. Popular hash functions are SHA-256 and SHA-512, which
+produce 32-byte and 64-byte results, respectively.
+The next step assumes the use of public-key cryptography as described above.
+The document owner then applies his private key to the hash to get D(hash). This
+value, called the signature block, is appended to the document and sent to the
+receiver, as shown in Fig. 9-13.
+Original
+document
+Original
+document
+Document
+compressed
+to a hash
+value
+Hash value
+run through D
+D(Hash)
+D(Hash)
+Signature
+block
+Hash
+(a)
+(b)
+Figure 9-13. (a) Computing a signature block. (b) What the receiver gets.
+When the document and hash arrive, the receiver first computes the hash of the
+document using SHA-256 or whatever cryptographic hash function has been
+agreed upon in advance. The receiver then applies the sender’s public key to the
+signature block to get E(D(hash)), getting back the original hash. Note that this
+assumes a cryptographic system where E(D(x)) = x. Fortunately, RSA has that
+property. If the computed hash does not match the hash from the signature block,
+the document, the signature block, or both have been tampered with (or changed by

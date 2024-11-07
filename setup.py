@@ -1,0 +1,46 @@
+from setuptools import find_packages, setup
+
+setup(
+    name="conv-lang-pdf",
+    version="1.0.0",
+    description="A Django-based application for translating large PDF files while preserving layout",
+    author="Ryazanov Dmitry",
+    author_email="dimaste7878@gmail.com",
+    url="https://github.com/Fllarpy/conv-lang-pdf",
+    packages=find_packages(exclude=["tests", "docs"]),
+    include_package_data=True,
+    install_requires=[
+        "Django>=3.2,<4.0",
+        "gunicorn>=20.1.0",
+        "reportlab>=3.6.0",
+        "PyMuPDF>=1.19.0",
+        "pdf2image>=1.16.0",
+        "Pillow>=8.0.0",
+        "nltk>=3.6.0",
+        "transformers>=4.0.0",
+        "torch>=1.7.0",
+        "psycopg2-binary>=2.9.1",
+        "python-dotenv>=0.19.0",
+        "django-environ>=0.4.5",
+        "django-crispy-forms>=1.12.0",
+    ],
+    classifiers=[
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Web Environment",
+        "Framework :: Django",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.9",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Software Development :: Libraries :: Application Frameworks",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+    ],
+    python_requires=">=3.9",
+    entry_points={
+        "console_scripts": [
+            "conv_lang_pdf_manage=web.manage:main",
+        ],
+    },
+)

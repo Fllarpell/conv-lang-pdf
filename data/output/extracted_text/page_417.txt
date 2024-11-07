@@ -1,0 +1,4 @@
+388
+INPUT/OUTPUT 
+CHAP. 5
+Figure 5-26. RAID levels 0 through 6. Backup and parity drives are shown shaded.

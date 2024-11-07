@@ -1,0 +1,40 @@
+CONTENTS
+xiii
+5.1.4 Direct Memory Access 344
+5.1.5 Interrupts Revisited 347
+5.2 
+PRINCIPLES OF I/O SOFTWARE 352
+5.2.1 Goals of the I/O Software 352
+5.2.2 Programmed I/O 354
+5.2.3 Interrupt-Driven I/O 355
+5.2.4 I/O Using DMA 356
+5.3 
+I/O SOFTWARE LAYERS 357
+5.3.1 Interrupt Handlers 357
+5.3.2 Device Drivers 359
+5.3.3 Device-Independent I/O Software 362
+5.3.4 User-Space I/O Software 368
+5.4 
+MASS STORAGE: DISK AND SSD 370
+5.4.1 Magnetic Disks 370
+5.4.2 Solid State Drives (SSDs) 381
+5.4.3 RAID 385
+5.5 
+CLOCKS 390
+5.5.1 Clock Hardware 390
+5.5.2 Clock Software 391
+5.5.3 Soft Timers 394
+5.6 
+USER INTERFACES: KEYBOARD, MOUSE, & MONITOR 395
+5.6.1 Input Software 396
+5.6.2 Output Software 402
+5.7 
+THIN CLIENTS 419
+5.8 
+POWER MANAGEMENT 420
+5.8.1 Hardware Issues 421
+5.8.2 Operating System Issues 422
+5.8.3 Application Program Issues 428
+5.9 
+RESEARCH ON INPUT/OUTPUT 428
+5.10 SUMMARY 430

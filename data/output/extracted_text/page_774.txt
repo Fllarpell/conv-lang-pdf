@@ -1,0 +1,45 @@
+SEC. 10.4
+MEMORY MANAGEMENT IN LINUX
+745
+data are not all that different from program text—both contain bit patterns 
+produced by the compiler that must be loaded into memory when the program starts.
+The existence of uninitialized data is actually just an optimization. When a 
+global variable is not explicitly initialized, the semantics of the C language say that its
+initial value is 0. In practice, most global variables are not initialized explicitly,
+and are thus 0. This could be implemented by simply having a section of the
+executable binary file exactly equal to the number of bytes of data, and initializing
+all of them, including the ones that have defaulted to 0.
+However, to sav e space in the executable file, this is not done. Instead, the file
+contains all the explicitly initialized variables following the program text. The
+uninitialized variables are all gathered together after the initialized ones, so all the
+compiler has to do is put a word in the header telling how many bytes to allocate.
+As an example, consider Fig. 10-12(a) again. Here the program text is 8 KB and
+the initialized data is also 8 KB. The uninitialized data (BSS) is 4 KB. The
+executable file is only 16 KB (text + initialized data), plus a short header that tells
+the system to allocate another 4 KB after the initialized data and zero it before
+starting the program. This trick avoids storing 4 KB of zeros in the executable file.
+In order to avoid allocating a physical page frame full of zeros, during 
+initialization Linux allocates a static zero page, a write-protected page full of zeros.
+When a process is loaded, its uninitialized data region is set to point to the zero
+page. Whenever a process actually attempts to write in this area, the copy-on-write
+mechanism kicks in, and an actual page frame is allocated to the process.
+Unlike the text segment, which cannot change, the data segment can change.
+Programs modify their variables all the time. Furthermore, many programs need to
+allocate space dynamically, during execution. Linux handles this by permitting the
+data segment to grow and shrink as memory is allocated and deallocated. A 
+system call, br k, is available to allow a program to set the size of its data segment.
+Thus to allocate more memory, a program can increase the size of its data segment.
+The C library procedure malloc, commonly used to allocate memory, makes heavy
+use of it. The process address-space descriptor contains information on the range
+of dynamically allocated memory areas in the process, typically called the heap.
+The third segment is the stack segment. On most machines, it starts at or near
+the top of the virtual address space and grows down toward 0. For instance, on
+32bit x86 platforms, the stack starts at address 0xC0000000, which is the 3-GB
+virtual address limit visible to the process in user mode. If the stack grows below
+the bottom of the stack segment, a hardware fault occurs and the operating system
+lowers the bottom of the stack segment by one page. Programs do not explicitly
+manage the size of the stack segment.
+When a program starts up, its stack is not empty. Instead, it contains all the
+environment (shell) variables as well as the command line typed to the shell to
+invoke it. In this way, a program can discover its arguments. For example, when
+cp src dest

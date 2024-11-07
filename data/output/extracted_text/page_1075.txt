@@ -1,0 +1,38 @@
+1046
+OPERATING SYSTEM DESIGN
+CHAP. 12
+Principle 1: Simplicity
+A simple interface is easier to understand and implement in a bug-free way. All
+system designers should memorize this famous quote from the pioneer French 
+aviator and writer, Antoine de St. Exupe´ry:
+Perfection is reached not when there is no longer anything to add, but
+when there is no longer anything to take away.
+If you want to get really picky, he didn’t say that. He said:
+Il semble que la perfection soit atteinte non quand il n’y a plus rien a`
+ajouter, mais quand il n’y a plus rien a` retrancher.
+But you get the idea. Memorize it either way.
+This principle says that less is better than more, at least in the operating system
+itself. Another way to say this is the KISS principle: Keep It Simple, Stupid.
+Principle 2: Completeness
+Of course, the interface must make it possible to do everything that the users
+need to do, that is, it must be complete. This brings us to another famous quote,
+this one from Albert Einstein:
+Everything should be as simple as possible, but no simpler.
+In other words, the operating system should do exactly what is needed of it and no
+more. If users need to store data, it must provide some mechanism for storing data.
+If users need to communicate with each other, the operating system has to provide
+a communication mechanism, and so on. In his 1991 Turing Award lecture, 
+Fernando Corbato´, one of the designers of CTSS and MULTICS, combined the 
+concepts of simplicity and completeness and said:
+First, it is important to emphasize the value of simplicity and elegance, for
+complexity has a way of compounding difficulties and as we have seen,
+creating mistakes. My definition of elegance is the achievement of a given
+functionality with a minimum of mechanism and a maximum of clarity.
+The key idea here is minimum of mechanism. In other words, every feature, 
+function, and system call should carry its own weight. It should do one thing and do it
+well. When a member of the design team proposes extending a system call or 
+adding some new feature, the others should ask whether something awful would 
+happen if it were left out. If the answer is: ‘‘No, but somebody might find this feature
+useful some day,’’ put it in a user-level library, not in the operating system, even if
+it is slower that way. Not every feature has to be faster than a speeding bullet. The
+goal is to preserve what Corbato´ called minimum of mechanism.

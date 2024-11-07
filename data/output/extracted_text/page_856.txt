@@ -1,0 +1,46 @@
+SEC. 10.8
+ANDROID
+827
+Activity manager in system_server process
+Email app process
+2. Create
+3. Return
+4. Send
+1. Bind
+Client app process
+5. Call service
+SyncService
+IBinder
+IBinder
+IBinder
+IBinder
+IBinder
+ServiceRecord
+(SyncService)
+STOPPED
+Figure 10-59. Binding to an application service.
+Receivers
+A receiver is the recipient of (typically external) event s that happen, most of
+the time in the background and outside of normal user interaction with an app.
+Receivers conceptually are the same as an application explicitly registering for a
+callback when something interesting happens (an alarm goes off, data connectivity
+changes, etc.), but do not require that the application be running in order to receive
+the event.
+The example email manifest shown in Fig. 10-51 contains a receiver for the
+application to find out when the device’s storage becomes low in order for it to
+stop synchronizing email (which may consume more storage). When the device’s
+storage becomes low, the system will send a broadcast with the low storage code,
+to be delivered to all receivers interested in the event.
+Figure 10-60 illustrates how such a broadcast is processed by the activity 
+manager in order to deliver it to interested receivers. It first asks the package manager
+for a list of all receivers interested in the event, which is placed in a 
+BroadcastRecord representing that broadcast. The activity manager will then proceed to
+step through each entry in the list, having each associated application’s process
+create and execute the appropriate receiver class.
+Receivers only run as one-shot operations. They are activated only one time.
+When an event happens, the system finds any receivers interested in it, delivers that
+ev ent to them, and once they hav e consumed the event they are done. There is no
+ReceiverRecord like those we have seen for other application components, because
+a particular receiver is only a transient entity for the duration of a single broadcast.
+Each time a new broadcast is sent to a receiver component, a new instance of that
+receiver’s class is created.

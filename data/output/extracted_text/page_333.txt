@@ -1,0 +1,75 @@
+304
+FILE SYSTEMS
+CHAP. 4
+(a)
+(b)
+Free disk blocks: 16, 17, 18
+A bitmap
+A 1-KB disk block can hold 256!
+32-bit disk block numbers
+86!
+234!
+897!
+422!
+140!
+223!
+223!
+160!
+126!
+142!
+141
+1001101101101100!
+0110110111110111!
+1010110110110110!
+0110110110111011!
+1110111011101111!
+1101101010001111!
+0000111011010111!
+1011101101101111!
+1100100011101111!
+0111011101110111!
+1101111101110111
+230!
+162!
+612!
+342!
+214!
+160!
+664!
+216!
+320!
+180!
+482
+42!
+136!
+210!
+97!
+41!
+63!
+21!
+48!
+262!
+310!
+516
+Figure 4-24. (a) Storing the free list on a linked list. (b) A bitmap.
+allocated blocks by 0s (or vice versa). For our example 1-TB disk, we need 1 
+billion bits for the map, which requires around 130,000 1-KB blocks to store. It is
+not surprising that the bitmap requires less space, since it uses 1 bit per block, vs.
+32 bits in the linked-list model. Only if the disk is nearly full (i.e., has few free
+blocks) will the linked-list scheme require fewer blocks than the bitmap.
+If free blocks tend to come in long runs of consecutive blocks, the free-list 
+system can be modified to keep track of runs of blocks rather than single blocks. An
+8-, 16-, or 32-bit count could be associated with each block giving the number of
+consecutive free blocks. In the best case, a basically empty disk could be 
+represented by two numbers: the address of the first free block followed by the count of
+free blocks. On the other hand, if the disk becomes severely fragmented, keeping
+track of runs is less efficient than keeping track of individual blocks because not
+only must the address be stored, but also the count.
+This issue illustrates a problem operating system designers often have. There
+are multiple data structures and algorithms that can be used to solve a problem, but
+choosing the best one requires data that the designers do not have and will not have
+until the system is deployed and heavily used. And even then, the data may not be
+available. For instance, while we may measure the file size distribution and disk
+usage in one or two environments, we have little idea if these numbers are 
+representative of home computers, corporate computers, government computers, not to
+mention tablets and smartphones, and others.

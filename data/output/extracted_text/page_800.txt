@@ -1,0 +1,85 @@
+SEC. 10.6
+THE LINUX FILE SYSTEM
+771
+0
+(a)
+1
+2
+3
+8
+9
+10
+11
+12
+13
+14
+15
+0
+1
+2
+3
+10
+11
+12
+13
+14
+15
+0
+1
+12
+13
+14
+15
+(b)
+(c)
+Process A's!
+shared!
+lock
+A's shared lock
+B's shared lock
+C's shared lock
+A
+B
+4
+5
+6
+7
+4
+5
+6
+7
+8
+9
+2
+3
+4
+5
+8
+9
+10
+11
+7
+6
+Figure 10-26. (a) A file with one lock. (b) Adding a second lock. (c) A third one.
+creates a file called abc with the protection bits taken from mode. These bits 
+determine which users may access the file and how. They will be described later.
+The creat call not only creates a new file, but also opens it for writing. To
+allow subsequent system calls to access the file, a successful creat returns a small
+nonnegative integer called a file descriptor, fd in the example above. If a creat is
+done on an existing file, that file is truncated to length 0 and its contents are 
+discarded. Additionally, files can also be created using the open call with appropriate
+arguments.
+Now let us continue looking at the main file-system calls, which are listed in
+Fig. 10-27. To read or write an existing file, the file must first be opened by calling
+open or creat. This call specifies the file name to be opened and how it is to be
+opened: for reading, writing, or both. Various options can be specified as well.
+Like creat, the call to open returns a file descriptor that can be used for reading or
+writing. Afterward, the file can be closed by close, which makes the file descriptor
+available for reuse on a subsequent creat or open. Both the creat and open calls
+always return the lowest-numbered file descriptor not currently in use.
+When a program starts executing in the standard way, file descriptors 0, 1, and
+2 are already opened for standard input, standard output, and standard error,
+respectively. In this way, a filter, such as the sort program, can just read its input
+from file descriptor 0 and write its output to file descriptor 1, without having to
+know what files they are. This mechanism works because the shell arranges for
+these values to refer to the correct (redirected) files before the program is started.

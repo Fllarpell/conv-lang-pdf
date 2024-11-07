@@ -1,0 +1,44 @@
+SEC. 10.8
+ANDROID
+807
+a higher oom adj will always be killed before those with lower ones. We will 
+discuss later how the Android system decides to assign these scores.
+In later versions of Android, a new user-space lmkd process was added to take
+care of killing processes, replacing the original Android implementation in the 
+kernel. This was made possible by newer Linux features such as ‘‘pressure-stall 
+information’’ provided to user space. Switching to lmkd not only allows Android to use
+a closer to stock Linux kernel, but also gives it more flexibility in how the 
+higher-level system interacts with the low-memory-killer.
+For example, the oom adj parameter in the kernel has a limit range of values,
+from <16 to 15. This greatly limits the granularity of process selection that can be
+provided to it. The new lmkd implementation allows a full integer for ordering
+processes.
+10.8.6 ART
+ART (Android RunTime) implements the Java language environment on
+Android that is responsible for running applications as well as most of its system
+code. Almost ev erything in the system service process—from the package 
+manager, through the window manager, to the activity manager—is implemented with
+Java language code executed by ART.
+Android is not, however, a Java-language platform in the traditional sense.
+Java code in an Android application is provided in ART’s bytecode format, called
+DEX (Dalvik Executable), based around a register machine rather than Java’s 
+traditional stack-based bytecode.
+DEX allows for faster interpretation, while still supporting JIT (Just-in-Time)
+compilation. DEX is also more space efficient, both on disk and in RAM, through
+the use of string pooling and other techniques.
+When writing Android applications, source code is written in Java and then
+compiled into standard Java bytecode using traditional Java tools. Android then
+introduces a new step: converting that Java bytecode into DEX. It is the DEX 
+version of an application that is packaged up as the final application binary and 
+ultimately installed on the device.
+Android’s system architecture leans heavily on Linux for system primitives,
+including memory management, security, and communication across security
+boundaries. It does not use the Java language for core operating system 
+concepts—there is little attempt to abstract away these important aspects of the 
+underlying Linux operating system.
+Of particular note is Android’s use of processes. Android’s design does not
+rely on the Java language to protect application from each other and the system,
+but rather takes the traditional operating system approach of process isolation.
+This means that each application is running in its own Linux process with its own
+ART environment, as are the system server and other core parts of the platform
+that are written in Java.

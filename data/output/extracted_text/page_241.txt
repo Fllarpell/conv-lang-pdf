@@ -1,0 +1,48 @@
+212
+MEMORY MANAGEMENT 
+CHAP. 3
+When a page fault occurs,!
+the page the hand is!
+pointing to is inspected.!
+The action taken depends!
+on the R bit:!
+   R = 0: Evict the page!
+   R = 1: Clear R and advance hand
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+Figure 3-16. The clock page replacement algorithm.
+3.4.6 The Least Recently Used (LRU) Page Replacement Algorithm
+A good approximation to the optimal algorithm is based on the observation
+that pages that have been heavily used in the last few instructions will probably be
+heavily used again soon. Conversely, pages that have not been used for ages will
+probably remain unused for a long time. This idea suggests a realizable algorithm:
+when a page fault occurs, throw out the page that has been unused for the longest
+time. This strategy is called LRU (Least Recently Used) paging.
+Although LRU is theoretically realizable, it is not cheap by a long shot. To 
+fully implement LRU, it is necessary to maintain a linked list of all pages in memory,
+with the most recently used page at the front and the least recently used page at the
+rear. The difficulty is that the list must be updated on every memory reference.
+Finding a page in the list, deleting it, and then moving it to the front is a time 
+consuming operation, even in hardware (assuming that such hardware could be built).
+However, there are other ways to implement LRU with special hardware. Let
+us consider the simplest way first. This method requires equipping the hardware
+with a 64-bit counter, C, that is automatically incremented after each instruction.
+Furthermore, each page table entry must also have a field large enough to contain
+the counter. After each memory reference, the current value of C is stored in the
+page table entry for the page just referenced. When a page fault occurs, the 
+operating system examines all the counters in the page table to find the lowest one. That
+page is the least recently used.
+3.4.7 Simulating LRU in Software
+Although the previous LRU algorithm is (in principle) realizable, few, if any,
+machines have the required hardware. Instead, a solution that can be implemented
+in software is needed. One possibility is called the NFU (Not Frequently Used)

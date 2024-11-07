@@ -1,0 +1,46 @@
+478
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+but the way we use it today is a little different. The main idea is that a VMM 
+(Virtual Machine Monitor) creates the illusion of multiple (virtual) machines on the
+same physical hardware. A VMM is also known as a hypervisor. As discussed in
+Sec. 1.7.5, we distinguish between type 1 hypervisors which run on the bare metal,
+and type 2 hypervisors that may make use of all the wonderful services and
+abstractions offered by an underlying operating system. Either way, virtualization
+allows a single computer to host multiple virtual machines, each potentially 
+running a completely different operating system.
+The advantage of this approach is that a failure in one virtual machine does not
+bring down any others. On a virtualized system, different servers can run on 
+different virtual machines, thus maintaining the partial-failure model that a 
+multicomputer has, but at a lower cost and with easier maintainability. Moreover, we can
+now run multiple different operating systems on the same hardware, benefit from
+virtual machine isolation in the face of attacks, and enjoy other good stuff.
+Of course, consolidating servers like this is like putting all your eggs in one
+basket. If the server running all the virtual machines fails, the result is even more
+catastrophic than the crashing of a single dedicated server. The reason 
+virtualization works, however, is that most service outages are due not to faulty hardware,
+but to ill-designed, unreliable, buggy, and poorly configured software, 
+emphatically including operating systems. With virtual machine technology, the only 
+software running in the highest privilege mode is the hypervisor, which has two orders
+of magnitude fewer lines of code than a full operating system, and thus two orders
+of magnitude fewer bugs. A hypervisor is simpler than an operating system
+because it does only one thing: emulate multiple copies of the bare metal (most
+commonly the Intel x86 architecture, although ARM is becoming popular in 
+datacenters also).
+Running software in virtual machines has still other advantages in addition to
+strong isolation. One of them is that having fewer physical machines saves money
+on hardware and electricity and takes up less rack space. For a company such as
+Amazon, Google or Microsoft, which may have hundreds of thousands of servers
+doing a huge variety of different tasks at each data center, reducing the physical
+demands on their data centers represents a huge cost savings. In fact, server 
+companies sometimes locate their data centers in the middle of nowhere—just to be
+close to, say, hydroelectric dams (and cheap energy). Virtualization also helps in
+trying out new ideas. Typically, in large companies, individual departments or
+groups think of an interesting idea and then go out and buy a server to implement
+it. If the idea catches on and hundreds or thousands of servers are needed, the 
+corporate data center expands. It is often hard to move the software to existing 
+machines because each application often needs a different version of the operating
+system, its own libraries, configuration files, and more. With virtual machines,
+each application can take its own environment with it.
+Another advantage of virtual machines is that checkpointing and migrating 
+virtual machines (e.g., for load balancing across multiple servers) is much easier than

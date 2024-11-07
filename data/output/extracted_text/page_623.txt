@@ -1,0 +1,50 @@
+594
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+a
+b
+a
+b
+c
+A
+B
+Single processor
+Original
+file
+1. Write "c"
+2. Read gets "abc"
+(a)
+(b)
+a
+b
+a
+b
+a
+b
+c
+A
+Client 1
+1. Read "ab"
+2. Write "c"
+File server 
+3. Read gets "ab"
+Client 2
+a
+b
+B
+Figure 8-35. (a) Sequential consistency. (b) In a distributed system with 
+caching, reading a file may return an obsolete value.
+result depends on who closes last. A less pleasant, but slightly easier to 
+implement, alternative is to say that the final result is one of the candidates, but leave the
+choice of which one unspecified.
+An alternative approach to session semantics is to use the upload/download
+model, but to automatically lock a file that has been downloaded. Attempts by
+other clients to download the file will be held up until the first client has returned
+it. If there is a heavy demand for a file, the server could send messages to the 
+client holding the file, asking it to hurry up, but that may or may not help. All in all,
+getting the semantics of shared files right is a tricky business with no elegant and
+efficient solutions.
+8.3.5 Object-Based Middleware
+Now let us take a look at a third paradigm. Instead of saying that everything is
+a document or everything is a file, we say that everything is an object. An object
+in this context is a collection of variables that are bundled together with a set of

@@ -1,0 +1,45 @@
+696
+SECURITY 
+CHAP. 9
+9.10 SUMMARY
+Computers frequently contain valuable and confidential data, including tax 
+returns, credit card numbers, business plans, trade secrets, and much more. The 
+owners of these computers are usually quite keen on having them remain private and
+not tampered with, which rapidly leads to the requirement that operating systems
+must provide good security. Security comprises confidentiality, integrity, and 
+availability. To dev elop secure systems, we consistently apply security principles. The
+structure of an operating system matters for its security properties, as some designs
+(e.g., monolithic systems) make it difficult to apply principles such as the Principle
+Of Least Authority. In general, the security of a system is inversely proportional to
+the size of the trusted computing base.
+A fundamental component of security for operating systems concerns access
+control to resources. Access rights to information can be modeled as a big matrix,
+with the rows being the domains (users) and the columns being the objects (e.g.,
+files). Each cell specifies the access rights of the domain to the object. Since the
+matrix is sparse, it can be stored by row, which becomes a capability list saying
+what that domain can do, or by column, in which case it becomes an access control
+list telling who can access the object and how. Using formal modeling techniques,
+information flow in a system can be modeled and limited. However, sometimes it
+can still leak out using covert channels, such as modulating CPU usage.
+Security properties that rest on strong proofs and formalizations go beyond the
+modeling of information flow and include cryptography. Cryptographic schemes
+can be categorized as secret key or public key. A secret-key method requires the
+communicating parties to exchange a secret key in advance, using some 
+out-ofband mechanism. Public-key cryptography does not require secretly exchanging a
+key in advance, but it is much slower in use. Sometimes it is necessary to prove
+the authenticity of digital information, in which case cryptographic hashes, digital
+signatures, and certificates signed by a trusted certification authority can be used.
+In any secure system, users must be authenticated. This can be done by 
+something the user knows, something the user has, or something the user is (biometrics).
+Tw o-factor identification, such as an iris scan and a password, can be used to
+enhance security.
+Many kinds of bugs in software can be exploited to take over programs and
+systems. These include buffer overflow vulnerabilities, format-string bugs, 
+useafter-free, type confusion bugs, null pointer dereferences, double frees, integer
+overflows, and several others. They enable a variety of attacks, nowadays 
+frequently reusing the original program code to implement the malicious behavior. To deal
+with such vulnerabilities, vendors deploy defenses such as stack canaries, data
+execution prevention, and address-space layout randomization.
+Insiders, such as company employees, can defeat system security in different
+ways. These include logic bombs set to go off on some future date, trap doors to
+allow the insider unauthorized access later, and login spoofing.

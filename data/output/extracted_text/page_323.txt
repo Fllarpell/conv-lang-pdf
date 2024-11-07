@@ -1,0 +1,46 @@
+294
+FILE SYSTEMS
+CHAP. 4
+however fascinating, is beyond the scope of this chapter. Irrespective of the flash
+technology, here are important differences between hard disks and flash storage.
+There are no moving parts in flash storage and the problems of seek times and
+rotational delays that we mentioned in the previous section do not exist. This
+means that the access time (latency) is much better—on the order of several tens of
+microseconds instead of milliseconds. It also means that on SSDs there is not
+much of a gap in performance between random and sequential reads. As we shall
+see, random writes are still quite a bit more expensive—especially small ones.
+Indeed, unlike magnetic disks, flash technology has asymmetric read and write
+performance: reads are much faster than writes. For instance, where a read takes a
+few tens of microseconds, a write can take hundreds. First, writes are slow because
+of how the flash cells that implement the bits are programmed—this is physics and
+not something we want to get into here. A second, and more impactful reason is
+that you can only write a unit of data after you have erased a suitable area on the
+device. In fact, flash memory distinguishes between a unit of I/O (often 4 KB), and
+a unit of erase (often 64-256 units of I/O, so up to several MB). Sadly, the industry
+takes great pleasure in confusing people and refers to a unit of I/O as a page and to
+the unit of erase as a block, except for those publications that refer to the unit of
+I/O as a block or even a sector and the unit of erase as a chunk. Of course, the
+meaning of a page is also quite different from that of a memory page in the 
+previous chapter and the meaning of a block does not match that of a disk block either.
+To avoid confusion, we will use the terms flash page and flash block for the unit of
+I/O and the unit of erase, respectively.
+To write a flash page, the SSD must first erase a flash block—an expensive
+operation taking hundreds of microseconds. Fortunately, after it has erased the
+block, there are many free flash pages in that space and the SSD can now write the
+flash pages in the flash block in order. In other words, it first writes flash page 0 in
+the block, then 1, then 2, etc. It cannot write flash page 0, followed by 2, and then
+1. Also, the SSD cannot really overwrite a flash page that was written earlier. It
+first has to erase the entire flash block again (not just the page). Indeed, if you 
+really wanted to overwrite some data in a file in-place, the SSD would need to save the
+other flash pages in the block somewhere else, erase the block in its entirety, and
+then rewrite the pages one by one—not a cheap operation at all! Instead, 
+modifying data on an SSD simply makes the old flash page invalid and then rewrites the
+new content in another block. If there are no blocks with free pages available, this
+would require erasing a block first.
+You do not want to keep writing the same flash pages all the time anyway, as
+flash memory suffers from wear. Repeatedly writing and erasing takes its toll and
+at some point the flash cells that hold the bits can no longer be used. A 
+program/erase (P/E) cycle consists of erasing a cell and writing new content in it. 
+Typical flash memory cells have a maximum endurance of a few thousand to a few
+hundred thousand P/E cycles before they kick the bucket. In other words, it is
+important to spread the wear across the flash memory cells as much as possible.

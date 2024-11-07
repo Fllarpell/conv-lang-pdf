@@ -1,0 +1,44 @@
+1062
+OPERATING SYSTEM DESIGN
+CHAP. 12
+12.3.6 Static vs. Dynamic Structures
+Operating system designers are constantly forced to choose between static and
+dynamic data structures. Static ones are always simpler to understand, easier to
+program, and faster in use; dynamic ones are more flexible. An obvious example
+is the process table. Early systems simply allocated a fixed array of per-process
+structures. If the process table consisted of 256 entries, then only 256 processes
+could exist at any one instant. An attempt to create a 257th one would fail for lack
+of table space. Similar considerations held for the table of open files (both per user
+and systemwide), and many other kernel tables.
+An alternative strategy is to build the process table as a linked list of 
+minitables, initially just one. If this table fills up, another one is allocated from a global
+storage pool and linked to the first one. In this way, the process table cannot fill up
+until all of kernel memory is exhausted.
+On the other hand, the code for searching the table becomes more complicated.
+For example, the code for searching a static process table for a given PID, pid, is
+given in Fig. 12-5. It is simple and efficient. Doing the same thing for a linked list
+of minitables is more work.
+found = 0;
+for (p = &proc table[0]; p < &proc table[PROC TABLE SIZE]; p++) {
+if (p->proc pid == pid) {
+found = 1;
+break;
+}
+}
+Figure 12-5. Code for searching the process table for a given PID.
+Static tables are best when there is plenty of memory or table utilizations can
+be guessed fairly accurately. For example, in a single-user system, it is unlikely
+that the user will start up more than 128 processes at once, and it is not a total 
+disaster if an attempt to start a 129th one fails.
+Yet another alternative is to use a fixed-size table, but if it fills up, allocate a
+new fixed-size table, say, twice as big. The current entries are then copied over to
+the new table and the old table is returned to the free storage pool. In this way, the
+table is always contiguous rather than linked. The disadvantage here is that some
+storage management is needed and the address of the table is now a variable
+instead of a constant.
+A similar issue holds for kernel stacks. When a thread switches from user
+mode to kernel mode, or a kernel-mode thread is run, it needs a stack in kernel
+space. For user threads, the stack can be initialized to run down from the top of the
+virtual address space, so the size need not be specified in advance. For kernel
+threads, the size must be specified in advance because the stack takes up some 
+kernel virtual address space and there may be many stacks. The question is: how much

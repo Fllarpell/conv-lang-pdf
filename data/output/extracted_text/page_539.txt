@@ -1,0 +1,45 @@
+510
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+instance. The virtual machines are isolated from other virtual machines, appear
+each as a duplicate of the underlying hardware, and ideally run with the same
+speed as the real machine. VMware adapted these core attributes of a virtual
+machine to an x86-based target platform as follows:
+1. Compatibility. The notion of an ‘‘essentially identical environment’’
+meant that any x86 operating system, and all of its applications,
+would be able to run without modifications as a virtual machine. A
+hypervisor needed to provide sufficient compatibility at the hardware
+level such that users could run whichever operating system (down to
+the update and patch version) they wished to install within a particular
+virtual machine, without restrictions.
+2. Performance. The overhead of the hypervisor had to be sufficiently
+low that users could use a virtual machine as their primary work 
+environment. As a goal, the designers of VMware aimed to run relevant
+workloads at near native speeds, and in the worst case to run them on
+then-current processors with the same performance as if they were
+running natively on the immediately prior generation of processors.
+This was based on the observation that most x86 software was not
+designed to run only on the latest generation of CPUs.
+3. Isolation. A hypervisor had to guarantee the isolation of the virtual
+machine without making any assumptions about the software running
+inside. That is, a hypervisor needed to be in complete control of
+resources. Software running inside virtual machines had to be 
+prevented from any access that would allow it to subvert the hypervisor.
+Similarly, a hypervisor had to ensure the privacy of all data not
+belonging to the virtual machine. A hypervisor had to assume that the
+guest operating system could be infected with unknown, malicious
+code (a much bigger concern today than during the mainframe era).
+There was an inevitable tension between these three requirements. For 
+example, total compatibility in certain areas might lead to a prohibitive impact on 
+performance, in which case VMware’s designers had to compromise. However, they
+ruled out any trade-offs that might compromise isolation or expose the hypervisor
+to attacks by a malicious guest. Overall, four major challenges emerged:
+1. The x86 architecture was not virtualizable.
+It had 
+virtualization-sensitive, nonprivileged instructions, which violated the Popek
+and Goldberg criteria for strict virtualization. For example, the POPF
+instruction has a different (yet nontrapping) semantics depending on
+whether the currently running software is allowed to disable interrupts
+or not. This ruled out the traditional trap-and-emulate approach to 
+virtualization. Even engineers from Intel Corporation were convinced
+their processors could not be virtualized in any practical sense.

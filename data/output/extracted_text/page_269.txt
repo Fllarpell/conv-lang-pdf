@@ -1,0 +1,40 @@
+240
+MEMORY MANAGEMENT 
+CHAP. 3
+the operating system kernel, such as Linux, nowadays also offer support for 
+ondemand paging in user processes (see for instance userfaultfd).
+3.7 SEGMENTATION
+Despite paging, the virtual memory discussed so far is one dimensional
+because the virtual addresses go from 0 to some maximum address, one address
+after another. For many problems, having two or more separate virtual address 
+spaces may be much better than having only one. For example, a compiler has many
+tables that are built up as compilation proceeds, possibly including
+1. The source text being saved for the printed listing (on batch systems).
+2. The symbol table, containing the names and attributes of variables.
+3. The table containing all the integer and floating-point constants used.
+4. The parse tree, containing the syntactic analysis of the program.
+5. The stack used for procedure calls within the compiler.
+Each of the first four tables grows continuously as compilation proceeds. The last
+one grows and shrinks in unpredictable ways during compilation. In a 
+one-dimensional memory, these fiv e tables would have to be allocated contiguous chunks of
+virtual address space, as in Fig. 3-30.
+Consider what happens if a program has a much larger than usual number of
+variables but a normal amount of everything else. The chunk of address space 
+allocated for the symbol table may fill up, but there may be lots of room in the other
+tables. What is needed is a way of freeing the programmer from having to manage
+the expanding and contracting tables, in the same way that virtual memory 
+eliminates the worry of organizing the program into overlays.
+A straightforward and quite general solution is to provide the machine with
+many completely independent address spaces, which are called segments. Each
+segment consists of a linear sequence of addresses, starting at 0 and going up to
+some maximum value. The length of each segment may be anything from 0 to the
+maximum address allowed. Different segments may, and usually do, have different
+lengths. Moreover, segment lengths may change during execution. The length of a
+stack segment may be increased whenever something is pushed onto the stack and
+decreased whenever something is popped off the stack.
+Because each segment constitutes a separate address space, different segments
+can grow or shrink independently without affecting each other. If a stack in a 
+certain segment needs more address space to grow, it can have it, because there is
+nothing else in its address space to bump into. Of course, a segment can fill up, but
+segments are usually very large, so this occurrence is rare. To specify an address
+in this segmented or two-dimensional memory, the program must supply a two-part

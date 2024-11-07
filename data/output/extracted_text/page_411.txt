@@ -1,0 +1,45 @@
+382
+INPUT/OUTPUT 
+CHAP. 5
+For instance, since modern computers have multiple cores and the SSD 
+consists of many (flash) pages, blocks and, ultimately, chips, it pays off to process 
+requests in parallel. To make this possible, NVMe supports multiple queues. At the
+very least, NVMe offers one command request queue (known as a submission
+queue in NVMe terminology) and one reply queue (known as a completion queue)
+per core. To perform storage requests, a core will first write I/O commands in its
+request queue and then write to the doorbell register when the commands are ready
+to execute. The doorbell triggers the controller on the SSD to process the entries in
+some order (e.g., in the order in which they were received, or in order of priority).
+When the request completes, it will write the result as a status code in the reply
+queue.
+NVMe queues have multiple advantages. First, where SATA offers only a 
+single queue with a small number of entries, NVMe allows many (and longer)
+queues—up to 64K queues with up to 64K I/O commands entries each. Each
+queue is processed in parallel, thus allowing the controller to push more commands
+to the flash chips and speeding up the storage I/O significantly. Second, because of
+this, since the overall computer system now needs fewer devices to support the
+same number of I/O operations, this also reduces the power and cooling 
+requirements. As a bonus, NVMe allows file systems more direct access to the PCIe bus†
+and SSD, meaning that fewer layers of software are involved in NVMe than in
+SATA operations.
+If our SSD uses NVMe, the operating system needs a driver for NVMe also.
+Often, this driver in turn consists of multiple components, such as a module that is
+more or less hardware independent, a module specifically for PCIe, a module for
+TCP, etc. This is not uncommon and drivers often consist of a number of logical
+components. The good news here is that the SSD interface is standardized by
+NVMe, and so the operating system needs only a single driver to handle all 
+conforming SSDs. Nowadays, all major operating systems provide support for NVMe,
+and thus for NVMe SSDs.
+Stable Storage
+As we have seen, disks sometimes make errors. Good sectors can suddenly
+become bad sectors. Whole drives can die unexpectedly. For some applications, it
+is essential that data never be lost or corrupted, even in the face of disk and CPU
+errors. Ideally, a disk should simply work all the time with no errors. 
+Unfortunately, that is not achievable. What is achievable is a disk subsystem that has the 
+following property: when a write is issued to it, the disk either correctly writes the
+data or it does nothing, leaving the existing data intact. Such a system is called 
+stable storage and is implemented in software (Lampson and Sturgis, 1979). The
+goal is to keep the disk consistent at all costs. Below we will describe a slight 
+variant of the original idea.
+† Actually, NVMe can even handle devices attached through other means than PCIe (including TCP
+connections over the network!), but for our purposes the PCIe is the only one of interest.

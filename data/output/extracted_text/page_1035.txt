@@ -1,0 +1,44 @@
+1006
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Infrastructure Driver) creates a system thread for each guest VP,
+called VP-backing threads to be scheduled by the Windows thread
+scheduler. Whenever one of these threads gets to run, it makes a
+hypercall to tell the hypervisor to run the associated VP. Whereas the
+other schedulers treat guest VPs as black boxes—as should be the
+case for most virtual machine scenarios—the root scheduler allows
+for various enlightenments (paravirtualizations) enabling better 
+integration between the guest and the host. For example, one 
+enlightenment allows the guest to inform the host about the priorities of threads
+currently running on its VPs. The host scheduler can reflect these 
+priority hints onto the corresponding VP-backing threads and schedule
+them accordingly, relative to other host threads. The root scheduler is
+enabled by default on client versions of Windows.
+The Virtualization Stack
+While the hypervisor provides hardware virtualization for guest partitions, it
+takes a lot more than that to run virtual machines. The virtualization stack, 
+composed of several component across kernel-mode and user-mode, manages virtual
+machine memory, handles device access, and orchestrates VM states such as start,
+stop, suspend, resume, live migration, and snapshot.
+As shown in Fig. 11-50, WinHvr.sys is the lowest layer of the virtualization
+stack in the root OS. Its enlightened guest counterpart is WinHv.sys in a Windows
+guest or LinuxHv in a Linux guest. It’s the hypervisor interface driver which
+exposes APIs to facilitate communicating with the hypervisor rather than directly
+issuing hypercalls. It’s the logical equivalent of ntdll.dll in user-mode which hides
+the system call interface behind a nicer set of exports.
+VID.sys, the virtualization infrastructure driver, is responsible for managing
+memory for virtual machines. It exposes interfaces to user-mode virtualization
+stack components to construct the GPA space of a guest which includes regular
+guest memory as well as memory-mapped I/O space (MMIO). In response to these
+requests, the VID allocates physical memory from the kernel memory manager and
+asks the hypervisor, via WinHvr.sys, to map guest GPAs to those SPAs. The 
+hypervisor needs physical memory to construct the SLAT hierarchy for each guest. The
+necessary memory for such metadata is allocated by the VID and deposited into
+the hypervisor, as necessary.
+VMBus is another keykernel-mode virtualization stack component. Its job is to
+facilitate communication between partitions. It does this by setting up shared 
+memory between partitions (e.g., a guest and the root) and taking advantage of 
+synthetic interrupt support in the hypervisor to get an interrupt injected into the 
+relevant partition when a message is pending. VMBus is used in paravirtualized I/O.
+VSPs and VSCs are virtual service providers and clients that run in the root and
+guest partitions, respectively. The VSPs communicate with their guest counterparts

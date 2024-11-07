@@ -1,0 +1,44 @@
+562
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+go over the system bus (e.g., the PCI bus) to the main RAM is too risky. Since the
+network board is typically plugged into the PCI bus, this is the only connection it
+has to the main RAM, so competing for this bus with the disk and every other I/O
+device is inevitable. It is safer to store incoming packets in the interface board’s
+private RAM and then copy them to the main RAM later.
+The interface board may have one or more DMA channels or even a complete
+CPU (or maybe even multiple CPUs) on board. The DMA channels can copy 
+packets between the interface board and the main RAM at high speed by requesting
+block transfers on the system bus, thus transferring several words without having to
+request the bus separately for each word. However, it is precisely this kind of block
+transfer, which ties up the system bus for multiple bus cycles, that makes the 
+interface board RAM necessary in the first place.
+Many interface boards have a CPU and sometimes an FPGA on them, possibly
+in addition to one or more DMA channels. Such a network interface is called a
+smart NIC , and they are becoming increasingly powerful and are very common.
+This design means that the main CPU can offload some work to the network board,
+such as handling reliable transmission (if the underlying hardware can lose 
+packets), multicasting (sending a packet to more than one destination), compression/
+decompression, encryption/decryption, and taking care of protection in a system
+that has multiple processes. However, having two CPUs means that they must 
+synchronize to avoid race conditions, which adds extra overhead and means more
+work for the operating system.
+Copying data across layers is safe, but not necessarily efficient. For instance, a
+browser requesting data from a remote web server will create a request in the
+browser’s address space. That request is subsequently copied to the kernel so that
+TCP and IP can handle it. Next, the data are copied to the memory of the network
+interface. On the other end, the inverse happens: the data are copied from the 
+network card to a kernel buffer, and from a kernel buffer to the Web server. Quite a
+few copies, unfortunately. Each copy introduces overhead, not just the copying
+itself, but also the pressure on the cache, TLB, etc. As a consequence, the latency
+over such network connections is high.
+In the next section, we discuss techniques to reduce the overhead due to 
+copying, cache pollution, and context switching as much as possible.
+8.2.2 Low-Level Communication Software
+The enemy of high-performance communication in multicomputer systems is
+excess copying of packets. In the best case, there will be one copy from RAM to
+the interface board at the source node, one copy from the source interface board to
+the destination interface board (if no storing and forwarding along the path occurs),
+and one copy from there to the destination RAM, a total of three copies. However,
+in many systems it is even worse. In particular, if the interface board is mapped
+into kernel virtual address space and not user virtual address space, a user process

@@ -1,0 +1,44 @@
+206
+MEMORY MANAGEMENT 
+CHAP. 3
+pointed to page tables, which, in turn, pointed to the actual 4-KB page frames.
+Both the page directory and the page tables each contained 1024 entries, giving a
+total of 210 × 210 × 212 = 232 addressable bytes, as desired.
+Ten years later, the Pentium Pro introduced another level: the page directory
+pointer table. In addition, it extended each entry in each level of the page table
+hierarchy from 32 bits to 64 bits, so that it could address memory above the 4-GB
+boundary. As it had only 4 entries in the page directory pointer table, 512 in each
+page directory, and 512 in each page table, the total amount of memory it could
+address was still limited to a maximum of 4 GB. When proper 64-bit support was
+added to the x86 family (originally by AMD), the additional level could have been
+called the ‘‘page directory pointer table pointer’’ or something equally horrible.
+That would have been perfectly in line with how chip makers tend to name things.
+Mercifully, they did not do this. The alternative they cooked up, ‘‘page map level
+4,’’ may not be a terribly catchy name either, but at least it is short and a bit clearer.
+At any rate, these processors now use all 512 entries in all tables, yielding an
+amount of addressable memory of 29 × 29 × 29 × 29 × 212 = 248 bytes. They could
+have added another level, but they probably thought that 256 TB would be 
+sufficient for a while.
+Turns out they were wrong. Some of the newer processors have support for a
+fifth level to extend the size of addresses to 57 bits. With such an address space,
+one can address up to 128 petabytes. This is a lot of bytes. It allows huge files to be
+mapped in. Of course, the downside of so many lev els is that page table walks
+become even more expensive.
+Inverted Page Tables
+An alternative to ever-increasing levels in a paging hierarchy is known as
+inverted page tables. They were first used by such processors as the PowerPC,
+the UltraSPARC, and the Itanium (sometimes referred to as ‘‘Itanic,’’ as it was not
+quite the success Intel had hoped for). It has now gone the way of the Amazon
+Fire Phone, Apple Newton, AT&T Picture Phone, Betamax video recorder,
+DeLorean car, Ford Edsel, and Windows Vista.
+Inverted page tables, however, liv e on. In this design, there is one entry per
+page frame in real memory, rather than one entry per page of virtual address space.
+For example, with 64-bit virtual addresses, a 4-KB page size, and 16 GB of RAM,
+an inverted page table requires only 4,194,304 entries. The entry keeps track of
+which (process, virtual page) is located in the page frame.
+Although inverted page tables save lots of space, at least when the virtual
+address space is much larger than the physical memory, they hav e a serious 
+downside: virtual-to-physical translation becomes much, much harder. When process n
+references virtual page p, the hardware can no longer find the physical page by
+using p as an index into the page table. Instead, it must search the entire inverted
+page table for an entry (n, p). Furthermore, this search must be done on every

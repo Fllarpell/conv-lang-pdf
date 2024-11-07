@@ -1,0 +1,40 @@
+SEC. 4.3
+FILE-SYSTEM IMPLEMENTATION
+279
+the file system is first touched. Typical information in the superblock includes a
+magic number to identify the file-system type, the number of blocks in the file 
+system, and other key administrative information.
+Entire disk
+Disk partition
+Partition table
+Files and directories
+Root dir
+I-nodes
+Superblock
+Free space mgmt
+Boot block
+  MBR
+Figure 4-10. A possible file-system layout.
+Next might come information about free blocks in the file system, for example
+in the form of a bitmap or a list of pointers. This might be followed by the i-nodes,
+an array of data structures, one per file, telling all about the file. After that might
+come the root directory, which contains the top of the file-system tree. Finally, the
+remainder of the disk contains all the other directories and files.
+New School: Unified Extensible Firmware Interface
+Unfortunately, booting in the way described above is slow, 
+architecture-dependent, and limited to smaller disks (up to 2 TB) and Intel therefore 
+proposed the UEFI (Unified Extensible Firmware Interface) as a replacement. is
+now the most popular way to boot personal computer systems. It fixes many of the
+problems of the old-style BIOS and MBR: fast booting, different architectures, and
+disk sizes up to 8 ZiB. It is also quite complex.
+Rather than relying on a Master Boot Record residing in sector 0 of the boot
+device, UEFI looks for the location of the partition table in the second block of
+the device. It reserves the first block as a special marker for software that expects
+an MBR here. The marker essentially says: No MBR here!
+The GPT (GUID Partition Table), meanwhile, contains information about the
+location of the various partitions on the disk. GUID stands for globally unique
+identifiers. As shown in Fig. 4-11, UEFI keeps a backup of the GPT in the last
+block. A GPT contains the start and end of each partition. Once the GPT is found,
+the firmware has enough functionality to read file systems of specific types.
+According to the UEFI standard the firmware should support at least FAT file 
+system types. One such file system is placed in a special disk partition, known as the

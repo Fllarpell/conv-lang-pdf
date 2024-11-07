@@ -1,0 +1,41 @@
+160
+PROCESSES AND THREADS
+CHAP. 2
+2.5.2 Scheduling in Batch Systems
+It is now time to turn from general scheduling issues to specific scheduling
+algorithms. In this section, we will look at algorithms used in batch systems. In the
+following ones, we will examine interactive and real-time systems. It is worth
+pointing out that some algorithms are used in both batch and interactive systems.
+We will study these later.
+First-Come, First-Served
+Probably the simplest of all scheduling algorithms ever devised is 
+nonpreemptive first-come, first-served. With this algorithm, processes are assigned the CPU
+in the order they request it. Basically, there is a single queue of ready processes.
+When the first job enters the system from the outside in the morning, it is started
+immediately and allowed to run as long as it wants to. It is not interrupted because
+it has run too long. As other jobs come in, they are put onto the end of the queue.
+When the running process blocks, the first process on the queue is run next. When
+a blocked process becomes ready, like a newly arrived job, it is put on the end of
+the queue, behind all waiting processes.
+The great strength of this algorithm is that it is easy to understand and equally
+easy to program. It is also fair in the same sense that allocating scarce concert 
+tickets or brand-new iPhones to people who are willing to stand on line starting at 2
+A.M. is fair. With this algorithm, a single linked list keeps track of all ready 
+processes. Picking a process to run just requires removing one from the front of the
+queue. Adding a new job or unblocked process just requires attaching it to the end
+of the queue. What could be simpler to understand and implement?
+Unfortunately, first-come, first-served also has a powerful disadvantage. 
+Suppose there is one compute-bound process that runs for 1 sec at a time and many
+I/O-bound processes that use little CPU time but each have to perform 1000 disk
+reads to complete. The compute-bound process runs for 1 sec, then it reads a disk
+block. All the I/O processes now run and start disk reads. When the 
+computebound process gets its disk block, it runs for another 1 sec, followed by all the 
+I/Obound processes in quick succession.
+The net result is that each I/O-bound process gets to read 1 block per second
+and will take 1000 sec to finish. With a scheduling algorithm that preempted the
+compute-bound process every 10 msec, the I/O-bound processes would finish in 10
+sec instead of 1000 sec, without slowing down the compute-bound process much.
+Shortest Job First
+Now let us look at another nonpreemptive batch algorithm that assumes the run
+times are known in advance. In an insurance company, for example, people can
+predict quite accurately how long it will take to run a batch of 1000 claims, since

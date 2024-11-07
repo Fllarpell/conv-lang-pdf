@@ -1,0 +1,50 @@
+SEC. 5.3
+I/O SOFTWARE LAYERS
+365
+User process
+User!
+space
+Kernel!
+space
+2
+2
+1
+1
+3
+Modem
+Modem
+Modem
+Modem
+(a)
+(b)
+(c)
+(d)
+Figure 5-15. (a) Unbuffered input. (b) Buffering in user space. (c) Buffering in
+the kernel followed by copying to user space. (d) Double buffering in the kernel.
+service procedure puts incoming characters in this buffer until it is completely full.
+Only then does it wakes up the user process. This scheme is far more efficient than
+the previous one, but it has a drawback: what happens if the buffer is paged out
+when a character arrives? The buffer could be locked in memory, but if many
+processes start locking pages in memory willy nilly, the pool of available pages
+will shrink and performance will degrade.
+Yet another approach is to create a buffer inside the kernel and have the 
+interrupt handler put the characters there, as shown in Fig. 5-15(c). When this buffer is
+full, the page with the user buffer is brought in, if needed, and the buffer copied
+there in one operation. This scheme is far more efficient.
+However, even this improved scheme suffers from a problem: What happens to
+characters that arrive while the page with the user buffer is being brought in from
+the disk? Since the buffer is full, there is no place to put them. A way out is to
+have a second kernel buffer. After the first buffer fills up, but before it has been
+emptied, the second one is used, as shown in Fig. 5-15(d). When the second buffer
+fills up, it is available to be copied to the user (assuming the user has asked for it).
+While the second buffer is being copied to user space, the first one can be used for
+new characters. In this way, the two buffers take turns: while one is being copied
+to user space, the other is accumulating new input. A buffering scheme like this is
+called double buffering.
+Another common form of buffering is the circular buffer. It consists of a
+region of memory and two pointers. One pointer points to the next free word,
+where new data can be placed. The other pointer points to the first word of data in
+the buffer that has not been removed yet. In many situations, the hardware
+advances the first pointer as it adds new data (e.g., just arriving from the network)
+and the operating system advances the second pointer as it removes and processes
+data. Both pointers wrap around, going back to the bottom when they hit the top.

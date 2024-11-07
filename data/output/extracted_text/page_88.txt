@@ -1,0 +1,46 @@
+SEC. 1.6
+SYSTEM CALLS
+59
+bytes—2 bytes for the i-number and 14 bytes for the name. Now a more 
+complicated structure is needed to support long file names, but conceptually a directory is
+still a set of (i-number, ASCII name) pairs. In Fig. 1-21, mail has i-number 16, and
+so on. What link does is simply create a brand new directory entry with a (possibly
+new) name, using the i-number of an existing file. In Fig. 1-21(b), two entries have
+the same i-number (70) and thus refer to the same file. If either one is later
+removed, using the unlink system call, the other one remains. If both are removed,
+UNIX sees that no entries to the file exist (a field in the i-node keeps track of the
+number of directory entries pointing to the file), so the file is removed from the
+SSD or disk and its blocks are returned to the free block pool.
+As we have mentioned earlier, the mount system call allows two file systems to
+be merged into one. A common situation is to have the root file system, containing
+the binary (executable) versions of the common commands and other heavily used
+files, on an SSD / hard disk (sub)partition and user files on another (sub)partition.
+Further, the user can then insert a USB disk with files to be read.
+By executing the mount system call, the USB file system can be attached to the
+root file system, as shown in Fig. 1-22. A typical statement in C to mount is
+mount("/dev/sdb0", "/mnt", 0);
+where the first parameter is the name of a block special file for USB drive 0, the
+second parameter is the place in the tree where it is to be mounted, and the third
+parameter tells whether the file system is to be mounted read-write or read-only.
+(a)
+(b)
+bin
+dev
+lib
+mnt
+usr
+bin
+dev
+usr
+!lib
+Figure 1-22. (a) File system before the mount. (b) File system after the mount.
+After the mount call, a file on drive 0 can be accessed by just using its path
+from the root directory or the working directory, without regard to which drive it is
+on. In fact, second, third, and fourth drives can also be mounted anywhere in the
+tree. The mount call makes it possible to integrate removable media into a single
+integrated file hierarchy, without having to worry about which device a file is on.
+Although this example involves USB drives, portions of hard disks (often called
+partitions or minor devices) can also be mounted this way, as well as external
+hard disks and SSDs. When a file system is no longer needed, it can be unmounted
+with the umount system call. After that, it is no longer accessible. Of course, if it
+is needed later on, it can be mounted again.

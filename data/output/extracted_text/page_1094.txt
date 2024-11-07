@@ -1,0 +1,41 @@
+SEC. 12.3
+IMPLEMENTATION
+1065
+server typically processes the requests (events) as a single thread in an event loop.
+Whenever the request requires the server to contact other servers for further 
+processing, it sends an asynchronous message of its own and, rather than block, 
+continues with the next request. Multiple threads are not needed. With only a single
+thread processing events, the problem of multiple threads accessing shared data
+structures cannot occur. On the other hand, a long-running event handler makes the
+single-threaded server’s response sluggish.
+Whether threads or events are the better programming model is a long-standing
+controversial issue that has stirred the hearts of zealots on either side ever since
+John Ousterhout’s classic paper: ‘‘Why threads are a bad idea (for most purposes)’’
+(1996). Ousterhout argues that threads make everything needlessly complicated:
+locking, debugging, callbacks, performance—you name it. Of course, it would not
+be a controversy if everybody agreed. A few years after Ousterhout’s paper, Von
+Behren et al. (2003) published a paper titled ‘‘Why events are a bad idea (for 
+highconcurrency servers).’’ Thus, deciding on the right programming model is a hard,
+but important decision for system designers. There is no slam-dunk winner. Web
+servers like apache embrace synchronous communication and threads, but others
+like lighttpd are based on the ev ent-driven paradigm. Both are very popular. In
+our opinion, events are often easier to understand and debug than threads. As long
+as there is no need for per-core concurrency, they are probably a good choice.
+12.3.9 Useful Techniques
+We hav e just looked at some abstract ideas for system design and 
+implementation. Now we will examine a number of useful concrete techniques for 
+system implementation. There are numerous others, of course, but space limitations
+restrict us to just a few.
+Hiding the Hardware
+A lot of hardware is ugly. It has to be hidden early on (unless it exposes 
+power, which most hardware does not). Some of the very low-level details can be 
+hidden by a HAL-type layer of the type shown in Fig. 12-2 as layer 1. However,
+many hardware details cannot be hidden this way.
+One thing that deserves early attention is how to deal with interrupts. They
+make programming unpleasant, but operating systems have to deal with them. One
+approach is to turn them into something else immediately. For example, every
+interrupt could be turned into a pop-up thread instantly. At that point we are 
+dealing with threads, rather than interrupts.
+A second approach is to convert each interrupt into an unlock operation on a
+mutex that the corresponding driver is waiting on. Then the only effect of an 
+interrupt is to cause some thread to become ready.

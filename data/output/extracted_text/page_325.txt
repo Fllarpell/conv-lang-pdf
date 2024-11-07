@@ -1,0 +1,46 @@
+296
+FILE SYSTEMS
+CHAP. 4
+In addition, the garbage collector needs to select both a victim block (the flash
+block to clean) and a target block (to which to write the live data still in the victim
+block). Should it simply pick these blocks in a random or round-robin fashion, or
+try to make a more informed decision? For instance, for the victim block, should it
+select the flash block with the least amount of valid data, or perhaps avoid the flash
+blocks that have a lot of wear already, or the blocks that contain a lot of ‘‘hot’’ data
+(i.e., data that is likely to be written again in the near future anyway)? Likewise,
+for the target block, should it pick based on the amount of available space, or the
+amount of accumulated wear on the flash block? Moreover, should it try to group
+hot and cold data to ensure that cold flash pages can mostly stay in the same block
+with no need for moving them around, while hot pages will perhaps be updated
+together close in time, so we can collect the updates in memory and then write
+them out to a new flash block in one blast? The answer is: yes. And if you’re 
+wondering which strategy is best, the answer is: it depends. Modern FTLs actually use
+a combination of these techniques.
+Clearly, garbage collection is complex and a lot of work. It also leads to an
+interesting performance property. Suppose there are many flash blocks with invalid
+pages, but all of them have only a small number of such pages. In that case, the
+garbage collector will have to separate the valid from the invalid pages for many
+blocks, each time coalescing the valid data in new blocks and erasing the old
+blocks to free up space, at a significant cost in performance and wear. Can you now
+see why small random writes may be costlier for garbage collection than sequential
+ones?
+In reality, small random writes are expensive reg ardless of garbage collection,
+if they overwrite an existing flash page in a full block. The problem has to do with
+the mappings in the translation tables. To sav e space, the FTL has two types of
+mappings: per page and per block. If everything was mapped per-page, we would
+need an enormous amount of memory to store the translation table. Where 
+possible, therefore, the FTL tries to map a block of pages that belong together as a 
+single entry. Unfortunately, that also means that modifying even a single byte in that
+block will invalidate the entire block and lead to lots of additional writes. The
+actual overheads of random writes depend on the garbage collection algorithm and
+the overall FTL implementation, both of which are typically as secret (and 
+wellguarded) as the formula for Coca Cola.
+The decoupling of logical disk block addresses and physical flash addresses
+creates an additional problem. With a hard disk drive, when the file system deletes
+a file, it knows exactly which blocks on the disk are now free for reuse and can 
+reuse them as it sees fit. This is not the case with SSDs. The file system may decide
+to delete a file and mark the logical block addresses as free, but how is the SSD to
+know which of its flash pages have been deleted and can therefore be safely
+garbage collected? The answer is: it does not and needs to be told explicitly by the
+file system. For this, the file system may use the TRIM command which tells the
+SSD that certain flash pages are now free. Note that an SSD without the TRIM

@@ -1,0 +1,43 @@
+270
+FILE SYSTEMS
+CHAP. 4
+10.
+Set attributes. Some of the attributes are user settable and can be
+changed after the file has been created. This system call makes that
+possible. The protection-mode information is an obvious example.
+Most of the flags also fall in this category.
+11.
+Rename. This call is not essential because a file that needs to be
+renamed can be copied and then the original file deleted. However,
+renaming a 50-GB movie by copying it and then deleting the original
+will take a long time.
+4.1.7 An Example Program Using File-System Calls
+In this section, we will examine a simple UNIX program that copies one file
+from its source file to a destination file. It is listed in Fig. 4-6. The program has
+minimal functionality and even worse error reporting, but it gives a reasonable idea
+of how some of the system calls related to files work.
+The program, copyfile, can be called, for example, by the command line
+copyfile abc xyz
+to copy the file abc to xyz. If xyz already exists, it will be overwritten. Otherwise,
+it will be created. The program must be called with exactly two arguments, both
+legal file names. The first is the source; the second is the output file.
+The four #include statements near the top of the program cause a large number
+of definitions and function prototypes to be included in the program. These are
+needed to make the program conformant to the relevant international standards, but
+will not concern us further. The next line is a function prototype for main, 
+something required by ANSI C, but also not important for our purposes.
+The first #define statement is a macro definition that defines the character
+string BUF SIZE as a macro that expands into the number 4096. The program
+will read and write in chunks of 4096 bytes. It is considered good programming
+practice to give names to constants like this. The second #define statement 
+determines who can access the output file.
+The main program is called main, and it has two arguments, argc and argv.
+These are supplied by the operating system when the program is called. The first
+one tells how many strings were present on the command line that invoked the 
+program, including the program name. It should be 3. The second one is an array of
+pointers to the arguments. In the example call given above, the elements of this
+array would contain pointers to the following values:
+argv[0] = "copyfile"
+argv[1] = "abc"
+argv[2] = "xyz"
+It is via this array that the program accesses its arguments.

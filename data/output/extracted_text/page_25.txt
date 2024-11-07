@@ -1,0 +1,49 @@
+xxiv
+PREFACE
+immediately after the producer-consumer section and moved the 
+dining philosophers to another chapter, that of deadlocks, entirely. 
+Besides numerous smaller updates, we also dropped some older material,
+such as scheduler activations and pop-up threads.
+•
+Chapter 3 now focuses on modern 64-bit architectures and contains
+more precise explanations of many aspects of paging and TLBs. For
+instance, we describe how operating systems use paging also and how
+some operating systems map the kernel into the address spaces of user
+processes.
+•
+Chapter 4 changed significantly. We dropped the lengthy descriptions
+of CD-ROMs and tapes, and instead added sections about SSD-based
+file systems, booting in modern UEFI-based computer systems, and
+secure file deletion and disk encryption.
+•
+In Chapter 5, we have more information about SSDs and NVMe, and
+explain input devices using a modern USB keyboard instead of the
+older PS/2 one of the previous edition. In addition, we clarify the 
+relation between interrupts, traps, exceptions, and faults.
+•
+As mentioned, we added the dining philosophers example to Chapter
+6. Other than that, the chapter is pretty much unchanged. The topic of
+deadlocks is fairly stable, with few new results.
+•
+In Chapter 7, we added a section about containers to the existing (and
+updated) explanation of hypervisor-based virtualization. The material
+on VMware has also been brought up to date.
+•
+Chapter 8 is an updated version of the previous material on 
+multiprocessor systems. We added subsections on simultaneous multithreading
+and discuss new types of coprocessors, while dropping sections such
+as the one on the older IXP network processors and the one on the
+(now dead) CORBA middleware. A new section discusses scheduling
+for security.
+•
+Chapter 9 has been heavily revised and reorganized, with much more
+focus on what is relevant for the operating system and less emphasis
+on crypto. We now start the chapter with a discussion of principles for
+secure design and their relevance for the operating system structure.
+We discuss exciting new hardware developments, such as the 
+Meltdown and Spectre transient execution vulnerabilities, that have come to
+light since the previous edition. In addition, we describe new software
+vulnerabilities that are important for the operating system. Finally, we
+greatly expanded the description of the ways in which the operating
+system can be hardened, with extensive discussion of control flow
+integrity, fine-grained ASLR, code signing, access restrictions, and

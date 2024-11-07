@@ -1,0 +1,38 @@
+SEC. 1.8
+THE WORLD ACCORDING TO C
+77
+pmake, etc.) that reads the Makefile, which tells it which files are dependent on
+which other files. What make does is see which object files are needed to build the
+operating system binary and for each one, check to see if any of the files it depends
+on (the code and headers) have been modified subsequent to the last time the
+object file was created. If so, that object file has to be recompiled. When make has
+determined which .c files have to recompiled, it then invokes the C compiler to
+recompile them, thus reducing the number of compilations to the bare minimum.
+In large projects, creating the Makefile is error prone, so there are tools that do it
+automatically.
+Once all the .o files are ready, they are passed to a program called the linker to
+combine all of them into a single executable binary file. Any library functions 
+called are also included at this point, interfunction references are resolved, and
+machine addresses are relocated as need be. When the linker is finished, the result
+is an executable program, traditionally called a.out on UNIX systems. The various
+components of this process are illustrated in Fig. 1-30 for a program with three C
+files and two header files. Although we have been discussing operating system
+development here, all of this applies to developing any large program.
+defs.h
+mac.h
+main.c
+help.c
+other.c
+C!
+preprocesor
+C!
+compiler
+main.o
+help.o
+other.o
+linker
+libc.a
+a.out
+Executable!
+binary program
+Figure 1-30. The process of compiling C and header files to make an executable.

@@ -1,0 +1,31 @@
+974
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Figure 11-38. Page transitions with memory compression (free/zero lists and
+mapped files omitted for clarity).
+an appropriate store (more on this later), compresses the page into it and returns to
+the memory manager. Since the page contents have been safely compressed into a
+store, the memory manager sets its page priority to the lowest (zero) and inserts
+into the standby list. It could have freed the page, but caching it at low priority is
+generally a better option because it avoids decompression in case the page may get
+soft-faulted from the standby list. Let us assume the page has been repurposed off
+the priority 0 standby sublist and now the process decides to write to the page. That
+access will result in a page fault and the memory manager will determine that the
+page is saved to the store manager (rather than the pagefile), so it will allocate a
+new physical page and call SmPageRead to retrieve page contents into the new
+physical page. The store manager will route the request to the appropriate store
+which will find and decompress the data into the target page.
+Astute readers may notice that the store manager behaves almost exactly like a
+regular pagefile, albeit a compressed one. In fact, the memory manager treats the
+store manager just like another pagefile. During system initialization, if memory
+compression is enabled, the memory manager creates a virtual pagefile to 
+represent the store manager. The size of the virtual pagefile is largely arbitrary, but it 
+limits how many pages can be saved in the store manager at one time, so an 
+appropriate size based on the system commit limit is picked. For most intents and purposes,
+the virtual pagefile is a real pagefile: it uses one of the 16 pagefile slots and has the
+same underlying bitmap data structures to manage available space. However, it
+does not have a backing file and, instead, uses the store manager SmPageRead and
+SmPageWr ite interface to perform I/O. So, during modified page writing, a virtual
+pagefile offset is allocated for the uncompressed page and the pagefile offset
+combined with the pagefile number is used as the key to identify the page when
+handing it over to the store manager. After the page is compressed, the PFN entry

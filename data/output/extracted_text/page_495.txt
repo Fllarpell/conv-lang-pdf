@@ -1,0 +1,44 @@
+466
+DEADLOCKS 
+CHAP. 6
+recovery. This heuristic is applicable to resource deadlocks also and is relied upon
+by users with buggy device drivers that can deadlock and freeze the system.
+Of course, if the original message was not lost but the reply was simply 
+delayed, the intended recipient may get the message two or more times, possibly with
+undesirable consequences. Think about an electronic banking system in which the
+message contains instructions to make a payment. Clearly, that should not be 
+repeated (and executed) multiple times just because the network is slow or the 
+timeout too short. Designing the communication rules, called the protocol, to get
+ev erything right is a complex subject, but one far beyond the scope of this book.
+Readers interested in network protocols might be interested in another book by one
+of the authors, Computer Networks (Tanenbaum et al., 2020).
+Not all deadlocks occurring in communication systems or networks are 
+communication deadlocks. Resource deadlocks can also occur there. Consider, for 
+example, the network of Fig. 6-18. It is a simplified view of the Internet. Very 
+simplified. The Internet consists of two kinds of computers: hosts and routers. A host
+is a user computer, either someone’s tablet or PC at home, a PC at a company, or a
+corporate server. Hosts do work for people. A router is a specialized 
+communications computer that moves packets of data from the source to the destination. Each
+host is connected to one or more routers, either by a digital subscriber line, cable
+TV connection, LAN, dial-up line, wireless network, optical fiber, or something
+else.
+A
+B
+D
+C
+Host
+Host
+Host
+Host
+Buffer
+Router
+Figure 6-18. A resource deadlock in a network.
+When a packet comes into a router from one of its hosts, it is put into a buffer
+for subsequent transmission to another router and then to another until it gets to the
+destination. These buffers are resources and there are a finite number of them. In
+Fig. 6-19, each router has only eight buffers (in practice they hav e millions, but
+that does not change the nature of the potential deadlock, just its frequency). 
+Suppose that all the packets at router A need to go to B and all the packets at B need to
+go to C and all the packets at C need to go to D and all the packets at D need to go
+to A. No packet can move because there is no buffer at the other end and we have a
+classical resource deadlock, albeit in the middle of a communications system.

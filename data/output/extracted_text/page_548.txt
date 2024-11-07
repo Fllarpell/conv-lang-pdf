@@ -1,0 +1,46 @@
+SEC. 7.11
+CASE STUDY: VMWARE
+519
+VMware Workstation appears to run on top of an existing operating system,
+and, in fact, its VMX does run as a process of that operating system. However, the
+VMM operates at system level, in full control of the hardware, and without
+depending on any way on the host operating system. Figure 7-10 shows the 
+relationship between the entities: the two contexts (host operating system and VMM)
+are peers to each other, and each has a user-level and a kernel component. When
+the VMM runs (the right half of the figure), it reconfigures the hardware, handles
+all I/O interrupts and exceptions, and can therefore safely temporarily remove the
+host operating system from its virtual memory. For example, the location of the
+interrupt table is set within the VMM by assigning the IDTR register to a new
+address. Conversely, when the host operating system runs (the left half of the 
+figure), the VMM and its virtual machine are equally removed from its virtual 
+memory.
+This transition between these two totally independent system-level contexts is
+a world switch. The name itself emphasizes that everything about the software
+changes during a world switch, in contrast with the regular context switch 
+implemented by an operating system. Figure 7-11 shows the difference between the
+two. The regular context switch between processes ‘‘A’’ and ‘‘B’’ swaps the user
+portion of the address space and the registers of the two processes, but leaves a
+number of critical system resources unmodified. For example, the kernel portion of
+the address space is identical for all processes, and the exception handlers are also
+not modified. In contrast, the world switch changes everything: the entire address
+space, all exception handlers, privileged registers, etc. In particular, the kernel
+address space of the host operating system is mapped only when running in the
+host operating system context. After the world switch into the VMM context, it has
+been removed from the address space altogether, freeing space to run both the
+VMM and the virtual machine. Although this sounds complicated, this can be
+implemented quite efficiently and takes only 45 x86 machine-language instructions
+to execute.
+The careful reader will have wondered: what of the guest operating system’s
+kernel address space? The answer is simply that it is part of the virtual machine
+address space, and is present when running in the VMM context. Therefore, the
+guest operating system can use the entire address space, and in particular the same
+locations in virtual memory as the host operating system. This is very specifically
+what happens when the host and guest operating systems are the same (e.g., both
+are Linux). Of course, this all ‘‘just works’’ because of the two independent 
+contexts and the world switch between the two.
+The same reader will then wonder: what of the VMM area, at the very top of
+the address space? As we discussed above, it is reserved for the VMM itself, and
+those portions of the address space cannot be directly used by the virtual machine.
+Luckily, that small 4-MB portion is not frequently used by the guest operating 
+systems since each access to that portion of memory must be individually emulated
+and induces noticeable software overhead.

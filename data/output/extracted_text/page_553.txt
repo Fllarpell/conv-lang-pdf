@@ -1,0 +1,44 @@
+524
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+mode, an irreversible transition that gives it access to the low-level hardware.
+Nevertheless, it is still a process and able to talk to and rely on the kernel. The only
+difference that it uses the VMCALL instruction to make a system call. The Dune
+approach was later used for research in dataplane operating systems such as IX
+(Belay, 2017) and finally adapted as the foundation for Google’s container solution
+gVisor (Young, 2019).
+Speaking of containers, the cloud is seeing a shift from being a platform for
+tenants to run virtual machines (specified by a virtual disk image) to a platform
+used by tenants to run containers specified as Dockerfiles and coordinated by
+orchestrators such as Kubernetes. Often, the container runs within a virtual 
+machine but the guest operating system is now run by the cloud provider. The latest
+trend, called ‘‘serverless’’, further decouples the application logic from its 
+environment (Shahrad et al., 2020). The idea here is to allow a service to be automatically
+spun up to serve a single function (an RPC over HTTPS) without managing any
+aspect of its operating system environment. Amazon calls its serverless 
+technology firecracker (Barr, 2018) and Google calls it gVisor (Young, 2019). Serverless
+computing has gained even more popularity with the adoption of the 
+Function-as-a-Service (FAAS) model (Kim and Lee, 2019). Of course, the operating
+system and indeed the server both still exist in serverless operations. But they are
+hidden from the developer.
+The cloud is therefore much more complex than it was in the beginning with
+the original AWS EC2 model of virtual machines: networks are virtualized, and
+applications are encapsulated into containers and serverless models that decouple
+them from the underlying layers. The cloud is more complex, but also more 
+powerful and central to nearly every computing organization. With this importance
+comes another consideration: trust. Specifically, how much must a tenant trust the
+cloud service provider ? The correct answer is obviously ‘‘as little as necessary.’’
+To achieve this goal of minimal trust dependencies, Intel introduced SGX as
+the first architectural extension for ‘‘confidential computing.’’ SGX creates
+enclaves, which are isolated in hardware from the host operating system and other
+applications, with the content of memory and registers cryptographically encrypted
+by the hardware. In a way, technologies such as SGX are similar to virtualization
+extensions: they create new ways for software to isolate itself from each other.
+SGX has notably been used in research to run entire operating systems such as in
+Haven (Baumann, 2015) or Linux containers such as in SCONE (Arnautov, 2016).
+7.13 SUMMARY
+Virtualization is the technique of simulating a computer, but with high 
+performance. Typically one computer runs many virtual machines at the same time. This
+technique is widely used in data centers to provide cloud computing. In this 
+chapter we looked at how virtualization works, especially for paging, I/O, and multicore
+systems. We also studied an example: VMWare.

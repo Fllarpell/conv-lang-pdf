@@ -1,0 +1,44 @@
+1100
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+BOYD-WICKIZER, S., CLEMENTS A.T., MAO, Y., PESTEREV, A., KAASHOEK, M.F.,
+MORRIS, R., and ZELDOVICH, N.: ‘‘ An Analysis of Linux Scalability to Many
+Cores,’’ Proc. Ninth USENIX Symp. on Operating Syst. Design and Implementation,
+USENIX, 2010.
+BRATUS, S., LOCASTO, M.E., PATTERSON, M., SASSAMAN, L., SHUBINA, A.: ‘‘Exploit
+Programming: From Buffer Overflows to Weird Machines and Theory of 
+Computation,’’ ;Login:, USENIX, pp. 11–21, December 2011.
+BRATUS, S.: ‘‘What Hackers Learn That the Rest of Us Don’t: Notes on Hacker 
+Curriculum,’’ IEEE Security and Privacy, Vol. 5, pp. 72–75, July/Aug. 2007.
+BRINCH HANSEN, P.: ‘‘The Programming Language Concurrent Pascal,’’ IEEE Trans.
+Software Eng., Vol. SE-1, pp. 199–207, June 1975.
+BROOKS, F.P., Jr.: ‘‘No Silver Bullet—Essence and Accident in Software Engineering,’’
+Computer, Vol. 20, pp. 10–19, April 1987.
+BROOKS, F.P., Jr.: The Mythical Man-Month: Essays on Software Engineering, 20th
+Anniversary Edition, Boston: Addison-Wesley, 1995.
+BRUNELLA, M., BELOCCHI, G., BONOLA, M., PONTARELLI, S. SIRACUSANO, G.,
+BIANCHI, G., CAMMARANO, A., PALUMBO, A., PETRUCCI, L., and BIFULCO, R.:
+‘‘Efficient Software Packet Processing on FPGAs and NICs,’’ Proc. 14th USENIX
+Symp. on Operating Syst. Design and Implementation, USENIX, pp. 973-990, 2020.
+BUGNION, E., DEVINE, S., GOVIL, K., and ROSENBLUM, M.: ‘‘Disco: Running 
+Commodity Operating Systems on Scalable Multiprocessors,’’ ACM Trans. Computer Syst., Vol.
+15, pp. 412–447, Nov. 1997.
+BUGNION, E., DEVINE, S., ROSENBLUM, M., SUGERMAN, J., and WANG, E.: ‘‘Bringing
+Virtualization to the x86 Architecture with the Original VMware Workstation,’’ ACM
+Tr ans. Computer Syst., Vol. 30, number 4, pp.12:1–12:51, Nov. 2012.
+BUROW, N., CAR, S.A., NASH, J., LARSEN, P., FRANZ, M., BRUNTHALER, S., and PAYER,
+M.: ‘‘Control-Flow Integrity: Precision, Security, and Performance,’’ ACM Computing
+Surveys, Vol. 50, pp. 1–33, April 2017.
+CAI, J., and STRAZDINS, P.E.: ‘‘ An Accurate Prefetch Technique for Dynamic Paging 
+Behaviour for Software Distributed Shared Memory,’’ Proc. 41st Int’l Conf. on Parallel
+Proc., IEEE, pp. 209–218, 2012.
+CAI, Y., and CHAN, W.K.: ‘‘MagicFuzzer: Scalable Deadlock Detection for Large-scale
+Applications,’’ Proc. 2012 Int’l Conf. on Software Eng., IEEE, pp. 606–616, 2012.
+CAMPISI, P.: Security and Privacy in Biometrics, New York: Springer, 2013.
+CARR, R.W., and HENNESSY, J.L.: ‘‘WSClock—A Simple and Effective Algorithm for
+Virtual Memory Management,’’ Proc. Eighth Symp. on Operating Syst. Prin., ACM,
+pp. 87–95, 1981.
+CARRIERO, N., and GELERNTER, D.: ‘‘The S/Net’s Linda Kernel,’’ ACM Trans. 
+Computer Syst., Vol. 4, pp. 110–129, May 1986.
+CARRIERO, N., and GELERNTER, D.: ‘‘Linda in Context,’’ Commun. ACM, Vol. 32, pp.
+444–458, April 1989.

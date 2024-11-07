@@ -1,0 +1,45 @@
+CHAP. 3  
+PROBLEMS
+255
+faults on the shared page, the page table entry for process A must be updated once the
+page is read into memory.
+(a) Under what conditions should the page table update for process B be delayed even
+though the handling of process A’s page fault will bring the shared page into 
+memory? Explain.
+(b) What is the potential cost of delaying the page table update?
+38. Consider the following two-dimensional array:
+int X[64][64];
+Suppose that a system has four page frames and each frame is 128 words (an integer
+occupies one word). Programs that manipulate the X array fit into exactly one page
+and always occupy page 0. The data are swapped in and out of the other three frames.
+The X array is stored in row-major order (i.e., X[0][1] follows X[0][0] in memory).
+Which of the two code fragments shown below will generate the lowest number of
+page faults? Explain and compute the total number of page faults.
+Fr agment A
+for (int j = 0; j < 64; j++)
+for (int i = 0; i < 64; i++) X[i][j] = 0;
+Fr agment B
+for (int i = 0; i < 64; i++)
+for (int j = 0; j < 64; j++) X[i][j] = 0;
+39. You hav e been hired by a cloud computing company that deploys thousands of servers
+at each of its data centers. They hav e recently heard that it would be worthwhile to
+handle a page fault at server A by reading the page from the RAM memory of some
+other server rather than its local disk drive.
+(a) How could that be done?
+(b) Under what conditions would the approach be worthwhile? Be feasible?
+40. One of the first timesharing machines, the DEC PDP-1, had a (core) memory of 4K
+18-bit words. It held one process at a time in its memory. When the scheduler decided
+to run another process, the process in memory was written to a paging drum, with 4K
+18-bit words around the circumference of the drum. The drum could start writing (or
+reading) at any word, rather than only at word 0. Why do you suppose this drum was
+chosen?
+41. A computer provides each process with 65,536 bytes of address space divided into
+pages of 4096 bytes each. A particular program has a text size of 32,768 bytes, a data
+size of 16,386 bytes, and a stack size of 15,870 bytes. Will this program fit in the
+machine’s address space? Suppose that instead of 4096 bytes, the page size were 512
+bytes, would it then fit? Each page must contain either text, data, or stack, not a 
+mixture of two or three of them.
+42. It has been observed that the number of instructions executed between page faults is
+directly proportional to the number of page frames allocated to a program. If the 
+available memory is doubled, the mean interval between page faults is also doubled. 
+Suppose that a normal instruction takes 1 microsec, but if a page fault occurs, it takes 2001

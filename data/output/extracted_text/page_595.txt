@@ -1,0 +1,43 @@
+566
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+The former sends the message pointed to by mptr to a process identified by dest
+and causes the called to be blocked until the message has been sent. The latter
+causes the called to be blocked until a message arrives. When one does, the 
+message is copied to the buffer pointed to by mptr and the called is unblocked. The
+addr parameter specifies the address to which the receiver is listening. Many 
+variants of these two procedures and their parameters are possible.
+One issue is how addressing is done. Since multicomputers are static, with the
+number of CPUs fixed, the easiest way to handle addressing is to make addr a 
+twopart address consisting of a CPU number and a process or port number on the
+addressed CPU. In this way, each CPU can manage its own addresses without
+potential conflicts.
+Blocking Versus Nonblocking Calls
+The calls described above are blocking calls (sometimes called synchronous
+calls). When a process calls send, it specifies a destination and a buffer to send to
+that destination. While the message is being sent, the sending process is blocked
+(i.e., suspended). The instruction following the call to send is not executed until
+the message has been completely sent, as shown in Fig. 8-19(a). Similarly, a call
+to receive does not return control until a message has actually been received and
+put in the message buffer pointed to by the parameter. The process remains 
+suspended in receive until a message arrives, even if it takes hours. In some systems,
+the receiver can specify from whom it wishes to receive, in which case it remains
+blocked until a message from that sender arrives.
+An alternative to blocking calls is the use of nonblocking calls (sometimes
+called asynchronous calls). If send is nonblocking, it returns control to the called
+immediately, before the message is sent. The advantage of this scheme is that the
+sending process can continue computing in parallel with the message transmission,
+instead of having the CPU go idle (assuming no other process is runnable). The
+choice between blocking and nonblocking primitives is normally made by the 
+system designers (i.e., either one primitive is available or the other), although in a few
+systems both are available and users can choose their favorite.
+However, the performance advantage offered by nonblocking primitives is 
+offset by a serious disadvantage for the programmer: the sender must not modify the
+message buffer until the message has been sent. The consequences of the process
+overwriting the message during transmission are too horrible to contemplate.
+Worse yet, the sending process has no idea of when the transmission is done, so the
+programmer never knows when it is safe to reuse the buffer. It can hardly avoid
+touching it forever.
+There are three possible ways out. The first solution is to have the kernel copy
+the message to an internal kernel buffer and then allow the process to continue, as
+shown in Fig. 8-19(b). From the sender’s point of view, this scheme is the same as

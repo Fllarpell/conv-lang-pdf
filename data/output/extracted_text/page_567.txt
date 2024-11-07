@@ -1,0 +1,44 @@
+538
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+32 KB of L1 instruction cache and 32 KB of data cache in addition to 512 KB of
+L2 cache. Finally, the cores share 256 MB of on-board L3 cache.
+While the CPUs may or may not share caches (see Fig. 1-8), they always share
+main memory, and this memory is consistent in the sense that there is always a
+unique value for each memory word. Special hardware circuitry makes sure that if
+a word is present in two or more caches and one of the CPUs modifies the word, it
+is automatically and atomically removed from all the caches in order to maintain
+consistency. This process is known as snooping.
+The result of this design is that multicore chips are just very small 
+multiprocessors. In fact, multicore chips are sometimes called CMPs (Chip 
+MultiProcessors). From a software perspective, CMPs are not really that different from 
+busbased multiprocessors or multiprocessors that use switching networks. However,
+there are some differences. To start with, on a bus-based multiprocessor, each of
+the CPUs has its own cache, as in Fig. 8-2(b) and also as in the design of
+Fig. 1-8(b). The shared-cache design of Fig. 1-8(a) does not occur in other 
+multiprocessors. Nowadays the L3 cache is typically shared. This does not necessarily
+mean that they are centralized. Often a large, shared cache is partitioned in 
+percore slices. For instance, on a CPU with 8 cores and a 32 MB shared cache, each
+core has a slice of 4 MB. The slices are shared so that any core can access any
+slice, but the performance varies. Accessing your local slice is much faster. In
+other words, we have a NUMA cache.
+NUMA issues aside, a shared L2 or L3 cache can affect performance either
+positively or negatively. If one core needs a lot of cache memory and the others do
+not, this design allows the cache hog to take whatever it needs. On the other hand,
+the shared cache also makes it possible for a greedy core to hurt the other cores.
+An area in which CMPs differ from their larger cousins is fault tolerance.
+Because the CPUs are closely connected, failures in shared components may bring
+down multiple CPUs at once, something unlikely in traditional multiprocessors.
+In addition to symmetric multicore chips, where all the cores are identical,
+another common category of multicore chip is the SoC (System On a Chip).
+These chips have one or more main CPUs, but also special-purpose cores, such as
+video and audio decoders, cryptoprocessors, network interfaces, and more, leading
+to a complete computer system on a chip. The M1 chip, used on some Apple 
+computers and mobile devices, is an SoC with four high-performance, power-hungry
+cores and four lower-performance, energy-efficient cores. This gives the operating
+system the ability to run threads on fast cores when that is needed but save energy
+when it is not.
+Manycore Chips
+Multicore simply means ‘‘more than one core,’’ but when the number of cores
+grows well beyond the reach of finger counting, we use another name. Manycore
+chips are multicores that contain many tens, hundreds, or even thousands of cores.

@@ -1,0 +1,46 @@
+902
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+The technique of using software interrupts to defer interrupt processing is a
+well-established method of reducing ISR latency. UNIX and other systems started
+using deferred processing in the 1970s to deal with the slow hardware and limited
+buffering of serial connections to terminals. The ISR would deal with fetching
+characters from the hardware and queuing them. After all higher-level interrupt
+processing was completed, a software interrupt would run a low-priority ISR to do
+character processing, such as implementing backspace by sending control 
+characters to the terminal to erase the last character displayed and move the cursor back.
+A similar example in Windows today is the keyboard device. After a key is
+struck, the keyboard ISR reads the key code from a register and then reenables the
+keyboard interrupt but does not do further processing of the key immediately.
+Instead, it uses a DPC to queue the processing of the key code until all outstanding
+device interrupts have been processed.
+Because DPCs run at level 2, they do not keep device ISRs from executing, but
+they do prevent any threads from running on that processor until all the queued
+DPCs complete and the CPU priority level is lowered below 2. Device drivers and
+the system itself must take care not to run either ISRs or DPCs for too long.
+Because threads are not allowed to execute, ISRs and DPCs can make the system
+appear sluggish and produce glitches when playing music by stalling the threads
+writing the music buffer to the sound device. Another common use of DPCs is 
+running routines in response to a timer interrupt. To avoid blocking threads, timer
+ev ents which need to run for an extended time should queue requests to the pool of
+worker threads the kernel maintains for background activities.
+The problem of thread starvation due to excessively long or frequent DPCs
+(called DPC Storms) is common enough that Windows implements a defense
+mechanism called the DPC Watchdog. The DPC Watchdog has time limits for
+individual DPCs and for back-to-back DPCs. When these limits are exceeded, the
+watchdog issues a system crash with the DPC WATCHDOG VIOLATION code and
+information about the long DPC (typically a buggy driver) along with a crash
+dump which can help diagnose the issue.
+Even though DPC storms are undesirable, so are system crashes. In 
+environments like the Azure Cloud where DPC storms due to incoming network packets
+are relatively common and system crashes are catastrophic, DPC watchdog 
+timeouts are typically configured higher to avoid crashes. To improve diagnosability in
+such situations, the DPC watchdog in Windows 11 supports soft and profiling
+thresholds. When the soft threshold is crossed, instead of crashing the system, the
+watchdog instead logs information which can later be analyzed to determine the
+source of the DPCs. When the profiling threshold is crossed, the watchdog starts a
+profiling timer and logs a stack trace of DPC execution every millisecond such that
+much more detailed analysis can be performed to understand the root cause of long
+or frequent DPCs.
+In addition to the improved DPC watchdog, the Windows 11 thread scheduler
+is also smarter about reducing thread starvation in the face of DPCs. For each

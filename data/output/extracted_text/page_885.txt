@@ -1,0 +1,44 @@
+856
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Privacy, in contrast, is a collaboration with the user, gaining their trust by 
+clearly informing them of what is happening with their data and providing controls for
+them to express their preferences. It is hard for an operating system to do this 
+automatically, not only because having this information and control is central to 
+gaining trust, but also because there is no right set of answers for all users: if you 
+survey users about their preferences for how their data is handled, some will care
+much less than others (caring more about features they get by providing their data),
+and some will have significantly stronger preferences for certain types of data 
+compared to others with strong preferences for different data.
+10.8.12 Background Execution and Social Engineering
+One of Android’s initial design goals was to create an open mobile operating
+system, allowing regular app developers the flexibility to not only implement much
+of the same functionality as provided by its built-in applications, but also to create
+new kinds of applications not originally envisioned by the platform.
+This design goal was expressed in the previously covered application model of
+activities, receivers, services, and content providers: a set of flexible basic building
+blocks applications use to express their needs to the operating system. Of special
+note is the service, a general mechanism for an app to express the need to do some
+work in the background even if the user is not currently running their app.
+A service can represent a wide range of functionality, from various kinds of
+updating and syncing data in the background, to more explicitly user-controlled
+execution. For example, Android shipped with a music player that allowed the user
+to continue listening to music even while not in the application itself. Since this
+could be built with the basic service construct, from the first version of Android
+any regular application could implement that same functionality, and even use it
+for entirely new kinds of experiences such as driving navigation or exercise 
+tracking.
+Android’s flexibility in background execution was valuable, but also became
+an increasing challenge to manage, which this section will look at in more detail.
+But before doing that, let’s consider a simple case of foreground services.
+A foreground service is a capability for a running service component to tell
+Android that it is especially important to the user. This gives the system an 
+important distinction between more important and less important services, for things like
+memory management. Recall Fig. 10-63 showing different process importance 
+categories. Whether a service is foreground or not determines whether its process is
+classified as perceptible or service. By being more important than regular services
+(but less important than the visible application), Android can correctly decide to
+get rid of processes for background services without breaking experiences like the
+user listening to music in the background.
+In Android 1.0, a services was made foreground with a simple API that 
+directly requested it, and the system trusted that apps used this for the intended purpose:

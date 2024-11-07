@@ -1,0 +1,46 @@
+SEC. 7.2
+REQUIREMENTS FOR VIRTUALIZATION
+483
+instructions that cause a trap if executed in user mode. Popek and Goldberg called
+these privileged instructions. Their paper stated for the first time that a machine
+is virtualizable only if the sensitive instructions are a subset of the privileged
+instructions. In simpler language, if you try to do something in user mode that you
+should not be doing in user mode, the hardware should trap. Unlike the IBM/370,
+which had this property, Intel’s 386 did not. Quite a few sensitive 386 instructions
+were ignored if executed in user mode or executed with different behavior. For
+example, the POPF instruction replaces the flags register, which changes the bit
+that enables/disables interrupts. In user mode, this bit is simply not changed. As a
+consequence, the 386 and its successors could not be virtualized, so they could not
+support a hypervisor directly.
+Actually, the situation is even worse than sketched. In addition to the problems
+with instructions that fail to trap in user mode, there are instructions that can read
+sensitive state in user mode without causing a trap. For example, on x86 processors
+prior to 2005, a program can determine whether it is running in user mode or 
+kernel mode by reading its code-segment selector. An operating system that did this
+and discovered that it was actually in user mode might make an incorrect decision
+based on this information.
+This problem was finally solved when Intel and AMD introduced virtualization
+in their CPUs starting in 2005 (Uhlig et al., 2005). On the Intel CPUs it is called
+VT (Virtualization Technology); on the AMD CPUs it is called SVM (Secure
+Virtual Machine). We will use the term VT in a generic sense below. Both were
+inspired by the IBM VM/370 work, but they are slightly different. The basic idea
+is to create environments in which virtual machines can be run. When a guest
+operating system is started up in an environment, it continues to run there until it
+causes an exception and traps to the hypervisor, for example, by executing an I/O
+instruction. The set of operations that trap is controlled by a hardware bitmap set
+by the hypervisor. With these extensions, the classical trap-and-emulate virtual
+machine approach becomes possible.
+The astute reader may have noticed an apparent contradiction in the 
+description thus far. On the one hand, we have said that x86 was not virtualizable until the
+architecture extensions introduced in 2005. On the other hand, we saw that
+VMware launched its first x86 hypervisor in 1999. How can both be true at the
+same time? The answer is that the hypervisors before 2005 did not really run the
+original guest operating system. Rather, they re wrote part of the code on the fly to
+replace problematic instructions with safe code sequences that emulated the 
+original instruction. Suppose, for instance, that the guest operating system performed a
+privileged I/O instruction, or modified one of the CPU’s privileged control 
+registers (like the CR3 register which contains a pointer to the page directory). It is
+important that the consequences of such instructions are limited to this virtual
+machine and do not affect other virtual machines, or the hypervisor itself. Thus, an
+unsafe I/O instruction was replaced by a trap that, after a safety check, performed
+an equivalent instruction and returned the result. Since we are rewriting, we can

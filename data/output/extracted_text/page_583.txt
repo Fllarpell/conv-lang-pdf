@@ -1,0 +1,57 @@
+554
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+central server to ask how many CPUs it may use. It then adjusts the number of
+threads up or down to match what is available.
+For example, a Web server can have 5, 10, 20, or any other number of threads
+running in parallel. If it currently has 10 threads and there is suddenly more
+demand for CPUs and it is told to drop to 5, when the next fiv e threads finish their
+current work, they are told to exit instead of being given new work. This scheme
+allows the partition sizes to vary dynamically to match the current workload better
+than the fixed system of Fig. 8-13.
+Gang Scheduling
+A clear advantage of space sharing is the elimination of multiprogramming,
+which eliminates the context-switching overhead. However, an equally clear
+disadvantage is the time wasted when a CPU blocks and has nothing at all to do
+until it becomes ready again. Consequently, people have looked for algorithms that
+attempt to schedule in both time and space together, especially for threads that 
+create multiple threads, which usually need to communicate with one another.
+To see the kind of problem that can occur when the threads of a process are
+independently scheduled, consider a system with threads A0 and A1 belonging to
+process A and threads B0 and B1 belonging to process B. Threads A0 and B0 are
+timeshared on CPU 0; threads A1 and B1 are timeshared on CPU 1. Threads A0
+and A1 need to communicate often. The communication pattern is that A0 sends A1
+a message, with A1 then sending back a reply to A0, followed by another such
+sequence, common in client-server situations. Suppose luck has it that A0 and B1
+start first, as shown in Fig. 8-14.
+A0
+B0
+A0
+B0
+A0
+B0
+B1
+A1
+B1 
+A1
+B1
+A1
+Thread A0 running
+0
+100
+200
+300
+400
+500
+600
+CPU 0
+CPU 1
+Time
+Request 1
+Request 2
+Reply 2
+Reply 1
+Figure 8-14. Communication between two threads belonging to thread A that are
+running out of phase.
+In time slice 0, A0 sends A1 a request, but A1 does not get it until it runs in
+time slice 1 starting at 100 msec. It sends the reply immediately, but A0 does not

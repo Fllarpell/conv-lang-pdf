@@ -1,0 +1,43 @@
+1106
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+HOLT, R.C.: ‘‘Some Deadlock Properties of Computer Systems,’’ ACM Computing Surveys,
+Vol. 4, pp. 179–196, Sept. 1972.
+HOWARD, M., and LEBLANK, D.: Writing Secure Code, Redmond, WA: Microsoft Press,
+2009.
+HRUBY, T., D., BOS, H., and TANENBAUM, A.S.: ‘‘When Slower Is Faster: On 
+Heterogeneous Multicores for Reliable Systems,’’ Proc. USENIX Ann. Tech. Conf., USENIX,
+2013.
+HRUBY, T., VOGT, D., BOS, H., and TANENBAUM, A.S.: ‘‘Keep Net Working—On a
+Dependable and Fast Networking Stack,’’ Proc. 42nd Conf. on Dependable Syst. and
+Networks, IEEE, pp. 1–12, 2012.
+HU, S., ZHU, Y., CHENG, P., GUO, C., TAN, K., PADHYE, J., and Chen, K: ‘‘Tagger: 
+Practical PFC Deadlock Prevention in Data Center Networks,’’ Proc. 12th International
+Conf. on emerging Networking EXperiments and Tech., ACM, 2017.
+HUTCHINSON, N.C., MANLEY, S., FEDERWISCH, M., HARRIS, G., HITZ, D., KLEIMAN,
+S., and O’MALLEY, S.: ‘‘Logical vs. Physical File System Backup,’’ Proc. Third
+USENIX Symp. on Operating Syst. Design and Implementation, USENIX, pp.
+239–249, 1999.
+IEEE Interface (API) IC Language IEEE, 2003.
+INTEL: ‘‘PCI-SIG SR-IOV Primer: An Introduction to SR-IOV Technology,’’ Intel White
+Paper, 2011.
+ION, F.: ‘‘From Touch Displays to the Surface: A Brief History of Touchscreen 
+Technology,’’ ArsTechnica, History of Tech, April, 2013.
+ISLOOR, S.S., and MARSLAND, T.A.: ‘‘The Deadlock Problem: An Overview,’’ Computer,
+Vol. 13, pp. 58–78, Sept. 1980.
+JANTZ, M.R., STRICKLAND, C., KUMAR, K., DIMITROV, M., and DOSHI, K.A.: ‘‘ A
+Framework for Application Guidance in Virtual Memory Systems,’’ Proc. Ninth Int’l
+Conf. on Virtual Execution Environments, ACM, pp. 155–166, 2013.
+JEONG, J., KIM, H., HWANG, J., LEE, J., and MAENG, S.: ‘‘Rigorous Rental Memory
+Management for Embedded Systems,’’ ACM Trans. Embedded Computing Syst., Vol.
+12, Art. 43, pp. 1–21, March 2013.
+JI, C., CHANG, L-P., PAN, R., WU, C., GAO C., SHI, L., KUO, T-W., and XUE, C.J.: 
+‘‘PatternGuided File Compression with User-Experience Enhancement for Log-Structured File
+System on Mobile Devices,’’ Proc. 19th USENIX Conf. on File and Storage Tech.,
+USENIX, pp. 127–140, 2021.
+JOHNSON, E.A: ‘‘Touch Display—A Novel Input/Output Device for Computers,’’ 
+Electronics Letters, Vol. 1, no. 8, pp. 219–220, 1965.
+JOHNSON, N.F., and JAJODIA, S.: ‘‘Exploring Steganography: Seeing the Unseen,’’ 
+Computer, Vol. 31, pp. 26–34, Feb. 1998.
+JOVER, R.P.: ‘‘Security Analysis of SMS as a Second Factor of Authentication,’’ Commun.
+ACM, Vol. 63, pp. 46–52, Dec. 2020.

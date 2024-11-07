@@ -1,0 +1,39 @@
+828
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Activity manager in system_server process
+Calendar app process
+Email app process
+Browser app process
+SyncControlReceiver
+SyncControlReceiver
+CleanupReceiver
+BroadcastRecord
+DEVICE_STORAGE_LOW
+SyncControlReceiver
+(Calendar app)
+SyncControlReceiver
+(Email app)
+CleanupReceiver
+(Browser app)
+Figure 10-60. Sending a broadcast to application receivers.
+Content Providers
+Our last application component, the content provider, is the primary 
+mechanism that applications use to exchange data with each other. All interactions with a
+content provider are through URIs using a content: scheme; the authority of the
+URI is used to find the correct content-provider implementation to interact with.
+For example, in our email application from Fig. 10-51, the content provider
+specifies that its authority is com.example.email.provider.email. Thus, URIs 
+operating on this content provider would start with
+content://com.example.email.provider.email/
+The suffix to that URI is interpreted by the provider itself to determine what data
+within it is being accessed. In the example here, a common convention would be
+that the URI
+content://com.example.email.provider.email/messages
+means the list of all email messages, while
+content://com.example.email.provider.email/messages/1
+provides access to a single message at key number 1.
+To interact with a content provider, applications always go through a system
+API called ContentResolver, where most methods have an initial URI argument
+indicating the data to operate on. One of the most often used ContentResolver
+methods is query, which performs a database query on a given URI and returns a

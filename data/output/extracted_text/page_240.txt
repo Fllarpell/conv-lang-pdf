@@ -1,0 +1,71 @@
+SEC. 3.4
+PA GE REPLACEMENT ALGORITHMS
+211
+The operation of this algorithm, called second chance, is shown in Fig. 3-15.
+In Fig. 3-15(a), we see pages A through H kept on a linked list and sorted by the
+time they arrived in memory.
+(a)
+Page loaded first
+Most recently!
+loaded page
+0!
+A
+3!
+B
+7!
+C
+8!
+D
+12!
+E
+14!
+F
+15!
+G
+18!
+H
+(b)
+A is treated like a!
+newly loaded page
+3!
+B
+7!
+C
+8!
+D
+12!
+E
+14!
+F
+15!
+G
+18!
+H
+20!
+A
+Figure 3-15. Operation of second chance. (a) Pages sorted in FIFO order.
+(b) Page list if a page fault occurs at time 20 and A has its R bit set. The numbers
+above the pages are their load times.
+Suppose that a page fault occurs at time 20. The oldest page is A, which 
+arrived at time 0, when the process started. If A has the R bit cleared, it is evicted
+from memory, either by being written to nonvolatile storage (if it is dirty), or just
+abandoned (if it is clean). On the other hand, if the R bit is set, A is put onto the
+end of the list and its ‘‘load time’’ is reset to the current time (20). The R bit is also
+cleared. The search for a suitable page continues with B.
+What second chance is looking for is an old page that has not been referenced
+in the most recent clock interval. If all the pages have been referenced, second
+chance degenerates into pure FIFO. Specifically, imagine that all the pages in
+Fig. 3-15(a) have their R bits set. One by one, the operating system moves the
+pages to the end of the list, clearing the R bit each time it appends a page to the end
+of the list. Eventually, it comes back to page A, which now has its R bit cleared. At
+this point, A is evicted. Thus the algorithm always terminates.
+3.4.5 The Clock Page Replacement Algorithm
+Although second chance is a reasonable algorithm, it is unnecessarily 
+inefficient because it is constantly moving pages around on its list. A better approach
+is to keep all the page frames on a circular list in the form of a clock, as shown in
+Fig. 3-16. The hand points to the oldest page.
+When a page fault occurs, the page being pointed to by the hand is inspected.
+If its R bit is 0, the page is evicted, the new page is inserted into the clock in its
+place, and the hand is advanced one position. If R is 1, it is cleared and the hand is
+advanced to the next page. This process is repeated until a page is found with
+R = 0. Not surprisingly, this algorithm is called clock.

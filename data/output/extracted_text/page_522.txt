@@ -1,0 +1,49 @@
+SEC. 7.5
+ARE HYPERVISORS MICROKERNELS DONE RIGHT?
+493
+Hardware
+VMIL/HWinterface lib.
+Sensitive
+instruction
+executed by
+HW
+VMI Linux
+Hardware
+VMware
+VMI Linux
+VMIL to Vmware lib.
+Hypervisor call
+Hardware
+Xen
+VMI Linux
+VMIL to Xen library
+Hypervisor call
+(a)
+(b)
+(c)
+Figure 7-6. VMI Linux running on (a) the bare hardware, (b) VMware, and
+(c) Xen.
+a hypervisor-agnostic interface for Linux. The interface, included in the mainline
+kernel from version 2.6.23 onward, allows the kernel to talk to whatever hypervisor
+is managing the physical hardware.
+7.6 MEMORY VIRTUALIZATION
+So far we have addressed the issue of how to virtualize the CPU. But a 
+computer system has more than just a CPU. It also has memory and I/O devices. They
+have to be virtualized, too. Let us see how that is done.
+Modern operating systems nearly all support virtual memory, which is 
+basically a mapping of pages in the virtual address space onto pages of physical memory.
+This mapping is defined by (multilevel) page tables. Typically the mapping is set
+in motion by having the operating system set a control register in the CPU that
+points to the top-level page table. Virtualization greatly complicates memory 
+management. In fact, it took hardware manufacturers two tries to get it right.
+Suppose, for example, a virtual machine is running, and the guest operating
+system in it decides to map its virtual pages 7, 4, and 3 onto physical pages 10, 11,
+and 12, respectively. It builds page tables containing this mapping and loads a
+hardware register to point to the top-level page table. This instruction is sensitive.
+On a VT CPU, it will trap; with dynamic translation it will cause a call to a 
+hypervisor procedure; on a paravirtualized operating system, it will generate a hypercall.
+For simplicity, let us assume it traps into a type 1 hypervisor, but the problem is the
+same in all three cases.
+What does the hypervisor do now? One solution is to actually allocate 
+physical pages 10, 11, and 12 to this virtual machine and set up the actual page tables to
+map the virtual machine’s virtual pages 7, 4, and 3 to use them. So far, so good.

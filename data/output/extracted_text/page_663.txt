@@ -1,0 +1,43 @@
+634
+SECURITY 
+CHAP. 9
+galaxies combined, is estimated to be in the ballpark of 1078, only 10x bigger, so
+1077 is a rather large number. Shorter keys may thwart amateurs, but certainly not
+major governments.
+Public-Key Cryptography
+Secret-key systems are efficient because the amount of computation required
+to encrypt or decrypt a message is manageable, but they hav e a big drawback: the
+sender and receiver must both be in possession of the shared secret key. They may
+ev en hav e to get together physically for one to give it to the other. To get around
+this problem, public-key cryptography is used (Diffie and Hellman, 1976). This
+system has the property that distinct keys are used for encryption and decryption
+and that given a well-chosen encryption key, it is virtually impossible to discover
+the corresponding decryption key. Under these circumstances, the encryption key
+can be made public and only the private decryption key kept secret.
+Just to give a feel for public-key cryptography, consider the following two
+questions:
+Question 1: How much is 314159265358979 × 314159265358979?
+Question 2: What is the square root of 3912571506419387090594828508241?
+Most sixth graders, if given a pencil, paper, and the promise of a really big ice
+cream sundae for the correct answer, could answer question 1 in an hour or two.
+Most adults given a pencil, paper, and the promise of a lifetime 50% tax cut could
+not solve question 2 at all without using a calculator, computer, or other external
+help. Although squaring and square rooting are inverse operations, they differ 
+enormously in their computational complexity. This kind of asymmetry forms the basis
+of public-key cryptography. Encryption makes use of the easy operation but
+decryption without the key requires you to perform the hard operation.
+As an example, a popular public-key system called RSA (named after the
+designers, Ron Rivest, Adi Shamir, and Len Adelson) exploits the fact that 
+multiplying really big numbers is much easier for a computer to do than factoring really
+big numbers, especially when all arithmetic is done using modulo arithmetic and
+all the numbers involved have hundreds of digits (Rivest et al., 1978).
+The way public-key cryptography works is that everyone picks a (public key,
+private key) pair and publishes the public key. The public key is the encryption
+key; the private key is the decryption key. Usually, the key generation is 
+automated, possibly with a user-selected password fed into the algorithm as a seed. To
+send a secret message to a user, a correspondent encrypts the message with the
+receiver’s public key. Since only the receiver has the private key, only the receiver
+can decrypt the message.
+Public-key cryptography is great because you can just publish your public key
+and everyone can use it and be sure that you alone can read the message. In 
+contrast, with secret-key cryptography you have to worry about getting the key to the

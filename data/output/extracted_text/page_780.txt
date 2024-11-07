@@ -1,0 +1,41 @@
+SEC. 10.4
+MEMORY MANAGEMENT IN LINUX
+751
+entry in the middle page directory points to the final page table, which is indexed
+by the page field of the virtual address. The entry found here points to the page
+needed. On the Pentium, which uses two-level paging, each page’s upper and 
+middle directories have only one entry, so the global directory entry effectively
+chooses the page table to use. Similarly, three-level paging can be used when 
+needed, by setting the size of the upper page directory field to zero. Starting with the
+4.14 kernel, fiv e-level page tables are also supported, to leverage the x86-64 
+hardware extensions originally introduced in the Intel Ice Lake processors.
+Global directory
+Upper directory
+Middle directory
+Page
+Offset
+Page
+Page table
+Page middle!
+directory
+Page upper!
+directory
+Page global!
+directory
+Virtual!
+address
+Figure 10-16. Linux uses four-level page tables.
+Physical memory is used for various purposes. The kernel itself is fully 
+hardwired; no part of it is ever paged out. The rest of memory is available for user
+pages, the paging cache, and other purposes. The page cache holds pages 
+containing file blocks that have recently been read or have been read in advance in
+expectation of being used in the near future, or pages of file blocks which need to
+be written to disk, such as those which have been created from user-mode 
+processes which have been swapped out to disk. It is dynamic in size and competes for
+the same pool of pages as the user processes. The paging cache is not really a 
+separate cache, but simply the set of user pages that are no longer needed and are 
+waiting around to be paged out. If a page in the paging cache is reused before it is
+evicted from memory, it can be reclaimed quickly.
+In addition, Linux supports dynamically loaded modules, most often device
+drivers. These can be of arbitrary size and each one must be allocated a contiguous
+piece of kernel memory. As a direct consequence of these requirements, Linux

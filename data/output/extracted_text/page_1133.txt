@@ -1,0 +1,42 @@
+1104
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+FARSHIN, A., BARBETTE1, T., ROOZBEH1, A., MAGUIRE JR., G. Q., and KOSTIC, D.:
+‘‘PacketMill: Tow ard Per-Core 100-Gbps Networking,’’ Proc. 26th ACM International
+Conf. on Arc hitectural Support for Programming Languages and Operating Syst.,
+ACM, 2021.
+FELTEN, E.W., and HALDERMAN, J.A.: ‘‘Digital Rights Management, Spyware, and 
+Security,’’ IEEE Security and Privacy, Vol. 4, pp. 18–23, Jan./Feb. 2006.
+FEUSTAL, E.A.: ‘‘The Rice Research Computer—A Tagged Architecture,’’ Proc. AFIPS
+Conf., AFIPS, 1972.
+FLORENCIO, D., and HERLEY, C.: ‘‘ A Large-Scale Study of Web Password Habits,’’ Proc.
+16th Int’l Conf. on the World Wide Web, ACM, pp. 657–666, 2007.
+FOTHERINGHAM, J.: ‘‘Dynamic Storage Allocation in the Atlas Including an Automatic
+Use of a Backing Store,’’ Commun. ACM, Vol. 4, pp. 435–436, Oct. 1961.
+FUSCO, J.: The Linux Programmer’s Toolbox, Hoboken, NJ: Pearson, 2007.
+GARFINKEL, T., PFAFF, B., CHOW, J., ROSENBLUM, M., and BONEH, D.: ‘‘Terra: A 
+Virtual Machine-Based Platform for Trusted Computing,’’ Proc. 19th Symp. on Operating
+Syst. Prin., ACM, pp. 193–206, 2003.
+GAROFALAKIS, J., and STERGIOU, E.: ‘‘ An Analytical Model for the Performance 
+Evaluation of Multistage Interconnection Networks with Two Class Priorities,’’ Future Gen.
+Computer Syst., Vol. 29, pp. 114–129, Jan. 2013.
+GEIST, R., and DANIEL, S.: ‘‘ A Continuum of Disk Scheduling Algorithms,’’ ACM Trans.
+Computer Syst., Vol. 5, pp. 77–92, Feb. 1987.
+GELERNTER, D.: ‘‘Generative Communication in Linda,’’ ACM Trans. Program. Lang.
+and Syst., Vol. 7, pp. 80–112, Jan. 1985.
+GIUFFRIDA, C., KUIJSTEN, A., and TANENBAUM, A.: ‘‘Safe and Automatic Live Update
+for Operating Systems,’’ Proc. 18th Int’l Conf. on Arc h. Support for Prog. Lang. and
+Operating Syst., ACM, pp. 279–292, 2013.
+GIUFFRIDA, C., KUIJSTEN, A., and TANENBAUM, A.S.: ‘‘Enhanced Operating System
+Security through Efficient and Fine-Grained Address Space Randomization,’’ Proc.
+21st USENIX Security Symp., USENIX, 2012.
+GIUFFRIDA, C., KUIJSTEN, A., and TANENBAUM, A.S.: ‘‘Safe and Automatic Live
+Update for Operating Systems,’’ Proc. 18th Int’l Conf. on Arc h. Support for Prog.
+Lang. and Operating Syst., ACM, pp. 279–292, 2013.
+GOLDBERG, R.P:: Architectural Prin. for Virtual Computer Syst., Ph.D. thesis, Harvard
+University, Cambridge, MA, 1972.
+GONG, L.: Inside Java 2 Platform Security, Boston: Addison-Wesley, 1999.
+GRAHAM, R.: ‘‘Use of High-Level Languages for System Programming,’’ Project MAC
+Report TM-13, M.I.T., Sept. 1970.
+GREENBERG, A.: A New Era of Cyberwar and the Hunt for the Kremlin’s Most Dangerous
+Hackers, New York: Doubleday, 2019.

@@ -1,0 +1,81 @@
+684
+SECURITY 
+CHAP. 9
+Stack
+Libraries
+Heap
+Code
+strcpy()
+strlen()
+...
+object 1
+object 2
+main()
+myFunc()
+Stack
+Libraries
+strcpy()
+strlen()
+...
+Heap
+object 1
+object 2
+Code
+main()
+myFunc()
+(a)
+Stack
+Libraries
+Heap
+Code
+strcpy()
+strlen()
+...
+object 1
+object 2
+main()
+myFunc()
+Stack
+Libraries
+Heap
+Code
+strlen()
+...
+strcpy()
+...
+object 2
+...
+object 1
+myFunc()
+...
+main()
+(b)
+Coarse-grained randomization:
+every time we run the program,
+the stack, heap, libraries and 
+codestart at a dierent location.
+Finer-grained randomization:
+every time we run the program,
+even the relative locations of 
+functions and objects change.
+Run n
+Run n+1
+Run n
+Run n+1
+Figure 9-33. Address-space layout randomization: (a) coarse-grained (b) fine-grained
+and parcel of mainstream operating systems such as Windows since 2017 and is
+supported by many compiler toolchains.
+To ensure that the control flow in the program always follows legitimate paths
+during execution, CFI analyzes the program in advance to determine what the 
+possible legitimate targets are for jump instructions, call instructions, and return
+instructions. For calls and jumps, it only considers those that may be tampered
+with by an attacker. If the code contains an instruction such as call 0x543210, there
+is nothing the attacker can do—the instruction will always call the function at that
+address. Since the code segment is read-only, it is difficult for the attacker to 
+modify the call target. However, suppose the instruction is an indirect call, such as call
+fptr, where fptr is a function pointer stored at some location in memory. If the
+attacker can change that memory location, for instance using a buffer overflow, she
+can control which code will be executed. You may wonder what the legitimate 
+targets for such indirect calls are. A simple if crude answer is: all the functions of
+which the address was ever stored in a function pointer. This is generally a very
+small fraction of the functions in the program. Restricting the indirect calls (calls

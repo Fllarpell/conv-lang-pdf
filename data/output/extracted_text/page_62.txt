@@ -1,0 +1,59 @@
+SEC. 1.3
+COMPUTER HARDWARE REVIEW
+33
+1.3.5 Buses
+The organization of Fig. 1-6 was used on minicomputers for years and also on
+the original IBM PC. However, as processors and memories got faster, the ability
+of a single bus (and certainly the IBM PC bus) to handle all the traffic was strained
+to the breaking point. Something had to give. As a result, additional buses were
+added, both for faster I/O devices and for CPU-to-memory traffic. As a 
+consequence of this evolution, a large x86 system currently looks something like
+Fig. 1-12.
+Memory controllers
+DDR  Memory
+Graphics
+PCIe
+Platform
+Controller
+Hub
+DMI
+PCIe slot
+PCIe slot
+PCIe slot
+PCIe slot
+Core1
+Core2
+Shared cache
+GPU Cores
+DDR 
+ Memory
+4
+4
+4
+3.2
+SATA
+USB  
+ports
+USB   
+ports
+Gigabit Ethernet
+Cache
+Cache
+More PCIe devices
+PCIe
+Figure 1-12. The structure of a large x86 system.
+This system has many buses (e.g., cache, memory, PCIe, PCI, USB, SATA, and
+DMI), each with a different transfer rate and function. The operating system must
+be aware of all of them for configuration and management. The main bus is the
+PCIe (Peripheral Component Interconnect Express) bus.
+The PCIe bus was invented by Intel as a successor to the older PCI bus, which
+in turn was a replacement for the original ISA (Industry Standard Architecture)
+bus. Capable of transferring tens of gigabits per second, PCIe is much faster than
+its predecessors. It is also very different in nature. Up to its creation in 2004, most
+buses were parallel and shared. A shared bus architecture means that multiple
+devices use the same wires to transfer data. Thus, when multiple devices have data
+to send, you need an arbiter to determine who can use the bus. In contrast, PCIe
+makes use of dedicated, point-to-point connections. A parallel bus architecture as
+used in traditional PCI means that you send each word of data over multiple wires.
+For instance, in regular PCI buses, a single 32-bit number is sent over 32 parallel
+wires. In contrast to this, PCIe uses a serial bus architecture and sends all bits in

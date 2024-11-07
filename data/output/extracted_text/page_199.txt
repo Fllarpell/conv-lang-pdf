@@ -1,0 +1,54 @@
+170
+PROCESSES AND THREADS
+CHAP. 2
+When the process A finally runs again, thread A1 will resume running. It will
+continue to consume all of A’s time until it is finished. However, its antisocial
+behavior will not affect other processes. They will get whatever the scheduler 
+considers their appropriate share, no matter what is going on inside process A.
+Now consider the case that A’s threads have relatively little work to do per
+CPU burst, for example, 5 msec of work within a 50-msec quantum. Consequently,
+each one runs for a little while, then yields the CPU back to the thread scheduler.
+This might lead to the sequence A1, A2, A3, A1, A2, A3, A1, A2, A3, A1, before the
+kernel switches to process B. This situation is illustrated in Fig. 2-45(a).
+Process A
+Process B
+Process B
+Process A
+1. Kernel picks a process
+1. Kernel picks a thread
+Possible:          A1, A2, A3, A1, A2, A3!
+Also possible:  A1, B1, A2, B2, A3, B3
+Possible:          A1, A2, A3, A1, A2, A3!
+Not possible:   A1, B1, A2, B2, A3, B3
+(a)
+(b)
+Order in which!
+threads run
+2. Run-time!
+    system!
+    picks a!
+    thread
+1
+2
+3
+1
+3
+2
+Figure 2-45. (a) Possible scheduling of user-level threads with a 50-msec 
+process quantum and threads that run 5 msec per CPU burst. (b) Possible scheduling
+of kernel-level threads with the same characteristics as (a).
+The scheduling algorithm used by the run-time system can be any of the ones
+described above. In practice, round-robin scheduling and priority scheduling are
+most common. The only constraint is the absence of a clock to interrupt a thread
+that has run too long. Since threads cooperate, this is usually not an issue.
+Now consider the situation with kernel-level threads. Here the kernel picks a
+particular thread to run. It does not have to take into account which process the
+thread belongs to, but it can if it wants to. The thread is given a quantum and is 
+forcibly suspended if it exceeds the quantum. With a 50-msec quantum and threads
+that block after 5 msec, the thread order for some period of 30 msec might be A1,
+B1, A2, B2, A3, B3, something not possible with these parameters and user-level
+threads. This situation is partially depicted in Fig. 2-45(b).
+A major difference between user-level threads and kernel-level threads is the
+performance. Doing a thread switch with user-level threads takes a handful of
+machine instructions. With kernel-level threads it requires a full context switch
+changing the memory map and invalidating the cache, which is several orders of

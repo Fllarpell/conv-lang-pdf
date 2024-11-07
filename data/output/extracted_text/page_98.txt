@@ -1,0 +1,46 @@
+SEC. 1.7
+OPERATING SYSTEM STRUCTURE
+69
+Machine 1
+Machine 2
+Machine 3
+Machine 4
+Client!
+Kernel
+File server!
+Kernel
+Process server!
+Kernel
+Terminal server!
+Kernel
+Message from!
+client to server
+Network
+Figure 1-27. The client-server model over a network.
+Increasingly many systems involve users at their home PCs as clients and large
+machines elsewhere running as servers. In fact, much of the Web operates this
+way. A PC sends a request for a Web page to the server and the Web page comes
+back. This is a typical use of the client-server model in a network.
+1.7.5 Virtual Machines
+The initial releases of OS/360 were strictly batch systems. Nevertheless, many
+360 users wanted to be able to work interactively at a terminal, so various groups,
+both inside and outside IBM, decided to write timesharing systems for it. The
+official IBM timesharing system, TSS/360, was delivered late, and when it finally
+arrived it was so big and slow that few sites converted to it. It was eventually 
+abandoned after its development had consumed some $50 million (Graham, 1970). But
+a group at IBM’s Scientific Center in Cambridge, Massachusetts, produced a 
+radically different system that IBM eventually accepted as a product. A linear 
+descendant of it, called z/VM, is now widely used on IBM’s current mainframes, the
+zSeries, which are heavily used in large corporate data centers, for example, as
+e-commerce servers that handle hundreds or thousands of transactions per second
+and use databases whose sizes run to millions of gigabytes.
+VM/370
+This system, originally called CP/CMS and later renamed VM/370 (Seawright
+and MacKinnon, 1979), was based on an astute observation: a timesharing system
+provides (1) multiprogramming and (2) an extended machine with a more 
+convenient interface than the bare hardware. The essence of VM/370 is to completely
+separate these two functions.
+The heart of the system, called a virtual machine monitor, runs on the bare
+hardware and does the multiprogramming, providing not one, but several virtual
+machines to the next layer up, as shown in Fig. 1-28. However, unlike all other
+operating systems, these virtual machines are not extended machines, with files

@@ -1,0 +1,31 @@
+SEC. 3.5
+DESIGN ISSUES FOR PAGING SYSTEMS
+229
+Program
+Process
+table
+Data 1
+Data 2
+Page tables
+Figure 3-25. Tw o processes sharing the same program sharing its page tables.
+Similarly, when A terminates, it is essential to be able to discover that the
+pages are still in use so that their nonvolatile storage space will not be freed by
+accident. Searching all the page tables to see if a page is shared is usually too
+expensive, so special data structures are needed to keep track of shared pages,
+especially if the unit of sharing is the individual page (or run of pages), rather than
+an entire page table.
+Sharing data is trickier than sharing code, but it is not impossible. In 
+particular, in UNIX, after a fork system call, the parent and child are required to share
+both program text and data. In a paged system, what is often done is to give each
+of these processes its own page table and have both of them point to the same set
+of pages. Thus no copying of pages is done at fork time. However, all the data
+pages are mapped into both processes as READ ONLY.
+As long as both processes just read their data, without modifying it, this 
+situation can continue. As soon as either process updates a memory word, the violation
+of the read-only protection causes a trap to the operating system. A copy is then
+made of the offending page so that each process now has its own private copy.
+Both copies are now set to READ/WRITE, so subsequent writes to either copy
+proceed without trapping. This strategy means that those pages that are never 
+modified (including all the program pages) need not be copied. Only the data pages that
+are actually modified need to be copied. This approach, called copy on write,
+improves performance by reducing copying.

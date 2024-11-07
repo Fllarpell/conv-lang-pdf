@@ -1,0 +1,42 @@
+SEC. 13.2
+ALPHABETICAL BIBLIOGRAPHY
+1117
+TALLURI, M., HILL, M.D., and KHALIDI, Y.A.: ‘‘ A New Page Table for 64-Bit Address
+Spaces,’’ Proc. 15th Symp. on Operating Syst. Prin., ACM, pp. 184–200, 1995.
+TANENBAUM, A.S.: ‘‘Lessons Learned from 30 Years of MINIX,’’ Commun. ACM, ACM,
+Vol. 59 No. 3, pp.70–78, March 2016".
+TANENBAUM, A.S., and AUSTIN, T.: Structured Computer Organization, 6th ed., Hoboken,
+NJ: Pearson, 2012.
+TANENBAUM, A.S., FEAMSTER, N., and WETHERALL, D.: Computer Networks, 6th ed.,
+Hoboken, NJ: Pearson, 2020.
+TANENBAUM, A.S., VAN RENESSE, R., VAN STAVEREN, H., SHARP, G.J., MULLENDER,
+S.J., JANSEN, J., and VAN ROSSUM, G.: ‘‘Experiences with the Amoeba Distributed
+Operating System,’’ Commun. ACM, Vol. 33, pp. 46–63, Dec. 1990.
+TANENBAUM, A.S., and WOODHULL, A.S.: Operating Syst.: Design and 
+Implementation, 3rd ed., Hoboken, NJ: Pearson, 2006.
+TARANOV, K., BRUNO, R., ALONSO G., and HOEFLER, T.: ‘‘Naos: Serialization-free
+RDMA Networking in Java,’’ Proc. USENIX Ann. Tech. Conf., USENIX, pp. 1–14,
+2021.
+TARASOV, V., HILDEBRAND, D., KUENNING, G., and ZADOK, E.: ‘‘Virtual Machine
+Workloads: The Case for New NAS Benchmarks,’’ Proc. 11th USENIX Conf. on File
+and Storage Tech., USENIX, 2013.
+TEORY, T.J.: ‘‘Properties of Disk Scheduling Policies in Multiprogrammed Computer 
+Systems,’’ Proc. AFIPS Fall Joint Computer Conf., AFIPS, pp. 1–11, 1972.
+TIMMER, J.: ‘‘Inching Closer to a DNA-Based File System,’’ Ars Technica, Feb. 2021.
+THALHEIM, J., UNNIBHAVI, H., PRIEBE, C., BHATOTIA, P., and PIETZUCH, P.: ‘‘rkt-io:
+A Direct I/O Stack for Shielded Execution,’’ Proc. 16th European Conf. on Computer
+Syst., ACM, 2021.
+THOMPSON, K.: ‘‘Reflections on Trusting Trust,’’ Commun. ACM, Vol. 27, pp. 761–763,
+Aug. 1984.
+TRACH, B., FAQEH, R., OLEKSENKO, O., OZGA, W., BHATOTIA, P., and FETZER, C.:
+‘‘T-Lease: a Trusted Lease Primitive for Distributed Systems,’’ Proc. ACM Symp. on
+Cloud Computing, ACM, pp. 387–400, 2020.
+TUCKER, A., and GUPTA, A.: ‘‘Process Control and Scheduling Issues for 
+Multiprogrammed Shared-Memory Multiprocessors,’’ Proc. 12th Symp. on Operating Syst.
+Prin., ACM, pp. 159–166, 1989.
+UHLIG, R. NEIGER, G., RODGERS, D., SANTONI, A.L., MARTINS, F.C.M., ANDERSON,
+A.V., BENNET, S.M., KAGI, A., LEU NG, F.H., and SMITH, L.: ‘‘Intel Virtualization
+Technology,’’ Computer, vol. 38, pp. 48–56, 2005.
+VA GHANI, S.B.: ‘‘Virtual Machine File System,’’ ACM SIGOPS Operating Syst. Rev., Vol.
+44, pp. 57–70, 2010.
+VAHALIA, U.: UNIX Internals—The New Frontiers, Hoboken, NJ: Pearson, 2007.

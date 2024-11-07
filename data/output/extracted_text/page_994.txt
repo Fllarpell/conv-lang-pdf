@@ -1,0 +1,45 @@
+SEC. 11.5
+MEMORY MANAGEMENT
+965
+of soft faults is demand-zero faults. These indicate that a zeroed page should be
+allocated and mapped in, for example, when the first access to a VirtualAlloc’d
+address occurs. When trimming private pages from process working sets, Windows
+checks if the page is entirely zero. If so, instead of putting the page on the modified
+list and writing it out to the pagefile, the memory manager frees the page and
+encodes the PTE to indicate a demand-zero fault on next access. Soft faults can
+also occur because pages have been compressed to effectively increase the size of
+physical memory. For most configurations of CPU, memory, and I/O in current
+systems, it is more efficient to use compression rather than incur the I/O expense
+(performance and energy) required to read a page from disk. We will cover 
+memory compression in more detail later in this section.
+When a physical page is no longer mapped by the page table in any process, it
+goes onto one of three lists: free, modified, or standby. Pages that will never be
+needed again, such as stack pages of a terminating process, are freed immediately.
+Pages that may be faulted again go to either the modified list or the standby list,
+depending on whether or not the dirty bit was set for any of the page table entries
+that mapped the page since it was last read from disk. Pages in the modified list
+will be eventually written to disk, then moved to the standby list.
+Since soft faults are much quicker to satisfy than hard faults, a big performance
+improvement opportunity is to prepage or prefetch into the standby list, data that
+is expected to be used soon. Windows makes heavy use of prefetch in several
+ways:
+1. Page fault clustering: When satisfying hard page faults from files or
+from the pagefile, the memory manager reads additional pages, up to
+a total of 64 KB, as long as the next page in the file corresponds to the
+next virtual page. That is almost always the case for regular files so
+mechanisms like pagefile reservations we described earlier in the 
+section help clustering efficiency for pagefiles.
+2. Application-launch prefetching: Application launches are generally
+very consistent from launch to launch: the same application and DLL
+pages are accessed. Windows takes advantage of this behavior by
+tracing the set of file pages accessed during an application launch,
+persisting this history on disk, identifying those pages that are indeed
+consistently accessed and prefetching them during the next launch
+potentially seconds before the application actually needs them. When
+the pages to prefetch are already resident in memory, no disk I/Os are
+issued, but when they are not, application-launch prefetch routinely
+issues hundreds of I/O requests to disk which significantly improves
+disk read efficiency on both rotational and solid state disks.
+3. Working set in-swap: The working set of a process in Windows is
+composed of the set of user-mode virtual addresses that are mapped
+by valid PTEs, that is, addresses that can be accessed without a page

@@ -1,0 +1,42 @@
+824
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Activity manager in system_server process
+Email app process
+ActivityRecord
+(ComposeActivity)
+ActivityRecord
+(CameraMainActivity)
+ActivityRecord
+(MailMainActivity)
+Saved state
+Saved state
+STOPPED
+STOPPED
+RESUMED
+Task: Camera
+ComposeActivity
+CameraMainActivity
+Camera app process
+Task: Email
+Figure 10-55. Sharing a camera picture through the email application.
+appearing in its own third task, separate from CameraMainActivity. This was part
+of a switch to a ‘‘document-centric recents’’ model, described in
+https://developer.android.com/guide/components/activities/recents
+where the tasks we have here that are shown to users could be contextual parts of
+apps as well as the apps themselves. The activity abstraction between apps and the
+operating system allowed implementing this kind of significant user experience
+with little to no modification of the apps themselves.
+Finally, let us look at what would happen if the user left the camera task while
+in this last state (that is, composing an email to share a picture) and returned to the
+email application. Figure 10-56 shows the new state the system will be in. Note
+that we have brought the email task with its main activity back to the foreground.
+This makes MailMainActivity the foreground activity, but there is currently no
+instance of it running in the application’s process.
+To return to the previous activity, the system makes a new instance, handing it
+back the previously saved state the old instance had provided. This action of
+restoring an activity from its saved state must be able to bring the activity back to
+the same visual state as the user last left it. To accomplish this, the application will
+look in its saved state for the message the user was in, load that message’s data
+from its persistent storage, and then apply any scroll position or other 
+user-interface state that had been saved.

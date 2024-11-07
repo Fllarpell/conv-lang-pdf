@@ -1,0 +1,46 @@
+288
+FILE SYSTEMS
+CHAP. 4
+in systems where it is expected that directories will routinely contain hundreds or
+thousands of files.
+A different way to speed up searching large directories is to cache the results
+of searches. Before starting a search, a check is first made to see if the file name is
+in the cache. If so, it can be located immediately. Of course, caching only works
+if a relatively small number of files comprise the majority of the lookups.
+4.3.4 Shared Files
+When several users are working together on a project, they often need to share
+files. As a result, it is often convenient for a shared file to appear simultaneously
+in different directories belonging to different users. Figure 4-18 shows the file 
+system of Fig. 4-8 again, only with one of C’s files now present in one of B’s 
+directories as well. The connection between B’s directory and the shared file is called a
+link. The file system itself is now a DAG (Directed Acyclic Graph), rather than a
+tree. Having the file system be a DAG complicates maintenance, but such is life.
+Root directory
+B
+B
+B
+C
+C
+C
+C
+A
+B
+C
+B
+?
+C
+C
+C
+A
+Shared file
+Figure 4-18. File system containing a shared file.
+Sharing files is convenient, but it also introduces some problems. To start
+with, if directories really do contain disk addresses, then a copy of the disk 
+addresses will have to be made in B’s directory when the file is linked. If either B or C
+subsequently appends to the file, the new blocks will be listed only in the directory
+of the user doing the append. The changes will not be visible to the other user, thus
+defeating the purpose of sharing.
+This problem can be solved in two ways. In the first solution, disk blocks are
+not listed in directories, but in a little data structure associated with the file itself.
+The directories would then just have pointers to the little data structure. This is the
+approach used in UNIX (where the little data structure is the i-node).

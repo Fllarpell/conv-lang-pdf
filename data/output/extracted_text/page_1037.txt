@@ -1,0 +1,22 @@
+1008
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+3. Hardware-accelerated devices: While paravirtualized I/O is much
+more efficient than device emulation, it still has too much root CPU
+overhead especially when it comes to today’s high-end networking
+devices used in data centers or NVMe disks. Such devices support
+SR-IOV (Single-Root I/O Virtualization) or DDA (Discrete Device
+Assignment). Either way, the virtual PCI VDEV, working with the
+vPCI VSP/VSC, exposes the device to the guest on the virtual PCI
+bus. This is either a virtual function (VF) for SR-IOV devices or a
+physical function (PF) for DDA. The guest loads the corresponding
+device driver and is able to communicate directly with the device
+because its MMIO space is mapped into guest memory via the
+IOMMU. The IOMMU is also configured by the hypervisor to ensure
+that the device can only perform I/O to pages exposed to the guest.
+Figure 11-51. Flow of parvirtualized I/O for an enlightened guest OS.
+VA-backed VMs
+Typically, the VID driver allocates dedicated physical memory for each virtual
+machine and maps it into the GPA space through the SLAT. This memory belongs
+to the VM whether it is using it or not. Hyper-V also supports a different model for
+managing VM memory, called VA-backed VMs, which provides more flexibility.

@@ -1,0 +1,43 @@
+SEC. 10.8
+ANDROID
+819
+and also includes components needed for synchronizing its local email storage
+with a server even when the user is not currently in the application.
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+package="com.example.email">
+<application>
+<activity android:name="com.example.email.MailMainActivity">
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+<categor y android:name="android.intent.categor y.LAUNCHER" />
+</intent-filter>
+</activity>
+<activity android:name="com.example.email.ComposeActivity">
+<intent-filter>
+<action android:name="android.intent.action.SEND" />
+<categor y android:name="android.intent.categor y.DEFAULT" />
+<data android:mimeType="*/*" />
+</intent-filter>
+</activity>
+<ser vice android:name="com.example.email.SyncSer vice">
+</ser vice>
+<receiver android:name="com.example.email.SyncControlReceiver">
+<intent-filter>
+<action android:name="android.intent.action.DEVICE STORAGE LOW" />
+</intent-filter>
+<intent-filter>
+<action android:name="android.intent.action.DEVICE STORAGE OKAY" />
+</intent-filter>
+</receiver>
+<provider android:name="com.example.email.EmailProvider"
+android:author ities="com.example.email.provider.email">
+</provider>
+</application>
+</manifest>
+Figure 10-51. Basic structure of AndroidManifest.xml.
+Keep in mind that while what is described here is a real application you could
+write for Android, in order to focus on illustrating key operating system concepts
+the example has been simplified and modified from how an actual application like
+this is typically designed. If you have written an Android application and seeing
+this example makes you feel like something is off, you are not wrong!

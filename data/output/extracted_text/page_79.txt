@@ -1,0 +1,41 @@
+50
+INTRODUCTION 
+CHAP. 1
+Typical of these new dev elopments was the CDC 6600, introduced in 1964 and
+for years by far the fastest computer in the world. Users could create so-called
+‘‘permanent files’’ by giving them names and hoping that no other user had also
+decided that, say, ‘‘data’’ was a suitable name for a file. This was a single-level 
+directory. Eventually, mainframes developed complex hierarchical file systems, 
+perhaps culminating in the MULTICS file system.
+As minicomputers came into use, they eventually also had hard disks. The
+standard disk on the PDP-11 when it was introduced in 1970 was the RK05 disk,
+with a capacity of 2.5 MB, about half of the IBM RAMAC, but it was only about
+40 cm in diameter and 5 cm high. But it, too, had a single-level directory initially.
+When microcomputers came out, CP/M was initially the dominant operating 
+system, and it, too, supported just one directory on the (floppy) disk. Later 
+minicomputers and microcomputers got hierarchical file systems also.
+Virtual Memory
+Virtual memory (discussed in Chap. 3) gives the ability to run programs larger
+than the machine’s physical memory by rapidly moving pieces back and forth
+between RAM and stable storage (SSD or disk). It underwent a similar 
+development, first appearing on mainframes, then moving to the minis and the micros. 
+Virtual memory also allowed having a program dynamically link in a library at run
+time instead of having it compiled in. MULTICS was again the first system to 
+allow this. Eventually, the idea propagated down the line and is now widely used on
+most UNIX and Windows systems.
+In all these developments, we see ideas invented in one context and later
+thrown out when the context changes (assembly-language programming, 
+monoprogramming, single-level directories, etc.) only to reappear in a different context
+often a decade later. For this reason, in this book we will sometimes look at ideas
+and algorithms that may seem dated on today’s high-end PCs, but which may soon
+come back on embedded computers, smart watches, or smart cards.
+1.6 SYSTEM CALLS
+We hav e seen that operating systems have two main functions: providing
+abstractions to user programs and managing the computer’s resources. For the most
+part, the interaction between user programs and the operating system deals with the
+former; for example, creating, writing, reading, and deleting files. The 
+resource-management part is largely transparent to the users and done automatically. Thus,
+the interface between user programs and the operating system is primarily about
+dealing with the abstractions. To really understand what operating systems do, we
+must examine this interface closely. The system calls available in the interface vary
+from one operating system to another, but the underlying concepts are similar.

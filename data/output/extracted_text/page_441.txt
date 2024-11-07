@@ -1,0 +1,46 @@
+412
+INPUT/OUTPUT 
+CHAP. 5
+by the Polish logician J. Lukasiewicz for representing algebraic formulas without
+using precedence or parentheses. Hungarian notation was invented by a Hungarian
+programmer at Microsoft, Charles Simonyi, who was the main architect of 
+Microsoft Word and Excel. It uses the first few characters of an identifier to specify the
+type. The allowed letters and types include c (character), w (word, now meaning an
+unsigned 16-bit integer), i (32-bit signed integer), l (long, also a 32-bit signed 
+integer), s (string), sz (string terminated by a zero byte), p (pointer), fn (function), and
+h (handle). Thus szCmd is a zero-terminated string and iCmdShow is an integer,
+for example. Many programmers believe that encoding the type in variable names
+this way has little value and makes Windows code hard to read. Also, things get
+hairy if you port your code from a 32-bit system to a 64-bit one, where parameters
+are suddenly 64 bits but their names still have the old i or l suffix. Nothing 
+analogous to this convention is present in UNIX.
+Every window must have an associated class object that defines its properties.
+In Fig. 5-36, that class object is wndclass. An object of type WNDCLASS has 10
+fields, four of which are initialized in Fig. 5-36. In an actual program, the other six
+would be initialized as well. The most important field is lpfnWndProc, which is a
+long (i.e., 32-bit) pointer to the function that handles the messages directed to this
+window. The other fields initialized here tell which name and icon to use in the
+title bar, and which symbol to use for the mouse cursor.
+After wndclass has been initialized, RegisterClass is called to pass it to 
+Windows. In particular, after this call Windows knows which procedure to call when
+various events occur that do not go through the message queue. The next call, 
+CreateWindow, allocates memory for the window’s data structure and returns a handle
+for referencing it later. The program then makes two more calls in a row, to put the
+window’s outline on the screen, and finally fill it in completely.
+At this point we come to the program’s main loop, which consists of getting a
+message, having certain translations done to it, and then passing it back to 
+Windows to have Windows invoke WndProc to process it. To answer the question of
+whether this whole mechanism could have been made simpler, the answer is yes,
+but it was done this way for historical reasons and we are now stuck with it.
+Following the main program is the procedure WndProc, which handles the
+various messages that can be sent to the window. The use of CALLBACK here, like
+WINAPI above, specifies the calling sequence to use for parameters. The first
+parameter is the handle of the window to use. The second parameter is the 
+message type. The third and fourth parameters can be used to provide additional 
+information when needed.
+Message types WM CREATE and WM DESTROY are sent at the start and end
+of the program, respectively. They giv e the program the opportunity, for example,
+to allocate memory for data structures and then return it.
+The third message type, WM PAINT, is an instruction to the program to fill in
+the window. It is called not only when the window is drawn the first time, but also
+possibly during program execution as well. In contrast to text-based systems, in

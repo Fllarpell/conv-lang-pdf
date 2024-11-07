@@ -1,0 +1,42 @@
+SEC. 10.6
+THE LINUX FILE SYSTEM
+783
+/proc/619 is the directory corresponding to the process with PID 619. In this 
+directory are files that appear to contain information about the process, such as its 
+command line, environment strings, and signal masks. In fact, these files do not exist
+on the disk. When they are read, the system retrieves the information from the
+actual process as needed and returns it in a standard format.
+Many of the Linux extensions relate to other files and directories located in
+/proc. They contain a wide variety of information about the CPU, disk partitions,
+devices, interrupt vectors, kernel counters, file systems, loaded modules, and much
+more. Unprivileged user programs may read much of this information to learn
+about system behavior in a safe way. Some of these files may be written to in order
+to change system parameters.
+10.6.4 NFS: The Network File System
+Networking has played a major role in Linux, and UNIX in general, right from
+the beginning (the first UNIX network was built to move new kernels from the
+PDP-11/70 to the Interdata 8/32 during the port to the latter). In this section, we
+will examine Sun Microsystem’s NFS (Network File System), which is used on
+all modern Linux systems to join the file systems on separate computers into one
+logical whole. NSF version 3 was introduced in 1994. Currently, the most recent
+version is NSFv4. It was originally introduced in 2000 and provides several
+enhancements over the previous NFS architecture. Three aspects of NFS are of
+interest: the architecture, the protocol, and the implementation. We will now
+examine these in turn, first in the context of the simpler NFS version 3, then we
+will turn to the enhancements included in v4.
+NFS Architecture
+The basic idea behind NFS is to allow an arbitrary collection of clients and 
+servers to share a common file system. In many cases, all the clients and servers are
+on the same LAN, but this is not required. It is also possible to run NFS over a
+wide area network if the server is far from the client. For simplicity, we will speak
+of clients and servers as though they were on distinct machines, but in fact, NFS
+allows every machine to be both a client and a server at the same time.
+Each NFS server exports one or more of its directories for access by remote
+clients. When a directory is made available, so are all of its subdirectories, so 
+actually entire directory trees are normally exported as a unit. The list of directories a
+server exports is maintained in a file, often /etc/exports, so these directories can be
+exported automatically whenever the server is booted. Clients access exported
+directories by mounting them. When a client mounts a (remote) directory, it
+becomes part of its directory hierarchy, as shown in Fig. 10-35.
+In this example, client 1 has mounted the bin directory of server 1 on its own
+bin directory, so it can now refer to the shell as /bin/sh and get the shell on server

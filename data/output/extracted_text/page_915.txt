@@ -1,0 +1,43 @@
+886
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+NtCreateProcess(&ProcHandle, Access, SectionHandle, DebugPor tHandle, ExceptPor tHandle, ...)
+NtCreateThread(&ThreadHandle, ProcHandle, Access, ThreadContext, CreateSuspended, ...)
+NtAllocateVir tualMemory(ProcHandle, Addr, Size, Type, Protection, ...)
+NtMapViewOfSection(SectHandle, ProcHandle, Addr, Size, Protection, ...)
+NtReadVir tualMemory(ProcHandle, Addr, Size, ...)
+NtWr iteVirtualMemor y(ProcHandle, Addr, Size, ...)
+NtCreateFile(&FileHandle, FileNameDescr iptor, Access, ...)
+NtDuplicateObject(srcProcHandle, srcObjHandle, dstProcHandle, dstObjHandle, ...)
+Figure 11-7. Examples of native NT API calls that use handles to manipulate
+objects across process boundaries.
+Kernel-mode objects are, of course, not unique to Windows. UNIX systems
+also support a variety of kernel-mode objects, such as files, network sockets, pipes,
+devices, processes, and interprocess communication (IPC) facilities, including
+shared memory, message ports, semaphores, and I/O devices. In UNIX, there are a
+variety of ways of naming and accessing objects, such as file descriptors, process
+IDs, and integer IDs for SystemV IPC objects, and i-nodes for devices. The 
+implementation of each class of UNIX objects is specific to the class. Files and sockets
+use different facilities than the SystemV IPC mechanisms or processes or devices.
+Kernel objects in Windows use a uniform facility based on handles and names
+in the NT namespace to reference kernel objects, along with a unified 
+implementation in a centralized object manager. Handles are per-process but, as 
+described above, can be duplicated into another process. The object manager allows
+objects to be given names when they are created, and then opened by name to get
+handles for the objects.
+The object manager uses Unicode (wide characters) to represent names in the
+NT namespace. Unlike UNIX, NT does not generally distinguish between 
+upperand lowercase (it is case preserving but case insensitive). The NT namespace is a
+hierarchical tree-structured collection of directories, symbolic links, and objects.
+The object manager also provides facilities for synchronization, security, and
+object lifetime management. Whether the general facilities provided by the object
+manager are made available to users of any particular object is up to the executive
+components, as they provide the native APIs that manipulate each object type.
+It is not only applications that use objects managed by the object manager. The
+operating system itself can also create and use objects—and does so heavily. Most
+of these objects are created to allow one component of the system to store some
+information for a substantial period of time or to pass some data structure to 
+another component, and yet benefit from the naming and lifetime support of the object
+manager. For example, when a device is discovered, one or more device objects
+are created to represent the device and to logically describe how the device is 
+connected to the rest of the system. To control the device, a device driver is loaded,

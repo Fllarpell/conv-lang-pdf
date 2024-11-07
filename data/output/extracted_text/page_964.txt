@@ -1,0 +1,43 @@
+SEC. 11.4
+PROCESSES AND THREADS IN WINDOWS
+935
+security is configured for the process and first thread, debugger configuration, and
+scheduling priorities. A flag also specifies whether open handles in the creator are
+to be passed to the new process. The function also takes the current working 
+directory for the new process and an optional data structure with information about the
+GUI Window the process is to use. Rather than returning just a process ID for the
+new process, Win32 returns both handles and IDs, both for the new process and for
+its initial thread.
+The large number of parameters reveals a number of differences from the
+design of process creation in UNIX.
+1. The actual search path for finding the program to execute is buried in
+the library code for Win32, but managed more explicitly in UNIX.
+2. The current working directory is a kernel-mode concept in UNIX but
+a user-mode string in Windows. Windows does open a handle on the
+current directory for each process, with the same annoying effect as in
+UNIX: you cannot delete the directory, unless it happens to be across
+the network, in which case you can delete it.
+3. UNIX parses the command line and passes an array of parameters,
+while Win32 leaves argument parsing up to the individual program.
+As a consequence, different programs may handle wildcards (e.g.,
+*.txt) and other special symbols in an inconsistent way.
+4. Whether file descriptors can be inherited in UNIX is a property of the
+handle. In Windows, it is a property of both the handle and a 
+parameter to process creation.
+5. Win32 is GUI oriented, so new processes are directly passed 
+information about their primary window, while this information is passed
+as parameters to GUI applications in UNIX.
+6. Windows does not have a SETUID bit as a property of the executable,
+but one process can create a process that runs as a different user, as
+long as it can obtain a token with that user’s credentials.
+7. The process and thread handle returned from Windows can be used at
+any time to modify the new process/thread in many ways, including
+modifying the virtual memory, injecting threads into the process, and
+altering the execution of threads. UNIX makes modifications to the
+new process only between the fork and exec calls, and only in limited
+ways as exec throws out all the user-mode state of the process.
+Some of these differences are historical and philosophical.
+UNIX was
+designed to be command-line oriented rather than GUI oriented like Windows.
+UNIX users are more sophisticated, and they understand concepts like PA TH 
+variables. Windows inherited a lot of legacy from MS-DOS.

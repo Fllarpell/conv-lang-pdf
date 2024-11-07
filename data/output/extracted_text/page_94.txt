@@ -1,0 +1,50 @@
+SEC. 1.7
+OPERATING SYSTEM STRUCTURE
+65
+which could be programmed without having to worry about the fact that multiple
+processes were running on a single processor. In other words, layer 0 provided the
+basic multiprogramming of the CPU.
+Layer
+Function
+5
+The operator
+4
+User programs
+3
+Input/output management
+2
+Operator-process communication
+1
+Memor y and drum management
+0
+Processor allocation and multiprogramming
+Figure 1-25. Structure of the THE operating system.
+Layer 1 did the memory management. It allocated space for processes in main
+memory and on a 512K word drum used for holding parts of processes (pages) for
+which there was no room in main memory. Above layer 1, processes did not have
+to worry about whether they were in memory or on the drum; the layer 1 software
+took care of making sure pages were brought into memory at the moment they
+were needed and removed when they were not needed.
+Layer 2 handled communication between each process and the operator 
+console (that is, the user). On top of this layer, each process effectively had its own
+operator console. Layer 3 took care of managing the I/O devices and buffering the
+information streams to and from them. Above layer 3 each process could deal with
+abstract I/O devices with nice properties, instead of real devices with many 
+peculiarities. Layer 4 was where the user programs were found. They did not have to
+worry about process, memory, console, or I/O management. The system operator
+process was located in layer 5.
+A further generalization of the layering concept was present in the MULTICS
+system. Instead of layers, MULTICS was described as having a series of concentric
+rings, with the inner ones being more privileged than the outer ones (which is
+effectively the same thing). When a procedure in an outer ring wanted to call a
+procedure in an inner ring, it had to make the equivalent of a system call, that is, a
+TRAP instruction whose parameters were carefully checked for validity before the
+call was allowed to proceed. Although the entire operating system was part of the
+address space of each user process in MULTICS, the hardware made it possible to
+designate individual procedures (memory segments, actually) as protected against
+reading, writing, or executing.
+Whereas the THE layering scheme was really only a design aid, because all the
+parts of the system were ultimately linked together into a single executable 
+program, in MULTICS, the ring mechanism was very much present at run time and
+enforced by the hardware. The advantage of the ring mechanism is that it can 
+easily be extended to structure user subsystems. For example, a professor could write a

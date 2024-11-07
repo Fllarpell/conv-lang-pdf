@@ -1,0 +1,47 @@
+142
+PROCESSES AND THREADS
+CHAP. 2
+monitor ProducerConsumer
+condition full, empty;
+integer count;
+procedure insert(item: integer);
+begin
+if count = N then wait(full);
+insert item(item);
+count := count + 1;
+if count = 1 then signal(empty)
+end;
+function remove: integer;
+begin
+if count = 0 then wait(empty);
+remove = remove item;
+count := count < 1;
+if count = N < 1 then signal(full)
+end;
+count := 0;
+end monitor;
+procedure producer;
+begin
+while true do
+begin
+item = produce item;
+ProducerConsumer.insert(item)
+end
+end;
+procedure consumer;
+begin
+while true do
+begin
+item = ProducerConsumer.remove;
+consume item(item)
+end
+end;
+Figure 2-35. An outline of the producer-consumer problem with monitors. Only
+one monitor procedure at a time is active. The buffer has N slots.
+You may be thinking that the operations wait and signal look similar to sleep
+and wakeup, which we saw earlier had fatal race conditions. Well, they are very
+similar, but with one crucial difference: sleep and wakeup failed because while one
+process was trying to go to sleep, the other one was trying to wake it up. With
+monitors, that cannot happen. The automatic mutual exclusion on monitor 
+procedures guarantees that if, say, the producer inside a monitor procedure discovers that
+the buffer is full, it will be able to complete the wait operation without having to

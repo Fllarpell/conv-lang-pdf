@@ -1,0 +1,41 @@
+894
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+actually modifying hive files. This approach ensures consistency with minimal
+overhead and allows recovery of registry data in the face of system crashes or 
+power outages.
+11.3 SYSTEM STRUCTURE
+In the previous sections, we examined Windows as seen by the programmer
+writing code for user mode. Now we are going to look under the hood to see how
+the system is organized internally, what the various components do, and how they
+interact with each other and with user programs. This is the part of the system
+seen by the programmer implementing low-level user-mode code, like subsystems
+and native services, as well as the view of the system provided to device-driver
+writers.
+Although there are many books on how to use Windows, there are fewer on
+how it works inside. One of the best places to look for additional information on
+this topic is Microsoft Windows Internals, 7th ed. Part 1 (Yosifovich et al, 2017)
+and Microsoft Windows Internals, 7th ed. Part 2. (Allievi et al., 2021).
+11.3.1 Operating System Structure
+As described earlier, the Windows operating system consists of many layers, as
+depicted in Fig. 11-4. In the following sections, we will dig into the lowest levels
+of the operating system: those that run in kernel mode. The central layer is the
+NTOS kernel itself, which is loaded from ntoskrnl.exe when Windows boots.
+NTOS itself consists of two layers, the executive, which containa most of the 
+services, and a smaller layer which is (also) called the kernel and implements the
+underlying thread scheduling and synchronization abstractions (a kernel within the
+kernel?), as well as implementing trap handlers, interrupts, and other aspects of
+how the CPU is managed.
+The division of NTOS into kernel and executive is a reflection of NT’s
+VAX/VMS roots. The VMS operating system, which was also designed by Cutler,
+had four hardware-enforced layers: user, supervisor, executive, and kernel 
+corresponding to the four protection modes provided by the VAX processor architecture.
+The Intel CPUs also support four rings of protection, but some of the early target
+processors for NT did not, so the kernel and executive layers represent a 
+software-enforced abstraction, and the functions that VMS provides in supervisor
+mode, such as printer spooling, are provided by NT as user-mode services.
+The kernel-mode layers of NT are shown in Fig. 11-11. The kernel layer of
+NTOS is shown above the executive layer because it implements the trap and 
+interrupt mechanisms used to transition from user mode to kernel mode.
+The uppermost layer in Fig. 11-11 is the system library (ntdll.dll), which 
+actually runs in user mode. The system library includes a number of support functions

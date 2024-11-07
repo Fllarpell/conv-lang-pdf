@@ -1,0 +1,41 @@
+SEC. 5.5
+CLOCKS
+395
+canceling out faster clock rates. Unfortunately, for certain applications, we want
+neither the overhead of interrupts nor the latency of polling.
+Soft timers avoid interrupts. Instead, whenever the kernel is running for some
+other reason, just before it returns to user mode it checks the real-time clock to see
+if a soft timer has expired. If it has expired, the scheduled event (e.g., packet 
+transmission or checking for an incoming packet) is performed, with no need to switch
+into kernel mode since the system is already there. After the work has been 
+performed, the soft timer is reset to go off again. All that has to be done is copy the
+current clock value to the timer and add the timeout interval to it.
+Soft timers stand or fall with the rate at which kernel entries are made for other
+reasons. These reasons include the following:
+1. System calls.
+2. TLB misses.
+3. Page faults.
+4. I/O interrupts.
+5. The CPU going idle.
+To see how often these events happen, Aron and Druschel made measurements
+with several CPU loads, including a fully loaded Web server, a Web server with a
+compute-bound background job, playing real-time audio from the Internet, and
+recompiling the UNIX kernel. The average entry rate into the kernel varied from 2
+to 18 µsec, with about half of these entries being system calls. Thus to a first-order
+approximation, having a soft timer go off, say, every 10 µsec is doable, albeit with
+an occasional missed deadline. Being 10 µsec late from time to time is often better
+than having interrupts eat up 35% of the CPU.
+Of course, there will be periods when there are no system calls, TLB misses, or
+page faults, in which case no soft timers will go off. To put an upper bound on
+these intervals, the second hardware timer can be set to go off, say, every 1 msec.
+If the application can live with only 1000 activations per second for occasional
+intervals, then the combination of soft timers and a low-frequency hardware timer
+may be better than either pure interrupt-driven I/O or pure polling.
+5.6 USER INTERFACES: KEYBOARD, MOUSE, & MONITOR
+Every general-purpose computer has a keyboard and monitor (and sometimes a
+mouse) to allow people to interact with it. Although the keyboard and monitor are
+technically separate devices, they work closely together. On mainframes, there are
+frequently many remote users, each with a device containing a keyboard and an
+attached display as a unit. These devices have historically been called terminals.
+People frequently still use that term, even when discussing personal computer
+keyboards and monitors (mostly for lack of a better term).

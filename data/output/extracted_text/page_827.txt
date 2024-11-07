@@ -1,0 +1,43 @@
+798
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+code needed in order to integrate well with it. A series of projects were soon
+undertaken to address these issues:
+1. In 2009, Android version 2.0 introduced an architecture for third 
+parties to plug their own sync adapters into platform APIs like the 
+contacts database. Google’s code for syncing various data moved to this
+well-defined SDK API.
+2. In 2010, Android version 2.2 included work on the internal design
+and implementation of Google’s proprietary code. This ‘‘great
+unbundling’’ cleanly implemented many core Google services, from
+delivering cloud-based system software updates to ‘‘cloud-to-device
+messaging’’ and other background services, so that they could be
+delivered and updated separately from the platform.
+3. In 2012, a new Google Play services application was delivered to 
+devices, containing updated and new features for Google’s proprietary
+nonapplication services. This was the outgrowth of the unbundling
+work in 2010, allowing proprietary APIs such as cloud-to-device 
+messaging and maps to be fully delivered and updated by Google.
+Since then, there have been a regular series of Android releases. Below are the
+major releases, with select highlights of the changes in each release related to the
+core operating system. A number of these will be covered in more detail later.
+1. Android 4.2 (2012): Added support for multi-user separation 
+(allowing different people to share a device in isolated users). SELinux
+introduced in non-enforcing mode.
+2. Android 4.3 (2013): Extended multi-user to enable ‘‘restricted
+users,’’ can create restricted environments for children, kiosk modes,
+point of sale systems, etc.
+3. Android 4.4 (2013): SELinux now enforced across operating 
+systems. Android Runtime (ART) is introduced as a developer preview
+and will later replace the original Dalvik virtual machine. ART 
+features ahead-of-time compilation and a new concurrent garbage 
+collector to avoid GC stalls that cause missed UI frames.
+4. Android 5.0 (2014): Introduced the JobScheduler, which would be
+the future foundation for applications to schedule almost all of their
+background work with the system. Extended multi-user to support
+‘‘profiles’’ where two users run concurrently under different identities
+(typically providing a concurrent personal and work profile that are
+isolated from each other).
+Introduced document-centric-recents
+model, where recent tasks can include documents or other 
+sub-sections of an overall application. Added support for 64-bit apps.

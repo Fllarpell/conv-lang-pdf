@@ -1,0 +1,41 @@
+718
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Consider the following command line consisting of three separate commands
+separated by semicolons:
+sor t <in >temp; head –30 <temp; rm temp
+It first runs sort, taking the input from in and writing the output to temp. When
+that has been completed, the shell runs head, telling it to print the first 30 lines of
+temp and print them on standard output, which defaults to the terminal. Finally, the
+temporary file is removed. It does not go to some special recycling bin. It is gone
+with the wind, forever.
+It frequently occurs that the first program in a command line produces output
+that is used as input to the next program. In the above example, we used the file
+temp to hold this output. However, Linux provides a simpler construction to do the
+same thing. In
+sor t <in | head –30
+the vertical bar, called the pipe symbol, says to take the output from sort and use it
+as the input to head, eliminating the need for creating, using, and removing the
+temporary file. A collection of commands connected by pipe symbols, called a
+pipeline, may contain arbitrarily many commands. A four-component pipeline is
+shown by the following example:
+grep ter *.t | sort | head –20 | tail –5 >foo
+Here all the lines containing the string ‘‘ter’’ in all the files ending in .t are written
+to standard output, where they are sorted. The first 20 of these are selected out by
+head, which passes them to tail, which writes the last fiv e (i.e., lines 16 to 20 in the
+sorted list) to foo. This is an example of how Linux provides basic building blocks
+(numerous filters), each of which does one job, along with a mechanism for them
+to be put together in almost limitless ways.
+Linux is a general-purpose multiprogramming system. A single user can run
+several programs at once, each as a separate process. The shell syntax for running
+a process in the background is to follow its command with an ampersand. Thus
+wc –l <a >b &
+runs the word-count program, wc, to count the number of lines (–l flag) in its input,
+a, writing the result to b, but does it in the background. As soon as the command
+has been typed, the shell types the prompt and is ready to accept and handle the
+next command. Pipelines can also be put in the background, for example, by
+sor t <x | head &
+Multiple pipelines can run in the background simultaneously.
+It is also possible to put a list of shell commands in a file and then start a shell
+with this file as standard input. The (second) shell just processes them in order, the
+same as it would with commands typed on the keyboard. Files containing shell

@@ -1,0 +1,39 @@
+SEC. 2.2
+THREADS
+105
+ Kernel 
+Thread 3's stack
+Process
+Thread 3
+Thread 1
+Thread 2
+Thread 1's!
+stack
+Figure 2-12. Each thread has its own stack.
+systems, one thread can wait for a (specific) thread to exit by calling a procedure,
+for example, thread join. This procedure blocks the calling thread until a 
+(specific) thread has exited. In this regard, thread creation and termination is very much
+like process creation and termination, with approximately the same options as well.
+Another common thread call is thread yield, which allows a thread to 
+voluntarily give up the CPU to let another thread run. Such a call is important because
+there is no clock interrupt to actually enforce multiprogramming as there is with
+processes. Thus, it is important for threads to be polite and voluntarily surrender
+the CPU from time to time to give other threads a chance to run. Other calls allow
+one thread to wait for another thread to finish some work, for a thread to announce
+that it has finished some work, and so on.
+While threads are often useful, they also introduce a number of serious 
+complications into the programming model. To start with, consider the effects of the
+UNIX fork system call. If the parent process has multiple threads, should the child
+also have them? If not, the process may not function properly, since all of them
+may be essential. However, if the child process gets as many threads as the parent,
+what happens if a thread in the parent was blocked on a read call, say, from the
+keyboard? Are two threads now blocked on the keyboard, one in the parent and
+one in the child? When a line is typed, do both threads get a copy of it? Only the
+parent? Only the child? The same problem exists with open network connections.
+The designers of the operating system have to make choices clear and carefully
+define the semantics so users will understand the behavior of the threads.
+We will look at some of these issues and observe that the solutions are often
+pragmatic. For instance, on a system such as Linux, a fork of a multithreaded 
+process will create only a single thread in the child. However, using Posix threads a
+program can use the pthread atfor k() call to register fork handlers (procedures that
+are called when a fork occurs), so it can start additional threads and do whatever is

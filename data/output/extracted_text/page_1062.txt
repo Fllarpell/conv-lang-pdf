@@ -1,0 +1,46 @@
+SEC. 11.11
+SECURITY IN WINDOWS
+1033
+OS downtime results in all hosted virtual machines becoming unavailable. In 
+summary, there’s nev er a good time to reboot machines to install security updates.
+As a result, many customer machines remain vulnerable to attacks for multiple
+days even though the fix is sitting on their disk. Windows Update does its best to
+nudge the user to reboot, but it needs to walk a fine line between securing the
+machine and upsetting the user by forcing a reboot.
+Hotpatching is a reboot-less update technology that can eliminate these 
+difficult trade-offs. Instead of replacing binaries on disk with updated ones, 
+hotpatching deploys a patch binary, loads it into memory at runtime, and dynamically
+redirects code flow from the base binary to the patch binary based on metadata
+embedded in the patch binary. Instead of replacing entire binaries, hotpatching
+works at the individual function level and redirects only select functions to their
+updated versions in the patch binary. These are called forward patches. 
+Unmodified functions always run in the base binary such that they can be patched later, if
+necessary. As a result, if an updated function in the patch binary calls an 
+unmodified function, the unmodified function needs to be back-patched to the base 
+binary. In addition, if patch functions need to access global variables, such accesses
+need to be redirected to the base binary’s globals through an indirection.
+Patch binaries are regular portable executable (PE) images that include patch
+metadata. Patch metadata identifies the base image to which the patch applies and
+lists the image-relative addresses of the functions to patch, including forward and
+backward patches. Due to the differences in instruction sets, patch application 
+differs slightly between x64 and arm64, but code flow remains the same. In both
+cases, an HPAT (Hotpatch Address Table) is allocated right after every binary
+(including patch binaries). Each HPAT entry is populated with the necessary code
+to redirect execution to the target. So, the act of applying a forward or backward
+patch to a function amounts to overwriting the first instruction of the function to
+make it jump to its corresponding HPAT entry. On x64, this requires 6 bytes of
+padding to be present before every function, but arm64 does not have that 
+requirement.
+Figure 11-59 illustrates code and data flow in a hotpatch with an example
+where functions foo( ) and baz( ) are updated in mylib patch.dll. When applying
+this patch, the patch engine is going to populate the HPAT for mylib.dll with
+redirection code targeting foo( ) and baz( ) in the patch binary, labeled as foo’ and
+baz’. Also, since foo( ) calls bar( ) and bar( ) was not updated, the patch engine is
+going to populate the HPAT for the patch binary to redirect bar( ) back to its 
+implementation in the base binary. Finally, since foo( ) references a global variable, the
+code emitted by the compiler for foo( ) in the patch binary will indirectly access
+the global through a pointer. So, the patch engine will also update that pointer to
+refer to the global variable in the base binary.
+Hotpatching is supported for user-mode, kernel-mode, VTL1 kernel-mode and
+ev en the hypervisor. User-mode hotpatches are applied by NTOS, VTL0 
+kernelmode hotpatches are applied by the Secure Kernel (which is also able to patch

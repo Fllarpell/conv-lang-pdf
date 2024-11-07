@@ -1,0 +1,51 @@
+286
+FILE SYSTEMS
+CHAP. 4
+(a)
+games!
+mail!
+news!
+work
+attributes!
+attributes!
+attributes!
+attributes
+Data structure!
+containing the!
+attributes
+(b)
+games!
+mail!
+news!
+work
+Figure 4-16. (a) A simple directory containing fixed-size entries with the disk addresses
+and attributes in the directory entry. (b) A directory in which each entry just
+refers to an i-node.
+The simplest approach is to set a limit on file-name length, typically 255 
+characters, and then use one of the designs of Fig. 4-16 with 255 characters reserved
+for each file name. This approach is simple, but wastes a great deal of directory
+space, since few files have such long names. For efficiency reasons, a different
+structure is desirable.
+One alternative is to giv e up the idea that all directory entries are the same size.
+With this method, each directory entry contains a fixed portion, typically starting
+with the length of the entry, and then followed by data with a fixed format, usually
+including the owner, creation time, protection information, and other attributes.
+This fixed-length header is followed by the actual file name, however long it may
+be, as shown in Fig. 4-17(a) in big-endian format (as used by some CPUs). In this
+example we have three files, project-budget, personnel, and foo. Each file name is
+terminated by a special character (usually 0), which is represented in the figure by
+a box with a cross in it. To allow each directory entry to begin on a word 
+boundary, each file name is filled out to an integral number of words, shown by shaded
+boxes in the figure.
+A disadvantage of this method is that when a file is removed, a variable-sized
+gap is introduced into the directory into which the next file to be entered may not
+fit. This problem is essentially the same one we saw with contiguous disk files,
+only now compacting the directory is feasible because it is entirely in memory.
+Another problem is that a single directory entry may span multiple pages, so a
+page fault may occur while reading a file name.
+Another way to handle variable-length names is to make the directory entries
+themselves all fixed length and keep the file names together in a heap at the end of
+the directory, as shown in Fig. 4-17(b). This method has the advantage that when
+an entry is removed, the next file entered will always fit there. Of course, the heap
+must be managed and page faults can still occur while processing file names. One
+very minor win here is that there is no longer any real need for file names to begin

@@ -1,0 +1,43 @@
+SEC. 3.3
+VIRTUAL MEMORY
+203
+Be sure you understand why TLB misses are far more common than page
+faults. It is an important point. The key is that there are usually thousands of
+pages in memory so page faults are rare but TLBs typically hold only 64 entries, so
+TLB misses happen all the time. Hardware manufacturers could reduce the 
+number of TLB misses by increasing the size of the TLB, but that is expensive and the
+chip area an increased TLB would take would leave less space for other important
+features such as caches. Chip design is full of trade-offs.
+Surprisingly enough, if the TLB is moderately large (say, 64 entries) to reduce
+the miss rate, software management of the TLB turns out to be acceptably efficient.
+The main gain here is a much simpler MMU, which frees up area on the chip for
+caches and other features that can improve performance.
+It is essential to understand the difference between different kinds of misses.
+A soft miss occurs when the page referenced is not in the TLB, but is in memory.
+All that is needed here is for the TLB to be updated. No disk (or SSD) I/O is 
+needed. Typically a soft miss takes 10–20 machine instructions to handle and can be
+completed in a couple of nanoseconds. In contrast, a hard miss occurs when the
+page itself is not in memory (and of course, also not in the TLB). An access to the
+disk or SSD is required to bring in the page, which can take up to milliseconds,
+depending on the nonvolatile storage being used. A hard miss is easily a million
+times slower than a soft miss. Looking up the mapping in the page table hierarchy
+is known as a page table walk.
+Actually, it is worse than that. A miss is not just soft or hard. Some misses are
+slightly softer (or slightly harder) than other misses. For instance, suppose the
+page walk does not find the page in the process’ page table and the program thus
+incurs a page fault. There are three possibilities. First, the page may actually be in
+memory, but not in this process’ page table. For instance, the page may have been
+brought in from nonvolatile storage by another process. In that case, we do not
+need to access the nonvolatile storage again, but merely map the page appropriately
+in the page tables. This is a pretty soft miss that is known as a minor page fault.
+Second, a major page fault occurs if the page needs to be brought in from 
+nonvolatile storage. Third, it is possible that the program simply accessed an invalid
+address and no mapping needs to be added in the TLB at all. In that case, the 
+operating system typically kills the program with a segmentation fault. Only in this
+case did the program do something wrong. All other cases are automatically fixed
+by the hardware and/or the operating system—at the cost of some performance.
+3.3.4 Page Tables for Large Memories
+TLBs can be used to speed up virtual-to-physical address translation over the
+original page-table-in-memory scheme. But that is not the only problem we have to
+tackle. Another problem is how to deal with very large virtual address spaces.
+Below we will discuss two ways of dealing with them.

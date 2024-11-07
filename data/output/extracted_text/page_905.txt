@@ -1,0 +1,44 @@
+876
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+and-feel to the graphical interface, bolstering Microsoft’s strategy of hooking 
+consumers and reaping the benefit as they pressured their employers to adopt systems
+with which they were already familiar. The strategy was overwhelmingly 
+successful, with Windows XP being installed on hundreds of millions of PCs over its
+first few years, allowing Microsoft to achieve its goal of effectively ending the era
+of MS-DOS-based Windows.
+Microsoft followed up Windows XP by embarking on an ambitious release to
+kindle renewed excitement among PC consumers. The result, Windows Vista, was
+completed in late 2006, more than fiv e years after Windows XP shipped. Windows
+Vista boasted yet another redesign of the graphical interface, and new OS features
+under the covers. There were many changes in customer-visible experiences and
+capabilities. The technologies under the covers of the system improved 
+substantially, with much clean-up of the code and many improvements in performance,
+scalability, and reliability. The server version of Vista (Windows Server 2008) was
+delivered about a year after the consumer version. It shares, with Vista, the same
+core system components, such as the kernel, drivers, and low-level libraries and
+programs.
+The human story of the early development of NT is related in the book 
+Showstopper (Zachary, 1994). The book tells a lot about the key people involved and the
+difficulties of undertaking such an ambitious software development project.
+11.1.4 Windows Vista
+The release of Windows Vista culminated Microsoft’s most extensive operating
+system project to date. The initial plans were so ambitious that a couple of years
+into its development Vista had to be restarted with a smaller scope. Plans to rely
+heavily on Microsoft’s type-safe, garbage-collected .NET language C# were
+shelved, as were some significant features such as the WinFS unified storage 
+system for searching and organizing data from many different sources. The size of the
+full operating system is staggering. The original NT release of 3 million lines of
+C/C++ had grown to 16 million in NT 4, 30 million in 2000, and 50 million in XP.
+By Windows Vista, the line count had grown to 70 million and has continued to
+grow every since.
+Much of the size is due to Microsoft’s emphasis on adding many new features
+to its products in every release. In the main system32 directory, there are 1600
+DLLs (Dynamic Link Libraries) and 400 EXEs (Executables), and that does not
+include the other directories containing the myriad of applets included with the
+operating system that allow users to surf the Web, play music and video, send
+email, scan documents, organize photos, and even make movies. Because 
+Microsoft wants customers to switch to new versions, it maintains compatibility by 
+generally keeping all the features, APIs, applets (small applications), etc., from the
+previous version. Few things ever get deleted. The result is that Windows was
+growing dramatically larger from release to release. Windows’ distribution media

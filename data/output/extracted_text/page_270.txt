@@ -1,0 +1,64 @@
+SEC. 3.7
+SEGMENTATION
+241
+Space currently being!
+used by the parse tree
+Free
+Virtual address space
+Symbol table
+Symbol table has!
+bumped into the!
+source text table
+Address space!
+allocated to the!
+parse tree
+Parse tree
+Source text
+Constant table
+Call stack
+Figure 3-30. In a one-dimensional address space with growing tables, one table
+may bump into another.
+address, a segment number, and an address within the segment. Figure 3-31 
+illustrates a segmented memory being used for the compiler tables discussed earlier.
+Five independent segments are shown here.
+Symbol!
+table
+Source!
+text
+Constants
+Parse!
+tree
+Call!
+stack
+Segment!
+0
+Segment!
+1
+Segment!
+2
+Segment!
+3
+Segment!
+4
+20K!
+16K!
+12K!
+8K!
+4K!
+0K
+12K!
+8K!
+4K!
+0K
+0K
+16K!
+12K!
+8K!
+4K!
+0K
+12K!
+8K!
+4K!
+0K
+Figure 3-31. A segmented memory allows each table to grow or shrink 
+independently of the other tables.

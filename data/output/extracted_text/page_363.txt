@@ -1,0 +1,44 @@
+334
+FILE SYSTEMS
+CHAP. 4
+ing student record; this is repeated till the application quits. Would the ‘‘block 
+readahead’’ technique be useful here?
+33. Consider a disk that has 10 data blocks starting from block 14 through 23. Let there be
+2 files on the disk: f1 and f2. The directory structure lists that the first data blocks of f1
+and f2 are, respectively, 22 and 16. Given the FAT table entries as below, what are the
+data blocks allotted to f1 and f2?
+(14,18); (15,17); (16,23); (17,21); (18,20); (19,15); (20, <1); (21, <1); (22,19); (23,14).
+In the above notation, (x, y) indicates that the value stored in table entry x points to data
+block y.
+34. A certain file system uses 4-KB disk blocks. The median file size is 1 KB. If all files
+were exactly 1 KB, what fraction of the disk space would be wasted? Do you think the
+wastage for a real file system will be higher than this number or lower than it? Explain
+your answer.
+35. Given a disk-block size of 4 KB and block-pointer address value of 4 bytes, what is the
+largest file size (in bytes) that can be accessed using 10 direct addresses and one 
+indirect block?
+36. Files in MS-DOS have to compete for space in the FAT -16 table in memory. If one file
+uses k entries, that is k entries that are not available to any other file, what constraint
+does this place on the total length of all files combined?
+37. A UNIX file system has 4-KB blocks and 4-byte disk addresses. What is the maximum
+file size if i-nodes contain 10 direct entries, and one single, double, and triple indirect
+entry each?
+38. How many disk operations are needed to fetch the i-node for a file with the path name
+/usr/ast/courses/os/handout.t? Assume that the i-node for the root directory is in 
+memory, but nothing else along the path is in memory. Also assume that all directories fit in
+one disk block.
+39. In many UNIX systems, the i-nodes are kept at the start of the disk. An alternative
+design is to allocate an i-node when a file is created and put the i-node at the start of
+the first block of the file. Discuss the pros and cons of this alternative.
+40. Write a program that reverses the bytes of a file, so that the last byte is now first and
+the first byte is now last. It must work with an arbitrarily long file, but try to make it
+reasonably efficient.
+41. Write a program that starts at a given directory and descends the file tree from that
+point recording the sizes of all the files it finds. When it is all done, it should print a
+histogram of the file sizes using a bin width specified as a parameter (e.g., with 1024,
+file sizes of 0 to 1023 go in one bin, 1024 to 2047 go in the next bin, etc.).
+42. Write a program that scans all directories in a UNIX file system and finds and locates
+all i-nodes with a hard link count of two or more. For each such file, it lists together all
+file names that point to the file.
+43. Write a new version of the UNIX ls program. This version takes as an argument one or
+more directory names and for each directory lists all the files in that directory, one line

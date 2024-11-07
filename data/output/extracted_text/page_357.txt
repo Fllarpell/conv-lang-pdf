@@ -1,0 +1,43 @@
+328
+FILE SYSTEMS
+CHAP. 4
+Bytes
+2
+14
+File name
+I-node!
+number
+Figure 4-34. A UNIX V7 directory entry.
+entries that point to the i-node. The latter field is needed due to links. Whenever a
+new link is made to an i-node, the count in the i-node is increased. When a link is
+removed, the count is decremented. When it gets to 0, the i-node is reclaimed and
+the disk blocks are put back in the free list.
+Keeping track of disk blocks is done using a generalization of Fig. 4-15 in
+order to handle very large files. The first 10 disk addresses are stored in the i-node
+itself, so for small files, all the necessary information is right in the i-node, which
+is fetched from disk to main memory when the file is opened. For somewhat larger
+files, one of the addresses in the i-node is the address of a disk block called a 
+single indirect block. This block contains additional disk addresses. If this still is
+not enough, another address in the i-node, called a double indirect block, contains
+the address of a block that contains a list of single indirect blocks. Each of these
+single indirect blocks points to a few hundred data blocks. If even this is not
+enough, a triple indirect block can also be used. The complete picture is given in
+Fig. 4-35.
+When a file is opened, the file system must take the file name supplied and
+locate its disk blocks. Let us consider how the path name /usr/ast/mbox is looked
+up. We will use UNIX as an example, but the algorithm is basically the same for
+all hierarchical directory systems. First the file system locates the root directory.
+In UNIX its i-node is located at a fixed place on the disk. From this i-node, it
+locates the root directory, which can be anywhere on the disk, but say block 1.
+After that it reads the root directory and looks up the first component of the
+path, usr, in the root directory to find the i-node number of the file /usr. Locating
+an i-node from its number is straightforward, since each one has a fixed location on
+the disk. From this i-node, the system locates the directory for /usr and looks up
+the next component, ast, in it. When it has found the entry for ast, it has the i-node
+for the directory /usr/ast. From this i-node it can find the directory itself and look
+up mbox. The i-node for this file is then read into memory and kept there until the
+file is closed. The lookup process is illustrated in Fig. 4-36.
+Relative path names are looked up the same way as absolute ones, only starting
+from the working directory instead of from the root directory. Every directory has
+entries for . and .. which are put there when the directory is created. The entry .
+has the i-node number for the current directory, and the entry for .. has the i-node

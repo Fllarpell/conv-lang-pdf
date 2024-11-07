@@ -1,0 +1,38 @@
+SEC. 13.1
+SUGGESTIONS FOR FURTHER READING
+1089
+Zhuravlev et al., ‘‘Survey of Scheduling Techniques for Addressing Shared
+Resources in Multicore Processors’’
+Multicore systems have started to dominate the field of general-purpose 
+computing world. One of the most important challenges is shared resource contention.
+In this survey, the authors present different scheduling techniques for handling
+such contention.
+Silberschatz et al., Operating System Concepts, 10th ed.
+Chapters 3 through 8 cover processes and interprocess communication, 
+including scheduling, critical sections, semaphores, monitors, and classical interprocess
+communication problems.
+Stratton et al., ‘‘Algorithm and Data Optimization Techniques for Scaling to 
+Massively Threaded Systems’’
+Programming a system with half a dozen threads is hard enough. But what
+happens when you have thousands of them? To say it gets tricky is to put it mildly.
+This article talks about approaches that are being taken.
+Reghenzani, ‘‘The Real-Time Linux Kernel: A Survey on PREEMPT RT’’
+A summary of work on providing real time functionality in the Linux 
+operating system.
+Schwarzkopf and Bailis, ‘‘Research for Practice: Cluster Scheduling for 
+Datacenters’’
+Scheduling on a single core is hard enough already. Now imagine you have to
+this for distributed clusters of computers. In the authors’ own words: ‘‘Interested in
+the foundations behind these systems, and how to achieve fast, flexible, and fair
+scheduling? Malte’s got you covered!’’
+13.1.3 Memory Management
+Denning, ‘‘Virtual Memory’’
+A classic paper on many aspects of virtual memory. Peter Denning was one of
+the pioneers in this field, and was the inventor of the working-set concept.
+Denning, ‘‘Working Sets Past and Present’’
+Another classic and a good overview of numerous memory management and
+paging algorithms. A comprehensive bibliography is included. Although many of
+the papers are old, the principles really have not changed at all.
+Knuth, The Art of Computer Programming, Vol. 1
+First fit, best fit, and other memory management algorithms are discussed and
+compared in this book.

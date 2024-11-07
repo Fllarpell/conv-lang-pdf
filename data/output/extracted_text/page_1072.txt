@@ -1,0 +1,44 @@
+SEC. 12.1
+THE NATURE OF THE DESIGN PROBLEM
+1043
+the new process also waiting for keyboard input? Other abstractions relate to 
+synchronization, signals, the memory model, modeling of I/O, and many other areas.
+Each of the abstractions can be instantiated in the form of concrete data 
+structures. Users can create processes, files, pipes, and more. The primitive operations
+manipulate these data structures. For example, users can read and write files. The
+primitive operations are implemented in the form of system calls. From the user’s
+point of view, the heart of the operating system is formed by the abstractions and
+the operations on them available via the system calls.
+Since on some computers multiple users can be logged into a computer at the
+same time, the operating system needs to provide mechanisms to keep them 
+separated. One user may not interfere with another. The process concept is widely used
+to group resources together for protection purposes. Files and other data structures
+generally are protected as well. Another place where separation is crucial is in 
+virtualization: the hypervisor must ensure that the virtual machines keep out of each
+other’s hair. Making sure each user can perform only authorized operations on
+authorized data is a key goal of system design. However, users also want to share
+data and resources, so the isolation has to be selective and under user control. This
+makes it much harder. The email program should not be able to clobber the Web
+browser. Even when there is only a single user, different processes need to be 
+isolated. Some systems, like Android, will start each process that belongs to the same
+user with a different user ID, to protect the processes from each other.
+Unfortunately, as we hav e seen, vulnerabilities in hardware and software make
+separation challenging in practice. Sometimes, the abstractions are leaky and
+unexpected interactions between software at one layer and software or hardware at
+another allow attackers to steal secret information, for instance, via side channels.
+It is the responsibility of the operating system to control the access to shared
+resources and the interaction to minimize the risk of such attacks.
+Closely related to the notion of separation is the need to isolate failures. If
+some part of the system goes down (e.g., a user process), it should not be able to
+take the rest of the system down with it. The design should make sure that the 
+various parts are well isolated from one another. Ideally, parts of the operating system
+should also be isolated from one another to allow independent failures. Going even
+further, maybe the operating system should be fault tolerant and self-healing?
+Finally, the operating system has to manage the hardware. In particular, it has
+to take care of all the low-level chips, such as interrupt controllers and bus 
+controllers. It also has to provide a framework for allowing device drivers to manage
+the larger I/O devices, such as disks, printers, and the display.
+12.1.2 Why Is It Hard to Design an Operating System?
+Moore’s Law says that computer hardware improves by a factor of 100 every
+decade. Nobody has a law saying that operating systems improve by a factor of
+100 every decade. Or even get better at all. In fact, a case can be made that some

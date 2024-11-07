@@ -1,0 +1,43 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+135
+That is where the difference between enter region and mutex lock comes in.
+When the later fails to acquire a lock, it calls thread yield to give up the CPU to
+another thread. Consequently there is no busy waiting. When the thread runs the
+next time, it tests the lock again.
+Since thread yield is just a call to the thread scheduler in user space, it is very
+fast. As a consequence, neither mutex lock nor mutex unlock requires any kernel
+calls. Using them, user-level threads can synchronize entirely in user space using
+procedures that require only a handful of instructions.
+The mutex system that we have described above is a bare-bones set of calls.
+With all software, there is always a demand for more features, and synchronization
+primitives are no exception. For example, sometimes a thread package offers a call
+mutex trylock that either acquires the lock or returns a code for failure, but does
+not block. This call gives the thread the flexibility to decide what to do next if there
+are alternatives to just waiting.
+There is a subtle issue that up until now we hav e glossed over but which is
+worth making explicit. With a user-space threads package, there is no problem with
+multiple threads having access to the same mutex, since all the threads operate in a
+common address space. However, with most of the earlier solutions, such as 
+Peterson’s algorithm and semaphores, there is an unspoken assumption that multiple
+processes have access to at least some shared memory, perhaps only one word, but
+something. If processes have disjoint address spaces, as we have consistently said,
+how can they share the turn variable in Peterson’s algorithm, or semaphores or a
+common buffer?
+There are two answers. First, some of the shared data structures, such as the
+semaphores, can be stored in the kernel and accessed only by means of system
+calls. This approach eliminates the problem. Second, most modern operating 
+systems (including UNIX and Windows) offer a way for processes to share some 
+portion of their address space with other processes. In this way, buffers and other data
+structures can be shared. In the worst case, if nothing else is possible, a shared file
+can be used.
+If two or more processes share most or all of their address spaces, the 
+distinction between processes and threads becomes somewhat blurred but is 
+nevertheless present. Two processes that share a common address space still have different
+open files, alarm timers, and other per-process properties, whereas the threads
+within a single process share them. And it is always true that multiple processes
+sharing a common address space never hav e the efficiency of user-level threads
+since the kernel is deeply involved in their management.
+Futexes
+With increasing parallelism, efficient synchronization and locking is very
+important for performance. Spin locks (and mutexes implemented by busy waiting
+in general) are fast if the wait is short, but waste CPU cycles if not. If there is much

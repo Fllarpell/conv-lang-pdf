@@ -1,0 +1,44 @@
+796
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+existing smartphone with a QWERTY keyboard and screen without touch input.
+The goal of this device was to get an initial product out as soon as possible, by
+leveraging existing hardware. The second target device, code-named ‘‘Dream,’’
+was designed specifically for Android, to run it as fully envisioned. It included a
+large (for that time) touch screen, slide-out QWERTY keyboard, 3G radio (for 
+faster Web browsing), accelerometer, GPS and compass (to support Google Maps),
+etc.
+As the software schedule came better into focus, it became clear that the two
+hardware schedules did not make sense. By the time it was possible to release
+Sooner, that hardware would be well out of date, and the effort put on Sooner was
+pushing out the more important Dream device. To address this, it was decided to
+drop Sooner as a target device (though development on that hardware continued for
+some time until the newer hardware was ready) and focus entirely on Dream.
+Android 1.0
+The first public availability of the Android platform was a preview SDK
+released in November 2007. This consisted of a hardware device emulator running
+a full Android device system image and core applications, API documentation, and
+a dev elopment environment. At this point, the core design and implementation
+were in place, and in most ways closely resembled the modern Android system
+architecture we will be discussing. The announcement included video demos of
+the platform running on top of both the Sooner and Dream hardware.
+Early development of Android had been done under a series of quarterly demo
+milestones to drive and show continued process. The SDK release was the first
+more formal release for the platform. It required taking all the pieces that had been
+put together so far for application development, cleaning them up, documenting
+them, and creating a cohesive dev elopment environment for third-party developers.
+Development now proceeded along two tracks: taking in feedback about the
+SDK to further refine and finalize APIs, and finishing and stabilizing the 
+implementation needed to ship the Dream device. A number of public updates to the
+SDK occurred during this time, culminating in a 0.9 release in August 2008 that
+contained the nearly final APIs.
+The platform itself had been going through rapid development, and in the
+spring of 2008 the focus was shifting to stabilization so that Dream could ship.
+Android at this point contained a large amount of code that had never been shipped
+as a commercial product, all the way from parts of the C library, through the
+Dalvik (and later ART) interpreter (which runs the apps), system services, and
+applications.
+Android also contained quite a few novel design ideas that had never been
+done before, and it was not clear how they would pan out. This all needed to come
+together as a stable product, and the team spent a few nail-biting months 
+wondering if all of this stuff would actually come together and work as intended.

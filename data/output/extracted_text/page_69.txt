@@ -1,0 +1,46 @@
+40
+INTRODUCTION 
+CHAP. 1
+outstanding alarms, lists of related processes, and all the other information needed
+to run the program. A process is fundamentally a container that holds all the 
+information needed to run a program.
+We will come back to the process concept in much more detail in Chap. 2. For
+the time being, the easiest way to get a good intuitive feel for a process is to think
+about a multiprogramming system. The user may have started a video editing 
+program and instructed it to convert a 2-hour video to a certain format (something that
+can take hours) and then gone off to surf the Web. Meanwhile, a background 
+process that wakes up periodically to check for incoming email may have started 
+running. Thus, we have (at least) three active processes: the video editor, the Web
+browser, and the email receiver. Periodically, the operating system decides to stop
+running one process and start running another, perhaps because the first one has
+used up more than its share of CPU time in the past second or two.
+When a process is suspended temporarily like this, it must later be restarted in
+exactly the same state it had when it was stopped. This means that all information
+about the process must be explicitly saved somewhere during the suspension. For
+example, the process may have sev eral files open for reading at once. Associated
+with each of these files is a pointer giving the current position (i.e., the number of
+the byte or record to be read next). When a process is temporarily suspended, all
+these pointers must be saved so that a read call executed after the process is 
+restarted will read the proper data. In many operating systems, all the information about
+each process, other than the contents of its own address space, is stored in an 
+operating system table called the process table, which is an array of structures, one for
+each process currently in existence.
+Thus, a (suspended) process consists of its address space, usually called the
+core image (in honor of the magnetic core memories used in days of yore), and its
+process table entry, which contains the contents of its registers and many other
+items needed to restart the process later.
+The key process-management system calls are those dealing with the creation
+and termination of processes. Consider a typical example. A process called the
+command interpreter or (i.e., shell) reads commands from a terminal. The user
+has just typed a command requesting that a program be compiled. The shell must
+now create a new process that will run the compiler. When that process has 
+finished the compilation, it executes a system call to terminate itself.
+If a process can create one or more other processes (referred to as child 
+processes) and these processes in turn can create child processes, we quickly arrive at
+the process tree structure of Fig. 1-13. Related processes that are cooperating to
+get some job done often need to communicate with one another and synchronize
+their activities. This communication is called interprocess communication, and
+will be addressed in detail in Chap. 2.
+Other process system calls are available to request more memory (or release
+unused memory that is not needed anymore), wait for a child process to terminate,
+and overlay its program with a different one.

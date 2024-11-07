@@ -1,0 +1,35 @@
+442
+DEADLOCKS 
+CHAP. 6
+Figure 6-3. Lunch time in the Philosophy Department.
+#define N 5
+/* number of philosophers */
+void philosopher(int i)
+/* i: philosopher number, from 0 to 4 */
+{
+while (TRUE) {
+think( );
+/* philosopher is thinking */
+take fork(i); 
+/* take left for k */
+take fork((i+1) % N);
+/* take right for k; % is modulo operator */
+eat( );
+/* yum-yum, spaghetti */
+put fork(i); 
+/* put left for k back on the table */
+put fork((i+1) % N);
+/* put right for k back on the table */
+}
+}
+Figure 6-4. A nonsolution to the dining philosophers problem.
+proposal too, fails, although for a different reason. With a little bit of bad luck, all
+the philosophers could start the algorithm simultaneously, picking up their left
+forks, seeing that their right forks were not available, putting down their left forks,
+waiting, picking up their left forks again simultaneously, and so on, forever. A
+situation like this, in which all the programs continue to run indefinitely but fail to
+make any progress, is called starvation. (It is called starvation even when the
+problem does not occur in an Italian or a Chinese restaurant.)
+Now you might think that if the philosophers would just wait a random time
+instead of the same time after failing to acquire the right-hand fork, the chance that
+ev erything would continue in lockstep for even an hour is very small. This

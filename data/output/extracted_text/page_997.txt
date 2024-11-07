@@ -1,0 +1,41 @@
+968
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+addresses that can be used to refer to the entire page table hierarchy. Figure 11-35
+shows two example virtual address translations (a) for the self-map entry and (b)
+for a page table entry. The self-map occupies the same 512 GB of kernel virtual
+address space for every process because a top-level PXE entry maps 512 GB.
+Self-map: 1111 1111 1111 1111 1111 0110 1111 1011 0111 1101 1011 1110 1101 1111 0110 1000
+Canonical bits
+Self-map PXE
+0x1ED
+0xC3
+0x1C5
+0x150
+0x1ED
+Page Map
+Level 4
+Page
+Directory
+Pointers
+Page
+Directory
+Page
+Table
+PTE: 1111 1111 1111 1111 1111 0110 1011 1011 0110 1010 0000 1100 0011 1110 0010 1000
+Virtual
+Address:0000 0000 0000 0000 0111 0110 1101 0100 0001 1000 0111 1100 0101 0000 0000 0000
+Figure 11-35. The Windows self-map entries are used to map the physical pages
+of the page table hierarchy into kernel virtual addresses. This makes conversion
+between a virtual address and its PTE address very easy.
+The Page Replacement Algorithm
+When the number of free physical memory pages starts to get low, the memory
+manager starts working to make more physical pages available by removing them
+from user-mode processes as well as the system process, which represents 
+kernelmode use of pages. The goal is to have the most important virtual pages present in
+memory and the others on disk. The trick is in determining what important means.
+In Windows this is answered by making heavy use of the working-set concept.
+Each process (not each thread) has a working set. This set consists of the 
+mapped-in pages that are in memory and thus can be referenced without a page fault.
+The size and composition of the working set fluctuates in unpredictable ways as
+the process’ threads run, of course.

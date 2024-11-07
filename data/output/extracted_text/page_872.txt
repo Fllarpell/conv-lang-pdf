@@ -1,0 +1,49 @@
+SEC. 10.8
+ANDROID
+843
+Activity manager in system_server process 
+Camera app process 
+PicturesProvider
+Authority: "pics" 
+ComposeActivity 
+Email app process
+Granted URls  
+Allow 
+Check 
+Open
+content://pics/1 
+Receive
+data
+To: ComposeActivity
+URI: content://pics/1 
+Task: Pictures  
+ActivityRecord
+(PicturePickerActivity) 
+ActivityRecord
+(ComposeActivity) 
+Saved state  
+RESUMED 
+STOPPED  
+RECEIVE
+content://pics/1 
+GET 
+Figure 10-70. Adding a picture attachment using a content provider.
+Android’s system settings include a user interface for selecting input methods.
+This interface shows all available input methods of the currently installed 
+applications and whether or not they are enabled. If users want to use a new input method
+after they hav e installed the application, they must go to this system settings 
+interface and enable it. When doing that, the system can also inform the user of the
+kinds of things this will allow the application to do.
+Even once an application is enabled as an input method, Android uses 
+finegrained access-control techniques to limit its impact. For example, only the 
+application that is being used as the current input method can actually have any special
+interaction; if the user has enabled multiple input methods (such as a soft keyboard
+and voice input), only the one that is currently in active use will have those features
+available in its sandbox. Even the current input method is restricted in what it can
+do, through additional policies such as only allowing it to interact with the window
+that currently has input focus.
+SELinux and Defense in Depth
+A robust security architecture is important: one where access to data is 
+minimized, the architecture is easy to understand so that it is less likely for bugs to be
+introduced during development, and changes that violate the intended security
+guarantees are easy to identify. Even in the best design, however, bugs will always

@@ -1,0 +1,45 @@
+118
+PROCESSES AND THREADS
+CHAP. 2
+send the full thank you message, it remembers which bytes it still needs to send, so
+it can try again later, when there is more space available. We simplified the 
+program to keep it relatively short, by means of pseudo code and not worrying about
+errors or connections closing. Nevertheless, it illustrates that a single-threaded
+ev ent-driven server can handle many clients concurrently.
+Most popular operating systems offer special, highly optimized event 
+notification interfaces for asynchronous I/O that are much more efficient than select.
+Well-known examples include the epoll system call on Linux, and the similar
+kqueue interface on FreeBSD. Windows and Solaris have slightly different 
+solutions. They all allow the server to monitor many network connections at once 
+without blocking on any of them. Because of this Web servers such as nginx can 
+comfortably handle ten thousand concurrent connections. This is no trivial feat and
+ev en has its own name: the C10k problem.
+Single-Threaded Versus Multi-Threaded Versus Event-driven Servers
+Finally, let us compare the three different ways to build a server. It should now
+be clear what threads have to offer. They make it possible to retain the idea of
+sequential processes that make blocking calls (e.g., for disk I/O) and still achieve
+parallelism. Blocking system calls make programming easier, and parallelism
+improves performance. The single-threaded server retains the simplicity of 
+blocking system calls but gives up performance.
+The third approach, event-driven programming, also achieves high 
+performance through parallelism but uses nonblocking calls and interrupts to do so. It
+is considered harder to program. These models are summarized in Fig. 2-20.
+Model 
+Characteristics
+Threads 
+Parallelism, blocking system calls
+Single-threaded process
+No parallelism, blocking system calls
+Finite-state machine/event-dr iven 
+Parallelism, nonblocking system calls, interr upts
+Figure 2-20. Three ways to construct a server.
+These three approaches to handle requests from a client apply not only to user
+programs, but also to the kernel itself where concurrency is just as important for
+performance. In fact, this is a good moment to point out that this book introduces
+many operating system concepts with an emphasis on what they mean for user 
+programs, but of course the operating system itself uses these concepts internally also
+(and some are even more relevant to the operating system than to user programs).
+Thus, the operating system kernel itself may consist of multithreaded or 
+eventdriven software. For instance, the Linux kernel on modern Intel CPUs is a 
+multithreaded operating system kernel. In contrast, MINIX 3 consists of many servers
+implemented following the model of finite state machine and events.

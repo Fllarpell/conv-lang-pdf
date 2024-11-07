@@ -1,0 +1,29 @@
+SEC. 5.6
+USER INTERFACES: KEYBOARD, MOUSE, & MONITOR
+417
+20 pt: 
+53 pt: 
+81 pt: 
+Figure 5-39. Some examples of character outlines at different point sizes.
+character telling how to do the rasterization. For example, both serifs on the top of
+the letter T should be identical, something that might not otherwise be the case due
+to roundoff error. Hints improve the final appearance.
+Touch Screens
+More and more the screen is used as an input device also. Especially on 
+smartphones, tablets, and other portable devices, it is convenient to tap and swipe away
+at the screen with your finger (or a stylus). The user experience is different and
+more intuitive than with a mouse-like device, since the user interacts directly with
+the objects on the screen. Research has shown that even orangutans are capable of
+operating touch-based devices.
+A touch device is not necessarily a screen. Touch devices fall into two 
+categories: opaque and transparent. A typical opaque touch device is the trackpad on a
+notebook computer, as discussed earlier. An example of a transparent device is the
+touch screen on a smartphone or tablet. In this section, however, we limit ourselves
+to touch screens.
+Like many things that have come into fashion in the computer industry, touch
+screens are not exactly new. As early as 1965, E.A. Johnson of the British Royal
+Radar Establishment described a (capacitive) touch display that, while crude,
+served as precursor of the displays we find today. Most modern touch screens are
+either resistive or capacitive.
+Resistive screens have a flexible plastic surface on top. The plastic in itself is
+nothing too special, except that is more scratch resistant than your garden variety

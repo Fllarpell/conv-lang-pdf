@@ -1,0 +1,44 @@
+SEC. 10.5
+INPUT/OUTPUT IN LINUX
+765
+The interaction with network devices is different. While network devices also
+produce/consume streams of characters, their asynchronous nature makes them less
+suitable for easy integration under the same interface as other character devices.
+The networking device driver produces packets consisting of multiple bytes of
+data, along with network headers. These packets are then routed through a series of
+network protocol drivers, and ultimately are passed to the user-space application. A
+key data structure is the socket buffer structure, skbuff, which is used to represent
+portions of memory filled with packet data. The data in an skbuff buffer do not
+always start at the start of the buffer. As they are being processed by various 
+protocols in the networking stack, protocol headers may be removed, or added. The user
+processes interact with networking devices via sockets, which in Linux support the
+original BSD socket API. The protocol drivers can be bypassed and direct access
+to the underlying network device is enabled via raw sockets. Only the superuser is
+allowed to create raw sockets.
+10.5.5 Modules in Linux
+For decades, UNIX device drivers were statically linked into the kernel so they
+were all present in memory whenever the system was booted. Given the 
+environment in which UNIX grew up, commonly departmental minicomputers and then
+high-end workstations, with their small and unchanging sets of I/O devices, this
+scheme worked well. Basically, a computer center built a kernel containing drivers
+for the I/O devices it actually had and that was it. If next year the center bought a
+new disk, it relinked the kernel. No big deal.
+With the arrival of Linux on the PC platform, suddenly all that changed. The
+number of I/O devices available on the PC is orders of magnitude larger than on
+any minicomputer. In addition, although all Linux users have (or can easily get)
+the full source code, probably the vast majority would have considerable difficulty
+adding a driver, updating all the device-driver related data structures, relinking the
+kernel, and then installing it as the bootable system (not to mention dealing with
+the aftermath of building a kernel that does not boot).
+Linux solved this problem with the concept of loadable modules. These are
+chunks of code that can be loaded into the kernel while the system is running. Most
+commonly these are character or block device drivers, but they can also be entire
+file systems, network protocols, performance monitoring tools, or anything else
+desired.
+When a module is loaded, several things have to happen. First, the module has
+to be relocated on the fly, during loading. Second, the system has to check to see if
+the resources the driver needs are available (e.g., interrupt request levels) and if so,
+mark them as in use. Third, any interrupt vectors that are needed must be set up.
+Fourth, the appropriate driver switch table has to be updated to handle the new
+major device type. Finally, the driver is allowed to run to perform any 
+device-specific initialization it may need. Once all these steps are completed, the driver is

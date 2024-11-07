@@ -1,0 +1,44 @@
+602
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+14. Affinity scheduling reduces cache misses. Does it also reduce TLB misses? What
+about page faults?
+15. For each of the topologies of Fig. 8-16, what is the diameter of the interconnection 
+network? Count all hops (host-router and router-router) equally for this problem.
+16. Consider the double-torus topology of Fig. 8-16(d) but expanded to size k × k. What
+is the diameter of the network? (Hint: Consider odd k and even k differently.)
+17. The bisection bandwidth of an interconnection network is often used as a measure of
+its capacity. It is computed by removing a minimal number of links that splits the 
+network into two equal-size units. The capacity of the removed links is then added up. If
+there are many ways to make the split, the one with the minimum bandwidth is the
+bisection bandwidth. For an interconnection network consisting of an 8 × 8 × 8 cube,
+what is the bisection bandwidth if each link is 1 Gbps?
+18. Consider a multicomputer in which the network interface is in user mode, so only three
+copies are needed from source RAM to destination RAM. Assume that moving a
+32-bit word to or from the network interface board takes 20 nsec and that the network
+itself operates at 1 Gbps. What would the delay be for a 64-byte packet being sent from
+source to destination if we could ignore the copying time? What is it with the copying
+time? Now consider the case where two extra copies are needed, to the kernel on the
+sending side and from the kernel on the receiving side. What is the delay in this case?
+19. Repeat the previous problem for both the three-copy case and the fiv e-copy case, but
+this time compute the bandwidth rather than the delay.
+20. When transferring data from RAM to a network interface, pinning a page can be used,
+but suppose that system calls to pin and unpin pages each take 1 µsec. Copying takes 5
+bytes/nsec using DMA but 20 nsec per byte using programmed I/O. How big does a
+packet have to be before pinning the page and using DMA is worth it?
+21. When a procedure is scooped up from one machine and placed on another to be called
+by RPC, some problems can occur. In the text, we pointed out four of these: pointers,
+unknown array sizes, unknown parameter types, and global variables. An issue not
+discussed is what happens if the (remote) procedure executes a system call. What 
+problems might that cause and what might be done to handle them?
+22. In a DSM system, when a page fault occurs, the needed page has to be located. List
+two possible ways to find the page.
+23. Consider the processor allocation of Fig. 8-24. Suppose that process H is moved from
+node 2 to node 3. What is the total weight of the external traffic now?
+24. Some multicomputers allow running processes to be migrated from one node to 
+another. Is it sufficient to stop a process, freeze its memory image, and just ship that off to a
+different node? Name two hard problems that have to be solved to make this work.
+25. Why is there a limit to cable length on an Ethernet network?
+26. In Fig. 8-27, the third and fourth layers are labeled Middleware and Application on all
+four machines. In what sense are they all the same across platforms, and in what sense
+are they different?

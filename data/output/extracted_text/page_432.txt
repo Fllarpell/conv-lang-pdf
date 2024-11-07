@@ -1,0 +1,56 @@
+SEC. 5.6
+USER INTERFACES: KEYBOARD, MOUSE, & MONITOR
+403
+with its own escape sequences. As a consequence, it was difficult to write software
+that worked on more than one terminal type.
+One solution, which was introduced in Berkeley UNIX, was a terminal 
+database called termcap. This software package defined a number of basic actions,
+such as moving the cursor to (row, column). To move the cursor to a particular
+location, the software, say, an editor, used a generic escape sequence which was
+then converted to the actual escape sequence for the terminal being written to. In
+this way, the editor worked on any terminal that had an entry in the termcap 
+database. Much UNIX software still works this way, even on personal computers.
+Eventually, the industry saw the need for standardizing the escape sequence, so
+an ANSI standard was developed. Some of the values are shown in Fig. 5-32.
+Escape sequence
+Meaning
+ESC [ n A
+Move up n lines
+ESC [ n B
+Move down n lines
+ESC [ n C
+Move right n spaces
+ESC [ n D
+Move left n spaces
+ESC [ m ; n H
+Move cursor to (m,n)
+ESC [ s J
+Clear screen from cursor (0 to end, 1 from start, 2 all)
+ESC [ s K
+Clear line from cursor (0 to end, 1 from start, 2 all)
+ESC [ n L
+Inser t n lines at cursor
+ESC [ n M
+Delete n lines at cursor
+ESC [ n P
+Delete n chars at cursor
+ESC [ n @
+Inser t n chars at cursor
+ESC [ n m
+Enable rendition n (0 = normal, 4 = bold, 5 = blinking, 7 = rev erse)
+ESC M
+Scroll the screen backward if the cursor is on the top line
+Figure 5-32. The ANSI escape sequences accepted by the terminal driver on 
+output. ESC denotes the ASCII escape character (0x1B), and n, m, and s are 
+optional numeric parameters.
+Consider how these escape sequences might be used by a text editor. Suppose
+that the user types a command telling the editor to delete all of line 3 and then
+close up the gap between lines 2 and 4. The editor might send the following
+escape sequence over the serial line to the terminal:
+ESC [ 3 ; 1 H ESC [ 0 K ESC [ 1 M
+(where the spaces are used above only to separate the symbols; they are not 
+transmitted). This sequence moves the cursor to the start of line 3, erases the entire line,
+and then deletes the now-empty line, causing all the lines starting at 5 to move up
+one line. Then what was line 4 becomes line 3; what was line 5 becomes line 4,
+and so on. Analogous escape sequences can be used to add text to the middle of the
+display. Words can be added or removed in a similar way.

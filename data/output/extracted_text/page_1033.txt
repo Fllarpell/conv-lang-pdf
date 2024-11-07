@@ -1,0 +1,25 @@
+1004
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Figure 11-50. Hyper-V virtualization components in the root and child partitions.
+Hypervisor
+The hypervisor is a thin layer of software that runs between the hardware and
+the operating systems it is hosting. It is the most privileged software on the system
+and therefore needs to have a minimal attack surface. For this reason, it delegates
+as much functionality as possible to the virtualization stack running in the root 
+partition.
+The hypervisor’s most important job is to virtualize hardware resources for its
+partitions: processors, memory, and devices. Each partition is assigned a set of 
+virtual processors (VPs) and guest physical memory. The hypervisor manages these
+resources very similar to processes and threads in the operating system. The 
+hypervisor internally represents each partition with a process data structure and each VP
+with a thread. From this perspective, each partition is an address space and each
+VP is a schedulable entity. As such, the hypervisor also includes a scheduler to
+schedule VPs on physical processors.
+In order to virtualize processors and memory, the hypervisor relies on 
+virtualization extensions provided by the underlying hardware. Intel, AMD, and ARM
+have slight variations in what they offer, but they are all conceptually similar. In a
+nutshell, the hardware defines a higher privilege level for the hypervisor and allows
+it to intercept various operations that occur while a processor is executing in guest
+mode. For example, when a clock interrupt occurs, the hypervisor gets control and
+can decide to switch out the currently running VP and pick another one, potentially

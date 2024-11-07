@@ -1,0 +1,40 @@
+SEC. 10.6
+THE LINUX FILE SYSTEM
+773
+this information via the stat system call. The first parameter is the file name. The
+second is a pointer to a structure where the information requested is to be put. The
+fields in the structure are shown in Fig. 10-28. The fstat call is the same as stat
+except that it operates on an open file (whose name may not be known) rather than
+on a path name.
+Device the file is on
+I-node number (which file on the device)
+File mode (includes protection infor mation)
+Number of links to the file
+Identity of the file’s owner
+Group the file belongs to
+File size (in bytes)
+Creation time
+Time of last access
+Time of last modification
+Figure 10-28. The fields returned by the stat system call.
+The pipe system call is used to create shell pipelines. It creates a kind of
+pseudofile, which buffers the data between the pipeline components, and returns
+file descriptors for both reading and writing the buffer. In a pipeline such as
+sor t <in | head –30
+file descriptor 1 (standard output) in the process running sort would be set (by the
+shell) to write to the pipe, and file descriptor 0 (standard input) in the process 
+running head would be set to read from the pipe. In this way, sort just reads from file
+descriptor 0 (set to the file in) and writes to file descriptor 1 (the pipe) without even
+being aware that these have been redirected. If they hav e not been redirected, sort
+will automatically read from the keyboard and write to the screen (the default 
+devices). Similarly, when head reads from file descriptor 0, it is reading the data sort
+put into the pipe buffer without even knowing that a pipe is in use. This is a clear
+example of how a simple concept (redirection) with a simple implementation (file
+descriptors 0 and 1) can lead to a powerful tool (connecting programs in arbitrary
+ways without having to modify them at all).
+The last system call in Fig. 10-27 is fcntl. It is used to lock and unlock files,
+apply shared or exclusive locks, and perform a few other file-specific operations.
+Now let us look at some system calls that relate more to directories or the file
+system as a whole, rather than just to one specific file. Some common ones are 
+listed in Fig. 10-29. Directories are created and destroyed using mkdir and rmdir,
+respectively. A directory can be removed only if it is empty.

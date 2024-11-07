@@ -1,0 +1,44 @@
+124
+PROCESSES AND THREADS
+CHAP. 2
+process 0 inspects turn, finds it to be 0, and enters its critical region. Process 1 also
+finds it to be 0 and therefore sits in a tight loop continually testing turn to see when
+it becomes 1. Continuously testing a variable until some value appears is called
+busy waiting. It should usually be avoided, since it wastes CPU time. Only when
+there is a reasonable expectation that the wait will be short is busy waiting used. A
+lock that uses busy waiting is called a spin lock.
+When process 0 leaves the critical region, it sets turn to 1, to allow process 1 to
+enter its critical region. Suppose that process 1 finishes its critical region quickly,
+so that both processes are in their noncritical regions, with turn set to 0. Now 
+process 0 executes its whole loop quickly, exiting its critical region and setting turn to
+1. At this point, turn is 1 and both processes are in their noncritical regions.
+Suddenly, process 0 finishes its noncritical region and goes back to the top of
+its loop. Unfortunately, it is not permitted to enter its critical region now, because
+turn is 1 and process 1 is busy with its noncritical region. It hangs in its while loop
+until process 1 sets turn to 0. Put differently, taking turns is not a good idea when
+one of the processes is much slower than the other.
+This situation violates condition 3 set out above: process 0 is being blocked by
+a process not in its critical region. Going back to the spooler directory discussed
+above, if we now associate the critical region with reading and writing the spooler
+directory, process 0 would not be allowed to print another file because process 1
+was doing something else.
+In fact, this solution requires that the two processes strictly alternate in 
+entering their critical regions, for example, in spooling files. Neither one would be 
+permitted to spool two in a row. While this algorithm does avoid all races, it is not
+really a serious candidate as a solution because it violates condition 3.
+Peterson’s Solution
+By combining the idea of taking turns with the idea of lock variables and 
+warning variables, a Dutch mathematician, T. Dekker, was the first one to devise a 
+software solution to the mutual exclusion problem that does not require strict 
+alternation. For a discussion of Dekker’s algorithm, see Dijkstra (1965).
+In 1981, G. L. Peterson discovered a much simpler way to achieve mutual 
+exclusion, thus rendering Dekker’s solution effectively obsolete. Peterson’s algorithm
+is shown in Fig. 2-24. This algorithm consists of two procedures written in ANSI
+C, which means that function prototypes should be supplied for all the functions
+defined and used. However, to sav e space, we will not show prototypes here or
+later.
+Before using the shared variables (i.e., before entering its critical region), each
+process calls enter region with its own process number, 0 or 1, as parameter. This
+call will cause it to wait, if need be, until it is safe to enter. After it has finished
+with the shared variables, the process calls leave region to indicate that it is done
+and to allow the other process to enter, if it so desires.

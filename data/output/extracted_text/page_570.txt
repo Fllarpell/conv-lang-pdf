@@ -1,0 +1,44 @@
+SEC. 8.1
+MULTIPROCESSORS
+541
+programs, and good compilers and debugging tools are scarce on the ground. Few
+programmers are experts in parallel programming and most know little about
+dividing work into multiple packages that can run in parallel. Synchronization,
+eliminating race conditions, and deadlock avoidance are such stuff as really bad
+dreams are made of, but unfortunately performance suffers horribly if they are not
+handled well. Semaphores are not the answer.
+Beyond these startup problems, it is far from obvious what kind of application
+really needs hundreds, let alone thousands, of general-purpose cores—especially in
+home environments. In large server farms, on the other hand, there is often plenty
+of work for large numbers of cores. For instance, a popular server may easily use a
+different core for each client request. Similarly, the cloud providers discussed in
+the previous chapter can soak up the cores to provide a large number of virtual
+machines to rent out to clients looking for on-demand computing power.
+Simultaneous Multithreading
+Not only do CPUs have many cores, those cores can support SMT 
+(Simultaneous Multithreading). SMT means that a core offers multiple hardware contexts
+that are sometimes referred to as hyper-threads. As usual, the hardware folks did
+not miss their chance to sow confusion in their naming of things, and we 
+emphasize that a hyper-thread is different from the threads we discussed in earlier 
+chapters—it refers to the capability of the hardware to run multiple things, processes or
+threads, simultaneously on the same core. In other words, each hyper-thread can
+run a process or a thread (or even a process with multiple user-level threads). For
+this reason, some people talk about virtual cores instead of hyper-threads.
+Indeed, each hyper-thread serves as a virtual core. For instance, it has its own
+set of registers to run a separate process independently of what is running on the
+other hyper-thread(s). However, it is not an independent physical core, as resources
+such as the L1 and L2 caches, the TLB, the execution units, and many other 
+elements are typically shared between the hyper-threads. Incidentally, this also means
+that the execution of one hyper-thread can easily interfere with that of another
+thread: if an execution engine is in use by one thread, other threads that want to use
+it will have to wait. And when one process accesses a new page of virtual memory,
+the access may remove a TLB entry from the process in the other hyper-thread.
+The benefit of hyper-threading is that you get ‘‘almost an extra core’’ for a
+fraction of the price. The performance benefits of hyper-threads vary. Some 
+workloads can be sped by as much as 30% or more, but for many applications, the 
+difference is much smaller.
+8.1.2 Multiprocessor Operating System Types
+Let us now turn from multiprocessor hardware to multiprocessor software, in
+particular, multiprocessor operating systems. Various approaches are possible.
+Below we will study three of them. Note that all of these are equally applicable to
+multicore systems as well as systems with discrete CPUs.

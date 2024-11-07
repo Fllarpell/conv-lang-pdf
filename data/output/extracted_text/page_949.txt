@@ -1,0 +1,46 @@
+920
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+The Close and Delete procedures represent different phases of being done with
+an object. When the last handle for an object is closed, there may be actions 
+necessary to clean up the state and these are performed by the Close procedure. When
+the final pointer reference is removed from the object, the Delete procedure is 
+called so that the object can be prepared to be deleted and have its memory reused.
+With file objects, both of these procedures are implemented as callbacks into the
+I/O manager, which is the component that declared the file object type. The
+object-manager operations result in I/O operations that are sent down the device
+stack associated with the file object; the file system does most of the work.
+The Parse procedure is used to open or create objects, like files and registry
+keys, that extend the NT namespace. When the object manager is attempting to
+open an object by name and encounters a leaf node in the part of the namespace it
+manages, it checks to see if the type for the leaf-node object has specified a Parse
+procedure. If so, it invokes the procedure, passing it any unused part of the path
+name. Again using file objects as an example, the leaf node is a device object
+representing a particular file-system volume. The Parse procedure is implemented
+by the I/O manager, and results in an I/O operation to the file system to fill in a file
+object to refer to an open instance of the file that the path name refers to on the
+volume. We will explore this particular example step-by-step below.
+The QueryName procedure is used to look up the name associated with an
+object. The Security procedure is used to get, set, or delete the security descriptors
+on an object. For most object types, this procedure is supplied as a standard entry
+point in the executive’s security reference monitor component.
+Note that the procedures in Fig. 11-18 do not perform the most useful 
+operations for each type of object, such as read or write on files (or down and up on
+semaphores). Rather, the object manager procedures supply the functions needed
+to correctly set up access to objects and then clean up when the system is finished
+with them. The objects are made useful by the APIs that operate on the data 
+structures the objects contain. System calls, like NtReadFile and NtWr iteFile, use the
+process’ handle table created by the object manager to translate a handle into a 
+referenced pointer on the underlying object, such as a file object, which contains the
+data that is needed to implement the system calls.
+Apart from the object-type callbacks, the object manager also provides a set of
+generic object routines for operations like creating objects and object types, 
+duplicating handles, getting a referenced pointer from a handle or name, adding and
+subtracting reference counts to the object header, and NtClose (the generic function
+that closes all types of handles).
+Although the object namespace is crucial to the entire operation of the system,
+few people know that it even exists because it is not visible to users without special
+viewing tools. One such viewing tool is winobj, available for free at the URL
+https://www.microsoft.com/technet/sysinternals. When run, this tool depicts an
+object namespace that typically contains the object directories listed in Fig. 11-19
+as well as a few others.

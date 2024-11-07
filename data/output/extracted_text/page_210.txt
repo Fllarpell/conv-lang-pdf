@@ -1,0 +1,55 @@
+SEC. 3.1
+NO MEMORY ABSTRACTION
+181
+(a)
+(b)
+(c)
+0xFFF …
+0
+0
+0
+User!
+program
+User!
+program
+User!
+program
+Operating!
+system in!
+RAM
+Operating!
+system in!
+RAM
+Operating!
+system in!
+ROM
+Device!
+drivers in ROM
+Figure 3-1. Three simple ways of organizing memory with an operating system
+and one user process. Other possibilities also exist.
+One way to get some parallelism in a system with no memory abstraction is to
+program with multiple threads. Since all threads in a process are supposed to see
+the same memory image, the fact that they are forced to is not a problem. While
+this idea works, it is of limited use since what people often want is unrelated 
+programs to be running at the same time, something the threads abstraction does not
+provide. Furthermore, any system that is so primitive as to provide no memory
+abstraction is unlikely to provide a threads abstraction.
+3.1.1 Running Multiple Programs Without a Memory Abstraction
+However, even with no memory abstraction, it is possible to run multiple 
+programs at the same time. What the operating system has to do is save the entire 
+contents of memory to a file on nonvolatile storage, then bring in and run the next 
+program. As long as there is only one program at a time in memory, there are no 
+conflicts. This concept (swapping) will be discussed below.
+With the addition of some special hardware, it is possible to run multiple 
+programs concurrently, even without swapping. The early models of the IBM 360
+solved the problem as follows. Memory was divided into 2-KB blocks and each
+was assigned a 4-bit protection key held in special registers inside the CPU. A
+machine with a 1-MB memory needed only 512 of these 4-bit registers for a total
+of 256 bytes of key storage. The PSW (Program Status Word) also contained a
+4-bit key. The 360 hardware trapped any attempt by a running process to access
+memory with a protection code different from the PSW key. Since only the 
+operating system could change the protection keys, user processes were prevented from
+interfering with one another and with the operating system itself.
+Nevertheless, this solution had a major drawback, depicted in Fig. 3-2. Here
+we have two programs, each 16 KB in size, as shown in Fig. 3-2(a) and (b). The
+former is shaded to indicate that it has a different memory key than the latter. The

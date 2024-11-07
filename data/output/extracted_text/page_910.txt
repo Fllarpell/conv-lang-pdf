@@ -1,0 +1,55 @@
+SEC. 11.2
+PROGRAMMING WINDOWS
+881
+Hardware abstraction layer (hal.dll)
+Hypervisor (hvix, hvax)
+Drivers: devices, file 
+systems, network
+NTOS executive layer 
+(ntoskrnl.exe)
+GUI driver 
+(Win32k.sys)
+NTOS kernel layer (ntoskrnl.exe)
+Kernel mode
+User mode
+Native NT API, C/C++ run-time (ntdll.dll)
+NT services: smss, lsass, 
+services, winlogon ...
+Win32 subsystem process 
+(csrss.exe)
+Modern broker processes
+Windows Services
+Windows Desktop Apps
+Modern Windows Apps
+Process lifetime mgr
+AppContainer
+COM
+WinRT: .NET/C++, WWA/JS
+Modern app mgr
+Subsystem API (kernel32)
+Dynamic libraries (ole, rpc)
+GUI (shell32, user32, gdi32)
+[.NET: base classes, GC]
+Desktop mgr(explorer)
+Figure 11-4. The programming layers in Modern Windows.
+11.2.1 Universal Windows Platform
+The Universal Windows Platform, introduced with Windows 10 based on the
+modern application platform in Windows 8, represented the first significant change
+to the application model for Windows programs since Win32. The WinRT API as
+well as a significant subset of the Win32 API surface is available to UWP 
+applications, allowing them to target multiple device families with the same underlying
+code while taking advantage of unique device capabilities via device 
+family-specific extensions. UWP is the only supported platform for apps on the Xbox gaming
+console, the HoloLens mixed reality device, and the Surface Hub collaboration 
+device.
+WinRT APIs are carefully curated to avoid various ‘‘sharp edges’’ of the 
+Win32 API to provide more consistent security, user privacy and app isolation 
+properties. They hav e projections into various languages such as C++, C#, and even
+JavaScript allowing developer flexibility. In early Windows 10 releases, the subset
+of the Win32 API available to UWP apps was too limited. For example, various
+threading or virtual memory APIs were out-of-bounds. This created friction for
+developers and made it more difficult to port software libraries and frameworks to
+support UWP. Over time, more and more Win32 APIs were made available to
+UWP applications.
+In addition to the API differences, the application model for UWP apps is 
+different from traditional Win32 programs in several ways.

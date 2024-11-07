@@ -1,0 +1,41 @@
+SEC. 1.7
+OPERATING SYSTEM STRUCTURE
+73
+The Jav a Virtual Machine
+Another area where virtual machines are used, but in a somewhat different
+way, is for running Java programs. When Sun Microsystems invented the Java 
+programming language, it also invented a virtual machine (i.e., a computer 
+architecture) called the JVM (Java Virtual Machine). Sun no longer exists today
+(because Oracle bought the company), but Java is still with us. The Java compiler
+produces code for JVM, which then typically is executed by a software JVM 
+interpreter. The advantage of this approach is that the JVM code can be shipped over
+the Internet to any computer that has a JVM interpreter and run there. If the 
+compiler had produced SPARC or x86 binary programs, for example, they could not
+have been shipped and run anywhere as easily. (Of course, Sun could have 
+produced a compiler that produced SPARC binaries and then distributed a SPARC
+interpreter, but JVM is a much simpler architecture to interpret.) Another 
+advantage of using JVM is that if the interpreter is implemented properly, which is not
+completely trivial, incoming JVM programs can be checked for safety and then
+executed in a protected environment so they cannot steal data or do any damage.
+Containers
+Besides full virtualization, we can also run multiple instances of an operating
+system on a single machine at the same time by having the operating system itself
+support different systems, or containers. Containers are provided by the host
+operating system such as Windows or Linux and mostly run just the user mode
+portion of an operating system. Each container shares the host operating system
+kernel and typically the binaries and libraries in a read-only fashion. This way, a
+Linux host can support many Linux containers. Since a container does not contain
+a full operating system, it can be extremely lightweight.
+Of course, there are downsides to containers also. First, it is not possible to run
+a container with a completely different operating system from that of the host.
+Also, unlike virtual machines, there is no strict resource partitioning. The container
+may be restricted in what it may access on SSD or disk and how much CPU time it
+gets, but all containers still share the resources in the underlying host operating
+system. Phrased differently, containers are process-level isolated. This means that a
+container that messes with the stability of the underlying kernel will also affect
+other containers.
+1.7.6 Exokernels and Unikernels
+Rather than cloning the actual machine, as is done with virtual machines,
+another strategy is partitioning it, in other words, giving each user a subset of the
+resources. Thus one virtual machine might get disk blocks 0 to 1023, the next one
+might get blocks 1024 to 2047, and so on.

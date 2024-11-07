@@ -1,0 +1,44 @@
+SEC. 10.4
+MEMORY MANAGEMENT IN LINUX
+755
+dynamically, one at a time, as they are referenced. If the user structure and page
+table are not in memory, the process cannot be run until the swapper brings them
+in.
+Paging is implemented partly by the kernel and partly by a new process called
+the page daemon. The page daemon is process 2 (process 0 is the idle 
+process—traditionally called the swapper—and process 1 is init, as shown in
+Fig. 10-11). Like all daemons, the page daemon runs periodically. Once awake, it
+looks around to see if there is any work to do. If it sees that the number of pages
+on the list of free memory pages is too low, it starts freeing up more pages.
+Linux is a fully demand-paged system with no prepaging and no working-set
+concept (although there is a call in which a user can give a hint that a certain page
+may be needed soon, in the hope it will be there when needed). Te xt segments and
+mapped files are paged to their respective files on disk. Everything else is paged to
+either the paging partition (if present) or one of the fixed-length paging files, called
+the swap area. Paging files can be added and removed dynamically and each one
+has a priority. Paging to a separate partition, accessed as a raw device, is more
+efficient than paging to a file for several reasons. First, the mapping between file
+blocks and disk blocks is not needed (saves disk I/O reading indirect blocks). 
+Second, the physical writes can be of any size, not just the file block size. Third, a
+page is always written contiguously to disk; with a paging file, it may or may not
+be.
+Pages are not allocated on the paging device or partition until they are needed.
+Each device and file starts with a bitmap telling which pages are free. When a
+page without backing store has to be tossed out of memory, the highest-priority
+paging partition or file that still has space is chosen and a page allocated on it. 
+Normally, the paging partition, if present, has higher priority than any paging file. The
+page table is updated to reflect that the page is no longer present in memory (e.g.,
+the page-not-present bit is set) and the disk location is written into the page-table
+entry.
+The Page Replacement Algorithm
+Page replacement works as follows. Linux tries to keep some pages free so that
+they can be claimed as needed. Of course, this pool must be continually 
+replenished. The PFRA (Page Frame Reclaiming Algorithm) algorithm is how this
+happens.
+First of all, Linux distinguishes between four different types of pages: 
+unreclaimable, swappable, syncable, and discardable. Unreclaimable pages, which
+include reserved or locked pages, kernel mode stacks, and the like, may not be
+paged out. Swappable pages must be written back to the swap area or the paging
+disk partition before the page can be reclaimed. Syncable pages must be written
+back to disk if they hav e been marked as dirty. Finally, discardable pages can be
+reclaimed immediately.

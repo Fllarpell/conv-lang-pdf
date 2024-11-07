@@ -1,0 +1,46 @@
+SEC. 3.3
+VIRTUAL MEMORY
+205
+be kept around. Suppose, for example, that a process needs 12 megabytes: the 
+bottom 4 megabytes of memory for program text, the next 4 megabytes for data, and
+the top 4 megabytes for the stack. In between the top of the data and the bottom of
+the stack is a gigantic hole that is not used.
+In Fig. 3-13(b), we see how the two-level page table works. On the left we see
+the top-level page table, with 1024 entries, corresponding to the 10-bit PT1 field.
+When a virtual address is presented to the MMU, it first extracts the PT1 field and
+uses this value as an index into the top-level page table. Each of these 1024 (or 210)
+entries in the top-level page table represents 4M (or 222 bytes) because the entire
+4-gigabyte (i.e., 32-bit) virtual address space has been chopped into chunks of
+4096 (or 212) bytes.
+The entry located by indexing into the top-level page table yields the address
+or the page frame number of a second-level page table. Entry 0 of the top-level
+page table points to the page table for the program text, entry 1 points to the page
+table for the data, and entry 1023 points to the page table for the stack. The other
+(shaded) entries are not used. The PT2 field is now used as an index into the 
+selected second-level page table to find the page frame number for the page itself.
+As an example, consider the 32-bit virtual address 0x00403004 (4,206,596
+decimal), which is 4,206,596 - 4MB = 12,292 bytes into the data area. This 
+virtual address corresponds to PT1 = 1, PT2 = 3, and Offset = 4. The MMU first uses
+PT1 to index into the top-level page table and obtain entry 1, which corresponds to
+addresses 4M to 8M < 1. It then uses PT2 to index into the second-level page table
+just found and extract entry 3, corresponding to addresses 12288 to 16383 within
+its 4M chunk (i.e., absolute addresses 4,206,592 to 4,210,687). This contains the
+page frame number of the page containing virtual address 0x00403004. If that
+page is not in memory, the Present/absent bit in the page table entry will have the
+value zero, causing a page fault. If the page is present in memory, the page frame
+number taken from the second-level page table is combined with the offset (4) to
+construct the physical address. This address is put on the bus and sent to memory.
+The interesting thing to note about Fig. 3-13 is that although the address space
+contains over a million pages, only four page tables are needed: the top-level table,
+and the second-level tables for 0 to 4M (for the program text), 4M to 8M (for the
+data), and the top 4M (for the stack). The Present/absent bits in the remaining
+1021 entries of the top-level page table are set to 0, forcing a page fault if they are
+ev er accessed. Should this occur, the operating system will notice that the process
+is trying to reference memory that it is not supposed to and will take appropriate
+action, such as sending it a signal or killing it. In this example, we have chosen
+round numbers for the various sizes and have picked PT1 equal to PT2, but in
+actual practice other values are also possible, of course.
+The two-level page table system of Fig. 3-13 can be expanded to three, four, or
+more levels. Additional levels give more flexibility. For instance, Intel’s 32 bit
+80386 processor (launched in 1985) was able to address up to 4-GB of memory,
+using a two-level page table that consisted of a page directory whose entries

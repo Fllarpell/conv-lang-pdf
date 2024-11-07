@@ -1,0 +1,47 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+127
+critical regions, the processes must call enter region and leave region at the 
+correct times for the method to work. If one process cheats, the mutual exclusion will
+fail. In other words, critical regions work only if the processes cooperate.
+An alternative instruction to TSL is XCHG, which exchanges the contents of two
+locations atomically, for example, a register and a memory word. The code is
+shown in Fig. 2-26, and, as can be seen, is essentially the same as the solution with
+TSL. All Intel x86 CPUs use XCHG instruction for low-level synchronization.
+enter region:
+MOVE REGISTER,#1
+| put a 1 in the register
+XCHG REGISTER,LOCK
+| swap the contents of the register and lock var iable
+CMP REGISTER,#0
+| was lock zero?
+JNE enter region 
+| if it was non zero, lock was set, so loop
+RET 
+| retur n to caller; critical region entered
+leave region:
+MOVE LOCK,#0
+| store a 0 in lock
+RET 
+| retur n to caller
+Figure 2-26. Entering and leaving a critical region using the XCHG instruction.
+2.4.4 Sleep and Wakeup
+Both Peterson’s solution and the solutions using TSL or XCHG are correct, but
+both have the defect of requiring busy waiting. In essence, what these solutions do
+is this: when a process wants to enter its critical region, it checks to see if the entry
+is allowed. If it is not, the process just sits in a tight loop burning the CPU while
+waiting until it is.
+Not only does this approach waste CPU time, but it can also have unexpected
+effects. Consider a computer with two processes, H, with high priority, and L, with
+low priority. The scheduling rules are such that H is run whenever it is in ready
+state. At a certain moment, with L in its critical region, H becomes ready to run
+(e.g., an I/O operation completes). H now begins busy waiting, but since L is never
+scheduled while H is running, L never gets the chance to leave its critical region, so
+H loops forever. This situation is sometimes referred to as a variant of the priority
+inversion problem.
+Now let us look at some interprocess communication primitives that block
+instead of wasting CPU time when they are not allowed to enter their critical
+regions. One of the simplest is the pair sleep and wakeup. Sleep is a system call
+that causes the caller to block, that is, be suspended until another process wakes it
+up. The wakeup call has one parameter, the process to be awakened. Alternatively,
+both sleep and wakeup each have one parameter, a memory address used to match
+up sleeps with wakeups.

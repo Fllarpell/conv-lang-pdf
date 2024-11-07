@@ -1,0 +1,44 @@
+SEC. 4.4
+FILE-SYSTEM MANAGEMENT AND OPTIMIZATION
+319
+k + 1 in the hope that when it is needed, it will have already arrived in the cache.
+At the very least, it will be on the way.
+Of course, this read-ahead strategy works only for files that are actually being
+read sequentially. If a file is being randomly accessed, read ahead does not help.
+In fact, it hurts by tying up disk bandwidth reading in useless blocks and removing
+potentially useful blocks from the cache (and possibly tying up more disk 
+bandwidth writing them back to disk if they are dirty). To see whether read ahead is
+worth doing, the file system can keep track of the access patterns to each open file.
+For example, a bit associated with each file can keep track of whether the file is in
+‘‘sequential-access mode’’ or ‘‘random-access mode.’’ Initially, the file is given the
+benefit of the doubt and put in sequential-access mode. However, whenever a seek
+is done, the bit is cleared. If sequential reads start happening again, the bit is set
+once again. In this way, the file system can make a reasonable guess about 
+whether it should read ahead or not. If it gets it wrong once in a while, it is not a 
+disaster, just a little bit of wasted disk bandwidth.
+Reducing Disk-Arm Motion
+Caching and read ahead are not the only ways to increase file-system 
+performance. Another important technique for hard disks is to reduce the amount of
+disk-arm motion by putting blocks that are likely to be accessed in sequence close
+to each other, preferably in the same cylinder. When an output file is written, the
+file system has to allocate the blocks one at a time, on demand. If the free blocks
+are recorded in a bitmap, and the whole bitmap is in main memory, it is easy
+enough to choose a free block as close as possible to the previous block. With a
+free list, part of which is on disk, it is much harder to allocate blocks close 
+together.
+However, even with a free list, some block clustering can be done. The trick is
+to keep track of disk storage not in blocks, but in groups of consecutive blocks. If
+all sectors consist of 512 bytes, the system could use 1-KB blocks (2 sectors) but
+allocate disk storage in units of 2 blocks (4 sectors). This is not the same as having
+2-KB disk blocks, since the cache would still use 1-KB blocks and disk transfers
+would still be 1 KB, but reading a file sequentially on an otherwise idle system
+would reduce the number of seeks by a factor of two, considerably improving 
+performance. A variation on the same theme is to take account of rotational 
+positioning. When allocating blocks, the system attempts to place consecutive blocks
+in a file in the same cylinder.
+Another performance bottleneck in systems that use i-nodes or anything like
+them is that reading even a short file requires two disk accesses: one for the i-node
+and one for the block. In many file systems, the i-node placement is like the one
+shown in Fig. 4-31(a). Here all the i-nodes are near the start of the disk, so the
+av erage distance between an i-node and its blocks will be half the number of 
+cylinders, requiring long seeks. This is clearly inefficient and needs to be improved.

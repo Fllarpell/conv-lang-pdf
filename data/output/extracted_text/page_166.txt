@@ -1,0 +1,48 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+137
+operating system, but on Linux it is built on top of futexes. A thread wishing to 
+enter a critical region first tries to lock the associated mutex. If the mutex is
+unlocked, the thread can enter immediately and the lock is atomically set, 
+preventing other threads from entering. If the mutex is already locked, the calling thread is
+blocked until it is unlocked. If multiple threads are waiting on the same mutex,
+when it is unlocked, only one of them is allowed to continue and relock it. These
+locks are not mandatory. It is up to the programmer to make sure threads use them
+correctly.
+The major calls relating to mutexes are shown in Fig. 2-31. As you might
+expect, mutexes can be created and destroyed. The calls for performing these 
+operations are pthread mutex init and pthread mutex destroy, respectively. They can
+also be locked—by pthread mutex lock—which tries to acquire the lock and
+blocks if is already locked. There is also an option for trying to lock a mutex and
+failing with an error code instead of blocking if it is already blocked. This call is
+pthread mutex trylock. This call allows a thread to effectively do busy waiting if
+that is ever needed. Finally, pthread mutex unlock unlocks a mutex and releases
+exactly one thread if one or more are waiting on it. Mutexes can also have 
+attributes, but these are used only for specialized purposes.
+Thread call
+Description
+pthread mutex init 
+Create a mutex
+pthread mutex destroy
+Destroy an existing mutex
+pthread mutex lock
+Acquire a lock or block
+pthread mutex tr ylock
+Acquire a lock or fail
+pthread mutex unlock
+Release a lock
+Figure 2-31. Some of the Pthreads’ calls relating to mutexes.
+In addition to mutexes, Pthreads offers a second synchronization mechanism,
+condition variables, discussed later. Mutexes are good for allowing or blocking
+access to a critical region. Condition variables allow threads to block due to some
+condition not being met. Almost always the two methods are used together. Let us
+now look at the interaction of threads, mutexes, and condition variables in a bit
+more detail.
+As a simple example, consider the producer-consumer scenario again: one
+thread puts things in a buffer and another one takes them out. If the producer 
+discovers that there are no more free slots available in the buffer, it has to block until
+one becomes available. Mutexes make it possible to do the check atomically 
+without interference from other threads, but having discovered that the buffer is full, the
+producer needs a way to block and be awakened later. This is what condition 
+variables allow.
+The most important calls related to condition variables are shown in Fig. 2-32.
+As you would probably expect, there are calls to create and destroy condition

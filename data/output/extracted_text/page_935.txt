@@ -1,0 +1,46 @@
+906
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+As with most operating systems, much of the functionality in the Windows
+executive is like library code, except that it runs in kernel mode so its data 
+structures can be shared and protected from access by user-mode code, and so it can
+access kernel-mode state, such as the MMU control registers. But otherwise the
+executive is simply executing operating system functions on behalf of its caller,
+and thus runs in the thread of its caller. This is the same as in UNIX systems.
+When any of the executive functions block waiting to synchronize with other
+threads, the user-mode thread is blocked, too. This makes sense when working on
+behalf of a particular user-mode thread, but it can be unfair when doing work 
+related to common housekeeping tasks. To avoid hijacking the current thread when the
+executive determines that some housekeeping is needed, a number of kernel-mode
+threads are created when the system boots and dedicated to specific tasks, such as
+making sure that modified pages get written to disk.
+For predictable, low-frequency tasks, there is a thread that runs once a second
+and has a laundry list of items to handle. For less predictable work, there is the
+pool of high-priority worker threads mentioned earlier which can be used to run
+bounded tasks by queuing a request and signaling the synchronization event that
+the worker threads are waiting on.
+The object manager manages most of the interesting kernel-mode objects
+used in the executive layer. These include processes, threads, files, semaphores,
+I/O devices and drivers, timers, and many others. As described previously, 
+kernelmode objects are really just data structures allocated and used by the kernel. In
+Windows, kernel data structures have enough in common that it is very useful to
+manage many of them in a unified facility.
+The facilities provided by the object manager include managing the allocation
+and freeing of memory for objects, quota accounting, supporting access to objects
+using handles, maintaining reference counts for kernel-mode pointer references as
+well as handle references, giving objects names in the NT namespace, and 
+providing an extensible mechanism for managing the lifecycle for each object. Kernel
+data structures which need some of these facilities are managed by the object 
+manager.
+Object-manager objects each have a type which is used to specify exactly how
+the lifecycle of objects of that type is to be managed. These are not types in the
+object-oriented sense, but are simply a collection of parameters specified when the
+object type is created. To create a new type, an executive component calls an
+object-manager API to create a new type. Objects are so central to the functioning
+of Windows that the object manager will be discussed in more detail in the next
+section.
+The I/O manager provides the framework for implementing I/O device drivers
+and provides a number of executive services specific to configuring, accessing, and
+performing operations on devices. In Windows, device drivers not only manage
+physical devices but they also provide extensibility to the operating system. Many
+functions that are hard compiled into the kernel on other systems are dynamically

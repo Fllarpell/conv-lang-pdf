@@ -1,0 +1,43 @@
+PREFACE
+xxvii
+ABOUT THE AUTHORS
+Andrew S. Tanenbaum has an S.B. degree from M.I.T. and a Ph.D. from the
+University of California at Berkeley. He is currently a Professor Emeritus of 
+Computer Science at the Vrije Universiteit in Amsterdam, the Netherlands. He was
+formerly Dean of the Advanced School for Computing and Imaging, an 
+interuniversity graduate school doing research on advanced parallel, distributed, and 
+imaging systems. He was also an Academy Professor of the Royal Netherlands 
+Academy of Arts and Sciences, which has saved him from turning into a bureaucrat. He
+also won a prestigious European Research Council Advanced Grant.
+In the past, he has done research on compilers, reliable operating systems, 
+networking, and distributed systems. This research has led to over 200 refereed 
+publications in journals and conferences. Prof. Tanenbaum has also authored or 
+coauthored fiv e books, which have been translated into over 20 languages, ranging
+from Basque to Thai. They are used at universities all over the world. There are
+163 versions of his books.
+Prof. Tanenbaum has also produced a considerable volume of software, 
+notably MINIX, a small UNIX clone. It was the direct inspiration for Linux and the
+platform on which Linux was initially developed. The current version of MINIX,
+called MINIX 3, is now focused on being an extremely reliable and secure 
+operating system. Prof. Tanenbaum will consider his work done when no user has any
+idea what an operating system crash is. MINIX 3 is an ongoing open-source 
+project to which you are invited to contribute. Go to www.minix3.org to download a
+free copy of MINIX 3 and give it a try. Both x86 and ARM versions are available.
+Prof. Tanenbaum’s Ph.D. students have gone on to greater glory after 
+graduating. Some have become professors; others have fulfilled leading roles in 
+government organizations and industry. He is very proud of them. In this respect, he
+resembles a mother hen.
+Prof. Tanenbaum is a Fellow of the ACM, a Fellow of the IEEE, and a member
+of the Royal Netherlands Academy of Arts and Sciences. He has also won 
+numerous scientific prizes from ACM, IEEE, and USENIX. If you are unbearably 
+curious about them, see his page on Wikipedia. He also has two honorary doctorates.
+Herbert Bos obtained his Master’s degree from Twente University and his
+Ph.D. from Cambridge University in the United Kingdom. Since then, he has
+worked extensively on dependable and efficient I/O architectures for operating 
+systems like Linux, but also research systems based on MINIX 3. He is currently a
+professor at the VUSec Systems Security Research Group in the Department of
+Computer Science at the Vrije Universiteit in Amsterdam, the Netherlands. His
+main research field is systems security.
+With his group, he discovered and analyzed many vulnerabilities in both 
+hardware and software. From buggy memory chips to vulnerable CPUs, and from flaws
+in operating systems to novel exploitation techniques, the research has led to fixes

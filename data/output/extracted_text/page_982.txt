@@ -1,0 +1,43 @@
+SEC. 11.4
+PROCESSES AND THREADS IN WINDOWS
+953
+As mentioned earlier, WoW64 guests run with guest versions of OS binaries
+that live in SysWoW64 for (x86) or SysArm32 (arm32) directories under 
+c:\Windows. From a performance perspective, that’s OK if the host CPU can execute
+guest instructions, but when jitting is necessary, having to jit and cache OS binaries
+is not ideal. A better approach could have been to pre-jit these OS binaries and ship
+them with the OS. That’s still not ideal because jitting arm64 instructions from x86
+instructions misses a lot of the context that exists in source code and results in 
+suboptimal code due to the architectural differences between x86 and arm64. For
+example, the strongly ordered memory model of the x86 vs. the weak memory
+model or arm64 forces the jitter to pessimistically add expensive memory barrier
+instructions.
+A much better option is to enhance the compiler toolchain to pre-compile the
+OS binaries from source code to arm64 directly, but in an x86-compatible way.
+That means the compiler uses x86 types and structures, but generates arm64
+instructions along with thunks to perform calling convention adjustments for calls
+from and to x86 code. For example, x86 function calls generally pass parameters
+on the stack whereas the arm64 calling convention expects them in registers. Any
+x86 assembly code is linked into the binary as is. These types of binaries 
+containing both x86-compatible arm64 code as well as x86 code are called CHPE
+(Compiled Hybrid Portable Executable) binaries. They are stored under 
+c:\Windows\SyChpe32 and are loaded whenever the x86 application tries to load a DLL
+from SysWoW64, providing improved performance by almost completely 
+eliminating emulation for OS code. Figure 11-28 shows CHPE DLLs in the address
+space of the emulated x86 process on an arm64 machine.
+x64 Emulation on arm64
+The first arm64 release of Windows 10 in 2017 only supported emulating
+32-bit x86 programs. While most Windows software has a 32-bit version, an
+increasing number of popular applications, especially games, are only available as
+x64. For that reason, Microsoft added support for x64-on-arm64 emulation in 
+Windows 11. It’s pretty remarkable that one can run x86, x64, arm32, and arm64
+applications on the arm64 version of Windows 11.
+There are many similarities between how emulation is implemented for x86
+and x64 guest architectures as shown in Fig. 11-29. Instruction emulation still
+happens via a jitter, xtajit64.dll, which has been ported to support x64 machine
+code. Since a given process cannot have both x86 and x64 code, either xtajit.dll or
+xtajit64.dll is loaded, as appropriate. Jitted code is persisted via the XtaCache NT
+service, as before. User-mode OS binaries intended to load into x64 processes are
+built using a hybrid binary interface similar to CHPE, called ARM64EC ARM 64
+Emulation Compatible. ARM64EC binaries contain arm64 machine code, 
+compiled using x64 types and behaviors with thunks to perform calling convention

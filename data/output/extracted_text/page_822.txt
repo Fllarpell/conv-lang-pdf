@@ -1,0 +1,42 @@
+SEC. 10.7
+SECURITY IN LINUX
+793
+the screen for standard error (file descriptor 2). Finally, it executes the preferred
+shell, thus terminating itself.
+At this point, the preferred shell is running with the correct UID and GID and
+standard input, output, and error all set to their default devices. All processes that it
+forks off (i.e., commands typed by the user) automatically inherit the shell’s UID
+and GID, so they also will have the correct owner and group. All files they create
+also get these values.
+When any process attempts to open a file, the system first checks the 
+protection bits in the file’s i-node against the caller’s effective UID and effective GID to
+see if the access is permitted. If so, the file is opened and a file descriptor returned.
+If not, the file is not opened and <1 is returned. No checks are made on subsequent
+read or wr ite calls. As a consequence, if the protection mode changes after a file is
+already open, the new mode will not affect processes that already have the file
+open.
+The Linux security model and its implementation are essentially the same as in
+most other traditional UNIX systems.
+10.8 ANDROID
+Android is a relatively new operating system designed to run on mobile 
+devices. It is based on the Linux kernel—Android introduces only a few new 
+concepts to the Linux kernel itself, using most of the Linux facilities you are already
+familiar with (processes, user IDs, virtual memory, file systems, scheduling, etc.)
+in sometimes very different ways than they were originally intended.
+Since its introduction in 2008, Android has grown to be the most widely used
+operating systems in the world with, as of this writing, over 3 billion monthly
+active users of just the Google flavor of Android alone. Its popularity has ridden
+the explosion of smartphones, and it is freely available for manufacturers of mobile
+devices to use in their products. It is also an open-source platform, making it 
+customizable to a diverse variety of devices. It is popular not only for 
+consumer-centric devices where its third-party application ecosystem is advantageous
+(such as tablets, televisions, game systems, and media players), but is increasingly
+used as the embedded OS for dedicated devices that need a graphical user interface
+such as smart watches, automotive dashboards, airplane seatbacks, medical 
+devices, and home appliances.
+A large amount of the Android operating system is written in a high-level 
+language, the Java programming language. The kernel and a large number of 
+lowlevel libraries are written in C and C++. However, a large amount of the system is
+written in Java and, but for some small exceptions, the entire application API is
+written and published in Java as well. The parts of Android written in Java tend to
+follow a very object-oriented design as encouraged by that language.

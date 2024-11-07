@@ -1,0 +1,44 @@
+498
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+hypervisor. What should the hypervisor do? One approach is for it to report back
+that the disks, printers, and so on are the ones that the hardware actually has. The
+guest will then load device drivers for these devices and try to use them. When the
+device drivers try to do actual I/O, they will read and write the device’s hardware
+device registers. These instructions are sensitive and will trap to the hypervisor,
+which could then copy the needed values to and from the hardware registers, as
+needed.
+But here, too, we have a problem. Each guest OS could think it owns an entire
+disk partition, and there may be many more virtual machines (hundreds) than there
+are actual disk partitions. The usual solution is for the hypervisor to create a file or
+region on the actual disk for each virtual machine’s physical disk. Since the guest
+OS is trying to control a disk that the real hardware has (and which the hypervisor
+understands), it can convert the block number being accessed into an offset into the
+file or disk region being used for storage and do the I/O.
+It is also possible for the disk that the guest is using to be different from the
+real one. For example, if the actual disk is some brand-new high-performance disk
+(or RAID) with a new interface, the hypervisor could advertise to the guest OS that
+it has a plain old IDE disk and let the guest OS install an IDE disk driver. When
+this driver issues IDE disk commands, the hypervisor converts them into 
+commands to drive the new disk. This strategy can be used to upgrade the hardware
+without changing the software. In fact, this ability of virtual machines to remap
+hardware devices was one of the reasons VM/370 became popular: companies
+wanted to buy new and faster hardware but did not want to change their software.
+Virtual machine technology made this possible.
+Another interesting trend related to I/O is that the hypervisor can take the role
+of a virtual switch. In this case, each virtual machine has a MAC address and the
+hypervisor switches frames from one virtual machine to another—just like an
+Ethernet switch would do. Virtual switches have sev eral advantages. For instance,
+it is very easy to reconfigure them. Also, it is possible to augment the switch with
+additional functionality, for instance for additional security.
+I/O MMUs
+Another I/O problem that must be solved somehow is the use of DMA, which
+uses absolute memory addresses. As might be expected, the hypervisor has to
+intervene here and remap the addresses before the DMA starts. However, 
+hardware already exists with an I/O MMU, which virtualizes the I/O the same way the
+MMU virtualizes the memory. I/O MMU exists in different forms and shapes for
+many processor architectures. Even if we limit ourselves to the x86, Intel and
+AMD have slightly different technology. Still, the idea is the same. This hardware
+eliminates the DMA problem.
+Just like regular MMUs, the I/O MMU uses page tables to map a memory
+address that a device wants to use (the device address) to a physical address. In a

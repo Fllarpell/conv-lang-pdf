@@ -1,0 +1,44 @@
+SEC. 10.1
+HISTORY OF UNIX AND LINUX
+709
+included in the standard; otherwise it was not. As a consequence of this algorithm,
+1003.1 bears a strong resemblance to the common ancestor of both System V and
+BSD, namely Version 7. The 1003.1 document is written in such a way that both
+operating system implementers and software writers can understand it, another
+novelty in the standards world, although work is already underway to remedy this.
+Although the 1003.1 standard addresses only the system calls, related 
+documents standardize threads, the utility programs, networking, and many other 
+features of UNIX. In addition, the C language has also been standardized by ANSI
+and ISO.
+10.1.6 MINIX
+One property that all modern UNIX systems have is that they are large and
+complicated, in a sense the antithesis of the original idea behind UNIX. Even if
+the source code were freely available, which it is not in most cases, it is out of the
+question that a single person could understand it all anymore. This situation led
+one of the authors of this book (AST) to write a new UNIX-like system that was
+small enough to understand, was available with all the source code, and could be
+used for educational purposes. That system consisted of 11,800 lines of C and 800
+lines of assembly code. Released in 1987, it was functionally almost equivalent to
+Version 7 UNIX, the mainstay of most computer science departments during the
+PDP-11 era.
+MINIX was one of the first UNIX-like systems based on a microkernel design.
+The idea behind a microkernel is to provide minimal functionality in the kernel to
+make it reliable and efficient. Consequently, memory management and the file 
+system were pushed out into user processes. The kernel handled message passing
+between the processes and little else. The kernel was 1600 lines of C and 800 lines
+of assembler. For technical reasons relating to the 8088 architecture, the I/O device
+drivers (2900 additional lines of C) were also in the kernel. The file system (5100
+lines of C) and memory manager (2200 lines of C) ran as two separate user 
+processes.
+Microkernels have the advantage over monolithic systems that they are easy to
+understand and maintain due to their highly modular structure. Also, moving code
+from the kernel to user mode makes them highly reliable because the crash of a
+user-mode process does less damage than the crash of a kernel-mode component.
+Their main disadvantage is a slightly lower performance due to the extra switches
+between user mode and kernel mode. However, performance is not everything: all
+modern UNIX systems run X Windows in user mode and simply accept the 
+performance hit to get the greater modularity (in contrast to Windows, where even the
+GUI (Graphical User Interface) is in the kernel). Other microkernels of this era
+were Mach (Accetta et al., 1986) and Chorus (Rozier et al., 1988).
+Within a few months of its appearance, MINIX became a bit of a cult item,
+with its own USENET (now Google) newsgroup, comp.os.minix, and over 40,000

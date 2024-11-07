@@ -1,0 +1,50 @@
+SEC. 3.3
+VIRTUAL MEMORY
+207
+memory reference, not just on page faults. Searching a 256K table on every 
+memory reference is not the way to make your machine blindingly fast.
+The way out of this dilemma is to make use of the TLB. If the TLB can hold
+all of the heavily used pages, translation can happen just as fast as with regular
+page tables. On a TLB miss, however, the inverted page table has to be searched in
+software. One feasible way to accomplish this search is to have a hash table hashed
+on the virtual address. All the virtual pages currently in memory that have the same
+hash value are chained together, as shown in Fig. 3-14. If the hash table has as
+many slots as the machine has physical pages, the average chain will be only one
+entry long, greatly speeding up the mapping. Once the page frame number has
+been found, the new (virtual, physical) pair is entered into the TLB.
+Traditional page!
+table with an entry!
+for each of the 252!
+pages
+1-GB physical!
+memory has 218!
+4-KB page frames
+Hash table
+218 -1
+252 -1
+218 -1
+0
+0
+Indexed!
+by virtual!
+page
+0
+Indexed!
+by hash on!
+virtual page
+Virtual!
+page
+Page!
+frame
+Figure 3-14. Comparison of a traditional page table with an inverted page table.
+Inverted page tables are used on 64-bit machines because even with a very
+large page size, the number of page table entries is gigantic. For example, with
+4-MB pages and 64-bit virtual addresses, 242 page table entries are needed.
+3.4 PAGE REPLACEMENT ALGORITHMS
+When a page fault occurs, the operating system has to choose a page to evict
+(remove from memory) to make room for the incoming page. If the page to be
+removed has been modified while in memory, it must be rewritten to nonvolatile
+storage to bring the disk or SSD copy up to date. If, however, the page has not
+been changed, for example because it contains the executable code for a program,
+text), the disk or SSD copy is already up to date, so no rewrite is needed. The page
+to be read in just overwrites the page being evicted.

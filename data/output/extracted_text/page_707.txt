@@ -1,0 +1,62 @@
+678
+SECURITY 
+CHAP. 9
+Except that we already saw in the previous section that there may still be traces
+at the micro-architectural level, for instance in the cache. For simplicity’s sake, let
+us assume that array B is shared between the attacker process and the victim (see
+also Fig. 9-30). This is not a strict requirement and the attack is still possible if the
+attacker cannot access the array directly, but a shared array simplifies the 
+explanation. In particular, just like in the previous section, the attacker can just read all the
+elements of array B in a loop, while timing the access durations. If the access of
+element n is considerably slower, the attacker knows that n/4096 must have been
+the value that was accessed transiently.
+What makes this especially dangerous is that the attacker may train the CPU’s
+predictor to mispredict. For instance, the attacker can provide 100 inputs that are
+in-bounds to trick the branch predictor into thinking that the outcome will be true
+the 101st time also. However, this time the attacker provides an illegal, 
+out-ofbounds-value to read data from a location that should not be accessible.
+Train branch predictor 
+to predict "true":
+Code
+Data
+Access is fast, because this 
+element is now in the cache.
+Process
+Kernel
+Speculatively load
+array element in 
+the cache
+1
+5
+Again, the index of the fast 
+array element (divided by 
+4096) is the value that was 
+read by Line 2 in the kernel!
+6
+1.  if (input < 32) {
+2.     char x = A [input]; 
+3.     char y = B [x * 4096];
+4.  }
+Shared array B
+Provide a value to
+cause misprediction:
+2
+"input = 63261"
+3 Speculatively 
+load A[63261]
+100x "input = 5"
+4
+Figure 9-30. Original Spectre attack on the kernel.
+By repeating the process, each time using the cache side channel to leak a new
+secret byte, the attacker can ‘‘read’’ out the victim’s entire address space, byte by
+byte. Even if the speculatively executed instructions access invalid memory 
+locations, it does not matter, as transient execution does not crash. It will simply squash
+the result and resume execution at the appropriate location.
+The attack is known as Spectre. There are many variants of speculative 
+execution attacks. The example in this section is known as Spectre Variant 1. Mitigations
+against speculative execution attacks are even more problematic than in the case of
+Meltdown and it may be that some variants of Spectre will never be fixed. The 
+reason is that speculative execution is so important for performance. Even so, 
+mitigations for different variants exist both in software and hardware and executing a
+Spectre attack on modern processors and modern operating systems is not trivial.
+As an example, the variant we showed in this section can be mitigated in software

@@ -1,0 +1,40 @@
+SEC. 8.3
+DISTRIBUTED SYSTEMS
+591
+pieces. The disadvantages are that there must be enough storage for the entire file
+locally, moving the entire file is wasteful if only parts of it are needed, and 
+consistency problems arise if there are multiple concurrent users.
+The Directory Hierarchy
+Files are only part of the story. The other part is the directory system. All 
+distributed file systems support directories containing multiple files. The next design
+issue is whether all clients have the same view of the directory hierarchy. As an
+example of what we mean, consider Fig. 8-34. In Fig. 8-34(a), we show two file
+servers, each holding three directories and some files. In Fig. 8-34(b), we have a
+system in which all clients (and other machines) have the same view of the 
+distributed file system. If the path /D/E/x is valid on one machine, it is valid on all of
+them.
+In contrast, in Fig. 8-34(c), different machines can have different views of the
+file system. To repeat the preceding example, the path /D/E/x might well be valid
+on client 1 but not on client 2. In systems that manage multiple file servers by
+remote mounting, Fig. 8-34(c) is the norm. It is flexible and straightforward to 
+implement, but it has the disadvantage of not making the entire system behave like a
+single old-fashioned timesharing system. In a timesharing system, the file system
+looks the same to any process, as in the model of Fig. 8-34(b). This property
+makes a system easier to program and understand.
+A closely related question is whether or not there is a global root directory,
+which all machines recognize as the root. One way to have a global root directory
+is to have the root contain one entry for each server and nothing else. Under these
+circumstances, paths take the form /server/path, which has its own disadvantages,
+but at least is the same everywhere in the system.
+Naming Transparency
+The principal problem with this form of naming is that it is not fully 
+transparent. Two forms of transparency are relevant in this context and are worth 
+distinguishing. The first one, location transparency, means that the path name gives no
+hint as to where the file is located. A path like /server1/dir1/dir2/x tells everyone
+that x is located on server 1, but it does not tell where that server is located. The
+server is free to move anywhere it wants to in the network without the path name
+having to be changed. Thus this system has location transparency.
+However, suppose that file x is extremely large and space is tight on server 1.
+Furthermore, suppose that there is plenty of room on server 2. The system might
+well like to move x to server 2 automatically. Unfortunately, when the first 
+component of all path names is the server, the system cannot move the file to the other

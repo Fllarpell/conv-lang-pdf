@@ -1,0 +1,87 @@
+214
+MEMORY MANAGEMENT 
+CHAP. 3
+Page
+0
+1
+2
+3
+4
+5 
+R bits for
+pages 0-5,
+clock tick 0
+10000000
+00000000
+10000000
+00000000
+10000000
+10000000
+1 0 1 0 1 1
+(a)
+R bits for
+pages 0-5,
+clock tick 1
+11000000
+10000000
+01000000
+00000000
+11000000
+01000000
+1 1 0 0 1 0
+(b)
+R bits for
+pages 0-5,
+clock tick 2
+11100000
+11000000
+00100000
+10000000
+01100000
+10100000
+1 1 0 1 0 1
+(c)
+R bits for
+pages 0-5,
+clock tick 3
+11110000
+01100000
+00010000
+01000000
+10110000
+01010000
+1 0 0 0 1 0
+(d)
+R bits for
+pages 0-5,
+clock tick 4
+01111000
+10110000
+10001000
+00100000
+01011000
+00101000
+0 1 1 0 0 0
+(e)
+Figure 3-17. The aging algorithm simulates LRU in software. Shown are six
+pages for fiv e clock ticks. The fiv e clock ticks are represented by (a) to (e).
+not that important. Of course, using a 16-bit, 32-bit, or 64-bit counter provides
+more history but the cost is more memory to store it. Usually 8 bits does the job
+just fine.
+3.4.8 The Working Set Page Replacement Algorithm
+In the purest form of paging, processes are started up with none of their pages
+in memory. As soon as the CPU tries to fetch the first instruction, it gets a page
+fault, causing the operating system to bring in the page containing the first 
+instruction. Other page faults for global variables and the stack usually follow quickly.
+After a while, the process has most of the pages it needs and settles down to run
+with relatively few page faults. This strategy is called demand paging because
+pages are loaded only on demand, not in advance.
+Of course, it is easy enough to write a test program that systematically reads all
+the pages in a large address space, causing so many page faults that there is not
+enough memory to hold them all. Fortunately, most processes do not work this
+way. They exhibit a locality of reference, meaning that during any phase of
+execution, the process references only a relatively small fraction of its pages. Each
+pass of a multipass compiler, for example, references only a fraction of all the
+pages, and a different fraction at that.
+The set of pages that a process is currently using is its working set (Denning,
+1968a; and Denning, 1980). If the entire working set is in memory, the process

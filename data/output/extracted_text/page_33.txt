@@ -1,0 +1,41 @@
+4
+INTRODUCTION 
+CHAP. 1
+Besides Windows, the other main example we will use throughout this book is
+UNIX and its variants and clones. It, too, has evolved over the years, with versions
+like FreeBSD (and essentially, macOS) being derived from the original system,
+whereas Linux is a fresh code base, although very closely modeled on UNIX and
+highly compatible with it. The huge investment needed to develop a mature and
+reliable operating system from scratch led Google to adopt an existing one, Linux,
+as the basis of its Android operating system. We will use examples from UNIX
+throughout this book and look at Linux in detail in Chap. 10.
+In this chapter, we will briefly touch on a number of key aspects of operating
+systems, including what they are, their history, what kinds are around, some of the
+basic concepts, and their structure. We will come back to many of these important
+topics in later chapters in more detail.
+1.1 WHAT IS AN OPERATING SYSTEM?
+It is hard to pin down what an operating system is other than saying it is the
+software that runs in kernel mode—and even that is not always true. Part of the
+problem is that operating systems perform two essentially unrelated functions: 
+providing application programmers (and application programs, naturally) a clean 
+abstract set of resources instead of the messy hardware ones and managing these
+hardware resources. Depending on who is doing the talking, you might hear mostly
+about one function or the other. Let us now look at both.
+1.1.1 The Operating System as an Extended Machine
+The architecture (instruction set, memory organization, I/O, and bus 
+structure) of most computers at the machine-language level is primitive and awkward to
+program, especially for input/output. To make this point more concrete, consider
+modern SATA (Serial ATA) hard disks used on most computers. A book 
+(Deming, 2014) describing an early version of the interface to the disk—what a 
+programmer would have to know to use the disk—ran over 450 pages. Since then, the
+interface has been revised multiple times and is even more complicated than it was
+in 2014. Clearly, no sane programmer would want to deal with this disk at the
+hardware level. Instead, a piece of software, called a disk driver, deals with the
+hardware and provides an interface to read and write disk blocks, without getting
+into the details.
+Operating systems contain many drivers for controlling I/O
+devices.
+But even this level is much too low for most applications. For this reason, all
+operating systems provide yet another layer of abstraction for using disks: files.
+Using this abstraction, programs can create, write, and read files, without having to
+deal with the messy details of how the hardware actually works.

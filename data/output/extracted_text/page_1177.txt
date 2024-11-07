@@ -1,0 +1,102 @@
+1148
+INDEX
+Storage pool, Windows, 980
+Storage spaces, Windows, 980
+Store eviction thread, Windows, 975
+Store manager, Windows, 973
+Store-and-forward packet switching, 560
+Stored value card, 644
+Strict alternation, 123–124
+Striping, RAID, 386
+Structure, operating system, 1054–1057
+Windows, 894–929
+Stuxnet attack, 639–640
+Subject, ACL, 622
+Subscribe, 597
+Substitution cipger, 633
+Subsystem, Windows, 880, 926–929
+Superblock, 278, 775, 776
+Superfetch, Windows, 966
+Superscalar computer, 22
+Superuser, 41, 790
+Supervisor mode, 2
+Supervisor mode access protection, 687
+Supervisor mode execution protection, 687
+Suspend blocker, 804
+Android, 804
+Svchost.exe, 928
+SVID (see System V Interface Definition)
+SVM (see Secure Virtual Machine)
+Swap area, 755
+Swapper process, 754
+Swappiness, 756
+Swapping, 185–188
+Symbian, 19
+Symbolic link, 278
+Symbolic linking, 289
+Symmetric multiprocessor, 544, 1005
+Symmetric-key cryptography, 633
+Sync system call, 757, 984
+Synchronization, 132
+Linux, 740–741
+Windows, 938–940
+Synchronization and IPC, 119–152
+Synchronization event, 938
+Synchronization multiprocessor, 545–548
+Synchronization object, 905
+Synchronous call, 566
+Synchronous input/output, 353
+Synchronous vs. asynchronous communication,
+1064–1065
+Synthetic interrupt support, Hyper-V, 1006
+System access control list, Windows, 1022
+System bus, 20
+System call, 23, 50–63
+access, 667, 671, 792
+alarm, 729, 1077
+append, 269
+atomic read, 740
+atomic set, 740
+brk, 745, 747
+chdir, 735, 774
+chmod, 791
+clone, 734, 735, 736, 1059
+close, 269, 761, 771, 785, 786
+closedir, 277
+connect, 760
+creat, 269, 277, 770, 771, 772, 774, 785
+delete, 269, 277
+directory management, 58–59
+down, 770, 1077
+exec, 90, 620, 727, 728, 732, 748, 808, 831, 935,
+936, 1052, 1059
+exit, 728
+fcntl, 773
+file management, 57–58
+fork, 544, 724, 726, 727, 731, 733, 734, 735, 753, 808,
+831, 832, 930, 935, 936, 1052, 1059, 1069
+fstat, 773
+fsync, 757
+get-acl, 625
+get attributes, 269
+getpid, 725
+ioctl, 761, 982, 983, 984
+kill, 729
+kmalloc, 753
+link, 277, 774
+listen, 760
+lock, 775
+lookup, 785
+lseek, 734, 735, 772, 1047
+mem, 749
+miscellaneous, 60
+mkdir, 773
+mmap, 747, 806, 890
+mount, 786, 787
+munmap, 747
+mutex trylock, 741
+nice, 737
+notify, 1047
+open, 269, 758, 771, 775, 777, 785, 786, 789
+opendir, 277
+pause, 729

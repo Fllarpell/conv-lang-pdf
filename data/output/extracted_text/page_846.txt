@@ -1,0 +1,42 @@
+SEC. 10.8
+ANDROID
+817
+Callers will receive an IExample interface that is implemented by IExample.Proxy,
+allowing them to make regular calls on the interface.
+The way these pieces work together to perform a complete IPC operation is
+shown in Fig. 10-49. A simple print call on an IExample interface turns into:
+1. IExample.Proxy marshals the method call into a Parcel, calling 
+transact on the IBinder it is connected to, which is typically a BinderProxy
+for an object in another process.
+2. BinderProxy constructs a kernel transaction and delivers it to the 
+kernel through an ioctl call.
+3. The kernel transfers the transaction to the intended process, delivering
+it to a thread that is waiting in its own ioctl call.
+4. The transaction is decoded back into a Parcel and onTransact called
+on the appropriate local object, here ExampleImpl (which is a 
+subclass of IExample.Stub).
+5. IExample.Stub decodes the Parcel into the appropriate method and
+arguments to call, here calling print.
+6. The concrete implementation of print in ExampleImpl finally
+executes.
+Process 1
+Kernel
+Process 2
+Examplelmpl
+IExample
+print("hello") 
+print("hello")
+IExample.Proxy
+IExample.Stub
+transact({print hello})
+onTransact({print hello})
+Binder
+BinderProxy
+ioctl()
+ioctl()
+binder_module
+Figure 10-49. Full path of an AIDL-based Binder IPC.
+The bulk of Android’s IPC is written using this mechanism. Most services in
+Android are defined through AIDL and implemented as shown here. Recall the
+previous Fig. 10-40 showing how the implementation of the package manager in
+the system server process uses IPC to publish itself with the service manager for

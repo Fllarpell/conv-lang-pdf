@@ -1,0 +1,42 @@
+74
+INTRODUCTION 
+CHAP. 1
+At the bottom layer, running in kernel mode, is a program called the exokernel
+(Engler et al., 1995). Its job is to allocate resources to virtual machines and then
+check attempts to use them to make sure no machine is trying to use somebody
+else’s resources. Each user-level virtual machine can run its own operating system,
+as on VM/370 and the Pentium virtual 8086s, except that each one is restricted to
+using only the resources it has asked for and been allocated.
+The advantage of the exokernel scheme is that it saves a layer of mapping. In
+the other designs, each virtual machine thinks it has its own disk or SSD, with
+blocks running from 0 to some maximum, so the virtual machine monitor must
+maintain tables to remap disk block addresses (and all other resources). With the
+exokernel, this remapping is not needed. The exokernel need only keep track of
+which virtual machine has been assigned which resource. This method still has the
+advantage of separating the multiprogramming (in the exokernel) from the user
+operating system code (in user space), but with less overhead, since all the 
+exokernel has to do is keep the virtual machines out of each other’s hair.
+The operating system functions were linked with the applications in the virtual
+machine in the form of a LibOS (Library Operating System), that needed only
+the functionality for the application(s) running in the user-level virtual machine.
+This idea, like so many others, was forgotten for a few decades, only to be
+rediscovered in recent years, in the form of Unikernels, minimal LibOS-based 
+systems that contain just enough functionality to support a single application (such as
+a Web server) on a virtual machine. Unikernels have the potential to be highly
+efficient as protection between the operating system (LibOS) and application is not
+needed: since there is only one application on the virtual machine, all code can run
+in kernel mode.
+1.8 THE WORLD ACCORDING TO C
+Operating systems are normally large C (or sometimes C++) programs 
+consisting of many pieces written by many programmers. The environment used for
+developing operating systems is very different from what individuals (such as 
+students) are used to when writing small Java programs. This section is an attempt to
+give a very brief introduction to the world of writing an operating system for 
+smalltime Java or Python programmers.
+1.8.1 The C Language
+This is not a guide to C, but a short summary of some of the key differences
+between C and languages like Python and especially Java. Java is based on C, so
+there are many similarities between the two. Python is somewhat different, but still
+fairly similar. For convenience, we focus on Java. Java, Python, and C are all
+imperative languages with data types, variables, and control statements, for 
+example. The primitive data types in C are integers (including short and long ones),

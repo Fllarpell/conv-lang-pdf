@@ -1,0 +1,44 @@
+706
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+it endlessly. Scientific meetings were organized around UNIX, with distinguished
+speakers getting up in front of the room to tell about some obscure kernel bug they
+had found and fixed. An Australian professor, John Lions, wrote a commentary on
+the UNIX source code of the type normally reserved for the works of Chaucer or
+Shakespeare (reprinted as Lions, 1996). The book described Version 6, so named
+because it was described in the sixth edition of the UNIX Programmer’s Manual.
+The source code was 8200 lines of C and 900 lines of assembly code. As a result
+of all this activity, new ideas and improvements to the system spread rapidly.
+Within a few years, Version 6 was replaced by Version 7, the first portable 
+version of UNIX (it ran on the PDP-11 and the Interdata 8/32), by now 18,800 lines of
+C and 2100 lines of assembler. A whole generation of students was brought up on
+Version 7, which contributed to its spread after they graduated and went to work in
+industry. By the mid-1980s, UNIX was in widespread use on minicomputers and
+engineering workstations from a variety of vendors. A number of companies even
+licensed the source code to make their own version of UNIX. One of these was a
+small startup called Microsoft, which sold Version 7 under the name XENIX for a
+number of years until its interest turned elsewhere.
+10.1.3 Portable UNIX
+Now that UNIX was in C, moving it to a new machine, known as porting it,
+was much easier than in the early days when it was written in assembly language.
+A port requires first writing a C compiler for the new machine. Then it requires
+writing device drivers for the new machine’s I/O devices, such as monitors, 
+printers, and disks (which includes SSDs and other block storage devices). Although
+the driver code is in C, it cannot be moved to another machine, compiled, and run
+there because no two disks work the same way. Finally, a small amount of
+machine-dependent code, such as the interrupt handlers and memory-management
+routines, must be rewritten, usually in assembly language.
+The first port beyond the PDP-11 was to the Interdata 8/32 minicomputer. This
+exercise revealed a large number of assumptions that UNIX implicitly made about
+the machine it was running on, such as the unspoken supposition that integers held
+16 bits, pointers also held 16 bits (implying a maximum program size of 64 KB),
+and that the machine had exactly three registers available for holding important
+variables. None of these were true on the Interdata, so considerable work was
+needed to clean UNIX up.
+Another problem was that although Ritchie’s compiler was fast and produced
+good object code, it produced only PDP-11 object code. Rather than write a new
+compiler specifically for the Interdata, Steve Johnson of Bell Labs designed and
+implemented the portable C compiler, which could be retargeted to produce code
+for any reasonable machine with only a moderate amount of effort. For years,
+nearly all C compilers for machines other than the PDP-11 were based on 
+Johnson’s compiler, which greatly aided the spread of UNIX to new computers.

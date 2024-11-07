@@ -1,0 +1,42 @@
+166
+PROCESSES AND THREADS
+CHAP. 2
+The technique of estimating the next value in a series by taking the weighted
+av erage of the current measured value and the previous estimate is sometimes 
+called aging. It is applicable to many situations where a prediction must be made
+based on previous values. Aging is especially easy to implement when a = 1/2. All
+that is needed is to add the new value to the current estimate and divide the sum by
+2 (by shifting it right 1 bit).
+Guaranteed Scheduling
+A completely different approach to scheduling is to make real promises to the
+users about performance and then live up to those promises. One promise that is
+realistic to make and easy to live up to is this: If n users are logged in while you are
+working, you will receive about 1/n of the CPU power. Similarly, on a single-user
+system with n processes running, all things being equal, each one should get 1/n of
+the CPU cycles. That seems fair enough.
+To make good on this promise, the system must keep track of how much CPU
+each process has had since its creation. It then computes the amount of CPU each
+one is entitled to, namely the time since creation divided by n. Since the amount of
+CPU time each process has actually had is also known, it is fairly straightforward
+to compute the ratio of actual CPU time consumed to CPU time entitled. A ratio of
+0.5 means that a process has only had half of what it should have had, and a ratio
+of 2.0 means that a process has had twice as much as it was entitled to. The 
+algorithm is then to run the process with the lowest ratio until its ratio has moved above
+that of its closest competitor. Then that one is chosen to run next.
+A variant of such a scheduling regime is used in Linux’ CFS (Completely
+Fair Scheduling) algorithm which keeps track of the ‘‘spent execution time’’ for
+processes in an efficient red-black tree. The left-most node in the tree corresponds
+to the process with the least spent execution time. The scheduler indexes the tree
+by execution time and selects the left-mode node to run. When the process stops
+running (either because it used up its time slot, or it was blocked or interrupted),
+the scheduler reinserts it in the tree based on its new spent execution time.
+Lottery Scheduling
+While making promises to the users and then living up to them is a fine idea, it
+is difficult to implement. However, another algorithm can be used to give similarly
+predictable results with a much simpler implementation. It is called lottery 
+scheduling (Waldspurger and Weihl, 1994).
+The basic idea is to give processes lottery tickets for various system resources,
+such as CPU time. Whenever a scheduling decision has to be made, a lottery ticket
+is chosen at random, and the process holding that ticket gets the resource. When
+applied to CPU scheduling, the system might hold a lottery 50 times a second, with
+each winner getting 20 msec of CPU time as a prize.

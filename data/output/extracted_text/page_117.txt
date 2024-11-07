@@ -1,0 +1,41 @@
+88
+PROCESSES AND THREADS
+CHAP. 2
+vanilla, and so on. In this analogy, the recipe is the program, that is, an algorithm
+expressed in some suitable notation, the computer scientist is the processor (CPU),
+and the cake ingredients are the input data. The process is the activity consisting of
+our baker reading the recipe, fetching the ingredients, and baking the cake.
+Now imagine that the computer scientist’s son comes running in screaming his
+head off, saying that he has been stung by a bee. The computer scientist records
+where he was in the recipe (the state of the current process is saved), gets out a
+first-aid book, and begins following the directions in it. Here we see the processor
+being switched from one process (baking) to a higher-priority process 
+(administering medical care), each having a different program (recipe versus first aid book).
+When the bee sting has been taken care of, the computer scientist goes back to his
+cake, continuing at the point where he left off.
+The key idea here is that a process is an activity of some kind. It has a 
+program, input, output, and a state. A single processor may be shared among several
+processes, with some scheduling algorithm being accustomed to determine when to
+stop work on one process and service a different one. In contrast, a program is
+something that may be stored on disk, not doing anything.
+It is worth noting that if a program is running twice, it counts as two processes.
+For example, it is often possible to start a word processor twice or print two files at
+the same time if two printers are available. The fact that two processes happen to
+be running the same program does not matter; they are distinct processes. The
+operating system may be able to share the code between them so only one copy is
+in memory, but that is a technical detail that does not change the conceptual 
+situation of two processes running.
+2.1.2 Process Creation
+Operating systems need some way to create processes. In very simple systems,
+or in systems designed for running only a single application (e.g., the controller in
+a microwave oven), it may be possible to have all the processes that will ever be
+needed be present when the system comes up. In general-purpose systems, 
+however, some way is needed to create and terminate processes as needed during 
+operation. We will now look at some of the issues.
+Four principal events cause processes to be created:
+1. System initialization
+2. Execution of a process-creation system call by a running process
+3. A user request to create a new process
+4. Initiation of a batch job
+When an operating system is booted, typically numerous processes are created.
+Some of these processes are foreground processes, that is, processes that interact

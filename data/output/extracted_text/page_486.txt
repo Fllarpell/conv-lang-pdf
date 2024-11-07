@@ -1,0 +1,96 @@
+SEC. 6.5
+DEADLOCK AVOIDANCE
+457
+motion is always to the north or east, never to the south or west (because processes
+cannot run backward in time, of course).
+When A crosses the I1 line on the path from r to s, it requests and is granted
+the printer. When B reaches point t, it requests the plotter.
+The regions that are shaded are especially interesting. The region with lines
+slanting from southwest to northeast represents both processes having the printer.
+The mutual exclusion rule makes it impossible to enter this region. Similarly, the
+region shaded the other way represents both processes having the plotter and is
+equally impossible.
+If the system ever enters the box bounded by I1 and I2 on the sides and I5 and
+I6 top and bottom, it will eventually deadlock when it gets to the intersection of I2
+and I6. At this point, A is requesting the plotter and B is requesting the printer, and
+both are already assigned. The entire box is unsafe and must not be entered. At
+point t the only safe thing to do is run process A until it gets to I4. Beyond that,
+any trajectory to u will do.
+The important thing to see here is that at point t, B is requesting a resource.
+The system must decide whether to grant it or not. If the grant is made, the system
+will enter an unsafe region and eventually deadlock. To avoid the deadlock, B
+should be suspended until A has requested and released the plotter.
+6.5.2 Safe and Unsafe States
+The deadlock avoidance algorithms that we will study use the information of
+Fig. 6-9. At any instant of time, there is a current state consisting of E, A, C, and
+R. A state is said to be safe if there is some scheduling order in which every 
+process can run to completion even if all of them suddenly request their maximum
+number of resources immediately. It is easiest to illustrate this concept by an
+example using one resource. In Fig. 6-12(a) we have a state in which A has three
+instances of the resource but may need as many as nine eventually. B currently has
+two and may need four altogether, later. Similarly, C also has two but may need an
+additional fiv e. A total of 10 instances of the resource exist, so with seven
+resources already allocated, three there are still free.
+A
+B
+C
+3
+2
+2
+9
+4
+7
+Free: 3"
+(a)
+A
+B
+C
+3
+4
+2
+9
+4
+7
+Free: 1"
+(b)
+A
+B
+C
+3
+0
+–"
+–"
+2
+9
+7
+Free: 5"
+(c)
+A
+B
+C
+3
+0
+7
+9
+7
+Free: 0"
+(d)
+–"
+A
+B
+C
+3
+0
+0
+9
+–"
+Free: 7"
+(e)
+Has Max
+Has Max
+Has Max
+Has Max
+Has Max
+Figure 6-12. Demonstration that the state in (a) is safe.
+The state of Fig. 6-12(a) is safe because there exists a sequence of allocations
+that allows all processes to complete execution. Namely, the scheduler can simply

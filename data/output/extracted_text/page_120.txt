@@ -1,0 +1,42 @@
+SEC. 2.1
+PROCESSES
+91
+Most processes terminate because they hav e done their work. When a compiler
+has compiled the program given to it, the compiler executes a system call to tell the
+operating system that it is finished. This call is exit in UNIX and ExitProcess in
+Windows. Screen-oriented programs also support voluntary termination. Word
+processors, Internet browsers, and similar programs always have an icon or menu
+item that the user can click to tell the process to remove any temporary files it has
+open and then terminate.
+The second reason for termination is that the process discovers a fatal error.
+For example, if a user types the command
+cc foo.c
+to compile the program foo.c and no such file exists, the compiler simply 
+announces this fact and exits. Screen-oriented interactive processes generally do not exit
+when given bad parameters. Instead they pop up a dialog box and ask the user to
+try again.
+The third reason for termination is an error caused by the process, often due to
+a program bug. Examples include executing an illegal instruction, referencing 
+nonexistent memory, or dividing by zero. In some systems (e.g., UNIX), a process can
+tell the operating system that it wishes to handle certain errors itself, in which case
+the process is signaled (interrupted) instead of terminated when one of the errors
+occurs.
+The fourth reason a process might terminate is that the process executes a 
+system call telling the operating system to kill some other process. In UNIX this call
+is kill. The corresponding Win32 function is TerminateProcess. In both cases, the
+killer must have the necessary authorization to do in the killee. In some systems,
+when a process terminates, either voluntarily or otherwise, all processes it created
+are immediately killed as well. Neither UNIX nor Windows works this way, 
+howev er.
+2.1.4 Process Hierarchies
+In some systems, when a process creates another process, the parent process
+and child process continue to be associated in certain ways. The child process can
+itself create more processes, forming a process hierarchy. Note that unlike plants
+and animals that use sexual reproduction, a process has only one parent (but zero,
+one, two, or more children). So a process is more like a hydra than like, say, a cow.
+In UNIX, a process and all of its children and further descendants together
+form a process group. When a user sends a signal from the keyboard (e.g., by
+pressing CTRL-C), the signal is delivered to all members of the process group 
+currently associated with the keyboard (usually all active processes that were created
+in the current window). Individually, each process can catch the signal, ignore the
+signal, or take the default action, which is to be killed by the signal.

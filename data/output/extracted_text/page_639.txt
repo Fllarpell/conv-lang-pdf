@@ -1,0 +1,44 @@
+610
+SECURITY 
+CHAP. 9
+Simplicity also helps to minimize the attack surface (all the points
+where an attacker may interact with the system to try to compromise
+it). A system that offers a large set of functions to untrusted users,
+each implemented by many lines of code, has a large attack surface. If
+a function is not really needed, leave it out. Back in the old days,
+when memory was expensive and scarce, programmers followed this
+principle out of necessity. The PDP-1 minicomputer, on which one of
+the authors cut his (programming) teeth, had 4K of 18-bit words or
+about 9 KB of total internal memory. It ran a timesharing system that
+could support three simultaneous users. Programs were necessarily
+very simple. Nowadays you cannot even boot the computer with less
+than a gigabyte of RAM and all this bloat makes programs buggy and
+unreliable.
+2. Principle of fail-safe defaults. Say you need to organize the access
+to a resource. It is better to make explicit rules about how users can
+access the resource than trying to identify the condition under which
+access to the resource should be denied. Phrased differently: a default
+of lack of permission is safer. This is how locked doors work: If you
+don’t hav e the key, you cannot get in.
+3. Principle of complete mediation. Every access to every resource
+should be checked for authority. It implies that we must have a way to
+determine the source of a request (the requester).
+4. POLA (Principle of least authority). This principle states that any
+(sub) system should have just enough authority (privilege) to perform
+its task and no more. Thus, if attackers compromise such a system,
+they elevate their privilege only by the bare minimum.
+5. Principle of privilege separation. Closely related to the previous
+point: it is better to split up the system in multiple POLA-compliant
+components than a single component with all the privileges 
+combined. Again, if one component is compromised, the attackers will be
+limited in what they can do.
+6. Principle of least common mechanism. This principle is a little
+trickier and states that we should minimize the amount of mechanism
+common to more than one user and depended on by all users. Think
+of it this way: if we have a choice between implementing a file 
+system routine in the operating system where its global variables are
+shared by all users, or in a user space library which, to all intents and
+purposes, is private to the user process, we should opt for the latter.
+The shared data in the operating system may otherwise serve as an
+information path between different users. We shall see examples of
+such sidechannels later.

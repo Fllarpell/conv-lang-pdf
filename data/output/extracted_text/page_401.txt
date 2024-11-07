@@ -1,0 +1,42 @@
+372
+INPUT/OUTPUT 
+CHAP. 5
+disks now support a system called logical block addressing, in which disk sectors
+are just numbered consecutively starting at 0, without regard to the disk geometry.
+Disk Formatting
+A hard disk consists of a stack of aluminum, alloy, or glass platters typically
+3.5 inch in diameter (or 2.5 inch on notebook computers). On each platter is
+deposited a thin magnetizable metal oxide. After manufacturing, there is no 
+information whatsoever on the disk.
+Before the disk can be used, each platter must receive a low-level format done
+by software. The format consists of a series of concentric tracks, each containing
+some number of sectors, with short gaps between the sectors. The format of a 
+sector is shown in Fig. 5-19.
+Preamble
+Data
+ECC
+Figure 5-19. A disk sector.
+The preamble starts with a certain bit pattern that allows the hardware to 
+recognize the start of the sector. It also contains the cylinder and sector numbers and
+some other information. The size of the data portion is determined by the 
+lowlevel formatting program. Most disks use 512-byte sectors. The ECC field 
+contains redundant information that can be used to recover from read errors. The size
+and content of this field varies from manufacturer to manufacturer, depending on
+how much disk space the designer is willing to give up for higher reliability and
+how complex an ECC code the controller can handle. A 16-byte ECC field is not
+unusual. Furthermore, all hard disks have some number of spare sectors allocated
+to be used to replace sectors with a manufacturing defect.
+The position of sector 0 on each track is offset from the previous track when
+the low-level format is laid down. This offset, called cylinder skew, is done to
+improve performance. The idea is to allow the disk to read multiple tracks in one
+continuous operation without losing data. The nature of the problem can be seen
+by looking at Fig. 5-18(a). Suppose that a request needs 18 sectors starting at 
+sector 0 on the innermost track. Reading the first 16 sectors takes one disk rotation,
+but a seek is needed to move outward one track to get the 17th sector. By the time
+the head has moved one track, sector 0 has rotated past the head so an entire 
+rotation is needed until it comes by again. That problem is eliminated by offsetting the
+sectors as shown in Fig. 5-20.
+The amount of cylinder skew depends on the drive geometry. For example, a
+10,000-RPM (Revolutions Per Minute) drive rotates in 6 msec. If a track contains
+300 sectors, a new sector passes under the head every 20 µsec. If the track-to-track
+seek time is 800 µsec, 40 sectors will pass by during the seek, so the cylinder skew

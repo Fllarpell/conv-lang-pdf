@@ -1,0 +1,40 @@
+582
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+not one network, but a federation of thousands of separate networks. However, for
+our purposes, it is sufficient to think of it as one WAN.
+Ethernet
+Classic Ethernet, which is described in IEEE Standard 802.3, consists of a
+coaxial cable to which a number of computers are attached. The cable is called the
+Ethernet, in reference to the luminiferous ether through which electromagnetic
+radiation was once thought to propagate. (When the nineteenth-century British
+physicist James Clerk Maxwell discovered that electromagnetic radiation could be
+described by a wav e equation, scientists assumed that space must be filled with
+some ethereal medium in which the radiation was propagating. Only after the
+famous Michelson-Morley experiment in 1887, which failed to detect the ether, did
+physicists realize that radiation could propagate in a vacuum.)
+In the very first version of Ethernet, a computer was attached to the cable by
+literally drilling a hole halfway through the cable and screwing in a wire leading to
+the computer. This was called a vampire tap, and is illustrated symbolically in
+Fig. 8-28(a). The taps were hard to get right, so before long, proper connectors
+were used. Nevertheless, electrically, all the computers were connected as if the
+cables on their network interface cards were soldered together.
+Computer
+Ethernet
+Switch
+Computer
+Ethernet
+(b)
+(a)
+Vampire tap
+Figure 8-28. (a) Classic Ethernet. (b) Switched Ethernet.
+With many computers hooked up to the same cable, a protocol is needed to
+prevent chaos. To send a packet on an Ethernet, a computer first listens to the
+cable to see if any other computer is currently transmitting. If not, it just begins
+transmitting a packet, which consists of a short header followed by a payload of 0
+to 1500 bytes. If the cable is in use, the computer simply waits until the current
+transmission finishes, then it begins sending.
+If two computers start transmitting simultaneously, a collision results, which
+both of them detect. Both respond by terminating their transmissions, waiting a
+random amount of time between 0 and T µsec and then starting again. If another
+collision occurs, all colliding computers randomize the wait into the interval 0 to

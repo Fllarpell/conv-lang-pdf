@@ -1,0 +1,44 @@
+SEC. 8.2
+MULTICOMPUTERS
+567
+Sender blocked
+Sender
+blocked
+Trap to kernel,
+sender blocked
+Message being sent
+Message being sent
+Sender running
+Sender running
+Return
+Sender running
+Sender running
+Trap
+Message
+copied to a
+kernel buffer
+Return from kernel,
+sender released
+(a)
+(b)
+Figure 8-19. (a) A blocking send call. (b) A nonblocking send call.
+a blocking call: as soon as it gets control back, it is free to reuse the buffer. Of
+course, the message will not yet have been sent, but the sender is not hindered by
+this fact. The disadvantage of this method is that every outgoing message has to be
+copied from user space to kernel space. With many network interfaces, the 
+message will have to be copied to a hardware transmission buffer later anyway, so the
+first copy is essentially wasted. The extra copy can reduce the performance of the
+system considerably.
+The second solution is to interrupt (signal) the sender when the message has
+been fully sent to inform it that the buffer is once again available. No copy is
+required here, which saves time, but user-level interrupts make programming
+tricky, difficult, and subject to race conditions, which makes them irreproducible
+and nearly impossible to debug.
+The third solution is to make the buffer copy on write, that is, to mark it as read
+only until the message has been sent. If the buffer is reused before the message has
+been sent, a copy is made. The problem with this solution is that unless the buffer
+is isolated on its own page, writes to nearby variables will also force a copy. Also,
+extra administration is needed because the act of sending a message now implicitly
+affects the read/write status of the page. Finally, sooner or later the page is likely to
+be written again, triggering a copy that may no longer be necessary.
+Thus, the choices on the sending side are

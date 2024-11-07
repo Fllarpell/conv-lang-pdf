@@ -1,0 +1,75 @@
+1032
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Mitigation 
+VBS-only
+Description
+InitAll 
+No
+Zero-initializes stack var iables to avoid vulnerabilities
+/GS 
+No
+Add canary to stack frames to protect return addresses
+DEP 
+No
+Data Execution Prevention. Stacks and heaps are not executable
+ASLR/KASLR 
+No
+Randomize user/ker nel address space to make ROP attacks difficult
+CFG 
+No
+Control Flow Guard. Protect integrity of forward-edge control flow
+KCFG 
+Yes 
+Ker nel-mode CFG. Secure Ker nel maintains CFG bitmap
+XFG 
+No
+Extended Flow Guard. Much finer grained protection than CFG
+CET 
+No
+Strong defense against ROP attacks using shadow stacks
+KCET 
+Yes 
+Ker nel-mode CET. Secure Ker nel maintains shadow stacks.
+PA C
+No 
+Protects stack retur n addresses using signatures
+CIG 
+No
+Enforces that code binaries are properly signed
+ACG
+No
+User-mode enforcement for WˆX and that data cannot become code
+HVCI 
+Yes 
+Ker nel-mode enforcement for WˆX and that data cannot become code
+PatchGuard 
+No
+Detect attempts to modify ker nel code and data
+HyperGuard 
+Yes 
+Stronger protection than PatchGuard
+Windows Defender 
+No
+Built-in antimalware software
+Figure 11-58. Some of the principal security protections in Windows.
+Limiting Window of Time to Exploit
+The most direct way to limit exploitation of a security bug is to fix or mitigate
+the issue and to deploy broadly as quickly as possible. Windows Update is an
+automated service providing fixes to security vulnerabilities by patching the
+affected programs and libraries within Windows. Many of the vulnerabilities fixed
+were reported by security researchers, and their contributions are acknowledged in
+the notes attached to each fix. Ironically the security updates themselves pose a
+significant risk. Many vulnerabilities used by attackers are exploited only after a
+fix has been published by Microsoft. This is because reverse engineering the fixes
+themselves is the primary way most hackers discover vulnerabilities in systems.
+Systems that did not have all known updates immediately applied are thus 
+susceptible to attack. The security research community is usually insistent that companies
+patch all vulnerabilities found within a reasonable time. The current monthly patch
+frequency used by Microsoft is a compromise between keeping the community
+happy and how often users must deal with patching to keep their systems safe.
+A significant cause of delay in fixing security issues is the need for a reboot
+after the updated binaries are deployed to customer machines. Reboots are very 
+inconvenient when many applications are open and the user is in the middle of work.
+The situation is similar on server machines where any downtime may result in
+Websites, file servers, database becoming inaccessible. In cloud datacenters, host

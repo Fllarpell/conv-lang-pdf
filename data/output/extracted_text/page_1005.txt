@@ -1,0 +1,45 @@
+976
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+no actual I/Os need to be issued. In parallel, the working set in-swap for the UWP
+process is initiated, which uses multiple threads to decompress pages from the
+per-process store. The precise ordering of pages for these two operations ensures
+that they make progress in parallel with no unnecessary delays to reconstruct the
+UWP process working set quickly.
+11.5.5 Memory Partitions
+A memory partition is an instantiation of the memory manager with its own
+isolated slice of RAM to manage. Being kernel objects, they support naming and
+security. There are NT APIs for creating and managing them as well as allocating
+memory from them using partition handles. Memory can be hot-added into a 
+partition or moved between partitions. At boot time, the system creates the initial
+memory partition called the system partition which owns all memory on the
+machine and houses the default instance of memory management. The system 
+partition is actually named and can be seen in the object manager namespace at \ 
+KernelObjects \ MemoryPartition0.
+Memory partitions are mainly targeted at two scenarios: memory isolation and
+workload isolation. Memory isolation is when memory needs to be set aside for
+later allocation. For such scenarios, a memory partition can be created and 
+appropriate memory can be added to it (e.g., a mix of 4 KB/2 MB/1 GB pages from
+select NUMA nodes). Later, pages can be allocated from the partition using regular
+physical memory allocation APIs which have variants that accept memory partition
+handles or object pointers. Azure servers which host customer VMs utilize this
+approach to set aside memory for VMs and ensure that other activity on the server
+is not going to interfere with that memory. It’s important to understand that this is
+very different from simply pre-allocating these pages because the full set of 
+memory management interfaces to allocate, free, and efficient zeroing of memory is
+available within the partition.
+Workload isolation is necessary in situations where multiple separate 
+workloads need to run concurrently without interfering with one another. In such 
+scenarios, isolating the workloads’ CPU usage (e.g., by affinitizing workloads to 
+different processor cores) is not sufficient. Memory is another resource that needs 
+isolation. Otherwise, one workload can easily interfere with others by repurposing all
+pages on the standby list (causing others to take more hard faults) or by dirtying
+lots of pagefile- and file-backed memory (depleting available memory and causing
+new memory allocations to block until dirty pages are written out) or by 
+fragmenting physical memory and slowing down large or huge page allocations.
+Memory partitions can provide the necessary workload isolation. By 
+associating a memory partition with a job object, it is possible to confine a process tree to a
+memory partition and use the job object interfaces to set the desired CPU and disk
+I/O restrictions for complete resource isolation.
+Being an instance of memory management, a memory partition includes the
+following major components as shown in Fig. 11-39:

@@ -1,0 +1,43 @@
+SEC. 13.2
+ALPHABETICAL BIBLIOGRAPHY
+1107
+KAFFES, K., .BIRLEA, D., LIN, Y., LO, D., and KOZYRAKIS, C.: ‘‘Leveraging Application
+Classes to Save Power in Highly-Utilized Data Centers,’’ Proc. ACM Symp. on Cloud
+Computing, ACM, pp. 134–149, 2020.
+KAMINSKY, D.: ‘‘Explorations in Namespace: White-Hat Hacking across the Domain
+Name System,’’ Commun. ACM, Vol. 49, pp. 62–69, June 2006.
+KAMINSKY, M., SAVVIDES, G., MAZIERES, D., and KAASHOEK, M.F.: ‘‘Decentralized
+User Authentication in a Global File System,’’ Proc. 19th Symp. on Operating Syst.
+Prin., ACM, pp. 60–73, 2003.
+KAMP, P.-H. and WATSON, R.N.M.: ‘‘Jails: Confining the Omnipotent Root,’’ Proc., SANE
+2000 Conf., NLUUG, 2000.
+KANETKAR, Y.P.: Writing Windows Device Drivers Course Notes, New Delhi: BPB 
+Publications, 2008.
+KASIKCI, B., CUI, W., GE, X., and NIU, B.: ‘‘Lazy Diagnosis of In-Production Concurrency
+Bugs,’’ Proc. 26th Symp. on Operating Syst. Prin., ACM, pp. 582–598, 2017.
+KASIKCI, B., ZAMFIR, C. and CANDEA, G.: ‘‘Data Races vs. Data Race Bugs: Telling the
+Difference with Portend,’’ Proc. 17th Int’l Conf. on Arc h. Support for Prog. Lang. and
+Operating Syst., ACM, pp. 185–198, 2012.
+KAUFMAN, C., PERLMAN, R., SPECINER, M., and PERLNER, R.: Network Security: 
+Private Communication in a Public World, Hoboken, NJ: Pearson, 2022.
+KELEHER, P., COX, A., DWARKADAS, S., and ZWAENEPOEL, W.: ‘‘TreadMarks: 
+Distributed Shared Memory on Standard Workstations and Operating Systems,’’ Proc.
+USENIX Winter Conf., USENIX, pp. 115–132, 1994.
+KESAVAN, R., CURTIS-MAURY, M., DEVADAS, V., and MISHRA, K.: ‘‘Storage Gardening:
+Using a Virtualization Layer for Efficient Defragmentation in the WAFL File System,’’
+Proc. 19th USENIX Conf. on File and Storage Tech., USENIX, pp. 65–78, 2019.
+KIM, J. and LEE, K.: ‘‘Practical Cloud Workloads for Serverless FaaS,’’ Proc. ACM Symp.
+on Cloud Computing, ACM, pp. 477, 2019.
+KIM, J.S., PATEL, M., YAGLIKCI, A.G., HASSAN, H., AZIZI, R., OROSA, L., and MUTLU,
+O.: ‘‘Revisiting RowHammer: An Experimental Analysis of Modern DRAM Devices
+and Mitigation Techniques,’’ Proc. 47th Int’l Symp. on Computer Architecture, ACM,
+pp. 638–651, 2020.
+KIM, Y., DALY, R., KIM, J.S., FALLIN, C., LEE, J., LEE, D., WILKERSON, C., LAI, K., and
+MUTLU, O.: ‘‘Flipping Bits in Memory without Accessing Them: An Experimental
+Study of DRAM Disturbance Errors,’’ Proc. 41st Int’l. Symp. Computer Arch., ACM,
+pp. 361–372, 2014.
+KIRSCH, C.M., SANVIDO, M.A.A., and HENZINGER, T.A.: ‘‘ A Programmable Microkernel
+for Real-Time Systems,’’ Proc. First Int’l Conf. on Virtual Execution Environments,
+ACM, pp. 35–45, 2005.
+KLEIMAN, S.R.: ‘‘Vnodes: An Architecture for Multiple File System Types in Sun UNIX,’’
+Proc. USENIX Summer Conf., USENIX, pp. 238–247, 1986.

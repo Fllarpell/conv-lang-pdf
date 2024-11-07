@@ -1,0 +1,45 @@
+SEC. 9.6
+EXPLOITING HARDWARE
+669
+disclosed in 2018 and everyone, from hardware vendors to operating system 
+developers, got their knickers in a twist. The vulnerabilities were given the apocalyptic
+names of Meltdown and Spectre and prominently featured in the news. Since then,
+security researchers have found tens of variants of these vulnerabilities. The 
+implications for operating systems are severe. To discuss all of them, we would need
+another book, but we will only look at the main underlying issues. To do so, we
+must first explain about covert and side channels. If you are interested in more
+detail about Meltdown and Spectre, see Lipp et al. (2020) and Amit et al. (2021).
+9.6.1 Covert Channels
+In Sec. 9.3, we discussed formal models of secure systems. All these ideas
+about formal models, cryptography, and provably secure systems sound great, but
+do they actually work? In a word: No. Even in a system which has a proper 
+security model underlying it and which has been proven to be secure and is correctly
+implemented, security leaks can still occur. In this section, we discuss how 
+information can still leak out even when it has been rigorously proven that such leakage
+is mathematically impossible. These ideas are due to Lampson (1973).
+Lampson’s model was originally formulated in terms of a single timesharing
+system, but the same ideas can be adapted to LANs and other multiuser 
+environments, including applications running in the cloud. In the purest form, it involves
+three processes on some protected machine. The first process, the client, wants
+some work performed by the second one, the server. The client and the server do
+not entirely trust each other. For example, the server’s job is to help clients with
+filling out their tax forms. The clients are worried that the server will secretly
+record their financial data, for example, maintaining a secret list of who earns how
+much, and then selling the list. The server is worried that the clients will try to steal
+the valuable tax program.
+The third process is the collaborator, which is conspiring with the server to
+indeed steal the client’s confidential data. The collaborator and server are typically
+owned by the same person. These three processes are shown in Fig. 9-23. The
+object of this exercise is to design a system in which it is impossible for the server
+process to leak to the collaborator process the information that it has legitimately
+received from the client process. Lampson called this the confinement problem.
+From the system designer’s point of view, the goal is to encapsulate or confine
+the server in such a way that it cannot pass information to the collaborator. Using a
+protection-matrix scheme we can easily guarantee that the server cannot 
+communicate with the collaborator by writing a file to which the collaborator has read
+access. We can probably also ensure that the server cannot communicate with the
+collaborator using the system’s interprocess communication mechanism.
+Unfortunately, more subtle communication channels may also be available. For
+example, the server can try to communicate a binary bit stream as follows. To send
+a 1 bit, it computes as hard as it can for a fixed interval of time. To send a 0 bit, it
+goes to sleep for the same length of time.

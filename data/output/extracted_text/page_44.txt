@@ -1,0 +1,43 @@
+SEC. 1.2
+HISTORY OF OPERATING SYSTEMS
+15
+code was widely available, various organizations developed their own 
+(incompatible) versions, which led to chaos. Two major versions developed, System V, from
+AT&T, and BSD (Berkeley Software Distribution) from the University of 
+California at Berkeley. These had minor variants as well. To make it possible to write
+programs that could run on any UNIX system, IEEE developed a standard for
+UNIX, called POSIX, that most versions of UNIX now support. POSIX defines a
+minimal system-call interface that conformant UNIX systems must support. In
+fact, some other operating systems now also support the POSIX interface.
+As an aside, it is worth mentioning that in 1987, one of the authors 
+(Tanenbaum) released a small clone of UNIX, called MINIX, primarily for educational
+purposes. Functionally, MINIX is very similar to UNIX, including POSIX support.
+Since that time, the original version of MINIX has evolved into MINIX 3, which is
+highly modular and focused on very high reliability and available for free from the
+Website www.minix3.org. MINIX 3 has the ability to detect and replace faulty or
+ev en crashed modules (such as I/O device drivers) on the fly without a reboot and
+without disturbing running programs. A book describing its internal operation and
+listing the source code in an appendix is also available (Tanenbaum and Woodhull,
+2006).
+The desire for a free production (as opposed to educational) version of MINIX
+led a Finnish student, Linus Torvalds, to write Linux. This system was directly
+inspired by and developed on MINIX and originally supported various MINIX 
+features (e.g., the MINIX file system). It has since been extended in many ways by
+many people but still retains some underlying structure common to MINIX and to
+UNIX. Readers interested in a detailed history of Linux and the open source
+movement might want to read Glyn Moody’s (2001) book. Most of what will be
+said about UNIX in this book thus applies to System V, MINIX, Linux, and other
+versions and clones of UNIX as well.
+Interestingly, both Linux and MINIX have become widely used. Linux powers
+a huge share of the servers in data centers and forms the basis of Android which
+dominates the smartphone market. MINIX was adapted by Intel for a separate and
+somewhat secret ‘‘management’’ processor embedded in virtually all its chipsets
+since 2008. In other words, if you have an Intel CPU, you also run MINIX deep in
+your processor, even if your main operating system is, say, Windows or Linux.
+1.2.4 The Fourth Generation (1980–Present): Personal Computers
+With the development of LSI (Large Scale Integration) circuits—chips 
+containing thousands of transistors on a square centimeter of silicon—the age of the
+personal computer dawned. In terms of architecture, personal computers (initially
+called microcomputers) were not all that different from minicomputers of the
+PDP-11 class, but in terms of price they certainly were different. Where the 
+minicomputer made it possible for a department in a company or university to have its

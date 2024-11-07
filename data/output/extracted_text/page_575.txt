@@ -1,0 +1,47 @@
+546
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+we discussed earlier, what this instruction does is read out a memory word and
+store it in a register. Simultaneously, it writes a 1 (or some other nonzero value)
+into the memory word. Of course, it takes two bus cycles to perform the memory
+read and memory write. On a uniprocessor, as long as the instruction cannot be
+broken off halfway, TSL always works as expected.
+Now think about what could happen on a multiprocessor. In Fig. 8-10, we see
+the worst-case timing, in which memory word 1000, being used as a lock, is 
+initially 0. In step 1, CPU 1 reads out the word and gets a 0. In step 2, before CPU 1
+has a chance to rewrite the word to 1, CPU 2 gets in and also reads the word out as
+a 0. In step 3, CPU 1 writes a 1 into the word. In step 4, CPU 2 also writes a 1
+into the word. Both CPUs got a 0 back from the TSL instruction, so both of them
+now hav e access to the critical region and the mutual exclusion fails.
+CPU 1
+Memory
+CPU 2
+Bus
+Word!
+1000 is!
+initially 0
+1. CPU 1 reads a 0
+3. CPU 1 writes a 1
+2. CPU 2 reads a 0
+4. CPU 2 writes a 1
+Figure 8-10. The TSL instruction can fail if the bus cannot be locked. These four
+steps show a sequence of events where the failure is demonstrated.
+To prevent this problem, the TSL instruction must first lock the bus, preventing
+other CPUs from accessing it, then do both memory accesses, then unlock the bus.
+Typically, locking the bus is done by requesting the bus using the usual bus request
+protocol, then asserting (i.e., setting to a logical 1 value) some special bus line until
+both cycles have been completed. As long as this special line is being asserted, no
+other CPU will be granted bus access. This instruction can only be implemented on
+a bus that has the necessary lines and (hardware) protocol for using them. Modern
+buses all have these facilities, but on earlier ones that did not, it was not possible to
+implement TSL correctly. This is why Peterson’s protocol was invented: to 
+synchronize entirely in software (Peterson, 1981).
+If TSL is correctly implemented and used, it guarantees that mutual exclusion
+can be made to work. However, this mutual exclusion method uses a spin lock
+because the requesting CPU just sits in a tight loop testing the lock as fast as it can.
+Not only does it completely waste the time of the requesting CPU (or CPUs), but it
+may also put a massive load on the bus or memory, seriously slowing down all
+other CPUs trying to do their normal work.
+At first glance, it might appear that the presence of caching should eliminate
+the problem of bus contention, but it does not. In theory, once the requesting CPU
+has read the lock word, it should get a copy in its cache. As long as no other CPU

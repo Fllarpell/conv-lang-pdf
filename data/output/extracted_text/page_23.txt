@@ -1,0 +1,29 @@
+xxii
+CONTENTS
+12.4.4 Caching 1075
+12.4.5 Hints 1076
+12.4.6 Exploiting Locality 1077
+12.4.7 Optimize the Common Case 1077
+12.5 PROJECT MANAGEMENT 1078
+12.5.1 The Mythical Man Month 1078
+12.5.2 Team Structure 1079
+12.5.3 The Role of Experience 1081
+12.5.4 No Silver Bullet 1082
+13 READING LIST AND BIBLIOGRAPHY
+1087
+13.1 SUGGESTIONS FOR FURTHER READING 1087
+13.1.1 Introduction 1088
+13.1.2 Processes and Threads 1088
+13.1.3 Memory Management 1089
+13.1.4 File Systems 1090
+13.1.5 Input/Output 1090
+13.1.6 Deadlocks 1091
+13.1.7 Virtualization and the Cloud 1092
+13.1.8 Multiple Processor Systems 1093
+13.1.9 Security 1093
+13.1.10 Case Study 1: UNIX, Linux, and Android 1094
+13.1.11 Case Study 2: Windows 1095
+13.1.12 Operating System Design 1096
+13.2 ALPHABETICAL BIBLIOGRAPHY 1097
+INDEX
+1121

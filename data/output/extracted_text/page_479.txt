@@ -1,0 +1,51 @@
+450
+DEADLOCKS 
+CHAP. 6
+Drawing a resource graph is straightforward even though our system is now
+considerably more complex than the simple ones we discussed so far. We show the
+corresponding resource graph of Fig. 6-8(a). This graph contains one cycle, which
+can be seen by visual inspection. The cycle is shown in Fig. 6-8(b). From this
+cycle, we can see that processes D, E, and G are all deadlocked. Processes A, C,
+and F are not deadlocked because S can be allocated to any one of them, which
+then finishes and returns it. Then the other two can take it in turn and also 
+complete. (Note that to make this example more interesting we have allowed 
+processes, namely D, to ask for two resources at once.)
+R
+S
+T
+T
+U
+V
+U
+V
+W
+C
+D
+E
+D
+E
+G
+G
+A
+F
+B
+(a)
+(b)
+Figure 6-8. (a) A resource graph. (b) A cycle extracted from (a).
+Although it is relatively simple to pick out the deadlocked processes by visual
+inspection from a simple graph, for use in actual systems we need a formal 
+algorithm for detecting deadlocks. Many algorithms for detecting cycles in directed
+graphs are known. Below we will give a simple one that inspects a graph and 
+terminates either when it has found a cycle or when it has shown that none exists. It
+uses one dynamic data structure, L, a list of nodes, as well as a list of arcs. During
+the algorithm, to prevent repeated inspections, arcs will be marked to indicate that
+they hav e already been inspected,
+The algorithm operates by carrying out the following steps as specified:
+1. For each node, N, in the graph, perform the following fiv e steps with
+N as the starting node.
+2. Initialize L to the empty list, and designate all the arcs as unmarked.
+3. Add the current node to the end of L and check to see if the node now
+appears in L two times. If it does, the graph contains a cycle (listed in
+L) and the algorithm terminates.
+4. From the given node, see if there are any unmarked outgoing arcs. If
+so, go to step 5; if not, go to step 6.

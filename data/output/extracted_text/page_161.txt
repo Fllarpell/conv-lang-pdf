@@ -1,0 +1,44 @@
+132
+PROCESSES AND THREADS
+CHAP. 2
+Fig. 2-5. In a system using semaphores, the natural way to hide interrupts is to
+have a semaphore, initially set to 0, associated with each I/O device. Just after
+starting an I/O device, the managing process does a down on the associated 
+semaphore, thus blocking immediately. When the interrupt comes in, the interrupt 
+handler then does an up on the associated semaphore, which makes the relevant process
+ready to run again. In this model, step 5 in Fig. 2-5 consists of doing an up on the
+device’s semaphore, so that in step 6 the scheduler will be able to run the device
+manager. Of course, if several processes are now ready, the scheduler may choose
+to run an even more important process next. We will look at some of the algorithms
+used for scheduling later on in this chapter.
+In the example of Fig. 2-28, we have actually used semaphores in two different
+ways. This difference is important enough to make explicit. The mutex semaphore
+is used for mutual exclusion. It is designed to guarantee that only one process at a
+time will be reading or writing the buffer and the associated variables. This mutual
+exclusion is required to prevent chaos. We will study mutual exclusion and how to
+achieve it in the next section.
+The other use of semaphores is for synchronization. The full and empty 
+semaphores are needed to guarantee that certain event sequences do or do not occur. In
+this case, they ensure that the producer stops running when the buffer is full, and
+that the consumer stops running when it is empty. This use is different from mutual
+exclusion.
+The Readers and Writers Problem
+The producers-consumers problem is useful for modeling two processes (or
+threads) that exchange blocks of data while sharing a buffer. Another famous 
+problem is the readers and writers problem (Courtois et al., 1971), which models access
+to a database. Imagine, for example, an airline reservation system, with many 
+competing processes wishing to read and write it. It is acceptable to have multiple 
+processes reading the database at the same time, but if one process is updating (writing)
+the database, no other processes may have access to the database, not even readers.
+The question is how do you program the readers and the writers? One solution is
+shown in Fig. 2-29.
+In this solution, the first reader to get access to the database does a down on the
+semaphore db. Subsequent readers merely increment a counter, rc. As readers
+leave, they decrement the counter, and the last to leave does an up on the 
+semaphore, allowing a blocked writer, if there is one, to get in.
+The solution presented here implicitly contains a subtle decision worth noting.
+Suppose that while a reader is using the database, another reader comes along.
+Since having two readers at the same time is not a problem, the second reader is
+admitted. Additional readers can also be admitted if they come along.
+Now suppose a writer shows up. The writer may not be admitted to the 
+database, since writers must have exclusive access, so the writer must be suspended.

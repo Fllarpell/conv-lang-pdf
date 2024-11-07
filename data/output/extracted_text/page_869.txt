@@ -1,0 +1,48 @@
+840
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Package manager in system_server process
+Camera app process
+PicturesProvider
+Authority: "pics"
+ComposeActivity
+Email app process
+Receive
+data
+Open
+content://pics/1
+Check
+Allow
+Email package UID
+Granted permissions
+READ_CONTACTS
+READ_PICTURES
+INTERNET
+Browser package UID
+Granted permissions
+INTERNET
+Figure 10-67. Requesting and using a permission.
+Package manager in system_server process
+Camera app process
+PicturesProvider
+Authority: "pics"
+Security
+exception
+Open
+content://pics/1
+Check
+Browser app process
+BrowserMainActivity
+Deny
+Email package UID
+Granted permissions
+READ_CONTACTS
+READ_PICTURES
+INTERNET
+Browser package UID
+Granted permissions
+INTERNET
+Figure 10-68. Accessing data without a permission.
+Permissions provide broad, unrestricted access to classes of operations and
+data. They work well when an application’s functionality is centered around those
+operations, such as our email application requiring the INTERNET permission to

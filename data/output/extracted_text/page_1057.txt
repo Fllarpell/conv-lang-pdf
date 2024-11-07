@@ -1,0 +1,46 @@
+1028
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+No-eXecute (NX) protection in page table entries to properly mark non-code 
+portions of the address space, such as thread stacks and heap data, as non-executable.
+As a result, the practice of exploiting stack or heap buffer overruns and copying
+code to the stack or heap for execution was no longer possible. In response, 
+attackers started resorting to ROP (Return-Oriented Programming) which involves
+overwriting the function return address or function pointers to point them at
+executable code fragments (typically OS DLLs) already loaded in the address
+space. Such code fragments ending with ’ retur n instruction, called gadgets, can be
+strung together by overwriting the stack with pointers to the desired fragments to
+run. It turns out there are enough usable gadgets in most address spaces to 
+construct any program; and tools exist to find them. Also, in a given release, OS DLLs
+were loaded at consistent addresses, so ROP attacks were easy to put together once
+the gadgets were identified.
+With Windows Vista, however, ROP attacks became much more difficult to
+mount because of ASLR (Address Space Layout Randomizations), a feature
+where the layout of code and data in the user-mode address space is randomized.
+Even though ASLR was not enabled for every single binary initially—allowing
+attackers to use non-ASLR’d binaries for ROP attacks—Windows 8 enabled ASLR
+for all binaries. Windows 10 also brought ASLR to kernel-mode. Addresses of all
+kernel-mode code, pools, and critical data structures like the PFN database and
+page tables are all randomized. It should be noted that ASLR is far more effective
+in a 64-bit address space since there are a lot more addresses to choose from vs.
+32-bit, making attacks like heap spraying to overwrite virtual function pointers
+impractical.
+With these mitigations in place, attackers must find and exploit an arbitrary
+read/write vulnerability discover locations of DLLs, heaps, or stacks. Then, they
+need to corrupt function pointers or return addresses to gain control via ROP. Even
+if an attacker has defeated ASLR and can read or write anything in the victim
+address space, Windows has additional mitigations to prevent the attacker from
+gaining arbitrary code execution. There are two aspects of these mitigations, 
+preventing control-flow hijacking and preventing arbitrary code generation.
+In order to hijack control flow, most exploits corrupt a function pointer 
+(typically a C++ virtual function table) to redirect it to a ROP gadget. CFG (Control
+Flow Guard) is a  mitigation that enforces coarse-grained control-flow integrity for
+indirect calls (such as virtual method calls) to prevent such attacks. It relies on
+metadata placed in code binaries which describe the set of code locations that can
+be called indirectly. During module load, this information is encoded by the kernel
+into a process-global bitmap, called the CFG bitmap, covering every binary in the
+address space. The CFG bitmap is protected to be read-only in user-mode. Each
+indirect call site performs a CFG check to verify that the target address is indeed
+marked as indirectly callable in the global bitmap. If not, the process is terminated.
+Since the vast majority of functions in a binary are not intended to be called
+indirectly, CFG significantly cuts down the options available to an attacker when

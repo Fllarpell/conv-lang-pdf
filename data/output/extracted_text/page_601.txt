@@ -1,0 +1,70 @@
+572
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+(a)
+Machine 1
+Machine 2
+Run-time!
+system
+Operating!
+system
+Shared memory
+Application
+Hardware
+Run-time!
+system
+Operating!
+system
+Application
+Hardware
+(b)
+Machine 1
+Machine 2
+Run-time!
+system
+Operating!
+system
+Shared memory
+Application
+Hardware
+Run-time!
+system
+Operating!
+system
+Application
+Hardware
+(c)
+Machine 1
+Machine 2
+Run-time!
+system
+Operating!
+system
+Shared memory
+Application
+Hardware
+Run-time!
+system
+Operating!
+system
+Application
+Hardware
+Figure 8-21. Various layers where shared memory can be implemented. (a) The
+hardware. (b) The operating system. (c) User-level software.
+in Fig. 8-22(a) for an address space with 16 pages and 4 nodes, each of them 
+capable of holding 6 pages.
+In this example, if CPU 0 references instructions or data in pages 0, 2, 5, or 9,
+the references are done locally. References to other pages cause traps. For 
+example, a reference to an address in page 10 will cause a trap to the DSM software,
+which then moves page 10 from node 1 to node 0, as shown in Fig. 8-22(b).
+Replication
+One improvement to the basic system that can improve performance 
+considerably is to replicate pages that are read only, for example, program text, read-only
+constants, or other read-only data structures. For example, if page 10 in Fig. 8-22 is
+a section of program text, its use by CPU 0 can result in a copy being sent to CPU
+0 without the original in CPU 1’s memory being invalidated or disturbed, as shown
+in Fig. 8-22(c). In this way, CPUs 0 and 1 can both reference page 10 as often as
+needed without causing traps to fetch missing memory.
+Another possibility is to replicate not only read-only pages, but also all pages.
+As long as reads are being done, there is effectively no difference between 
+replicating a read-only page and replicating a read-write page. However, if a replicated

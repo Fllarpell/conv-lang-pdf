@@ -1,0 +1,44 @@
+SEC. 9.8
+OPERATING SYSTEM HARDENING
+683
+size of 2 MB (221 bytes). Such a system will have 30 < 21 = 9 bits available for
+randomization. In other words, the entropy is 9 bits. In other words, attackers need
+512 guesses to find the kernel code. Suppose they find a vulnerability, such as a
+buffer overflow, that allows them to make the kernel jump to an address of their
+choosing and try out all possible values for these 9 bits, the system would 
+(probably) crash on 511 attempts and hit the correct target once. Phrased differently, if
+the attackers can attack a few thousand machines, they hav e a pretty good chance
+of compromising the operating system kernel of at least some of them—even if the
+attack leaves a trail of crashes in its wake.
+The entropy, or how much your randomize is not the only factor that 
+determines the strength of randomization, it also matters what you randomize. KASLR
+implementations commonly use coarse-grained randomization, whereby the stack,
+code, and heap all start at a random location, but there is no randomization within
+these memory areas.
+Fig. 9-33(a) shows an example. This is simple and fast. Unfortunately, it also
+means that it is sufficient for the attack to leak a single code pointer, say the start of
+one particular function, to break the randomization. All the other code will be at a
+fixed offset from this. More advanced randomization schemes randomize at a finer
+granularity. For instance, Fig. 9-33(b) shows a scheme where the locations of
+functions and heap objects are also randomized relative to each other. Instead of
+randomizing at the function level, it is also possible to do so at the page level, or
+ev en at the level of code fragments within a function. Now leaking a single code
+address is no longer sufficient, because it tells the attacker nothing about the 
+location of other functions and code snippets. Fine-grained randomization also works
+for global data, data on the heap, and even local variables on the stack. It is even
+possible to rerandomize the locations of code and data every few seconds during
+program execution, thus greatly reducing the time available for an attacker to try to
+learn where things are (Giuffrida et al., 2013). The disadvantage of very 
+finegrained randomization is that shuffling things around hurts locality and increases
+fragmentation.
+In general, KASLR is not considered a very strong defense against local
+attackers—that are able to run code locally on the machine. In fact, coarse-grained
+KASLR in particular has been broken many times.
+9.8.2 Control-Flow Restrictions
+Besides hiding the code at randomized locations, it is also possible to reduce
+the amount of code that the attacker can use. In particular, it would be nice if we
+could ensure that a return instruction can only return to the instruction following a
+function call, that a call instruction can only target a legitimate function, etc. Even
+if an attack overwrites a return address on the stack, the set of addresses to which it
+could divert the program’s control flow is now much more limited. This idea
+became popular under the name CFI (Control-Flow Integrity). It has been part

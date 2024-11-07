@@ -1,0 +1,33 @@
+SEC. 11.4
+PROCESSES AND THREADS IN WINDOWS
+949
+Figure 11-27. An example of priority inversion.
+addresses priority inversion between kernel threads through a facility in the thread
+scheduler called Autoboost. Autoboost automatically tracks resource 
+dependencies between threads and applies priority floors to raise the scheduling priority of
+threads that hold resources needed by higher-priority threads. In this case, 
+Autoboost would determine that the owner of the pushlock needs to be raised to the
+maximum priority of the waiters, so it would apply a priority floor of 12 to T1 until
+it releases the lock, thus resolving the inversion.
+In some multiprocessor systems, there are multiple types of processors with
+varying performance and efficiency characteristics. On these systems with 
+heterogeneous processors, the scheduler must take these varying performance and
+efficiency characteristics into account in order to make optimal scheduling 
+decisions. The Windows kernel does this through a thread scheduling property called
+the QoS class (Quality-of-Service class), which classifies threads based on their
+importance to the user and their performance requirements. Windows defines six
+QoS classes: high, medium, low, eco, multimedia, and deadline. In general, threads
+with a higher QoS class are threads that are more important to the user and thus
+require higher performance, for example threads that belong to a process that is in
+the foreground. Threads with a lower QoS class are threads that are less important
+and favor eff iciency over performance, for example threads performing 
+background maintenance work. Classification of threads into QoS levels is done by the
+scheduler through a number of heuristics considering attributes such as whether a
+thread belongs to a process with a foreground window or belongs to a process that
+is playing audio. Applications can also provide explicit process and thread level
+hints about their importance via the SetProcessInfor mation and SetThreadInfor 
+mation Win32 APIs. From the thread’s QoS class, the scheduler derives sev eral more
+specific scheduling properties based on the system’s power policy.
+Firstly, the system’s power policy can be configured to restrict work to a 
+particular type of processor. For example, the system can be configured to allow low
+QoS work to run only on the most efficient processors in the system in order to

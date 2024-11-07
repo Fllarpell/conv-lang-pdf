@@ -1,0 +1,56 @@
+SEC. 11.8
+THE WINDOWS NT FILE SYSTEM
+993
+directory containing miscellaneous files for things like disk quotas, object 
+identifiers, reparse points, and so on. The last four MFT records are reserved for future
+use.
+Each MFT record consists of a record header followed by the (attribute header,
+value) pairs. The record header contains a magic number used for validity 
+checking, a sequence number updated each time the record is reused for a new file, a
+count of references to the file, the actual number of bytes in the record used, the
+identifier (index, sequence number) of the base record (used only for extension
+records), and some other miscellaneous fields.
+NTFS defines 13 attributes that can appear in MFT records. These are listed in
+Fig. 11-45. Each attribute header identifies the attribute and gives the length and
+location of the value field along with a variety of flags and other information.
+Usually, attribute values follow their attribute headers directly, but if a value is too
+long to fit in the MFT record, it may be put in separate disk blocks. Such an
+attribute is said to be a nonresident attribute. The data attribute is an obvious
+candidate. Some attributes, such as the name, may be repeated, but all attributes
+must appear in a fixed order in the MFT record. The headers for resident attributes
+are 24 bytes long; those for nonresident attributes are longer because they contain
+information about where to find the attribute on disk.
+Attribute 
+Description
+Standard infor mation
+Flag bits, timestamps, etc.
+File name
+File name in Unicode; may be repeated for MS-DOS name
+Secur ity descr iptor
+Obsolete. Secur ity infor mation is now in $Extend$Secure
+Attr ibute list
+Location of additional MFT records, if needed
+Object ID
+64-bit file identifier unique to this volume
+Reparse point
+Used for mounting and symbolic links
+Volume name
+Name of this volume (used only in $Volume)
+Volume infor mation
+Volume version (used only in $Volume)
+Index root 
+Used for director ies
+Index allocation 
+Used for ver y large directories
+Bitmap 
+Used for ver y large directories
+Logged utility stream
+Controls logging to $LogFile
+Data 
+Stream data; may be repeated
+Figure 11-45. The attributes used in MFT records.
+The standard information field contains the file owner, security information,
+the timestamps needed by POSIX, the hard-link count, the read-only and archive
+bits, and so on. It is a fixed-length field and is always present. The file name is a
+variable-length Unicode string. In order to make files with non–MS-DOS names
+accessible to old 16-bit programs, files can also have an 8  +  3  MS-DOS short

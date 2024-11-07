@@ -1,0 +1,41 @@
+SEC. 10.8
+ANDROID
+797
+Finally, in August 2008, the software was stable and ready to ship. Builds
+went to the factory and started being flashed onto devices. In September, Android
+1.0 was launched on the Dream device, now called the T-Mobile G1.
+Continued Development
+After Android’s 1.0 release, development continued at a rapid pace. There
+were about 15 major updates to the platform over the following 5 years, adding a
+large variety of new features and improvements from the initial 1.0 release.
+The original Compatibility Definition Document basically allowed only for
+compatible devices that were very much like the T-Mobile G1. Over the following
+years, the range of compatible devices would greatly expand. Key points of this
+process were as follows:
+1. During 2009, Android versions 1.5 through 2.0 introduced a soft
+keyboard to remove a requirement for a physical keyboard, much
+more extensive screen support (both size and pixel density) for 
+lowerend QVGA devices and new larger and higher density devices like the
+WVGA Motorola Droid, and a new ‘‘system feature’’ facility for 
+devices to report what hardware features they support and applications
+to indicate which hardware features they require. The latter is the key
+mechanism Google Play uses to determine application compatibility
+with a specific device.
+2. During 2011, Android versions 3.0 through 4.0 introduced new core
+support in the platform for 10-inch and larger tablets; the core 
+platform now fully supported device screen sizes everywhere from small
+QVGA phones, through smartphones and larger ‘‘phablets,’’ 7-inch
+tablets and larger tablets to beyond 10 inches.
+3. As the platform provided built-in support for more diverse hardware,
+not only larger screens but also nontouch devices with or without a
+mouse, many more types of Android devices appeared. This included
+TV devices such as Google TV, gaming devices, notebooks, cameras,
+etc.
+Significant development work also went into something not as visible: a
+cleaner separation of Google’s proprietary services from the Android open-source
+platform.
+For Android 1.0, a significant amount of work had been put into having a clean
+third-party application API and an open-source platform with no dependencies on
+proprietary Google code. However, the implementation of Google’s proprietary
+code was often not yet cleaned up, having dependencies on internal parts of the
+platform. Often the platform did not even hav e facilities that Google’s proprietary

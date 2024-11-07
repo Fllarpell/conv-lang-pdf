@@ -1,0 +1,58 @@
+SEC. 8.2
+MULTICOMPUTERS
+561
+path has been set up, the bits are pumped all the way from the source to the 
+destination nonstop as fast as possible. There is no intermediate buffering at the 
+intervening switches. Circuit switching requires a setup phase, which takes some time,
+but is faster once the setup has been completed. After the packet has been sent, the
+path must be torn down again. A variation on circuit switching, called wormhole
+routing, breaks each packet up into subpackets and allows the first subpacket to
+start flowing even before the full path has been built.
+Network Interfaces
+All the nodes in a multicomputer have either a plug-in board containing the
+node’s connection to the interconnection network that holds the multicomputer
+together or a network chip on the mother board that does the same thing. The way
+these boards (and chips) are built and how they connect to the main CPU and RAM
+have substantial implications for the operating system. We will now briefly look at
+some of the issues here.
+In virtually all multicomputers, the interface board contains substantial RAM
+for holding outgoing and incoming packets. Usually, an outgoing packet has to be
+copied to the interface board’s RAM before it can be transmitted to the first switch.
+The reason for this design is that many interconnection networks are synchronous,
+so that once a packet transmission has started, the bits must continue flowing at a
+constant rate. If the packet is in the main RAM, this continuous flow out onto the
+network cannot be guaranteed due to other traffic on the memory bus. Using a 
+dedicated RAM on the interface board eliminates this problem. This design is shown
+in Fig. 8-18.
+CPU
+CPU
+CPU
+CPU
+Switch
+Node 2
+Main RAM
+Main RAM
+Node 4
+Interface
+board
+Optional
+on- board
+CPU
+Interface
+board
+RAM
+Node 3
+Main RAM
+Main RAM
+Node 1
+3
+2
+1
+4
+5
+User
+OS
+Figure 8-18. Position of the network interface boards in a multicomputer.
+The same problem occurs with incoming packets. The bits arrive from the 
+network at a constant and often extremely high rate. If the network interface board
+cannot store them in real time as they arrive, data will be lost. Again here, trying to

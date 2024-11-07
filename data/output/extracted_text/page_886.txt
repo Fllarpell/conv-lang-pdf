@@ -1,0 +1,42 @@
+SEC. 10.8
+ANDROID
+857
+something the user is aware of like background music playback. However, soon
+after 1.0 shipped, it was observed that applications would often use the API 
+incorrectly, setting something to be foreground that was not really so important to the
+user. This behavior started to cause bad experiences for users, as the services they
+did care about would get killed due to services they did not.
+The foreground service issue was addressed in Android 2.0 by requiring that,
+in order to make a service foreground, it also needs to have an ongoing notification
+associated with it. This tied the purpose of a foreground service (doing something
+the user is directly aware of) to something an app would only want to do in such a
+situation (inform the user about what it is doing in a very visible way). Playing
+music in the background, navigating with maps, tracking exercise—all of these
+things naturally involve displaying a notification so the user can easily see what is
+happening and control it, even when not in the app that is doing the operation.
+Though the notification solution worked well in incentivizing developers to use
+foreground services for their intended purpose, over time a more general issue of
+apps running in the background became an growing problem for Android that
+needed to be further addressed. To understand why, let’s consider the way an 
+operating system like Android deals with a limited resource such as battery power.
+The battery of a mobile device is an important, limited resource. For each
+charge of the battery, you can get a fixed amount of work done. People expect
+their battery to last through a normal day without needing to be charged, so there is
+a fixed amount of work that a device can do each day. Ideally the battery only
+drains while its screen is on and in use, so there is a fairly clear amount of actual
+work you can use the device for each day. Howev er, while the screen is off 
+numerous things can also consume power, such as:
+1. Keeping RAM refreshed so it retains its data.
+2. Keeping CPUs asleep but ready to wake up when an external event
+happens.
+3. Running the various radios: Cell, Wi-Fi, Bluetooth, etc.
+4. Maintaining an active network connection to wake up when important
+ev ents happen, such as receiving an instant message that should notify
+the user.
+5. Apps doing work users may care about: syncing email (and possibly
+notifying of a new message arriving), updating current weather 
+information for them to see next time they check their device, syncing
+news to show them current headlines next time they look, etc.
+The more power consumed while not in use, the more the user’s experience
+degrades due to there being less time she can actually use her device qon a single
+charge during the day. Most of the above items simply must be done to keep the

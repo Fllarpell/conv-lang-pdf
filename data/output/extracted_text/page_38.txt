@@ -1,0 +1,54 @@
+SEC. 1.2
+HISTORY OF OPERATING SYSTEMS
+9
+could afford the multimillion-dollar price tag. To run a job (i.e., a program or set
+of programs), a programmer would first write the program on paper (in FORTRAN
+or assembler), then punch it on cards. The programmer would then bring the card
+deck down to the input room, hand it to one of the operators, and go drink coffee
+until the output was ready.
+When the computer finished whatever job it was currently running, an operator
+would go over to the printer and tear off the output and carry it over to the output
+room, so that the programmer could collect it later. Then the operator would take
+one of the card decks that had been brought from the input room and read it in. If
+the FORTRAN compiler was needed, the operator would have to get it from a file
+cabinet and read it in. Much computer time was wasted while operators were 
+walking around the machine room.
+Given the high cost of the equipment, it is not surprising that people quickly
+looked for ways to reduce the wasted time. The solution generally adopted was the
+batch system. The idea behind it was to collect a tray full of jobs in the input
+room and then read them onto a magnetic tape using a small (relatively) 
+inexpensive computer, such as the IBM 1401, which was quite good at reading cards,
+copying tapes, and printing output, but not at all good at numerical calculations.
+Other, much more expensive machines, such as the IBM 7094, were used for the
+real computing. This situation is shown in Fig. 1-3.
+1401
+7094
+1401
+(a)
+(b)
+(c)
+(d)
+(e)
+(f)
+Card!
+reader
+Tape!
+drive
+Input!
+tape
+Output!
+tape
+System!
+tape
+Printer
+Figure 1-3. An early batch system. (a) Programmers bring cards to 1401. (b)
+1401 reads batch of jobs onto tape. (c) Operator carries input tape to 7094. (d)
+7094 does computing. (e) Operator carries output tape to 1401. (f) 1401 prints
+output.
+After about an hour of collecting a batch of jobs, the cards were read onto a
+magnetic tape, which was carried into the machine room, where it was mounted on
+a tape drive. The operator then loaded a special program (the ancestor of today’s
+operating system), which read the first job from tape and ran it. The output was
+written onto a second tape, instead of being printed. After each job finished, the
+operating system automatically read the next job from the tape and began running
+it. When the whole batch was done, the operator removed the input and output

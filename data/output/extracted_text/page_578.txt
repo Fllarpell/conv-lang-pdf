@@ -1,0 +1,46 @@
+SEC. 8.1
+MULTIPROCESSORS
+549
+Assuming that spinning and doing a thread switch are both feasible options,
+the trade-off is as follows. Spinning wastes CPU cycles directly. Testing a lock
+repeatedly is not productive work. Switching, however, also wastes CPU cycles,
+since the current thread’s state must be saved, the lock on the ready list must be
+acquired, a thread must be selected, its state must be loaded, and it must be started.
+Furthermore, the CPU cache will contain all the wrong blocks, so many expensive
+cache misses will occur as the new thread starts running. TLB faults are also 
+likely. Eventually, a switch back to the original thread must take place, with more
+cache misses following it. The cycles spent doing these two context switches plus
+all the cache misses are wasted.
+If it is known that mutexes are generally held for, say, 50 µsec and it takes 1
+msec to switch from the current thread and 1 msec to switch back later, it is more
+efficient just to spin on the mutex. On the other hand, if the average mutex is held
+for 10 msec, it is worth the trouble of making the two context switches. The trouble
+is that critical regions can vary considerably, so which approach is better?
+One design is to always spin. A second design is to always switch. But a third
+design is to make a separate decision each time a locked mutex is encountered. At
+the time the decision has to be made, it is not known whether it is better to spin or
+switch, but for any giv en system, it is possible to make a trace of all activity and
+analyze it later offline. Then it can be said in retrospect which decision was the
+best one and how much time was wasted in the best case. This hindsight algorithm
+then becomes a benchmark against which feasible algorithms can be measured.
+This problem has been studied by researchers for decades (Ousterhout, 1982).
+Most work uses a model in which a thread failing to acquire a mutex spins for
+some period of time. If this threshold is exceeded, it switches. In some cases, the
+threshold is fixed, typically the known overhead for switching to another thread
+and then switching back. In other cases, it is dynamic, depending on the observed
+history of the mutex being waited on.
+The best results are achieved when the system keeps track of the last few 
+observed spin times and assumes that this one will be similar to the previous ones.
+For example, assuming a 1-msec context switch time again, a thread will spin for a
+maximum of 2 msec, but observe how long it actually spun. If it fails to acquire a
+lock and sees that on the previous three runs it waited an average of 200 µsec, it
+should spin for 2 msec before switching. However, if it sees that it spun for the full
+2 msec on the previous attempts, it should switch immediately and not spin.
+Some modern processors, including the x86, offer special instructions to make
+the waiting more efficient in terms of reducing power consumption. For instance,
+the MONITOR/MWAIT instructions on x86 allow a program to block until some
+other processor modifies the data in a previously defined memory area. 
+Specifically, the MONITOR instruction defines an address range that should be monitored
+for writes. The MWAIT instruction then blocks the thread until someone writes to
+the area. Effectively, the thread is spinning, but without burning many cycles 
+needlessly. On notebook computers, this does not drain the battery as much.

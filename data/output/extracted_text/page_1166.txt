@@ -1,0 +1,102 @@
+INDEX
+1137
+Migration
+live, 504
+virtual machine, 503–504
+Milan chip, 539
+Minimal process, Windows, 943
+Miniport, 910
+MINIX 3, 15, 63–68, 342, 612, 709–712, 1047
+file system, 766, 776
+Minor device, 59, 758
+Minor device number, 364
+Minor page fault, 203
+Missing block, 313
+Mkdir system call, 54, 773
+Mmap system call, 747, 806, 890
+MMU (see Memory Management Unit)
+Modified bit, 198
+Modified page writer thread, Windows, 969, 971
+Module, Linux, 765
+Molnar, Ingo, 739
+Monitor, 138–145
+Monitor/Mwait instruction, 549
+Monoalphabetic substitution cipher, 633
+Monolithic operating system, 63–64
+Moore’s law, 537
+Motif, 405
+Mount system call, 54, 786, 787
+Mounted device, 353
+Mouse software, 401
+MPI (see Message-Passing Interface)
+MPK (see Memory Protection Key)
+MS-DOS (see MicroSoft Disk Operating System)
+MSIX package, 882
+MTE (see Memory Tagging Extensions)
+Multi-factor authentication, 879
+Multicomputer, 557–579
+grid, 559
+message-passing, 565–568
+Multicomputer communication software, 562–570
+Multicomputer hardware, 558–562
+Multicomputer interconnection, 558–561
+cube, 559
+diameter, 559
+grid, 559
+hypercube, 559
+mesh, 559
+torus, 559
+Multicomputer load balancing, 576–579
+Multicomputer network, 561–562
+Multicomputer scheduling, 575–576
+Multicore chip, 23–24, 537–538, 540–541
+MULTICS (see MULTiplexed Information and Computing Service)
+Multilevel page table, 204, 204–206
+Multilevel security, 629–632
+Multiple queue scheduling, 164–165
+Multiplexed information and computing service, 13–14, 42, 50, 65,
+243–247, 1046
+Multiplexing, 6
+Multiprocessor, 86, 530–557
+bus-based, 530–531
+crossbar, 532–533
+leader-follower, 543
+omega network, 533–535
+switching network, 533–535
+symmetric, 544
+Multiprocessor hardware, 530–545
+Multiprocessor operating system, 541–545
+Multiprocessor scheduling, 550–557
+Multiprocessor synchronization, 545–548
+Multiprogramming, 12, 86, 95–97
+Multiqueue, 563
+Multiserver operating system, 612
+Multistage switching network, 533
+Multithreaded code, 113–116
+Multithreading, 24, 102
+simultaneous, 541
+Multitouch screen, 418
+Munmap system call, 747
+Murphy’s law, 120
+Mutant, Windows, 905
+Mutex, 134–138, 938
+pthreads, 136
+Mutex trylock system call, 741
+Multiprocessor, snooping, 538
+Mutual exclusion, 121, 127, 135–136
+bounded buffer, 128–132
+busy waiting, 121–127
+disabling interrupts, 121–123
+lock variables, 123
+message passing, 145–148
+monitor, 138–145
+mutex, 134–138
+Peterson’s solution, 124–125
+producer-consumer, 128–132
+readers and writers problem, 132–133
+semaphore, 129–133
+spin lock, 124
+strict alternation, 123–124
+TSL instruction, 125–127
+Mwait instruction, 549
+Mythical man month, 1078–1079

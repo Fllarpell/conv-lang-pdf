@@ -1,0 +1,39 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+145
+As we said earlier, monitors are a programming-language concept. The 
+compiler must recognize them and arrange for the mutual exclusion somehow or other. C,
+Pascal, and most other languages do not have monitors, so it is unreasonable to
+expect their compilers to enforce any mutual exclusion rules. In fact, how could the
+compiler even know which procedures were in monitors and which were not?
+These same languages do not have semaphores either, but adding semaphores
+is easy: all you need to do is add two short assembly-code routines to the library to
+issue the up and down system calls. The compilers do not even hav e to know that
+they exist. Of course, the operating systems have to know about the semaphores,
+but at least if you have a semaphore-based operating system, you can still write the
+user programs for it in C or C++ (or even assembly language if you are 
+masochistic enough). With monitors, you need a language that has them built in.
+Another problem with monitors, and also with semaphores, is that they were
+designed for solving the mutual exclusion problem on one or more CPUs that all
+have access to a common memory. By putting the semaphores in the shared 
+memory and protecting them with TSL or XCHG instructions, we can avoid races. When
+we move to a distributed system consisting of multiple CPUs, each with its own
+private memory and connected by a local area network, these primitives become
+inapplicable. The conclusion is that semaphores are too low lev el and monitors are
+not usable except in a few programming languages. Also, none of the primitives
+allow information exchange between machines. Something else is needed.
+2.4.8 Message Passing
+That something else is message passing. This method of interprocess 
+communication uses two primitives, send and receive, which, like semaphores and unlike
+monitors, are system calls rather than language constructs. As such, they can easily
+be put into library procedures, such as
+send(destination, &message);
+and
+receive(source, &message);
+The former call sends a message to a given destination and the latter one receives a
+message from a given source (or from ANY, if the receiver does not care). If no
+message is available, the receiver can block until one arrives. Alternatively, it can
+return immediately with an error code.
+Design Issues for Message-Passing Systems
+Message-passing systems have many problems and design issues that do not
+arise with semaphores or with monitors, especially if the communicating processes
+are on different machines connected by a network. For example, messages can be

@@ -1,0 +1,44 @@
+480
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+space—commonly referred to as containers or jails. There are many differences
+with hypervisor-based virtualization. The main one is that while a container may
+look like an isolated computer (with its own devices, its own memory, etc.), the
+underlying operating system is fixed and cannot be replaced by another. A second
+important difference is that since all containers use the same underlying operating
+system (and hence share its resources), the isolation between containers is less
+complete than that between virtual machines. A third difference is that, precisely
+because the containers directly use the services of a single operating system, they
+are often more lightweight and efficient than hypervisor-based solutions. In this
+chapter, our main focus is on hypervisor-based virtualization, but we will discuss
+OS-level virtualization also.
+7.1 HISTORY
+With all the hype surrounding virtualization in recent years, we sometimes 
+forget that by Internet standards virtual machines are ancient. As early as the 1960s.
+IBM experimented with not just one but two independently developed hypervisors:
+SIMMON and CP-40. While CP-40 was a research project, it was reimplemented
+as CP-67 to form the control program of CP/CMS, a virtual machine operating
+system for the IBM System/360 Model 67. Later, it was reimplemented again and
+released as VM/370 for the System/370 series in 1972. The System/370 line was
+replaced by IBM in the 1990s by the System/390. This was essentially just a name
+change since the underlying architecture remained the same for reasons of 
+backward compatibility. Of course, the hardware technology was greatly improved and
+the newer machines were bigger and faster than the older ones, but as far as 
+virtualization was concerned, nothing changed. In 2000, IBM released the z-series,
+which supported 64-bit virtual address spaces but was otherwise backward 
+compatible with the System/360. All of these systems supported virtualization decades
+before it became popular on the x86.
+In 1974, two computer scientists at UCLA, Gerald Popek and Robert 
+Goldberg, published a seminal paper (‘‘Formal Requirements for Virtualizable Third
+Generation Architectures’’) that listed exactly what conditions a computer 
+architecture should satisfy in order to support virtualization efficiently (Popek and 
+Goldberg, 1974). It is impossible to write a chapter on virtualization without referring to
+their work and terminology. Famously, the well-known x86 architecture that also
+originated in the 1970s did not meet these requirements for decades. It was not the
+only one. Nearly every architecture since the mainframe also failed the test. The
+1970s were very productive, seeing also the birth of UNIX, Ethernet, the Cray-1,
+Microsoft, and Apple—so, despite what your parents may say, the 1970s were not
+just about disco!
+In fact, the real Disco revolution started in the 1990s, when researchers at 
+Stanford University developed a new hypervisor by that name and went on to found
+VMware, a virtualization giant that offers type 1 and type 2 hypervisors and now

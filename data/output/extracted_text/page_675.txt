@@ -1,0 +1,45 @@
+646
+SECURITY 
+CHAP. 9
+1. Challenge sent to smart card
+3. Response sent back
+Remote!
+computer
+Smart!
+card
+2. Smart!
+    card!
+    computes!
+    response
+Smart!
+card!
+reader
+Figure 9-16. Use of a smart card for authentication.
+A typical biometrics system has two parts: enrollment and identification. 
+During enrollment, the user’s characteristics are measured and the results digitized.
+Then significant features are extracted and stored in a record associated with the
+user. The record can be kept in a central database (e.g., for logging in to a remote
+computer), or stored on a smart card that the user carries around and inserts into a
+remote reader (e.g., at an ATM machine).
+The other part is identification. The user shows up and provides a login name.
+Then the system makes the measurement again. If the new values match the ones
+sampled at enrollment time, the login is accepted; otherwise it is rejected. The
+login name is needed because the measurements are never exact, so it is difficult to
+index them and then search the index. Also, two people might have the same 
+characteristics, so requiring the measured characteristics to match those of a specific
+user is stronger than just requiring them to match those of any user.
+The characteristic chosen should have enough variability that the system can
+distinguish among many people without error. For example, hair color is not a
+good indicator because too many people share the same color. Also, the 
+characteristic should not vary over time and with some people, hair color does not have
+this property. Similarly a person’s voice may be different due to a cold and a face
+may look different due to a beard or makeup not present at enrollment time. Since
+later samples are never going to match the enrollment values exactly, the system
+designers have to decide how good the match has to be to be accepted. In 
+particular, they hav e to decide whether it is worse to reject a legitimate user once in a
+while or let an imposter get in once in a while. An e-commerce site might decide
+that rejecting a loyal customer might be worse than accepting a small amount of
+fraud, whereas a nuclear weapons site might decide that refusing access to a 
+genuine employee was better than letting random strangers in twice a year.
+An important point here is that any authentication scheme must be 
+psychologically acceptable to the user community. Even something as nonintrusive as storing

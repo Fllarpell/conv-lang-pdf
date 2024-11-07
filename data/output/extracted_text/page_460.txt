@@ -1,0 +1,44 @@
+SEC. 5.10
+SUMMARY
+431
+Thin clients have some advantages over standard PCs, notably simplicity and
+less maintenance for users.
+Finally, power management is a major issue for phones, tablets, and notebooks
+because battery lifetimes are limited and for desktop and server machines because
+of an organization’s energy bills. Various techniques can be employed by the 
+operating system to reduce power consumption. Programs can also help out by 
+sacrificing some quality for longer battery lifetimes.
+PROBLEMS
+1. Advances in chip technology have made it possible to put an entire controller, 
+including all the bus access logic, on an inexpensive chip. How does that affect the model of
+Fig. 1-6?
+2. Given the speeds listed in Fig. 5-1, is it possible to record video using a digital video
+recorder and transmit them over an 802.11n network at full speed? Defend your
+answer.
+3. Figure 5-3(b) shows one way of having memory-mapped I/O even in the presence of
+separate buses for memory and I/O devices, namely, to first try the memory bus and if
+that fails try the I/O bus. A clever computer science student has thought of an
+improvement on this idea: try both in parallel, to speed up the process of accessing I/O
+devices. What do you think of this idea?
+4.
+Explain the tradeoffs between precise and imprecise interrupts on a superscalar
+machine.
+5. A DMA controller has fiv e channels. The controller is capable of requesting a 32-bit
+word every 40 nsec. A response takes equally long. How fast does the bus have to be
+to avoid being a bottleneck?
+6. Suppose that a system uses DMA for data transfer from disk controller to main 
+memory. Further assume that it takes t1 nsec on average to acquire the bus and t2 nsec to
+transfer one word over the bus (t1 >> t2). After the CPU has programmed the DMA
+controller, how long will it take to transfer 1000 words from the disk controller to main
+memory, if (a) word-at-a-time mode is used, (b) burst mode is used? Assume that 
+commanding the disk controller requires acquiring the bus to send one word and 
+acknowledging a transfer also requires acquiring the bus to send one word.
+7. One mode that some DMA controllers use is to have the device controller send the
+word to the DMA controller, which then issues a second bus request to write to 
+memory. How can this mode be used to perform memory to memory copy? Discuss any
+advantage or disadvantage of using this method instead of using the CPU to perform
+memory to memory copy.
+8. Suppose that a computer can read or write a memory word in 5 nsec. Also suppose that
+when an interrupt occurs, all 32 CPU registers, plus the program counter and PSW are
+pushed onto the stack. What is the maximum number of interrupts per second this
+machine can process?

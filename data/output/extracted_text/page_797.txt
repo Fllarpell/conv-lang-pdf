@@ -1,0 +1,65 @@
+768
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+other will have to use an absolute path name to refer to it (or change the working
+directory). If this is long enough, it may become irritating to have to keep typing
+it. Linux provides a solution by allowing users to make a new directory entry that
+points to an existing file. Such an entry is called a link.
+As an example, consider the situation of Fig. 10-24(a). Aron and Nathan are
+working together on a project, and each of them needs access to the other’s files. If
+Aron has /usr/aron as his working directory, he can refer to the file x in Nathan’s
+directory as /usr/nathan/x. Alternatively, Aron can create a new entry in his 
+directory, as shown in Fig. 10-24(b), after which he can use x to mean /usr/nathan/x.
+bin
+dev
+etc
+lib
+tmp
+usr
+x
+y
+z
+a
+b
+c
+aron
+nathan
+/
+(a)
+bin
+dev
+etc
+lib
+tmp
+usr
+x
+y
+z
+a
+b
+c
+x
+aron
+nathan
+/
+(b)
+Link
+Figure 10-24. (a) Before linking. (b) After linking.
+In the example just discussed, we suggested that before linking, the only way
+for Aron to refer to Nathan’s file x was by using its absolute path. Actually, this is
+not really true. When a directory is created, two entries, . and .., are automatically
+made in it. The former refers to the working directory itself. The latter refers to the
+directory’s parent, that is, the directory in which it itself is listed. Thus from
+/usr/aron, another path to Nathan’s file x is .. /nathan/x .
+In addition to regular files, Linux also supports character special files and
+block special files. Character special files are used to model serial I/O devices,
+such as keyboards and printers. Opening and reading from /dev/tty reads from the
+keyboard; opening and writing to /dev/lp writes to the printer. Block special files,
+often with names like /dev/hd1, can be used to read and write raw disk partitions
+without regard to the file system. Thus, a seek to byte k followed by a read will
+begin reading from the kth byte on the corresponding partition, completely 
+ignoring the i-node and file structure. Raw block devices are used for paging and 
+swapping by programs that lay down file systems (e.g., mkfs), and by programs that fix
+sick file systems (e.g., fsck), for example.
+Many computers have two or more disks. On mainframes at banks, for 
+example, it is frequently necessary to have 100 or more disks on a single machine, in

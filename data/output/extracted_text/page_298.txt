@@ -1,0 +1,50 @@
+SEC. 4.1
+FILES
+269
+4.1.6 File Operations
+Files exist to store information and allow it to be retrieved later. Different 
+systems provide different operations to allow storage and retrieval. Below is a 
+discussion of the most common system calls relating to files.
+1.
+Create. The file is created with no data. The purpose of the call is to
+announce that the file is coming and to set some of the attributes.
+2.
+Delete. When the file is no longer needed, it has to be deleted to free
+up disk space. There is always a system call for this purpose.
+3.
+Open. Before using a file, a process must open it. The purpose of the
+open call is to allow the system to fetch the attributes and list of disk
+addresses into main memory for rapid access on later calls.
+4.
+Close. When all the accesses are finished, the attributes and disk
+addresses are no longer needed, so the file should be closed to free up
+internal table space. Many systems encourage this by imposing a
+maximum number of open files on processes. A disk is written in
+blocks, and closing a file forces writing of the file’s last block, even
+though that block may not be entirely full yet.
+5.
+Read. Data are read from file. Usually, the bytes come from the 
+current position. The caller must specify how many data are needed and
+must also provide a buffer to put them in.
+6.
+Wr ite. Data are written to the file again, usually at the current 
+position. If the current position is the end of the file, the file’s size
+increases. If the current position is in the middle of the file, existing
+data are overwritten and lost forever.
+7.
+Append. This call is a restricted form of wr ite. It can add data only to
+the end of the file. Systems that provide a minimal set of system calls
+rarely have append, but some systems have this call.
+8.
+Seek. For random-access files, a method is needed to specify from
+where to take the data. One common approach is a system call, seek,
+that repositions the file pointer to a specific place in the file. After this
+call has completed, data can be read from, or written to, that position.
+9.
+Get attributes. Processes often need to read file attributes to do their
+work. For example, the UNIX make program is commonly used to
+manage software development projects consisting of many source
+files. When make is called, it examines the modification times of all
+the source and object files and arranges for the minimum number of
+compilations required to bring everything up to date. To do its job, it
+must look at the attributes, namely, the modification times.

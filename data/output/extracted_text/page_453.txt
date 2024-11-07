@@ -1,0 +1,56 @@
+424
+INPUT/OUTPUT 
+CHAP. 5
+blast for 40 msec and x/4 joules running at half speed. If a video player can
+decompress and display a frame in 20 msec, the operating system can run at full
+power for 20 msec and then shut down for 20 msec for a total energy usage of x/2
+joules. Alternatively, it can run at half power and just make the deadline, but use
+only x/4 joules instead. A comparison of running at full speed and full power for
+some time interval and at half speed and one-quarter power for twice as long is
+shown in Fig. 5-40. In both cases the same work is done, but in Fig. 5-40(b) only
+half the energy is consumed doing it.
+1.00
+0.75
+0.50
+0.25
+0 0
+T/2
+T
+Time
+Power
+(a)
+1.00
+0.75
+0.50
+0.25
+0 0
+T/2
+T
+Time
+Power
+(b)
+Figure 5-40. (a) Running at full clock speed. (b) Cutting voltage by two cuts
+clock speed by two and power consumption by four.
+In a similar vein, if a user is typing at 1 char/sec, but the work needed to 
+process the character takes 100 msec, it is better for the operating system to detect the
+long idle periods and slow the CPU down by a factor of 10. In short, running
+slowly is more energy efficient than running quickly.
+In general, CPUs have sev eral sleep modes, typically referred to as C-states.
+C0 is the active state, while C1–Cn represent sleep states, whereby the processor
+clock is stopped (and no instructions are executed) and certain parts of the CPU are
+powered down. Figure 5-41 shows an example of some of the C-states of a 
+modern processor. The transition from C0 to a higher C-state can be triggered by 
+special instructions. For instance, on Intel x86 the HLT instruction will drive the CPU
+from C0 to C1, while the MWAIT <new C-state> instruction allows the operating
+system to specify the new C-state explicitly. Specific events (such as interrupts)
+trigger a return to the active state C0.
+Processors may have additional modes to save power further. For instance, a
+set of predefined power states (or P-states) that control both the frequency and the
+voltage at which the processor operates. In other words, these are not sleep states,
+but (slower or faster) forms of the active state. For instance, in P0, a specific 
+processor may operate at its maximum performance of 3.6GHz and 1.4V, in P1 at
+3.4GHz and 1.35V and so on, until we get to a minimum level of, say, 2.8GHz and
+1.2V. These power states may be controlled by software, but often the CPU itself
+tries to pick the right P-state for the current situation. For instance, when it notices
+that the utilization decreases, it may try to reduce the performance and hence the
+power consumption of the CPU by automatically switching to higher P-states.

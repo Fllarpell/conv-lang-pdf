@@ -1,0 +1,44 @@
+SEC. 7.11
+CASE STUDY: VMWARE
+521
+support 64-bit systems, the fundamental idea of having totally separate address
+spaces for the host operating system and the VMM remains valid today.
+In contrast, the approach to the virtualization of the x86 architecture changed
+rather dramatically with the introduction of hardware-assisted virtualization. 
+Hardware-assisted virtualizations, such as Intel VT-x and AMD-v were introduced in
+two phases. The first phase, starting in 2005, was designed with the explicit 
+purpose of eliminating the need for either paravirtualization or binary translation
+(Uhlig et al., 2005). Starting in 2007, the second phase provided hardware support
+in the MMU in the form of nested page tables. This eliminated the need to 
+maintain shadow page tables in software. Today, VMware’s hypervisors mostly uses a
+hardware-based, trap-and-emulate approach (as formalized by Popek and Goldberg
+four decades earlier) whenever the processor supports both virtualization and
+nested page tables.
+The emergence of hardware support for virtualization had a significant impact
+on VMware’s guest operating system centric-strategy. In the original VMware
+Workstation, the strategy was used to dramatically reduce implementation 
+complexity at the expense of compatibility with the full architecture. Today, full 
+architectural compatibility is expected due to hardware support. The current VMware
+guest operating system-centric strategy focuses on performance optimizations for
+selected guest operating systems.
+7.11.6 ESX Server: VMware’s type 1 Hypervisor
+In 2001, VMware released a different product, called ESX Server, aimed at the
+server marketplace. Here, VMware’s engineers took a different approach: rather
+than creating a type 2 solution running on top of a host operating system, they 
+decided to build a type 1 solution that would run directly on the hardware.
+Figure 7-12 shows the high-level architecture of ESX Server. It combines an
+existing component, the VMM, with a true hypervisor running directly on the bare
+metal. The VMM performs the same function as in VMware Workstation, which is
+to run the virtual machine in an isolated environment that is a duplicate of the x86
+architecture. As a matter of fact, the VMMs used in the two products use the same
+source code base, and they are largely identical. The ESX hypervisor replaces the
+host operating system. But rather than implementing the full functionality expected
+of an operating system, its only goal is to run the various VMM instances and to
+efficiently manage the physical resources of the machine. ESX Server therefore
+contains the usual subsystem found in an operating system, such as a CPU 
+scheduler, a memory manager, and an I/O subsystem, with each subsystem optimized to
+run virtual machines.
+The absence of a host operating system required VMware to directly address
+the issues of peripheral diversity and user experience described earlier. For 
+peripheral diversity, VMware restricted ESX Server to run only on well-known and 
+certified server platforms, for which it had device drivers. As for the user experience,

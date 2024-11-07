@@ -1,0 +1,65 @@
+SEC. 9.5
+EXPLOITING SOFTWARE
+663
+4. class robot { /* parent class */
+5. public:
+6. 
+char name[128];
+7. 
+void play piano () { /* ... */ }
+8. 
+robot (const char *str) { /* constructor also names the robot */
+9. 
+strncpy (name, str, 127);
+10. 
+}
+11. };
+12.
+13. class worker robot : public robot { /* first child class */
+14. 
+using robot::robot;
+15. public:
+16. 
+virtual void change name (const char *str) { strncpy (name, str, 127); }
+17. };
+18.
+19. class super visor robot : public robot { /* second child class */
+20. 
+using robot::robot;
+21. public:
+22. 
+virtual void execute management routine (char *cmd) { system (cmd); }
+23. };
+24.
+25. void test robot (robot *r) { /* can be called with any robot */
+26. 
+r->play piano();
+27. }
+28.
+29. void prompt user for name (robot *r) { /* can be called with wor ker robots only */
+30. 
+char *newname = read name from commandline ();
+31. 
+wor ker robot *w = static cast<wor ker robot*> (r); /* cast to wor ker robot */
+32. 
+w->change name(newname);
+33. }
+34.
+35. int main (int argc, char *argv[])
+36. {
+37. 
+wor ker robot *w = new wor ker robot (name1);
+38. 
+supervisor robot *s = new super visor robot (name2);
+39. 
+test robot (w);
+40. 
+test robot (s);
+41. 
+prompt user for name (w); /* This is fine - the name will be changed */
+42. 
+prompt user for name (s); /* This will EXECUTE the command */
+43. }
+The factory produces two types of robots. All robots have a name that is set when
+they are created (Lines 37–38). Workers can only play the piano, but supervisors
+can additionally carry out a variety of management routines (Line 22). Moreover,

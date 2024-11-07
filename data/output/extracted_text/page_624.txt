@@ -1,0 +1,44 @@
+SEC. 8.3
+DISTRIBUTED SYSTEMS
+595
+access procedures, called methods. Processes are not permitted to access the 
+variables directly. Instead, they are required to invoke the methods.
+Some programming languages, such as C++ and Java, are object oriented, but
+these are language-level objects rather than run-time objects. One well-known 
+system based on run-time objects is CORBA (Common Object Request Broker
+Architecture) (Vinoski, 1997), which first saw light of day in 1991 and was
+actively updated until as late as 2012. CORBA is a client-server system, in which
+client processes on client machines can invoke operations on objects located on
+(possibly remote) server machines. CORBA was designed for a heterogeneous
+system running a variety of hardware platforms and operating systems and 
+programmed in a variety of languages. To make it possible for a client on one 
+platform to invoke a server on a different platform, ORBs (Object Request Brokers)
+are interposed between client and server to allow them to match up. The ORBs
+play an important role in CORBA, even providing the system with its name.
+Each CORBA object is defined by an interface definition in a language called
+IDL (Interface Definition Language), which tells what methods the object
+exports and what parameter types each one expects. The IDL specification can be
+compiled into a client stub procedure and stored in a library. If a client process
+knows in advance that it will need to access a certain object, it is linked with the
+object’s client stub code. The IDL specification can also be compiled into a 
+skeleton procedure that is used on the server side. If it is not known in advance which
+CORBA objects a process needs to use, dynamic invocation is also possible, but
+how that works is beyond the scope of our treatment.
+The function of the ORBs is to hide all the low-level distribution and 
+communication details from the client and server code. In particular, the ORBs hide from
+the client the location of the server, whether the server is a binary program or a
+script, what hardware and operating system the server runs on, whether the object
+is currently active, and how the two ORBs communicate (e.g., using TCP/IP, RPC,
+or shared memory).
+A serious problem with CORBA is that every object is located on only one 
+server, which means the performance will be terrible for objects that are heavily used
+on client machines around the world. In practice, CORBA functions acceptably
+only in small-scale systems, such as to connect processes on one computer, one
+LAN, or within a single company.
+8.3.6 Coordination-Based Middleware
+Our last paradigm for a distributed system is called coordination-based 
+middleware. We will discuss it by looking at the Linda system, an academic research
+project that started the whole field.
+Linda started as a novel system for communication and synchronization 
+developed at Yale University by David Gelernter and his student Nick Carriero (Carriero
+and Gelernter, 1986; Carriero and Gelernter, 1989; and Gelernter, 1985). In Linda,

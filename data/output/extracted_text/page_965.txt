@@ -1,0 +1,46 @@
+936
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+The comparison is also skewed because Win32 is a user-mode wrapper around
+the native NT process execution, much as the system library function wraps
+fork/exec in UNIX. The actual NT system calls for creating processes and threads,
+NtCreateProcess and NtCreateThread, are simpler than the Win32 versions. The
+main parameters to NT process creation are a handle on a section representing the
+program file to run, a flag specifying whether the new process should, by default,
+inherit handles from the creator, and parameters related to the security model. All
+the details of setting up the environment strings and creating the initial thread are
+left to user-mode code that can use the handle on the new process to manipulate its
+virtual address space directly.
+To support the POSIX subsystem, native process creation has an option to 
+create a new process by copying the virtual address space of another process rather
+than mapping a section object for a new program. This is used only to implement
+fork for POSIX, and not exposed by Win32. Since POSIX no longer ships with
+Windows, process duplication has little use—though sometimes enterprising 
+developers come up with special uses, similar to uses of fork without exec in UNIX.
+One such interesting usage is process crashdump generation. When a process
+crashes and a dump needs to be generated, a clone of the address space is created
+using the native NT process creation API, but without handle duplication. This
+allows crashdump generation to take its time while the crashing process can be
+safely restarted without encountering violations, for example due to files still being
+open by its clone.
+Thread creation passes the CPU context to use for the new thread (which
+includes the stack pointer and initial instruction pointer), a template for the TEB,
+and a flag saying whether the thread should be immediately run or created in a 
+suspended state (waiting for somebody to call NtResumeThread on its handle). 
+Creation of the user-mode stack and pushing of the argv/argc parameters is left to 
+usermode code calling the native NT memory-management APIs on the process 
+handle.
+In the Windows Vista release, a new native API for processes, 
+NtCreateUserProcess, was added which moves many of the user-mode steps into the 
+kernelmode executive and combines process creation with creation of the initial thread.
+The reason for the change was to support the use of processes as security 
+boundaries. Normally, all processes created by a user are considered to be equally 
+trusted. It is the user, as represented by a token, that determines where the trust 
+boundary is. NtCreateUserProcess allows processes to also provide trust boundaries, but
+this means that the creating process does not have sufficient rights regarding a new
+process handle to implement the details of process creation in user mode for 
+processes that are in a different trust environment. The primary use of a process in a
+different trust boundary (which are called protected processes) is to support forms
+of digital rights management, which protect copyrighted material from being used
+improperly. Of course, protected processes only target user-mode attacks against
+protected content and cannot prevent kernel-mode attacks.

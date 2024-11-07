@@ -1,0 +1,44 @@
+914
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+structures of kernel components. Phase 1 starts all the remaining processors and
+completes final initialization of all kernel components. At the end of Phase 1, once
+the I/O manager is initialized, boot drivers are started and file systems are 
+mounted, the rest of OS boot can proceed to load new binaries from disk.
+The first user-mode process to get started during boot is smss.exe which is 
+similar to /etc/init in UNIX systems. Smss first completes the initialization of the
+subsystem-independent parts of the operating system by creating any configured
+paging files and finalizing registry initialization by loading the remaining hives.
+Then it starts acting as a session manager: it launches new instances of itself to 
+initialize Session 0, the non-interactive session, and Session 1, the interactive session.
+These child smss instances are responsible for enumerating and starting NT 
+subsystems which are listed under the HKLM\ SYSTEM\ CurrentControlSet\ 
+Control\ Session Manager\ Subsystems registry key. On Windows 11, the only 
+supported subsystem is the Windows subsystem, so the child smss instance starts the 
+Windows subsystem process, csrss.exe. Then the Session 0 instance executes the
+wininit.exe process to initialize the rest of the Windows subsystem while the 
+Session 1 instance starts the winlogon.exe process to allow the interactive user to log
+in.
+The Windows boot sequence has logic to deal with common problems users
+encounter when booting the system fails. Sometimes installation of a bad device
+driver, or incorrectly modifying the SYSTEM hive can prevent the system from
+booting successfully. To recover from these situations, Windows boot manager
+allows users to launch the WinRE (Windows Recovery Environment) WinRE
+provides an assortment of tools and automated repair mechanisms. These include
+System Restore which allows restoring the boot volume to a previous snapshot.
+Another is Startup Repair which is an automated tool that detects and fixes the
+most common sources of startup problems. PC Reset performs the equivalent of a
+factory reset to bring Windows back to its original state after installation. For cases
+where manual intervention may be necessary, WinRE can also launch a command
+prompt where the user has access to any command-line tool. Similarly, the system
+may be booted in safe-mode where only a minimal set of device drivers and 
+services are loaded to minimize the chances of encountering startup failure.
+11.3.3 Implementation of the Object Manager
+The object manager is probably the single most important component in the
+Windows executive, which is why we hav e already introduced many of its 
+concepts. As described earlier, it provides a uniform and consistent interface for 
+managing system resources and data structures, such as open files, processes, threads,
+memory sections, timers, devices, drivers, and semaphores. Even more specialized
+objects representing things like kernel transactions, profiles, security tokens, and
+Win32 desktops are managed by the object manager. Device objects link together
+the descriptions of the I/O system, including providing the link between the NT

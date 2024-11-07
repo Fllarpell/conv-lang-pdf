@@ -1,0 +1,50 @@
+# Python files
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+# Logs and debug files
+*.log
+*.pot
+*.pid
+*.swp
+*.swo
+*.swn
+*.sml
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# IDE configuration files
+.vscode/
+.idea/
+
+# Environment and secret files
+.env
+*.env
+
+# Build and deployment files
+build/
+dist/
+*.egg-info/
+*.eggs
+
+# Static and media files
+/staticfiles/
+/media/
+media/
+
+# Docker files
+docker-compose.override.yml
+docker-compose.dev.yml
+*.orig
+
+# Database and migration files
+db.sqlite3
+*.sqlite3
+
+# Django generated files
+local_settings.py

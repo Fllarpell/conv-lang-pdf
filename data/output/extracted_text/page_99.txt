@@ -1,0 +1,44 @@
+70
+INTRODUCTION 
+CHAP. 1
+and other nice features. Instead, they are exact copies of the bare hardware, 
+including kernel/user mode, I/O, interrupts, and everything else the real machine has.
+I/O instructions here
+Trap here
+Trap here
+System calls here
+Virtual 370s
+CMS
+CMS
+CMS
+VM/370
+370 Bare hardware
+Figure 1-28. The structure of VM/370 with CMS.
+Because each virtual machine is identical to the true hardware, each one can
+run any operating system that will run directly on the bare hardware. Different 
+virtual machines can, and frequently do, run different operating systems. On the 
+original IBM VM/370 system, some ran OS/360 or one of the other large batch or 
+transaction-processing operating systems, while others ran a single-user, interactive
+system called CMS (Conversational Monitor System) for interactive timesharing
+users. The latter was popular with programmers.
+When a CMS program executed a system call, the call was trapped to the 
+operating system in its own virtual machine, not to VM/370, just as it would be were it
+running on a real machine instead of a virtual one. CMS then issued the normal
+hardware I/O instructions for reading its virtual disk or whatever was needed to
+carry out the call. These I/O instructions were trapped by VM/370, which then 
+performed them as part of its simulation of the real hardware. By completely 
+separating the functions of multiprogramming and providing an extended machine, each
+of the pieces could be much simpler, more flexible, and much easier to maintain.
+In its modern incarnation, z/VM is usually used to run multiple complete 
+operating systems rather than stripped-down single-user systems like CMS. For 
+example, the zSeries is capable of running one or more Linux virtual machines along
+with traditional IBM operating systems.
+Virtual Machines Rediscovered
+While IBM has had a virtual-machine product available for four decades, and a
+few other companies, including Oracle and Hewlett-Packard, have recently added
+virtual-machine support to their high-end enterprise servers, the idea of 
+virtualization has largely been ignored in the PC world until recently. But in the past
+decades, a combination of new needs, new software, and new technologies have
+combined to make it a hot topic.
+First the needs. Many companies have traditionally run their mail servers, Web
+servers, FTP servers, and other servers on separate computers, sometimes with

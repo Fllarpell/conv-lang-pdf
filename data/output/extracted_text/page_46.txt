@@ -1,0 +1,46 @@
+SEC. 1.2
+HISTORY OF OPERATING SYSTEMS
+17
+of UNIX, even selling a microcomputer version of it called XENIX during the
+company’s early years.)
+CP/M, MS-DOS, and other operating systems for early microcomputers were
+all based on users typing in commands from the keyboard. That eventually 
+changed due to research done by Doug Engelbart at Stanford Research Institute in the
+1960s. Engelbart invented the Graphical User Interface, complete with windows,
+icons, menus, and mouse. These ideas were adopted by researchers at Xerox PARC
+and incorporated into machines they built.
+One fine day, Steve Jobs, who co-invented the Apple computer in his garage,
+visited PARC, saw a GUI, and instantly realized its potential value, something
+Xerox management famously did not. This strategic blunder of incredibly 
+gargantuan proportions led to a book entitled Fumbling the Future (Smith and Alexander,
+1988). Jobs then embarked on building an Apple with a GUI. This project led to
+the Lisa, which was too expensive and failed commercially. Jobs’ second attempt,
+the Apple Macintosh, was an huge success, not only because it was much cheaper
+than the Lisa, but also because it was user friendly, meaning that it was intended
+for users who not only knew nothing about computers but furthermore had 
+absolutely no intention whatsoever of learning. In the creative world of graphic design,
+professional digital photography, and professional digital video production, 
+Macintoshes became widely used and their users loved them. In 1999, Apple adopted a
+kernel derived from Carnegie Mellon University’s Mach microkernel which was
+originally developed to replace the kernel of BSD UNIX. Thus, Apple’s macOS is
+a UNIX-based operating system, albeit with a distinctive interface.
+When Microsoft decided to build a successor to MS-DOS, it was strongly
+influenced by the success of the Macintosh. It produced a GUI-based system 
+called Windows, which originally ran on top of MS-DOS (i.e., it was more like a shell
+than a true operating system). For about 10 years, from 1985 to 1995, Windows
+was just a graphical environment on top of MS-DOS. However, starting in 1995 a
+freestanding version, Windows 95, was released that incorporated many operating
+system features into it, using the underlying MS-DOS system only for booting and
+running old MS-DOS programs. Microsoft rewrote much of the operating system
+from scratch for Windows NT, a full 32-bit system. The lead designer for 
+Windows NT was David Cutler, who was also one of the designers of the VAX VMS
+operating system, so some ideas from VMS are present in NT. In fact, so many
+ideas from VMS were present in it that the owner of VMS, DEC, sued Microsoft.
+The case was settled out of court for an amount of money requiring many digits to
+express. Version 5 of Windows NT was renamed Windows 2000 in early 1999,
+and two years later Microsoft released a slightly upgraded version called Windows
+XP which had a longer run than other versions (6 years).
+After Windows 2000, Microsoft broke up the Windows family into a client and
+a server line. The client line was based on XP and its successors, while the server
+line produced Windows Server 2003–2019 and now Windows Server vNext.
+Microsoft later also introduced a third line, for the embedded world. All of these

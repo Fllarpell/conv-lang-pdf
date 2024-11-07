@@ -1,0 +1,41 @@
+462
+DEADLOCKS 
+CHAP. 6
+Nevertheless, there is a germ of an idea here that is frequently applicable.
+Av oid assigning a resource unless absolutely necessary, and try to make sure that
+as few processes as possible may actually claim the resource.
+6.6.2 Attacking the Hold-and-Wait Condition
+The second of the conditions stated by Coffman et al. looks slightly more
+promising. If we can prevent processes that hold resources from waiting for more
+resources, we can eliminate deadlocks. One way to achieve this goal is to require
+all processes to request all their resources before starting execution. If ev erything
+is available, the process will be allocated whatever it needs and can run to 
+completion. If one or more resources are busy, nothing will be allocated and the process
+will just wait.
+An immediate problem with this approach is that many processes do not know
+how many resources they will need until they hav e started running. In fact, if they
+knew, the banker’s algorithm could be used. Another problem is that resources
+will not be used optimally with this approach. Take, as an example, a process that
+reads data from an input tape, analyzes it for an hour, and then writes an output
+tape as well as plotting the results. If all resources must be requested in advance,
+the process will tie up the output tape drive and the plotter for an hour.
+Nevertheless, some mainframe batch systems require the user to list all the
+resources on the first line of each job. The system then preallocates all resources
+immediately and does not release them until they are no longer needed by the job
+(or in the simplest case, until the job finishes). While this method puts a burden on
+the programmer and wastes resources, it does prevent deadlocks.
+A slightly different way to break the hold-and-wait condition is to require a
+process requesting a resource to first temporarily release all the resources it 
+currently holds. Then it tries to get everything it needs all at once.
+6.6.3 Attacking the No-Preemption Condition
+Attacking the third condition (no preemption) is also a possibility. If a process
+has been assigned the printer and is in the middle of printing its output, forcibly
+taking away the printer because a needed plotter is not available is tricky at best
+and impossible at worst. However, some resources can be virtualized to avoid this
+situation. Spooling printer output to the SSD or disk and allowing only the printer
+daemon access to the real printer eliminates deadlocks involving the printer,
+although it creates a potential for deadlock over disk space. With large SSDs/disks
+though, running out of storage space is unlikely.
+However, not all resources can be virtualized like this. For example, records in
+databases or tables inside the operating system must be locked to be used and
+therein lies the potential for deadlock.

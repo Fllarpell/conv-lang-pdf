@@ -1,0 +1,47 @@
+570
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+Client CPU
+Client
+stub
+Client
+2
+1
+Operating system
+Server CPU
+Server
+stub
+4
+3
+5
+Operating system
+Server
+Network
+Figure 8-20. Steps in making a remote procedure call. The stubs are shaded.
+Implementation Issues
+Despite the conceptual elegance of RPC, there are a few snakes hiding under
+the grass. A big one is the use of pointer parameters. Normally, passing a pointer
+to a procedure is not a problem. The called procedure can use the pointer the same
+way the caller can because the two procedures reside in the same virtual address
+space. With RPC, passing pointers is impossible because the client and server are
+in different address spaces.
+In some cases, tricks can be used to make it possible to pass pointers. Suppose
+that the first parameter is a pointer to an integer, k. The client stub can marshal k
+and send it along to the server. The server stub then creates a pointer to k and
+passes it to the server procedure, just as it expects. When the server procedure
+returns control to the server stub, the latter sends k back to the client, where the
+new k is copied over the old one, just in case the server changed it. In effect, the
+standard calling sequence of call-by-reference has been replaced by copy restore.
+Unfortunately, this trick does not always work, for example, if the pointer points to
+a graph or other complex data structure. For this reason, some restrictions must be
+placed on parameters to procedures called remotely. Yes, it is easy to construct
+cases where RPC fails badly, but programmers using it do not want it to fail, so
+they avoid the cases where it can fail.
+A second problem is that in weakly typed languages, like C, it is perfectly legal
+to write a procedure that computes the inner product of two vectors (arrays), 
+without specifying how large either one is. Each could be terminated by a special value
+known only to the calling and called procedures. Under these circumstances, it is
+essentially impossible for the client stub to marshal the parameters: it has no way
+of determining how large they are.
+A third problem is that it is not always possible to deduce the types of the
+parameters, not even from a formal specification or the code itself. An example is

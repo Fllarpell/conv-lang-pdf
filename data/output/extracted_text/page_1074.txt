@@ -1,0 +1,42 @@
+SEC. 12.1
+THE NATURE OF THE DESIGN PROBLEM
+1045
+Sixth, operating system designers rarely know how their systems will be used,
+so they need to provide for considerable generality. Neither UNIX nor Windows
+was designed with a Web browser or streaming HD video in mind, yet many 
+computers running these systems do little else. Nobody tells a ship designer to build a
+ship without specifying whether they want a fishing vessel, a cruise ship, or a 
+battleship. And even fewer change their minds after the product has arrived.
+Seventh, modern operating systems are generally designed to be portable,
+meaning they hav e to run on multiple hardware platforms. They also have to 
+support thousands of I/O devices, all of which are independently designed with no
+regard to one another. An example of where this diversity causes problems is the
+need for an operating system to run on both little-endian and big-endian machines.
+A second example was seen constantly under MS-DOS when users attempted to
+install, say, a sound card and a modem that used the same I/O ports or interrupt
+request lines. Few programs other than operating systems have to deal with sorting
+out problems caused by conflicting pieces of hardware.
+Eighth, and last in our list, is the frequent need to be backward compatible
+with some previous operating system. That system may have restrictions on word
+lengths, file names, or other aspects that the designers now reg ard as obsolete, but
+are stuck with. It is like converting a factory to produce next year’s cars instead of
+this year’s cars, but while continuing to produce this year’s cars at full capacity.
+12.2 INTERFACE DESIGN
+It should be clear by now that writing a modern operating system is not easy.
+But where does one begin? Probably the best place to begin is to think about the
+interfaces it provides. An operating system provides a set of abstractions, mostly
+implemented by data types (e.g., files) and operations on them (e.g., read). 
+Together, these form the interface to its users. Note that in this context the users of the
+operating system are programmers who write code that use system calls, not 
+people running application programs.
+In addition to the main system-call interface, most operating systems have
+additional interfaces. For example, some programmers need to write device drivers
+to insert into the operating system. These drivers see certain features and can make
+certain procedure calls. These features and calls also define an interface, but a very
+different one from one application programmers see. All of these interfaces must
+be carefully designed if the system is to succeed.
+12.2.1 Guiding Principles
+Are there any principles that can guide interface design? We believe there are.
+In Chap. 9, we already discussed Saltzer and Schroeder’s principles for a secure
+design. There are also principles for a good design in general. Briefly summarized,
+they are simplicity, completeness, and the ability to be implemented efficiently.

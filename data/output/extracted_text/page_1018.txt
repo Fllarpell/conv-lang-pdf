@@ -1,0 +1,41 @@
+SEC. 11.7
+INPUT/OUTPUT IN WINDOWS
+989
+correctly in this environment can be very challenging, which is why WDF was
+developed to simplify the Windows Driver Model.
+Many books are available about the Windows Driver Model and the newer
+Windows Driver Foundation (Orwick and Smith, 2007; Viscarola et al., 2007;
+Kanetkar, 2008; Vostokov, 2009; Reeves, 2010; and Yosifovich, 2019).
+11.8 THE WINDOWS NT FILE SYSTEM
+Windows supports several file systems, the most important of which are
+FAT-16, FAT-32, NTFS (NT File System), and ReFS (Resilient File System).
+FAT stands for File Access Table. FAT -16 is the old MS-DOS file system. It uses
+16-bit disk addresses, which limits it to disk partitions no larger than 2 GB. It was
+primarily used for floppy disks. FAT -32 uses 32-bit disk addresses and supports
+disk partitions up to 2 TB. There is no security in FAT -32 and today it is really
+used only for transportable media, like flash drives. NTFS is the file system 
+developed specifically for the NT version of Windows. Starting with Windows XP it
+became the default file system installed by most computer manufacturers, greatly
+improving the security and functionality of Windows. NTFS uses 64-bit disk
+addresses and can (theoretically) support disk partitions up to 264 bytes, although
+other considerations limit it to smaller sizes.
+ReFS is the newest file system in this group and initially shipped with 
+Windows Server 2012 R2 which coincides with Windows 8.1. It’s called the Resilient
+File System because one of its design goals is to be self-healing. ReFS can verify
+and automatically repair itself without downtime. This is achieved by maintaining
+integrity metadata for its on disk structures as well as user data. It’s a 
+nonoverwriting file system which means that metadata on disk is never updated in place;
+instead the new one is written elsewhere and the old version is marked deleted.
+When paired with storage spaces, ReFS supports the concept of tiering of user data
+and file system metadata meaning that it can keep ‘‘hot’’ data in faster disks and
+move ‘‘cold’’ data to slower disks automatically. Since ReFS is not used as the
+default file system for Windows yet, we will not study it in detail.
+In this chapter, we will examine the NTFS file system because it is the default
+file system for Windows and a modern one with many interesting features and
+design innovations. It is large and complex and space limitations prevent us from
+covering all of its features, but the material presented below should give a 
+reasonable impression of it.
+11.8.1 Fundamental Concepts
+Individual file names in NTFS are limited to 255 characters; full paths are 
+limited to 32,767 characters. File names are in Unicode, allowing people in countries
+not using the Latin alphabet (e.g., Greece, Japan, India, Russia, and Israel) to write

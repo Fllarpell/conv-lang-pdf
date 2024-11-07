@@ -1,0 +1,46 @@
+SEC. 10.5
+INPUT/OUTPUT IN LINUX
+761
+When the connection is no longer needed, it can be closed in the usual way, via the
+close system call.
+10.5.3 Input/Output System Calls in Linux
+Each I/O device in a Linux system generally has a special file associated with
+it. Most I/O can be done by just using the proper file, eliminating the need for 
+special system calls. Nevertheless, sometimes there is a need for something that is 
+device specific. Prior to POSIX, most UNIX systems had a system call ioctl that 
+performed a large number of device-specific actions on special files. Over the course
+of the years, it had gotten to be quite a mess. POSIX cleaned it up by splitting its
+functions into separate function calls primarily for terminal devices. In Linux and
+modern UNIX systems, whether each one is a separate system call or they share a
+single system call or something else is implementation dependent.
+The first four calls listed in Fig. 10-20 are used to set and get the terminal
+speed. Different calls are provided for input and output because some modems
+operate at split speed. For example, old videotex systems allowed people to access
+public databases with short requests from the home to the server at 75 bits/sec with
+replies coming back at 1200 bits/sec. This standard was adopted at a time when
+1200 bits/sec both ways was too expensive for home use. Times change in the 
+networking world. This asymmetry still persists, with some telephone companies
+offering inbound service at 40 Mbps and outbound service at 10 Mbps, or some
+other asymmetric arrangement.
+With fiber optics, the inbound and outbound
+speeds are generally the same, for example, 500/500.
+Function call
+Description
+s = cfsetospeed(&ter mios, speed) 
+Set the output speed
+s = cfsetispeed(&ter mios, speed) 
+Set the input speed
+s = cfgetospeed(&ter mios, speed) 
+Get the output speed
+s = cfgtetispeed(&ter mios, speed) 
+Get the input speed
+s = tcsetattr(fd, opt, &termios) 
+Set the attributes
+s = tcgetattr(fd, &termios) 
+Get the attributes
+Figure 10-20. The main POSIX calls for managing the terminal.
+The last two calls in the list are for setting and reading back all the special
+characters used for erasing characters and lines, interrupting processes, and so on.
+In addition, they enable and disable echoing, handle flow control, and perform 
+similar functions. Additional I/O function calls also exist, but they are somewhat 
+specialized, so we will not discuss them further. In addition, ioctl is still available.

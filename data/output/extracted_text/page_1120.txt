@@ -1,0 +1,38 @@
+SEC. 13.1
+SUGGESTIONS FOR FURTHER READING
+1091
+memory, hard disk, tape, and, as we saw earlier, even DNA. In this article, the 
+various technologies are surveyed and their strengths and weaknesses highlighted.
+Greengard, ‘‘The Future of Data Storage’’
+There may be many fancy new materials for storing bytes, but in practice good
+old magnetic tape will be with us for a long while yet, explains this article. Tape is
+inexpensive and the data on it remain accessible longer than on many other media.
+It is also easy to use and manage.
+Stan and Skadron, ‘‘Power-Aware Computing’’
+Until someone manages to get Moore’s Law to apply to batteries, energy usage
+is going to continue to be a major issue in mobile devices. Power and heat are so
+critical these days that operating systems are aware of the CPU temperature and
+adapt their behavior to it. This article surveys some of the issues and serves as an
+introduction to fiv e other articles in this special issue of Computer on power-aware
+computing.
+Swanson and Caulfield, ‘‘Refactor, Reduce, Recycle: Restructuring the I/O Stack
+for the Future of Storage’’
+Disks exist for two reasons: when power is turned off, RAM loses its contents.
+Also, disks are very big. But suppose RAM did not lose its contents when 
+powered off? How would that change the I/O stack? Nonvolatile memory is here and
+this article looks at how it changes systems.
+Ion, ‘‘From Touch Displays to the Surface: A Brief History of Touchscreen Tech.,’’
+Touch screens have become ubiquitous in a short time span. This article traces
+the history of the touch screen through history with easy-to-understand 
+explanations and nice vintage pictures and videos. Fascinating stuff!
+Walker and Cragon, ‘‘Interrupt Processing in Concurrent Processors’’
+Implementing precise interrupts on superscalar computers is a challenging
+activity. The trick is to serialize the state and do it quickly. A number of the design
+issues and trade-offs are discussed here.
+13.1.6 Deadlocks
+Coffman et al., ‘‘System Deadlocks’’
+A short introduction to deadlocks, what causes them, and how they can be 
+prevented or detected.
+Holt, ‘‘Some Deadlock Properties of Computer Systems’’
+A discussion of deadlocks. Holt introduces a directed graph model that can be
+used to analyze some deadlock situations.

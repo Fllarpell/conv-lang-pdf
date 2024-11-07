@@ -1,0 +1,25 @@
+258
+MEMORY MANAGEMENT 
+CHAP. 3
+will be one of the other pages with equal probability.
+(a) Demonstrate that the page reference string-generation routine behaves properly for
+some small N.
+(b) Compute the page fault rate for a small example in which there is one process and a
+fixed number of page frames. Explain why the behavior is correct.
+(c) Repeat part (b) with two processes with independent page reference sequences and
+twice as many page frames as in part (b).
+(d) Repeat part (c) but using a global policy instead of a local one. Also, contrast the
+per-process page fault rate with that of the local policy approach.
+55. Write a program that can be used to compare the effectiveness of adding a tag field to
+TLB entries when control is toggled between two programs. The tag field is used to
+effectively label each entry with the process id. Note that a nontagged TLB can be 
+simulated by requiring that all TLB entries have the same tag at any one time. The inputs
+will be:
+• The number of TLB entries available
+• The clock interrupt interval expressed as number of memory references
+• A file containing a sequence of (process, page references) entries
+• The cost to update one TLB entry
+(a) Describe the basic data structures and algorithms in your implementation.
+b) Show that your simulation behaves as expected for a simple (but nontrivial) input
+example.
+(c) Plot the number of TLB updates per 1000 references.

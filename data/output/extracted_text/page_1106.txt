@@ -1,0 +1,42 @@
+SEC. 12.4
+PERFORMANCE
+1077
+12.4.6 Exploiting Locality
+Processes and programs do not act at random. They exhibit a fair amount of
+locality in time and space, and this information can be exploited in various ways to
+improve performance. One well-known example of spatial locality is the fact that
+processes do not jump around at random within their address spaces. They tend to
+use a relatively small number of pages during a given time interval. The pages that
+a process is actively using can be noted as its working set, and the operating 
+system can make sure that when the process is allowed to run, its working set is in
+memory, thus reducing the number of page faults.
+The locality principle also holds for files. When a process has selected a 
+particular working directory, it is likely that many of its future file references will be to
+files in that directory. By putting all the i-nodes and files for each directory close
+together on the disk, performance improvements can be obtained. This principle is
+what underlies the Berkeley Fast File System (McKusick et al., 1984).
+Another area in which locality plays a role is in thread scheduling in 
+multiprocessors. As we saw in Chap. 8, one way to schedule threads on a 
+multiprocessor is to try to run each thread on the CPU it last used, in hopes that some of its
+memory blocks will still be in the memory cache.
+12.4.7 Optimize the Common Case
+It is frequently a good idea to distinguish between the most common case and
+the worst possible case and treat them differently. Often the code for the two is
+quite different. It is important to make the common case fast. For the worst case, if
+it occurs rarely, it is sufficient to make it correct.
+As a first example, consider entering a critical region. Most of the time, the
+entry will succeed, especially if processes do not spend a lot of time inside critical
+regions. Windows takes advantage of this expectation by providing a WinAPI call
+EnterCr iticalSection that atomically tests a flag in user mode (using TSL or 
+equivalent). If the test succeeds, the process just enters the critical region and no kernel
+call is needed. If the test fails, the library procedure does a down on a semaphore
+to block the process. Thus, in the normal case, no kernel call is needed. In Chap. 2,
+we saw that futexes on Linux likewise optimize for the common case of no 
+contention.
+As a second example, consider setting an alarm (using signals in UNIX). If no
+alarm is currently pending, it is straightforward to make an entry and put it on the
+timer queue. However, if an alarm is already pending, it has to be found and
+removed from the timer queue. Since the alar m call does not specify whether there
+is already an alarm set, the system has to assume worst case, that there is. 
+However, since most of the time there is no alarm pending, and since removing an 
+existing alarm is expensive, it is a good idea to distinguish these two cases.

@@ -1,0 +1,39 @@
+SEC. 6.2
+INTRODUCTION TO DEADLOCKS
+447
+might lead to deadlock, the operating system can simply suspend the process 
+without granting the request (i.e., just not schedule the process) until it is safe. In
+Fig. 6-7, if the operating system knew about the impending deadlock, it could 
+suspend B instead of granting it S. By running only A and C, we would get the
+requests and releases of Fig. 6-7(k) instead of Fig. 6-7(d). This sequence leads to
+the resource graphs of Fig. 6-7(l)–(q), which do not lead to deadlock.
+After step (q), process B can be granted S because A is finished and C has
+ev erything it needs. Even if B blocks when requesting T, no deadlock can occur. B
+will just wait until C is finished.
+Later in this chapter, we will study a detailed algorithm for making allocation
+decisions that do not lead to deadlock. For the moment, the point to understand is
+that resource graphs are a tool that lets us see if a given request/release sequence
+leads to deadlock. We just carry out the requests and releases step by step, and
+after every step we check the graph to see if it contains any cycles. If so, we have a
+deadlock; if not, there is no deadlock. Although our treatment of resource graphs
+has been for the case of a single resource of each type, resource graphs can also be
+generalized to handle multiple resources of the same type (Holt, 1972).
+In general, four strategies are used for dealing with deadlocks.
+1. Just ignore the problem. Maybe if you ignore it, it will ignore you.
+2. Detection and recovery. Let them occur, detect them, and take action.
+3. Dynamic avoidance by careful resource allocation.
+4. Prevention, by structurally negating one of the four conditions.
+In the next four sections, we will examine each of these methods in turn.
+6.3 THE OSTRICH ALGORITHM
+The simplest approach is the ostrich algorithm: stick your head in the sand and
+pretend there is no problem.† People react to this strategy in different ways. 
+Mathematicians find it unacceptable and say that deadlocks must be prevented at all
+costs. Engineers ask how often the problem is expected, how often the system
+crashes for other reasons, and how serious a deadlock is. If deadlocks occur on the
+av erage once every fiv e years, but system crashes due to hardware failures and
+operating system bugs occur once a week, most engineers would not be willing to
+pay a large penalty in performance or convenience to eliminate deadlocks.
+To make this contrast more specific, consider an operating system that blocks
+the caller when an open system call on a physical device such as a 3D scanner or a
+†Actually, this bit of folklore is nonsense. Ostriches can run at 60 km/hour and their kick is powerful
+enough to kill any lion with visions of a big chicken dinner, and lions know this.

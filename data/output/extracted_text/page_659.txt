@@ -1,0 +1,42 @@
+630
+SECURITY 
+CHAP. 9
+mandatory access controls do is regulate the flow of information, to make sure that
+it does not leak out in a way it is not supposed to. Not even if a malicious user
+tries to leak it.
+The Bell-LaPadula Model
+The most widely used multilevel security model is the Bell-LaPadula model
+so we will start there (Bell and LaPadula, 1973). This model was designed for
+handling military security, but it is also applicable to other organizations. In the
+military world, documents (objects) can have a security level, such as unclassified,
+confidential, secret, and top secret. People are also assigned these levels, 
+depending on which documents they are allowed to see. A general might be allowed to
+see all documents, whereas a lieutenant might be restricted to documents cleared as
+confidential and lower. A process running on behalf of a user acquires the user’s
+security level. Since there are multiple security levels, this scheme is called a 
+multilevel security system.
+The Bell-LaPadula model has rules about how information can flow:
+1. The simple security property: A process running at security level k
+can read only objects at its level or lower. For example, a general can
+read a lieutenant’s documents but a lieutenant cannot read a general’s
+documents.
+2. The * property: A process running at security level k can write only
+objects at its level or higher. For example, a lieutenant can append a
+message to a general’s mailbox telling everything he knows, but a
+general cannot append a message to a lieutenant’s mailbox telling
+ev erything she knows because the general may have seen top-secret
+documents that may not be disclosed to a lieutenant.
+Roughly summarized, processes can read down and write up, but not the reverse.
+If the system rigorously enforces these two properties, it can be shown that no
+information can leak out from a higher security level to a lower one. The * 
+property was so named because in the original report, the authors could not think of a
+good name for it and used * as a temporary placeholder until they could devise a
+better name. They nev er did and the report was printed with the *. In this model,
+processes read and write objects, but do not communicate with each other directly.
+The Bell-LaPadula model is illustrated graphically in Fig. 9-11.
+In this figure, a (solid) arrow from an object to a process indicates that the
+process is reading the object, that is, information is flowing from the object to the
+process. Similarly, a (dashed) arrow from a process to an object indicates that the
+process is writing into the object, that is, information is flowing from the process to
+the object. Thus all information flows in the direction of the arrows. For example,
+process B can read from object 1 but not from object 3.

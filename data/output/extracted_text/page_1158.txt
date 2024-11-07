@@ -1,0 +1,99 @@
+INDEX
+1129
+Exception, 347
+ExceptPortHandle, Windows, 885
+Exclusive lock, 770
+Exec system call, 54, 620, 727, 728, 732, 748,
+808, 831, 935, 936, 1052, 1059
+Executable, Windows, 76
+Execution paradigm, 1049–1050
+Executive layer, Windows, 894, 905–909
+Execve system call, 54, 90
+EXEs (see Executable, Windows)
+ExFAT file system, 262
+Existing resource vector, 451
+Exit system call, 54, 728
+ExitProcess, 91
+ExitProcesss Win32 call, 91
+ExitWindowsEx Win32 call, 1014
+Exokernel, 73–74, 1055
+Experience, role, 1081–1082
+Explicit intent, Android, 830
+Exploit, 606
+Exploitations, Windows, 1027–1031
+Exploiting hardware, 668–679
+Exploiting locality, 1077
+Exploiting software, 647–668
+Ext2 file system, 293
+Linux, 776–781
+Ext3, 293
+Ext3 file system, Linux, 781
+Ext4 file system, 293, 297, 321, 781–782
+Extended Berkeley packet filter, 691
+Extended flow guard, Windows, 1029
+Extended page table, 495–496
+Hyper-V, 1005
+Extending trust, 912
+Extensions to Linux, Android, 803–807
+Extent, 782
+External fragmentation, 243
+External pager, 238
+F
+FAAS (see Function As A Service)
+Failure isolation, 1043
+Fair-share scheduling, 167–168
+False sharing, distributed shared memory, 573
+FastMutex, Win31 call, 940
+FAT (see File Allocation Table)
+FAT-16 file system, 262, 325–317
+FAT-32 file system, 261–262, 325
+Fault (exception), 347
+FCFS (see First-Come First-Served disk scheduling)
+Fcntl system call, 773
+Fiber, Windows, 931
+Fidelity, hypervisor, 482
+FIFO (see First-In First-Out page replacement algorithm)
+File, 42–45, 261–272
+ASCII, 265
+block special, 264
+character special, 264
+implementation, 280–285
+File access, 266–267
+File access table, 989
+File allocation table, 283–284
+File attribute, 267–268
+File compression, Windows, 998–999
+File descriptor, 44, 271, 771
+File encryption, NT file system, 1000
+File extension, 262
+File handle, 785
+File management system calls, 57–58
+File mapping, Windows, 889
+File metadata, 267
+File naming, 261–263
+File operation, 269–270
+File structure, 263–264
+File system, 259–331
+/proc, 782–783
+example, 324–330
+exFAT, 262
+ext2, 293, 776–781
+ext3, 293, 781
+ext4, 292, 297, 321, 781–782
+FAT-16, 262, 325–327
+FAT-32, 261–262, 325
+flash, 293–298
+fragmentation, 320–321
+journaling, 292–293, 781
+Linux, 766–789
+log-structured, 290–292
+MINIX 3, 766, 776
+MS-DOS, 324–327
+network, 299, 783–789
+NFS, 783–789
+NTFS, 262, 989–1000
+proc, 782–783
+resilient, 262, 989
+stateless, 786
+UNIX V7, 327–330
+Windows, 989–1000

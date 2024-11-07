@@ -1,0 +1,43 @@
+SEC. 12.3
+IMPLEMENTATION
+1069
+Reentrancy
+Reentrancy refers to the ability of code to be executed two or more times
+simultaneously. On a  multiprocessor, there is always the danger that while one
+CPU is executing some procedure, another CPU will start executing it as well,
+before the first one has finished. In this case, two (or more) threads on different
+CPUs might be executing the same code at the same time. This situation must be
+protected against by using mutexes or some other means to protect critical regions.
+However, the problem also exists on a uniprocessor. In particular, most of any
+operating system runs with interrupts enabled. To do otherwise would lose many
+interrupts and make the system unreliable. While the operating system is busy
+executing some procedure, P, it is entirely possible that an interrupt occurs and that
+the interrupt handler also calls P. If the data structures of P were in an inconsistent
+state at the time of the interrupt, the handler will see them in an inconsistent state
+and fail.
+An obvious example where this can happen is if P is the scheduler. Suppose
+that some process has used up its quantum and the operating system is moving it to
+the end of its queue. Partway through the list manipulation, the interrupt occurs,
+makes some process ready, and runs the scheduler. With the queues in an 
+inconsistent state, the system will probably crash. As a consequence even on a 
+uniprocessor, it is best that most of the operating system is reentrant, critical data 
+structures are protected by mutexes, and interrupts are disabled at moments when they
+cannot be tolerated.
+Brute Force
+Using brute force to solve a problem has acquired a bad name over the years,
+but it is often the way to go in the name of simplicity. Every operating system has
+many procedures that are rarely called or operate with so few data that optimizing
+them is not worthwhile. For example, it is frequently necessary to search various
+tables and arrays within the system. The brute force algorithm is to just leave the
+table in the order the entries are made and search it linearly when something has to
+be looked up. If the number of entries is small (say, under 1000), the gain from
+sorting the table or hashing it is small, but the code is far more complicated and
+more likely to have bugs in it. Sorting or hashing the mount table (which keeps
+track of mounted file systems in UNIX systems) really is not a good idea.
+Of course, for functions that are on the critical path, say, context switching,
+ev erything should be done to make them very fast, possibly even writing them in
+(heaven forbid) assembly language. But large parts of the system are not on the
+critical path. For example, many system calls are rarely invoked. If there is one
+fork ev ery second, and it takes 1 msec to carry out, then even optimizing it to 0
+wins only 0.1%. If the optimized code is bigger and buggier, a case can be made
+not to bother with the optimization.

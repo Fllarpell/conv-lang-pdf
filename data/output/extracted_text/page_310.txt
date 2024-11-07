@@ -1,0 +1,54 @@
+SEC. 4.3
+FILE-SYSTEM IMPLEMENTATION
+281
+…!
+File A!
+(4 blocks)
+File C!
+(6 blocks)
+File B!
+(3 blocks)
+File D!
+(5 blocks)
+File F!
+(6 blocks)
+File E!
+(12 blocks)
+File G!
+(3 blocks)
+(a)
+…!
+!(File A)
+!(File C)
+File B
+5 Free blocks
+6 Free blocks
+!(File E)
+!(File G)
+(b)
+Figure 4-12. (a) Contiguous allocation of disk space for seven files. (b) The
+state of the disk after files D and F have been removed.
+Second, the read performance is excellent even on a magnetic disk because the
+entire file can be read from the disk in a single operation. Only one seek is needed
+(to the first block). After that, no more seeks or rotational delays are needed, so
+data come in at the full bandwidth of the disk. Thus contiguous allocation is simple
+to implement and has high performance. We will talk about sequential versus 
+random accesses on SSDs later.
+Unfortunately, contiguous allocation also has a very serious drawback: over the
+course of time, the disk becomes fragmented. To see how this comes about, 
+examine Fig. 4-12(b). Here two files, D and F, hav e been removed. When a file is
+removed, its blocks are naturally freed, leaving a run of free blocks on the disk.
+The disk is not compacted on the spot to squeeze out the hole, since that would
+involve copying all the blocks following the hole, potentially millions of blocks,
+which would take hours or even days with large disks. As a result, the disk 
+ultimately consists of files and holes, as illustrated in the figure.
+Initially, this fragmentation is not a problem, since each new file can be written
+at the end of disk, following the previous one. However, eventually the disk will fill
+up and it will become necessary to either compact the disk, which is prohibitively
+expensive, or to reuse the free space in the holes. Reusing the space requires 
+maintaining a list of holes, which is doable. However, when a new file is to be created,
+it is necessary to know its final size in order to choose a hole that is big enough.
+Imagine the consequences of such a design. The user starts a recording 
+application in order to create a video. The first thing the program asks is how many
+bytes the final video will be. The question must be answered or the program will
+not continue. If the number given ultimately proves too small, the program has to

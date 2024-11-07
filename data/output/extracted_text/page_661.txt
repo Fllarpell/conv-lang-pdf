@@ -1,0 +1,43 @@
+632
+SECURITY 
+CHAP. 9
+LaPadula, a programmer can query a janitor about the company’s future plans and
+then overwrite the president’s files that contain corporate strategy. Not all 
+companies might be equally enthusiastic about this model.
+The problem with the Bell-LaPadula model is that it was devised to keep
+secrets, not guarantee the integrity of the data. For the latter, we need precisely the
+reverse properties (Biba, 1977):
+1. The simple integrity property: A process running at security level k
+can write only objects at its level or lower (no write up).
+2. The integrity * property: A process running at security level k can
+read only objects at its level or higher (no read down).
+Together, these properties ensure that the programmer can update the janitor’s files
+with information acquired from the president, but not vice versa. Of course, some
+organizations want both the Bell-LaPadula properties and the Biba properties, but
+these are in direct conflict so they are hard to achieve simultaneously.
+9.3.2 Cryptography
+Formal approaches and mathematical rigor can also be found in cryptography.
+Operating systems use cryptographic solutions in many places. For instance, some
+file systems encrypt all the data on disk, while protocols such as IPSec can encrypt
+or sign the content of network packets. Even so, cryptography itself is to operating
+system developers as the internal combustion engine or electric motor is to drivers:
+you do not really need to understand the details, as long as you can use it. In this
+section, we will limit ourselves to a bird’s-eye view of cryptography.
+The purpose of cryptography is to take a message or file, called the plaintext,
+and encrypt it into ciphertext in such a way that only authorized people know how
+to convert it back to plaintext. For all others, the ciphertext is just an 
+incomprehensible pile of bits. Strange as it may sound to beginners in the area, the encryption
+and decryption algorithms (functions) should always be public. Trying to keep
+them secret almost never works and gives the people trying to keep the secrets a
+false sense of security. In the trade, this tactic is called security by obscurity and
+is employed only by security amateurs. Oddly enough, the category of amateurs
+also includes many huge multinational corporations that really should know better.
+As mentioned earlier, this is just Kerckhoffs’ principle.
+Instead, the secrecy depends on parameters to the algorithms called keys. If P
+is the plaintext file, KE is the encryption key, C is the ciphertext, and E is the
+encryption algorithm (i.e., function), then C = E(P, KE). This is the definition of
+encryption. It says that the ciphertext is obtained by using the (known) encryption
+algorithm, E, with the plaintext, P, and the (secret) encryption key, KE, as 
+parameters. The idea that the algorithms should all be public and the secrecy should reside
+exclusively in the keys is called Kerckhoffs’ principle, as mentioned earlier. All
+serious cryptographers subscribe to this idea.

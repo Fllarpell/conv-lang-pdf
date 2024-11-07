@@ -1,0 +1,58 @@
+SEC. 5.6
+USER INTERFACES: KEYBOARD, MOUSE, & MONITOR
+397
+0x0b). No other keys are pressed so all other bytes are zero. Next, the user presses
+another key without releasing the first. Now the keyboards sends a report with two
+scancodes. When the user subsequently releases one of the keys, that value is
+zeroed out. Moreover, the next scancode shifts to the left. In fact, the order of the
+bytes indicates the order in which the user pressed the keys. Thus, if the user
+presses ‘‘O’’ in Step 5, the keyboard’s report indicates not just which keys are 
+currently depressed, but also that ‘‘H’’ was pressed first, then ‘‘B’’ and finally ‘‘O’’. In
+other words, the bytes further to the left correspond to keys that were pressed 
+earlier and the ones further to the right correspond to later key presses.
+Key event 
+Report
+Comment
+1
+Press (only) ‘‘H’’
+00 00 0b 00 00 00 00 00
+Scancode for ‘‘H’’ is 0x0b
+2
+Press ‘‘J’’ without releasing ‘‘H’’
+00 00 0b 0d 00 00 00 00
+Scancode for ‘‘J’’ is 0x0d
+3
+Press ‘‘B’’ without releasing ‘‘HJ’’
+00 00 0b 0d 05 00 00 00
+Scancode for ‘‘B’’ is 0x05
+4
+Release ‘‘J’’, still pressing ‘‘HB’’
+00 00 0b 05 00 00 00 00
+No press is 0x00
+5
+Press ‘‘O’’ without releasing ‘‘HB’’
+00 00 0b 05 12 00 00 00
+Scancode for ‘‘O’’ is 0x12
+Figure 5-30. Reports sent by a USB keyboard when a user presses and releases
+different keys. Earlier key presses are encoded by the bytes toward the left.
+So far, we described something called an interrupt transfer, but found that we
+talked only about polling. Where are the interrupts? Remember that the transfer
+described so far occurred between the USB device (the keyboard) and the host 
+controller. After completely receiving the report, the host controller may now generate
+the interrupt to tell the CPU the happy news about the key presses. At each of these
+keyboard interrupts, the keyboard driver extracts the information about what 
+happened. From that point on, everything happens in software and is pretty much 
+independent of the hardware.
+Most of the rest of this section can be best understood when thinking of typing
+commands to a shell window (command-line interface). This is how programmers
+commonly work. We will discuss graphical interfaces later. Some devices, in 
+particular touch screens, are used for input and output. We hav e made an (arbitrary)
+choice to discuss them in the section on output devices. We will discuss graphical
+interfaces later in this chapter.
+Keyboard Software
+The numbers in the reports represent the key numbers, called the scan codes,
+not the ASCII code. When the A key is struck, for example, the scan code (4) is
+put in the report. It is up to the driver to determine that it is lowercase, uppercase,
+CTRL-A, ALT-A, CTRL-ALT-A, or some other combination. For instance, the
+driver can check the first (modifier) byte in the report to see if the SHIFT, CTRL,
+or ALT keys were pressed.

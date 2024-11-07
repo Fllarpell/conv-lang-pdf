@@ -1,0 +1,44 @@
+SEC. 9.6
+EXPLOITING HARDWARE
+675
+Of course, the CPU has to be careful with such out-of-order execution. If
+something goes wrong during the execution of the DIV, for instance if the divisor
+turns out to be 0, it must raise an exception and undo all the effects of the 
+subsequent out-of-order instructions. In other words, it must make it so that it appears as
+if the out-of-order instructions were never executed. These instructions are 
+transient.
+The problem is that such transient execution is squashed only at the 
+architectural level—the level that is visible to the program(mers). So, the CPU makes sure
+that the transient instructions will have had no effect on registers or memory. 
+Howev er, there may still be traces of the executed-and-then-squashed code at the 
+microarchitectural level. The micro-architecture is what implements a particular 
+instruction set architecture. It includes the sizes and replacement policies of the caches,
+the TLB, the execution units, etc. For example, many CPUs from different 
+companies implement the x86-64 instruction set architecture and they can all run the
+same programs, but under the hood, at the micro-architectural level, these CPUs
+are very different. Transient execution that is squashed at the architectural level
+may leave traces at the micro-architectural level, for instance because data that was
+loaded from memory is now in the cache.
+How bad is that, you ask? Well, as we saw in the previous section, the presence
+or absence or data in the cache may be used as a covert channel. And that is 
+exactly what is happening in these attacks.
+Transient Execution Attacks Based on Faults
+For eff iciency, operating systems such as Linux map the operating system 
+kernel into the address space of every user process. Doing so makes system calls
+cheaper, because even though the system call causes a switch to a more privileged
+domain, the kernel, there is no need to change the page tables. To make sure that
+user processes cannot modify kernel pages, the pages table entries for kernel 
+memory have the Supervisor bit set (see Fig. 3.11).
+Now consider the code in Fig. 9-27, where an unprivileged attacker tries to
+read a kernel address in Line 2. The CPU will not be enthusiastic about the idea,
+because the supervisor bit is set for that page, so the instruction will fault and
+throw an exception. This will happen when the corresponding instruction is retired.
+In the meantime, however, the CPU will continue under the assumption that all is
+well. It will (transiently) read the value and (transiently) execute the instruction in
+Line 3, which uses it as an index in an array. When the exception is finally raised,
+the architectural effects of the instructions are reverted. For instance, when the dust
+settles, the original values will be in reg0 and reg1. The problem is that the 
+transient instruction in Line 3 still had an effect on the micro-architectural state, as
+array [reg0 * 4096] is now in the cache. See also Fig. 9-28. Before executing
+these three instructions, the attacker makes sure that none of the other elements are
+in the cache. This is easy: just access a lot of other data, so that all the cachelines

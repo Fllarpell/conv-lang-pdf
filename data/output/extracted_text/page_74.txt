@@ -1,0 +1,44 @@
+SEC. 1.5
+OPERATING SYSTEM CONCEPTS
+45
+nearly always mounted on empty directories.) If a system contains multiple hard
+disks, they can all be mounted into a single tree as well.
+Another important concept in UNIX is the special file. Special files are 
+provided in order to make I/O devices look like files. That way, they can be read and
+written using the same system calls as are used for reading and writing files. Two
+kinds of special files exist: block special files and character special files. Block
+special files are used to model devices that consist of a collection of randomly
+addressable blocks, such as SSDs and disks. By opening a block special file and
+reading, say, block 4, a program can directly access the fourth block on the device,
+without regard to the structure of the file system contained on it. Similarly, 
+character special files are used to model printers, keyboards, mice, and other devices that
+accept or output a character stream. By convention, the special files are kept in the
+/dev directory. For example, /dev/lp might be the printer (once called the line 
+printer).
+The last feature we will discuss in this overview relates to both processes and
+files: pipes. A pipe is a sort of pseudofile that can be used to connect two 
+processes, as shown in Fig. 1-16. If processes A and B wish to talk using a pipe, they
+must set it up in advance. When process A wants to send data to process B, it writes
+on the pipe as though it were an output file. In fact, the implementation of a pipe is
+very much like that of a file. Process B can read the data by reading from the pipe
+as though it were an input file. Thus, communication between processes in UNIX
+looks very much like ordinary file reads and writes. Stronger yet, the only way a
+process can discover that the output file it is writing on is not really a file, but a
+pipe, is by making a special system call. File systems are very important. We will
+have much more to say about them in Chap. 4 and also in Chaps. 10 and 11.
+Process
+Pipe
+Process
+A
+B
+Figure 1-16. Tw o processes connected by a pipe.
+1.5.4 Input/Output
+All computers have physical devices for acquiring input and producing output.
+After all, what good would a computer be if the users could not tell it what to do
+and could not get the results after it did the work requested? Many kinds of input
+and output devices exist, including keyboards, monitors, printers, and so on. It is
+up to the operating system to manage these devices.
+Consequently, every operating system has an I/O subsystem for managing its
+I/O devices. Some of the I/O software is device independent, that is, it applies to
+many or all I/O devices equally well. Other parts of it, such as device drivers, are
+specific to particular I/O devices. In Chap. 5, we will have a look at I/O software.

@@ -1,0 +1,84 @@
+1074
+OPERATING SYSTEM DESIGN
+CHAP. 12
+each entry initialized (at compile time) to the bit count corresponding to that byte
+value. With this approach no computation at all is needed at run time, just one
+indexing operation. A macro to do the job is given in Fig. 12-7(c).
+This is a clear example of trading computation time against memory. Howev er,
+we could go still further. If the bit counts for whole 32-bit words are needed, using
+our bit count macro, we need to perform four lookups per word. If we expand the
+table to 65,536 entries, we can suffice with two lookups per word, at the price of a
+much bigger table.
+Looking answers up in tables can also be used in other ways. A well-known
+image-compression technique, GIF, uses table lookup to encode 24-bit RGB pixels.
+However, GIF only works on images with 256 or fewer colors. For each image to
+be compressed, a palette of 256 entries is constructed, each entry containing one
+24-bit RGB value. The compressed image then consists of an 8-bit index for each
+pixel instead of a 24-bit color value, a gain of a factor of three. This idea is 
+illustrated for a 4 × 4 section of an image in Fig. 12-8. The original compressed image
+is shown in Fig. 12-8(a). Each value is a 24-bit value, with 8 bits for the intensity
+of red, green, and blue, respectively. The GIF image is shown in Fig. 12-8(b).
+Each value is an 8-bit index into the color palette. The color palette is stored as part
+of the image file, and is shown in Fig. 12-8(c). Actually, there is more to GIF, but
+the core idea is table lookup.
+3,8,13 3,8,13
+3,8,13 3,8,13
+26,4,9 90,2,6
+4,19,20 4,6,9
+4,6,9 10,30,8
+5,8,1
+22,2,0
+10,11,5 4,2,17 88,4,3 66,4,43
+7
+7
+7
+7
+2
+6
+3
+4
+4
+5
+10
+0
+8
+9
+2
+11
+11
+10
+1
+6
+7
+8
+5
+0
+9
+2
+3
+4
+8 Bits
+24 Bits
+24 Bits
+(b)
+(c)
+(a)
+22,2,0
+26,4,9
+5,8,1
+10,30,8
+4,6,9
+4,19,20
+90,2,6
+66,4,43
+88,4,3
+4,2,17
+10,11,5
+3,8,13
+Figure 12-8. (a) Part of an uncompressed image with 24 bits per pixel. (b) The
+same part compressed with GIF, with 8 bits per pixel. (c) The color palette.
+There is another way to reduce image size, and it illustrates a different 
+tradeoff. PostScript is a programming language that can be used to describe images.
+(Actually, any programming language can describe images, but PostScript is tuned
+for this purpose.) Many printers have a PostScript interpreter built into them to be
+able to run PostScript programs sent to them.

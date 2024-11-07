@@ -1,0 +1,44 @@
+522
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+x86
+ESX hypervisor
+VMM
+VMM
+VMM
+VMM
+VM
+ESX
+VM
+VM
+VM
+Figure 7-12. ESX Server: VMware’s type 1 hypervisor.
+ESX Server (unlike VMware Workstation) required users to install a new system
+image on a boot partition.
+Despite the drawbacks, the trade-off made sense for dedicated deployments of
+virtualization in data centers, consisting of hundreds or thousands of physical 
+servers, and often (many) thousands of virtual machines. Such deployments are
+sometimes referred today as private clouds. There, the ESX Server architecture
+provides substantial benefits in terms of performance, scalability, manageability,
+and features. For example:
+1. The CPU scheduler ensures that each virtual machine gets a fair share
+of the CPU (to avoid starvation). It is also designed so that the 
+different virtual CPUs of a given multiprocessor virtual machine are
+scheduled at the same time.
+2. The memory manager is optimized for scalability, in particular to run
+virtual machines efficiently even when they need more memory than
+is actually available on the computer. To achieve this result, ESX 
+Server first introduced the notion of ballooning and transparent page
+sharing for virtual machines (Waldspurger, 2002).
+3. The I/O subsystem is optimized for performance. Although VMware
+Workstation and ESX Server often share the same front-end 
+emulation components, the back ends are totally different. In the VMware
+Workstation case, all I/O flows through the host operating system and
+its API, which often adds overhead. This is particularly true in the
+case of networking and storage devices. With ESX Server, these 
+device drivers run directly within the ESX hypervisor, without requiring
+a world switch.
+4. The back ends also typically relied on abstractions provided by the
+host operating system. For example, VMware Workstation stores 
+virtual machine images as regular (but very large) files on the host file
+system. In contrast, ESX Server has VMFS (Vaghani, 2010), a file

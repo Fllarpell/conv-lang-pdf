@@ -1,0 +1,56 @@
+SEC. 10.6
+THE LINUX FILE SYSTEM
+769
+order to hold the huge databases required. Personal computers may have an 
+internal disk or SSD and an external USB drive for backups. When there are multiple
+disk drives, the question arises of how to handle them.
+One solution is to put a self-contained file system on each one and just keep
+them separate. Consider, for example, the situation shown in Fig. 10-25(a). Here
+we have a hard disk, which we call C:, and a USB external drive, which we call D:.
+Each has its own root directory and files. With this solution, the user has to specify
+both the device and the file when anything other than the default is needed. For
+instance, to copy a file x to a directory d (assuming C: is the default), one would
+type
+cp D:/x /a/d/x
+This is the approach taken by a number of systems, including Windows, which it
+inherited from MS-DOS in a century long ago.
+/
+a
+b
+a
+c
+p
+q
+r
+q
+q
+r
+d
+/
+c
+d
+b
+USB
+/
+Hard disk
+Hard disk
+x
+y
+z
+x
+y
+z
+Figure 10-25. (a) Separate file systems. (b) After mounting.
+The Linux solution is to allow one disk to be mounted in another disk’s file
+tree. In our example, we could mount the USB drive on the directory /b, yielding
+the file system of Fig. 10-25(b). The user now sees a single file tree, and no longer
+has to be aware of which file resides on which device. The above copy command
+now becomes
+cp /b/x /a/d/x
+exactly the same as it would have been if everything had been on the hard disk in
+the first place.
+Another interesting property of the Linux file system is locking. In some
+applications, two or more processes may be using the same file at the same time,
+which may lead to race conditions. One solution is to program the application with
+critical regions. However, if the processes belong to independent users who do not
+ev en know each other, this kind of coordination is generally inconvenient.

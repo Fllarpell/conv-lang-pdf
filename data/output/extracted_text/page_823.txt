@@ -1,0 +1,43 @@
+794
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+10.8.1 Android and Google
+Android is an unusual operating system in the way it combines open-source
+code with closed-source third-party applications. The open-source part of Android
+is called the AOSP (Android Open Source Project) and is completely open and
+free to be used and modified by anyone.
+An important goal of Android is to support a rich third-party application 
+environment, which requires having a stable implementation and API for applications
+to run against. However, in an open-source world where every device 
+manufacturer can customize the platform however it wants, compatibility issues quickly
+arise. There needs to be some way to control this conflict.
+Part of the solution to this for Android is the CDD (Compatibility Definition
+Document), which describes the ways Android must behave to be compatible with
+third party applications. This document describes what is required to be a 
+compatible Android device. Without some way to enforce such compatibility, howev er, it
+will often be ignored; there needs to be some additional mechanism to do this.
+Android solves this by allowing additional proprietary services to be created
+on top of the open-source platform, providing (typically cloud-based) services that
+the platform cannot itself implement. Since these services are proprietary, they can
+restrict which devices are allowed to include them, thus requiring CDD 
+compatibility of those devices.
+Google implemented Android to be able to support a wide variety of 
+proprietary cloud services, with Google’s extensive set of services being representative
+cases: Gmail, calendar and contacts sync, cloud-to-device messaging, and many
+other services, some visible to the user, some not. When it comes to offering 
+compatible apps, the most important service is Google Play.
+Google Play is Google’s online store for Android apps. Generally when 
+developers create Android applications, they will publish with Google Play. Since
+Google Play (or any other application store) is a significant channel through which
+applications are delivered to an Android device, that proprietary service is 
+responsible for ensuring that applications will work on the devices it delivers them to.
+Google Play uses two main mechanisms to ensure compatibility. The first and
+most important is requiring that any device shipping with it must be a compatible
+Android device as per the CDD. This ensures a baseline of behavior across all 
+devices. In addition, Google Play must know about any features of a device that an
+application requires (such as having a touch screen, camera hardware, or telephony
+support) so the application is not made available on devices that lack them.
+10.8.2 History of Android
+Google developed Android in the mid-2000s, after acquiring Android as a
+startup company early in its development. Nearly all the development of the
+Android platform that exists today was done under Google’s management.

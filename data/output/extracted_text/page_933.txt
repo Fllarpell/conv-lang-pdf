@@ -1,0 +1,42 @@
+904
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+they are completely asynchronous: they can execute even when the target thread is
+not in an alertable wait state. As such, special user APCs are the equivalent of
+UNIX signals, available to developers via the QueueUserAPC2 API. Prior to the
+advent of special user APCs, developers who needed to run code in arbitrary
+threads (e.g., for garbage collection in a managed runtime) had to resort to using
+more complicated mechanisms like manually changing the context of the target
+thread using SetThreadContext.
+The executive layer also uses APCs for operations other than I/O completion.
+Because the APC mechanism is carefully designed to deliver APCs only when it is
+safe to do so, it can be used to safely terminate threads. If it is not a good time to
+terminate the thread, the thread will have declared that it was entering a critical
+region and defer deliveries of APCs until it leaves. Kernel threads mark themselves
+as entering critical regions to defer APCs when acquiring locks or other resources,
+so that they cannot be terminated while still holding the resource or deadlock due
+to reentrancy. The thread termination APC is very similar to a special user-mode
+APC except that it is ‘‘extra special’’ because it runs before any special user APC
+to terminate the thread immediately.
+Dispatcher Objects
+Another kind of synchronization object is the dispatcher object. This is any
+ordinary kernel-mode object (the kind that users can refer to with handles) that
+contains a data structure called a dispatcher header, shown in Fig. 11-13. These
+objects include semaphores, mutexes, events, waitable timers, and other objects
+that threads can wait on to synchronize execution with other threads. They also
+include objects representing open files, processes, threads, and IPC ports. The 
+dispatcher data structure contains a flag representing the signaled state of the object,
+and a queue of threads waiting for the object to be signaled.
+Notification/Synchronization flag
+Signaled state
+List head for waiting threads
+Object-specific data
+Object header
+Executive
+object
+DISPATCHER_HEADER
+Figure 11-13. Dispatcher header data structure embedded in many executive
+objects (dispatcher objects).
+Synchronization primitives, like semaphores, are natural dispatcher objects.
+Also timers, files, ports, threads, and processes use the dispatcher-object 
+mechanisms in order to do notifications. When a timer goes off, I/O completes on a file,

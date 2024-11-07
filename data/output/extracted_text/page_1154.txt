@@ -1,0 +1,102 @@
+INDEX
+1125
+CHERI, 931
+Chief programmer team, 1080
+Child partition, Hyper-V, 1003
+Child process, 40
+Linux, 724
+Chip multiprocessor, 538
+Chmod system call, 54, 791
+CHPE (see Compiled Hybrid Portable
+Executable)
+Chromebook, 420
+ChromeOS, 420
+Chroot system call, 481, 504–505
+CIG (see Code Integrity Guard)
+Ciphertext, 632
+Circuit switching, 560
+Circular buffer, 365
+Class driver, Windows, 910
+Classical IPC problem
+dining philosophers, 440–444
+producer-consumer, 128–129
+readers and writers, 132–133
+Classical thread model, 102–106
+Cleaner process, LFS, 291
+Cleaning policy, 225
+Client, 68
+X, 404
+Client library, 880
+Client stub, 569
+Client-server, 68
+Client-server operating system, 68–69
+Clock, 390–395
+Clock hardware, 390–391
+Clock mode, one-shot, 391
+square-wav e mode, 391
+Clock page replacement algorithm, 211–212
+Clock software, 391–394
+Clock tick, 391
+Clone system call, 734, 735, 736, 1059
+Close system call, 54, 269, 761, 771, 785, 786
+Close Win32 call, 982, 985
+Closedir system call, 277
+Cloud, 479, 501–507
+Cloud computing, 14
+Clouds as a service, 502–503
+Cluster computer, 558
+Cluster of workstations, 558
+Cluster size, 325
+CMOS memory, 27
+CMP (see Chip MultiProcessors)
+CMS (see Conversational Monitor System)
+Co-scheduling, 555
+Code and data integrity check, 689
+Code integrity guard, Windows, 1030
+Code review, 680
+Code signing, 692
+Code-injection attack, 652
+Code-reuse attack, 653–655
+Coherency wall, 539
+Colossus, 8
+COM (see Component Object-Model)
+Command interpreter, 40, 46
+Command-injection attack, 666–667
+Commit charge, Windows, 959
+Commit limit, Windows, 958
+Committed page, Windows, 958
+Common criteria, 908
+Common object request broker architecture, 595
+Communication deadlock, 465–466
+Communication software, 562–564
+multicomputer, 562–570
+user-level, 565–568
+Compare&swap, Windows, 897
+Comparison of threading models, 118
+Compatibility definition document, 794
+Compatible time sharing system, 13, 1046
+Competition synchronization, 465
+Compiled hybrid portable executable, 953
+Completely fair scheduler, 739
+Completely fair scheduling, 166
+Completeness principle, 1046–1047
+Component object-model, 892
+Compression, file, 321, 998–999
+Compression and deduplication, 321
+Compute-bound process, 154
+Condition variable, 141
+Windows, 939
+Confidential computing, 688
+Confidentiality, 608
+Configuration manager, Windows, 908
+Confinement problem, 669
+Connect system call, 760
+Connected standby, Windows, 1002
+Connection-oriented service, 585
+Connectionless service, 585
+Consistency, file system, 312–315
+Constant time, 674
+Container, 73, 480, 504
+Hyper-V, 1015–1016
+Linux, 814, 818, 821
+Containing security damage, Windows, 1031–1032

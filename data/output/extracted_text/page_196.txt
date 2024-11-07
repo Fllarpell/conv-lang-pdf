@@ -1,0 +1,43 @@
+SEC. 2.5
+SCHEDULING
+167
+To paraphrase George Orwell: ‘‘All processes are equal, but some processes
+are more equal.’’ More important processes can be given extra tickets, to increase
+their odds of winning. If there are 100 tickets outstanding, and one process holds
+20 of them, it will have a 20% chance of winning each lottery. In the long run, it
+will get about 20% of the CPU. In contrast to a priority scheduler, where it is very
+hard to state what having a priority of 40 actually means, here the rule is clear: a
+process holding a fraction f of the tickets will get about a fraction f of the resource
+in question.
+Lottery scheduling has several interesting properties. For example, if a new
+process shows up and is granted some tickets, at the very next lottery it will have a
+chance of winning in proportion to the number of tickets it holds. In other words,
+lottery scheduling is highly responsive.
+Cooperating processes may exchange tickets if they wish. For example, when a
+client process sends a message to a server process and then blocks, it may give all
+of its tickets to the server, to increase the chance of the server running next. When
+the server is finished, it returns the tickets so that the client can run again. In fact,
+in the absence of clients, servers need no tickets at all.
+Lottery scheduling can be used to solve problems that are difficult to handle
+with other methods. One example is a video server in which several processes are
+feeding video streams to their clients, but at different frame rates. Suppose that the
+processes need frames at 10, 20, and 25 frames/sec. By allocating these processes
+10, 20, and 25 tickets, respectively, they will automatically divide the CPU in
+approximately the correct proportion, that is, 10:20:25.
+Fair-Share Scheduling
+So far we have assumed that each process is scheduled on its own, without
+regard to who its owner is. As a result, if user 1 starts up nine processes and user 2
+starts up one process, with round robin or equal priorities, user 1 will get 90% of
+the CPU and user 2 only 10% of it.
+To prevent this situation, some systems take into account which user owns a
+process before scheduling it. In this model, each user is allocated some fraction of
+the CPU and the scheduler picks processes in such a way as to enforce it. Thus, if
+two users have each been promised 50% of the CPU, they will each get that, no
+matter how many processes they hav e in existence.
+As an example, consider a system with two users, each of which has been
+promised 50% of the CPU. User 1 has four processes, A, B, C, and D, and user 2
+has only one process, E. If round-robin scheduling is used, a possible scheduling
+sequence that meets all the constraints is this one:
+A E B E C E D E A E B E C E D E ...
+On the other hand, if user 1 is entitled to twice as much CPU time as user 2, we
+might get:

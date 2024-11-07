@@ -1,0 +1,46 @@
+1014
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+and give them an opportunity to initialize their state and do any other prep work
+required. If any of these steps fail, then the server silo boot fails, and the container
+is torn down.
+Finally, the initial user mode process smss.exe is started within the container.
+At this p,oint the user mode portions of the OS boot up. A new instance of
+csrss.exe is started (the Win32 subsystem process), a new instance of lsass.exe (the
+local security authority subsystem), a new service control manager, etc. For the
+most part, everything works in the same way it would if booting user mode on the
+host. Some things are different in the container, though. For example, an interactive
+user session is not created—it is not needed since the container is headless. But
+these changes are just configuration changes, driven by existing mechanisms. The
+difference in behavior is because the virtualized registry state for the container is
+configured that way.
+As the container boots, it is booting from a VHD (Virtual Hard Disk). 
+Howev er, that VHD is mostly empty. The file system virtualization driver, wcifs.sys,
+provides the appearance to the processes running within the container that the hard
+disk is fully populated. The backing store for the container’s disk contents is
+spread across one or more directories on the host as illustrated in Fig. 11-53. Each
+of these host directories represents an image layer. The bottom-most layer is
+known as the base layer and is provided by Microsoft. Subsequent layers are 
+various deltas to this bottom layer, potentially changing configuration settings in the
+virtualized registry hives, or additions, changes, or deletions (represented with 
+special tombstone files to the file system. At runtime, the file system namespace 
+filter merges each of these directories together to create the view exposed to the 
+container. Each of these layers is immutable and can be shared across containers. As
+the container runs and makes changes to the file system, those changes are 
+captured on the VHD exposed to the container. In this way, the VHD will contain
+deltas from the layers below. It is possible to later shut down the container and
+make a new layer based on the contents of the VHD. Or if the container is no
+longer needed, it can be disposed of, and all persisted side effects deleted.
+Certain operations are blocked within a container. For example, a container is
+not allowed to load a kernel driver as doing so might allow an avenue to escape the
+containment. Additionally, certain functionality such as changing the time is 
+blocked within the container. Typically, such operations are protected by privilege
+checks. These privilege checks are augmented when running in the container so
+that the operations that should be blocked within a container are blocked regardless
+of the privilege enabled in the caller’s token. Other operations, such as changing
+the time zone, are allowed if the required privilege is held but the operation is 
+virtualized so that only processes within the container use the new time zone.
+A container can be terminated in a few ways. First, it can be terminated from
+the outside (via the management stack) which is like a forced shutdown. Second, it
+can be terminated from inside the container when a process calls a Win32 API to
+shut down Windows, such as ExitWindowsEx or InitiateSystemShutdown. When

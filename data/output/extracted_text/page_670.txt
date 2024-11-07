@@ -1,0 +1,43 @@
+SEC. 9.4
+AUTHENTICATION
+641
+a series of ASCII lines, one per user, until it finds the line containing the user’s
+login name. If the (encrypted) password contained in this line matches the 
+encrypted password just computed, the login is permitted, otherwise it is refused. The
+advantage of this scheme is that no one, not even the superuser, can look up any
+users’ passwords because they are not stored in unencrypted form anywhere in the
+system. For illustration purposes, we assume for now that the encrypted password
+is stored in the password file itself. Later, we will see, this is no longer the case for
+modern variants of UNIX.
+If the attacker manages to get hold of the encrypted password, the scheme can
+be attacked, as follows. A cracker first builds a dictionary of likely passwords the
+way Morris and Thompson did. At leisure, these are encrypted using the known
+algorithm. It does not matter how long this process takes because it is done in 
+advance of the break-in. Now armed with a list of (password, encrypted password)
+pairs, the cracker strikes. He reads the (publicly accessible) password file and
+strips out all the encrypted passwords. These are compared to the encrypted 
+passwords in his list. For every hit, the login name and unencrypted password are now
+known. A simple shell script can automate this process so it can be carried out in a
+fraction of a second. A typical run of the script will yield dozens of passwords.
+After recognizing the possibility of this attack, Morris and Thompson 
+described a technique that renders the attack almost useless. Their idea is to associate an
+n-bit random number, called the salt, with each password. The random number is
+changed whenever the password is changed. The random number is stored in the
+password file in unencrypted form, so that everyone can read it. Instead of just
+storing the encrypted password in the password file, the password and the random
+number are first concatenated and then encrypted together. This encrypted result is
+then stored in the password file, as shown in Fig. 9-15 for a password file with fiv e
+users, Bobbie, Tony, Laura, Mark, and Deborah. Each user has one line in the file,
+with three entries separated by commas: login name, salt, and encrypted password
++ salt. The notation e(Dog, 4238) represents the result of concatenating Bobbie’s
+password, Dog, with her randomly assigned salt, 4238, and running it through the
+encryption function, e. It is the result of that encryption that is stored as the third
+field of Bobbie’s entry.
+Bobbie, 4238, e(Dog, 4238)
+Tony, 2918, e(6%%TaeFF, 2918)
+Laura, 6902, e(Shakespeare, 6902)
+Mar k, 1694, e(XaB#Bwcz, 1694)
+Deborah, 1092, e(LordByron,1092)
+Figure 9-15. The use of salt to defeat precomputation of encrypted passwords.
+Now consider the implications for a cracker who wants to build up a list of
+likely passwords, encrypt them, and save the results in a sorted file, f, so that any

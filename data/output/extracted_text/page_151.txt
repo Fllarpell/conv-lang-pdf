@@ -1,0 +1,46 @@
+122
+PROCESSES AND THREADS
+CHAP. 2
+A enters critical region
+A leaves critical region
+B attempts to!
+enter critical !
+region
+B enters!
+critical region
+T1
+T2
+T3
+T4
+Process A 
+Process B 
+B blocked
+B leaves!
+critical region
+Time
+Figure 2-22. Mutual exclusion using critical regions.
+is only switched from process to process as a result of clock interrupt or other
+interrupts, after all, and with interrupts turned off the CPU will not be switched to
+another process. Thus, once a process has disabled interrupts, it can examine and
+update the shared memory without fear that any other process will intervene and
+make a mess of things.
+This approach is generally unattractive because it is unwise to give user 
+processes the power to turn off interrupts. What if one of them did it, and never turned
+them on again? That could be the end of the system. Furthermore, if the system is
+a multiprocessor (with two or more CPUs), disabling interrupts affects only the
+CPU that executed the disable instruction. The other ones will continue running
+and can access the shared memory.
+On the other hand, it is frequently convenient for the kernel itself to disable
+interrupts for a few instructions while it is updating variables or especially critical
+lists. If an interrupt occurs while the list of ready processes, for example, is in an
+inconsistent state, race conditions could occur. The conclusion is: disabling 
+interrupts is often a useful technique within the operating system itself but is not 
+appropriate as a general mutual exclusion mechanism for user processes. The kernel
+should not disable interrupts for more than a few instructions lest it miss interrupts.
+The possibility of achieving mutual exclusion by disabling interrupts—even
+within the kernel—is becoming less every day due to the increasing number of
+multicore chips even in low-end PCs. Two cores are already common, 4 are present
+in many machines, and 8, 16, or 32 are not far behind. In a multicore (i.e., 
+multiprocessor system), disabling the interrupts of one CPU does not prevent other
+CPUs from interfering with operations the first CPU is performing. Consequently,
+more sophisticated schemes are needed.

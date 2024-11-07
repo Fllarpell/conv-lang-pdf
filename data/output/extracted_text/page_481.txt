@@ -1,0 +1,62 @@
+452
+DEADLOCKS 
+CHAP. 6
+At any instant, some of the resources are assigned and are not available. Let A
+be the av ailable resource vector, with Ai giving the number of instances of
+resource i that are currently available (i.e., unassigned). If both of our two tape
+drives are assigned, A1 will be 0.
+Now we need two arrays, C, the current allocation matrix, and R, the request
+matrix. The ith row of C tells how many instances of each resource class Pi 
+currently holds. Thus, Cij is the number of instances of resource j that are held by
+process i. Similarly, Rij is the number of instances of resource j that Pi wants.
+These four data structures are shown in Fig. 6-9.
+Resources in existence"
+(E1, E2, E3, …, Em)
+Current allocation matrix
+C11
+C21
+Cn1
+C12
+C22
+Cn2
+C13
+C23
+Cn3
+C1m
+C2m
+Cnm
+Row n is current allocation"
+to process n
+Resources available"
+(A1, A2, A3, …, Am)
+Request matrix
+R11
+R21
+Rn1
+R12
+R22
+Rn2
+R13
+R23
+Rn3
+R1m
+R2m
+Rnm
+Row 2 is what process 2 needs
+Figure 6-9. The four data structures needed by the deadlock detection algorithm.
+An important invariant holds for these four data structures. In particular, every
+resource is either allocated or is available. This observation means that
+n
+i=1Y Cij + A j = E j. SP0. 6v
+In other words, if we add up all the instances of the resource j that have been 
+allocated and to this add all the instances that are available, the result is the number of
+instances of that resource class that exist.
+The deadlock detection algorithm is based on comparing vectors. Let us
+define the relation A ) B on two vectors A and B to mean that each element of A is
+less than or equal to the corresponding element of B. Mathematically, A ) B holds
+if and only if Ai ) Bi for 1 ) i ) m.
+Each process is initially said to be unmarked. As the algorithm progresses,
+processes will be marked, indicating that they are able to complete and are thus not
+deadlocked. When the algorithm terminates, any unmarked processes are known
+to be deadlocked. This algorithm assumes a worst-case scenario: all processes
+keep all acquired resources until they exit.

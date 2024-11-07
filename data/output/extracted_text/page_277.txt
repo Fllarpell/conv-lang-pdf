@@ -1,0 +1,41 @@
+248
+MEMORY MANAGEMENT 
+CHAP. 3
+3.7.3 Segmentation with Paging: The Intel x86
+Up until the x86-64, the virtual memory system of the x86 resembled that of
+MULTICS in many ways, including the presence of both segmentation and paging.
+Whereas MULTICS had 256K independent segments, each up to 64K 36-bit
+words, the x86 has 16K independent segments, each holding up to 1 billion 32-bit
+words. Although there are fewer segments, the larger segment size is far more
+important, as few programs need more than 1000 segments, but many programs
+need large segments. As of x86-64, segmentation is considered obsolete and is no
+longer supported, except in legacy mode. Although some vestiges of the old 
+segmentation mechanisms are still available in x86-64’s native mode, mostly for 
+compatibility, they no longer serve the same role and no longer offer true segmentation.
+The x86-32, however, still comes equipped with the whole shebang.
+So why did Intel kill what was a variant of the perfectly good MULTICS 
+memory model that it supported for close to three decades? Probably the main reason is
+that neither UNIX nor Windows ever used it, even though it was quite efficient
+because it eliminated system calls, turning them into lightning-fast procedure calls
+to the relevant address within a protected operating system segment. None of the
+developers of any UNIX or Windows system wanted to change their memory 
+model to something that was x86 specific because it would surely break portability to
+other platforms. Since the software was not using the feature, Intel got tired of
+wasting chip area to support it and removed it from the 64-bit CPUs.
+All in all, one has to give credit to the x86 designers. Given the conflicting
+goals of implementing pure paging, pure segmentation, and paged segments, while
+at the same time being compatible with the 286, and doing all of this efficiently,
+the resulting design is surprisingly simple and clean.
+3.8 RESEARCH ON MEMORY MANAGEMENT
+Memory management is an active research area and every year brings a new
+harvest of publications to improve a system’s security, performance, or both. Also,
+while traditional memory management topics, especially paging algorithms for
+uniprocessor CPUs, has largely died off, researchers now look at new types of 
+storage, or at incorporating memory on remote machines (Ruan et al., 2020). Also,
+some people never say die and even the good old fork system call has been given a
+do-over. Observing that the performance of fork has become a bottleneck for 
+memory intensive applications, as all the page tables must be copied first, even if the
+data and code pages themselves are shared copy-on-write, as a logical next step,
+researchers decided to also share the page tables copy-on-write (Zhao, 2021).
+Memory management in datacenters and clouds is complicated. For instance, a
+big problem arises when a virtual machine is happily humming along when all of a

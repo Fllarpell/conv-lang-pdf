@@ -1,0 +1,48 @@
+SEC. 11.2
+PROGRAMMING WINDOWS
+885
+Object category
+Examples
+Synchronization 
+Semaphores, mutexes, events, IPC ports, I/O completion queues
+I/O 
+Files, devices, drivers, timers
+Program
+Jobs, processes, threads, sections, tokens
+Win32 GUI
+Desktops, application callbacks
+Figure 11-6. Common categories of kernel-mode object types.
+In the native NT API, calls are available to create new kernel-mode objects or
+access existing ones. Every call creating or opening an object returns a handle to
+the caller. A handle in Windows is somewhat analogous to a file descriptor in
+UNIX, except that it can be used for more types of objects than just files. The
+handle can subsequently be used to perform operations on the object. Handles are
+specific to the process that created them. In general, handles cannot be passed
+directly to another process and used to refer to the same object. However, under
+certain circumstances, it is possible to duplicate a handle into the handle table of
+other processes in a protected way, allowing processes to share access to objects—
+ev en if the objects are not accessible in the namespace. The process duplicating
+each handle must itself have handles for both the source and target process.
+Every object has a security descriptor associated with it, telling in detail who
+may and may not perform what kinds of operations on the object based on the
+access requested. When handles are duplicated between processes, new access
+restrictions can be added that are specific to the duplicated handle. Thus, a process
+can duplicate a read-write handle and turn it into a read-only version in the target
+process.
+Figure 11-7 shows a sampling of the native APIs, all of which use explicit
+handles to manipulate kernel-mode objects such as processes, threads, IPC ports,
+and sections (which are used to describe memory objects that can be mapped into
+address spaces). NtCreateProcess returns a handle to a newly created process
+object, representing an executing instance of the program represented by the 
+SectionHandle. DebugPor tHandle is used to communicate with a debugger when 
+giving it control of the process after an exception (e.g., dividing by zero or accessing
+invalid memory). ExceptPor tHandle is used to communicate with a subsystem
+process when errors occur and are not handled by an attached debugger.
+NtCreateThread takes ProcHandle because it can create a thread in any process
+for which the calling process has a handle (with sufficient access rights). In a 
+similar vein, NtAllocateVir tualMemory, NtMapViewOfSection, NtReadVir tualMemory,
+and NtWr iteVirtualMemor y allow one process not only to operate on its own
+address space, but also to allocate virtual addresses, map sections, and read or
+write virtual memory in other processes. NtCreateFile is the native API call for
+creating a new file or opening an existing one. NtDuplicateObject is the API call
+for duplicating handles from one process to another.

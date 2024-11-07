@@ -1,0 +1,42 @@
+814
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+the same file multiple times will allocate a different descriptor each time. The
+Binder IPC system maintains unique object identities as those objects move
+between processes.
+The Binder architecture essentially introduces a capability-based security
+model to Linux. Each Binder object is a capability. Sending an object to another
+process grants that capability to the process. The receiving process may then make
+use of whatever features the object provides. A process can send an object out to
+another process, later receive an object from any process, and identify whether that
+received object is exactly the same object it originally sent out.
+Binder User-Space API
+Most user-space code does not directly interact with the Binder kernel module.
+Instead, there is a user-space object-oriented library that provides a simpler API.
+The first level of these user-space APIs maps fairly directly to the kernel concepts
+we have covered so far, in the form of three classes:
+1. IBinder is an abstract interface for a Binder object. Its key method is
+transact, which submits a transaction to the object.
+The 
+implementation receiving the transaction may be an object either in the
+local process or in another process; if it is in another process, this will
+be delivered to it through the Binder kernel module as previously 
+discussed.
+2. Binder is a concrete Binder object. Implementing a Binder subclass
+gives you a class that can be called by other processes. Its key 
+method is onTransact, which receives a transaction that was sent to it. The
+main responsibility of a Binder subclass is to look at the transaction
+data it receives here and perform the appropriate operation.
+3. Parcel is a container for reading and writing data that are in a Binder
+transaction. It has methods for reading and writing typed 
+data—integers, strings, arrays—but most importantly it can read and write 
+references to any IBinder object, using the appropriate data structure for
+the kernel to understand and transport that reference across processes.
+Figure 10-46 depicts how these classes work together, modifying Fig. 10-44
+that we previously looked at with the user-space classes that are used. Here we see
+that Binder1b and Binder2a are instances of concrete Binder subclasses. To 
+perform an IPC, a process now creates a Parcel containing the desired data, and sends
+it through another class we have not yet seen, BinderProxy. This class is created
+whenever a new handle appears in a process, thus providing an implementation of
+IBinder whose transact method creates the appropriate transaction for the call and
+submits it to the kernel.

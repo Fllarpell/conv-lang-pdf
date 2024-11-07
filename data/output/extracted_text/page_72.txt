@@ -1,0 +1,42 @@
+SEC. 1.5
+OPERATING SYSTEM CONCEPTS
+43
+Root directory
+Students
+Faculty
+Leo
+Prof.Brown
+Files
+Courses
+CS101
+CS105
+Papers
+Grants
+SOSP
+COST-11
+Committees
+Prof.Green
+Prof.White
+Matty
+Robbert
+Figure 1-14. A file system for a university department.
+The process and file hierarchies both are organized as trees, but the similarity
+stops there. Process hierarchies usually are not very deep (more than fiv e levels is
+unusual), whereas file hierarchies are commonly six, seven, or even more levels
+deep. Process hierarchies are typically more short-lived than directory hierarchies
+which may exist for years. Ownership and protection also differ for processes and
+files. Typically, only a parent process may control or even access a child process,
+but mechanisms nearly always exist to allow files and directories to be read by a
+wider group than just the owner.
+Every file within the directory hierarchy can be specified by giving its path
+name from the top of the directory hierarchy, the root directory. Such absolute
+path names consist of the list of directories that must be traversed from the root
+directory to get to the file, with slashes separating the components. In Fig. 1-14,
+the path for file CS101 is /Faculty/Prof.Brown/Courses/CS101. The leading slash
+indicates that the path is absolute, that is, starting at the root directory. As an aside,
+in Windows, the backslash (\) character is used as the separator instead of the slash
+(/) character (for historical reasons), so the file path given above would be written
+as \Faculty\Prof.Brown\Courses\CS101. Throughout this book, we will generally
+use the UNIX convention for paths.
+At every instant, each process has a current working directory, in which path
+names not beginning with a slash are looked for. For example, in Fig. 1-14, if

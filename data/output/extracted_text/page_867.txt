@@ -1,0 +1,51 @@
+838
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+words, Android uses an existing core feature in Linux, but in a novel way. The
+result is better isolation.
+Application security in Android revolves around UIDs. In Linux, each process
+runs as a specific UID, and Android uses the UID to identify and protect security
+barriers. The only way to interact across processes is through some IPC 
+mechanism, which generally carries with it enough information to identify the UID of the
+caller. Binder IPC explicitly includes this information in every transaction 
+delivered across processes so a recipient of the IPC can easily ask for the UID of the
+caller.
+Android predefines a number of standard UIDs for the lower-level parts of the
+system, but most applications are dynamically assigned a UID, at first boot or
+install time, from a range of ‘‘application UIDs.’’ Figure 10-66 illustrates some
+common mappings of UID values to their meanings. UIDs below 10000 are fixed
+assignments within the system for dedicated hardware or other specific parts of the
+implementation; some typical values in this range are shown here. In the range
+10000–19999 are UIDs dynamically assigned to applications by the package 
+manager when it installs them; this means at most 10,000 applications can be installed
+on the system. Also note the range starting at 100000, which is used to implement
+a traditional multiuser model for Android: an application that is granted UID
+10002 as its identity would be identified as 110002 when running as a second user.
+UID 
+Purpose
+0
+Root
+1000 
+Core system (system ser ver process)
+1001 
+Telephony ser vices
+1013 
+Low-level media processes
+2000 
+Command line shell access
+10000–19999 
+Dynamically assigned application UIDs
+100000 
+Start of secondar y users
+Figure 10-66. Common UID assignments in Android.
+When an application is first assigned a UID, a new storage directory is created
+for it, with the files there owned by its UID. The application gets full access to its
+private files there, but cannot access the files of other applications, nor can the
+other applications touch its own files. This makes content providers, as discussed
+in the earlier section on applications, especially important, as they are one of the
+few mechanisms that can transfer data between applications.
+Even the system itself, running as UID 1000, cannot touch the files of 
+applications. This is why the installd daemon exists: it runs with special privileges to be
+able to access and create files and directories for other applications. There is a
+very restricted API installd provided to the package manager for it to create and
+manage the data directories of applications as needed.

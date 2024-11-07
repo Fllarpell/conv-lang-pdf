@@ -1,0 +1,43 @@
+x
+CONTENTS
+2.5 
+SCHEDULING 152
+2.5.1 Introduction to Scheduling 153
+2.5.2 Scheduling in Batch Systems 160
+2.5.3 Scheduling in Interactive Systems 162
+2.5.4 Scheduling in Real-Time Systems 168
+2.5.5 Policy Versus Mechanism 169
+2.5.6 Thread Scheduling 169
+2.6 
+RESEARCH ON PROCESSES AND THREADS 171
+2.7 
+SUMMARY 172
+3
+MEMORY MANAGEMENT
+179
+3.1 
+NO MEMORY ABSTRACTION 180
+3.1.1 Running Multiple Programs Without a Memory Abstraction 181
+3.2 
+A MEMORY ABSTRACTION: ADDRESS SPACES 183
+3.2.1 The Notion of an Address Space 184
+3.2.2 Swapping 185
+3.2.3 Managing Free Memory 188
+3.3 
+VIRTUAL MEMORY 192
+3.3.1 Paging 193
+3.3.2 Page Tables 196
+3.3.3 Speeding Up Paging 200
+3.3.4 Page Tables for Large Memories 203
+3.4 
+PAGE REPLACEMENT ALGORITHMS 207
+3.4.1 The Optimal Page Replacement Algorithm 208
+3.4.2 The Not Recently Used Page Replacement Algorithm 209
+3.4.3 The First-In, First-Out (FIFO) Page Replacement Algorithm 210
+3.4.4 The Second-Chance Page Replacement Algorithm 210
+3.4.5 The Clock Page Replacement Algorithm 211
+3.4.6 The Least Recently Used (LRU) Page Replacement Algorithm 212
+3.4.7 Simulating LRU in Software 212
+3.4.8 The Working Set Page Replacement Algorithm 214
+3.4.9 The WSClock Page Replacement Algorithm 218
+3.4.10 Summary of Page Replacement Algorithms 220

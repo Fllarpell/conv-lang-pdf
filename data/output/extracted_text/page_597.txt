@@ -1,0 +1,42 @@
+568
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+1. Blocking send (CPU idle during message transmission).
+2. Nonblocking send with copy (CPU time wasted for the extra copy).
+3. Nonblocking send with interrupt (makes programming difficult).
+4. Copy on write (extra copy probably needed eventually).
+Under normal conditions, the first choice is the most convenient, especially if 
+multiple threads are available, in which case while one thread is blocked trying to
+send, one or more other threads can continue working. It also does not require any
+kernel buffers to be managed. Furthermore, as can be seen from comparing
+Fig. 8-19(a) to Fig. 8-19(b), the message will usually be out the door faster if no
+copy is required.
+For the record, we would like to point out that some authors use a different 
+criterion to distinguish synchronous from asynchronous primitives. In the alternative
+view, a call is synchronous only if the sender is blocked until the message has been
+received and an acknowledgement sent back (Andrews, 1991). In the world of
+real-time communication, synchronous has yet another meaning, which can lead to
+confusion, unfortunately.
+Just as send can be blocking or nonblocking, so can receive. A blocking call
+just suspends the caller until a message has arrived. If multiple threads are 
+available, this is a simple approach. Alternatively, a nonblocking receive just tells the
+kernel where the buffer is and returns control almost immediately. An interrupt
+can be used to signal that a message has arrived. However, interrupts are difficult
+to program and are also quite slow, so it may be preferable for the receiver to poll
+for incoming messages using a procedure, poll, that tells whether any messages are
+waiting. If so, the called can call get message, which returns the first arrived 
+message. In some systems, the compiler can insert poll calls in the code at appropriate
+places, although knowing how often to poll is tricky.
+Yet another option is a scheme in which the arrival of a message causes a new
+thread to be created spontaneously in the receiving process’ address space. Such a
+thread is called a pop-up thread. It runs a procedure specified in advance and
+whose parameter is a pointer to the incoming message. After processing the 
+message, it simply exits and is automatically destroyed.
+A variant on this idea is to run the receiver code directly in the interrupt 
+handler, without going to the trouble of creating a pop-up thread. To make this scheme
+ev en faster, the message itself contains the address of the handler, so when a 
+message arrives, the handler can be called in a few instructions. The big win here is
+that no copying at all is needed. The handler takes the message from the interface
+board and processes it on the fly. This scheme is called active messages (Von
+Eicken et al., 1992). Since each message contains the address of the handler,
+active messages work only when senders and receivers trust each other completely.

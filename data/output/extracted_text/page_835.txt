@@ -1,0 +1,45 @@
+806
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+Out-of-Memory Killer
+Linux includes an ‘‘out-of-memory killer’’ that attempts to recover when 
+memory is extremely low. Out-of-memory situations on modern operating systems are
+nebulous affairs. With paging and swap, it is rare for applications themselves to see
+out-of-memory failures. However, the kernel can still get in to a situation where it
+is unable to find available RAM pages when needed, not just for a new allocation,
+but when swapping in or paging in some address range that is now being used.
+In such a low-memory situation, the standard Linux out-of-memory killer is a
+last resort to try to find RAM so that the kernel can continue with whatever it is
+doing. This is done by assigning each process a ‘‘badness’’ lev el, and simply
+killing the process that is considered the most bad. A process’s badness is based on
+the amount of RAM being used by the process, how long it has been running, and
+other factors; the goal is to kill large processes that are hopefully not critical.
+Android puts special pressure on the out-of-memory killer. It does not have a
+swap space, so it is much more common to be in out-of-memory situations: there is
+no way to relieve memory pressure except by dropping clean RAM pages mapped
+from storage that has been recently used. Even so, Android uses the standard
+Linux configuration to over-commit memory—that is, allow address space to be
+allocated in RAM without a guarantee that there is available RAM to back it. 
+Overcommit is an extremely important tool for optimizing memory use, since it is 
+common to mmap large files (such as executables) where you will only be needing to
+load into RAM small parts of the overall data in that file.
+Given this situation, the stock Linux out-of-memory killer does not work well,
+as it is intended more as a last resort and has a hard time correctly identifying good
+processes to kill. In fact, as we will discuss later, Android relies extensively on the
+out-of-memory killer running regularly to reap processes and make good choices
+about which to select.
+To address this, Android introduced its own out-of-memory killer to the kernel,
+with different semantics and design goals. The Android out-of-memory killer runs
+much more aggressively: whenever RAM is getting ‘‘low.’’ Low RAM is identified
+by a tunable parameter indicating how much available free and cached RAM in the
+kernel is acceptable. When the system goes below that limit, the out-of-memory
+killer runs to release RAM from elsewhere. The goal is to ensure that the system
+never gets into bad paging states, which can negatively impact the user experience
+when foreground applications are competing for RAM, since their execution
+becomes much slower due to continual paging in and out.
+Instead of trying to guess which processes are least useful and therefore should
+be killed, the Android out-of-memory killer relies very strictly on information 
+provided to it by user space. The traditional Linux out-of-memory killer has a
+per-process oom adj parameter that can be used to guide it toward the best process
+to kill by modifying the process’ overall badness score. Android’s original 
+outof-memory killer used this same parameter, but as a strict ordering: processes with

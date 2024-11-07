@@ -1,0 +1,41 @@
+92
+PROCESSES AND THREADS
+CHAP. 2
+As another example of where the process hierarchy plays a key role, let us look
+at how UNIX initializes itself when it is started, just after the computer is booted.
+A special process, called init, is present in the boot image. When it starts running,
+it reads a file telling how many terminals there are. Then it forks off a new process
+per terminal. These processes wait for someone to log in. If a login is successful,
+the login process executes a shell to accept commands. These commands may start
+up more processes, and so forth. Thus, all the processes in the whole system
+belong to a single tree, with init at the root.
+In contrast, Windows has no concept of a process hierarchy. All processes are
+equal. The only hint of a process hierarchy is that when a process is created, the
+parent is given a special token (called a handle) that it can use to control the child.
+However, it is free to pass this token to some other process, thus invalidating the
+hierarchy. Processes in UNIX cannot disinherit their children.
+2.1.5 Process States
+Although each process is an independent entity, with its own program counter
+and internal state, processes often need to interact with other processes. One 
+process may generate some output that another process uses as input. In the command
+cat chapter1 chapter2 chapter3 | grep tree
+the first process, running cat, concatenates and outputs three files. The second
+process, running grep, selects all lines containing the word ‘‘tree.’’ Depending on
+the relative speeds of the two processes (which depends on both the relative 
+complexity of the programs and how much CPU time each one has had), it may happen
+that grep is ready to run, but there is no input waiting for it. It must then block
+until some input is available.
+When a process blocks, it does so because logically it cannot continue, 
+typically because it is waiting for input that is not yet available. It is also possible for a
+process that is conceptually ready and able to run to be stopped because the 
+operating system has decided to allocate the CPU to another process for a while. These
+two conditions are completely different. In the first case, the suspension is inherent
+in the problem (you cannot process the user’s command line until it has been
+typed). In the second case, it is a technicality of the system (not enough CPUs to
+give each process its own private processor). In Fig. 2-2 we see a state diagram
+showing the three states a process may be in:
+1. Running (actually using the CPU at that instant).
+2. Ready (runnable; temporarily stopped to let another process run).
+3. Blocked (unable to run until some external event happens).
+Logically, the first two states are similar. In both cases the process is willing to run,
+only in the second one, there is temporarily no CPU available for it. The third state

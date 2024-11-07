@@ -1,0 +1,44 @@
+500
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+the hypervisor must either contain the driver itself, or make a call to a driver in
+domain 0, which is somewhat similar to a host operating system. As virtual
+machine technology matures, future hardware is likely to allow application 
+programs to access the hardware directly in a secure way, meaning that device drivers
+can be linked directly with application code or put in separate user-mode servers
+(as in MINIX3), thereby eliminating the problem.
+Single Root I/O Virtualization
+Directly assigning a device to a virtual machine is not very scalable. With four
+physical networks you can support no more than four virtual machines that way.
+For eight virtual machines you need eight network cards, and to run 128 virtual
+machines—well, let’s just say that it may be hard to find your computer buried
+under all those network cables.
+Sharing devices among multiple hypervisors in software is possible, but often
+not optimal because an emulation layer (or device domain) interposes itself
+between hardware and the drivers and the guest operating systems. The emulated
+device frequently does not implement all the advanced functions supported by the
+hardware. Ideally, the virtualization technology would offer the equivalence of 
+device pass through of a single device to multiple hypervisors, without any overhead.
+Virtualizing a single device to trick every virtual machine into believing that it has
+exclusive access to its own device is much easier if the hardware actually does the
+virtualization for you. On PCIe, this is known as single root I/O virtualization.
+SR-IOV (Single Root I/O Virtualization) allows us to bypass the 
+hypervisor’s inv olvement in the communication between the driver and the device.
+Devices that support SR-IOV provide an independent memory space, interrupts
+and DMA streams to each virtual machine that uses it (Intel, 2011). The device
+appears as multiple separate devices and each can be configured by separate virtual
+machines. For instance, each will have a separate base address register and address
+space. A virtual machine maps one of these memory areas (used for instance to
+configure the device) into its address space.
+SR-IOV provides access to the device in two flavors: PF (Physical Functions)
+and (Virtual Functions). PFs are full PCIe functions and allow the device to be
+configured in whatever way the administrator sees fit. Physical functions are not
+accessible to guest operating systems. VFs are lightweight PCIe functions that do
+not offer such configuration options. They are ideally suited for virtual machines.
+In summary, SR-IOV allows devices to be virtualized in (up to) hundreds of virtual
+functions that trick virtual machines into believing they are the sole owner of a 
+device. For example, given an SR-IOV network interface, a virtual machine is able to
+handle its virtual network card just like a physical one. Better still, many modern
+network cards have separate (circular) buffers for sending and receiving data, 
+dedicated to this virtual machines. For instance, the Intel I350 series of network cards
+has eight send and eight receive queues.

@@ -1,0 +1,49 @@
+SEC. 9.5
+EXPLOITING SOFTWARE
+657
+07. 
+if (author ized != 0) {
+08. 
+printf ("Welcome %s, here is all our secret data\n", name)
+09. 
+/* ... show secret data ... */
+10. 
+} else
+11. 
+printf ("Sorry %s, but you are not authorized.\n", name);
+12. 
+}
+13. }
+The code is meant to do an authorization check. Only users with the right 
+credentials are allowed to see the top secret data. The function check credentials is
+not a function from the C library, but we assume that it exists somewhere in the
+program and does not contain any errors. Now suppose the attacker types in 129
+characters. As in the previous case, the buffer will overflow, but it will not modify
+the return address. Instead, the attacker has modified the value of the authorized
+variable, giving it a value that is not 0. The program does not crash and does not
+execute any attacker code, but it leaks secret information to an unauthorized user.
+Buffer Overflows—The Not So Final Word
+Buffer overflows are some of the oldest and most important memory 
+corruption techniques that are used by attackers. Despite more than a quarter century of
+incidents, and a plethora of defenses (we have only treated the most important
+ones), it seems impossible to get rid of them (Van der Veen, 2012). For all this
+time, a substantial fraction of all security problems is due to this flaw, which is 
+difficult to fix because there are so many existing C programs around that do not
+check for buffer overflow.
+The arms race is nowhere near complete. All around the world, researchers are
+investigating new defenses. Some of these defenses are aimed at binaries, others
+consist of security extension to C and C++ compilers. Popular compilers such as
+Visual Studio, gcc, and LLVM/Clang offer ‘‘sanitizers’’ as compile-time options to
+stop a wide range of possible attacks. One of the most popular ones is known as
+AddressSanitizer. By compiling your code with -fsanitize=address, the compiler
+ensures that every memory allocation is flanked by red zones: small areas of
+‘‘invalid’’ memory. Any access to a red zone, for instance as result of a buffer 
+overflow, will lead to a program crash with an appropriately depressing error message.
+To make this happen, AddressSanitizer keeps a bit map to indicate for each byte of
+allocated memory that it is valid and for each byte in red zone that it is invalid.
+Whenever the program accesses memory, it quickly consults the bit map to see if
+the access is permitted. Of course, none of this is free. The bit map and red zones
+increase the memory usage and initializing and consulting the bit map incur a hefty
+performance penalty. Since slowing down code by almost a factor 2 is rarely super
+popular among product managers, AddressSanitizer is often not used in production
+code. However, it is useful during testing.

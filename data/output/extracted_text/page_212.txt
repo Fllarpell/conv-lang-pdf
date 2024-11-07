@@ -1,0 +1,42 @@
+SEC. 3.1
+NO MEMORY ABSTRACTION
+183
+accomplished shortly. What the IBM 360 did as a stop-gap solution was modify
+the second program on the fly as it loaded it into memory using a technique known
+as static relocation. It worked like this. When a program was loaded at address
+16,384, the constant 16,384 was added to every program address during the load
+process (so ‘‘JMP 28’’ became ‘‘JMP 16,412’’, etc.).While this mechanism works
+if done right, it is not a very general solution and slows down loading. 
+Furthermore, it requires extra information in all executable programs to indicate which
+words contain (relocatable) addresses and which do not. After all, the ‘‘28’’ in
+Fig. 3-2(b) has to be relocated but an instruction like
+MOV REGISTER1,28
+which moves the number 28 to REGISTER1 must not be relocated. The loader needs
+some way to tell what is an address and what is a constant.
+Finally, as we pointed out in Chap. 1, history tends to repeat itself in the 
+computer world. While direct addressing of physical memory is but a distant memory
+(sorry) on mainframes, minicomputers, desktop computers, notebooks, and 
+smartphones, the lack of a memory abstraction is still common in embedded and smart
+card systems. Devices such as radios, washing machines, and microwave ovens are
+all full of software (in ROM) these days, and in most cases the software addresses
+absolute memory. This works because all the programs are known in advance and
+users are not free to run their own software on their toaster.
+In fact, history loops back upon itself in interesting ways. For instance, modern
+Intel x86 processors have advanced forms of memory management and isolation
+(as we shall see), far more powerful than the simple combination of protection keys
+and static relocation in the IBM 360. Nevertheless, Intel started adding these exact
+(and seemingly old-fashioned) protection keys to its CPUs only in 2017, more than
+50 years after the first IBM 360 came into use. Now they are touted as an 
+important security-enhancing innovation.
+Conversely, where high-end embedded systems (such as smartphones) have
+elaborate operating systems, simpler ones do not. In some cases, there is an 
+operating system, but it is just a library that is linked with the application program and
+provides system calls for performing I/O and other common tasks. The e-Cos 
+operating system is a common example of an operating system as library.
+3.2 A MEMORY ABSTRACTION: ADDRESS SPACES
+All in all, exposing physical memory to processes has several major 
+drawbacks. First, if user programs can address every byte of memory, they can easily
+trash the operating system, intentionally or by accident, bringing the system to a
+grinding halt (unless there is special hardware like the IBM 360’s lock-and-key
+scheme). This problem exists even if only one user program (application) is 
+running. Second, with this model, it is difficult to have multiple programs running at

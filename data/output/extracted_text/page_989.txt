@@ -1,0 +1,46 @@
+960
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+memory. The memory manager implements this by marking the page as read-only
+after it is loaded. The first time a thread attempts to write the page the memory
+manager will detect this situation and free the pagefile page, grant write access to
+the page, and then have the thread try again.
+Windows supports up to 16 pagefiles, normally spread out over separate disks
+to achieve higher I/O bandwidth. Each one has an initial size and a maximum size
+it can grow to later if needed, but it is better to create these files to be the 
+maximum size at system installation time. If it becomes necessary to grow a pagefile
+when the file system is much fuller, it is likely that the new space in the pagefile
+will be highly fragmented, reducing performance.
+The operating system keeps track of which virtual page maps onto which part
+of which paging file by writing this information into the page table entries for the
+process for private pages, or into prototype page table entries associated with the
+section object for shared pages. In addition to the pages that are backed by the
+pagefile, many pages in a process are mapped to regular files in the file system.
+The executable code and read-only data in a program file (e.g., an EXE or
+DLL) can be mapped into the address space of whatever process is using it. Since
+these pages cannot be modified, they nev er need to be paged out and end up on the
+standby list as cached pages when they are no longer in use and can immediately
+be reused. When the page is needed again in the future, the memory manager will
+read the page in from the program file.
+Sometimes pages that start out as read-only end up being modified, for 
+example, setting a breakpoint in the code when debugging a process, or fixing up code
+to relocate it to different addresses within a process, or making modifications to
+data pages that started out shared. In cases like these, Windows, like most modern
+operating systems, supports a type of page called copy-on-write. These pages
+start out as ordinary mapped pages, but when an attempt is made to modify any
+part of the page the memory manager makes a private, writable copy. It then
+updates the page table for the virtual page so that it points at the private copy and
+has the thread retry the write—which will succeed the second time. If that copy
+later needs to be paged out, it will be written to the pagefile rather than the original
+file,
+Besides mapping program code and data from EXE and DLL files, ordinary
+files can be mapped into memory, allowing programs to reference data from files
+without doing read and write operations. I/O operations are still needed, but they
+are provided implicitly by the memory manager using the section object to 
+represent the mapping between pages in memory and the blocks in the files on disk.
+Section objects do not have to refer to a file. They can refer to anonymous
+regions of memory, called pagefile-backed sections. By mapping pagefile-backed
+section objects into multiple processes, memory can be shared without having to
+allocate a file on disk. Since sections can be given names in the NT namespace,
+processes can rendezvous by opening sections by name, as well as by duplicating
+and passing handles between processes.

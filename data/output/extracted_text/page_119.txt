@@ -1,0 +1,43 @@
+90
+PROCESSES AND THREADS
+CHAP. 2
+In UNIX, there is only one system call to create a new process: fork. This call
+creates an exact clone of the calling process. After the fork, the two processes, the
+parent and the child, have the same memory image, the same environment strings,
+and the same open files. That is all there is. Usually, the child process then
+executes execve or a similar system call to change its memory image and run a
+new program. For example, when a user types a command, say, sort, to the shell,
+the shell forks off a child process and the child executes sort. The reason for this
+two-step process is to allow the child to manipulate its file descriptors after the fork
+but before the execve in order to accomplish redirection of standard input, standard
+output, and standard error.
+In Windows, in contrast, a single Win32 function call, CreateProcess, handles
+both process creation and loading the correct program into the new process. This
+call has 10 parameters, which include the program to be executed, the 
+command-line parameters to feed that program, various security attributes, bits that
+control whether open files are inherited, priority information, a specification of the
+window to be created for the process (if any), and a pointer to a structure in which
+information about the newly created process is returned to the caller. In addition to
+CreateProcess, Win32 has about 100 other functions for managing and 
+synchronizing processes and related topics.
+In both UNIX and Windows systems, after a process is created, the parent and
+child have their own distinct address spaces. If either process changes a word in its
+address space, the change is not visible to the other process. In traditional UNIX,
+the child’s initial address space is a copy of the parent’s, but there are definitely
+two distinct address spaces involved; no writable memory is shared. Some UNIX
+implementations share the program text between the two since that cannot be 
+modified. Alternatively, the child may share all of the parent’s memory, but in that case
+the memory is shared copy-on-write, which means that whenever either of the two
+wants to modify part of the memory, that chunk of memory is explicitly copied
+first to make sure the modification occurs in a private memory area. Again, no
+writable memory is shared. It is, however, possible for a newly created process to
+share some of its creator’s other resources, such as open files. In Windows, the 
+parent’s and child’s address spaces are different from the start.
+2.1.3 Process Termination
+After a process has been created, it starts running and does whatever its job is.
+However, nothing lasts forever, not even processes. Sooner or later the new 
+process will terminate, usually due to one of the following conditions:
+1. Normal exit (voluntary)
+2. Error exit (voluntary)
+3. Fatal error (involuntary)
+4. Killed by another process (involuntary)

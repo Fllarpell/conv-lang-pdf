@@ -1,0 +1,42 @@
+350
+INPUT/OUTPUT 
+CHAP. 5
+nonexecuted instructions. In fact, many instructions may have been partially
+executed, with different instructions being more or less complete. In this situation,
+the program counter most likely reflects the address of the next instruction to be
+fetched and pushed into the pipeline rather than the address of the instruction that
+just was processed by the execution unit.
+On a superscalar machine, such as that of Fig. 1-7(b), things are even worse.
+CPU instructions may be internally decomposed into so-called micro-operations
+and these micro-operations may execute out of order, depending on the availability
+of internal resources such as functional units and registers (see also Sec. 2.5.9). At
+the time of an interrupt, some instructions issued long ago may not be anywhere
+near completion and others started more recently may be (almost) done. This is not
+a problem as the CPU will simply buffer the results of each instruction until all
+previous instructions have also completed and then commit all of them in order.
+However, it means that at the point when an interrupt is signaled, there may be
+many instructions in various states of completeness, and there is not much of 
+relation between them and the program counter at all.
+An interrupt that leaves the machine in a well-defined state is called a precise
+interrupt (Walker and Cragon, 1995). Such an interrupt has four properties:
+1. The PC (Program Counter) is saved in a known place.
+2. All instructions before the one pointed to by the PC have completed.
+3. No instruction beyond the one pointed to by the PC has finished.
+4. The execution state of the instruction pointed to by the PC is known.
+Note that even with precise interrupts there is no prohibition on instructions
+beyond the one pointed to by the PC from starting. It is just that any changes they
+make to registers or memory must be completely undone when the interrupt 
+happens. This is what many processor architectures, including the x86, try to do. Since
+the CPU erases all visible effects as if these instructions never executed, we call the
+instructions transient. Such transient execution occurs for many reasons (Ragab
+et al., 2021). We already saw that a fault or interrupt that happens during the 
+execution of an instruction while some later instructions have already completed requires
+the processor to throw away the results of these later instructions. However, 
+modern CPUs employ many more tricks to improve performance. For instance, the
+CPU may speculate on the outcome of a conditional branch. If the outcome of an if
+condition was TRUE the last 50 times, the CPU will assume that it will be true the
+51st time also and speculatively start fetching and executing the instructions for the
+TRUE branch. Of course, if the 51st time was different and the outcome is really
+FALSE, these instructions must now be made transient. Transient execution has
+been the source of all sorts of security trouble, but that is not what we need to 
+discuss now and we save it for Chapter 9.

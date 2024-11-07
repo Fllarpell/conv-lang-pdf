@@ -1,0 +1,44 @@
+194
+MEMORY MANAGEMENT 
+CHAP. 3
+CPU!
+package
+CPU
+The CPU sends virtual!
+addresses to the MMU
+The MMU sends physical!
+addresses to the memory
+Memory!
+management!
+unit
+Memory
+Disk!
+controller
+Bus
+Figure 3-8. The position and function of the MMU. Here the MMU is shown as
+being a part of the CPU chip because it commonly is nowadays. However, 
+logically it could be a separate chip and was years ago.
+The virtual address space consists of fixed-size units called pages. The 
+corresponding units in the physical memory are called page frames. The pages and page
+frames are the same size. In this example they are 4 KB, but page sizes from 512
+bytes to a gigabyte have been used in real systems. With 64 KB of virtual address
+space and 32 KB of physical memory, we get 16 virtual pages and 8 page frames.
+Transfers between RAM and nonvolatile storage are always in whole pages. Many
+processors support multiple page sizes that can be mixed and matched as the 
+operating system sees fit. For instance, the x86-64 architecture supports 4-KB, 2-MB,
+and 1-GB pages, so we could use 4-KB pages for user applications and a single
+1-GB page for the kernel. We will see later why it is sometimes better to use a 
+single large page, rather than a large number of small ones.
+The notation in Fig. 3-9 is as follows. The range marked 0K–4K means that
+the virtual or physical addresses in that page are 0 to 4095. The range 4K–8K
+refers to addresses 4096 to 8191, and so on. Each page contains exactly 4096
+addresses starting at a multiple of 4096 and ending one shy of a multiple of 4096.
+When the program tries to access address 0, for example, using the instruction
+MOV REG,0
+virtual address 0 is sent to the MMU. The MMU sees that this virtual address falls
+in page 0, that is, in the range of 0 to 4095, which according to its mapping is page
+frame 2 (8192 to 12287). It thus transforms the address to 8192 and outputs
+address 8192 onto the bus. The memory knows nothing at all about the MMU and
+just sees a request for reading or writing address 8192, which it honors. Thus, the
+MMU has effectively mapped all virtual addresses between 0 and 4095 onto 
+physical addresses 8192 to 12287.

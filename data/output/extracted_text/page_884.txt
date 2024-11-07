@@ -1,0 +1,5 @@
+SEC. 10.8
+ANDROID
+855
+Figure 10-81. Android 12’s coarse vs. fine prompt.
+Figure 10-82. Android 12’s privacy dashboard showing ‘‘location’’ details.

@@ -1,0 +1,43 @@
+SEC. 9.2
+CONTROLLING ACCESS TO RESOURCES
+627
+the fourth field. Note that the original Check value is used because other 
+outstanding capabilities depend on it.
+This new capability is sent back to the requesting process. The user can now
+give this to a friend by just sending it in a message. If the friend turns on rights
+bits that should be off, the server will detect this when the capability is used since
+the f value will not correspond to the false rights field. Since the friend does not
+know the true check field, he cannot fabricate a capability that corresponds to the
+false rights bits. This scheme was developed for the Amoeba system (Tanenbaum
+et al., 1990).
+In addition to the specific object-dependent rights, such as read and execute,
+capabilities (both kernel and cryptographically protected) usually have generic
+rights which are applicable to all objects. Examples of generic rights are
+1. Copy capability: create a new capability for the same object.
+2. Copy object: create a duplicate object with a new capability.
+3. Remove capability: delete an entry from the C-list; object unaffected.
+4. Destroy object: permanently remove an object and a capability.
+A last remark worth making about capability systems is that revoking access to
+an object is quite difficult in the kernel-managed version. It is hard for the system
+to find all the outstanding capabilities for any object to take them back, since they
+may be stored in C-lists all over the disk. One approach is to have each capability
+point to an indirect object, rather than to the object itself. By having the indirect
+object point to the real object, the system can always break that connection, thus
+invalidating the capabilities. (When a capability to the indirect object is later 
+presented to the system, the user will discover that the indirect object is now pointing
+to a null object.)
+In the Amoeba scheme, revocation is easy. All that needs to be done is change
+the check field stored with the object. In one blow, all existing capabilities are
+invalidated. However, neither scheme allows selective rev ocation, that is, taking
+back, say, Joanna’s permission, but nobody else’s. This defect is generally 
+recognized to be a problem with all capability systems.
+Another general problem is making sure the owner of a valid capability does
+not give a copy to 1000 of his best friends. Having the kernel manage capabilities,
+as in Hydra, solves the problem, but this solution does not work well in a 
+distributed system such as Amoeba.
+Very briefly summarized, ACLs and capabilities have somewhat 
+complementary properties. Capabilities are very efficient because if a process says ‘‘Open the
+file pointed to by capability 3’’ no checking is needed. With ACLs, a (potentially
+long) search of the ACL may be needed. If groups are not supported, then granting
+ev eryone read access to a file requires enumerating all users in the ACL. 
+Capabilities also allow a process to be encapsulated easily, whereas ACLs do not. On the

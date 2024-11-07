@@ -1,0 +1,45 @@
+SEC. 10.8
+ANDROID
+795
+Early Development
+Android, Inc. was a software company founded to build software to create
+smarter mobile devices. Originally looking at cameras, the vision soon switched to
+smartphones due to their larger potential market. That initial goal grew to 
+addressing the then-current difficulty in developing for mobile devices, by bringing to
+them an open platform built on top of Linux that could be widely used.
+During this time, prototypes for the platform’s user interface were 
+implemented to demonstrate the ideas behind it. The platform itself was targeting three
+key languages, JavaScript, Java, and C++, in order to support a rich 
+application-development environment.
+Google acquired Android in July 2005, providing the necessary resources and
+cloud-service support to continue Android development as a complete product. A
+fairly small group of engineers worked closely together during this time, starting to
+develop the core infrastructure for the platform and foundations for higher-level
+application development.
+In early 2006, a significant shift in plan was made: instead of supporting 
+multiple programming languages, the platform would focus entirely on the Java 
+programming language for its application development. This was a difficult change,
+as the original multilanguage approach superficially kept everyone happy with ‘‘the
+best of all worlds’’; focusing on one language felt like a step backward to engineers
+who preferred other languages.
+Trying to make everyone happy, howev er, can easily make nobody happy.
+Building out three different sets of language APIs would have required much more
+effort than focusing on a single language, greatly reducing the quality of each one.
+The decision to focus on the Java language was critical for the ultimate quality of
+the platform and the development team’s ability to meet important deadlines.
+As development progressed, the Android platform was developed closely with
+the applications that would ultimately ship on top of it. Google already had a wide
+variety of services—including Gmail, Maps, Calendar, YouTube, and of course
+Search—that would be delivered on top of Android. Knowledge gained from
+implementing these applications on top of the early platform was fed back into its
+design. This iterative process with the applications allowed many design flaws in
+the platform to be addressed early in its development.
+Most of the early application development was done with little of the 
+underlying platform actually available to the developers. The platform was usually 
+running all inside one process, through a ‘‘simulator’’ that ran all of the system and
+applications as a single process on a host computer. In fact there are still some
+remnants of this old implementation around today, with things like the 
+Application.onTer minate method still in the SDK (Software Dev elopment Kit), which
+Android programmers use to write applications.
+In June 2006, two hardware devices were selected as software-development
+targets for planned products. The first, code-named ‘‘Sooner,’’ was based on an

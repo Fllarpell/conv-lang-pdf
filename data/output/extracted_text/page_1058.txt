@@ -1,0 +1,46 @@
+SEC. 11.11
+SECURITY IN WINDOWS
+1029
+corrupting function pointers. In particular, function pointers can only point to the
+first instruction of a function, aligned at 16-bytes, rather than arbitrary ROP 
+gadgets.
+With Windows 10, it became possible to enable CFG in kernel-mode with
+KCFG (Kernel CFG) even though it was only enabled with Virtualization-based
+security. Unsurprisingly, KCFG leverages VSM to enable the Secure Kernel to
+maintain the CFG bitmap and prevent anybody in VTL0 kernel-mode from 
+modifying it. With Windows 11, Kernel CFG is enabled by default on all machines.
+One weakness in CFG is that every indirect call target is treated the same; a
+function pointer can call any indirectly callable function regardless of the number
+or types of parameters. An improved version of CFG, called XFG (Extended
+Flow Guard) was developed to address this shortcoming. Instead of a global 
+bitmap, XFG relies on function signature hashes to ensure that a call site is 
+compatible with the target of a function pointer. Each indirectly-callable function is 
+preceded by a hash covering its complete type, including the number and types of its
+parameters. Each call site knows the signature hash of the function it is intending
+to call and validates whether the target of the function pointer is a match. As a
+result, XFG is much more selective than CFG in its validation and does not leave
+too many options to attackers. Even though the initial release of Windows 11 does
+not include XFG, it is present in Windows Insider flights and is likely to ship in a
+subsequent official release.
+CFG and XFG only protect the forward edge of code flow by validating 
+indirect calls. However, as we described earlier, many attacks corrupt stack return
+addresses to hijack code flow when the victim function returns. Reliably 
+defending against return address hijacking using a software-only mechanism turns out to
+be very difficult. In fact, Microsoft internally implemented such a defense in 2017,
+called RFG (Return Flow Guard). RFG used a software shadow stack into
+which return addresses on the call stack were saved on function entry and validated
+by the function epilogue. Even though an incredible amount of engineering effort
+went into this project across the compiler, operating systems, and security teams,
+the project was ultimately shelved because an internal security researcher 
+identified an attack with a high success rate that corrupted the return address on the stack
+before it was copied to the shadow stack. Such an attack was previously 
+considered, but thought to be infeasible due to its low expected success rate. RFG also
+relied on the shadow stack being hidden from software running in the process
+(otherwise an attacker could just corrupt the shadow stack as well). Soon after
+RFG was canceled, other security researchers identified reliable ways to locate
+such frequently accessed data structures in the address space. These were some
+very important takeaways from the project: security features that rely on hiding
+things and probabilistic mechanisms do not tend to be durable.
+A robust defense against return address hijacking had to wait until Intel’s CET
+was released in late 2020. CET is a hardware implementation of shadow stacks
+without any (known) race conditions and does not depend on keeping the shadow

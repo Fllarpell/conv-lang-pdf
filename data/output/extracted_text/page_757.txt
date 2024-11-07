@@ -1,0 +1,50 @@
+728
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+while (TRUE) {
+/* repeat forever /*/
+type prompt( );
+/* display prompt on the screen */
+read command(command, params); 
+/* read input line from keyboard */
+pid = for k( ); 
+/* fork off a child process */
+if (pid < 0) {
+pr intf("Unable to for k0);
+/* error condition */
+continue; 
+/* repeat the loop */
+}
+if (pid != 0) {
+waitpid (<1, &status, 0); 
+/* parent waits for child */
+} else {
+execve(command, params, 0); 
+/* child does the wor k */
+}
+}
+Figure 10-7. A highly simplified shell.
+The main program of cp (and many other programs) contains the function 
+declaration
+main(argc, argv, envp)
+where argc is a count of the number of items on the command line, including the
+program name. For the example above, argc is 3.
+The second parameter, argv, is a pointer to an array. Element i of that array is a
+pointer to the ith string on the command line. In our example, argv[0] would point
+to the two-character string ‘‘cp’’. Similarly, argv[1] would point to the fiv 
+e-character string ‘‘file1’’ and argv[2] would point to the fiv e-character string ‘‘file2’’.
+The third parameter of main, envp, is a pointer to the environment, an array of
+strings containing assignments of the form name = value used to pass information
+such as the terminal type and home directory name to a program. In Fig. 10-7, no
+environment is passed to the child, so that the third parameter of execve is a zero.
+If exec seems complicated, do not despair; it is the most complex system call.
+All the rest are much simpler. As an example of a simple one, consider exit, which
+processes should use when they are finished executing. It has one parameter, the
+exit status (0 to 255), which is returned to the parent in the variable status of the
+waitpid system call. The low-order byte of status contains the termination status,
+with 0 being normal termination and the other values being various error 
+conditions. The high-order byte contains the child’s exit status (0 to 255), as specified in
+the child’s call to exit. For example, if a parent process executes the statement
+n = waitpid(<1, &status, 0);
+it will be suspended until some child process terminates. If the child exits with,
+say, 4 as the parameter to exit, the parent will be awakened with n set to the child’s

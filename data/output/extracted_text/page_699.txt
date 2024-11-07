@@ -1,0 +1,44 @@
+670
+SECURITY 
+CHAP. 9
+(a)
+(b)
+Client
+Server
+Collaborator
+Kernel
+Kernel
+Encapsulated server
+Covert!
+channel
+Figure 9-23. (a) The client, server, and collaborator processes. (b) The 
+encapsulated server can still leak to the collaborator via covert channels.
+The collaborator can try to detect the bit stream by carefully monitoring its
+response time. In general, it will get better response when the server is sending a 0
+than when the server is sending a 1. This communication channel is known as a
+covert channel, and is illustrated in Fig. 9-23(b).
+Of course, the covert channel is a noisy channel, containing a lot of extraneous
+information, but information can be reliably sent over a noisy channel by using an
+error-correcting code (e.g., a Hamming code, or even something more 
+sophisticated). The use of an error-correcting code reduces the already low bandwidth of
+the covert channel even more, but it still may be enough to leak substantial 
+information. It is fairly obvious that no protection model based on a matrix of objects
+and domains is going to prevent this kind of leakage.
+Modulating the CPU usage is not the only covert channel. The paging rate can
+also be modulated (many page faults for a 1, no page faults for a 0). In fact, almost
+any way of degrading system performance in a clocked way is a candidate. If the
+system provides a way of locking files, then the server can lock some file to 
+indicate a 1, and unlock it to indicate a 0. On some systems, it may be possible for a
+process to detect the status of a lock even on a file that it cannot access. This covert
+channel is illustrated in Fig. 9-24, with the file locked or unlocked for some fixed
+time interval known to both the server and collaborator. In this example, the secret
+bit stream 11010100 is being transmitted.
+Locking and unlocking a prearranged file, S, is not an especially noisy channel,
+but it does require fairly accurate timing unless the bit rate is very low. The
+reliability and performance can be increased even more using an acknowledgement
+protocol. This protocol uses two more files, F1 and F2, locked by the server and
+collaborator, respectively, to keep the two processes synchronized. After the server
+locks or unlocks S, it flips the lock status of F1 to indicate that a bit has been sent.
+As soon as the collaborator has read out the bit, it flips F2’s lock status to tell the
+server it is ready for another bit and waits until F1 is flipped again to indicate that
+another bit is present in S. Since timing is no longer involved, this protocol is fully

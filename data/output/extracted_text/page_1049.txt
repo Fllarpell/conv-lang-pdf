@@ -1,0 +1,44 @@
+1020
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+In Windows 10 and newer releases, password-less authentication schemes are
+preferred over passwords, which are either hard-to-remember or easy-to-guess.
+Windows Hello is the umbrella name for the set of password-less authentication
+technologies users can use to log into Windows. Hello supports biometrics-based
+face, iris, and fingerprint recognition as well as per-device PIN. The data path from
+the infrared camera hardware to the VTL1 trustlet that implements face recognition
+is protected against VTL0 access via Virtualization-based Security memory and
+IOMMU protections. Biometric data is encrypted by the trustlet and stored on disk.
+Discretionary access controls allow the owner of a file or other object to say
+who can use it and in what way. Privileged access controls allow the system 
+administrator (superuser) to override them when needed. Address-space protection
+simply means that each process has its own protected virtual address space not
+accessible by any unauthorized process. The next item means that when the 
+process heap grows, the pages mapped in are initialized to zero so that processes cannot
+find any old information put there by the previous owner (hence the zeroed page
+list in Fig. 11-37, which provides a supply of zeroed pages for this purpose). 
+Finally, security auditing allows the administrator to produce a log of certain 
+security-related events.
+While the Orange Book does not specify what is to happen when someone
+steals your notebook computer, in large organizations one theft a week is not
+unusual. Consequently, Windows provides tools that a conscientious user can use
+to minimize the damage when a notebook is stolen or lost (e.g., secure login,
+encrypted files, etc.). In addition, organizations can use a mechanism called Group
+Policy to push down such secure machine configuration for all of its users before
+they can gain access to corporate network resources.
+In the next section, we will describe the basic concepts behind Windows 
+security. After that we will look at the security system calls. Finally, we will conclude
+by seeing how security is implemented and learn about Windows’ defenses against
+online threats.
+11.11.1 Fundamental Concepts
+Every Windows user (and group) is identified by an SID (Security ID). SIDs
+are binary numbers with a short header followed by a long random component.
+Each SID is intended to be unique worldwide. When a user starts up a process, the
+process and its threads run under the user’s SID. Most of the security system is
+designed to make sure that each object can be accessed only by threads with 
+authorized SIDs.
+Each process has an access token that specifies an SID and other properties.
+The token is normally created by winlogon, as described below. The format of the
+token is shown in Fig. 11-55. Processes can call GetTokenInfor mation to acquire
+this information. The header contains some administrative information. The 
+expiration time field could tell when the token ceases to be valid, but it is currently not

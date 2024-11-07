@@ -1,0 +1,84 @@
+458
+DEADLOCKS 
+CHAP. 6
+run B exclusively, until it asks for and gets two more instances of the resource,
+leading to the state of Fig. 6-12(b). When B completes, we get the state of
+Fig. 6-12(c). Then the scheduler can run C, leading eventually to Fig. 6-12(d).
+When C completes, we get Fig. 6-12(e). Now A can get the six instances of the
+resource it needs and also complete. Thus, the state of Fig. 6-12(a) is safe because
+the system, by careful scheduling, can avoid deadlock.
+Now suppose we have the initial state shown in Fig. 6-13(a), but this time A
+requests and gets another resource, giving Fig. 6-13(b). Can we find a sequence
+that is guaranteed to work? Let us try. The scheduler could run B until it asked for
+all its resources, as shown in Fig. 6-13(c).
+A
+B
+C
+3
+2
+2
+9
+4
+7
+Free: 3
+(a)
+A
+B
+C
+4
+2
+2
+9
+4
+7
+Free: 2
+(b)
+A
+B
+C
+4
+4
+—
+4
+2
+9
+7
+Free: 0
+(c)
+A
+B
+C
+4
+—
+2
+9
+7
+Free: 4
+(d)
+Has Max
+Has Max
+Has Max
+Has Max
+Figure 6-13. Demonstration that the state in (b) is not safe.
+Eventually, B completes and we get the state of Fig. 6-13(d). At this point we
+are stuck. We only have four instances of the resource free, and each of the active
+processes needs fiv e. There is no sequence that guarantees completion. Thus, the
+allocation decision that moved the system from Fig. 6-13(a) to Fig. 6-13(b) went
+from a safe to an unsafe state. Running A or C next starting at Fig. 6-13(b) does
+not work either. In retrospect, A’s request should not have been granted.
+It is worth noting that an unsafe state is not a deadlocked state. Starting at
+Fig. 6-13(b), the system can run for a while. In fact, one process can even 
+complete. Furthermore, it is possible that A might release a resource before asking for
+any more, allowing C to complete and avoiding deadlock altogether. Thus, the 
+difference between a safe state and an unsafe state is that from a safe state the system
+can guarantee that all processes will finish; from an unsafe state, no such 
+guarantee can be given.
+6.5.3 The Banker’s Algorithm for a Single Resource
+A scheduling algorithm that can avoid deadlocks is due to Dijkstra (1965); it is
+known as the banker’s algorithm and is an extension of the deadlock detection
+algorithm given in Sec. 6.5. It is modeled on the way a small-town banker might
+deal with a group of customers to whom he has granted lines of credit. (Years ago,
+banks did not lend money unless they knew they could be repaid.) What the 
+algorithm does is check to see if granting the request leads to an unsafe state. If so, the
+request is denied. If granting the request leads to a safe state, it is carried out. In
+Fig. 6-14(a) we see four customers, A, B, C, and D, each of whom has been granted

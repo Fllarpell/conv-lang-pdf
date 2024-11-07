@@ -1,0 +1,44 @@
+SEC. 8.1
+MULTIPROCESSORS
+545
+its own mutex. In this way, each critical region can be executed by only one CPU
+at a time and each critical table can be accessed by only one CPU at a time.
+Most modern multiprocessors use this arrangement. The hard part about 
+writing the operating system for such a machine is not that the actual code is so 
+different from a regular operating system. It is not. The hard part is splitting it into
+critical regions that can be executed concurrently by different CPUs without 
+interfering with one another, not even in subtle, indirect ways. In addition, every table
+used by two or more critical regions must be separately protected by a mutex and
+all code using the table must use the mutex correctly.
+Furthermore, great care must be taken to avoid deadlocks. If two critical
+regions both need table A and table B, and one of them claims A first and the other
+claims B first, sooner or later a deadlock will occur and nobody will know why. In
+theory, all the tables could be assigned integer values and all the critical regions
+could be required to acquire tables in increasing order. This strategy avoids 
+deadlocks, but it requires the programmer to think very carefully about which tables
+each critical region needs and to make the requests in the right order.
+As the code evolves over time, a critical region may need a new table it did not
+previously need. If the programmer is new and does not understand the full logic
+of the system, then the temptation will be to just grab the mutex on the table at the
+point it is needed and release it when it is no longer needed. However reasonable
+this may appear, it may lead to deadlocks, which the user will perceive as the 
+system freezing. Getting it right is not easy and keeping it right over a period of years
+in the face of changing programmers is very difficult, so the whole approach is
+very error-prone.
+8.1.3 Multiprocessor Synchronization
+The CPUs in a multiprocessor frequently need to synchronize. We just saw the
+case in which kernel critical regions and tables have to be protected by mutexes.
+Let us now take a close look at how this synchronization actually works in a 
+multiprocessor. It is far from trivial, as we will soon see.
+To start with, proper synchronization primitives are really needed. If a process
+on a uniprocessor machine (just one CPU) makes a system call that requires
+accessing some critical kernel table, the kernel code can just disable interrupts
+before touching the table. It can then do its work knowing that it will be able to
+finish without any other process sneaking in and touching the table before it is 
+finished. On a multiprocessor, disabling interrupts affects only the CPU doing the
+disable. Other CPUs continue to run and can still touch the critical table. As a 
+consequence, a proper mutex protocol must be used and respected by all CPUs to
+guarantee that mutual exclusion works.
+The heart of any practical mutex protocol is a special instruction that allows a
+memory word to be inspected and set in one indivisible operation. We saw how
+TSL (Test and Set Lock) was used in Fig. 2-25 to implement critical regions. As

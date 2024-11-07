@@ -1,0 +1,46 @@
+858
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+device functional, but the last point is more complicated: these are not necessary,
+and though they do create a better experience individually, this comes at the price
+of a worse overall battery life experience.
+Consider a single app developer whose app lets you see news stories. It is
+important for people using the app to see the current news, possibly even for them
+to get notifications about recent news of interest, so the developer decides to
+refresh its news from the network even when the app is not directly in use. Of
+course the developer understands that just keeping the app running all of the time
+to constantly retrieve news is not good for the user, so a decision is made to do this
+only, say, twice an hour, to avoid draining the battery.
+An app like this, doing some background work twice an hour, probably by
+itself has a good balance between experience in the app vs. overall battery life.
+However, now take 20 apps making this same trade-off and install them on a 
+device: there is something wanting to do work in the background every 1.5 minutes!
+This will notably consume the device’s limited available battery power, and thus
+how much it can be used during the day.
+This problem is an illustration of the economic science concept of the tragedy
+of the commons. This is a situation where, when there are individual users of a
+shared resource, making their own individual rational decision about how to use
+that resource, together those decisions can result in over-consumption of the
+resource that results in harm to all of them beyond the individual benefits any each
+user gains. None of the individuals need be malicious in any way for this to 
+happen. The original example of the tragedy of the commons is a public pasture for
+grazing sheep. It is in the interest of each farmer to have as many sheep as 
+possible, but this may result in so many sheep that the pasture is overgrazed and all the
+sheep starve.
+Android’s approach of providing generic flexible building blocks for apps is a
+recipe for these kinds of tragedy of the commons issues. This design was 
+important early on for Android to allow significant innovation on top of the platform in
+ways it could not anticipate. However, it also relies significantly on applications
+making good global decisions about their behavior. In particular, when an 
+application asks to start a service, the platform must generally respect that (as much as it
+can) and allow the service to run, doing whatever it decides to do, until the app
+says it is done.
+The most obvious problem this allows, however, is for apps that are poorly
+designed or buggy to rapidly drain the battery: starting a service for a long time,
+sitting there holding a wake lock keeping the device running, doing significant
+work on the CPU that uses power. Android 2.3 included the first major step in
+addressing background app battery use, shown in Fig. 10-83, which presents to the
+user how much the battery has drained and approximations for how much apps and
+other things on the device are responsible for that drain.
+Viewing OS resource management as an economic/social problem, we have
+now seen two general strategies for addressing them. Tying foreground services to

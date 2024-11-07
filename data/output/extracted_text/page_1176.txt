@@ -1,0 +1,102 @@
+INDEX
+1147
+Signature block, 635
+Silo, Windows, 1011
+SIMMON, 480
+Simonyi, Charles, 412
+Simple integrity property, 632
+Simple security property, 630
+Simplicity principle, 1046
+Simulating LRU in software, 212–214
+Simultaneous multithreading, 541
+Single indirect block, 328, 781
+Single interleaved disk, 374
+Single large expensive disk, 386
+Single root I/O virtualization, 500
+Single-level directory system, 272–273
+Single-root I/O virtualization, Hyper-V, 1008
+Singularity, 617
+SK (see Secure Kernel)
+Skeleton, 595
+Skew, disk, 372–373
+Slab allocator, 752
+SLAT (see Second Level Address Translation)
+SLED (see Single Large Expensive Disk)
+Sleep and wakeup, 127
+SleepConditionVariableCS Win32 call, 939
+SleepConditionVariableSRW Win32 call, 939
+Slice, cache, 538
+Slim reader-writer lock, 939
+SMAP (see Supervisor Mode Access Protection)
+Smart card, 646
+Smart card operating system, 39
+Smart NIC, 562
+Smart scheduling, 552
+Smartphone, 13, 14, 19, 37
+Smartphone operating system, 37
+SMEP (see Supervisor Mode Execution Protection)
+SMP (see Symmetric MultiProcessor)
+SmPageEvict Win32 call, 975
+SmPageRead Win32 call, 974
+SmPageWrite Win32 call, 973, 974
+SMT (see Simultaneous Multithreading)
+Snooping cache, 538
+Snooping multiprocessor, 538
+SoC (see System on a Chip)
+Social engineering, Android, 856–861
+Socket
+Linux, 759–763
+Windows, 937
+Socket system call, 765
+Soft fault, Windows, 958, 964
+Soft miss, TLB, 203
+Soft real time scheduling, 168
+Soft timer, 394–395
+Software as a service, 502
+Software development kit, 795
+Windows, 882
+Software fault isolation, 514
+Software guard extension, 688
+Software hardening, 681–694
+Software TLB management, 202–203
+Solid state drive, 7, 381–385
+SPA (see s Server Physical Addresses)
+Space sharing, 552–554
+Space-time trade-offs, 1072–1075
+Sparse file, NT file system, 995–996
+Special file, 45, 264, 758
+Spectre, 678–679, 928
+Spin lock, 124, 546–549
+Spinning versus switching, 548–549
+Spooler directory, 119
+Spooling, 12, 369
+Spooling directory, 369
+Square-wav e mode, clock, 391
+SR-IOV (see Single Root I/O Virtualization)
+SR-IOV (see Single-Root I/O Virtualization)
+SRW (see locks Slim Reader-Writer locks)
+SS direct memory access, 344
+SSD (see Solid State Drive)
+SSF (see Shortest Seek First disk scheduling)
+Stable storage, 382–385
+Stack canary, 650–652
+avoiding, 651
+Stack pointer, 21
+Stack segment, 56
+Stage 2 translation, Hyper-V, 1005
+Standard error, 717
+Standard input, 717
+Standard output, 717
+Standard UNIX, 708–709
+Standby list, Windows, 959
+Standby mode, Windows, 1001
+Star property, 630
+Starting a process, Android, 832
+Startup repair, 914
+Starvation, 442, 468–469
+Stat system call, 54, 773, 776, 778
+Stateful file system, 789
+Stateless file system, 786
+Static relocation, 183
+Static vs. dynamic structures, 1062–1063
+Storage allocation, NT file system, 994–998

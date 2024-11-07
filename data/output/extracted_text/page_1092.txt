@@ -1,0 +1,44 @@
+SEC. 12.3
+IMPLEMENTATION
+1063
+space should each one get? The trade-offs here are similar to those for the process
+table. Making key data structures like these dynamic is possible, but complicated.
+Another static-dynamic trade-off is process scheduling. In some systems,
+especially real-time ones, the scheduling can be done statically in advance. For
+example, an airline knows what time its flights will leave weeks before their 
+departure. Similarly, multimedia systems know when to schedule audio, video, and other
+processes in advance. For general-purpose use, these considerations do not hold
+and scheduling must be dynamic.
+Yet another static-dynamic issue is kernel structure. It is much simpler if the
+kernel is built as a single binary program and loaded into memory to run. The 
+consequence of this design, however, is that adding a new I/O device requires a 
+relinking of the kernel with the new device driver. Early versions of UNIX worked this
+way, and it was quite satisfactory in a minicomputer environment when adding new
+I/O devices was a rare occurrence. Nowadays, most operating systems allow code
+to be added to the kernel dynamically, with all the additional complexity that
+entails.
+12.3.7 Top-Down vs. Bottom-Up Implementation
+While it is best to design the system top down, in theory it can be implemented
+top down or bottom up. In a top-down implementation, the implementers start
+with the system-call handlers and see what mechanisms and data structures are
+needed to support them. These procedures are written, and so on, until the 
+hardware is reached.
+The problem with this approach is that it is hard to test anything with only the
+top-level procedures available. For this reason, many dev elopers find it more 
+practical to actually build the system bottom up. This approach entails first writing
+code that hides the low-level hardware, essentially the HAL in Windows (Chap.
+11). Interrupt handling and the clock driver are also needed early on.
+Then multiprogramming can be tackled, along with a simple scheduler (e.g.,
+round-robin scheduling). At this point, it should be possible to test the system to
+see if it can run multiple processes correctly. If that works, it is now time to begin
+the careful definition of the various tables and data structures needed throughout
+the system, especially those for process and thread management and later memory
+management. I/O and the file system can wait initially, except for a primitive way
+to read the keyboard and write to the screen for testing and debugging. In some
+cases, the key low-level data structures should be protected by allowing access
+only through specific access procedures—in effect, object-oriented programming,
+no matter what the programming language is. As lower layers are completed, they
+can be tested thoroughly. In this way, the system advances from the bottom up,
+much the way contractors build tall office buildings.
+If a large team of programmers is available, an alternative approach is to first
+make a  detailed design of the whole system, and then assign different groups to

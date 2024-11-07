@@ -1,0 +1,44 @@
+730
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+to signal it after 30 seconds. While the student is reading the text, the program has
+nothing to do. It could sit in a tight loop doing nothing, but that would waste CPU
+time that a background process or other user might need. A better solution is to
+use the pause system call, which tells Linux to suspend the process until the next
+signal arrives. Woe be it to the program that calls pause with no alarm pending.
+10.3.3 Implementation of Processes and Threads in Linux
+A process in Linux is like an iceberg: you only see the part above the water,
+but there is also an important part underneath. Every process has a user part that
+runs the user program. However, when one of its threads makes a system call, it
+traps to kernel mode and begins running in kernel context, with a different memory
+map and full access to all machine resources. It is still the same thread, but now
+with more power and also its own kernel mode stack and kernel mode program
+counter. These are important because a system call can block partway through, for
+example, waiting for a disk operation to complete. The program counter and 
+registers are then saved so the thread can be restarted in kernel mode later.
+The Linux kernel internally represents processes as tasks, via the structure
+task struct. Unlike other OS approaches (which make a distinction between a
+process, lightweight process, and thread), Linux uses the task structure to represent
+any execution context. Therefore, a single-threaded process will be represented
+with one task structure and a multithreaded process will have one task structure for
+each of the user-level threads. Finally, the kernel itself is multithreaded, and has
+kernel-level threads which are not associated with any user process and are 
+executing kernel code. We will return to the treatment of multithreaded processes (and
+threads in general) later in this section.
+For each process, a process descriptor of type task struct is resident in 
+memory at all times. It contains vital information needed for the kernel’s management of
+all processes, including scheduling parameters, lists of open-file descriptors, and so
+on. The process descriptor along with memory for the kernel-mode stack for the
+process are created upon process creation.
+For compatibility with other UNIX systems, Linux identifies processes via the
+PID. The kernel organizes all processes in a doubly linked list of task structures.
+In addition to accessing process descriptors by traversing the linked lists, the PID
+can be mapped to the address of the task structure, and the process information can
+be accessed immediately.
+The task structure contains a variety of fields. Some of these fields contain
+pointers to other data structures or segments, such as those containing information
+about open files. Some of these segments are related to the user-level structure of
+the process, which is not of interest when the user process is not runnable. 
+Therefore, these may be swapped or paged out, in order not to waste memory on 
+information that is not needed. For example, although it is possible for a process to be
+sent a signal while it is swapped out, it is not possible for it to read a file. For this

@@ -1,0 +1,33 @@
+390
+INPUT/OUTPUT 
+CHAP. 5
+particular, they are ‘‘write-heavy’’ and require a fair number of additional writes
+due to the parity blocks. Unfortunately, writes are not just relatively expensive,
+they also increase the SSD’s wear.
+5.5 CLOCKS
+Clocks (also called timers) are essential to the operation of any 
+multiprogrammed system for a variety of reasons. They maintain the time of day and 
+prevent one process from monopolizing the CPU, among other things. The clock 
+software can take the form of a device driver, even though a clock is neither a block
+device, like a disk, nor a character device, like a mouse. Our examination of clocks
+will follow the same pattern as in the previous section: first a look at clock 
+hardware and then a look at the clock software.
+5.5.1 Clock Hardware
+Tw o types of clocks are commonly used in computers, and both are quite 
+different from the clocks and watches used by people. The simpler clocks are tied to
+the 110- or 220-volt power line and cause an interrupt on every voltage cycle, at 50
+or 60 Hz. These clocks used to dominate, but are rare nowadays.
+The other kind of clock is built out of three components: a crystal oscillator, a
+counter, and a holding register, as shown in Fig. 5-27. When a piece of quartz
+crystal is properly cut and mounted under tension, it can be made to generate a
+periodic signal of very great accuracy, typically in the range of several hundred
+megahertz to a few gigahertz, depending on the crystal chosen. Using electronics,
+this base signal can be multiplied by a small integer to get frequencies up to several
+gigahertz or even more. At least one such circuit is usually found in any computer,
+providing a synchronizing signal to the computer’s various circuits. This signal is
+fed into the counter to make it count down to zero. When the counter gets to zero,
+it causes a CPU interrupt.
+Crystal oscillator
+Counter is decremented at each pulse
+Holding register is used to load the counter
+Figure 5-27. A programmable clock.

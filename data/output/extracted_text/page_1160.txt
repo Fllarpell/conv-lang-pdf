@@ -1,0 +1,99 @@
+INDEX
+1131
+GPT (see GUID Partition Table)
+GPU (see Graphics Processing Unit)
+Grace period, 151
+Grand unified bootloader, 741
+Graph-theoretic load balancing, 576–577
+Graphical user interface, 2, 408–414, 709
+Graphics card, 409
+Graphics device interface, 413
+Graphics processing unit, 24, 409, 539
+Grid interconnection, 559
+Group, security, 623
+Group identification, 41
+Group policy, Windows security, 1020
+GRUB (see GRand Unified Bootloader)
+Guaranteed scheduling, 166
+Guarded stack, Windows, 1027
+Guest compute service, 1016
+Guest operating system, 72, 485, 514–515
+Guest physical address, 495, Hyper-V 1005
+Guest virtual address, 495
+Guest-induced page fault, 494
+GUI (see Graphical User Interface)
+GUID (see Globally Unique ID)
+GUID partition table, 35, 279, 375
+H
+Haeckel, Ernst, 47
+HAL (see Hardware Abstraction Layer)
+Handle, object, 885
+Windows, 92, 917–919
+Hard fault, Windows, 964
+Hard link, 277
+Hard miss, TLB, 203
+Hard real time scheduling, 168
+Hardening, security, 616
+Hardening the operating system, 681–694
+access restriction, 685–689
+control-flow restriction, 683–685
+encapsulating untrusted code, 691–692
+fine-grained randomization, 682–683
+integrity checks, 689–690
+remote attestation, 690–69
+sandboxing, 692–694
+Hardware abstraction layer, 895, 897–900
+Hardware isolated process, 1016–1017
+Hardware review, 20–36
+Hardware stack protection, 880
+Hardware support, nested page table, 495–496
+Hardware-accelerated device, Hyper-V, 1008
+Hardware-enforced stack protection, Windows, 1030
+Hardware-independent encapsulation, 516
+Hash algorithm, cryptographic, 635
+HCS (see Host Compute Service)
+Head skew, 373
+Header file, 75–76, 720
+Headless workstation, 558
+Heap, 745
+Heap feng shui, 662
+Heap spraying, 650
+Heterogeneous multicore, 540
+Hiberboot, Windows, 1001
+Hibernation, Windows, 1001
+Hiding the hardware, 1065–1067
+Hierarchical directory system, 273–274
+High-level format, 375
+High-resolution timer, 737
+Hints, 1076
+History
+Android, 794–799
+Berkeley UNIX, 704–705
+Linux, 710–713
+MINIX, 709–710
+UNIX, 704–713
+VMware, 507–508
+Windows, 871–880
+History of virtualization, 480–482
+Hive, registry, 891
+Honeywell 6000, 244
+Hooking attack, 668
+Host, 466, 583
+Host compute service, 1016
+Host container, Windows, 1013
+Host operating system, 72, 485, 517–520
+Host physical address, 495
+Hosted hypervisor, 485
+Hotpatch address table, Windows, 1033
+Hotpatching, Windows, 1033
+HPAT (see Hotpatch Address Table)
+HSP (see Hardware-enforced Stack Protection)
+Huge page, 753
+Windows, 956
+Hungarian notation, 411
+HVCI (see Hypervisor-enforced Code Integrity)
+Hydra, 626
+Hyper-thread, 541
+Hyper-V, 481, 895–987, 1003–1011
+Hyper-V I/O, 1007–1010
+Hyper-V isolated container, 1015–1016

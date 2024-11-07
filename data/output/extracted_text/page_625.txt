@@ -1,0 +1,40 @@
+596
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+independent processes communicate via an abstract tuple space. The tuple space
+is global to the entire system, and processes on any machine can insert tuples into
+the tuple space or remove tuples from the tuple space without regard to how or
+where they are stored. To the user, the tuple space looks like a big, global shared
+memory, as we hav e seen in various forms before, as in Fig. 8-21(c).
+A tuple is like a structure in C or Java. It consists of one or more fields, each
+of which is a value of some type supported by the base language (Linda is 
+implemented by adding a library to an existing language, such as C). For C-Linda, field
+types include integers, long integers, and floating-point numbers, as well as 
+composite types such as arrays (including strings) and structures (but not other tuples).
+Unlike objects, tuples are pure data; they do not have any associated methods. 
+Figure 8-36 shows three tuples as examples.
+("abc", 2, 5)
+("matr ix-1", 1, 6, 3.14)
+("family", "is-sister", "Stephany", "Roberta")
+Figure 8-36. Three Linda tuples.
+Four operations are provided on tuples. The first one, out, puts a tuple into the
+tuple space. For example,
+out("abc", 2, 5);
+puts the tuple ("abc", 2, 5) into the tuple space. The fields of out are normally 
+constants, variables, or expressions, as in
+out("matr ix<1", i, j, 3.14);
+which outputs a tuple with four fields, the second and third of which are 
+determined by the current values of the variables i and j.
+Tuples are retrieved from the tuple space by the in primitive. They are
+addressed by content rather than by name or address. The fields of in can be
+expressions or formal parameters. Consider, for example,
+in("abc", 2, ?i);
+This operation ‘‘searches’’ the tuple space for a tuple consisting of the string
+‘‘abc’’, the integer 2, and a third field containing any integer (assuming that i is an
+integer). If found, the tuple is removed from the tuple space and the variable i is
+assigned the value of the third field. The matching and removal are atomic, so if
+two processes execute the same in operation simultaneously, only one of them will
+succeed, unless two or more matching tuples are present. The tuple space may even
+contain multiple copies of the same tuple.
+The matching algorithm used by in is straightforward. The fields of the in
+primitive, called the template, are (conceptually) compared to the corresponding

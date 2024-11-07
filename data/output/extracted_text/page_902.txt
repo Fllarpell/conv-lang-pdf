@@ -1,0 +1,41 @@
+SEC. 11.1
+HISTORY OF WINDOWS THROUGH WINDOWS 11
+873
+in all of business history. Had he licensed CP/M to IBM, Kildall would probably
+have become the richest man on the planet. Rebuffed by Kildall, IBM came back to
+Bill Gates, the cofounder of Microsoft, and asked for help again. Within a short
+time, Microsoft bought a CP/M clone from a local company, Seattle Computer
+Products, ported it to the IBM PC, and licensed it to IBM. It was then renamed
+MS-DOS 1.0 (MicroSoft Disk Operating System) and shipped with the first IBM
+PC in 1981.
+MS-DOS was a 16-bit real-mode, single-user, command-line-oriented 
+operating system consisting of 8 KB of memory resident code. Over the next decade,
+both the PC and MS-DOS continued to evolve, adding more features and 
+capabilities. By 1986, when IBM built the PC/AT based on the Intel 286, MS-DOS had
+grown to be 36 KB, but it continued to be a command-line-oriented, 
+one-application-at-a-time, operating system.
+11.1.2 1990s: MS-DOS-based Windows
+Inspired by the graphical user interface of a system developed by Doug 
+Engelbart at Stanford Research Institute and later improved at Xerox PARC, and their
+commercial progeny, the Apple Lisa and the Apple Macintosh, Microsoft decided
+to give MS-DOS a graphical user interface that it called Windows. The first two
+versions of Windows (1985 and 1987) were not very successful, due in part to the
+limitations of the PC hardware available at the time. In 1990, Microsoft released
+Windows 3.0 for the Intel 386 and sold over one million copies in six months.
+Windows 3.0 was not a true operating system, but a graphical environment
+built on top of MS-DOS, which was still in control of the machine and the file 
+system. All programs ran in the same address space and a bug in any one of them
+could bring the whole system to a frustrating halt.
+In August 1995, Windows 95 was released. It contained many of the features
+of a full-blown operating system, including virtual memory, process management,
+and multiprogramming, and introduced 32-bit programming interfaces. However, it
+still lacked security, and provided poor isolation between applications and the 
+operating system such that a bug in one program can crash the entire system or cause
+a system-wide hang. Thus, the problems with instability continued, even with the
+subsequent releases of Windows 98 and Windows Me, where MS-DOS was still
+there running 16-bit assembly code in the heart of the Windows operating system.
+11.1.3 2000s: NT-based Windows
+By the end of the 1980s, Microsoft realized that continuing to evolve an 
+operating system with MS-DOS at its center was not the best way to go. PC hardware
+was continuing to increase in speed and capability and ultimately the PC market
+would collide with the desktop, workstation, and enterprise-server computing

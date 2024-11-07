@@ -1,0 +1,44 @@
+SEC. 12.5
+PROJECT MANAGEMENT
+1081
+In practice, large companies, which have had long experience producing 
+software and know what happens if it is produced haphazardly, hav e a tendency to at
+least try to do it right. In contrast, smaller, newer companies, which are in a huge
+rush to get to market, do not always take the care to produce their software 
+carefully. This haste often leads to far from optimal results.
+Neither Brooks nor Mills foresaw the growth of the open source movement.
+While many expressed doubt (especially those leading large closed-source 
+software companies), open source software has been a tremendous success. From large
+servers to embedded devices, and from industrial control systems to handheld
+smartphones, open source software is everywhere. Large companies like Google
+and IBM are throwing their weight behind Linux now and contribute heavily in
+code. What is noticeable is that the open source software projects that have been
+most successful have clearly used the chief-programmer model of having one mind
+control the architectural design (e.g., Linus Torvalds for the Linux kernel and
+Richard Stallman for the GNU C compiler).
+12.5.3 The Role of Experience
+Having experienced designers is absolutely critical to any software project.
+Brooks points out that most of the errors are not in the code, but in the design. The
+programmers correctly did what they were told to do. What they were told to do
+was wrong. No amount of test software will catch bad specifications.
+Brooks’ solution is to abandon the classical development model illustrated in
+Fig. 12-11(a) and use the model of Fig. 12-11(b). Here the idea is to first write a
+main program that merely calls the top-level procedures, initially dummies. 
+Starting on day 1 of the project, the system will compile and run, although it does 
+nothing. As time goes on, real modules replace the dummies. The result is that system
+integration testing is performed continuously, so errors in the design show up much
+earlier, so the learning process caused by bad design starts earlier.
+A little knowledge is a dangerous thing. Brooks observed what he called the
+second system effect. Often the first product produced by a design team is 
+minimal because the designers are afraid it may not work at all. As a result, they are
+hesitant to put in many features. If the project succeeds, they build a follow-up
+system. Impressed by their own success, the second time the designers include all
+the bells and whistles that were intentionally left out the first time. As a result, the
+second system is bloated and performs poorly. The third time around they are
+sobered by the failure of the second system and are cautious again.
+The CTSS-MULTICS pair is a clear case in point. CTSS was the first 
+general-purpose timesharing system and was a huge success despite having minimal
+functionality. Its successor, MULTICS, was too ambitious and suffered badly for it.
+The ideas were good, but there were too many new things, so the system performed
+poorly for years and was never a commercial success. The third system in this line
+of development, UNIX, was much more cautious and much more successful.

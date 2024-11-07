@@ -1,0 +1,46 @@
+948
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+ZeroPage system threads run at priority 0 and convert free pages into pages of all
+zeroes. There is a separate ZeroPage thread for each real processor.
+Each thread has a base priority based on the priority class of the process and
+the relative priority of the thread. But the priority used for determining which of
+the 32 lists a ready thread is queued on is determined by its current priority, which
+is normally the same as the base priority—but not always. Under certain 
+conditions, the current priority of a thread is adjusted by the kernel above its base 
+priority. Since the array of Fig. 11-26 is based on the current priority, changing this 
+priority affects scheduling. These priority adjustments can be classified into two
+types: priority boost and priority floors.
+First let us discuss priority boosts. Boosts are temporary adjustments to
+thread priority and are generally applied when a thread enters the ready state. For
+example, when an I/O operation completes and releases a waiting thread, the 
+priority is boosted to give it a chance to run again quickly and start more I/O. The idea
+here is to keep the I/O devices busy. The amount of boost depends on the I/O 
+device, typically 1 for a disk, 2 for a serial line, 6 for the keyboard, and 8 for the
+sound card.
+Similarly, if a thread was waiting on a semaphore, mutex, or other event, when
+it is released, it gets boosted by two lev els if it is in the foreground process (the
+process controlling the window to which keyboard input is sent) and one level
+otherwise. This fix tends to raise interactive processes above the big crowd at level
+8. Finally, if a GUI thread wakes up because window input is now available, it gets
+a boost for the same reason.
+These boosts are not forever. They take effect immediately and can cause
+rescheduling of the CPU. But if a thread uses all of its next quantum, it loses one
+priority level and moves down one queue in the priority array. If it uses up another
+full quantum, it moves down another level, and so on until it hits its base level,
+where it remains until it is boosted again. A thread cannot be boosted into or within
+the real-time priority range, non-realtime threads can be boosted to at most a 
+priority of 15 and realtime threads cannot be boosted at all.
+The second class of priority adjustment is a priority floor. Unlike boosts
+which apply an adjustment relative to a thread’s base priority, priority floors apply
+a constraint that a thread’s absolute current priority must never fall below a giv en
+minimum priority. This constraint is not linked to the thread quantum and persists
+until explicitly removed.
+One case in which priority floors are used is illustrated in Fig. 11-27. Imagine
+that on a single processor machine, a thread T1 running in kernel-mode at priority
+4 gets preempted by a priority 8 thread T2 after acquiring a pushlock. Then, a 
+priority 12 thread T3 arrives, preempts T2 and blocks trying to acquire the pushlock
+held by T1. At this point, both T1 and T2 are runnable, but T2 has higher priority,
+so it continues running even though it is effectively preventing T3, a higher priority
+thread, from making progress because T1 is not able to run to release the pushlock.
+This situation is a very well-known problem called priority inversion. Windows

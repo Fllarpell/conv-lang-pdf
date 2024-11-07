@@ -1,0 +1,35 @@
+xviii
+CONTENTS
+9.9  RESEARCH ON SECURITY 694
+9.10 SUMMARY 696
+10 CASE STUDY 1: UNIX, LINUX, AND ANDROID
+703
+10.1 HISTORY OF UNIX AND LINUX 704
+10.1.1 UNICS 704
+10.1.2 PDP-11 UNIX 705
+10.1.3 Portable UNIX 706
+10.1.4 Berkeley UNIX 707
+10.1.5 Standard UNIX 708
+10.1.6 MINIX 709
+10.1.7 Linux 710
+10.2 OVERVIEW OF LINUX 713
+10.2.1 Linux Goals 713
+10.2.2 Interfaces to Linux 714
+10.2.3 The Shell 716
+10.2.4 Linux Utility Programs 719
+10.2.5 Kernel Structure 720
+10.3 PROCESSES IN LINUX 723
+10.3.1 Fundamental Concepts 724
+10.3.2 Process-Management System Calls in Linux 726
+10.3.3 Implementation of Processes and Threads in Linux 730
+10.3.4 Scheduling in Linux 736
+10.3.5 Synchronization in Linux 740
+10.3.6 Booting Linux 741
+10.4 MEMORY MANAGEMENT IN LINUX 743
+10.4.1 Fundamental Concepts 744
+10.4.2 Memory Management System Calls in Linux 746
+10.4.3 Implementation of Memory Management in Linux 748
+10.4.4 Paging in Linux 754
+10.5 INPUT/OUTPUT IN LINUX 757
+10.5.1 Fundamental Concepts 758
+10.5.2 Networking 759

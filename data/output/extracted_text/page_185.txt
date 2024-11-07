@@ -1,0 +1,43 @@
+156
+PROCESSES AND THREADS
+CHAP. 2
+Third, when a process blocks on I/O, on a semaphore, or for some other 
+reason, another process has to be selected to run. Sometimes the reason for blocking
+may play a role in the choice. For example, if A is an important process and it is
+waiting for B to exit its critical region, letting B run next will allow it to exit its
+critical region and thus let A continue. The trouble, however, is that the scheduler
+generally does not have the necessary information to take this dependency into
+account.
+Fourth, when an I/O interrupt occurs, a scheduling decision may be made. If
+the interrupt came from an I/O device that has now completed its work, some 
+process that was blocked waiting for the I/O may now be ready to run. It is up to the
+scheduler to decide whether to run the newly ready process, the process that was
+running at the time of the interrupt, or some third process.
+If a hardware clock provides periodic interrupts at 50 or 60 Hz (or possibly at
+some other—potentially higher—frequency), a scheduling decision can be made at
+each clock interrupt or at every kth clock interrupt. Scheduling algorithms can be
+divided into two categories with respect to how they deal with clock interrupts. A
+nonpreemptive scheduling algorithm picks a process to run and then just lets it
+run until it blocks (either on I/O or waiting for another process) or voluntarily
+releases the CPU. Even if it runs for many hours, it will not be forcibly suspended.
+In effect, no scheduling decisions are made during clock interrupts. After 
+clockinterrupt processing has been finished, the process that was running before the
+interrupt is resumed, unless a higher-priority process was waiting for a 
+now-satisfied timeout.
+In contrast, a preemptive scheduling algorithm picks a process and lets it run
+for a maximum of some fixed time. If it is still running at the end of the time 
+interval, it is suspended and the scheduler picks another process to run (if one is 
+available). Doing preemptive scheduling requires having a clock interrupt occur at the
+end of the time interval to give control of the CPU back to the scheduler. If no
+clock is available, nonpreemptive scheduling is the only option.
+Preemption is not just relevant for applications, but also for operating system
+kernels, especially monolithic ones. Nowadays many of them are preemptive. If
+they were not, a poorly implemented driver or a very slow system call could hog
+the CPU. Instead, in a preemptive kernel the scheduler can force the long running
+driver or system call to context switch.
+Categories of Scheduling Algorithms
+Not surprisingly, in different environments different scheduling algorithms are
+needed. This situation arises because different application areas (and different
+kinds of operating systems) have different goals. In other words, what the 
+scheduler should optimize for is not the same in all systems. Three environments worth
+distinguishing are:

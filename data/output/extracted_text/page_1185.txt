@@ -1,0 +1,82 @@
+1156
+INDEX
+Windows virtual hard disk, 1014
+Windows virtual pagefile, 974
+Windows virtual trust level, 1017
+Windows virtualization, 1003–1035
+Windows virtualization-based security, 897
+Windows Vista, 3, 876–877
+Windows volume shadow copy, 981
+Windows virtualization-based security, 1017–1018
+Windows vulnerabilities, 1026–1027, 1026–1031
+Windows working set in-swap, 965–966
+Windows working set out-swap, 966
+Windows workload isolation, 976
+Windows wow64 abstraction layer, 951
+Windows write-behind, 979
+Windows XP, 3, 875–876
+Windows xtacache, 952
+Windows zeropage, 948
+Windows zeropage thread, 972
+Windows-on-Windows, 889
+Wintel, 509
+Wireless communication, power management, 427
+Wirth, Niklaus, 1042
+Wmb system call, 740
+Wndproc, 412
+WNF (see Windows Notification Facility)
+WNS (see Windows Notification Service)
+Worker thread, 100
+Working directory, 43, 275, 767
+Working set, 214
+Working set in-swap, Windows, 965–966
+Working set model, 215
+Working set out-swap, Windows, 966
+Working set page replacement algorithm, 214–218
+Workload isolation, Windows, 976
+World switch, 489
+Worm, 607
+Wormhole routing, 561
+Worst fit memory management algorithm, 191
+WOW (see Windows-on-Windows)
+Wo w64 abstraction layer, Windows, 951
+Wozniak, Steve, 614
+Wrapper, 110
+Write system call, 54, 269, 593, 619, 746, 757,
+758, 760, 772, 775, 782, 788, 793, 1048
+Write Win32 call, 982
+Write-behind, Windows, 979
+Write-through cache, 317, 371
+WSA (see Windows Subsystem for Android)
+WSclock page replacement algorithm, 218–220
+WSL (see Windows Subsystem for Linux)
+X
+X, 404–408
+X client, 404
+X Intrinsic, 404
+X Resource, 406
+X server, 404
+X Widget, 405
+X window system, 18, 404–408, 710, 715
+X11, 18, 715
+X64 emulation on arm64, 953–955
+X86, 21, 33, 183, 243, 248, 695
+virtualization, 509–511
+XCHG
+Xen, 481, 502
+XFG (see Extended Flow Guard)
+Xlib, 404
+Xtacache, Windows, 952
+Z
+Z/VM, 69
+Zero page, 745
+Zeropage, Windows, 948
+Zeropage thread, Windows, 972
+Zombie, 616
+Zombie state, 729
+Zone dma, 748
+Zone dma32, 749
+Zone highmem, 749
+Zone normal, 749
+Zuse, Konrad, 8
+Zygote, Android, 801–802, 808–809, 832–833

@@ -1,0 +1,51 @@
+520
+VIRTUALIZATION AND THE CLOUD
+CHAP. 7
+Host OS
+Context
+Process
+A
+Process
+B
+Normal
+Context Switch
+VMware
+World Switch
+VMM
+Context
+Linear Address space
+VMM
+A (user-space)
+Kernel Address space
+B (user-space)
+VMX (user-space)
+Kernel Address space
+Kernel Address space (host OS)
+Virtual Machine
+Figure 7-11. Difference between a normal context switch and a world switch.
+Going back to Fig. 7-10: it further illustrates the various steps that occur when
+a disk interrupt happens while the VMM is executing (step i). Of course, the
+VMM cannot handle the interrupt since it does not have the back-end device driver.
+In (ii), the VMM does a world switch back to the host operating system. 
+Specifically, the world-switch code returns control to the VMware driver, which in (iii)
+emulates the same interrupt that was issued by the disk. So in step (iv), the 
+interrupt handler of the host operating system runs through its logic, as if the disk 
+interrupt had occurred while the VMware driver (but not the VMM!) was running.
+Finally, in step (v), the VMware driver returns control to the VMX application. At
+this point, the host operating system may choose to schedule another process, or
+keep running the VMware VMX process. If the VMX process keeps running, it
+will then resume execution of the virtual machine by doing a special call into the
+device driver, which will generate a world switch back into the VMM context. As
+you see, this is a neat trick that hides the entire VMM and virtual machine from the
+host operating system. More importantly, it provides the VMM complete freedom
+to reprogram the hardware as it sees fit.
+7.11.5 The Evolution of VMware Workstation
+The technology landscape has changed dramatically in the decade following
+the development of the original VMware Virtual Machine Monitor.
+The hosted architecture is still used today for state-of-the-art interactive 
+hypervisors such as VMware Workstation, VMware Player, and VMware Fusion (the
+product aimed at Apple macOS host operating systems), and even in VMware’s
+product aimed at cell phones (Barr et al., 2010). The world switch, and its ability to
+separate the host operating system context from the VMM context, remains the
+foundational mechanism of VMware’s hosted products today. Although the 
+implementation of the world switch has evolved through the years, for example, to

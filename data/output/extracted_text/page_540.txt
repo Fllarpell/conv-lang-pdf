@@ -1,0 +1,40 @@
+SEC. 7.11
+CASE STUDY: VMWARE
+511
+2. The x86 architecture was of daunting complexity. The x86 
+architecture was a notoriously complicated CISC architecture, including
+legacy support for multiple decades of backward compatibility. Over
+the years, it had introduced four main modes of operations (real, 
+protected, v8086, and system management), each of which enabled in
+different ways the hardware’s segmentation model, paging 
+mechanisms, protection rings, and security features (such as call gates).
+3. x86 machines had diverse peripherals. Although there were only
+two major x86 processor vendors, the personal computers of the time
+could contain an enormous variety of add-in cards and devices, each
+with their own vendor-specific device drivers. Virtualizing all these
+peripherals was infeasible. This had two implications: it applied to
+both the front end (the virtual hardware exposed in the virtual 
+machines) and the back end (the real hardware that the hypervisor 
+needed to be able to control) of peripherals.
+4. Need for a simple user experience. Classic hypervisors were 
+installed in the factory, similar to the firmware found in today’s computers.
+Since VMware was a startup, its users would have to add the 
+hypervisors to existing systems after the fact. VMware needed a software 
+deliv ery model with an easy installation procedure to speed-up adoption.
+7.11.4 VMware Workstation: Solution Overview
+This section describes at a high level how VMware Workstation addressed the
+challenges mentioned in the previous section.
+VMware Workstation is a type 2 hypervisor that consists of distinct modules.
+One important module is the VMM, which is responsible for executing the virtual
+machine’s instructions. A second important module is the VMX, which interacts
+with the host operating system.
+The section covers first how the VMM solves the nonvirtualizability of the x86
+architecture. Then, we describe the operating system-centric strategy used by the
+designers throughout the development phase. Next, we look at the design of the
+virtual hardware platform, which addresses half of the peripheral diversity 
+challenge. Finally, we discuss the role of the host operating system, in particular the
+interaction between the VMM and VMX components.
+Virtualizing the x86 Architecture
+The VMM runs the actual virtual machine; it enables it to make forward
+progress. A VMM built for a virtualizable architecture uses a technique known as
+trap-and-emulate to execute the virtual machine’s instruction sequence directly, but

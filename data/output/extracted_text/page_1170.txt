@@ -1,0 +1,102 @@
+INDEX
+1141
+Paging in large memories, 203–207
+Paging systems, design, 221–232
+load control, 224–225
+Palladium, 636
+Paradigm, event-driven, 1065
+Paradigms for system design, 1048–1051
+Parallel bus architecture, 33
+Parallels, 481
+Paravirt op, 492
+Paravirtualization, 72, 484
+Paravirtualized device, Hyper-V, 1007
+Parcel, Android, 814–815
+Parent process, 724
+Parse, Windows, 919
+Partition, 59
+child, 1003
+Hyper-V, 1003
+hypervisor, 896
+virtualization, 1003
+Partition table, 279
+Passive attack, 616
+Password, one-time, 642–643
+Password security, 637–643
+UNIX, 640–642
+weak, 638–640
+Patch, Windows, 1033
+Patch binary, Windows, 1033
+Patchguard, Windows, 1031
+Paterson, Tim 16
+Path name, 43, 274–276
+absolute, 274
+MULTICS, 274
+relative, 275
+Pause system call, 729
+PC, IBM, 15
+PCIe (see Peripheral Component Interconnect
+Express)
+PCR (see Platform Configuration Register)
+PDA (see Personal Digital Assistant)
+PDP-1, 14
+PDP-11, 14–15, 49, 50, 341, 705–706
+PE (see Portable Executable)
+PEB (see Process Environment Block)
+Perfect shuffle network, 533
+Performance, 1070–1078
+caching, 1075–1076
+exploiting locality, 1077
+file system, 321–322
+hints, 1076
+optimize the common case, 1077–1078
+Performance (continued)
+space-time trade-offs, 1072–1075
+what should be optimized?, 1071–1072
+Periodic scheduling, 168
+Peripheral component interconnect express, 33
+Permission, Android, 839–843
+Persistent memory, 29
+Persistent storage, 260
+Personal computer, 15, 872
+Personal computer operating system, 37
+Personal digital assistant, 37
+Peterson’s solution, 124–125
+PF (see Physical Function)
+PFF (see Page Fault Frequency page replacement algorithm)
+PFN (see Page Frame Number database)
+PFRA (see Page Frame Reclaiming Algorithm)
+Phase-change memory, 931
+Physical address, host, 495
+machine, 495
+Physical address extension, 753
+Physical dump, 309
+Physical function, 500
+Physical memory management, 748–752
+Windows, 969–971
+PID (see Process IDentifier)
+Pidgin Pascal, 141
+Pinned page, 236, 749
+Pinning, 236
+Pipe, 45, 725
+Pipe symbol, 718
+Pipe system call, 773
+Pipeline, 22, 718
+Plaintext, 632
+Platform as a service, 502
+Platform configuration register, 912
+PLT (see Procedure Linkage Table)
+Plug-and-play, 907
+Plug-and-play manager, Windows, 980
+Pointer, 75
+Pointer authentication, Windows, 1030
+POLA (see Principle of Least Authority)
+Policy, 68
+Policy versus mechanism, 169
+Policy vs. mechanism, 238–240, 1057–1058
+Polling, 355
+Pop-up thread, 568
+Popek, Gerald, 480
+Popek and Goldberg criteria, 507, 510
+Portable C compiler, 706
+Portable executable, 35

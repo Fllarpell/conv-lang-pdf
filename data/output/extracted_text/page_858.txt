@@ -1,0 +1,43 @@
+SEC. 10.8
+ANDROID
+829
+Cursor for retrieving the structured results. For example, retrieving a summary of
+all of the available email messages would look something like:
+quer y("content://com.example.email.provider.email/messages")
+Though this does not look like it to applications, what is actually going on
+when they use content providers has many similarities to binding to services. 
+Figure 10-61 illustrates how the system handles our query example:
+1. The application calls ContentResolver.query to initiate the operation.
+2. The URI’s authority is handed to the activity manager for it to find
+(via the package manager) the appropriate content provider.
+3. If the content provider is not already running, it is created.
+4. Once created, the content provider returns to the activity manager its
+IBinder implementing the system’s IContentProvider interface.
+5. The content provider’s Binder is returned to the ContentResolver.
+6. The content resolver can now complete the initial query operation by
+calling the appropriate method on the AIDL interface, returning the
+Cursor result.
+Activity manager in system_server process
+Email app process
+ProviderRecord
+(EmailProvider)
+EmailProvider
+ContentResolver
+1. query()
+Client app process
+3. Create
+IBinder
+IContentProvider.Stub
+IContentProvider.Proxy
+4. Return
+5. Return
+2. Look up
+    Authority
+IBinder
+IBinder
+6. query()
+Figure 10-61. Interacting with a content provider.
+Content providers are one of the key mechanisms for performing interactions
+across applications. For example, if we return to the cross-application sharing 
+system previously described in Fig. 10-55, content providers are the way data are
+actually transferred. The full flow for this operation is:

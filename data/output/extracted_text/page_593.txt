@@ -1,0 +1,42 @@
+564
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+suitable process. As it is faster to process all segments in the same TCP flow on the
+same processor (where the caches are warm), the card can use the hashing logic to
+hash the TCP flow fields (IP addresses and TCP port numbers) and add all 
+segments with the same hash on the same queue that is served by a specific core. This
+is also useful for virtualization, as it allows us to give each virtual machine its own
+queue.
+Node-to-Network Interface Communication
+Another issue is how to get packets onto the interface board. The fastest way is
+to use the DMA chip on the board to just copy them in from RAM. The problem
+with this approach is that DMA may use physical rather than virtual addresses and
+runs independently of the CPU, unless an I/O MMU is present. To start with,
+although a user process certainly knows the virtual address of any packet it wants
+to send, it generally does not know the physical address. Making a system call to
+do the virtual-to-physical mapping is undesirable, since the point of putting the
+interface board in user space in the first place was to avoid having to make a 
+system call for each packet to be sent.
+In addition, if the operating system decides to replace a page while the DMA
+chip is copying a packet from it, the wrong data will be transmitted. Worse yet, if
+the operating system replaces a page while the DMA chip is copying an incoming
+packet to it, not only will the incoming packet be lost, but also a page of innocent
+memory will be ruined, probably with disastrous consequences shortly.
+These problems can be avoided by having system calls to pin and unpin pages
+in memory, marking them as temporarily unpageable. However, having to make a
+system call to pin the page containing each outgoing packet and then having to
+make another call later to unpin it is expensive. If packets are small, say, 64 bytes
+or less, the overhead for pinning and unpinning every buffer is prohibitive. For
+large packets, say, 1 KB or more, it may be tolerable. For sizes in between, it
+depends on the details of the hardware. Besides introducing a performance hit,
+pinning and unpinning pages add to the software complexity. And if user 
+processes can pin pages, what is to prevent a greedy process from pinning all its page to
+keep them from being paged out in order to improve its performance?
+Remote Direct Memory Access
+In some fields, high network latencies are simply not acceptable. For instance,
+for certain applications in high-performance computing the computation time is
+strongly dependent on the network latency. Likewise, high-frequency trading is all
+about having computers perform transactions (buying and selling stock) at
+extremely high speeds—every microsecond counts. Whether or not it is wise to
+have computer programs trade millions of dollars worth of stock in a millisecond,
+when pretty much all software tends to be buggy, is an interesting question for

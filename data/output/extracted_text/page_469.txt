@@ -1,0 +1,50 @@
+440
+DEADLOCKS 
+CHAP. 6
+typedef int semaphore;
+typedef int semaphore;
+semaphore resource 1; 
+semaphore resource 1;
+semaphore resource 2;
+void process A(void) {
+void process A(void) {
+down(&resource 1); 
+down(&resource 1);
+use resource 1( );
+down(&resource 2);
+up(&resource 1); 
+use both resources( );
+}
+up(&resource 2);
+up(&resource 1);
+}
+(a) 
+(b)
+Figure 6-1. Using a semaphore to protect resources. (a) One resource. (b) Two resources.
+Sometimes processes need two or more resources. They can be acquired
+sequentially, as shown in Fig. 6-1(b). If more than two resources are needed, they
+are just acquired one after another.
+So far, so good. As long as only one process is involved, everything works
+fine. Of course, with only one process, there is no need to formally acquire 
+resources, since there is no competition for them.
+Now let us consider a situation with two processes, A and B, and two
+resources. Two scenarios are depicted in Fig. 6-2. In Fig. 6-2(a), both processes
+ask for the resources in the same order. In Fig. 6-2(b), they ask for them in a 
+different order. This difference may seem minor, but it is not.
+In Fig. 6-2(a), one of the processes will acquire the first resource before the
+other one. That process will then successfully acquire the second resource and do
+its work. If the other process attempts to acquire resource 1 before it has been
+released, the other process will simply block until it becomes available.
+In Fig. 6-2(b), the situation is different. It might happen that one of the 
+processes acquires both resources and effectively blocks out the other process until it is
+done. However, it might also happen that process A acquires resource 1 and 
+process B acquires resource 2. Each one will now block when trying to acquire the
+other one. Neither process will ever run again. Bad news: this situation is a 
+deadlock.
+Here we see how what appears to be a minor difference in coding style—
+which resource to acquire first—turns out to make the difference between the 
+program working and the program failing in a hard-to-detect way.
+6.1.3 The Dining Philosophers Problem
+In 1965, Dijkstra posed and then solved a synchronization problem he called
+the dining philosophers problem. Since that time, everyone inventing yet another
+synchronization primitive has felt obligated to demonstrate how wonderful the new

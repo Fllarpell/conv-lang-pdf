@@ -1,0 +1,39 @@
+232
+MEMORY MANAGEMENT 
+CHAP. 3
+A better solution is to compile shared libraries with a special compiler flag 
+telling the compiler not to produce any instructions that use absolute addresses.
+Instead only instructions using relative addresses are used. For example, there is
+almost always an instruction that says jump forward (or backward) by n bytes (as
+opposed to an instruction that gives a specific address to jump to). This instruction
+works correctly no matter where the shared library is placed in the virtual address
+space. By avoiding absolute addresses, the problem can be solved. Code that uses
+only relative offsets is called position-independent code.
+3.5.8 Mapped Files
+Shared libraries are really a special case of a more general facility called 
+memory-mapped files. The idea here is that a process can issue a system call to map a
+file onto a portion of its virtual address space. In most implementations, no pages
+are brought in at the time of the mapping, but as pages are touched, they are
+demand paged in one page at a time, using the file on nonvolatile storage as the
+backing store. When the process exits, or explicitly unmaps the file, all the 
+modified pages are written back to the file on disk or SSD.
+Mapped files provide an alternative model for I/O. Instead of doing reads and
+writes, the file can be accessed as a big character array in memory. In some 
+situations, programmers find this model more convenient.
+If two or more processes map onto the same file at the same time, they can
+communicate over shared memory. Writes done by one process to the shared 
+memory are immediately visible when the other one reads from the part of its virtual
+address space mapped onto the file. This mechanism thus provides a 
+high-bandwidth channel between processes and is often used as such (even to the extent of
+mapping a scratch file). Now it should be clear that if memory-mapped files are
+available, shared libraries can use this mechanism.
+3.6 IMPLEMENTATION ISSUES
+Implementers of virtual memory systems have to make choices among the
+major theoretical algorithms, such as second chance versus aging, local versus 
+global page allocation, and demand paging versus prepaging. But they also have to be
+aw are of a number of practical implementation issues as well. In this section, we
+will take a look at a few of the common problems and some solutions.
+3.6.1 Operating System Involvement with Paging
+There are four times when the operating system has paging-related work to do:
+process creation time, process execution time, page fault time, and process 
+termination time. We will now briefly examine each of these to see what has to be done.

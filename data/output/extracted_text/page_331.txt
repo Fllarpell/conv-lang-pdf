@@ -1,0 +1,43 @@
+302
+FILE SYSTEMS
+CHAP. 4
+the obvious problem that if a file grows, it may have to be moved on the disk. The
+same problem holds for segments in memory, except that moving a segment in
+memory is a relatively fast operation compared to moving a file from one disk
+position to another. For this reason, nearly all file systems chop files up into 
+fixedsize blocks that need not be adjacent.
+Block Size
+Once it has been decided to store files in fixed-size blocks, the question arises
+how big the block should be. Given the way hard disks are organized, the sector,
+the track, and the cylinder are obvious candidates for the unit of allocation
+(although these are all device dependent, which is a minus). In flash-based 
+systems, the flash page size is another candidate, while in a paging system, the 
+memory page size is also a major contender.
+Since magnetic disks have served as the storage work horse for years and led
+to many of the design choices, such as the common 4 KB block size still used
+today, let us consider them first. On a hard disk, having a large block size means
+that every file, even a 1-byte file, ties up an entire block. It also means that small
+files waste a large amount of disk space. On the other hand, a small block size
+means that most files will span multiple blocks and thus need multiple seeks and
+rotational delays to read them, reducing performance. Thus if the allocation unit is
+too large, we waste space; if it is too small, we waste time. The block size of 4 KB
+is considered a reasonable compromise for average users.
+As an example, consider a disk with 1 MB per track, a rotation time of 8.33
+msec, and an average seek time of 5 msec. The time in milliseconds to read a block
+of k bytes is then the sum of the seek, rotational delay, and transfer times:
+5 + 4. 165 + (k/1000000) × 8. 33
+The dashed curve of Fig. 4-23 shows the data rate for such a disk as a function of
+block size. To compute the space efficiency, we need to make an assumption about
+the mean file size. For simplicity, let us assume that all files are 4 KB. While this is
+clearly not true in practice, it turns out that modern file systems are littered with
+files of a few kilobytes in size (e.g., icons, emojis, and emails) so this is not a crazy
+number either. The solid curve of Fig. 4-23 shows the space efficiency as a 
+function of block size.
+The two curves can be understood as follows. The access time for a block is
+completely dominated by the seek time and rotational delay, so giv en that it is
+going to cost 9 msec to access a block, the more data that are fetched, the better.
+Hence, the data rate goes up almost linearly with block size (until the transfers take
+so long that the transfer time begins to matter).
+Now consider space efficiency. With 4-KB files and 1-KB, 2-KB, or 4-KB
+blocks, files use 4, 2, and 1 block, respectively, with no wastage. With an 8-KB
+block and 4-KB files, the space efficiency drops to 50%, and with a 16-KB block it

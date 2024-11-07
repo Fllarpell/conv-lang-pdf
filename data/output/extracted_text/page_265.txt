@@ -1,0 +1,42 @@
+236
+MEMORY MANAGEMENT 
+CHAP. 3
+unambiguously undo all the effects of the faulting instruction so that it can be
+restarted. If this information is not available, the operating system has to jump
+through hoops to figure out what happened and how to repair it. The problem
+could have been solved in hardware but that would have made the hardware more
+expensive so it was decided to leave it to the software.
+3.6.4 Locking Pages in Memory
+Although we have not discussed I/O much in this chapter, the fact that a 
+computer has virtual memory does not mean that I/O is absent. Virtual memory and I/O
+interact in subtle ways. Consider a process that has just issued a system call to
+read from some file or device into a buffer within its address space. While waiting
+for the I/O to complete, the process is suspended and another process is allowed to
+run. This other process gets a page fault.
+If the paging algorithm is global, there is a small, but nonzero, chance that the
+page containing the I/O buffer will be chosen to be removed from memory. If an
+I/O device is currently in the process of doing a DMA transfer to that page, 
+removing it will cause part of the data to be written in the buffer where they belong, and
+part of the data to be written over the just-loaded page. One solution to this 
+problem is to lock pages engaged in I/O in memory so that they will not be removed.
+Locking a page is often called pinning it in memory. Another solution is to do all
+I/O to kernel buffers and then copy the data to user pages later. Howev er, this
+requires an extra copy and thus slows everything down.
+3.6.5 Backing Store
+In our discussion of page replacement algorithms, we saw how a page is 
+selected for removal. We hav e not said much about where on nonvolatile storage it is
+put when it is paged out. Let us now describe some of the issues related to
+disk/SSD management.
+The simplest algorithm for allocating page space on nonvolatile storage is to
+have a special swap partition on the disk or, even better, on a separate storage 
+device from the file system (to balance the I/O load). UNIX systems traditionally
+work like this. This partition does not have a normal file system on it, which 
+eliminates all the overhead of converting offsets in files to block addresses. Instead,
+block numbers relative to the start of the partition are used throughout.
+When the system is booted, this swap partition is empty and is represented in
+memory as a single entry giving its origin and size. In the simplest scheme, when
+the first process is started, a chunk of the partition area the size of the first process
+is reserved and the remaining area reduced by that amount. As new processes are
+started, they are assigned chunks of the swap partition equal in size to their core
+images. As they finish, their storage space is freed. The swap partition is managed
+as a list of free chunks. Better algorithms will be discussed in Chap. 10.

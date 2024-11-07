@@ -1,0 +1,52 @@
+SEC. 4.4
+FILE-SYSTEM MANAGEMENT AND OPTIMIZATION
+303
+1 KB
+4 KB
+16 KB
+64 KB
+256 KB
+1MB
+100%
+10
+20
+30
+40
+50
+60
+0
+80%
+60%
+40%
+20%
+0%
+Data rate (MB/sec)
+Disk space utilization
+Figure 4-23. The dashed curve (left-hand scale) gives the data rate of a disk. The
+solid curve (right-hand scale) gives the disk-space efficiency. All files are 4 KB.
+is down to 25%. In reality, few files are an exact multiple of the disk block size, so
+some space is always wasted in the last block of a file.
+What the curves show, howev er, is that performance and space utilization are
+inherently in conflict. Small blocks are bad for performance but good for 
+diskspace utilization. For these data, no reasonable compromise is available. The size
+closest to where the two curves cross is 64 KB, but the data rate is only 6.6 MB/sec
+and the space efficiency is about 7%, neither of which is very good. Historically,
+file systems have chosen sizes in the 1-KB to 4-KB range, but with disks now
+exceeding multiple TB, it might be better to increase the block size and accept the
+wasted disk space. Disk space is hardly in short supply any more.
+So far we have looked at the optimal block size from the perspective of a hard
+disk and observed that if the allocation unit is too large, we waste space, while if it
+is too small, we waste time. With flash storage, we incur memory waste not just for
+large disk blocks, but also for smaller ones that do not fill up a flash page.
+Keeping Track of Free Blocks
+Once a block size has been chosen, the next issue is how to keep track of free
+blocks. Two methods are widely used, as shown in Fig. 4-24. The first one 
+consists of using a linked list of disk blocks, with each block holding as many free
+disk block numbers as will fit. With a 1-KB block and a 32-bit disk block number,
+each block on the free list holds the numbers of 255 free blocks. (One slot is
+required for the pointer to the next block.) Consider a 1-TB disk, which has about
+1 billion disk blocks. To store all these addresses at 255 per block requires about 4
+million blocks. Generally, free blocks are used to hold the free list, so the storage
+is essentially free.
+The other free-space management technique is the bitmap. A disk with n
+blocks requires a bitmap with n bits. Free blocks are represented by 1s in the map,

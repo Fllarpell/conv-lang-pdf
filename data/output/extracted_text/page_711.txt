@@ -1,0 +1,44 @@
+682
+SECURITY 
+CHAP. 9
+possible to verify a small operating system kernel against a formal specification to
+prove that processes are properly isolated (Klein et al. 2009). Frankly, this is
+incredibly cool. Others have applied formal methods to compilers and other 
+programs.
+An obvious limitation of formal verification is that it is only as good as the
+specification. If you make a mistake in the specification, the software may be 
+vulnerable even though it was verified. Another problem is most of the proofs concern
+themselves solely with software, while assuming the hardware to be correct. As we
+saw earlier, hardware vulnerabilities make short work of such assumptions.
+Besides hardware issues that leak information (e.g., via cache side channels or
+transient execution attacks), there are other hardware bugs that cause memory 
+corruption. For instance, the circuits that encode bits in memory chips are packed so
+closely together, that reading or writing a value in one location in memory may
+interfere with the value in a location adjacent to it on the chip. Note that such 
+locations are not necessarily close to each other in terms of the virtual or even physical
+addresses as seen by the software—DRAM memory may internally remap 
+addresses to chip locations in wonderfully complex ways. By aggressively accessing one
+or a few locations in memory in quick repetition, the interference may build up and
+ev entually cause a bit flip in the neighboring location. This sounds like magic, but
+yes, it is possible to change one value in memory (for instance, a value in the 
+kernel) by reading another value at a completely unrelated address (for instance, in
+your own address space). The problem is known as the Rowhammer 
+vulnerability. The exact nature of Rowhammer attacks is beyond this book and we will not
+discuss it further, except to add that, unfortunately, few formal software proofs take
+into account magic. For more information about it, see Kim et al. (2014), Konoth
+et al. (2018), Kim et al. (2020), and Hassan et al. (2021).
+A more practical problem of the use of formal methods is that generating
+proofs for complex software is difficult to scale and massive software projects such
+as the Linux or Windows kernel are well beyond what we can achieve with formal
+verification. As a result, most of the software that we use today is riddled with
+vulnerabilities. Operating systems therefore protect themselves against attacks by
+means of software hardening.
+9.8.1 Fine-Grained Randomization
+We already discussed how randomization of the address space through Address
+Space Layout Randomization (ASLR) makes it difficult for attackers to find 
+gadgets for their ROP attacks. Nowadays, all mainstream operating systems apply a
+form of ASLR. When applied to the kernel, it is known as KASLR.
+Just how randomized is that kernel? The amount of randomness is called the
+entropy and is expressed in bits. Suppose an operating system kernel lives in an
+address range of 1 GB (230 bytes) and is aligned to a 2 MB page boundary. The
+alignment means that the code can start at any address that is a multiple of the page

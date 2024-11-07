@@ -1,0 +1,41 @@
+436
+INPUT/OUTPUT 
+CHAP. 5
+52. Assuming that it takes 5 nsec to copy a byte, how much time does it take to completely
+rewrite the screen of an 80 character × 25 line text mode memory-mapped screen?
+What about a 1536 × 2048 pixel graphics screen with 24-bit color?
+53. Assuming that it takes 5 nsec to copy a byte, how much time does it take to completely
+rewrite the screen of an 80 character × 25 line text mode memory-mapped screen?
+What about a 1024 × 768 pixel graphics screen with 24-bit color?
+54. In Fig. 5-36 there is a class to RegisterClass. In the corresponding X Window code, in
+Fig. 5-34, there is no such call or anything like it. Why not?
+55. In the text we gav e an example of how to draw a rectangle on the screen using the 
+Windows GDI:
+Rectangle(hdc, xleft, ytop, xright, ybottom);
+Is there any real need for the first parameter (hdc), and if so, what? After all, the 
+coordinates of the rectangle are explicitly specified as parameters.
+56. A thin-client terminal is used to display a Web page containing an animated cartoon of
+size 400 pixels × 160 pixels running at 20 frames/sec. What fraction of a 1000-Mbps
+gigabit Ethernet is consumed by displaying the cartoon?
+57. It has been observed that a thin-client system works well with a 1-Mbps network in a
+test. Are any problems likely in a multiuser situation? (Hint: Consider a large number
+of users watching a scheduled TV show and the same number of users browsing the
+World Wide Web.)
+58. Describe two advantages and two disadvantages of thin client computing.
+59. If a CPU’s maximum voltage, V, is cut to V/n, its power consumption drops to 1/n2 of
+its original value and its clock speed drops to 1/n of its original value. Suppose that a
+user is typing at 1 char/sec, but the CPU time required to process each character is 100
+msec. What is the optimal value of n and what is the corresponding energy saving in
+percent compared to not cutting the voltage? Assume that an idle CPU consumes no
+energy at all.
+60. A notebook computer is set up to take maximum advantage of power saving features
+including shutting down the display and the hard disk after periods of inactivity. A user
+sometimes runs UNIX programs in text mode, and at other times uses the X Window
+System. She is surprised to find that battery life is significantly better when she uses
+text-only programs. Why?
+61. Write a program that simulates stable storage. Use two large fixed-length files on your
+disk to simulate the two disks.
+62. Write a program to implement the three disk-arm scheduling algorithms. Write a driver
+program that generates a sequence of cylinder numbers (0–999) at random, runs the
+three algorithms for this sequence and prints out the total distance (number of 
+cylinders) the arm needs to traverse in the three algorithms.

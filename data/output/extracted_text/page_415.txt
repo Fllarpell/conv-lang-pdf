@@ -1,0 +1,46 @@
+386
+INPUT/OUTPUT 
+CHAP. 5
+300-MPG cars, flying from Amsterdam to San Francisco in an hour, or taking a
+train from New York to D.C. in 20 minutes, but in the computer industry it is an
+embarrassment. Thus, the gap between CPU performance and (hard) disk 
+performance had become much larger over time. Could anything be done to help?
+Yes! As we have seen, parallel processing is increasingly being used to speed
+up computation. It has occurred to various people over the years that parallel I/O
+might be a good idea, too. In their 1988 paper, Patterson et al. suggested six 
+specific disk organizations that could be used to improve disk performance, reliability,
+or both (Patterson et al., 1988). These ideas were quickly adopted by industry and
+have led to a new class of I/O device called a RAID. Patterson et al. defined RAID
+as Redundant Array of Inexpensive Disks, but industry redefined the I to be
+‘‘Independent’’ rather than ‘‘Inexpensive’’ (maybe so they could charge more?).
+Since a villain was also needed (as in RISC vs. CISC, also due to Patterson), the
+bad guy here was the SLED (Single Large Expensive Disk).
+The fundamental idea behind a RAID is to install a box full of disks next to the
+computer, typically a large server, replace the disk controller card with a RAID
+controller, copy the data over to the RAID, and then continue normal operation. In
+other words, a RAID should look like a SLED to the operating system but have
+better performance and better reliability. In the past, RAIDs consisted exclusively
+of hard disks typically connected via SCSI interfaces. Nowadays, manufacturers
+also support SATA and SSDs as well as disks.
+In addition to appearing like a single disk to the software, all RAIDs have the
+property that the data are distributed over the drives, to allow parallel operation.
+Several different schemes for doing this were defined by Patterson et al. 
+Nowadays, most manufacturers refer to the seven standard configurations as RAID
+level 0 through RAID level 6. In addition, there are a few other minor levels that
+we will not discuss. The term ‘‘level’’ is something of a misnomer since no 
+hierarchy is inv olved; there are simply seven different organizations possible.
+RAID level 0 is illustrated in Fig. 5-26(a). It consists of viewing the virtual
+single disk simulated by the RAID as being divided up into strips of k sectors each,
+with sectors 0 to k < 1 being strip 0, sectors k to 2k < 1 strip 1, and so on. For
+k = 1, each strip is a sector; for k = 2 a strip is two sectors, etc. The RAID level 0
+organization writes consecutive strips over the drives in round-robin fashion, as
+depicted in Fig. 5-26(a) for a RAID with four disk drives.
+Distributing data over multiple drives like this is called striping. For example,
+if the software issues a command to read a data block consisting of four 
+consecutive strips starting at a strip boundary, the RAID controller will break this 
+command up into four separate commands, one for each of the four disks, and have
+them operate in parallel. Thus, we have parallel I/O without the software knowing
+about it.
+RAID level 0 works best with large requests, the bigger the better. If a request
+is larger than the number of drives times the strip size, some drives will get 
+multiple requests, so that when they finish the first request they start the second one. It

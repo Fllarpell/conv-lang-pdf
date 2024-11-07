@@ -1,0 +1,82 @@
+SEC. 9.2
+CONTROLLING ACCESS TO RESOURCES
+621
+An important question is how the system keeps track of which object belongs
+to which protection domain. Conceptually, at least, one can envision a large matrix,
+with the rows being domains and the columns being objects. Each box lists the
+rights, if any, that the domain contains for the object. The matrix for Fig. 9-3 is
+shown in Fig. 9-4. Given this matrix and the current domain number, the system
+can tell if an access to a given object in a particular way from a specified domain is
+allowed.
+Printer1
+Plotter2
+Domain
+1
+2
+3
+File1
+File2
+File3
+File4
+File5
+File6
+Object
+Read
+Read
+Read!
+Write
+Read!
+Write
+Read!
+Write!
+Execute
+Read!
+Write!
+Execute
+Write
+Write
+Write
+Figure 9-4. A protection matrix.
+Domain switching itself can be easily included in the matrix model by 
+realizing that a domain is itself an object, with the operation enter. Figure 9-5 shows the
+matrix of Fig. 9-4 again, only now with the three domains as objects themselves.
+Processes in domain 1 can switch to domain 2, but once there, they cannot go back.
+This situation models executing a SETUID program in UNIX. No other domain
+switches are permitted in this example.
+Object
+Domain2
+Domain3
+Domain1
+Enter
+Printer1
+Plotter2
+Domain
+1
+2
+3
+File1
+File2
+File3
+File4
+File5
+File6
+Read
+Read
+Read!
+Write
+Read!
+Write
+Read!
+Write!
+Execute
+Read!
+Write!
+Execute
+Write
+Write
+Write
+Figure 9-5. A protection matrix with domains as objects.
+9.2.2 Access Control Lists
+In practice, actually storing the matrix of Fig. 9-5 is rarely done because it is
+large and sparse. Most domains have no access at all to most objects, so storing a
+very large, mostly empty, matrix is a waste of disk space. Two methods that are

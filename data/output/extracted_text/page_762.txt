@@ -1,0 +1,58 @@
+SEC. 10.3
+PROCESSES IN LINUX
+733
+Figure 10-8 illustrates the steps described above through the following 
+example. After the user types the command, ls, the shell creates a new process by 
+forking off a clone of itself. The new shell then calls exec to overlay its memory with
+the contents of the executable file ls. After that, ls can start.
+sh
+sh
+ls
+fork code
+New process
+Same process
+1. Fork call
+3. exec call
+  4. sh overlaid
+with ls
+PID = 501
+PID = 748
+PID = 748
+Allocate child’s task structure 
+Fill child’s task structure from parent
+Allocate child’s stack and user area
+Fill child’s user area from parent
+Allocate PID for child
+Set up child to share parent’s text
+Copy page tables for data and stack
+Set up sharing of open files
+Copy parent’s registers to child
+Find the executable program
+Verify the execute permission
+Read and verify the header
+Copy arguments, environ to kernel
+Free the old address space
+Allocate new address space
+Copy arguments, environ to stack
+Reset signals
+Initialize registers
+exec code
+2. New sh
+    created
+Figure 10-8. The steps in executing the command ls typed to the shell.
+Threads in Linux
+We discussed threads in a general way in Chap. 2. Here we will focus on 
+kernel threads in Linux, particularly on the differences among the Linux thread model
+and other UNIX systems. In order to better understand the unique capabilities 
+provided by the Linux model, we start with a discussion of some of the challenging
+decisions present in multithreaded systems.
+The main issue in introducing threads is maintaining the correct traditional
+UNIX semantics. First consider fork. Suppose that a process with multiple (kernel)
+threads does a fork system call. Should all the other threads be created in the new
+process? For the moment, let us answer that question with yes. Suppose that one
+of the other threads was blocked reading from the keyboard. Should the 
+corresponding thread in the new process also be blocked reading from the keyboard? If
+so, which one gets the next line typed? If not, what should that thread be doing in
+the new process?
+The same problem holds for many other things threads can do. In a 
+single-threaded process, the problem does not arise because the one and only thread

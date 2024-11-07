@@ -1,0 +1,46 @@
+SEC. 8.4
+RESEARCH ON MULTIPLE PROCESSOR SYSTEMS
+599
+problems related to synchronization and consistency, and the way to make such
+systems faster and more reliable.
+Thread management on cores remains an active and complex problem. To
+improve latency, Qin et al. (2020) implemented a user-level threads package that
+suppors extremely short-lived threads (only a few microsecond). An arbiter core
+assigns cores to applications, and the applications then control the placements of
+threads among the cores.
+Fast communication between nodes connected through a network, for instance,
+through RDMA, is also a hot research topic. Many optimizations for different
+(one-side or two-sided) RDMA primitives exist, and Wei et al. (2020) provide a
+systematic comparison. They show that no single primitive (one-sided or 
+twosided) wins in all cases and propose a hybrid implementation instead. Interestingly,
+the benefits of RDMA do not automatically apply to all programs written in 
+languages such as Java and Scala, which do not support direct access to heap memory.
+Taranov et al. (2021) show how RDMA networking can be extended to Java.
+The fast networks also lead to renewed interest in distributed shared memory
+(DSM). In DSM, caching of data (needed to reduce frequent remote accesses) can
+incur high coherence overhead. In Concordia, Wang et al. (2021) develop DSM
+with fast in-network cache coherence backed by smart NICs. Meanwhile, Ruan et
+al. (2020) demonstrated an application-integrated far memory implementation. It
+achieves the same common-case access latency for remote memory as for local
+RAM and allows one to build remoteable, hybrid near/far memory data structures.
+While the design and implementation of new operating systems is getting rarer,
+ev en in research, new work does appear from time to time. LegoOS introduces a
+new OS model to manage disaggregated systems that disseminates traditional 
+operating system functionalities into loosely coupled monitors, each of which runs on
+and manages a hardware component (Shan et al., 2018). Internally, LegoOS
+cleanly separates processor, memory, and storage devices both at the hardware
+level and the OS level.
+One of the most difficult problems in distributed systems is what to do in case
+nodes fails. Alagappan et al. (2018) show how to perform replicated data updates
+in a distributed system using situation-aware updates and crash recovery. In 
+particular, it will perform updates in memory if all is well and many nodes are up, but
+flushes them to disk when failures arise.
+Finally, researchers work on using the abundance of many cores to improve
+storage. For instance, Liao et al. (2021) present a multicore-friendly log-structured
+file system (LFS) for flash storage. With three main techniques, they improve the
+scalability of LFS. First, they propose a new reader-writer semaphore to scale the
+user I/O without hurting the internal operations of LFS. Second, they improve the
+access to the in-memory index and cache while delivering a concurrency- and
+flash-friendly on-disk layout. Third, they exploit the flash parallelism, they move
+from a single log design with runtime-independent log partitions and delay the
+ordering and consistency guarantees to crash recovery.

@@ -1,0 +1,45 @@
+1016
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Then the HCS (Host Compute Service) communicates to the GCS (Guest 
+Compute Service) running in the Utility VM and requests the server silo to be started.
+Since Hyper-V isolated containers run their own copy of the Windows kernel
+in the Utility VM, even a hostile workload that manages to take advantage of a
+flaw in the Windows kernel will not be able to attack the host. Administrators can
+alternate between running a server container in either a process isolated or 
+HyperV isolated scenario with one command line switch.
+Hardware Isolated Processes
+Windows 10 has also introduced support for running certain processes that
+represent a high attack surface within Hardware Isolated Containers in some 
+Windows editions. MDAG (Microsoft Defender Application Guard) supports 
+running the Edge browser within a hardware isolated container. The Edge team has
+worked very hard to protect users when navigating to a malicious website. 
+However, Edge is also very large and complicated and so is the underlying OS. There will
+always be latent bugs that bad actors can try to exploit. By running the Edge 
+browser in a Utility VM-type environment, malicious activity can be limited to the 
+container. And since the container’s side effects can be discarded after each run, it is
+possible to provide a pristine environment for each launch.
+Unlike server containers which are headless, users need to see the Edge 
+browser. This is achieved by lev eraging a technology known as RAIL (Remote Apps
+Integrated Locally). The RDP (Remote Desktop Protocol) is used to remote the
+window for a single application, in this case the Edge browser, to the host. The
+effect is the user has the same experience as running Edge locally but with the
+backend processing done in a container. Copy and paste functionality is limited
+over RDP to avoid malicious attacks via the clipboard. Display performance is
+quite good due to shared memory between the host and the guest for display 
+purposes, and a virtual GPU can even be exposed to the guest so that the guest can
+leverage the host GPU for rendering purposes.
+In later versions of Windows 10, MDAG was extended to support running
+Microsoft Office applications as well. For other applications not supported directly
+by MDAG, there is a feature known as Windows Sandbox. Windows Sandbox
+uses the same underlying technology as MDAG and Hyper-V isolated containers
+but provides the user with a full desktop environment. The user can launch 
+Windows Sandbox to run programs they are hesitant to run on the host.
+MDAG and Windows Sandbox leverage the same OS instance installed on the
+host and when the host OS is serviced so is the MDAG/Sandbox environment.
+They also benefit from the same VA-backed VM optimizations listed above like
+direct mapped memory and integrated scheduler reducing the cost of running these
+relative to a classic VM.
+VA-backed VMs are also used for running certain guest operating systems
+other than Windows.
+WSL (Windows Subsystem for Linux) and WSA

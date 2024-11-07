@@ -1,0 +1,42 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+151
+Finally, operating systems such as Microsoft Windows employ random 
+boosting, essentially rolling the dice every now and then and giving random 
+mutex-holding threads a high priority until they exit the critical region.
+2.4.11 Avoiding Locks: Read-Copy-Update
+The fastest locks are no locks at all. And no locks also means no risk of 
+priority inversion. The question is whether we can allow for concurrent read and write
+accesses to shared data structures without locking. In the general case, the answer
+is clearly no. Imagine thread A sorting an array of numbers, while thread B is 
+calculating the average. Because A moves the values back and forth across the array,
+B may encounter some values multiple times and others not at all. The result could
+be anything, but it would almost certainly be wrong.
+In some cases, however, we can allow a writer to update a data structure even
+though other processes are still using it. The trick is to ensure that each reader
+either reads the old version of the data, or the new one, but not some weird 
+combination of old and new. As an illustration, consider the tree shown in Fig. 2-39.
+Readers traverse the tree from the root to its leaves. In the top half of the 
+figure, a new node X is added. To do so, we make the node ‘‘just right’’ before 
+making it visible in the tree: we initialize all values in node X, including its child 
+pointers. Then, with one atomic write, we make X a child of A. No reader will ever read
+an inconsistent version. In the bottom half of the figure, we subsequently remove B
+and D. First, we make A’s left child pointer point to C. All readers that were in A
+will continue with node C and never see B or D. In other words, they will see only
+the new version. Likewise, all readers currently in B or D will continue following
+the original data structure pointers and see the old version. All is well, and we
+never need to lock anything. The main reason that the removal of B and D works
+without locking the data structure, is that RCU (Read-Copy-Update) decouples
+the removal and reclamation phases of the update.
+Of course, there is a problem. As long as we are not sure that there are no more
+readers of B or D, we cannot really free them. But how long should we wait? One
+minute? Ten? We hav e to wait until the last reader has left these nodes. RCU 
+carefully determines the maximum time a reader may hold a reference to the data 
+structure. After that period, it can safely reclaim the memory. Specifically, readers
+access the data structure in what is known as a read-side critical section which
+may contain any code, as long as it does not block or sleep. In that case, we know
+the maximum time we need to wait. Specifically, we define a grace period as any
+time period in which we know that each thread to be outside the read-side critical
+section at least once. All will be well if we wait for a duration that is at least equal
+to the grace period before reclaiming. As the code in a read-side critical section is
+not allowed to block or sleep, a simple criterion is to wait until all the threads have
+executed a context switch.

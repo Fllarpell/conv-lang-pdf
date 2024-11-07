@@ -1,0 +1,38 @@
+1092
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+Isloor and Marsland, ‘‘The Deadlock Problem: An Overview’’
+A tutorial on deadlocks, with special emphasis on database systems. A variety
+of models and algorithms are covered.
+Levine, ‘‘Defining Deadlock’’
+In Chap. 6 of this book, we focused on resource deadlocks and barely touched
+on other kinds. This short paper points out that in the literature, various definitions
+have been used, differing in subtle ways. The author then looks at communication,
+scheduling, and interleaved deadlocks and comes up with a new model that tries to
+cover all of them.
+Shub, ‘‘A Unified Treatment of Deadlock’’
+This short tutorial summarizes the causes and solutions to deadlocks and 
+suggests what to emphasize when teaching it to students.
+13.1.7 Virtualization and the Cloud
+Portnoy, ‘‘Virtualization Essentials’’
+A gentle introduction to virtualization. It covers the context (including the 
+relation between virtualization and the cloud), and covers a variety of solutions (with a
+bit more emphasis on VMware).
+Randal, ‘‘The Ideal Versus the Real: Revisiting the History of Virtual Machines
+and Containers’’
+Often virtual machines are portrayed as offering better security. This survey
+paper catalogues key dev elopments in the evolution of virtual machines and 
+containers from the 1950s to today and corrects various common misperceptions about
+them with historical details.
+Erl et al., ‘‘Cloud Computing: Concepts, Technology & Architecture’’
+A book devoted to cloud computing in a broad sense. The authors explain in
+detail what is hidden behind acronyms like IAAS, PAAS, SAAS, and similar ‘‘X’’
+As A Service family members.
+Rosenblum and Garfinkel, ‘‘Virtual Machine Monitors: Current Technology and
+Future Trends’’
+Starting with a history of virtual machine monitors, this article then goes on to
+discuss the current state of CPU, memory, and I/O virtualization. It covers problem
+areas relating to all three and how future hardware may alleviate the problems.
+Whitaker et al., ‘‘Rethinking the Design of Virtual Machine Monitors’’
+Most computers have some bizarre and difficult to virtualize aspects. In this
+paper, the authors of the Denali system argue for paravirtualization, that is,

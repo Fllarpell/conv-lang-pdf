@@ -1,0 +1,39 @@
+SEC. 1.4
+THE OPERATING SYSTEM ZOO
+37
+related; mainframe operating systems often perform all of them. An example
+mainframe operating system is Z/OS, the successor of OS/390, which in turn was a
+direct descendant of OS/360. However, mainframe operating systems are 
+gradually being replaced by UNIX variants such as Linux.
+1.4.2 Server Operating Systems
+One level down are the server operating systems. They run on servers, which
+are either very large personal computers, workstations, or even mainframes. They
+serve multiple users at once over a network and allow the users to share hardware
+and software resources. Servers can provide print service, file service, database 
+service, or Web service. Internet providers run many server machines to support their
+customers and Websites use servers to store the Web pages and handle the 
+incoming requests. Typical server operating systems are Linux, FreeBSD, Solaris, and
+the Windows Server family.
+1.4.3 Personal Computer Operating Systems
+The next category is the personal computer operating system. Modern ones all
+support multiprogramming, often with dozens of programs started up at boot time,
+and multiprocessor architectures. Their job is to provide good support to a single
+user. They are widely used for word processing, spreadsheets, games, and Internet
+access. Common examples are Windows 11, macOS, Linux, and FreeBSD. 
+Personal computer operating systems are so widely known that probably little 
+introduction is needed. In fact, many people are not even aware that other kinds exist.
+1.4.4 Smartphone and Handheld Computer Operating Systems
+Continuing on down to smaller and smaller systems, we come to tablets (like
+Apple’s iPad), smartphones and other handheld computers. A handheld computer,
+originally known as a PDA (Personal Digital Assistant), is a small computer that
+can be held in your hand during operation. Smartphones and tablets are the 
+bestknown examples. As we have already seen, this market is currently dominated by
+Google’s Android and Apple’s iOS. Most of these devices boast multicore CPUs,
+GPS, cameras and other sensors, copious amounts of memory, and sophisticated
+operating systems. Moreover, all of them have more third-party applications (apps)
+than you can shake a (USB) stick at. Google has over 3 million Android apps in
+the Play Store and Apple has over 2 million in the App Store.
+1.4.5 The Internet of Things and Embedded Operating Systems
+The IOT (Internet of Things) comprises all the billions of physical objects
+with sensors and actuators that are increasingly connected to the network, such as
+fridges, thermostats, security camera’s motion sensors, and so on. All of these

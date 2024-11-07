@@ -1,0 +1,40 @@
+SEC. 7.11
+CASE STUDY: VMWARE
+513
+VMM
+Shared modules
+(shadow MMU, I/O handling, …)
+Direct Execution
+Binary translation
+Decision
+Alg.
+Figure 7-8. High-level components of the VMware virtual machine monitor (in
+the absence of hardware support).
+1. The virtual machine is currently running in kernel mode (ring 0 in the
+x86 architecture).
+2. The virtual machine can disable interrupts and issue I/O instructions
+(in the x86 architecture, when the I/O privilege level is set to the ring
+level).
+3. The virtual machine is currently running in real mode, a legacy 16-bit
+execution mode used by the BIOS among other things.
+The actual decision algorithm contains a few additional conditions. The details
+can be found in Bugnion et al. (2012). Interestingly, the algorithm does not depend
+on the instructions that are stored in memory and may be executed, but only on the
+value of a few virtual registers; therefore, it can be evaluated very efficiently in just
+a handful of instructions.
+The second key insight was that by properly configuring the hardware, 
+particularly using the x86 segment protection mechanisms carefully, system code under
+dynamic binary translation could also run at near-native speeds. This is very 
+different than the factor-of-fiv e slowdown normally expected of machine simulators.
+The difference can be explained by comparing how a dynamic binary translator
+converts a simple instruction that accesses memory. To emulate such an instruction
+in software, a classic binary translator emulating the full x86 instruction-set 
+architecture would have to first verify whether the effective address is within the range
+of the data segment, then convert the address into a physical address, and finally to
+copy the referenced word into the simulated register. Of course, these various steps
+can be optimized through caching, in a way very similar to how the processor
+cached page-table mappings in a translation-lookaside buffer. But even such 
+optimizations would lead to an expansion of individual instructions into an instruction
+sequence.
+The VMware binary translator performs none of these steps in software.
+Instead, it configures the hardware so that this simple instruction can be reissued

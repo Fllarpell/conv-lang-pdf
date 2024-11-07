@@ -1,0 +1,43 @@
+SEC. 11.6
+CACHING IN WINDOWS
+979
+skipped have to be filled with zeros, and for security reasons it is critical that the
+ValidDataLength recorded in the file metadata not allow access to uninitialized
+blocks, so the zero blocks have to be written to disk before the metadata is updated
+with the new length. While it is expected that if the system crashes, some of the
+blocks in the file might not have been updated from memory, it is not acceptable
+that some of the blocks might contain data previously belonging to other files.
+Let us now examine how the cache manager works. When a file is referenced,
+the cache manager maps a 256-KB chunk of kernel virtual address space onto the
+file. If the file is larger than 256 KB, only a portion of the file is mapped at a time.
+If the cache manager runs out of 256-KB chunks of virtual address space, it must
+unmap an old file before mapping in a new one. Once a file is mapped, the cache
+manager can satisfy requests for its blocks by just copying from kernel virtual
+address space to the user buffer. If the block to be copied is not in physical 
+memory, a page fault will occur and the memory manager will satisfy the fault in the
+usual way. The cache manager is not even aware of whether the block was in 
+memory or not. The copy always succeeds.
+The cache manager has various heuristics for detecting file access patterns. For
+example, when it detects a sequential access pattern, it starts performing 
+readahead on behalf of the application such that data is ready by the time the 
+application issues its I/O. This is very similar to the prefetching performed by the memory
+manager and uses the same underlying memory manager APIs.
+Another important background operation the cache manager performs is 
+writebehind. When dirty data accumulates in the cache manager’s virtual address
+space, it starts proactively writing out the dirty data to disk to minimize the amount
+of lost data if, for example, the power goes out. Applications can always use the
+FlushFileBuffers Win32 API to flush all dirty data to disk; write-behind is a 
+secondary measure. Another important benefit of write-behind is that the underlying
+pages can be more quickly reclaimed by the memory manager if available memory
+starts running low.
+The cache manager also works for pages that are mapped into virtual memory
+and accessed with pointers rather than being copied between kernel and user-mode
+buffers. When a thread accesses a virtual address mapped to a file and a page fault
+occurs, the memory manager may in many cases be able to satisfy the access as a
+soft fault. It does not need to access the disk, since it finds that the page is already
+in physical memory because it is mapped by the cache manager.
+11.7 INPUT/OUTPUT IN WINDOWS
+The goals of the Windows I/O manager are to provide a fundamentally 
+extensive and flexible framework for efficiently handling a very wide variety of I/O 
+devices and services, support automatic device discovery and driver installation (plug
+and play) and efficient power management for devices and the CPU—all using a

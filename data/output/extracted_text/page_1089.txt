@@ -1,0 +1,48 @@
+1060
+OPERATING SYSTEM DESIGN
+CHAP. 12
+www.cs.vu.nl/~ast/ indicates a specific machine (www) in a specific department
+(cs) at specific university (vu) in a specific country (nl). The part after the slash
+indicates a specific file on the designated machine, in this case, by convention,
+index.html in ast’s home directory. Note that URLs (and DNS addresses in general,
+including email addresses) are ‘‘backward,’’ starting at the bottom of the tree and
+going up, unlike file names, which start at the top of the tree and go down. Another
+way of looking at this is whether the tree is written from the top starting at the left
+and going right or starting at the right and going left.
+Often naming is done at two lev els: external and internal. For example, files
+always have a character-string name in ASCII or Unicode for people to use. In
+addition, there is almost always an internal name that the system uses. In UNIX,
+the real name of a file is its i-node number; the ASCII name is not used at all 
+internally. In fact, it is not even unique, since a file may have multiple links to it. The
+analogous internal name in Windows is the file’s index in the MFT. The job of the
+directory is to provide the mapping between the external name and the internal
+name, as shown in Fig. 12-4.
+Chap-12
+Chap-11
+Chap-10
+External name: /usr/ast/books/mos5/Chap-12
+Directory: /usr/ast/books/mos5
+I-node table
+1
+2
+3
+4
+5
+6
+7
+2
+38
+114
+Internal name: 2
+Figure 12-4. Directories are used to map external names onto internal names.
+In many cases (such as the file-name example given above), the internal name
+is an unsigned integer that serves as an index into a kernel table. Other examples of
+table-index names are file descriptors in UNIX and object handles in Windows.
+Note that neither of these has any external representation. They are strictly for use
+by the system and running processes. In general, using table indices for transient
+names that are lost when the system is rebooted is a good idea.
+Operating systems commonly support multiple namespaces, both external and
+internal. For example, in Chap. 11 we looked at three external namespaces 
+supported by Windows: file names, object names, and registry names. In addition,
+there are innumerable internal namespaces using unsigned integers, for example,
+object handles and MFT entries. Although the names in the external namespaces

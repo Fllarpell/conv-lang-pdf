@@ -1,0 +1,42 @@
+700
+SECURITY 
+CHAP. 9
+25. Name three characteristics that a good biometric indicator must have in order to be
+useful as a login authenticator.
+26. Name three biometric characteristics that would not be good to use for authentication.
+27. Authentication mechanisms are divided into three categories: Something the user
+knows, something the user has, and something the user is. Imagine an authentication
+system that uses a combination of these three categories. For example, it first asks the
+user to enter a login and password, then insert a plastic card (with magnetic strip) and
+enter a PIN, and finally provide fingerprints. Can you think of two drawbacks of this
+design?
+28. A computer science department has a large collection of UNIX machines on its local
+network. Users on any machine can issue a command of the form
+rexec machine4 who
+and have the command executed on machine4, without having the user log in on the
+remote machine. This feature is implemented by having the user’s kernel send the 
+command and his UID to the remote machine. Is this scheme secure if the kernels are all
+trustworthy? What if some of the machines are students’ personal computers, with no
+protection? Assume the network cannot be tapped.
+29. Lamport’s one-time password scheme uses the passwords in reverse order. Would it not
+be simpler to use f (s) the first time, f (f(s)) the second time, and so on?
+30. Is there any feasible way to use the MMU hardware to prevent the kind of overflow
+attack shown in Fig. 9-17? Explain why or why not.
+31. Describe how stack canaries work and how they can be circumvented by the attackers.
+32. The TOCTOU attack exploits a race condition between the attacker and the victim.
+One way to prevent race conditions is make file system accesses transactions. Explain
+how this approach might work and what problems might arise?
+33. Name a C compiler feature that could eliminate a large number of security holes. Why
+is it not more widely implemented?
+34. Can the Trojan-horse attack work in a system protected by capabilities?
+35. When a file is removed, its blocks are generally put back on the free list, but they are
+not erased. Do you think it would be a good idea to have the operating system erase
+each block before releasing it? Consider both security and performance factors in your
+answer, and explain the effect of each.
+36. Often one sees the following instructions for recovering from a virus attack:
+1. Boot the infected system.
+2. Back up all files to an external medium.
+3. Run fdisk (or a similar program) to format the disk.
+4. Reinstall the operating system from the original CD-ROM.
+5. Reload the files from the external medium.
+Name two serious errors in these instructions.

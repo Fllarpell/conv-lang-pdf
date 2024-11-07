@@ -1,0 +1,35 @@
+xx
+CONTENTS
+11.1.6 Windows 10 878
+11.1.7 Windows 11 879
+11.2 PROGRAMMING WINDOWS 880
+11.2.1 Universal Windows Platform 881
+11.2.2 Windows Subsystems 883
+11.2.3 The Native NT Application Programming Interface 884
+11.2.4 The Win32 Application Programming Interface 887
+11.2.5 The Windows Registry 891
+11.3 SYSTEM STRUCTURE 894
+11.3.1 Operating System Structure 894
+11.3.2 Booting Windows 910
+11.3.3 Implementation of the Object Manager 914
+11.3.4 Subsystems, DLLs, and User-Mode Services 926
+11.4 PROCESSES AND THREADS IN WINDOWS 929
+11.4.1 Fundamental Concepts 929
+11.4.2 Job, Process, Thread, and Fiber Management API Calls 934
+11.4.3 Implementation of Processes and Threads 941
+11.4.4 WoW64 and Emulation 950
+11.5 MEMORY MANAGEMENT 955
+11.5.1 Fundamental Concepts 955
+11.5.2 Memory-Management System Calls 961
+11.5.3 Implementation of Memory Management 962
+11.5.4 Memory Compression 973
+11.5.5 Memory Partitions 976
+11.6 CACHING IN WINDOWS 977
+11.7 INPUT/OUTPUT IN WINDOWS 979
+11.7.1 Fundamental Concepts 980
+11.7.2 Input/Output API Calls 982
+11.7.3 Implementation of I/O 984
+11.8 THE WINDOWS NT FILE SYSTEM 989
+11.8.1 Fundamental Concepts 989
+11.8.2 Implementation of the NT File System 990
+11.9 WINDOWS POWER MANAGEMENT 1000

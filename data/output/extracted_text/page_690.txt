@@ -1,0 +1,27 @@
+SEC. 9.5
+EXPLOITING SOFTWARE
+661
+Stack frame
+       of printf
+First parameter to printf
+(pointer to format string)
+Figure 9-21. A format string attack. By using exactly the right number of %08x,
+the attacker can use the first four characters of the format string as an address.
+Once the user has the ability to overwrite memory and force a jump to newly
+injected code, the code has all the power and access that the attacked program has.
+If the program is SETUID root, the attacker can create a shell with root privileges.
+As an aside, the use of fixed-size character arrays in this example could also be
+subject to a buffer-overflow attack.
+The good news is that format string vulnerabilities are relatively easy to detect
+and popular compilers have the ability to warn the programmer that their code may
+be vulnerable. Better still, the ‘‘%n’’ format specifier is disabled by default in
+many modern C libraries.
+9.5.3 Use-After-Free Attacks
+A third memory-corruption technique that is very popular in the wild is known
+as a use-after-free attack. The simplest manifestation of the technique is quite easy
+to understand, but generating an exploit can be tricky. C and C++ allow a program
+to allocate memory on the heap using the malloc call, which returns a pointer to a
+newly allocated chunk of memory. Later, when the program no longer needs it, it
+calls free to release the memory. The variable still contains the same pointer, but it
+now points to memory that has already been freed. We say that the pointer is 
+dangling because it points to memory that the program no longer ‘‘owns.’’ Bad things

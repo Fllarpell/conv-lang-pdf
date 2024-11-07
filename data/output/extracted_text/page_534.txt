@@ -1,0 +1,46 @@
+SEC. 7.10
+OS-LEVEL VIRTUALIZATION
+505
+cannot access other name spaces (subtrees). However, having your own root 
+directory is not enough. For proper isolation, containers also need separate name spaces
+for process identifiers, user identifiers, network interfaces (and the associated IP
+addresses), IPC endpoints, etc. Furthermore, isolation of (and limits on) memory
+and CPU usage would also be nice. Perhaps you can think of a few other resources
+that should be restricted?
+We hav e already seen that limiting access to a particular file system name
+space using a system call like something like chroot is relatively simple: the 
+operating system remembers that for this group of processes all file operations are 
+relative to the new root. If one of the processes opens a file in /home/hjb/, the operating
+system knows that this is relative to the new root. We can apply similar tricks to the
+other name spaces. For instance, when a process opens all network interfaces on
+the system, the operating makes sure to open only the network interface(s) 
+assigned to the group/container. Similarly, process and user identifiers can be virtualized,
+so that when a process sends a signal to the process with process identifier 6293,
+the operating system translates that number to the ‘‘real’’ process identifier. All of
+this is straightforward. However, how does one partition resources such as memory
+and CPU usage?
+In general, we need a way to track resource usage for groups of processes for a
+wide variety of resources. Different operating systems have different solutions.
+One of the better known ones, the Linux cgroups (control groups) feature, we will
+use for illustration purposes. It allows administrators to organize processes in sets
+known as cgroups, and to monitor and limit a cgroup’s usage of various kinds of
+resources. Cgroups are flexible in that they do not prescribe in advance the exact
+resources to track. Thus, any resource that can be tracked and restricted can be
+added. By attaching a resource controller (sometimes referred to as a 
+‘‘subsystem’’) for a particular resource to a cgroup, it will monitor and/or limit the 
+corresponding resource access for all processes that are a member of that cgroup.
+It is possible to limit the usage of one set of resources (such as memory, CPU,
+and the bandwidth for block I/O) for process P1 and another set (for instance, only
+block I/O bandwidth) for process P2. To do so, we first create two cgroups
+CCPU+Mem and CBlkio. We then attach the CPU and memory controller to the first
+cgroup, and the block I/O controller to the second. Finally, we make P1 a member
+of both CCPU+Mem and CBlkio, and P2 a member of only CBlkio.
+This in itself is still not enough. Often, we do not want to control the CPU
+usage of P1 and P2 together, but rather isolate the CPU usage of P1 and P2 
+individually also. As we shall see, cgroups elegantly solve this problem.
+It is important to realize that resource control is often possible at different 
+levels of granularity. Take the CPU. At a fine granularity, we can divide the CPU time
+on a core among processes dynamically using scheduling. We hav e discussed
+scheduling at length in Chap. 2. At a much coarser granularity, we can simply
+divide the cores of a computer, restricting the processes in a cgroup to, say, 4 of the
+16 cores. Whatever they do, their processes will not run on the other 12 cores.

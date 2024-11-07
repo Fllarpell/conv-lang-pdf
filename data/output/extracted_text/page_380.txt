@@ -1,0 +1,72 @@
+SEC. 5.1
+PRINCIPLES OF I/O HARDWARE
+351
+Meanwhile, when an interrupt occurs, what should happen to the instruction to
+which the PC is currently pointing? It is permitted that this instruction has been
+executed. It is also permitted that it has not been executed. However, it must be
+clear which case applies. Often, if the interrupt is an I/O interrupt, the instruction
+will not yet have started. However, if the interrupt is really a trap or page fault, then
+the PC generally points to the instruction that caused the fault so it can be restarted
+later. The situation of Fig. 5-6(a) illustrates a precise interrupt. All instructions up
+to the program counter (316) have completed and none of those beyond it have
+started (or have been rolled back to undo their effects).
+(a)
+(b)
+300
+304
+308
+PC
+312
+316
+PC
+Not executed
+Not executed
+Not executed
+Not executed
+Fully executed
+Fully executed
+Fully executed
+Fully executed
+80% executed
+60% executed
+20% executed
+35% executed
+40% executed
+10% executed
+Fully executed
+Not executed
+320
+324
+328
+332
+300
+304
+308
+312
+316
+320
+324
+328
+332
+Figure 5-6. (a) A precise interrupt. (b) An imprecise interrupt.
+An interrupt that does not meet these requirements is called an imprecise
+interrupt and makes life most unpleasant for the operating system writer, who
+now has to figure out what has happened and what still has to happen. Fig. 5-6(b)
+illustrates an imprecise interrupt, where different instructions near the program
+counter are in different stages of completion, with older ones not necessarily more
+complete than younger ones. Machines with imprecise interrupts usually vomit a
+large amount of internal state onto the stack to give the operating system the 
+possibility of figuring out what was going on. The code necessary to restart the machine
+is typically exceedingly complicated. Also, saving a large amount of information to
+memory on every interrupt makes interrupts slow and recovery even worse. This
+leads to the ironic situation of having very fast superscalar CPUs sometimes being
+unsuitable for real-time work due to slow interrupts.
+Some computers are designed so that some kinds of interrupts and traps are
+precise and others are not. For example, having I/O interrupts be precise but traps
+due to fatal programming errors be imprecise is not so bad since no attempt need
+be made to restart a running process after it has divided by zero. At that point,
+having done something that is infinitely bad, it is toast anyway. Some machines
+have a bit that can be set to force all interrupts to be precise. The downside of 
+setting this bit is that it forces the CPU to carefully log everything it is doing and
+maintain shadow copies of registers so it can generate a precise interrupt at any
+instant. All this overhead has a major impact on performance.

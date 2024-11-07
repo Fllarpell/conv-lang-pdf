@@ -1,0 +1,55 @@
+SEC. 4.5
+EXAMPLE FILE SYSTEMS
+325
+addition, system files cannot accidentally be deleted using the del command. The
+main components of MS-DOS have this bit set.
+Size
+Extension Attributes
+Reserved
+Date
+First!
+block!
+number
+Bytes
+8
+3
+1
+10
+2
+File name
+Time
+2
+2
+4
+Figure 4-32. The MS-DOS directory entry.
+The directory entry also contains the date and time the file was created or last
+modified. The time is accurate only to ±2 sec because it is stored in a 2-byte field,
+which can store only 65,536 unique values (a day contains 86,400 seconds). The
+time field is subdivided into seconds (5 bits), minutes (6 bits), and hours (5 bits).
+The date counts in days using three subfields: day (5 bits), month (4 bits), and year
+< 1980 (7 bits). With a 7-bit number for the year and time beginning in 1980, the
+highest expressible year is 2107. Thus. MS-DOS has a built-in Y2108 problem.
+To avoid catastrophe, MS-DOS users should begin with Y2108 compliance as
+early as possible. If MS-DOS had used the combined date and time fields as a
+32-bit seconds counter, it could have represented every second exactly and delayed
+the catastrophe until 2116.
+MS-DOS stores the file size as a 32-bit number, so in theory files can be as
+large as 4 GB. However, other limits (described below) restrict the maximum file
+size to 2 GB or less. A surprisingly large part of the entry (10 bytes) is unused.
+MS-DOS keeps track of file blocks via a file allocation table in main memory.
+The directory entry contains the number of the first file block. This number is used
+as an index into a 64K entry FAT in main memory. By following the chain, all the
+blocks can be found. The operation of the FAT is illustrated in Fig. 4-14.
+The FAT file system comes in three versions: FAT -12, FAT -16, and FAT -32,
+depending on how many bits a disk address contains. Actually, FAT -32 is 
+something of a misnomer, since only the low-order 28 bits of the disk addresses are
+used. It should have been called FAT -28, but powers of two sound so much neater.
+Another variant of the FAT file system is exFAT , which Microsoft introduced
+for large removable devices. Apple licensed exFAT , so that there is one modern file
+system that can be used to transfer files both ways between Windows and MacOS
+computers. Since exFAT is proprietary and Microsoft has not released the 
+specification, we will not discuss it further here.
+For all FATs, the disk block can be set to some multiple of 512 bytes (possibly
+different for each partition), with the set of allowed block sizes (called cluster
+sizes by Microsoft) being different for each variant. The first version of MS-DOS
+used FAT -12 with 512-byte blocks, giving a maximum partition size of 212 × 512

@@ -1,0 +1,44 @@
+708
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+network protocol that was used, TCP/IP, to become a de facto standard in the
+UNIX world, and later in the Internet, which is dominated by UNIX-based servers.
+Berkeley also added a substantial number of utility programs to UNIX, 
+including a new editor (vi), a new shell (csh), Pascal and Lisp compilers, and many more.
+All these improvements caused Sun Microsystems, DEC, and other computer 
+vendors to base their versions of UNIX on Berkeley UNIX, rather than on AT&T’s
+‘‘official’’ version, System V. As a consequence, Berkeley UNIX became well
+established in the academic, research, and defense worlds. For more information
+about Berkeley UNIX, see McKusick et al. (1996).
+10.1.5 Standard UNIX
+By the end of the 1980s, two different, and somewhat incompatible, versions
+of UNIX were in widespread use: 4.3BSD and System V Release 3. In addition,
+virtually every vendor added its own nonstandard enhancements. This split in the
+UNIX world, together with the fact that there were no standards for binary 
+program formats, greatly inhibited the commercial success of UNIX because it was
+impossible for software vendors to write and package UNIX programs with the
+expectation that they would run on any UNIX system (as was routinely done with
+MS-DOS). Various attempts at standardizing UNIX initially failed. AT&T, for
+example, issued the SVID (System V Interface Definition), which defined all the
+system calls, file formats, and so on. This document was an attempt to keep all the
+System V vendors in line, but it had no effect on the enemy (BSD) camp, which
+just ignored it.
+The first serious attempt to reconcile the two flavors of UNIX was initiated
+under the auspices of the IEEE Standards Board, a highly respected and, most
+importantly, neutral body. Hundreds of people from industry, academia, and 
+government took part in this work. The collective name for this project was POSIX.
+The first three letters refer to Portable Operating System. The IX was added to
+make the name UNIXish.
+After a great deal of argument and counter-argument, rebuttal and 
+counter-rebuttal, the POSIX committee produced a standard known as 1003.1. It defines
+a set of library procedures that every conformant UNIX system must supply. Most
+of these procedures invoke a system call, but a few can be implemented outside the
+kernel. Typical procedures are open, read, and fork. The idea of POSIX is that a
+software vendor who writes a program that uses only the procedures defined by
+1003.1 knows that this program will run on every conformant UNIX system.
+While it is true that most standards bodies tend to produce a horrible 
+compromise with a few of everyone’s pet features in it, 1003.1 is remarkably good 
+considering the large number of parties involved and their respective vested interests.
+Rather than take the union of all features in System V and BSD as the starting
+point (the norm for most standards bodies), the IEEE committee took the 
+intersection. Very roughly, if some feature was present in both System V and BSD, it was

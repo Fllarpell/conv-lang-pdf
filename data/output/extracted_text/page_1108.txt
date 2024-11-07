@@ -1,0 +1,42 @@
+SEC. 12.5
+PROJECT MANAGEMENT
+1079
+people 2 years to build, it is inconceivable that 360 people could do it in 1 month
+and probably not possible to have 60 people do it in 6 months.
+There are three reasons for this effect. First, the work cannot be fully 
+parallelized. Until the planning is done and it has been determined what modules are
+needed and what their interfaces will be, no coding can even be started. On a
+2-year project, the planning alone may take 8 months.
+Second, to fully utilize a large number of programmers, the work must be 
+partitioned into large numbers of modules so that everyone has something to do. Since
+ev ery module might potentially interact with every other one, the number of 
+module-module interactions that need to be considered grows as the square of the 
+number of modules, that is, as the square of the number of programmers. This 
+complexity quickly gets out of hand. Careful measurements of 63 software projects
+have confirmed that the trade-off between people and months is far from linear on
+large projects (Boehm, 1981).
+Third, debugging is highly sequential. Setting 10 debuggers on a problem does
+not find the bug 10 times as fast. In fact, 10 debuggers are probably slower than
+one because they will waste so much time talking to each other.
+Brooks sums up his experience with trading-off people and time in Brooks’
+Law:
+Adding manpower to a late software project makes it later.
+The problem with adding people is that they hav e to be trained in the project, the
+modules have to be redivided to match the larger number of programmers now
+available, many meetings will be needed to coordinate all the efforts, and so on.
+Abdel-Hamid and Madnick (1991) confirmed this law experimentally. A slightly
+irreverent way of restating Brooks law is
+It takes 9 months to bear a child, no matter how many women you assign
+to the job.
+12.5.2 Team Structure
+Commercial operating systems are large software projects and invariably
+require large teams of people. The quality of the people matters immensely. It has
+been known for decades that top programmers are 10× more productive than bad
+programmers (Sackman et al., 1968). The trouble is, when you need 200 
+programmers, it is hard to find 200 top programmers; you have to settle for a wide
+spectrum of qualities.
+What is also important in any large design project, software or otherwise, is the
+need for architectural coherence. There should be one mind controlling the design.
+Always remember that the camel is a horse designed by a committee. Brooks cites
+the Reims cathedral in France as an example of a large project that took decades to
+build, and in which the architects who came later subordinated their desire to put

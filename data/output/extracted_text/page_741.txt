@@ -1,0 +1,46 @@
+712
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+different GUIs (GNOME and KDE), which compete with each other, hav e also
+been written for Linux. In short, it has grown to a full-blown UNIX clone with all
+the bells and whistles a UNIX lover might conceivably want.
+One unusual feature of Linux is its business model: it is free software. It can
+be downloaded from various sites on the Internet, for example: www.kernel.org.
+Linux comes with a license devised by Richard Stallman, founder of the Free 
+Software Foundation. Despite the fact that Linux is free, this license, the GPL (GNU
+Public License), is longer than Microsoft’s Windows license and specifies what
+you can and cannot do with the code. Users may use, copy, modify, and 
+redistribute the source and binary code freely. The main restriction is that all works
+derived from the Linux kernel may not be sold or redistributed in binary form only;
+the source code must either be shipped with the product or be made available on
+request.
+Although Torvalds still rides herd on the kernel fairly closely, a large amount
+of user-level software has been written by numerous other programmers, many of
+them having migrated over from the MINIX, BSD, and GNU online communities.
+However, as Linux evolves, an increasingly smaller fraction of the Linux 
+community wants to hack source code (witness the hundreds of books telling how to install
+and use Linux and only a handful discussing the code or how it works). Also,
+many Linux users now forgo the free distribution on the Internet to buy one of the
+distributions available from numerous competing commercial companies. A 
+popular Website listing the current top-100 Linux distributions is at 
+www.distrowatch.org. As more and more software companies start selling their own versions
+of Linux and more and more hardware companies offer to preinstall it on the 
+computers they ship, the line between commercial software and free software is 
+beginning to blur substantially.
+As a footnote to the Linux story, it is interesting to note that just as the Linux
+bandwagon was gaining steam, it got a big boost from a very unexpected source—
+AT&T. In 1992, Berkeley, by now running out of funding, decided to terminate
+BSD development with one final release, 4.4BSD (which later formed the basis of
+FreeBSD and also MacOS). Since this version contained essentially no AT&T
+code, Berkeley issued the software under an open source license (not GPL) that let
+ev erybody do whatever they wanted with it except one thing—sue the University
+of California. The AT&T subsidiary controlling UNIX promptly reacted by—you
+guessed it—suing the University of California. It also sued a company, BSDI, set
+up by the BSD developers to package the system and sell support, much as Red
+Hat and other companies now do for Linux. Since virtually no AT&T code was
+involved, the lawsuit was based on copyright and trademark infringement, 
+including items such as BSDI’s 1-800-ITS-UNIX telephone number. Although the case
+was eventually settled out of court, it kept FreeBSD off the market long enough for
+Linux to get well established. Had the lawsuit not happened, starting around 1993
+there would have been serious competition between two free, open source UNIX
+systems: the reigning champion, BSD, a mature and stable system with a large

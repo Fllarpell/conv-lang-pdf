@@ -1,0 +1,41 @@
+234
+MEMORY MANAGEMENT 
+CHAP. 3
+2. An assembly-code interrupt service routine is started to save the 
+registers and other volatile information, to keep the operating system
+from destroying it. It then calls the page fault handler.
+3. The operating system tries to discover which virtual page is needed.
+Often one of the hardware registers contains this information. If not,
+the operating system must retrieve the program counter, fetch the
+instruction, and parse it in software to figure out what it was doing
+when the fault hit.
+4. Once the virtual address that caused the fault is known, the system
+checks to see if this address is valid and the protection is consistent
+with the access. If not, the process is sent a signal or killed. If the
+address is valid and no protection fault has occurred, the system
+checks to see if a page frame is free. If no frames are free, the page
+replacement algorithm is run to select a victim.
+5. If the page frame selected is dirty, the page is scheduled for transfer to
+nonvolatile storage, and a context switch takes place, suspending the
+faulting process and letting another one run until the disk or SSD
+transfer has completed. In any event, the frame is marked as busy to
+prevent it from being used for another purpose.
+6. As soon as the page frame is clean (either immediately or after it is
+written to nonvolatile storage), the operating system looks up the disk
+address where the needed page is, and schedules a disk or SSD 
+operation to bring it in. While the page is being loaded, the faulting process
+is still suspended and another user process is run, if one is available.
+7. When the disk or SSD interrupt indicates that the page has arrived,
+the page tables are updated to reflect its position, and the frame is
+marked as being in the normal state.
+8. The faulting instruction is backed up to the state it had when it began
+and the program counter is reset to point to that instruction.
+9. The faulting process is scheduled, and the operating system returns to
+the (assembly-language) routine that called it.
+10. This routine reloads the registers and other state information and
+returns to user space to continue execution where it left off.
+3.6.3 Instruction Backup
+So far, we simply said that when a program references a page that is not in
+memory, the instruction causing the fault is stopped partway through and a trap to
+the operating system occurs. After the operating system has fetched the page 
+needed, it must restart the instruction causing the trap. This is easier said than done.

@@ -1,0 +1,42 @@
+SEC. 1.6
+SYSTEM CALLS
+63
+managing the GUI. For instance, Windows 11 has an elaborate security system
+and also supports file links.
+One last note about Win32 is perhaps worth making. Win32 is not a terribly
+uniform or consistent interface. The main culprit here was the need to be 
+backward compatible with the previous 16-bit interface used in Windows 3.x.
+1.7 OPERATING SYSTEM STRUCTURE
+Now that we have seen what operating systems look like on the outside (i.e.,
+the programmer’s interface), it is time to take a look inside. In the following 
+sections, we will examine six different structures that have been tried, in order to get
+some idea of the spectrum of possibilities. These are by no means exhaustive, but
+they giv e an idea of some designs that have been tried in practice. The six designs
+we will discuss here are monolithic systems, layered systems, microkernels, 
+client-server systems, virtual machines, and exo- and unikernels.
+1.7.1 Monolithic Systems
+By far the most common organization, the monolithic approach is to run the
+entire operating system as a single program in kernel mode. The operating system
+is written as a collection of procedures, linked together into a single large
+executable binary program. When this technique is used, each procedure in the 
+system is free to call any other one, if the latter provides some useful computation that
+the former needs. Being able to call any procedure you want is very efficient, but
+having thousands of procedures that can call each other without restriction may
+also lead to a system that is unwieldy and difficult to understand. Also, a crash in
+any of these procedures will take down the entire operating system.
+To construct the actual object program of the operating system when this 
+approach is used, one first compiles all the individual procedures (or the files 
+containing the procedures) and then binds them all together into a single executable
+file using the system linker. In terms of information hiding, there is essentially
+none—every procedure is visible to every other procedure (as opposed to a 
+structure containing modules or packages, in which much of the information is hidden
+aw ay inside modules, and only the officially designated entry points can be called
+from outside the module).
+Even in monolithic systems, however, it is possible to have some structure. The
+services (system calls) provided by the operating system are requested by putting
+the parameters in a well-defined place (e.g., on the stack) and then executing a trap
+instruction. This instruction switches the machine from user mode to kernel mode
+and transfers control to the operating system, shown as step 6 in Fig. 1-17. The
+operating system then fetches the parameters and determines which system call is
+to be carried out. After that, it indexes into a table that contains in slot k a pointer
+to the procedure that carries out system call k (step 7 in Fig. 1-17).

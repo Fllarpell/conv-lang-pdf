@@ -1,0 +1,102 @@
+1136
+INDEX
+Mailbox, 146
+Mailslot, Windows, 937
+Mainframe, 8
+Mainframe operating system, 36–37
+Major device, 758
+Major device number, 364
+Major page fault, 203
+Making single-threaded code multithreaded, 113–116
+Malware, 607, 615, 647, 912, 1034–1035
+Managing free memory, 188–192
+Mandatory access control, 629
+Manycore chip, 538–540
+Map file system, 42
+Mapped file, 232
+Mapped page writer thread, Windows, 971
+MapViewOfFile Win32 call, 1009
+Maroocky Shire sewage spill, 616–617
+Marshaling, parameter, 569
+Marshalling, 815
+Mass storage, 370–390
+Master boot record, 35, 278–279, 375, 741
+Master file table, Windows, 991, 994–998
+Mauchley, William, 8
+MBR (see Master Boot Record)
+MDAG (see Microsoft Defender Application Guard)
+MDLs (see Memory Descriptor Lists)
+Measured boot, 913
+Mechanism, 68
+Mechanism vs. policy, 1057–1058
+Meltdown attack, 676, 928
+Mem system call, 749
+Memory, 24–28
+free, 188–192
+Memory allocation, Linux, 752–753
+Memory-allocation mechanism, 752–753
+Memory barrier, 149
+Memory compaction, 187
+Memory compression, Windows, 973–976
+Memory descriptor list, Windows, 986
+Memory fence, 149
+Memory hierarchy, 179
+Memory management, 179–250
+bitmap, 189
+implementation, 232–240
+implementation in Linux, 748–754
+implementation in Windows, 962–973
+linked list, 190–191
+Linux, 743–757
+overlays, 192
+Windows, 955–979
+Memory management algorithm
+best fit, 191
+first fit, 190
+next fit, 190
+quick fit, 191
+worst fit, 191
+Memory management system calls in Linux, 746–748
+Memory management unit, 28, 193
+I/O, 498–499
+Memory manager, 179
+Windows, 907
+Memory mapped file, 232
+Memory partition, Windows, 976
+Memory pressure, Windows, 969
+Memory protection key, 695
+Memory tagging extension, 1026
+Memory virtualization, 493–497
+Memory-management system calls, Win32, 961–962
+Memory-mapped file, 746
+Memory-mapped I/O, 340–344
+Memory-mapped input/output, 341
+Mesh, 559
+Message passing, 145–148
+Message-passing
+design issues, 145–146
+interface, 148
+Metadata, 267, file 267
+Method, 410, 595
+Metric units, 80–81
+MFT (see Master File Table)
+Mickey, 401
+Microarchitecture, 21
+Microcomputer, 15
+Microkernel operating system, 66–68
+Microkernel vs. hypervisor, 490–493
+Microkernel-based client-server system, 1056
+Microprogramming, 48
+Microsoft, 16–18, 408
+Microsoft Azure, 506
+Microsoft defender application guard, 1016
+Microsoft disk operating system, 16, 261–262,
+871–873, 1045
+file system, 324–327
+Microvm, 1009
+Middleware, 581–598
+coordination-based, 595–598
+document-based, 588–590
+file-based, 590–594
+object-based, 594–595
+publish/subscribe, 598–598

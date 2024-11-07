@@ -1,0 +1,44 @@
+966
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+fault. Normally, when the memory manager detects memory pressure,
+it trims pages from process working sets in order to generate more
+available memory. The UWP application model provides an 
+opportunity for a more optimized approach due to its lifetime management.
+UWP applications are suspended via their job objects when they are
+no longer visible and resumed when the user switches back to them.
+This reduces CPU consumption and power usage.
+4. Working set out-swap. Working set out-swap involves reserving
+preferably sequential space in the pagefile for each page in the 
+process working set and remembering the set of pages that are in the
+working set. In order to improve the chances of finding sequential
+space, Windows actually creates and uses a separate pagefile called
+swapfile.sys exclusively for working set out-swap. When under 
+memory pressure, the entire working set of the UWP application is 
+emptied at once and since each page is reserved sequential space in the
+swapfile, pages removed from the working set can be written out very
+efficiently with large, sequential I/Os. When the UWP application is
+about to be resumed, the memory manager performs a working set 
+inswap operation where it prefetches the out-swapped pages from the
+swapfile, using large, sequential reads, directly into the working set.
+In addition to maximizing disk read bandwidth, this also avoids any
+subsequent soft-faults because the working set is fully restored to its
+state before suspension.
+5. Superfetch: Today’s desktop systems generally have 8, 16, 32, 64, or
+ev en more GBs of memory installed, and this memory is largely
+empty after a system boot. Similarly, memory contents can 
+experience significant disruptions, for example, when the user runs a big
+game, which pushes out everything else to disk, and then exits the
+game. Having GBs of empty memory is lost opportunity because the
+next application launch or switching to an old browser tab will need
+to page in lots of data from disk. Would it not be better if there was a
+mechanism to populate empty memory pages with useful data in the
+background, and cache them on the standby list? That’s what 
+Superfetch does. It’s a user-mode service for proactive memory 
+management. It tracks frequently-used file pages and prefetches them into
+the standby list when free memory is available. Superfetch also tracks
+paged out private pages of important applications and brings these
+into memory as well. As opposed to the earlier forms of prefetch,
+which are just-in-time, Superfetch employs background prefetch,
+using low-priority I/O requests in order to avoid creating disk 
+contention with higher-priority disk reads.

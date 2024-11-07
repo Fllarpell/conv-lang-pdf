@@ -1,0 +1,31 @@
+SEC. 10.8
+ANDROID
+803
+coresponding service in the system server. To accomplish this, at boot time the
+system server publishes each service under a well-defined name in the service
+manager, a daemon started by init. The PackageManager in the application 
+process retrieves a connection from the service manager to its system service using that
+same name.
+Application process
+System server
+Application Code
+PackageManager
+PackageManagerService
+Service manager
+"package"
+Binder IPC
+Binder IPC
+Binder IPC
+Figure 10-40. Publishing and interacting with system services.
+Once the PackageManager has connected with its system service, it can make
+calls on it.
+Most application calls to PackageManager are implemented as
+interprocess communication using Android’s Binder IPC mechanism, in this case
+making calls to the PackageManagerService implementation in the system server.
+The implementation of PackageManagerService arbitrates interactions across all
+client applications and maintains state that will be needed by multiple applications.
+10.8.5 Linux Extensions
+For the most part, Android includes a stock Linux kernel providing standard
+Linux features. Most of the interesting aspects of Android as an operating system
+are in how those existing Linux features are used. There are also, however, sev eral
+significant extensions to Linux that the Android system relies on.

@@ -1,0 +1,56 @@
+SEC. 1.7
+OPERATING SYSTEM STRUCTURE
+67
+The MINIX 3 microkernel is only about 15,000 lines of C and some 1400 lines
+of assembler for very low-level functions such as catching interrupts and switching
+processes. The C code manages and schedules processes, handles interprocess
+communication (by passing messages between processes), and offers a set of about
+40 kernel calls to allow the rest of the operating system to do its work. These calls
+perform functions like hooking handlers to interrupts, moving data between
+address spaces, and installing memory maps for new processes. The process 
+structure of MINIX 3 is shown in Fig. 1-26, with the kernel call handlers labeled Sys.
+The device driver for the clock is also in the kernel because the scheduler interacts
+closely with it. The other device drivers run as separate user processes.
+User
+mode
+Microkernel handles interrupts, processes, 
+scheduling, interprocess communication
+Sys
+Clock
+FS
+Proc.
+Reinc.
+Other
+...
+Servers
+Disk
+TTY
+Netw
+Print
+Other
+...
+Drivers
+Shell
+Make
+...
+Process
+User programs
+Other
+Figure 1-26. Simplified structure of the MINIX system.
+Outside the kernel, the system is structured as three layers of processes all 
+running in user mode. The lowest layer contains the device drivers. Since they run in
+user mode, they do not have physical access to the I/O port space and cannot issue
+I/O commands directly. Instead, to program an I/O device, the driver builds a 
+structure telling which values to write to which I/O ports and makes a kernel call telling
+the kernel to do the write. This approach means that the kernel can check to see
+that the driver is writing (or reading) from I/O it is authorized to use. Consequently
+(and unlike a monolithic design), a buggy audio driver cannot accidentally write on
+the SSD or disk.
+Above the drivers is another user-mode layer containing the servers, which do
+most of the work of the operating system. One or more file servers manage the file
+system(s), the process manager creates, destroys, and manages processes, and so
+on. User programs obtain operating system services by sending short messages to
+the servers asking for the POSIX system calls. For example, a process needing to
+do a read sends a message to one of the file servers telling it what to read.
+One interesting server is the reincarnation server, whose job is to check if the
+other servers and drivers are functioning correctly. In the event that a faulty one is

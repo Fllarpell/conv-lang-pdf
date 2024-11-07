@@ -1,0 +1,62 @@
+SEC. 10.5
+INPUT/OUTPUT IN LINUX
+763
+The I/O system is split into two major components: the handling of block 
+special files and the handling of character special files. We will now look at each of
+these components in turn.
+The goal of the part of the system that does I/O on block special files (e.g.,
+disks) is to minimize the number of transfers that must be done. To accomplish
+this goal, Linux has a cache between the disk drivers and the file system, as 
+illustrated in Fig. 10-22. Prior to the 2.2 kernel, Linux maintained completely separate
+page and buffer caches, so a file residing in a disk block could be cached in both
+caches. Newer versions of Linux have a unified cache. A generic block layer holds
+these components together, performs the necessary translations between disk 
+sectors, blocks, buffers and pages of data, and enables the operations on them.
+The cache is a table in the kernel for holding thousands of the most recently
+used blocks. When a block is needed from a disk for whatever reason (i-node,
+directory, or data), a check is first made to see if it is in the cache. If it is present in
+the cache, the block is taken from there and a disk access is avoided, thereby
+resulting in great improvements in system performance.
+Block!
+device!
+driver
+Char!
+device!
+driver
+Network!
+device!
+driver
+I/O!
+scheduler
+Regular!
+file
+Char!
+special!
+file
+Network!
+socket
+Cache
+Virtual File System
+(Optional!
+line!
+discipline)
+Protocol!
+drivers
+File system 1
+FS 2
+Block!
+device!
+driver
+I/O!
+scheduler
+Block!
+special!
+file
+Figure 10-22. The Linux I/O system showing one file system in detail.
+If the block is not in the page cache, it is read from the disk into the cache and
+from there copied to where it is needed. Since the page cache has room for only a
+fixed number of blocks, the page-replacement algorithm described in the previous
+section is invoked.
+The page cache works for writes as well as for reads. When a program writes a
+block, it goes to the cache, not to the disk. The kernel worker threads will flush the
+block to disk in the event the cache grows above a specified value. In addition, to

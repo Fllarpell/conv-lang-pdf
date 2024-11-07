@@ -1,0 +1,40 @@
+114
+PROCESSES AND THREADS
+CHAP. 2
+software. Another is to assign each thread its own private global variables, as
+shown in Fig. 2-18. In this way, each thread has its own private copy of errno and
+other global variables, so conflicts are avoided. In effect, this decision creates a
+new scoping level, variables visible to all the procedures of a thread (but not to
+other threads), in addition to the existing scoping levels of variables visible only to
+one procedure and variables visible everywhere in the program.
+Thread 1's!
+code
+Thread 2's!
+code
+Thread 1's!
+stack
+Thread 2's!
+stack
+Thread 1's!
+globals
+Thread 2's!
+globals
+Figure 2-18. Threads can have private global variables.
+Accessing the private global variables is a bit tricky, howev er, since most 
+programming languages have a way of expressing local variables and global variables,
+but not intermediate forms. It is possible to allocate a chunk of memory for the 
+globals and pass it to each procedure in the thread as an extra parameter. While hardly
+an elegant solution, it works.
+Alternatively, new library procedures can be introduced to create, set, and read
+these threadwide global variables. The first call might look like this:
+create global("bufptr");
+It allocates storage for a pointer called bufptr on the heap or in a special storage
+area reserved for the calling thread. No matter where the storage is allocated, only
+the calling thread has access to the global variable. If another thread creates a 
+global variable with the same name, it gets a different storage location that does not
+conflict with the existing one.
+Tw o calls are needed to access global variables: one for writing them and the
+other for reading them. For writing, something like
+set global("bufptr", &buf);
+will do. It stores the value of a pointer in the storage location previously created by
+the call to create global. To read a global variable, the call might look like

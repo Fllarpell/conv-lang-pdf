@@ -1,0 +1,42 @@
+SEC. 11.10
+VIRTUALIZATION IN WINDOWS
+1017
+(Windows Subsystem for Android) are also built on VA-backed VMs to run
+Linux and Android operating systems on top of Windows in a more efficient way
+than regular VMs. While these operating systems do not (yet) implement all of the
+memory management and root scheduler enlightenments Windows guests do, they
+are able to take full advantage of host-side memory management optimizations like
+memory compression and paging.
+11.10.3 Virtualization-Based Security
+We covered how virtualization can be used to run virtual machines, containers,
+and security-isolated processes. Windows also leverages virtualization to improve
+its own security. The fundamental problem is that there is too much code running
+in kernel-mode, both as part of Windows and third-party drivers. The breadth of
+Windows in the world and the diversity of hardware it supports has resulted in a
+very healthy ecosystem of kernel-mode drivers, despite moving a lot of them into
+user-mode. All kernel-mode code executes at the same CPU privilege level and,
+therefore, any security vulnerability can enable an attacker to disrupt code flow,
+modify or steal security-sensitive data in the kernel. A higher privilege level is 
+necessary to ‘‘police’’ kernel mode and to protect security-sensitive data.
+Virtual Secure Mode provides a secure execution environment by leveraging
+virtualization to establish new trust boundaries for the operating system. These
+new trust boundaries can limit and control the set of memory, CPU and hardware
+resources kernel-mode software can access such that even if kernel-mode is 
+compromised by an attacker, the entire system is not compromised.
+VSM provides these trust boundaries through the concept of VTLs (Virtual
+Trust Levels). At its core, a VTL is a set of memory access protections. Each
+VTL can have a different set of protections, controlled by code running at a higher,
+more privileged VTL. Therefore, higher VTLs can police lower VTLs by 
+configuring what access they hav e to memory. Semantically, this is similar to the 
+relationship between user-mode and kernel-mode enforced by CPU hardware. For 
+example, a higher VTL can use this capability in the following ways:
+1. It can prevent a lower VTL from accessing certain pages which may
+contain security-sensitive data or data owned by the higher VTL.
+2. It can prevent a lower VTL from writing to certain pages to prevent
+overwrite of critical settings, data structures, or code.
+3. It can prevent a lower VTL from executing code pages unless they are
+‘‘approved’’ by the higher VTL.
+For each partition, including the root and guest partitions, the hypervisor 
+supports multiple VTLs. Being in the same partition, all VTLs share the same set of
+virtual processors, memory, and devices, but each VTL can have different access
+rights to those resources. Memory protections for VTLs are implemented using a

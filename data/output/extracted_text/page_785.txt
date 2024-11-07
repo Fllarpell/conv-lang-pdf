@@ -1,0 +1,46 @@
+756
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+At boot time, init starts up a page daemon, kswapd, for each memory node, and
+configures them to run periodically. Each time kswapd aw akens, it checks to see if
+there are enough free pages available, by comparing the low and high watermarks
+with the current memory usage for each memory zone. If there is enough memory,
+it goes back to sleep, although it can be awakened early if more pages are suddenly
+needed. If the available memory for any of the zones ever falls below a threshold,
+kswapd initiates the page frame reclaiming algorithm. During each run, only a 
+certain target number of pages is reclaimed, typically a maximum of 32. This number
+is limited to control the I/O pressure (the number of disk writes created during the
+PFRA operations). Both the number of reclaimed pages and the total number of
+scanned pages are configurable parameters.
+Each time PFRA executes, it first tries to reclaim easy pages, then proceeds
+with the more difficult ones. Many people also grab the low-hanging fruit first.
+Discardable and unreferenced pages can be reclaimed immediately by moving
+them onto the zone’s freelist. Next it looks for pages with backing store which have
+not been referenced recently, using a clock-like algorithm. Following are shared
+pages that none of the users seems to be using much. The challenge with shared
+pages is that, if a page entry is reclaimed, the page tables of all address spaces 
+originally sharing that page must be updated in a synchronous manner. Linux 
+maintains efficient tree-like data structures to easily find all users of a shared page.
+Ordinary user pages are searched next, and if chosen to be evicted, they must be
+scheduled for write in the swap area. The swappiness of the system, that is, the
+ratio of pages with backing store vs. pages which need to be swapped out selected
+during PFRA, is a tunable parameter of the algorithm. Finally, if a page is invalid,
+absent from memory, shared, locked in memory, or being used for DMA, it is
+skipped.
+PFRA uses a clock-like algorithm to select old pages for eviction within a 
+certain category. At the core of this algorithm is a loop which scans through each
+zone’s active and inactive lists, trying to reclaim different kinds of pages, with 
+different urgencies. The urgency value is passed as a parameter telling the procedure
+how much effort to expend to reclaim some pages. Usually, this means how many
+pages to inspect before giving up.
+During PFRA, pages are moved between the active and inactive list in the
+manner described in Fig. 10-18. To maintain some heuristics and try to find pages
+which have not been referenced and are unlikely to be needed in the near future,
+PFRA maintains two flags per page: active/inactive, and referenced or not. These
+two flags encode four states, as shown in Fig. 10-18. During the first scan of a set
+of pages, PFRA first clears their reference bits. If during the second run over the
+page it is determined that it has been referenced, it is advanced to another state,
+from which it is less likely to be reclaimed. Otherwise, the page is moved to a state
+from where it is more likely to be evicted.
+Pages on the inactive list, which have not been referenced since the last time
+they were inspected, are the best candidates for eviction. They are pages with both

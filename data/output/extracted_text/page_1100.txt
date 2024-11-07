@@ -1,0 +1,43 @@
+SEC. 12.4
+PERFORMANCE
+1071
+12.4.1 Why Are Operating Systems Slow?
+Before talking about optimization techniques, it is worth pointing out that the
+slowness of many operating systems is to a large extent self-inflicted. For example,
+older operating systems, such as MS-DOS and UNIX Version 7, booted within a
+few seconds. Modern UNIX systems and Windows can take many tens of seconds
+to boot, despite running on hardware that is 1000 times faster. The reason is that
+they are doing much more, wanted or not. A case in point. Plug and play makes it
+somewhat easier to install a new hardware device, but the price paid is that on
+every boot, the operating system has to go out and inspect all the hardware to see if
+there is anything new out there. This bus scan takes time.
+An alternative (and, in the authors’ opinion, better) approach would be to scrap
+plug-and-play altogether and have an icon on the screen labeled ‘‘Install new 
+hardware.’’ Upon installing a new hardware device, the user would click on it to start
+the bus scan, instead of doing it on every boot. The designers of current systems
+were well aware of this option, of course. They rejected it, basically, because they
+assumed that the users were too stupid to be able to do this correctly (although they
+would word it more kindly). This is only one example, but there are many more
+where the desire to make the system ‘‘user-friendly’’ slows the system down all the
+time for everyone.
+Probably the biggest single thing system designers can do to improve 
+performance is to be much more selective about adding new features. The question to
+ask is not whether some users like it, but whether it is worth the inevitable price in
+code size, speed, complexity, and reliability. Only if the advantages clearly 
+outweigh the drawbacks should it be included. Programmers have a tendency to
+assume that code size and bug count will be 0 and speed will be infinite. 
+Experience shows this view to be a wee bit optimistic.
+Another factor that plays a role is product marketing. By the time version 4 or
+5 of some product has hit the market, probably all the features that are actually 
+useful have been included and most of the people who need the product already have
+it. To keep sales going, many manufacturers nevertheless continue to produce a
+steady stream of new versions, with more features, just so they can sell their 
+existing customers upgrades. Adding new features just for the sake of adding new 
+features may help sales but rarely helps performance. It almost never helps reliability.
+12.4.2 What Should Be Optimized?
+As a general rule, the first version of the system should be as straightforward
+as possible. The only optimizations should be things that are so obviously going to
+be a problem that they are unavoidable. Having a block cache for the file system is
+such an example. Once the system is up and running, careful measurements
+should be made to see where the time is really going. Based on these numbers,
+optimizations should be made where they will help most.

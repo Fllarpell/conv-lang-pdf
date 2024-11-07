@@ -1,0 +1,52 @@
+SEC. 1.3
+COMPUTER HARDWARE REVIEW
+21
+Monitor
+Keyboard
+USB printer
+Hard!
+disk drive
+Hard!
+disk!
+controller
+USB!
+controller
+Keyboard!
+controller
+Video!
+controller
+Memory
+CPU
+Bus
+!!MMU
+!Figure 1-6. Some of the components of a simple personal computer.
+Each CPU has a specific set of instructions that it can execute. Thus an x86
+processor cannot execute ARM programs and an ARM processor cannot execute
+x86 programs. Please note that we will use the term x86 to refer to all the Intel
+processors descended from the 8088, which was used on the original IBM PC.
+These include the 286, 386, and Pentium series, as well as the modern Intel core i3,
+i5, and i7 CPUs (and their clones).
+Because accessing memory to get an instruction or data word takes much 
+longer than executing an instruction, all CPUs contain registers inside to hold key 
+variables and temporary results. Instruction sets often contains instructions to load a
+word from memory into a register, and store a word from a register into memory.
+Other instructions combine two operands from registers and/or memory, into a
+result, such as adding two words and storing the result in a register or in memory.
+In addition to the general registers used to hold variables and temporary
+results, most computers have sev eral special registers that are visible to the 
+programmer. One of these is the program counter, which contains the memory
+address of the next instruction to be fetched. After that instruction has been
+fetched, the program counter is updated to point to its successor.
+Another register is the stack pointer, which points to the top of the current
+stack in memory. The stack contains one frame for each procedure that has been
+entered but not yet exited. A procedure’s stack frame holds those input parameters,
+local variables, and temporary variables that are not kept in registers.
+Yet another register is the PSW (Program Status Word). This register 
+contains the condition code bits, which are set by comparison instructions, the CPU
+priority, the mode (user or kernel), and various other control bits. User programs
+may normally read the entire PSW but typically may write only some of its fields.
+The PSW plays an important role in system calls and I/O.
+The operating system must be fully aware of all the registers. When time 
+multiplexing the CPU, the operating system will often stop the running program to
+(re)start another one. Every time it stops a running program, the operating system
+must save all the registers so they can be restored when the program runs later.

@@ -1,0 +1,44 @@
+82
+INTRODUCTION 
+CHAP. 1
+possible applications for each of these systems (at least one for each of the operating
+systems types).
+3. What is the difference between timesharing and multiprogramming systems?
+4. To use cache memory, main memory is divided into cache lines, typically 32 or 64
+bytes long. An entire cache line is cached at once. What is the advantage of caching an
+entire line instead of a single byte or word at a time?
+5. On early computers, every byte of data read or written was handled by the CPU (i.e.,
+there was no DMA). What implications does this have for multiprogramming?
+6. Instructions related to accessing I/O devices are typically privileged instructions, that
+is, they can be executed in kernel mode but not in user mode. Give a reason why these
+instructions are privileged.
+7. The family-of-computers idea was introduced in the 1960s with the IBM System/360
+mainframes. Is this idea now dead as a doornail or does it live on?
+8. One reason GUIs were initially slow to be adopted was the cost of the hardware 
+needed to support them. How much video RAM is needed to support a 25-line × 80-row
+character monochrome text screen? How much for a 1200 × 900-pixel 24-bit color 
+bitmap? What was the cost of this RAM at 1980 prices ($5/KB)? How much is it now?
+9. There are several design goals in building an operating system, for example, resource
+utilization, timeliness, robustness, and so on. Give an example of two design goals that
+may contradict one another.
+10. What is the difference between kernel and user mode? Explain how having two distinct
+modes aids in designing an operating system.
+11. A 255-GB disk has 65,536 cylinders with 255 sectors per track and 512 bytes per 
+sector. How many platters and heads does this disk have? Assuming an average cylinder
+seek time of 11 msec, average rotational delay of 7 msec and reading rate of 100
+MB/sec, calculate the average time it will take to read 400 KB from one sector.
+12. Which of the following instructions should be allowed only in kernel mode?
+(a) Disable all interrupts.
+(b) Read the time-of-day clock.
+(c) Set the time-of-day clock.
+(d) Change the memory map.
+13. Consider a system that has two CPUs, each CPU having two threads (hyperthreading).
+Suppose three programs, P0, P1, and P2, are started with run times of 5, 10 and 20
+msec, respectively. How long will it take to complete the execution of these programs?
+Assume that all three programs are 100% CPU bound, do not block during execution,
+and do not change CPUs once assigned.
+14. A computer has a pipeline with four stages. Each stage takes the same time to do its
+work, namely, 1 nsec. How many instructions per second can this machine execute?
+15. Consider a computer system that has cache memory, main memory (RAM) and disk,
+and an operating system that uses virtual memory. It takes 1 nsec to access a word
+from the cache, 10 nsec to access a word from the RAM, and 10 msec to access a word

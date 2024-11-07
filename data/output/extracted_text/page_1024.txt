@@ -1,0 +1,63 @@
+SEC. 11.8
+THE WINDOWS NT FILE SYSTEM
+995
+hard to place the second logical block in block 21, the third logical block in 22,
+and so on. One way to achieve these runs is to allocate disk storage several blocks
+at a time, when possible.
+The blocks in a stream are described by a sequence of records, each one
+describing a sequence of logically contiguous blocks. For a stream with no holes
+in it, there will be only one such record. Streams that are written in order from
+beginning to end all belong in this category. For a stream with one hole in it (e.g.,
+only blocks 0–49 and blocks 60–79 are defined), there will be two records. Such a
+stream could be produced by writing the first 50 blocks, then seeking forward to
+logical block 60 and writing another 20 blocks. When a hole is read back, all the
+missing bytes are zeros. Files with holes are called sparse files.
+Each record begins with a header giving the offset of the first block within the
+stream. Next comes the offset of the first block not covered by the record. In the
+example above, the first record would have a header of (0, 50) and would provide
+the disk addresses for these 50 blocks. The second one would have a header of
+(60, 80) and would provide the disk addresses for these 20 blocks.
+Each record header is followed by one or more pairs, each giving a disk
+address and run length. The disk address is the offset of the disk block from the
+start of its partition; the run length is the number of blocks in the run. As many
+pairs as needed can be in the run record. Use of this scheme for a three-run, 
+nineblock stream is illustrated in Fig. 11-46.
+Standard
+info header
+File name
+header
+Data
+header
+Info about data blocks
+Run #1 Run #2 Run #3
+Standard
+info
+File name
+ 
+0
+9
+20
+4
+64
+2
+80
+3
+Unused
+Disk blocks
+Blocks numbers
+20-23
+64-65
+80-82
+MTF
+record
+Record
+header
+Header
+Figure 11-46. An MFT record for a three-run, nine-block stream.
+In this figure, we have an MFT record for a short stream of nine blocks (header
+0–8). It consists of the three runs of consecutive blocks on the disk. The first run is
+blocks 20–23, the second is blocks 64–65, and the third is blocks 80–82. Each of
+these runs is recorded in the MFT record as a (disk address, block count) pair. How
+many runs there are depends on how well the disk block allocator did in finding
+runs of consecutive blocks when the stream was created. For an n-block stream, the
+number of runs can be anything from 1 through n.

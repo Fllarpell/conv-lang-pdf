@@ -1,0 +1,44 @@
+SEC. 9.8
+OPERATING SYSTEM HARDENING
+689
+attacks are, is there any hope of stopping them? The answer is: it depends. In 
+general, whenever security domains share resources, there is a risk of side channels.
+Saltzer and Schroeder’s Principle of Least Common Mechanism suggests that we
+have as little as possible of it. Unfortunately, modern computer systems share
+resources all over the place: cores, caches, TLBs, memory, branch predictors,
+buses, etc. However, that does not mean that we are powerless. If the operating 
+system is able to either partition the resources, or flush their state between the 
+execution of different security domains, life becomes much harder for attackers.
+For instance, by sacrificing some efficiency, operating systems are sometimes
+able to partition resources such as caches even at a fine granularity. A well-known
+technique, known as page coloring, is an example of such partitioning of the
+cache, which works by giving different security domains memory pages that map
+to disjoint cache sets. As a simple example, imagine that the operating system
+gives process 1 only pages that map onto cache sets 0 < (N < 1) and process 2
+pages that map onto cache sets (N < 1) < M. Whatever the cache activity in 
+process 1, it will not normally affect the cache activity of process 2. Nowadays, rather
+than relying on the operating contorting itself during memory allocation, cache
+partitioning is sometimes also supported by hardware. For instance, Intel’s CAT
+(Cache Allocation Technology). allows one to set aside a number of ways of an
+n-way set associate cache.
+9.8.4 Code and Data Integrity Checks
+Some operating systems reduce the number of bugs in the operating system by
+accepting only drivers and other code that are signed by trusted vendors with a 
+digital signature. Such driver signing helps to ensure a measure of quality of 
+operating system extensions. A similar mechanism is commonly used for updates: only
+signed updates from a trusted source will be installed. Taking the idea one step 
+further, operating systems such as Windows may completely ‘‘lock down’’ the
+machine to ensure that it can run only trusted software in general. In that case, it
+becomes very difficult to run non-authorized apps of whatever nature even for 
+malware that manages to obtain elevated privileges, because the check is performed in
+a hardware-protected environment that the malware cannot easily bypass.
+Finally, many modern operating systems offer functionality to ensure that the
+code to check the signatures, the operating system itself, and indeed all steps 
+involved in the booting process were loaded correctly. The verification takes a number
+of steps, just like the boot process itself takes multiple steps.
+To secure boot a machine, we need a root of trust, typically a secure hardware
+device, to get the ball rolling. The procedure is roughly as follows. A 
+microcontroller starts the boot process by executing a small amount of firmware from a
+ROM (or flash memory that cannot be reprogrammed by an attacker). As we have
+seen in Sec. 1.3, the UEFI firmware then loads a bootloader, which in turn loads
+the operating system. As shown in Fig. 9-35(a), a secure boot process checks all of

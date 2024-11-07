@@ -1,0 +1,50 @@
+SEC. 11.2
+PROGRAMMING WINDOWS
+893
+This is one of the problems UWP application model and more specifically its
+AppContainer sandbox aims to solve. UWP applications cannot directly access or
+modify the registry. Rules are somewhat more relaxed for MSIX packaged 
+applications: access to the registry is allowed, but their registry namespace is virtualized
+such that writes to global or per-user locations are redirected to per-user-per-app
+locations. This mechanism prevents such applications from potentially 
+destabilizing the system by modifying system settings and eliminates risk of interference
+between multiple applications.
+The registry is accessible to Win32 applications. There are calls to create and
+delete keys, look up values within keys, and more. Some of the more useful ones
+are listed in Fig. 11-10.
+Win32 API function
+Description
+RegCreateKeyEx 
+Create a new registr y key
+RegDeleteKey 
+Delete a registry key
+RegOpenKeyEx 
+Open a key to get a handle to it
+RegEnumKeyEx 
+Enumerate the subkeys subordinate to the key of the handle
+RegQuer yValueEx 
+Look up the data for a value within a key
+RegSetValueEx 
+Modifies data for a value within a key
+RegFlushKey 
+Persist any modifications on the given key to disk
+Figure 11-10. Some of the Win32 API calls for using the registry
+The registry is a cross between a file system and a database, and yet really
+unlike either. It’s really a key-value store with hierarchical keys. Entire books have
+been written describing the registry (Hipson, 2002; Halsey and Bettany, 2015; and
+Ngoie, 2021) and many companies have sprung up to sell special software just to
+manage the complexity of the registry.
+To explore the registry, Windows has a GUI program called regedit that allows
+you to open and explore the directories (called keys) and data items (called values).
+Microsoft’s Po werShell scripting language can also be useful for walking through
+the keys and values of the registry as if they were directories and files. A more
+interesting tool to use is procmon, which is available from Microsoft’s tools’ 
+Website: https://www.microsoft.com/technet/sysinternals. Procmon watches all the 
+registry accesses that take place in the system and is very illuminating. Some 
+programs will access the same key over and over tens of thousands of times.
+Registry APIs are some of the most frequently used Win32 APIs in the system.
+They need to be fast and reliable. So, the registry implements caching of registry
+data in memory for fast access, but also persists data on disk to avoid losing too
+many changes even when RegFlushKey is not called. Because registry integrity is
+so critical to correct system functioning, the registry uses write-ahead-logging 
+similar to database systems to record modifications sequentially into log files before

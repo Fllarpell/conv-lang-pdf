@@ -1,0 +1,75 @@
+752
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+manages physical memory in such a way that it can acquire an arbitrary-sized
+piece of memory at will. The algorithm it uses is known as the buddy algorithm
+and is described below.
+Memory-Allocation Mechanisms
+Linux supports several mechanisms for memory allocation. The main 
+mechanism for allocating new page frames of physical memory is the page allocator,
+which operates using the well-known buddy algorithm.
+The basic idea for managing a chunk of memory is as follows. Initially 
+memory consists of a single contiguous piece, 64 pages in the simple example of
+Fig. 10-17(a). When a request for memory comes in, it is first rounded up to a
+power of 2, say eight pages. The full memory chunk is then divided in half, as
+shown in (b). Since each of these pieces is still too large, the lower piece is divided
+in half again (c) and again (d). Now we hav e a chunk of the correct size, so it is
+allocated to the caller, as shown shaded in (d).
+(a)
+64
+(b)
+32
+32
+(d)
+32
+8
+8
+16
+(e)
+16
+8
+8
+32
+(f)
+8
+8
+8
+32
+8
+(g)
+8
+4
+8
+8
+32
+(h)
+4
+8
+8
+8
+32
+(i)
+16
+44
+8
+32
+(c)
+16
+16
+32
+4
+4
+Figure 10-17. Operation of the buddy algorithm.
+Now suppose that a second request comes in for eight pages. This can be 
+satisfied directly now (e). At this point, a third request comes in for four pages. The
+smallest available chunk is split (f) and half of it is claimed (g). Next, the second
+of the 8-page chunks is released (h). Finally, the other eight-page chunk is
+released. Since the two adjacent just-freed eight-page chunks came from the same
+16-page chunk, they are merged to get the 16-page chunk back (i).
+Linux manages memory using the buddy algorithm, with the additional feature
+of having an array in which the first element is the head of a list of blocks of size 1
+unit, the second element is the head of a list of blocks of size 2 units, the next 
+element points to the 4-unit blocks, and so on. In this way, any power-of-2 block can
+be found quickly.
+This algorithm leads to considerable internal fragmentation because if you
+want a 65-page chunk, you have to ask for and get a 128-page chunk.

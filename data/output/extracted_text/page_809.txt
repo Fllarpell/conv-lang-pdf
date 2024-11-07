@@ -1,0 +1,67 @@
+780
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+When the shell forks off p1, x is initially empty, so p1 just starts writing at file
+position 0. However, when p1 finishes, some mechanism is needed to make sure
+that the initial file position that p2 sees is not 0 (which it would be if the file 
+position were kept in the file-descriptor table), but the value p1 ended with.
+The way this is achieved is shown in Fig. 10-34. The trick is to introduce a
+new table, the open-file-description table, between the file descriptor table and
+the i-node table, and put the file position (and read/write bit) there. In this figure,
+the parent is the shell and the child is first p1 and later p2. When the shell forks off
+p1, its user structure (including the file-descriptor table) is an exact copy of the
+shell’s, so both of them point to the same open-file-description table entry. When
+p1 finishes, the shell’s file descriptor is still pointing to the open-file description
+containing p1’s file position. When the shell now forks off p2, the new child 
+automatically inherits the file position, without either it or the shell even having to
+know what that position is.
+Mode
+i-node
+Link count
+Uid
+Gid
+File size
+Times
+Addresses of!
+first 12!
+disk blocks
+Single indirect
+Double indirect
+Triple indirect
+Parent's!
+file-!
+descriptor!
+table
+Child's!
+file-!
+descriptor!
+table
+Unrelated!
+process  !
+file-!
+descriptor!
+table
+Open file!
+description
+File position!
+R/W!
+Pointer to i-node
+File position!
+R/W!
+Pointer to i-node
+Pointers to!
+disk blocks
+Triple!
+indirect!
+block
+Double!
+indirect!
+block
+Single!
+indirect!
+block
+`
+Figure 10-34. The relation between the file-descriptor table, the 
+open-filedescription table, and the i-node table.
+However, if an unrelated process opens the file, it gets its own 
+open-filedescription entry, along with its own file position, which is just what is needed.

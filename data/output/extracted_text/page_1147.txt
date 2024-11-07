@@ -1,0 +1,46 @@
+1118
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+VAHLDIEK-OBERWA GNER, A., ELNIKETY,
+E., DUARTE, N.O., SAMMLER, M.,
+DRUSCHEL, P., and GARG, D.: ‘‘ERIM: Secure, Efficient In-process Isolation with
+Protection Keys (MPK),’’ Proc. 28th USENIX Security Symp. , USENIX, pp.
+1221–1238, 2019.
+VAN DER VEEN, V., DDUTT-SHARMA, N., CAVALLARO, L., and BOS, H.: ‘‘Memory
+Errors: The Past, the Present, and the Future,’’ Proc. 15th Int’l Conf. on Research in
+Attacks, Intrusions, and Defenses, Berlin: Springer-Verlag, pp. 86–106, 2012.
+VAN OORSCHOT, P.C.: Computer Security and the Internet, Berlin: Springer, 2020.
+VAN STEEN, and TANENBAUM, A.S.: Distributed Syst., 3rd ed., Amazon, 2017.
+VIENNOT, N., NAIR, S., and NIEH, J.: ‘‘Transparent Mutable Replay for Multicore 
+Debugging and Patch Validation,’’ Proc. 18th Int’l Conf. on Arc h. Support for Prog. Lang.
+and Operating Syst., ACM, 2013.
+VINOSKI, S.: ‘‘CORBA: Integrating Diverse Applications within Distributed 
+Heterogeneous Environments,’’ IEEE Commun. Magazine, Vol. 35, pp. 46–56, Feb. 1997.
+VISCAROLA, P.G, MASON, T., CARIDDI, M., RYAN, B., and NOONE, S.: Introduction to
+the Windows Driver Foundation Kernel-Mode Framework, Amherst, NH: OSR Press,
+2007.
+VMWARE, Inc.: ‘‘ Achieving a Million I/O Operations Per Second from a Single VMware
+vSphere 5.0 Host,’’ http://www.vmware.com/files/pdf/1M-iops-perf-vsphere5.pdf, 2011.
+VOLOS, S. VASWANI, K, and BRUNO, R.: ‘‘Graviton: Trusted Execution Environments on
+GPUs,’’ Proc. 13th USENIX Symp. on Operating Syst. Design and Implementation,
+USENIX, 2018.
+VON BEHREN, R., CONDIT, J., and BREWER, E.: ‘‘Why Events Are A Bad Idea (for 
+HighConcurrency Servers),’’ Proc. Ninth Workshop on Hot Topics in Operating Syst.,
+USENIX, pp. 19–24, 2003.
+VON EICKEN, T., CULLER, D., GOLDSTEIN, S.C., and SCHAUSER, K.E.: ‘‘ Active 
+Messages: A Mechanism for Integrated Communication and Computation,’’ Proc. 19th
+Int’l Symp. on Computer Arch., ACM, pp. 256–266, 1992.
+VOSTOKOV, D.: Windows Device Drivers: Practical Foundations, Opentask, 2009.
+WADDINGTON, D., and HARRIS, J.: ‘‘Software Challenges for the Changing Storage
+Landscape,’’ Commun. ACM, Vol. 61, pp. 136–145, Nov. 2018.
+WAHBE, R., LUCCO, S., ANDERSON, T., and GRAHAM, S.: ‘‘Efficient Software-Based
+Fault Isolation,’’ Proc. 14th Symp. on Operating Syst. Prin., ACM, pp. 203–216, 1993.
+WALDSPURGER, C.A.: ‘‘Memory Resource Management in VMware ESX Server,’’ ACM
+SIGOPS Operating Syst. Rev., Vol. 36, pp. 181–194, Jan. 2002.
+WALDSPURGER, C.A., and ROSENBLUM, M.: ‘‘I/O Virtualization,’’ Commun. ACM, Vol.
+55, pp. 66–73, 2012.
+WALDSPURGER, C.A., and WEIHL, W.E.: ‘‘Lottery Scheduling: Flexible 
+ProportionalShare Resource Management,’’ Proc. First USENIX Symp. on Operating Syst. Design
+and Implementation, USENIX, pp. 1–12, 1994.
+WALKER, W., and CRAGON, H.G.: ‘‘Interrupt Processing in Concurrent Processors,’’ 
+Computer, Vol. 28, pp. 36–46, June 1995.

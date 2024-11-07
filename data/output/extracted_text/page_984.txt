@@ -1,0 +1,41 @@
+SEC. 11.4
+PROCESSES AND THREADS IN WINDOWS
+955
+as x64 compatible code (ARM64EC or x64 machine code) and the necessary 
+metadata to switch between the two personalities. On disk, these files look like regular
+native arm64 binaries: the machine type field in the PE header indicates arm64 and
+export tables point to native arm64 code. However, when this binary is loaded into
+an x64 process, the kernel memory manager transforms the process’ view of the
+binary by applying modifications described by the metadata similar to how 
+relocation fixups are performed. The PE header machine type field, the export and import
+table pointers are adjusted to make the binary appear as an ARM64EC binary to
+the process.
+In addition to helping eliminate file system redirection, ARM64X binaries 
+provide another significant benefit. For most functions compiled into the binary, the
+native arm64 compiler and the ARM64EC compiler will generate identical arm64
+machine instructions. Such code can be single-instanced in the ARM64X binary
+rather than being stored as two copies, thus reducing binary size as well as 
+allowing the same code pages to be shared in memory between arm64 and x64 
+processes.
+11.5 MEMORY MANAGEMENT
+Windows has an extremely sophisticated and complex virtual memory system.
+It has a number of Win32 functions for using it, implemented by the memory 
+manager—the largest component of NTOS. In the following sections, we will look at
+the fundamental concepts, the Win32 API calls, and finally the implementation.
+11.5.1 Fundamental Concepts
+Since Windows 11 supports only 64-bit machines, this chapter is only going to
+consider 64-bit processes on 64-bit machines. 32-bit emulation on 64-bit machines
+was described in the WoW64 section earlier.
+In Windows, every user process has its own virtual address space, split equally
+between kernel-mode and user-mode. Today’s 64-bit processors generally 
+implement 48-bits of virtual addresses resulting in a 256 TB total address space. When
+the full 64-bit addresses are not implemented, hardware requires that all the 
+unimplemented bits be the same as the highest implemented bit. Addresses in this 
+format are called canonical. This approach helps ensure that applications and 
+operating systems do not rely on storing information in these bits to make future 
+expansion possible. Out of the 256 TB address space, user-mode takes the lower 128 TB,
+kernel-mode takes the upper 128 TB. Even though this may sound, pretty big, a
+nontrivial portion is actually already reserved for various categories of data, 
+security mitigations as well as for performance optimizations.
+On today’s 64-bit processors, the 48-bits of virtual addresses are mapped using
+a 4-level page table scheme where each page table is 4 KB in size and each PTE

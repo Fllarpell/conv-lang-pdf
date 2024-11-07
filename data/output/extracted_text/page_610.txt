@@ -1,0 +1,45 @@
+SEC. 8.3
+DISTRIBUTED SYSTEMS
+581
+printers, and serial lines all operated on the same way, with the same primitives,
+makes it easier to deal with them than having them all conceptually different.
+One method by which a distributed system can achieve some measure of 
+uniformity in the face of different underlying hardware and operating systems is to
+have a layer of software on top of the operating system. The layer, called 
+middleware, is illustrated in Fig. 8-27. This layer provides certain data structures and
+operations that allow processes and users on far-flung machines to interoperate in a
+consistent way.
+Intel x86
+Windows
+Middleware
+Middleware
+Middleware
+Middleware
+Application
+Intel x86
+Linux
+Application
+SPARC
+Solaris
+Application
+Mac OS
+Application
+Macintosh
+Common base for applications
+Network
+Figure 8-27. Positioning of middleware in a distributed system.
+In a sense, middleware is like the operating system of a distributed system.
+That is why it is being discussed in a book on operating systems. On the other
+hand, it is not really an operating system, so the discussion will not go into much
+detail. For a comprehensive, book-length treatment of distributed systems, see 
+Distributed Systems (Van Steen and Tanenbaum, 2017). In the remainder of this 
+chapter, we will look quickly at the hardware used in a distributed system (i.e., the
+underlying computer network), then its communication software (the network 
+protocols). After that we will consider a variety of paradigms used in these systems.
+8.3.1 Network Hardware
+Distributed systems are built on top of computer networks, so a brief 
+introduction to the subject is in order. Networks come in two major varieties, LANs (Local
+Area Networks), which cover a  building or a campus, and WANs (Wide Area
+Networks), which can be citywide, countrywide, or worldwide. The most 
+important kind of LAN is Ethernet, so we will examine that as an example LAN. As our
+example WAN, we will look at the Internet, even though technically the Internet is

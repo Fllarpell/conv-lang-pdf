@@ -1,0 +1,98 @@
+1132
+INDEX
+Hyper-V page table, 1005
+Hyper-V partition, 1003
+Hyper-V scheduler, 1006–1006
+Hyper-V virtualization stack, 1006
+Hypercall, 484, 1005
+Hypercube, 559
+Hyperguard, Windows, 1031
+Hyperlink, 588
+Hyperthreading, 24
+Hypervisor, 71–72, 478, 484–486, 895
+efficiency, 482
+ESX, 521–523
+hosted, 485
+Hyper-V, 885–897
+type 1, 484–486, 488
+type 2, 485–486, 488
+Windows, 1004
+Hypervisor as microkernel, 490–493
+Hypervisor efficiency, 482
+Hypervisor fidelity, 482
+Hypervisor interface driver, 1006
+Hypervisor safety, 482
+Hypervisor vs. microkernel, 490–493
+Hypervisor-enforced code integrity, Windows, 1030
+Hypervisor-induced page fault, 495
+I
+I-node, 58, 284–285, 775, 778
+I-space, 227
+Input/output completion port, 984
+Input/output device, 29–32
+Input/output manager, 906
+Input/output port space, 31
+Input/output request packet, 924, 985
+Windows, 986–987
+Input/output scheduler, Linux, 764
+Input/output virtualization, 497–500
+Input/output, Linux 757–767
+I/O (see Input/Output)
+IAAS (see Infrastructure As A Service)
+IAT (see Import Address Table)
+IBinder, Android, 814
+IBM AS/400, 625
+IBM PC, 16
+IC (see Integrated Circuit)
+Icon, 409–412
+Idempotent operation, 293
+IDL (see Interface Definition Language)
+IEEE 1003.1, 708
+IExample, Android, 816
+IExample.proxy, 816
+IExample.stub, 816
+IF (see Interrupt Flag)
+Immediate file, NT file system, 994
+Impersonation, Windows, 1021
+Implementation, object manager, 914–926
+Implementation, operating system, 1053–1070
+Implementation issues, RPC, 570
+Implementation, file system
+Linux, 774–783
+Windows, 990–1000
+Implementation, input/output
+Linux, 762–765
+Windows, 984–989
+Implementation, memory management, 232–240
+Linux, 748–757
+Windows, 962–973
+Implementation, processes
+Linux, 730–738
+Windows, 941–950
+Implementation, security
+Linux, 792–793
+Windows, 1023–1025
+Implementation, threads
+Linux, 733–738
+Windows, 941–950
+Implementing directories, 285–288
+Implementing files, 280–285
+Implicit intent, 831
+Import address table, 927
+Imprecise interrupt, 351–352
+Improving performance, 1070–1078
+Incremental dump, 308, 308–312
+Index node, 284–285
+Indirect block, 781
+file system, 328
+Indirection, 1067–1068
+Indium tin oxide, 418
+Industry standard architecture, 33
+Infrastructure as a service, 502
+Init, Android, 801–802
+Linux, 742
+InitializeACL Win32 call, 1023
+InitializeSecurityDescriptor Win32 call, 1022
+InitiateSystemShutdown Win32 call, 1014
+InitOnceExecuteOnce Win32 call, 939
+Input software, 396–402

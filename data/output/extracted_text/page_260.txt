@@ -1,0 +1,39 @@
+SEC. 3.5
+DESIGN ISSUES FOR PAGING SYSTEMS
+231
+library is not read into memory in a single blow. It is paged in, page by page, as
+needed, so functions that are not called will not be brought into RAM.
+In addition to making executable files smaller and also saving space in 
+memory, shared libraries have another important advantage: if a function in a shared
+library is updated to remove a bug, it is not necessary to recompile the programs
+that call it. The old binaries continue to work. This feature is especially important
+for commercial software, where the source code is not distributed to the customer.
+For example, if Microsoft finds and fixes a security error in some standard DLL,
+Windows Update will download the new DLL and replace the old one, and all 
+programs that use the DLL will automatically use the new version the next time they
+are launched.
+Shared libraries come with one little problem, however, that has to be solved,
+however. The problem is illustrated in Fig. 3-26. Here we see two processes 
+sharing a library of size 20 KB (assuming each box is 4 KB). However, the library is
+located at a different address in each process, presumably because the programs
+themselves are not the same size. In process 1, the library starts at address 36K; in
+process 2 it starts at 12K. Suppose that the first thing the first function in the
+library has to do is jump to address 16 in the library. If the library were not shared,
+it could be relocated on the fly as it was loaded so that the jump (in process 1)
+could be to virtual address 36K + 16. Note that the physical address in the RAM
+where the library is located does not matter since all the pages are mapped from
+virtual to physical addresses by the MMU hardware.
+Process 1
+Process 2
+RAM
+36K
+12K
+0
+0
+Figure 3-26. A shared library being used by two processes.
+However, since the library is shared, relocation on the fly will not work. After
+all, when the first function is called by process 2 (at address 12K), the jump
+instruction has to go to 12K + 16, not 36K + 16. This is the little problem. One
+way to solve it is to use copy on write and create new pages for each process 
+sharing the library, relocating them on the fly as they are created, but this scheme
+defeats the purpose of sharing the library, of course.

@@ -1,0 +1,84 @@
+940
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+initialization of data structures is surprisingly hard in multithreaded programs and
+this primitive provides a very simple way to ensure correctness and 
+high-performance.
+So far, we discussed the most popular synchronization mechanisms provided
+by Windows to user-mode programs. There are many more primitives exposed to
+kernel-mode callers. Some examples are EResources which are reader-writer locks
+typically used by the file system stack which support unusual scenarios such as
+cross-thread lock ownership transfer. FastMutex is an exclusive lock similar to a
+critical section and PushLocks are the kernel-mode analogue of SRW locks. A
+high-performance variant of pushlocks, called the Cache-aware PushLock, is
+implemented to provide scalability even on machines with hundreds of processor
+cores. A cache-aware pushlock is composed of many pushlocks, one for each 
+processor (or small groups of processors). It is targeted at scenarios where exclusive
+acquires are rare. Shared acquires only acquire the local pushlock associated with
+the processor while exclusive acquires must acquire every pushlock. Only 
+acquiring a local lock in the common case results in much more efficient processor cache
+behavior especially on multi-NUMA machines. While the cache-aware pushlock is
+great for scalability, it does have a large memory cost and is therefore not always
+appropriate to use for small, multiplicative data structures. The Auto-expand
+PushLock provides a good compromise: it starts out as a single pushlock, taking
+up only two pointers worth of space, but automatically ‘‘expands’’ to become a
+cache-aware pushlock when it detects a high degree of cache contention due to
+concurrent shared acquires.
+A summary of these synchronization primitives is giv en in Fig. 11-24.
+Primitive 
+Kernel object
+Kernel/User 
+Shared/Exclusive
+Event 
+Yes 
+Both
+N/A
+Semaphore 
+Yes 
+Both
+N/A
+Mutex
+Yes 
+Both
+Exclusive
+Cr itical Section 
+No
+User-mode 
+Exclusive
+SRW Lock
+No
+User-mode 
+Shared
+Condition Var iable 
+No
+User-mode 
+N/A
+InitOnce 
+No
+User-mode 
+N/A
+WaitOnAddress 
+No
+User-mode 
+N/A
+EResource 
+No
+Kernel-mode 
+Shared
+FastMutex
+No
+Ker nel-mode
+Exclusive
+PushLock
+No
+Ker nel-mode
+Shared
+Cache-aware PushLock
+No
+Ker nel-mode
+Shared
+Auto-expand PushLock
+No
+Ker nel-mode
+Shared
+Figure 11-24. Summary of synchronization primitives provided by Windows.

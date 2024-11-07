@@ -1,0 +1,41 @@
+272
+FILE SYSTEMS
+CHAP. 4
+The first actual statement checks argc to see if it is 3. If not, it exits with status
+code 1. Any status code other than 0 means that an error has occurred. The status
+code is the only error reporting present in this program. A production version
+would normally print error messages as well.
+Then we try to open the source file and create the destination file. If the source
+file is successfully opened, the system assigns a small integer to in fd, to identify
+the file. Subsequent calls must include this integer so that the system knows which
+file it wants. Similarly, if the destination is successfully created, out fd is given a
+value to identify it. The second argument to creat sets the protection mode. If
+either the open or the create fails, the corresponding file descriptor is set to <1, and
+the program exits with an error code.
+Now comes the copy loop. It starts by trying to read in 4 KB of data to buffer.
+It does this by calling the library procedure read, which actually invokes the read
+system call. The first parameter identifies the file, the second gives the buffer, and
+the third tells how many bytes to read. The value assigned to rd count gives the
+number of bytes actually read. Normally, this will be 4096, except if fewer bytes
+are remaining in the file. When the end of the file has been reached, it will be 0. If
+rd count is ever zero or negative, the copying cannot continue, so the break 
+statement is executed to terminate the (otherwise endless) loop.
+The call to write outputs the buffer to the destination file. The first parameter
+identifies the file, the second gives the buffer, and the third tells how many bytes to
+write, analogous to read. Note that the byte count is the number of bytes actually
+read, not BUF SIZE. This point is important because the last read will not return
+4096 unless the file just happens to be a multiple of 4 KB.
+When the entire file has been processed, the first call beyond the end of file
+will return 0 to rd count, which will make it exit the loop. At this point, the two
+files are closed and the program exits with a status indicating normal termination.
+Although the Windows system calls are different from those of UNIX, the 
+general structure of a command-line Windows program to copy a file is moderately
+similar to that of Fig. 4-6. We will examine the Windows calls in Chap. 11.
+4.2 DIRECTORIES
+To keep track of files, file systems normally have directories or folders, which
+are themselves files. In this section, we will discuss directories, their organization,
+their properties, and the operations that can be performed on them.
+4.2.1 Single-Level Directory Systems
+The simplest form of directory system is having one directory containing all
+the files. Sometimes it is called the root directory, but since it is the only one, the
+name does not matter much. On the first personal computers, this system was

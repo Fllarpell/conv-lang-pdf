@@ -1,0 +1,40 @@
+830
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+1. A share request that includes the URI of the data to be shared is 
+created and is submitted to the system.
+2. The system asks the ContentResolver for the MIME type of the data
+behind that URI; this works much like the query method we just 
+discussed, but asks the content provider to return a MIME-type string for
+the URI.
+3. The system finds all activities that can receive data of the identified
+MIME type.
+4. A user interface is shown for the user to select one of the possible
+recipients.
+5. When one of these activities is selected, the system launches it.
+6. The share-handling activity receives the URI of the data to be shared,
+retrieves its data through ContentResolver, and performs its 
+appropriate operation: creates an email, stores it, etc.
+10.8.9 Intents
+A detail that we have not yet discussed in the application manifest shown in
+Fig. 10-51 is the <intent-filter> tags included with the activity and receiver 
+declarations. This is part of the intent feature in Android, which is the cornerstone for
+how different applications identify each other in order to be able to interact and
+work together.
+An intent is the mechanism Android uses to discover and identify activities,
+receivers, and services. It is similar in some ways to the Linux shell’s search path,
+which the shell uses to look through multiple possible directories in order to find
+an executable matching command names given to it.
+There are two major types of intents: explicit and implicit. An explicit intent
+is one that directly identifies a single specific application component; in Linux
+shell terms it is the equivalent to supplying an absolute path to a command. The
+most important part of such an intent is a pair of strings naming the component: the
+package name of the target application and class name of the component within
+that application. Now referring back to the activity of Fig. 10-52 in application
+Fig. 10-51, an explicit intent for this component would be one with package name
+com.example.email and class name com.example.email.MailMainActivity.
+The package and class name of an explicit intent are enough information to
+uniquely identify a target component, such as the main email activity in Fig. 10-52.
+From the package name, the package manager can return everything needed about
+the application, such as where to find its code. From the class name, we know
+which part of that code to execute.

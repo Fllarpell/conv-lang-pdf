@@ -1,0 +1,102 @@
+SEC. 2.3
+EVENT-DRIVEN SERVERS
+117
+0. /* Preliminar ies:
+1. 
+svrSock
+: the main server socket, bound to TCP port 12345
+2. 
+toSend
+: database to track what data we still have to send to the client
+3. 
+- toSend.put (fd, msg) will register that we need to send msg on fd
+4. 
+- toSend.get (fd) returns the string we need to send msg on fd
+5. 
+- toSend.destroy (fd) removes all infor mation about fd from toSend */
+6.
+7. inFds
+= { svrSock }  
+/* file descriptors to watch for incoming data */
+8. outFds
+= { }  
+/* file descriptors to watch to see if sending is possible */
+9. exceptFds = { }  
+/* file descriptors to watch for exception conditions (not used) */
+10.
+11. char msgBuf [MAX MSG SIZE] 
+/* buffer in which to receive messages */
+12. char *thankYouMsg = "Thank you!" /* reply to send back */
+13.
+14. while (TRUE)
+15. {
+16. 
+/* block until some file descriptors are ready to be used */
+17. 
+rdyIns, rdyOuts, rdyExcepts = select (inFds, outFds, exceptFds, NO TIMEOUT)
+18.
+19. 
+for (fd in rdyIns) /* iterate over all the connections that have something for us */
+20. 
+{
+21. 
+if (fd == svrSock) 
+/* a new connection from a client */
+22. 
+{
+23. 
+newSock = accept (svrSock) 
+/* create new socket for client */
+24. 
+inFds = inFds F { newSock }  /* must monitor it also */
+25. 
+}
+26. 
+else
+27. 
+{
+/* receive the message from the client */
+28. 
+n = receive (fd, msgBuf, MAX MSG SIZE)
+29. 
+printf ("Received: %s.0, msgBuf)
+30.
+31. 
+toSend.put (fd, thankYouMsg) 
+/* must still send thankYouMsg on fd */
+32. 
+outFds = outFds F { fd }  
+/* so must monitor this fd */
+33. 
+}
+34. 
+}
+35. 
+for (fd in rdyOuts) /* iterate over all the connections that we can now thank */
+36. 
+{
+37 
+msg = toSend.get (fd)
+/* see what we need to send on this connection */
+38 
+n = send (fd, msg, strlen(msg))
+39 
+if (n < strlen (thankYouMsg)
+40 
+{
+41 
+toSend.put (fd, msg+n) /* remaining characters to send next time*/
+42 
+} else
+43. 
+{
+44. 
+toSend.destroy (fd)
+45. 
+outFds = outFds \ { fd } /* we have thanked this one already */
+46 
+}
+47. 
+}
+47. }
+Figure 2-19. An event-driven thank-you server (pseudo code).

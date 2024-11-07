@@ -1,0 +1,45 @@
+SEC. 1.6
+SYSTEM CALLS
+51
+We are thus forced to make a choice between (1) vague generalities 
+(‘‘operating systems have system calls for reading files’’) and (2) some specific system
+(‘‘UNIX has a read system call with three parameters: one to specify the file, one
+to tell where the data are to be put, and one to tell how many bytes to read’’).
+We hav e chosen the latter approach. It’s more work that way, but it gives more
+insight into what operating systems really do. Although this discussion specifically
+refers to POSIX (International Standard 9945-1), hence also to UNIX, System V,
+BSD, Linux, MINIX 3, and so on, most other modern operating systems have 
+system calls that perform the same functions, even if the details differ. Since the actual
+mechanics of issuing a system call are highly machine dependent and often must
+be expressed in assembly code, a procedure library is provided to make it possible
+to make system calls from C programs and often from other languages as well.
+It is useful to keep the following in mind. Any single-CPU computer can
+execute only one instruction at a time. If a process is running a user program in
+user mode and needs a system service, such as reading data from a file, it has to
+execute a trap instruction to transfer control to the operating system. The operating
+system then figures out what the calling process wants by inspecting the 
+parameters. Then it carries out the system call and returns control to the instruction 
+following the system call. In a sense, making a system call is like making a special
+kind of procedure call—only system calls enter the kernel and procedure calls do
+not.
+To make the system-call mechanism clearer, let us take a quick look at the read
+system call. As mentioned above, it has three parameters: the first one specifying
+the file, the second one pointing to the buffer, and the third one giving the number
+of bytes to read. Like nearly all system calls, it is invoked from C programs by 
+calling a library procedure with the same name as the system call: read. A call from a
+C program might look like this:
+count = read(fd, buffer, nbytes);
+The system call (and the library procedure) returns the number of bytes actually
+read in count. This value is normally the same as nbytes, but may be smaller, if,
+for example, end-of-file is encountered while reading.
+If the system call cannot be carried out owing to an invalid parameter or a disk
+error, count is set to <1, and the error number is put in a global variable, errno.
+Programs should always check the results of a system call to see if an error
+occurred.
+System calls are performed in a series of steps. To make this concept clearer,
+let us examine the read call discussed above. In preparation for calling the read
+library procedure, which actually makes the read system call, the calling program
+first prepares the parameters, for instance by storing them in a set of registers that
+by convention are used for parameters. For instance, on x86-64 CPUs, Linux,
+FreeBSD, Solaris, and macOS use the System V AMD64 ABI calling convention,
+which means that the first six parameters are passed in registers RDI, RSI, RDX,

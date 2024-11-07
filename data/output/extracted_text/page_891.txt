@@ -1,0 +1,46 @@
+862
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+topic of permissions. This requires the user to make a deliberate decision to give up
+their device’s battery life to the app, which is a fairly high bar for most users; the
+result was sufficient pressure to drive most apps to finally move to JobScheduler
+instead.
+Android 10 included a new restriction on activity launches. Prior to this
+release, an application in the background could freely launch an activity into the
+foreground. A number of use cases that needed this capability (such as incoming
+calls and alarm clocks) now had other facilities for getting the user’s attention, and
+this capability was increasingly abused by malware. Disallowing background
+launches was done primarily to address the malware issue, but also closed a door
+apps had to get away from Android’s background execution control: if they 
+happened to be able to run a little bit in the background (such as receiving a 
+broadcast), they could launch one of their activities to bring their app back to the 
+foreground and escape any current background restrictions.
+The changes up to Android 8, and to some degree the activity launch 
+restrictions in Android 10, put the system in a much better position to manage the battery
+and ensure that users have a good experience. The state of things looked good for a
+few years, until a new issue started appearing: foreground services.
+Recall that a foreground service is a special state for a service, marking it as
+important to the user. This state means that background restrictions and doze can
+not be applied to its app, for example, a foreground service being used to play
+music needs to run indefinitely, be able to keep the device awake, and have 
+network access in case it is streaming audio from a server.
+When background execution restrictions were implemented, an additional 
+special carve-out needed to be created for foreground services. There are important
+cases where an app in the background will need to start a foreground service, such
+as starting their music playback in response to a media button being pressed while
+the app is not in the foreground. This has the same result as launching activities in
+the background, allowing them to escape background execution restrictions.
+At this point, the original incentive to use foreground services for their 
+intended purpose (doing something the user directly cares about), by requiring a 
+notification, had broken down. Two major changes caused this. First, the increasing
+restrictions on background execution removed the alternative dev elopers had of
+just using a regular service. Second, changes to the notification system had made
+app abuse of notifications less of a problem for them: originally, if the user was
+unhappy with a notification, their only option was to turn off all of the app’s 
+notifications. This prevented the app from getting the user’s attention anywhere, since it
+could no longer post any notifications. Recent changes In Android allowed users to
+have finer control over notifications, so they could easily just hide the one for the
+foreground service without impacting other notifications.
+Android 12 finally took on this problem by restricting foreground services.
+Much like the restriction on launching activities, applications could no longer start
+foreground services whenever they wanted. Instead, foreground services could now

@@ -1,0 +1,44 @@
+SEC. 9.2
+CONTROLLING ACCESS TO RESOURCES
+623
+specific. Examples of generic rights are destroy object and copy object. These
+could hold for any object, no matter what type it is. Object-specific rights might
+include append message for a mailbox object and sor t alphabetically for a 
+directory object.
+So far, our ACL entries have been for individual users. Many systems support
+the concept of a group of users. Groups have names and can be included in ACLs.
+Tw o variations on the semantics of groups are possible. In some systems, each
+process has a user ID (UID) and group ID (GID). In such systems, an ACL entry
+contains entries of the form
+UID1, GID1: rights1; UID2, GID2: rights2; ...
+Under these conditions, when a request is made to access an object, a check is
+made using the caller’s UID and GID. If they are present in the ACL, the rights
+listed are available. If the (UID, GID) combination is not in the list, the access is
+not permitted.
+Using groups this way effectively introduces the concept of a role. Consider a
+computer installation in which Tana is system administrator, and thus in the group
+sysadm. Howev er, suppose that the company also has some clubs for employees
+and Tana is a member of the pigeon fanciers club. Club members belong to the
+group pigfan and have access to the company’s computers for managing their
+pigeon database. A portion of the ACL might be as shown in Fig. 9-7.
+File 
+Access control list
+Password 
+tana, sysadm: RW
+Pigeon data 
+bill, pigfan: RW; tana, pigfan: RW; ...
+Figure 9-7. Tw o access control lists.
+If Tana tries to access one of these files, the result depends on which group she
+is currently logged in as. When she logs in, the system may ask her to choose
+which of her groups she is currently using, or there might even be different login
+names and/or passwords to keep them separate. The point of this scheme is to 
+prevent Tana from accessing the password file when she currently has her pigeon
+fancier’s hat on. She can do that only when logged in as the system administrator.
+In some cases, a user may have access to certain files independent of which
+group she is currently logged in as. That case can be handled by introducing the
+concept of a wildcard, which means everyone. For example, the entry
+tana, *: RW
+for the password file would give Tana access no matter which group she was 
+currently in as.
+Yet another possibility is that if a user belongs to any of the groups that have
+certain access rights, the access is permitted. The advantage here is that a user

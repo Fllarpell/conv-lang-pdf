@@ -1,0 +1,96 @@
+SEC. 4.5
+EXAMPLE FILE SYSTEMS
+329
+I-node
+Attributes
+Disk addresses
+Single!
+indirect!
+block
+Double!
+indirect!
+block
+Triple!
+indirect!
+block
+Addresses of!
+data blocks
+Figure 4-35. A UNIX i-node.
+Root directory
+I-node 6!
+is for /usr
+Block 132!
+is /usr!
+directory
+I-node 26!
+is for!
+/usr/ast
+Block 406!
+is /usr/ast!
+directory
+Looking up!
+usr yields!
+i-node 6
+I-node 6!
+says that!
+/usr is in!
+block 132
+/usr/ast!
+is i-node!
+26
+/usr/ast/mbox!
+is i-node!
+60
+I-node 26!
+says that!
+/usr/ast is in!
+block 406
+1!
+1!
+4!
+7!
+14!
+9!
+6!
+8
+.!
+..!
+bin!
+dev!
+lib!
+etc!
+usr!
+tmp
+6!
+1!
+19!
+30!
+51!
+26!
+45!
+dick!
+erik!
+jim!
+ast!
+bal!
+26!
+6!
+64!
+92!
+60!
+81!
+17!
+grants!
+books!
+mbox!
+minix!
+src!
+Mode!
+size!
+times
+132
+Mode!
+size!
+times
+406
+Figure 4-36. The steps in looking up /usr/ast/mbox.

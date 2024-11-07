@@ -1,0 +1,36 @@
+SEC. 2.5
+SCHEDULING
+155
+Long CPU burst
+Short CPU burst
+Waiting for I/O
+(a) 
+(b) 
+Time
+Figure 2-40. Bursts of CPU usage alternate with periods of waiting for I/O.
+(a) A CPU-bound process. (b) An I/O-bound process.
+It is worth noting that if CPUs get faster, processes tend to get more 
+I/Obound. This effect occurs because CPUs are improving faster than hard disks. As a
+consequence, the scheduling of I/O-bound processes could become a more 
+important subject in the future. The basic idea here is that if an I/O-bound process wants
+to run, it should get a chance quickly so that it can issue its disk request and keep
+the disk busy. As we saw in Fig. 2-6, when processes are I/O bound, it takes quite a
+few of them to keep the CPU fully occupied.
+On the other hand, CPUs do not seem to be getting much faster these days
+because making them go faster produces too much heat. Hard disks are not getting
+any faster either, but SSDs are replacing hard disks in desktop and notebook 
+computers. Then again, in large data centers, hard disks are still widely used due to
+their lower cost per bit. The consequence of all this is that scheduling depends a lot
+on the context and an algorithm that works well on a notebook may not work well
+in a data center. And in 10 years, everything may be different.
+When to Schedule
+A key issue related to scheduling is when to make scheduling decisions. It
+turns out that there are a variety of situations in which scheduling is needed. First,
+when a new process is created, a decision needs to be made whether to run the 
+parent process or the child process. Since both processes are in ready state, it is a 
+normal scheduling decision and can go either way, that is, the scheduler can 
+legitimately choose to run either the parent or the child next.
+Second, a scheduling decision must be made when a process exits. That 
+process can no longer run (since it no longer exists), so some other process must be
+chosen from the set of ready processes. If no process is ready, a system-supplied
+idle process is normally run.

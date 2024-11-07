@@ -1,0 +1,52 @@
+772
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+System call
+Description
+fd = creat(name, mode) 
+One way to create a new file
+fd = open(file, how, ...) 
+Open a file for reading, writing, or both
+s = close(fd) 
+Close an open file
+n = read(fd, buffer, nbytes) 
+Read data from a file into a buffer
+n = write(fd, buffer, nbytes) 
+Write data from a buffer into a file
+position = lseek(fd, offset, whence)
+Move the file pointer
+s = stat(name, &buf) 
+Get a file’s status infor mation
+s = fstat(fd, &buf) 
+Get a file’s status infor mation
+s = pipe(&fd[0]) 
+Create a pipe
+s = fcntl(fd, cmd, ...)
+File locking and other operations
+Figure 10-27. Some system calls relating to files. The return code s is <1 if an
+error has occurred; fd is a file descriptor, and position is a file offset. The 
+parameters should be self-explanatory.
+The most heavily used calls are undoubtedly read and wr ite. Each one has
+three parameters: a file descriptor (telling which open file to read or write), a buffer
+address (telling where to put the data or get the data from), and a count (telling
+how many bytes to transfer). That is all there is. It is a very simple design. A 
+typical call is
+n = read(fd, buffer, nbytes);
+Although nearly all programs read and write files sequentially, some programs
+need to be able to access any part of a file at random. Associated with each file is a
+pointer that indicates the current position in the file. When reading (or writing)
+sequentially, it normally points to the next byte to be read (written). If the pointer
+is at, say, 4096, before 1024 bytes are read, it will automatically be moved to 5120
+after a successful read system call. The lseek call changes the value of the position
+pointer, so that subsequent calls to read or wr ite can begin anywhere in the file, or
+ev en beyond the end of it. It is called lseek to avoid conflicting with seek, a  
+nowobsolete call that was formerly used on 16-bit computers for seeking.
+Lseek has three parameters: the first one is the file descriptor for the file; the
+second is a file position; the third tells whether the file position is relative to the
+beginning of the file, the current position, or the end of the file. The value returned
+by lseek is the absolute position in the file after the file pointer is changed. Slightly
+ironically, lseek is the only file system call that never causes a real disk operation
+because all it does is update the current file position, which is a number in 
+memory.
+For each file, Linux keeps track of the file mode (regular, directory, special
+file), size, time of last modification, and other information. Programs can ask to see

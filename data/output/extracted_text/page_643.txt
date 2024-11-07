@@ -1,0 +1,43 @@
+614
+SECURITY 
+CHAP. 9
+there is nothing they can do to compromise system security. By reducing the 
+trusted computing base by two orders of magnitude, systems like MINIX 3 can 
+potentially offer much higher security than conventional designs.
+Unikernels may reduce the TCB in a different way, by aggressively removing
+ev erything that is not essential for the application in the Unikernel. While there
+may be little or no separation between the operating system and the kernel, the
+total amount of code in the TCB is much reduced compared to monolithic systems.
+The point is that the structure of the operating system has important consequences
+for the security guarantees.
+9.1.5 Attackers
+Systems are under constant threat from attackers who try to violate the security
+guarantees provided by the operating system or hypervisor, by stealing confidential
+data, modifying data to which they should not have access, or crashing the system.
+There are many ways in which an outsider can attack a system; we will look at
+some of them later in this chapter. Many of the attacks nowadays are supported by
+highly advanced tools and services. Some of these tools are built by criminals, 
+others by ‘‘ethical hackers,’’ who are trying to help companies find flaws in their 
+software so they can be repaired before it is released.
+Incidentally, the popular press tends to use the generic term ‘‘hacker’’ for the
+criminals. However, within the computer world, ‘‘hacker’’ is a term of honor
+reserved for all great programmers. While some of these are rogues, most are not.
+The press got this one wrong. In deference to true hackers, we will use the term in
+the original sense and will call people who try to break into computer systems
+where they do not belong either crackers.
+Hackers and crackers have influenced operating system design in more ways
+than one. Not only have operating systems adopted a wide variety of protection
+mechanisms to prevent attackers from compromising the system, the crackers
+scene also served as a source of inspiration for the earlier computer pioneers. Steve
+Wozniak and Steve Jobs spent their time developing tools for phone phreaking
+(cracking the telephony system) before moving on to build a personal computer
+that they decided to call Apple. According to Wozniak, there would have been no
+Apple without John Draper, a controversial cracker popularly known as Captain
+Crunch. He acquired his nickname when he discovered that the toy whistle in a
+package of Cap’n Crunch cereals emitted a tone of 2600 Hz, which happened to be
+the exact frequency used by AT&T to authorize its (then expensive) long distance
+calls. Before founding one of the most successful computer companies in history,
+the two Steves similarly spent their time trying to get phone calls for free.
+In the security literature, people who are nosing around places where they hav e
+no business being may also be called attackers, intruders, or sometimes 
+adversaries. A few decades ago, cracking computer systems was all about showing your

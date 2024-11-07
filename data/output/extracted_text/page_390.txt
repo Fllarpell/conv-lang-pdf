@@ -1,0 +1,46 @@
+SEC. 5.3
+I/O SOFTWARE LAYERS
+361
+system can call to get the driver to do work for it. Typical procedures are those to
+read a block (block device) or write a character string (character device).
+In some systems, the operating system is a single binary program that contains
+all of the drivers it will need compiled into it. This scheme was the norm for years
+with UNIX systems because they were run by computer centers and I/O devices
+rarely changed. If a new device was added, the system administrator simply 
+recompiled the kernel with the new driver to build a new binary.
+With the advent of personal computers, with their myriad I/O devices, this
+model no longer worked. Few users are capable of recompiling or relinking the
+kernel, even if they hav e the source code or object modules, which is not always
+the case. Instead, operating systems, starting with MS-DOS, went over to a model
+in which drivers were dynamically loaded into the system during execution. 
+Different systems handle loading drivers in different ways.
+A device driver has several functions. The most obvious one is to accept
+abstract read and write requests from the device-independent software above it and
+see that they are carried out. But there are also a few other functions it must 
+perform. For example, the driver must initialize the device, if needed. It may also
+need to manage its power requirements and log events.
+Many device drivers have a similar general structure. A typical driver starts
+out by checking the input parameters to see if they are valid. If not, an error is
+returned. If they are valid, a translation from abstract to concrete terms may be
+needed. For a disk driver, this may mean converting a linear block number into the
+head, track, sector, and cylinder numbers for the disk’s geometry, while for SSDs
+the block number should be mapped on the appropriate flash block and page.
+Next the driver may check if the device is currently in use. If it is, the request
+will be queued for later processing. If the device is idle, the hardware status will
+be examined to see if the request can be handled now. It may be necessary to
+switch the device on or start a motor before transfers can be begun. On inkjet
+printers, the print head has to do a little dance before it can start printing. Once the
+device is on and ready to go, the actual control can begin.
+Controlling the device means issuing a sequence of commands to it. The driver
+is the place where the command sequence is determined, depending on what has to
+be done. After the driver knows which commands it is going to issue, it starts 
+writing them into the controller’s device registers. After each command is written to
+the controller, it may be necessary to check to see if the controller accepted the
+command and is prepared to accept the next one. This sequence continues until all
+the commands have been issued. Some controllers can be given a linked list of
+commands (in memory) and told to read and process them all by itself without 
+further help from the operating system.
+After the commands have been issued, one of two situations will apply. In
+many cases, the device driver must wait until the controller does some work for it,
+so it blocks itself until the interrupt comes in to unblock it. In other cases, 
+however, the operation finishes without delay, so the driver does not need to block. As an

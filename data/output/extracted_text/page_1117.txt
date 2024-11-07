@@ -1,0 +1,38 @@
+1088
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+13.1.1 Introduction
+Silberschatz et al., Operating System Concepts, 10th ed.
+A general textbook on operating systems. It covers processes, memory 
+management, storage management, protection and security, distributed systems, and
+some special-purpose systems. Two case studies are given: Linux and Windows.
+The cover is full of dinosaurs. These are legacy animals, to emphasize that 
+operating systems also carry a lot of legacy.
+Stallings, Operating Systems, 9th ed.
+Still another textbook on operating systems. It covers all the traditional topics,
+and also includes a small amount of material on distributed systems.
+Stevens and Rago, Advanced Programming in the UNIX Environment
+This book tells how to write C programs that use the UNIX system call 
+interface and the standard C library. Examples are based on the System V Release 4 and
+the 4.4BSD versions of UNIX. The relationship of these implementations to
+POSIX is described in detail.
+Tanenbaum and Woodhull, Operating System Design and Implementation
+A hands-on way to learn about operating systems. This book discusses the
+usual principles, but in addition discusses an actual operating system, MINIX 3, in
+great detail, and contains a listing of that system as an appendix.
+13.1.2 Processes and Threads
+Arpaci-Dusseau and Arpaci-Dusseau, Operating Systems: Three Easy Pieces
+The entire first part of this book is dedicated to virtualization of the CPU to
+share it with multiple processes. What is nice about this book (besides the fact that
+there is a free online version) is that it introduces not only the concepts of 
+processing and scheduling techniques, but also the APIs and systems calls like fork and
+exec in some detail.
+Andrews and Schneider, ‘‘Concepts and Notations for Concurrent Programming’’
+A tutorial and survey of processes and interprocess communication, including
+busy waiting, semaphores, monitors, message passing, and other techniques. The
+article also shows how these concepts are embedded in various programming 
+languages. The article is old, but it has stood the test of time very well.
+Ben-Ari, Principles of Concurrent Programming
+This little book is entirely devoted to the problems of interprocess 
+communication. There are chapters on mutual exclusion, semaphores, monitors, and the dining
+philosophers problem, among others. It, too, has stood up very well over the years.

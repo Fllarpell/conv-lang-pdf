@@ -1,0 +1,45 @@
+608
+SECURITY 
+CHAP. 9
+refer to the overall problem, and the term protection domain to indicate the exact
+set of operations (such reading or writing a file or memory page) a user or process
+is permitted to perform on the objects in the system. Moreover, we will use 
+security mechanism to refer to a specific technique used by the operating system to
+safeguard information in the computer. An example of a security mechanism is 
+setting the supervisor bit in a pagetable entry of a page that should be inaccessible to
+user applications. Finally, we will use the term security domain in an informal
+way to refer to software that, on the one hand, needs to be able to perform its tasks
+securely, and on the other hand, needs to be prevented from jeopardizing the 
+security of others. Examples of security domains include the components of the 
+operating system kernel, processes and virtual machines. If we zoom in enough, we see
+that the notion of security domain is simply a convenient way to point at particular
+software. However, from a security point of view, all that is relevant about a 
+security domain is defined by its protection domain.
+9.1.1 The CIA Security Triad
+Many security texts decompose the security of an information system in three
+components: confidentiality, integrity, and availability. Together, they are often
+referred to as ‘‘CIA.’’ They are shown in Fig. 9-1 and constitute the core security
+properties that we must protect against attackers and eavesdroppers—such as the
+(other) CIA.
+The first, confidentiality, is concerned with having secret data remain secret.
+More specifically, if the owner of some data has decided that these data are to be
+made available only to certain people and no others, the system should guarantee
+that release of the data to unauthorized people never occurs. As an absolute 
+minimum, the owner should be able to specify who can see what, and the system
+should enforce these specifications, which ideally should be per file.
+Goal 
+Threat
+Confidentiality 
+Exposure of data
+Integrity 
+Tamper ing with data
+Av ailability 
+Denial of service
+Figure 9-1. Security goals and threats.
+The second property, integrity, means that unauthorized users should not be
+able to modify any data without the owner’s permission. Data modification in this
+context includes not only changing the data, but also removing data and adding
+false data. If a system cannot guarantee that data deposited in it remain unchanged
+until the owner decides to change them, it is not worth much for data storage.
+The third property, av ailability, means that nobody can disturb the system to
+make it unusable. Such denial-of-service attacks are increasingly common. For

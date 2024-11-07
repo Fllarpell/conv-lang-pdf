@@ -1,0 +1,39 @@
+278
+FILE SYSTEMS
+CHAP. 4
+A variant on the idea of linking files is the symbolic link (sometimes called a
+shortcut or alias). Instead, of having two names point to the same internal data
+structure representing a file, a name can be created that points to a tiny file naming
+another file. When the first file is used, for example, opened, the file system 
+follows the path and finds the name at the end. Then it starts the lookup process all
+over using the new name. Symbolic links have the advantage that they can cross
+disk boundaries and even name files on remote computers. Their implementation is
+somewhat less efficient than hard links though.
+4.3 FILE-SYSTEM IMPLEMENTATION
+Now it is time to turn from the user’s view of the file system to the 
+implementor’s view. Users are concerned with how files are named, what operations are
+allowed on them, what the directory tree looks like, and similar interface issues.
+Implementers are interested in how files and directories are stored, how disk space
+is managed, and how to make everything work efficiently and reliably. In the 
+following sections, we will examine a number of these areas to see what the issues
+and trade-offs are.
+4.3.1 File-System Layout
+File systems are stored on disks. Most disks can be divided up into one or
+more partitions, with independent file systems on each partition. The layout
+depends on whether you have an old computer with a BIOS and a master boot
+record, or a modern UEFI-based system.
+Old School: The Master Boot Record
+On older systems, sector 0 of the disk is called the MBR (Master Boot
+Record) and is used to boot the computer. The end of the MBR contains the 
+partition table. This table gives the starting and ending addresses of each partition. One
+of the partitions in the table is marked as active. When the computer is booted, the
+BIOS reads in and executes the MBR. The first thing the MBR program does is
+locate the active partition, read in its first block, which is called the boot block,
+and execute it. The program in the boot block loads the operating system contained
+in that partition. For uniformity, every partition starts with a boot block, even if it
+does not contain a bootable operating system. Besides, it might contain one in the
+future.
+Other than starting with a boot block, the layout of a disk partition varies a lot
+from file system to file system. Often the file system will contain some of the items
+shown in Fig. 4-10. The first one is the superblock. It contains all the key 
+parameters about the file system and is read into memory when the computer is booted or

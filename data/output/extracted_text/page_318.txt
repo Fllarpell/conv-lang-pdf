@@ -1,0 +1,46 @@
+SEC. 4.3
+FILE-SYSTEM IMPLEMENTATION
+289
+In the second solution, B links to one of C’s files by having the system create a
+new file, of type LINK, and entering that file in B’s directory. The new file 
+contains just the path name of the file to which it is linked. When B reads from the
+linked file, the operating system sees that the file being read from is of type LINK,
+looks up the name of the file, and reads that file. This approach is called symbolic
+linking, to contrast it with traditional (hard) linking, as discussed earlier.
+Each of these methods has its drawbacks. In the first method, at the moment
+that B links to the shared file, the i-node records the file’s owner as C. Creating a
+link does not change the ownership (see Fig. 4-19), but it does increase the link
+count in the i-node, so the system knows how many directory entries currently
+point to the file.
+C's directory
+B's directory
+B's directory
+C's directory
+Owner = C!
+Count = 1
+Owner = C!
+Count = 2
+Owner = C!
+Count = 1
+(a)
+(b)
+(c)
+Figure 4-19. (a) Situation prior to linking. (b) After the link is created. (c) After
+the original owner removes the file.
+If C subsequently tries to remove the file, the system is faced with a problem.
+If it removes the file and clears the i-node, B will have a directory entry pointing to
+an invalid i-node. If the i-node is later reassigned to another file, B’s link will
+point to the wrong file. The system can see from the count in the i-node that the
+file is still in use, but there is no easy way for it to find all the directory entries for
+the file, in order to erase them. Pointers to the directories cannot be stored in the 
+inode because there can be an unlimited number of directories.
+The only thing to do is remove C’s directory entry, but leave the i-node intact,
+with count set to 1, as shown in Fig. 4-19(c). We now hav e a situation in which B
+is the only user having a directory entry for a file owned by C. If the system does
+accounting or has quotas, C will continue to be billed for the file until B decides to
+remove it, if ever, at which time the count goes to 0 and the file is deleted.
+With symbolic links this problem does not arise because only the true owner
+has a pointer to the i-node. Users who have linked to the file just have path names,
+not i-node pointers. When the owner removes the file, it is destroyed. Subsequent
+attempts to use the file via a symbolic link will fail when the system is unable to
+locate the file. Removing a symbolic link does not affect the file at all.

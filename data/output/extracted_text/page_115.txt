@@ -1,0 +1,44 @@
+86
+PROCESSES AND THREADS
+CHAP. 2
+eternity. While waiting for a disk request to complete, many more requests may
+come in. If there are multiple disks present, some or all of the newer ones may be
+fired off to other disks long before the first request is satisfied. Clearly some way is
+needed to model and control this concurrency. Processes (and especially threads)
+can help here.
+Now consider a user PC. When the system is booted, many processes are
+secretly started, often unknown to the user. For example, a process may be started
+up to wait for incoming email. Another process may run on behalf of the antivirus
+program to check periodically if any new virus definitions are available. In 
+addition, explicit user processes may be running, printing files and backing up the
+user’s photos on a USB stick, all while the user is surfing the Web. All this activity
+has to be managed, and a multiprogramming system supporting multiple processes
+comes in very handy here. Even simple computing devices, such as smartphones
+and tablets, can support multiple processes.
+In any multiprogramming system, each CPU switches from process to process
+quickly, running each for tens or maybe hundreds of milliseconds. While strictly
+speaking, at any one instant each CPU is running only one process, in the course of
+1 second it may work on several of them, giving the illusion of parallelism. 
+Sometimes people speak of pseudoparallelism in this context, to contrast it with the
+true hardware parallelism of multiprocessor systems (which have two or more
+CPUs sharing the same physical memory). Keeping track of multiple, parallel
+activities is hard for people to do. Therefore, operating system designers over the
+years have evolved a conceptual model (sequential processes) that makes 
+parallelism easier to deal with. That model, its uses, and some of its consequences form
+the subject of this chapter.
+2.1.1 The Process Model
+In this model, all the runnable software on the computer, sometimes including
+the operating system, is organized into a number of sequential processes, or just
+processes for short. A process is just an instance of an executing program, 
+including the current values of the program counter, registers, and variables. 
+Conceptually, each process has its own virtual CPU. In reality, of course, each real
+CPU switches back and forth from process to process, but to understand the 
+system, it is much easier to think about a collection of processes running in (pseudo)
+parallel than to try to keep track of how each CPU switches from program to 
+program. Switching rapidly back and forth like this is known as multiprogramming,
+as we saw in Chap. 1.
+In Fig. 2-1(a), we see a computer multiprogramming four programs in 
+memory. In Fig. 2-1(b) we see four processes, each with its own flow of control (i.e., its
+own logical program counter), and each one running independently of the other
+ones. Of course, there is only one physical program counter, so when each process
+runs, its logical program counter is loaded into the real program counter. When it is

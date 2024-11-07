@@ -1,0 +1,45 @@
+SEC. 8.2
+MULTICOMPUTERS
+569
+8.2.4 Remote Procedure Call
+Although the message-passing model provides a convenient way to structure a
+multicomputer operating system, it suffers from one incurable flaw: the basic 
+paradigm around which all communication is built is input/output. The procedures send
+and receive are fundamentally engaged in doing I/O, and many people believe that
+I/O is the wrong programming model.
+This problem has long been known, but little was done about it until a paper by
+Birrell and Nelson (1984) introduced a completely different way of attacking the
+problem. Although the idea is refreshingly simple (once someone has thought of
+it), the implications are often subtle. In this section we will examine the concept,
+its implementation, its strengths, and its weaknesses.
+In a nutshell, what Birrell and Nelson suggested was allowing programs to call
+procedures located on other CPUs. When a process on machine 1 calls a 
+procedure on machine 2, the calling process on 1 is suspended, and execution of the 
+called procedure takes place on 2. Information can be transported from the called to
+the callee in the parameters and can come back in the procedure result. No 
+message passing or I/O at all is visible to the programmer. This technique is known as
+RPC (Remote Procedure Call) and has become the basis of a large amount of
+multicomputer software. Traditionally the calling procedure is known as the client
+and the called procedure is known as the server; we will use those names here, too.
+The idea behind RPC is to make a remote procedure call look as much as 
+possible like a local one. In the simplest form, to call a remote procedure, the client
+program must be bound with a small library procedure called the client stub that
+represents the server procedure in the client’s address space. Similarly, the server is
+bound with a procedure called the server stub. These procedures hide the fact that
+the procedure call from the client to the server is not local.
+The actual steps in making an RPC are shown in Fig. 8-20. Step 1 is the client
+calling the client stub. This call is a local procedure call, with the parameters
+pushed onto the stack in the normal way. Step 2 is the client stub packing the
+parameters into a message and making a system call to send the message. Packing
+the parameters is called marshaling. Step 3 is the kernel sending the message
+from the client machine to the server machine. Step 4 is the kernel passing the
+incoming packet to the server stub (which would normally have called receive 
+earlier). Finally, step 5 is the server stub calling the server procedure. The reply traces
+the same path in the other direction.
+The key item to note here is that the client procedure, written by the user, just
+makes a normal (local) procedure call to the client stub, which has the same name
+as the server procedure. Since the client procedure and client stub are in the same
+address space, the parameters are passed in the usual way. Similarly, the server
+procedure is called by a procedure in its address space with the parameters it
+expects. To the server procedure, nothing is odd. In this way, instead of doing I/O
+using send and receive, remote communication is done by faking a procedure call.

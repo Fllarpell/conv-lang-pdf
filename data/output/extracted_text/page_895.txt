@@ -1,0 +1,39 @@
+866
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+simultaneously. How much physical memory is needed (a) if shared text is used, and
+(b) if it is not?
+26. Why are open-file-descriptor tables necessary in Linux?
+27. In Linux, the data and stack segments are paged and swapped to a scratch copy kept on
+a special paging disk or partition, but the text segment uses the executable binary file
+instead. Why?
+28. Describe a way to use mmap and signals to construct an interprocess-communication
+mechanism.
+29. A file is mapped in using the following mmap system call:
+mmap(65536, 32768, READ, FLAGS, fd, 0)
+Pages are 8 KB. Which byte in the file is accessed by reading a byte at memory
+address 72,000?
+30. After the system call of the previous problem has been executed, the call
+munmap(65536, 8192)
+is carried out. Does it succeed? If so, which bytes of the file remain mapped? If not,
+why does it fail?
+31. Can a page fault ever lead to the faulting process being terminated? If so, give an
+example. If not, why not?
+32. Is it possible that with the buddy system of memory management it ever occurs that
+two adjacent blocks of free memory of the same size coexist without being merged into
+one block? If so, explain how. If not, show that it is impossible.
+33. It is stated in the text that a paging partition will perform better than a paging file. Why
+is this so?
+34. Give two examples of the advantages of relative path names over absolute ones.
+35. The following locking calls are made by a collection of processes. For each call, tell
+what happens. If a process fails to get a lock, it blocks.
+(a) A wants a shared lock on bytes 0 through 10.
+(b) B wants an exclusive lock on bytes 20 through 30.
+(c) C wants a shared lock on bytes 8 through 40.
+(d) A wants a shared lock on bytes 25 through 35.
+(e) B wants an exclusive lock on byte 8.
+36. Consider the locked file of Fig. 10-26(c). Suppose that a process tries to lock bytes 10
+and 11 and blocks. Then, before C releases its lock, yet another process tries to lock
+bytes 10 and 11, and also blocks. What kinds of problems are introduced into the
+semantics by this situation? Propose and defend two solutions.
+37. Explain under what situations a process may request a shared lock or an exclusive lock.

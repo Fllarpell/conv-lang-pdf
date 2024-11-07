@@ -1,0 +1,64 @@
+SEC. 3.7
+SEGMENTATION
+243
+Consideration
+Paging
+Segmentation
+Need the programmer be aware!
+that this technique is being used?
+How many linear address!
+spaces are there?
+Can the total address space!
+exceed the size of physical!
+memory?
+Can procedures and data be!
+distinguished and separately!
+protected?
+Can tables whose size fluctuates!
+be accommodated easily?
+Is sharing of procedures!
+between users facilitated?
+Why was this technique!
+invented?
+No
+No
+No
+No
+1
+Yes
+Yes
+Yes
+Yes
+Yes
+Yes
+Many
+To get a large 
+linear address 
+space without 
+having to buy 
+more physical 
+memory
+To allow programs 
+and data to be broken 
+up into logically 
+independent address 
+spaces and to aid 
+sharing and 
+protection
+Figure 3-32. Comparison of paging and segmentation.
+system has been running for a while, memory will be divided up into a number of
+chunks, some containing segments and some containing holes. This phenomenon,
+called checkerboarding or external fragmentation, wastes memory in the holes.
+It can be dealt with by compaction, as shown in Fig. 3-33(e).
+3.7.2 Segmentation with Paging: MULTICS
+If the segments are large, it may be inconvenient, or even impossible, to keep
+them in main memory in their entirety. This leads to the idea of paging them, so
+that only those pages of a segment that are actually needed have to be around. 
+Several significant systems have supported paged segments. In this section, we will
+describe the first one: MULTICS. Its design strongly influenced the Intel x86
+which similarly offered segmentation and paging up until the x86-64.
+The MULTICS operating system was one of the most influential operating 
+systems ever, having had a major influence on topics as disparate as UNIX, the x86
+memory architecture, TLBs, and cloud computing. It was started as a research
+project at M.I.T. and went live in 1969. The last MULTICS system was shut down
+in 2000, a run of 31 years. Few other operating systems have lasted more-or-less

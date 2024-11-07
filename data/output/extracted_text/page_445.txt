@@ -1,0 +1,43 @@
+416
+INPUT/OUTPUT 
+CHAP. 5
+BitBlt can do more than just copy bitmaps. The last parameter gives the 
+possibility of performing Boolean operations to combine the source bitmap and the
+destination bitmap. For example, the source can be ORed into the destination to
+merge with it. It can also be EXCLUSIVE ORed into it, which maintains the 
+characteristics of both source and destination.
+A problem with bitmaps is that they do not scale. A character that is in a box
+of 8 × 12 on a display of 640 × 480 will look reasonable. However, if this bitmap is
+copied to a printed page at 1200 dots/inch, which is 10,200 bits × 13,200 bits, the
+character width (8 pixels) will be 8/1200 inch or 0.17 mm. In addition, copying
+between devices with different color properties or between monochrome and color
+does not work well.
+For this reason, Windows also supports a data structure called a DIB (Device
+Independent Bitmap). Files using this format use the extension .bmp. These files
+have file and information headers and a color table before the pixels. This 
+information makes it easier to move bitmaps between dissimilar devices.
+Fonts
+In versions of Windows before 3.1, characters were represented as bitmaps and
+copied onto the screen or printer using BitBlt. The problem with that, as we just
+saw, is that a bitmap that makes sense on the screen is too small for the printer.
+Also, a different bitmap is needed for each character in each size. In other words,
+given the bitmap for A in 10-point type, there is no way to compute it for 12-point
+type. Because every character of every font might be needed for sizes ranging from
+4 point to 120 point, a vast number of bitmaps were needed. The whole system was
+just too cumbersome for text.
+The solution was the introduction of TrueType fonts, which are not bitmaps but
+outlines of the characters. Each TrueType character is defined by a sequence of
+points around its perimeter. All the points are relative to the (0, 0) origin. Using
+this system, it is easy to scale the characters up or down. All that has to be done is
+to multiply each coordinate by the same scale factor. In this way, a TrueType 
+character can be scaled up or down to any point size, even fractional point sizes. Once
+at the proper size, the points can be connected using the well-known 
+follow-thedots algorithm taught in kindergarten (note that modern kindergartens use splines
+for smoother results). After the outline has been completed, the character can be
+filled in. An example of some characters scaled to three different point sizes is
+given in Fig. 5-39.
+Once the filled character is available in mathematical form, it can be rasterized,
+that is, converted to a bitmap at whatever resolution is desired. By first scaling and
+only then rasterizing, we can be sure that the characters displayed on the screen or
+printed on the printer will be as close as possible, differing only in quantization
+error. To improve the quality still more, it is now possible to embed hints in each

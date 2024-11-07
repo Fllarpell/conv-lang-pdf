@@ -1,0 +1,41 @@
+1026
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+such as distributed denial-of-service attacks, compromising other computers, and
+distribution of spam or other illicit materials. Unfortunately, this is not yet feasible
+in practice, and computers continue to have security vulnerabilities. The industry
+continues to make progress towards producing more secure systems code with 
+better developer training, more rigorous security reviews and improved source code
+annotations (e.g., SAL) with associated static analysis tools. On the validation
+front, intelligent fuzzers automatically stress-test interfaces with random inputs to
+cover all code paths and address sanitizers inject checks for invalid memory
+accesses to find bugs. More and more systems code is moving to languages like
+Rust with strong memory safety guarantees. On the hardware front, research and
+development of new CPU features like Intel’s CET (Control-flow Enforcement
+Technology) ARM’s MTE (Memory Tagging Extensions) and the emerging
+CHERI architecture help eliminate classes of vulnerabilities as we will describe
+below.
+As long as humans continue to build software, it is going to have bugs, many
+of which lead to security vulnerabilities. Microsoft has been following a 
+multipronged approach pretty successfully since Windows Vista to mitigate these 
+vulnerabilities such that they are difficult and costly to leverage by attackers. The
+components of this strategy are listed below.
+1. Eliminate classes of vulnerabilities.
+2. Break exploitation techniques.
+3. Contain damage and prevent persistence of exploits.
+4. Limit the window of time to exploit vulnerabilities.
+Let us study each of these components in more detail.
+Eliminating Vulnerabilities
+Most code vulnerabilities stem from small coding errors that lead to buffer
+overruns, using memory after it is freed, type-confusion due to incorrect casts and
+using uninitialized memory. These vulnerabilities allow an attacker to disrupt code
+flow by overwriting return addresses, virtual function pointers, and other data that
+control the execution or behavior of programs. Indeed, memory safety issues have
+consistently accounted for about 70% of exploitable bugs in Windows.
+Many of these problems can be avoided if type-safe languages such as C# and
+Rust are used instead of C and C++. Fortunately, a lot of new dev elopment is 
+shifting to these languages. And even with these unsafe languages many vulnerabilities
+can be avoided if students and professional developers are better trained to 
+understand the pitfalls of parameter and data validation, and the many dangers inherent
+in memory allocation APIs. After all, many of the software engineers who write
+code at Microsoft today were students only a few years earlier, just as many of you

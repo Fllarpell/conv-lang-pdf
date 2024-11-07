@@ -1,0 +1,44 @@
+366
+INPUT/OUTPUT 
+CHAP. 5
+Buffering is also important on output. Consider, for example, how output is
+done to the modem without buffering using the model of Fig. 5-15(b). The user
+process executes a wr ite system call to output n characters. The system has two
+choices at this point. It can block the user until all the characters have been 
+written, but this could take a very long time over a slow telephone line. It could also
+release the user immediately and do the I/O while the user computes some more,
+but this leads to an even worse problem: how does the user process know that the
+output has been completed and it can reuse the buffer? The system could generate
+a signal or software interrupt, but that style of programming is difficult and prone
+to race conditions. A much better solution is for the kernel to copy the data to a
+kernel buffer, analogous to Fig. 5-15(c) (but the other way), and unblock the caller
+immediately. Now it does not matter when the actual I/O has been completed. The
+user is free to reuse the buffer the instant it is unblocked.
+Buffering is a widely used technique, but it has a downside as well. If data get
+buffered too many times, performance suffers. Consider, for example, the network
+of Fig. 5-16. When a user performs a system call to write to the network, the 
+kernel copies the packet to a kernel buffer to allow the user to proceed immediately
+(step 1). At this point, the user program can reuse the buffer.
+2
+1
+5
+4
+3
+User process
+Network
+Network!
+controller
+User!
+space
+Kernel!
+space
+Figure 5-16. Networking may involve many copies of a packet.
+When the driver is called, it copies the data to the controller for output (step 2).
+The reason it does not output to the wire directly from kernel memory is that once
+a packet transmission has been started, it must continue at a uniform speed. The
+driver cannot guarantee that it can get to memory at a uniform speed because DMA
+channels and other I/O devices may be stealing many cycles. Failing to get a word
+transmitted on time would ruin the packet. By buffering the packet inside the 
+controller, this problem is avoided.
+After the packet has been copied to the controller’s internal buffer, it is copied
+out onto the network (step 3). Bits arrive at the receiver shortly after being sent, so

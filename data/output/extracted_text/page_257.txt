@@ -1,0 +1,43 @@
+228
+MEMORY MANAGEMENT 
+CHAP. 3
+respectively, as illustrated in Fig. 3-24(b). Each address space runs from 0 to some
+maximum, typically 216 < 1 or 232 < 1. The linker must know when separate 
+Iand D-spaces are being used, because when they are, the data are relocated to 
+virtual address 0 instead of starting after the program.
+In a computer with this kind of design, both address spaces can be paged, 
+independently from one another. Each one has its own page table, with its own 
+mapping of virtual pages to physical page frames. When the hardware wants to fetch an
+instruction, it knows that it must use I-space and the I-space page table. Similarly,
+data must go through the D-space page table. Other than this distinction, having
+separate I- and D-spaces does not introduce any special complications for the 
+operating system and it does double the available address space.
+While address spaces these days are large, their sizes used to be a serious 
+problem. Even today, though, separate I- and D-spaces are still common. However,
+rather than for the normal address spaces, they are now used to divide the L1
+cache. After all, in the L1 cache, memory is still plenty scarce. In fact, on some
+processors we even find that, under the hood, the TLB is also partitioned in L1 and
+L2 and the L1 TLB is further divided in a TLB for instructions and a TLB for data.
+3.5.6 Shared Pages
+Another design issue is sharing. In a large multiprogramming system, it is
+common for several users to be running the same program at the same time. Even a
+single user may be running several programs that use the same library. It is clearly
+more efficient to share the pages, to avoid having two copies of the same page in
+memory at the same time. One problem is that not all pages are sharable. In 
+particular, pages that are read-only, such as program text, can be shared, but for data
+pages sharing is more complicated.
+If separate I- and D-spaces are supported, it is relatively straightforward to
+share programs by having two or more processes use the same page table for their
+I-space but different page tables for their D-spaces. Typically in an implementation
+that supports sharing in this way, page tables are data structures independent of the
+process table. Each process then has two pointers in its process table: one to the 
+Ispace page table and one to the D-space page table, as shown in Fig. 3-25. When
+the scheduler chooses a process to run, it uses these pointers to locate the 
+appropriate page tables and sets up the MMU using them. Even without separate I- and 
+Dspaces, processes can share programs (or sometimes, libraries), but the mechanism
+is more complicated.
+When two or more processes share some code, a problem occurs with the 
+shared pages. Suppose that processes A and B are both running the editor and sharing
+its pages. If the scheduler decides to remove A from memory, evicting all its pages
+and filling the empty page frames with some other program will cause B to 
+generate a large number of page faults to bring them back in again.

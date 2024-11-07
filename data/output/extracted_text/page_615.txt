@@ -1,0 +1,48 @@
+586
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+For some applications, the delays introduced by acknowledgements are 
+unacceptable. One such application is digitized voice traffic. It is preferable for 
+telephone users to hear a bit of noise on the line or a garbled word from time to time
+than to introduce a delay to wait for acknowledgements.
+Not all applications require connections. For example, to test the network, all
+that is needed is a way to send a single packet that has a high probability of arrival,
+but no guarantee. Unreliable (meaning not acknowledged) connectionless service
+is often called datagram service, in analogy with telegram service, which also
+does not provide an acknowledgement back to the sender.
+In other situations, the convenience of not having to establish a connection to
+send one short message is desired, but reliability is essential. The acknowledged
+datagram service can be provided for these applications. It is like sending a 
+registered letter and requesting a return receipt. When the receipt comes back, the 
+sender is absolutely sure that the letter was delivered to the intended party and not lost
+along the way.
+Still another service is the request-reply service. In this service, the sender
+transmits a single datagram containing a request; the reply contains the answer. For
+example, a query to the local library asking where Uighur is spoken falls into this
+category. Request-reply is commonly used to implement communication in the 
+client-server model: the client issues a request and the server responds to it. Figure
+8-30 summarizes the types of services we have discussed.
+Service
+Reliable message stream
+Reliable byte stream
+Unreliable connection
+Unreliable datagram
+Acknowledged datagram
+Request-reply
+Example
+Sequence of pages of a book
+Remote login
+Digitized voice
+Network test packets
+Registered mail
+Database query
+Connection-oriented
+Connectionless
+Figure 8-30. Six different types of network service.
+Network Protocols
+All networks have highly specialized rules for what messages may be sent and
+what responses may be returned in response to these messages. For example, under
+certain circumstances (e.g., file transfer), when a message is sent from a source to a
+destination, the destination is required to send an acknowledgement back 
+indicating correct receipt of the message. Under other circumstances (e.g., digital 
+telephony), no such acknowledgement is expected. The set of rules by which particular

@@ -1,0 +1,50 @@
+SEC. 2.2
+THREADS
+101
+operation to get the page from the disk and blocks until the disk operation 
+completes. When the thread blocks on the disk operation, another thread is chosen to
+run, possibly the dispatcher, in order to acquire more work, or possibly another
+worker that is now ready to run.
+This model allows the server to be written as a collection of sequential threads.
+The dispatcher’s program consists of an infinite loop for getting a work request and
+handing it off to a worker. Each worker’s code consists of an infinite loop 
+consisting of accepting a request from the dispatcher and checking the Web cache to see if
+the page is present. If so, it is returned to the client, and the worker blocks waiting
+for a new request. If not, it gets the page from the disk, returns it to the client, and
+blocks waiting for a new request.
+A rough outline of the code is given in Fig. 2-9. Here, as in the rest of this
+book, TRUE is assumed to be the constant 1. Also, buf and page are structures
+appropriate for holding a work request and a Web page, respectively.
+while (TRUE) {
+while (TRUE) {
+get next request(&buf); 
+wait for work(&buf)
+handoff work(&buf); 
+look for page in cache(&buf, &page);
+}
+if (page not in cache(&page))
+read page from disk(&buf, &page);
+retur n page(&page);
+}
+(a) 
+(b)
+Figure 2-9. A rough outline of the code for Fig. 2-8. (a) Dispatcher thread.
+(b) Worker thread.
+Consider how the Web server could be written in the absence of threads. One
+possibility is to have it operate as a single thread. The main loop of the Web server
+gets a request, examines it, and carries it out to completion before getting the next
+one. While waiting for the disk, the server is idle and does not process any other
+incoming requests. If the Web server is running on a dedicated machine, as is 
+commonly the case, the CPU is simply idle while the Web server is waiting for the
+disk. The net result is that many fewer requests/sec can be processed. Thus, threads
+gain considerable performance, but each thread is programmed sequentially, in the
+usual way. We will look at an alternative, event-driven, approach later.
+A third example where threads are useful is in applications that must process
+very large amounts of data. The normal approach is to read in a block of data,
+process it, and then write it out again. The problem here is that if only blocking
+system calls are available, the process blocks while data are coming in and data are
+going out. Having the CPU go idle when there is lots of computing to do is clearly
+wasteful and should be avoided if possible.
+Threads offer a solution. The process could be structured with an input thread,
+a processing thread, and an output thread. The input thread reads data into an input
+buffer. The processing thread takes data out of the input buffer, processes them,

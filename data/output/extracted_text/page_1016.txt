@@ -1,0 +1,45 @@
+SEC. 11.7
+INPUT/OUTPUT IN WINDOWS
+987
+Kernel buffer address
+MDL
+Thread
+IRP Driver-Stack Data
+Completion/cancel info
+Thread’s IRP chain link
+Memory descr list head
+User buffer address
+Buffer pointers
+Flags
+MDL
+Next IRP
+Completion
+APC block
+Driver
+queuing
+& comm.
+Operation code
+Figure 11-42. The major fields of an I/O Request Packet.
+Device Stacks
+A driver in Windows may do all the work by itself, or drivers may also be
+stacked, which means that a request may pass through a sequence of drivers, each
+doing part of the work. Two stacked drivers are also illustrated in Fig. 11-43.
+One common use for stacked drivers is to separate the bus management from
+the functional work of controlling the device. Bus management on the PCI bus is
+quite complicated on account of many kinds of modes and bus transactions. By
+separating this work from the device-specific part, driver writers are freed from
+learning how to control the bus. They can just use the standard bus driver in their
+stack. Similarly, USB and SCSI drivers have a device-specific part and a generic
+part, with common drivers being supplied by Windows for the generic part.
+Another use of stacking drivers is to be able to insert filter drivers into the
+stack. We hav e already looked at the use of file-system filter drivers, which are
+inserted above the file system. Filter drivers are also used for managing physical
+hardware. A filter driver performs some transformation on the operations as the
+IRP flows down the device stack, as well as during the completion operation with
+the IRP flows back up through the completion routines each driver specified. For
+example, a filter driver could compress data on the way to the disk or encrypt data
+on the way to the network. Putting the filter here means that neither the application
+program nor the true device driver has to be aware of it, and it works automatically
+for all data going to (or coming from) the device.
+Kernel-mode device drivers are a serious problem for the reliability and 
+stability of Windows. Most of the kernel crashes in Windows are due to bugs in device

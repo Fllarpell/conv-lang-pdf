@@ -1,0 +1,50 @@
+356
+INPUT/OUTPUT 
+CHAP. 5
+the buffer is copied to kernel space, as we showed earlier, and the first character is
+copied to the printer as soon as it is willing to accept a character. At that point, the
+CPU calls the scheduler and some other process is run. The process that asked for
+the string to be printed is blocked until the entire string has printed. The work done
+on the system call is shown in Fig. 5-9(a).
+copy from user(buffer, p, count); 
+if (count == 0) {
+enable interr upts( ); 
+unblock user( );
+while (*pr inter status reg != READY) ;
+} else {
+*pr inter data register = p[0];
+*pr inter data register = p[i];
+scheduler( );
+count = count < 1;
+i = i + 1;
+}
+acknowledge interr upt( );
+retur n from interr upt( );
+(a) 
+(b)
+Figure 5-9. Writing a string to the printer using interrupt-driven I/O. (a) Code
+executed at the time the print system call is made. (b) Interrupt service procedure
+for the printer.
+When the printer has printed the character and is prepared to accept the next
+one, it generates an interrupt. This interrupt stops the current process and saves its
+state. Then the printer interrupt-service procedure is run. A crude version of this
+code is shown in Fig. 5-9(b). If there are no more characters to print, the interrupt
+handler takes some action to unblock the user. Otherwise, it outputs the next 
+character, acknowledges the interrupt, and returns to the process that was running just
+before the interrupt, which continues from where it left off.
+5.2.4 I/O Using DMA
+An obvious disadvantage of interrupt-driven I/O is that an interrupt occurs on
+ev ery character. Interrupts take time, so this scheme wastes a certain amount of
+CPU time. A solution is to use DMA. Here the idea is to let the DMA controller
+feed the characters to the printer one at time, without the CPU being bothered. In
+essence, DMA is programmed I/O, only with the DMA controller doing all the
+work, instead of the main CPU. This strategy requires special hardware (the DMA
+controller) but frees up the CPU during the I/O to do other work. An outline of the
+code is given in Fig. 5-10.
+The big win with DMA is reducing the number of interrupts from one per
+character to one per buffer printed. If there are many characters and interrupts are
+slow, this can be a major improvement. On the other hand, the DMA controller is
+usually much slower than the main CPU. If the DMA controller is not capable of
+driving the device at full speed, or the CPU usually has nothing to do anyway
+while waiting for the DMA interrupt, then interrupt-driven I/O or even 
+programmed I/O may be better. Most of the time, though, DMA is worth it.

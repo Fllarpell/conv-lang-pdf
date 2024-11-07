@@ -1,0 +1,42 @@
+SEC. 8.2
+MULTICOMPUTERS
+575
+However, saying this is easier than doing it. Furthermore, if the false sharing 
+consists of node 1 using one element of an array and node 2 using a different element
+of the same array, there is little that even a clever compiler can do to eliminate the
+problem.
+Achieving Sequential Consistency
+If writable pages are not replicated, achieving consistency is not an issue.
+There is exactly one copy of each writable page, and it is moved back and forth
+dynamically as needed. Since it is not always possible to see in advance which
+pages are writable, in many DSM systems, when a process tries to read a remote
+page, a local copy is made and both the local and remote copies are set up in their
+respective MMUs as read only. As long as all references are reads, everything is
+fine.
+However, if any process attempts to write on a replicated page, a potential 
+consistency problem arises because changing one copy and leaving the others alone is
+unacceptable. This situation is analogous to what happens in a multiprocessor
+when one CPU attempts to modify a word that is present in multiple caches. The
+solution there is for the CPU about to do the write to first put a signal on the bus
+telling all other CPUs to discard their copy of the cache block. DSM systems 
+typically work the same way. Before a shared page can be written, a message is sent to
+all other CPUs holding a copy of the page telling them to unmap and discard the
+page. After all of them have replied that the unmap has finished, the original CPU
+can now do the write.
+It is also possible to tolerate multiple copies of writable pages under carefully
+restricted circumstances. One way is to allow a process to acquire a lock on a 
+portion of the virtual address space, and then perform multiple read and write 
+operations on the locked memory. At the time the lock is released, changes can be 
+propagated to other copies. As long as only one CPU can lock a page at a given 
+moment, this scheme preserves consistency.
+Alternatively, when a potentially writable page is actually written for the first
+time, a clean copy is made and saved on the CPU doing the write. Locks on the
+page can then be acquired, the page updated, and the locks released. Later, when a
+process on a remote machine tries to acquire a lock on the page, the CPU that
+wrote it earlier compares the current state of the page to the clean copy and builds
+a message listing all the words that have changed. This list is then sent to the
+acquiring CPU to update its copy instead of invalidating it (Keleher et al., 1994).
+8.2.6 Multicomputer Scheduling
+On a multiprocessor, all processes reside in the same memory. When a CPU
+finishes its current task, it picks a process and runs it. In principle, all processes
+are potential candidates. On a multicomputer the situation is quite different. Each

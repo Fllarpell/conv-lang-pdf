@@ -1,0 +1,91 @@
+SEC. 8.2
+MULTICOMPUTERS
+577
+Mathematically, the problem then reduces to finding a way to partition (i.e., cut)
+the graph into k disjoint subgraphs, subject to certain constraints (e.g., total CPU
+and memory requirements below some limits for each subgraph). For each 
+solution that meets the constraints, arcs that are entirely within a single subgraph 
+represent intramachine communication and can be ignored. Arcs that go from one
+subgraph to another represent network traffic. The goal is then to find the 
+partitioning that minimizes the network traffic while meeting all the constraints. As an
+example, Fig. 8-24 shows a system of nine processes, A through I, with each arc
+labeled with the mean communication load between those two processes (e.g., in
+Mbps).
+G
+H
+I
+A
+E
+F
+B
+C
+D
+Node 1
+Node 2
+3
+2
+3
+5
+5
+8
+1
+2
+4
+4
+2
+3
+6
+2
+1
+4
+Node 3
+G
+H
+I
+A
+E
+F
+B
+C
+D
+Node 1
+Node 2
+3
+2
+3
+5
+5
+8
+1
+2
+4
+4
+2
+3
+6
+2
+1
+4
+Node 3
+Traffic
+between
+D and I
+Process
+Figure 8-24. Tw o ways of allocating nine processes to three nodes.
+In Fig. 8-24(a), we have partitioned the graph with processes A, E, and G on
+node 1, processes B, F, and H on node 2, and processes C, D, and I on node 3. The
+total network traffic is the sum of the arcs intersected by the cuts (the dashed
+lines), or 30 units. In Fig. 8-24(b), we have a different partitioning that has only 28
+units of network traffic. Assuming that it meets all the memory and CPU 
+constraints, this is a better choice because it requires less communication.
+Intuitively, what we are doing is looking for clusters that are tightly coupled
+(high intracluster traffic flow) but that interact little with other clusters (low 
+intercluster traffic flow). Work on this problem has been going on for over 40 years.
+Some of the earliest papers discussing the problem are Chow and Abraham (1982),
+Lo (1984), and Stone and Bokhari (1978).
+A Sender-Initiated Distributed Heuristic Algorithm
+Now let us look at some distributed algorithms. One algorithm says that when
+a process is created, it runs on the node that created it unless that node is 
+overloaded. The metric for overloaded might involve too many processes, too big a total
+working set, or some other metric. If it is overloaded, the node selects another
+node at random and asks it what its load is (using the same metric). If the probed

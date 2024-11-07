@@ -1,0 +1,46 @@
+SEC. 3.8
+RESEARCH ON MEMORY MANAGEMENT
+249
+sudden the hypervisor needs an update. While you may migrate the virtual
+machines to another node, this turns out to be inefficient and in-place updates are
+often possible, even without a reboot, by preserving the memory pages of the 
+virtual machine (Russinovich, 2021). Another issue that makes memory management in
+these environments different from traditional settings is that in data centers many
+applications run on a complex software stack where each layer does some memory
+management and the applications are able to adapt their performance to the 
+available memory, rendering the working set model ineffective. Performance can be
+improved by inserting policies and mechanisms in each layer to coordinate 
+memory management (Lion et al., 2021).
+Integrating new forms of memory and storage into the regular memory 
+hierarchy is not easy and the adoption of persistent memory in existing systems has
+been a bumpy ride (Neal et al., 2020). Much research tries to make the integration
+more seamless. For instance, researchers have designed techniques for conversion
+of regular DRAM addresses to persistent memory addresses (Lee et al., 2019).
+Others have used persistent memory to convert existing distributed in-memory
+storage systems into persistent, crash-consistent versions with low overhead and
+minimal code changes (Zhang et al., 2020).
+Many aspects of memory management have become a battleground for 
+security researchers. For instance, reducing the memory footprint of a system by means
+of memory deduplication turns out to be a highly security sensitive operation. Who
+knew? For instance, attackers may detect that a page has been deduplicated and
+thus learn what another process has in its address space (Bosman and Bos, 2016).
+To eliminate the threat, deduplication must be designed such that one can no longer
+distinguish between deduplicated and non-deduplicated pages (Oliverio, et al.,
+2017).
+Many attacks on the operating system depend on getting memory lined up in
+the right way. For instance, attackers may be able to corrupt some important value
+(e.g., the return address from a procedure call), but only if the corresponding object
+is at a specific location. Such heap lay-out feng shui is complicated to perform
+from a user process and researchers have looked for ways of automating this 
+process (Chen and Xing, 2019).
+Finally, there has been substantial work on operating systems due to Meltdown
+and Spectre vulnerabilities in popular CPUs (see also Chapter 9). In particular, it
+has led to radical and expensive changes in Linux on many processors. Where the
+Linux kernel was originally mapped into the address space of every process as a
+measure to speed up system calls (by obviating the need to change page tables for
+a system call), Meltdown required strict page table isolation. As it made the 
+context switch much more expensive, the Linux developers were furious with Intel.
+The names initially proposed for the expensive fix were ‘‘User Address Space 
+Separation’’ and ‘‘Forcefully Unmap Complete Kernel With Interrupt Trampolines,’’
+but eventually they settled on kernel page table isolation (kpti), as the acronym is
+considerably less offensive.

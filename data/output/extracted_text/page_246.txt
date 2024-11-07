@@ -1,0 +1,61 @@
+SEC. 3.4
+PA GE REPLACEMENT ALGORITHMS
+217
+Now let us look at a page replacement algorithm based on the working set. The
+basic idea is to find a page that is not in the working set and evict it. In Fig. 3-19.
+we see a portion of a page table for some machine. Because only pages located in
+memory are considered as candidates for eviction, pages that are absent from
+memory are ignored by this algorithm. Each entry contains (at least) two key items
+of information: the (approximate) time the page was last used and the R 
+(Referenced) bit. An empty white rectangle symbolizes the other fields not needed for
+this algorithm, such as the page frame number, the protection bits, and the M
+(Modified) bit.
+Information about!
+one page
+2084
+2204
+Current virtual time
+2003
+1980
+1213
+2014
+2020
+2032
+1620
+Page table
+1
+1
+1
+0
+1
+1
+1
+0
+Time of last use
+Page referenced!
+during this tick
+Page not referenced!
+during this tick
+R (Referenced) bit
+Scan all pages examining R bit:!
+       if (R == 1)!
+          set time of last use to current virtual time!
+!       if (R == 0 and age > o)!
+          remove this page!
+!       if (R == 0 and age ) o)!
+          remember the smallest time
+Figure 3-19. The working set algorithm.
+The algorithm works as follows. The hardware is assumed to set the R and M
+bits, as discussed earlier. Similarly, a periodic clock interrupt is assumed to cause
+software to run that clears the Referenced bit on every clock tick. On every page
+fault, the page table is scanned to look for a suitable page to evict.
+As each entry is processed, the R bit is examined. If it is 1, the current virtual
+time is written into the Time of last use field in the page table, indicating that the
+page was in use at the time the fault occurred. Since the page has been referenced
+during the current clock tick, it is clearly in the working set and is not a candidate
+for removal (o is assumed to span multiple clock ticks).
+If R is 0, the page has not been referenced during the current clock tick and
+may be a candidate for removal. To see whether or not it should be removed, its
+age (the current virtual time minus its Time of last use) is computed and compared
+to o . If the age is greater than o , the page is no longer in the working set and the
+new page replaces it. The scan continues updating the remaining entries.

@@ -1,0 +1,43 @@
+SEC. 12.3
+IMPLEMENTATION
+1061
+are all Unicode strings, looking up a file name in the registry will not work, just as
+using an MFT index in the object table will not work. In a good design, 
+considerable thought is given to how many namespaces are needed, what the syntax of
+names is in each one, how they can be told apart, whether absolute and relative
+names exist, and so on.
+12.3.5 Binding Time
+As we have just seen, operating systems use various kinds of names to refer to
+objects. Sometimes the mapping between a name and an object is fixed, but 
+sometimes it is not. In the latter case, when the name is bound to the object may matter.
+In general, early binding is simple, but not flexible, whereas late binding is more
+complicated but often more flexible.
+To clarify the concept of binding time, let us look at some real-world 
+examples. An example of early binding is the practice of some colleges to allow parents
+to enroll a baby at birth and prepay the current tuition. When the student shows up
+18 years later, the tuition is fully paid, no matter how high it may be at that
+moment.
+In manufacturing, ordering parts in advance and maintaining an inventory of
+them is early binding. In contrast, just-in-time manufacturing requires suppliers to
+be able to provide parts on the spot, with no advance notice required. This is late
+binding.
+Programming languages often support multiple binding times for variables.
+Global variables are bound to a particular virtual address by the compiler. This
+exemplifies early binding. Variables local to a procedure are assigned a virtual
+address (on the stack) at the time the procedure is invoked. This is intermediate
+binding. Variables stored on the heap (those allocated by malloc in C or new in
+Java) are assigned virtual addresses only at the time they are actually used. Here
+we have late binding.
+Operating systems often use early binding for most data structures, but 
+occasionally use late binding for flexibility. Memory allocation is a case in point. Early
+multiprogramming systems on machines lacking address-relocation hardware had
+to load a program at some memory address and relocate it to run there. If it was
+ev er swapped out, it had to be brought back at the same memory address or it
+would fail. In contrast, paged virtual memory is a form of late binding. The actual
+physical address corresponding to a given virtual address is not known until the
+page is touched and actually brought into memory.
+Another example of late binding is window placement in a GUI. In contrast to
+the early graphical systems, in which the programmer had to specify the absolute
+screen coordinates for all images on the screen, in modern GUIs the software uses
+coordinates relative to the window’s origin, but that is not determined until the
+window is put on the screen, and it may even be changed later.

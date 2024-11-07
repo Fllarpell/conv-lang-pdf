@@ -1,0 +1,49 @@
+SEC. 5.5
+CLOCKS
+393
+ev ery clock tick is ‘‘charged’’ to the process running at the time of the tick. A
+minor problem with this strategy is that if many interrupts occur during a process’
+run, it is still charged for a full tick, even though it did not get much work done.
+Properly accounting for the CPU during interrupts is too expensive and is rarely
+done.
+In many systems, a process can request that the operating system give it a
+warning after a certain interval. The warning is usually a signal, interrupt, message,
+or something similar. One application requiring such warnings is networking, in
+which a packet not acknowledged within a certain time interval must be 
+retransmitted. Another application is computer-aided instruction, where a student not 
+providing a response within a certain time is told the answer.
+If the clock driver had enough clocks, it could set a separate clock for each
+request. This not being the case, it must simulate multiple virtual clocks with a 
+single physical clock. One way is to maintain a table in which the signal time for all
+pending timers is kept, as well as a variable giving the time of the next one. 
+Whenev er the time of day is updated, the driver checks to see if the closest signal has
+occurred. If it has, the table is searched for the next one to occur.
+If many signals are expected, it is more efficient to simulate multiple clocks by
+chaining all the pending clock requests together, sorted on time, in a linked list, as
+shown in Fig. 5-29. Each entry on the list tells how many clock ticks following the
+previous one to wait before causing a signal. In this example, signals are pending
+for 4203, 4207, 4213, 4215, and 4216.
+Current time
+Next signal
+Clock!
+header
+3
+4
+6
+2
+1 X
+4200
+3
+Figure 5-29. Simulating multiple timers with a single clock.
+In Fig. 5-29, the next interrupt occurs in 3 ticks. On each tick, Next signal is
+decremented. When it gets to 0, the signal corresponding to the first item on the list
+is caused, and that item is removed from the list. Then Next signal is set to the
+value in the entry now at the head of the list, in this example, 4.
+Note that during a clock interrupt, the clock driver has several things to do—
+increment the real time, decrement the quantum and check for 0, do CPU 
+accounting, and decrement the alarm counter. Howev er, each of these operations has been
+carefully arranged to be very fast because they hav e to be repeated many times a
+second.
+Parts of the operating system also need to set timers. These are called 
+watchdog timers and are frequently used (especially in embedded devices) to detect
+problems such as hangs. For instance, a watchdog timer may reset a system that

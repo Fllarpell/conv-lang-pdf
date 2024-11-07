@@ -1,0 +1,42 @@
+942
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+represented by the section object are mapped into the new process’
+user-mode address space.
+8. The executive creates and initializes the user-mode PEB, which is
+used by both user mode processes and the kernel to maintain 
+processwide state information, such as the user-mode heap pointers and
+the list of loaded libraries (DLLs).
+9. Virtual memory is allocated in the new process and used to pass
+parameters, including the environment strings and command line.
+10. A process ID is allocated from the special handle table (ID table) the
+kernel maintains for efficiently allocating locally unique IDs for 
+processes and threads.
+11. A thread object is allocated and initialized. A user-mode stack is 
+allocated along with the Thread Environment Block. The CONTEXT
+record which contains the thread’s initial values for the CPU registers
+(including the instruction and stack pointers) is initialized.
+12. The process object is added to the global list of processes. Handles
+for the process and thread objects are allocated in the caller’s handle
+table. An ID for the initial thread is allocated from the ID table.
+13.
+NtCreateUserProcess returns to user mode with the new process
+created, containing a single thread that is ready to run but suspended.
+14. If the NT API fails, the Win32 code checks to see if this might be a
+process belonging to another subsystem like WoW64. Or perhaps the
+program is marked that it should be run under the debugger. These
+special cases are handled with special code in the user-mode 
+CreateProcess code.
+15. If NtCreateUserProcess was successful, there is still some work to be
+done. Win32 processes have to be registered with the Win32 
+subsystem process, csrss.exe. Kernelbase.dll sends a message to csrss 
+telling it about the new process along with the process and thread 
+handles so it can duplicate itself. The process and threads are entered into
+the subsystems’ tables so that they hav e a complete list of all Win32
+processes and threads. The subsystem then displays a cursor 
+containing a pointer with an hourglass to tell the user that something is
+going on but that the cursor can be used in the meanwhile. When the
+process makes its first GUI call, usually to create a window, the 
+cursor is removed (it times out after 2 seconds if no call is forthcoming).
+16. If the process is restricted, such as low-rights Internet browser, the
+token is modified to restrict what objects the new process can access.

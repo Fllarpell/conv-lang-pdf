@@ -1,0 +1,45 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+143
+worry about the possibility that the scheduler may switch to the consumer just
+before the wait completes. The consumer will not even be let into the monitor at all
+until the wait is finished and the producer has been marked as no longer runnable.
+Although Pidgin Pascal is an imaginary language, some real programming 
+languages also support monitors, although not always in the form designed by Hoare
+and Brinch Hansen. One such language is Java. Java is an object-oriented language
+that supports user-level threads and also allows methods (procedures) to be
+grouped together into classes. By adding the keyword synchronized to a method
+declaration, Java guarantees that once any thread has started executing that method,
+no other thread will be allowed to start executing any other synchronized method
+of that object. Without synchronized, there are no guarantees about interleaving.
+A solution to the producer-consumer problem using monitors in Java is giv en
+in Fig. 2-36. Our solution has four classes. The outer class, ProducerConsumer,
+creates and starts two threads, p and c. The second and third classes, producer and
+consumer, respectively, contain the code for the producer and consumer. Finally,
+the class our monitor, is the monitor. It contains two synchronized threads that are
+used for actually inserting items into the shared buffer and taking them out. Unlike
+the previous examples, here we have the full code of insert and remove.
+The producer and consumer threads are functionally identical to their 
+counterparts in all our previous examples. The producer has an infinite loop generating
+data and putting it into the common buffer. The consumer has an equally infinite
+loop taking data out of the common buffer and doing some fun thing with it.
+The interesting part of this program is the class our monitor, which holds the
+buffer, the administration variables, and two synchronized methods. When the 
+producer is active inside insert, it knows for sure that the consumer cannot be active
+inside remove, making it safe to update the variables and the buffer without fear of
+race conditions. The variable count keeps track of how many items are in the 
+buffer. It can take on any value from 0 through and including N < 1. The variable lo is
+the index of the buffer slot where the next item is to be fetched. Similarly, hi is the
+index of the buffer slot where the next item is to be placed. It is permitted that
+lo = hi, which means that either 0 items or N items are in the buffer. The value of
+count tells which case holds.
+Synchronized methods in Java differ from classical monitors in an essential
+way: Java does not have condition variables built in. Instead, it offers two 
+procedures, wait and notify, which are the equivalent of sleep and wakeup except that
+when they are used inside synchronized methods, they are not subject to race 
+conditions. In theory, the method wait can be interrupted, which is what the code 
+surrounding it is all about. Java requires that the exception handling be made explicit.
+For our purposes, just imagine that go to sleep is the way to go to sleep.
+By making the mutual exclusion of critical regions automatic, monitors make
+parallel programming much less error prone than using semaphores. Nevertheless,
+they too have some drawbacks. It is not for nothing that our two examples of 
+monitors were in Pidgin Pascal instead of C, as are the other examples in this book.

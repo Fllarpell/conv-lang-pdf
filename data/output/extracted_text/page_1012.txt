@@ -1,0 +1,58 @@
+SEC. 11.7
+INPUT/OUTPUT IN WINDOWS
+983
+I/O system call
+Description
+NtCreateFile 
+Open new or existing files or devices
+NtReadFile 
+Read from a file or device
+NtWr iteFile
+Wr ite to a file or device
+NtQuer yDirector yFile
+Request infor mation about a directory, including files
+NtQuer yVolumeInfor mationFile
+Request infor mation about a volume
+NtSetVolumeInfor mationFile
+Modify volume infor mation
+NtNotifyChangeDirector yFile
+Complete when any file in the directory or subtree is modified
+NtQuer yInfor mationFile
+Request infor mation about a file
+NtSetInfor mationFile
+Modify file infor mation
+NtLockFile 
+Lock a range of bytes in a file
+NtUnlockFile 
+Remove a range lock
+NtFsControlFile 
+Miscellaneous operations on a file
+NtFlushBuffersFile 
+Flush in-memor y file buffers to disk
+NtCancelIoFile 
+Cancel outstanding I/O operations on a file
+NtDeviceIoControlFile 
+Special operations on a device
+Figure 11-40. Native NT API calls for performing I/O.
+like the directory query operation, but expects a file handle which represents an
+open volume which may or may not contain a file system. Unlike for directories,
+there are parameters than can be modified on volumes, and thus there is a separate
+API NtSetVolumeInfor mationFile.
+NtNotifyChangeDirector yFile is an example of an interesting NT paradigm.
+Threads can do I/O to determine whether any changes occur to objects (mainly
+file-system directories, as in this case, or registry keys). Because the I/O is 
+asynchronous the thread returns and continues, and is only notified later when 
+something is modified. The pending request is queued in the file system as an 
+outstanding I/O operation using an I/O Request Packet. Notifications are problematic if you
+want to remove a file-system volume from the system, because the I/O operations
+are pending. So Windows supports facilities for canceling pending I/O operations,
+including support in the file system for forcibly dismounting a volume with 
+pending I/O.
+NtQuer yInfor mationFile is the file-specific version of the system call for 
+directories. It has a companion system call, NtSetInfor mationFile. These interfaces
+access and modify all sorts of information about file names, file features like
+encryption and compression and sparseness, and other file attributes and details,
+including looking up the internal file id or assigning a unique binary name (object
+id) to a file.
+These system calls are essentially a form of ioctl specific to files. The set 
+operation can be used to rename or delete a file. But note that they take handles, not file

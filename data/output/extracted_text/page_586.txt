@@ -1,0 +1,42 @@
+SEC. 8.1
+MULTIPROCESSORS
+557
+only a few instructions: to measure the number of clock cycles to jump to the next
+code page. In other words, it obtains the value of the CPU cycle counter, jumps to
+the virtual address of the next code page, gets the CPU cycle counter again, and
+calculates the difference. What good does this do? Well, if it took many CPU
+cycles to jump to the next page, it probably means that there was a TLB miss. That
+miss was presumably caused by the execution of program code in the victim 
+process. Specifically, every slow jump corresponds to a page accessed by the victim.
+By observing the sequence of slow pages, the attacker can reconstruct, at least
+approximately, the sequence of accesses in the victim and from that derive the key.
+In practice, side channel attacks can get much more complicated and generally
+have to deal with less ideal circumstances, for example, due to spurious memory
+accesses, for instance, by the kernel. However, there are many ways to leak data on
+a shared core, and many shared resources besides the TLB to do it. Especially after
+the disclosure of the Meltdown and Spectre vulnerabilities in modern processors in
+2018 (Xiong and Szefer, 2021), people got very nervous about running mutually
+non-trusting programs on the same core.
+What does any of this have to do with scheduling, you ask? Since the side
+channels are particularly problematic for untrusted code that runs on the same core,
+much work has gone into making sure that processes or threads from different
+security domains do not run simultaneously on the same core. For instance, the
+core scheduler on Windows Hyper-V hypervisor guarantees that it will never
+assign threads from more than one virtual machine to the same physical core. If
+there is no second from the same virtual machine, it will simply leave the second
+hyper-thread unused. In fact, it even allows each virtual machine to indicate which
+threads can run together.
+The core scheduler makes it harder for attackers to use specific side channels,
+but it does not remove all side channels. For instance, in the above example any
+attack that occurs inside a single virtual machine is still possible. Even so, SMT is
+problematic from a security perspective and some operating systems, such as
+OpenBSD, have now disabled it by default—allegedly as a result of the TLB
+research by one of the authors of this book. (Sorry!)
+8.2 MULTICOMPUTERS
+Multiprocessors are popular and attractive because they offer a simple 
+communication model: all CPUs share a common memory. Processes can write messages
+to memory that can then be read by other processes. Synchronization can be done
+using mutexes, semaphores, monitors, and other well-established techniques. The
+only fly in the ointment is that large multiprocessors are difficult to build and thus
+expensive. And very large ones are impossible to build at any price. So something
+else is needed if we are to scale up to large numbers of CPUs.

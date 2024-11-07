@@ -1,0 +1,44 @@
+1110
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+LIONS, J.: Lions’ Commentary on Unix 6th Edition, with Source Code, San Jose, CA: 
+Peerto-Peer Communications, 1996.
+LIPP, M., SCHWARZ, M., GRUSS, D., PRESCHER, T., HAAS, W., HORN, J., MANGARD, S.,
+and KOCHER, P.: ‘‘Meltdown, Reading Kernel Memory from User Space,’’ Commun.
+ACM, Vol. 63, pp. 46–56, June 2020.
+LO, V.M.: ‘‘Heuristic Algorithms for Task Assignment in Distributed Systems,’’ Proc.
+Fourth Int’l Conf. on Distributed Computing Syst., IEEE, pp. 30–39, 1984.
+LOUGHLIN, K., NEAL, I., MA, J., TSAI, E., WEISSE, O., NARAYANASAMY, S. and
+KASIKCI, B.,: ‘‘DOLMA: Securing Speculation with the Principle of Transient 
+NonObservability,’’ Proc. 28th USENIX Security Symp. , USENIX, 2019.
+LOVE, R.: Linux System Programming: Talking Directly to the Kernel and C Library,
+Sebastopol, CA: O’Reilly & Associates, 2013.
+LU, L., ARPACI-DUSSEAU, A.C., and ARPACI-DUSSEAU, R.H.: ‘‘Fault Isolation and Quick
+Recovery in Isolation File Systems,’’ Proc. Fifth USENIX Workshop on Hot Topics in
+Storage and File Syst., USENIX, 2013.
+MCKUSICK, M.K.: ‘‘Disks from the Perspective of a File System,’’ Commun. ACM, Vol.
+55, pp. 53–55, Nov. 2012.
+MCKUSICK, M.K., BOSTIC, K., KARELS, M.J., QUARTERMAN, J.S.: The Design and
+Implementation of the 4.4BSD Operating System, Boston: Addison-Wesley, 1996.
+MCKUSICK, M.K., JOY, W.N., LEFFLER, S.J., and FABRY, R.S.:R ‘‘ Fast File System for
+UNIX’’ ACM Trans. Computer Syst., Vol. 2, pp 181–97, Aug. 1984.
+MCKUSICK, M.K., NEVILLE-NEIL, G.V., and WATSON, R.N.M.: The Design and 
+Implementation of the FreeBSD Operating System, Boston: Addison-Wesley, 2014.
+MA, A., DRAGGA, C., ARPACI-DUSSEAU, A.C., and ARPACI-DUSSEAU, R.H.: ‘‘ffsck: The
+Fast File System Checker,’’ Proc. 11th USENIX Conf. on File and Storage Tech.,
+USENIX, 2013.
+MANCO, F., LUPU C., SCHMIDT, F., MENDES, J., KUENZER, S., SATI, S., YASUKATA K.,
+RAICIU, C., and HUICI F.: ‘‘My VM is Lighter (and Safer) than your Container,’’ Proc.
+26th Symp. on Operating Syst. Prin., ACM, pp. 218–233, 2017.
+MANEAS, S., MAHDAVIANI, K., EMAMI, T., and SCHROEDER, B.: ‘‘ A Study of SSD 
+Reliability in Large Scale Enterprise Storage Deployments,’’ Proc. 18th USENIX Conf. on
+File and Storage Tech., USENIX, 2020.
+MARINO, D., HAMMER, C., DOLBY, J., VAZIRI, M., TIP, F., and VITEK, J.: ‘‘Detecting
+Deadlock in Programs with Data-Centric Synchronization,’’ Proc. Int’l Conf. on 
+Software Eng., IEEE, pp. 322–331, 2013.
+MARKETTOS, A. T., ROTHWELL, C., GUTSTEIN, B. F., PEARCE, A., NEUMANN, P.G.,
+MOORE, S. W., and WATSON, R. N. M.: ‘‘Thunderclap: Exploring Vulnerabilities in
+Operating System IOMMU Protection via DMA from Untrustworthy Peripherals,’’
+Proc. Network and Distributed Syst. Security Symp., Internet Society, 2019.
+MAXWELL, S.: Linux Core Kernel Commentary, Scottsdale, AZ: Coriolis Group Books,
+2001.

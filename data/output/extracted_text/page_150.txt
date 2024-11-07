@@ -1,0 +1,38 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+121
+writing the shared data at the same time. Put in other words, what we need is
+mutual exclusion, that is, some way of making sure that if one process is using a
+shared variable or file, the other processes will be excluded from doing the same
+thing. The difficulty above occurred because process B started using one of the
+shared variables before process A was finished with it. The choice of appropriate
+operations for achieving mutual exclusion is a major design issue in any operating
+system, and a subject that we will examine in great detail in the following sections.
+The problem of avoiding race conditions can also be formulated in an abstract
+way. Part of the time, a process is busy doing internal computations and other
+things that do not lead to race conditions. However, sometimes a process has to
+access shared memory or files, or do other critical things that can lead to races.
+That part of the program where the shared memory is accessed is called the critical
+region or critical section. If we could arrange matters such that no two processes
+were ever in their critical regions at the same time, we could avoid races.
+Although this requirement avoids race conditions, it is not sufficient for having
+parallel processes cooperate correctly and efficiently using shared data. We need
+four conditions to hold to have a good solution:
+1. No two processes may be simultaneously inside their critical regions.
+2. No assumptions may be made about speeds or the number of CPUs.
+3. No process running outside its critical region may block any process.
+4. No process should have to wait forever to enter its critical region.
+In an abstract sense, the behavior that we want is shown in Fig. 2-22. Here
+process A enters its critical region at time T1. A  little later, at time T2 process B
+attempts to enter its critical region but fails because another process is already in
+its critical region and we allow only one at a time. Consequently, B is temporarily
+suspended until time T3 when A leaves its critical region, allowing B to enter
+immediately. Eventually B leaves (at T4) and we are back to the original situation
+with no processes in their critical regions.
+2.4.3 Mutual Exclusion with Busy Waiting
+In this section, we will examine various proposals for achieving mutual 
+exclusion, so that while one process is busy updating shared memory in its critical
+region, no other process will enter its critical region and cause trouble.
+Disabling Interrupts
+On a single-processor system, the simplest solution is to have each process 
+disable all interrupts just after entering its critical region and re-enable them just
+before leaving it. With interrupts disabled, no clock interrupts can occur. The CPU

@@ -1,0 +1,43 @@
+CHAP. 2  
+PROBLEMS
+175
+24. Does Peterson’s solution to the mutual-exclusion problem shown in Fig. 2-24 work
+when process scheduling is preemptive? How about when it is nonpreemptive?
+25. Can the priority inversion problem discussed in Sec. 2.3.4 happen with user-level
+threads? Why or why not?
+26. In Sec. 2.3.4, a situation with a high-priority process, H, and a low-priority process, L,
+was described, which led to H looping forever. Does the same problem occur if 
+roundrobin scheduling is used instead of priority scheduling? Discuss.
+27. In a system with threads, is there one stack per thread or one stack per process when
+user-level threads are used? What about when kernel-level threads are used? Explain.
+28. When a computer is being developed, it is usually first simulated by a program that
+runs one instruction at a time. Even multiprocessors are simulated strictly sequentially
+like this. Is it possible for a race condition to occur when there are no simultaneous
+ev ents? Explain.
+29. The producer-consumer problem can be extended to a system with multiple producers
+and consumers that write (or read) to (from) one shared buffer. Assume that each 
+producer and consumer runs in its own thread. Will the solution presented in Fig. 2-28,
+using semaphores, work for this system?
+30. Consider the following solution to the mutual-exclusion problem involving two 
+processes P0 and P1. Assume that the variable turn is initialized to 0. Process P0’s code is
+presented below.
+/* Other code */
+while (turn != 0) { } /* Do nothing and wait. */
+Cr itical Section /* . . . */
+tur n = 0;
+/* Other code */
+For process P1, replace 0 by 1 in above code. Determine if the solution meets all the
+required conditions for a correct mutual-exclusion solution.
+31. How could an operating system that can disable interrupts implement semaphores?
+32. Show how counting semaphores (i.e., semaphores that can hold an arbitrary value) can
+be implemented using only binary semaphores and ordinary machine instructions.
+33. If a system has only two processes, does it make sense to use a barrier to synchronize
+them? Why or why not?
+34. Can two threads in the same process synchronize using a kernel semaphore if the
+threads are implemented by the kernel? What if they are implemented in user space?
+Assume that no threads in any other processes have access to the semaphore. Discuss
+your answers.
+35. Synchronization within monitors uses condition variables and two special operations,
+wait and signal. A more general form of synchronization would be to have a single
+primitive, waituntil, that had an arbitrary Boolean predicate as parameter. Thus, one
+could say, for example,

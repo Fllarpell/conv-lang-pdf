@@ -1,0 +1,53 @@
+SEC. 2.4 SYNCHRONIZATION AND INTERPROCESS COMMUNICATION
+129
+#define N 100
+/* number of slots in the buffer */
+int count = 0;
+/* number of items in the buffer */
+void producer(void)
+{
+int item;
+while (TRUE) {
+/* repeat forever */
+item = produce item( );
+/* generate next item */
+if (count == N) sleep( ); 
+/* if buffer is full, go to sleep */
+inser t item(item); 
+/* put item in buffer */
+count = count + 1;
+/* increment count of items in buffer */
+if (count == 1) wakeup(consumer); 
+/* was buffer empty? */
+}
+}
+void consumer(void)
+{
+int item;
+while (TRUE) {
+/* repeat forever */
+if (count == 0) sleep( ); 
+/* if buffer is empty, got to sleep */
+item = remove item( );
+/* take item out of buffer */
+count = count < 1; 
+/* decrement count of items in buffer */
+if (count == N < 1) wakeup(producer); 
+/* was buffer full? */
+consume item(item); 
+/* pr int item */
+}
+}
+Figure 2-27. The producer-consumer problem with a fatal race condition.
+sent to a process that is still awake, this bit is set. Later, when the process tries to
+go to sleep, if the wakeup waiting bit is on, it will be turned off, but the process
+will stay awake. The wakeup waiting bit is a piggy bank for storing wakeup 
+signals. The consumer clears the wakeup waiting bit in every iteration of the loop.
+While the wakeup waiting bit saves the day in this simple example, it is easy to
+construct examples with three or more processes in which one wakeup waiting bit
+is insufficient. We could make another patch and add a second wakeup waiting bit,
+or maybe 32 or 64 of them, but in principle the problem is still there.
+2.4.5 Semaphores
+This was the situation in 1965, when E. W. Dijkstra (1965) suggested using an
+integer variable to count the number of wakeups saved for future use. In his initial
+proposal, a new variable type, which he called a semaphore, was introduced. A

@@ -1,0 +1,41 @@
+292
+FILE SYSTEMS
+CHAP. 4
+then marked as free, so that the log can use it for new data. In this manner, the
+cleaner moves along the log, removing old segments from the back and putting any
+live data into memory for rewriting in the next segment. Consequently, the disk is a
+big circular buffer, with the writer thread adding new segments to the front and the
+cleaner thread removing old ones from the back.
+The bookkeeping here is nontrivial, since when a file block is written back to a
+new segment, the i-node of the file (somewhere in the log) must be located,
+updated, and put into memory to be written out in the next segment. The i-node
+map must then be updated to point to the new copy. Nev ertheless, it is possible to
+do the administration, and the performance results show that all this complexity is
+worthwhile. Measurements given in the papers cited above show that LFS 
+outperforms UNIX by an order of magnitude on small writes, while having a 
+performance that is as good as or better than UNIX for reads and large writes.
+4.3.6 Journaling File Systems
+Log-structured file systems are an interesting idea in general and one of the
+ideas inherent in them, robustness in the face of failure, can also be applied to more
+conventional file systems. The basic idea here is to keep a log of what the file 
+system is going to do before it does it, so that if the system crashes before it can do its
+planned work, upon rebooting the system can look in the log to see what was going
+on at the time of the crash and finish the job. Such file systems, called journaling
+file systems, are very popular. Microsoft’s NTFS file system and the Linux ext4
+and ReiserFS file systems all use journaling. MacOS offers journaling file systems
+as an option. Journaling is the default and it is widely used. Below we will give a
+brief introduction to this topic.
+To see the nature of the problem, consider a simple garden-variety operation
+that happens all the time: removing a file. This operation (in UNIX) requires three
+steps:
+1. Remove the file from its directory.
+2. Release the i-node to the pool of free i-nodes.
+3. Return all the disk blocks to the pool of free disk blocks.
+In Windows, analogous steps are required. In the absence of system crashes, the
+order in which these steps are taken does not matter; in the presence of crashes, it
+does. Suppose that the first step is completed and then the system crashes. The 
+inode and file blocks will not be accessible from any file, but will also not be 
+available for reassignment; they are just off in limbo somewhere, decreasing the 
+available resources. If the crash occurs after the second step, only the blocks are lost.
+If the order of operations is changed and the i-node is released first, then after
+rebooting, the i-node may be reassigned, but the old directory entry will continue

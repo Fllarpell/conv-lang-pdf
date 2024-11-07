@@ -1,0 +1,45 @@
+188
+MEMORY MANAGEMENT 
+CHAP. 3
+If it is expected that most processes will grow as they run, it is probably a good
+idea to allocate a little extra memory whenever a process is swapped in or moved,
+to reduce the overhead associated with moving or swapping processes that no 
+longer fit in their allocated memory. Howev er, when swapping processes to nonvolatile
+storage, only the memory actually in use should be swapped; it is wasteful to swap
+the extra memory as well. In Fig. 3-5(a), we see a memory configuration in which
+space for growth has been allocated to two processes.
+(a)
+(b)
+Operating!
+system
+Room for growth
+Room for growth
+B-Stack
+A-Stack
+B-Data
+A-Data
+B-Program
+A-Program
+Operating!
+system
+Room for growth
+B
+A
+Actually in use
+Room for growth
+Actually in use
+Figure 3-5. (a) Allocating space for a growing data segment. (b) Allocating
+space for a growing stack and a growing data segment.
+If processes can have two growing segments—for example, the data segment
+being used as a heap for variables that are dynamically allocated and released and a
+stack segment for the normal local variables and return addresses—an alternative
+arrangement suggests itself, namely that of Fig. 3-5(b). In this figure, we see that
+each process illustrated has a stack at the top of its allocated memory that is 
+growing downward, and a data segment just beyond the program text that is growing
+upward. The memory between them can be used for either segment. If it runs out,
+the process will either have to be moved to a hole with sufficient space, swapped
+out of memory until a large enough hole can be created, or killed.
+3.2.3 Managing Free Memory
+When memory is assigned dynamically, the operating system must manage it.
+In general terms, there are two ways to keep track of memory usage: bitmaps and
+free lists. In this section and the next one, we will look at these two methods. In

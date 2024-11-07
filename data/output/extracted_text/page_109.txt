@@ -1,0 +1,44 @@
+80
+INTRODUCTION 
+CHAP. 1
+key abstractions, the most important of which are processes and threads, address
+spaces, and files. Accordingly the next three chapters are devoted to these topics.
+Chapter 2 is about processes and threads. It discusses their properties and how
+they communicate with one another. It also gives a number of detailed examples
+of how interprocess communication works and how to avoid some of the pitfalls.
+In Chap. 3 we study address spaces and their adjunct, memory management.
+The important topic of virtual memory will be examined, together with paging.
+Then, in Chap. 4, we come to the topic of file systems. To a considerable
+extent, what the user sees is the file system. We will look at both the file-system
+interface and the file-system implementation.
+Input/Output is covered in Chap. 5. We will cover the concept of device
+(in)dependence using examples such as storage devices, keyboards, and displays.
+Chapter 6 is about deadlocks, including ways to prevent or avoid them.
+At this point, we will have completed our study of the basic principles of 
+single-CPU operating systems. However, there is more to say, especially about
+advanced topics. In Chap. 7, we examine virtualization. We discuss both the 
+principles, and some of the existing virtualization solutions in detail.
+Another
+advanced topic is multiprocessor systems, including multicores, parallel 
+computers, and distributed systems. These subjects are covered in Chap. 8. Another
+important subject is operating system security, which we cover in Chap 9.
+Next we have some case studies of real operating systems. These are UNIX,
+Linux, and Android (Chap. 10), and Windows 11 (Chap. 11). The text concludes
+with some wisdom and thoughts about operating system design in Chap. 12.
+1.11 METRIC UNITS
+To avoid any confusion, it is worth stating explicitly that in this book, as in
+computer science in general, metric units are used instead of traditional English
+units (the furlong-stone-fortnight system). The principal metric prefixes are listed
+in Fig. 1-31. The prefixes are typically abbreviated by their first letters, with the
+units greater than 1 capitalized. Thus a 1-TB database occupies 1012 bytes of 
+storage and a 100-psec (or 100-ps) clock ticks every 10<10 seconds. Since milli and
+micro both begin with the letter ‘‘m,’’ a choice had to be made. Normally, ‘‘m’’ is
+for milli and ‘‘µ’’ (the Greek letter mu) is for micro.
+It is also worth pointing out that, in common industry practice, the units for
+measuring memory sizes have slightly different meanings. There kilo means 210
+(1024) rather than 103 (1000) because memories are always a power of two. Thus a
+1-KB memory contains 1024 bytes, not 1000 bytes. Similarly, a 1-MB memory
+contains 220 (1,048,576) bytes and a 1-GB memory contains 230 (1,073,741,824)
+bytes. However, a 1-Kbps communication line transmits 1000 bits per second and a
+1-Gbps LAN runs at 1,000,000,000 bits/sec because these speeds are not powers of
+two. Unfortunately, many people tend to mix up these two systems, especially for

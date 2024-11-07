@@ -1,0 +1,122 @@
+448
+DEADLOCKS 
+CHAP. 6
+(j)
+       A
+Request R
+Request S
+Release R
+Release S
+      B
+Request S
+Request T
+Release S
+Release T
+      C
+Request T
+Request R
+Release T
+Release R
+1. A requests R
+2. B requests S
+3. C requests T
+4. A requests S
+5. B requests T
+6. C requests R
+    deadlock
+1. A requests R
+2. C requests T
+3. A requests S
+4. C requests R
+5. A releases R
+6. A releases S
+    no deadlock
+A
+R
+B
+S
+C
+T
+(i)
+A
+R
+B
+S
+C
+T
+(h)
+A
+R
+B
+S
+C
+T
+(g)
+A
+R
+B
+S
+C
+T
+(f)
+A
+R
+B
+S
+C
+T
+(e)
+(d)
+(c)
+(b)
+(a)
+A
+R
+B
+S
+C
+T
+(q)
+A
+R
+B
+S
+C
+T
+(p)
+A
+R
+B
+S
+C
+T
+(o)
+A
+R
+B
+S
+C
+T
+(n)
+A
+R
+B
+S
+C
+T
+(m)
+A
+R
+B
+S
+C
+T
+(l)
+(k)
+A
+R
+B
+S
+C
+T
+Figure 6-7. An example of how deadlock occurs and how it can be avoided.

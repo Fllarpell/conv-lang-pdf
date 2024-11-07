@@ -1,0 +1,43 @@
+694
+SECURITY 
+CHAP. 9
+cannot be used by the foreign program itself, which may require rewriting it to
+avoid this register.
+The code works as follows: First the target address under inspection is copied
+to a scratch register, S1. Then this register is shifted right precisely the correct
+number of bits to isolate the common prefix in S1. Next the isolated prefix is 
+compared to the correct prefix initially loaded into S2. If they do not match, a trap
+occurs and the foreign program is killed. This code sequence requires four 
+instructions and two scratch registers.
+Patching the binary program during execution requires some work, but it is
+doable. It would be simpler if the foreign program were presented in source form
+and then compiled locally using a trusted compiler that automatically checked the
+static addresses and inserted code to verify the dynamic ones during execution.
+Either way, there is some runtime overhead associated with the dynamic checks.
+Wahbe et al. (1993) have measured this as about 4%, which is perhaps not too bad.
+A second problem that must be solved is what happens when a foreign 
+program tries to make a system call. The solution here is straightforward. The 
+system-call instruction is replaced by a call to a special module called a reference
+monitor on the same pass that the dynamic address checks are inserted (or, if the
+source code is available, by linking with a special library that calls the reference
+monitor instead of making system calls). Either way, the reference monitor 
+examines each attempted call and decides if it is safe to perform. If the call is deemed
+acceptable, such as writing a temporary file in a designated scratch directory, the
+call is allowed to proceed. If the call is known to be dangerous or the reference
+monitor cannot tell, the foreign program is killed. If the reference monitor can tell
+which foreign program called it, a single reference monitor somewhere in memory
+can handle the requests from all foreign programs. The reference monitor normally
+learns about the permissions from a configuration file.
+9.9 RESEARCH ON SECURITY
+Few topics see more activity than security in operating systems. Research is
+taking place in all areas: cryptography, attacks, defenses, compilers, hardware, 
+formal methods, etc. A more-or-less continuous stream of high-profile security 
+incidents ensures that research interest in security, both in academia and in industry, is
+not likely to wav er in the next few years either.
+Even venerable concepts such as passwords are still active research topics, for
+instance when modeling the strength of a password (Pasquini et al., 2021) or 
+protecting password vaults as used by password managers using a set of decoy vaults
+(Cheng et al., 2021). Also other authentication factors, such as security keys, are
+targeted by security researchers to probe for weaknesses (Roche et al., 2021).
+Bugs in the operating system itself are clearly a major concern and researchers
+are developing testing frameworks for various operating systems to find and

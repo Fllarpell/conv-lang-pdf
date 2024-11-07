@@ -1,0 +1,44 @@
+SEC. 11.11
+SECURITY IN WINDOWS
+1027
+reading this case study are now. Many books are available on the kinds of small
+coding errors that are exploitable in pointer-based languages and how to avoid
+them (e.g., Howard and LeBlank, 2009).
+Compiler-based techniques can also make C/C++ code safer. Windows 11
+build system leverages a mitigation called InitAll which zero-initializes stack 
+variables and simple types to eliminate vulnerabilities due to uninitialized variables.
+There’s also significant investment in hardware advances to help eliminate
+memory safety vulnerabilities. One of them is the ARMv8.5 Memory Tagging
+Extensions. This associates a 4-bit memory tag, stored elsewhere in RAM with
+each 16-byte granule of memory. Pointers also have a tag field (in reserved address
+bits) which is set, for example, by memory allocators. When memory is accessed
+via the pointer, the CPU compares its tag with the tag stored in memory and raises
+an exception if a mismatch occurs. This approach eliminates bugs like buffer 
+overruns because the memory beyond the buffer will have a different tag. Windows
+does not currently support MTE. CHERI is a more comprehensive approach that
+uses 128-bit unforgeable capabilities to access memory, providing very 
+finegrained access control. It is a promising approach with durable safety guarantees,
+but it has a much higher implementation cost compared to extensions like MTE
+because it requires porting and recompiling all software.
+Breaking Exploitation Techniques
+The security landscape is constantly changing. The broad availability of the
+Internet made it much easier for attackers to exploit vulnerabilities at a much larger
+scale, causing significant damage. At the same time, digital transformation is 
+moving more and more enterprise processes into software, thus creating new targets for
+attackers. As software defenses improve, attackers continually adapt and invent
+new types of exploits. It’s a cat-and-mouse game, but exploits are certainly getting
+harder to build and deploy.
+In the early 2000s, life was much easier for attackers. It was possible to exploit
+stack buffer overruns to copy code to the stack, overwrite the function return
+address to start executing the code when the function returns. Over multiple
+releases, several OS mitigations almost completely wiped out this attack vector.
+The first one was /GS (Guarded Stack), released in Windows XP Service Pack 2.
+/GS is a randomized stack canary implementation where a function entry point
+saves a known value, called a security cookie on its stack and verifies, before
+returning, that the cookie has not been overwritten. Since the security cookie is
+generated randomly at process creation time and combined with the stack frame
+address, it is not easy to guess. So, /GS provides good protection against linear
+buffer overflows, but does not detect the overflows until the end of the function and
+does not detect out-of-band writes to the return address if canary is not corrupted.
+Another important security mitigation included in Windows XP Service Pack 2
+was DEP (Data Execution Prev ention). DEP leverages processor support for the

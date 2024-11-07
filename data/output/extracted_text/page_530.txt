@@ -1,0 +1,43 @@
+SEC. 7.8
+VIRTUAL MACHINES ON MULTICORE CPUS
+501
+7.8 VIRTUAL MACHINES ON MULTICORE CPUS
+The combination of virtual machines and multicore CPUs creates a whole new
+world in which the number of CPUs available can be set by the software. If there
+are, say, four cores, and each can run, for example, up to eight virtual machines, a
+single (desktop) CPU can be configured as a 32-node multicomputer if need be,
+but it can also have fewer CPUs, depending on the software. Never before has it
+been possible for an application designer to first choose how many CPUs he wants
+and then write the software accordingly. This is clearly a new phase in computing.
+Moreover, virtual machines can share memory. A typical example where this
+is useful is a single server hosting multiple instances of the same operating 
+systems. All that has to be done is map physical pages into the address spaces of 
+multiple virtual machines. Memory sharing is already available in deduplication 
+solutions. Deduplication does exactly what you think it does: avoids storing the same
+data twice. It is a fairly common technique in storage systems, but it is now 
+appearing in virtualization as well. In Disco, it was known as transparent page sharing
+(which requires modification to the guest), while VMware calls it content-based
+page sharing (which does not require any modification). In general, the technique
+revolves around scanning the memory of each of the virtual machines on a host and
+hashing the memory pages. Should some pages produce an identical hash, the 
+system has to first check to see if they really are the same, and if so, deduplicate them,
+creating one page with the actual content and two references to that page. Since the
+hypervisor controls the nested (or shadow) page tables, this mapping is 
+straightforward. Of course, when either of the guests modifies a shared page, the change
+should not be visible in the other virtual machine(s). The trick is to use copy on
+write so the modified page will be private to the writer.
+If virtual machines can share memory, a single computer becomes a virtual
+multiprocessor. Since all the cores in a multicore chip share the same RAM, a 
+single quad-core chip could easily be configured as a 32-node multiprocessor or a
+32-node multicomputer, as needed.
+The combination of multicore, virtual machines, hypervisor, and microkernels
+is going to radically change the way people think about computer systems. Current
+software cannot deal with the idea of the programmer determining how many
+CPUs are needed, whether they should be a multicomputer or a multiprocessor,
+and how minimal kernels of one kind or another fit into the picture. Future 
+software will have to deal with these issues. If you are a computer science or 
+engineering student or professional, you could be the one to sort out all this stuff. Go for it!
+7.9 CLOUDS
+Virtualization technology played a crucial role in the dizzying rise of cloud
+computing. There are many clouds. Some clouds are public and available to 
+anyone willing to pay for the use of resources, others are private to an organization.

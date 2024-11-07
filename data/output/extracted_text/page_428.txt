@@ -1,0 +1,65 @@
+SEC. 5.6
+USER INTERFACES: KEYBOARD, MOUSE, & MONITOR
+399
+some drivers just truncate lines to 80 characters by throwing away all characters
+beyond column 80.
+Another problem is tab handling. It is usually up to the driver to compute
+where the cursor is currently located, taking into account both output from 
+programs and output from echoing, and compute the proper number of spaces to be
+echoed.
+Now we come to the problem of device equivalence. Logically, at the end of a
+line of text, one wants a carriage return, to move the cursor back to column 1, and
+a line feed, to advance to the next line. Requiring users to type both at the end of
+each line would not sell well. It is up to the device driver to convert whatever
+comes in to the format used by the operating system. In UNIX, the Enter key is
+converted to a line feed for internal storage; in Windows it is converted to a 
+carriage return followed by a line feed.
+If the standard form is just to store a line feed (the UNIX convention), then
+carriage returns (created by the Enter key) should be turned into line feeds. If the
+internal format is to store both (the Windows convention), then the driver should
+generate a line feed when it gets a carriage return and a carriage return when it gets
+a line feed. No matter what the internal convention, the monitor may require both
+a line feed and a carriage return to be echoed in order to get the screen updated
+properly. On a multiuser system such as a mainframe, different users may have
+different types of terminals connected to it and it is up to the keyboard driver to get
+all the different carriage-return/line-feed combinations converted to the internal
+system standard and arrange for all echoing to be done right.
+When operating in canonical mode, some of the input characters have special
+meanings. Figure 5-31 shows all of the special characters required by the POSIX
+standard. The defaults are all control characters that should not conflict with text
+input or codes used by programs; all except the last two can be changed under 
+program control.
+Character 
+POSIX name 
+Comment
+CTRL-H 
+ERASE
+Backspace one character
+CTRL-U 
+KILL
+Erase entire line being typed
+CTRL-V 
+LNEXT
+Inter pret next character literally
+CTRL-S 
+STOP 
+Stop output
+CTRL-Q 
+START
+Star t output
+DEL 
+INTR
+Interr upt process (SIGINT)
+CTRL-\ 
+QUIT 
+Force core dump (SIGQUIT)
+CTRL-D 
+EOF
+End of file
+CTRL-M 
+CR
+Carr iage retur n (unchangeable)
+CTRL-J 
+NL
+Line feed (unchangeable)
+Figure 5-31. Characters that are handled specially in canonical mode.

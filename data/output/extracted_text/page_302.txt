@@ -1,0 +1,43 @@
+SEC. 4.2
+DIRECTORIES
+273
+common, in part because there was only one user. Interestingly enough, the world’s
+first supercomputer, the CDC 6600, also had only a single directory for all files,
+ev en though it was used by many users at once. This decision was no doubt made
+to keep the software design simple.
+An example of a system with one directory is given in Fig. 4-7. Here the
+directory contains four files. The advantages of this scheme are its simplicity and
+the ability to locate files quickly—there is only one place to look, after all. It is
+sometimes still used on simple embedded devices such as digital cameras and
+some portable music players.
+Root directory
+A
+B
+C
+D
+Figure 4-7. A single-level directory system containing four files.
+Biologist Ernst Haeckel once said ‘‘ontogeny recapitulates phylogeny.’’ It’s not
+entirely accurate, but there is a grain of truth in it. Something analogous happens in
+the computer world. Some concept was in vogue on, say, mainframe computers,
+then discarded as they got more powerful, but picked up later on minicomputers.
+Then it was discarded there and later picked up on personal computers. Then it was
+discarded there and later picked up further down the food chain.
+So we frequently see concepts (like having one directory for all files) no longer
+used on powerful computers, but now being used on simple embedded devices like
+digital cameras and portable music players. For this reason through this chapter
+(and, indeed, the entire book), we will often discuss ideas that were once popular
+on mainframes, minicomputers, or personal computers, but have since been 
+discarded. Not only is this a good historical lesson, but often these ideas make perfect
+sense on yet lower-end devices. The chip on your credit card really does not need
+the full-blown hierarchical directory system we are about to explore. The simple
+file system used on the CDC 6600 supercomputer in the 1960s will do just fine,
+thank you. So when you read about some old concept here, do not think ‘‘how 
+oldfashioned.’’ Think: Would that work on an RFID (Radio Frequency IDentification)
+chip? that costs 5 cents and is used on a public-transit payment card? It just might.
+4.2.2 Hierarchical Directory Systems
+The single level is adequate for very simple dedicated applications (and was
+ev en used on the first personal computers), but for modern users with thousands of
+files, it would be impossible to find anything if all files were in a single directory.
+Consequently, a way is needed to group related files together. A professor, for
+example, might have a collection of files that together form a book that she is 
+writing, a second collection containing student programs submitted for another course,

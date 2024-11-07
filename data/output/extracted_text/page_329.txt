@@ -1,0 +1,44 @@
+300
+FILE SYSTEMS
+CHAP. 4
+it basically does is provide a list of the addresses of the functions the VFS requires,
+either as one long call vector (table) or as several of them, one per VFS object, as
+the VFS demands. Thus once a file system has registered with the VFS, the VFS
+knows how to, say, read a block from it—it simply calls the fourth (or whatever)
+function in the vector supplied by the file system. Similarly, the VFS then also
+knows how to carry out every other function the concrete file system must supply:
+it just calls the function whose address was supplied when the file system 
+registered.
+After a file system has been mounted, it can be used. For example, if a file 
+system has been mounted on /usr and a process makes the call
+open("/usr/include/unistd.h", O RDONLY)
+while parsing the path, the VFS sees that a new file system has been mounted on
+/usr and locates its superblock by searching the list of superblocks of mounted file
+systems. Having done this, it can find the root directory of the mounted file system
+and look up the path include/unistd.h there. The VFS then creates a v-node and
+makes a call to the concrete file system to return all the information in the file’s 
+inode. This information is copied into the v-node (in RAM), along with other 
+information, most importantly the pointer to the table of functions to call for operations
+on v-nodes, such as read, wr ite, close, and so on.
+After the v-node has been created, the VFS makes an entry in the 
+file-descriptor table for the calling process and sets it to point to the new v-node. (For the
+purists, the file descriptor actually points to another data structure that contains the
+current file position and a pointer to the v-node, but this detail is not important for
+our purposes here.) Finally, the VFS returns the file descriptor to the caller so it
+can use it to read, write, and close the file.
+Later when the process does a read using the file descriptor, the VFS locates
+the v-node from the process and file descriptor tables and follows the pointer to the
+table of functions, all of which are addresses within the concrete file system on
+which the requested file resides. The function that handles read is now called and
+code within the concrete file system goes and gets the requested block. The VFS
+has no idea whether the data are coming from the local disk, a remote file system
+over the network, a USB stick, or something different. The data structures involved
+are shown in Fig. 4-22. Starting with the caller’s process number and the file 
+descriptor, successively the v-node, read function pointer, and access function within
+the concrete file system are located.
+In this manner, it becomes relatively straightforward to add new file systems.
+To make one, the designers first get a list of function calls the VFS expects and
+then write their file system to provide all of them. Alternatively, if the file system
+already exists and needs to be ported to the VFS, then they hav e to provide 
+wrapper functions that do what the VFS needs, usually by making one or more native
+calls to the underlying concrete file system.

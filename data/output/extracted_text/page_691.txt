@@ -1,0 +1,49 @@
+662
+SECURITY 
+CHAP. 9
+happen when the program accidentally decides to use the memory. Consider the
+following code that discriminates against (really) old people:
+01. int *A = (int *) malloc (128);
+/* allocate space for 128 integers */
+02. int year of bir th = read user input ( ); /* read an integer from standard input */
+03. if (year of bir th < 1900) {
+04. 
+printf ("Error, year of birth should be greater than 1900 \n");
+05. 
+free (A);
+06. } else {
+07. 
+...
+08. 
+/* do something interesting with array A */
+09. 
+...
+10. }
+11. ... /* many more statements, containing malloc and free */
+12. A[0] = year of bir th;
+The code is wrong. And not just because of the age discrimination, but also
+because in line 12 it may assign a value to an element of array A after it was freed
+already (in line 5). The pointer A will still point to the same address, but it is not
+supposed to be used anymore. In fact, the memory may already have been reused
+for another buffer by now (see line 11).
+The question is: what will happen? The store in line 12 will try to update 
+memory that is no longer in use for array A, and may well modify a different data 
+structure that now liv es in this memory area. In general, this memory corruption is not a
+good thing, but it gets even worse if the attacker is able to manipulate the program
+in such a way that it places a specific heap object in that memory where the first
+integer of that object contains, say, the user’s authorization level. This is not always
+easy to do, but there exist techniques (known as heap feng shui) to help attackers
+pull it off. Feng Shui is the ancient Chinese art of orienting building, tombs, and
+memory on the heap in an auspicious manner. If the digital feng shui master 
+succeeds, she can now set the authorization level to any value (well, up to 1900).
+9.5.4 Type Confusion Vulnerabilities
+A related vulnerability is caused by type confusion. It is mainly a problem for
+C++ programs, but sometimes also occurs in other languages such as C. As you
+may know, C++ is an object oriented language. Programs create objects of certain
+classes, where each class may inherit properties from one or more parent classes.
+As this book is quite a tome already, we will not include a C++ tutorial, but there
+are many hundreds available online. Instead, we explain the main issues from a
+high level. Consider the following code for a factory of piano-playing robots:
+1. const char *name1 = (char*) "Sam";
+2. const char *name2 = (char*) "Rick";
+3.

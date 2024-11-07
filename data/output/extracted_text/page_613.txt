@@ -1,0 +1,41 @@
+584
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+Figure 8-29 shows a portion of the Internet. At the top we have one of the
+backbones, normally operated by a backbone operator. It consists of a number of
+routers connected by high-bandwidth fiber optics, with connections to backbones
+operated by other (competing) telephone companies. Usually, no hosts connect
+directly to the backbone, other than maintenance and test machines run by the 
+telephone company.
+Backbone
+High-bandwidth fiber
+Router at ISP
+ADSL line!
+to home PC
+Home PC
+Medium-!
+bandwidth!
+fiber
+Router
+Host
+Ethernet
+Fiber or!
+copper wire
+Local router
+Regional network
+Figure 8-29. A portion of the Internet.
+Attached to the backbone routers by medium-speed fiber optic connections are
+regional networks and routers at ISPs. In turn, corporate Ethernets each have a
+router on them and these are connected to regional network routers. Routers at
+ISPs are connected to modem banks used by the ISP’s customers. In this way,
+ev ery host on the Internet has at least one path, and often many paths, to every
+other host.
+All traffic on the Internet is sent in the form of packets. Each packet carries its
+destination address inside it, and this address is used for routing. When a packet
+comes into a router, the router extracts the destination address and looks (part of) it
+up in a table to find which outgoing line to send the packet on and thus to which
+router. This procedure is repeated until the packet reaches the destination host.
+The routing tables are highly dynamic and are updated continuously as routers and
+links go down and come back up and as traffic conditions change. The routing
+algorithms have been intensively studied and modified over the years. No doubt
+they will continue to be studied and modified in the years ahead as well.

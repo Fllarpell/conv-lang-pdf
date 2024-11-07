@@ -1,0 +1,45 @@
+SEC. 9.8
+OPERATING SYSTEM HARDENING
+687
+strong walls between attackers and the system’s crown jewels, in accordance with
+the security principles by Saltzer and Schroeder.
+While it is intuitively clear why we must protect the operating system from
+untrusted user processes, we now argue that stopping the operating system from
+accessing code or data in user processes is also useful. Our first example concerns
+operating systems that map the kernel into the address space of every process so
+that a system call does not require an address space switch. Linux is such an 
+operating system (except on older CPUs vulnerable to Meltdown, where KPTI 
+separates the kernel and user address spaces). In that case, bugs such as null pointer
+dereferences (see Sec. 9.5.4) become much more serious because the kernel may
+execute user memory.
+It would be better if the kernel did not have a way to execute code in the user
+process, accidentally or not. It probably should not be able to read from user data
+either, because that would allow an attack to feed malicious data to the operating
+system. To prevent inadvertent execution of user code in the kernel, many CPUs
+today implement what Intel calls SMEP (Supervisor Mode Execution 
+Protection) and SMAP (Supervisor Mode Access Protection). When SMEP and
+SMAP are enabled, all attempts to execute (SMEP) or access (SMAP) memory in
+user processes from the operating system kernel result in a fault. But wait! What if
+the kernel really does need to access some memory in a user process, for instance
+to read or write a buffer to send over the network? In that case, the kernel can 
+temporarily disable the SMAP restrictions and do whatever needs to be done and then
+turn the restrictions back on again.
+Our second example of the need to restrict accesses by the operating system to
+user memory is that sometimes, on rare occasions, we do not trust the operating
+system. This may sound very strange. Did we not build our model of the trusted
+computing base around the operating system, with rings of protection and 
+supervisor mode and all that? Well yes, but there are still situations where even the kernel
+of the operating system is not part of the TCB for the application. Suppose the
+Coca Cola Company wants to run simulations in a cloud environment to develop a
+new recipe for its Coca Cola syrup. The actual Coca Cola Formula is probably the
+most famous trade secret in the world. In 1919, the only written copy of the 
+formula was placed in a vault in a bank. In 2011, it was moved to another vault in
+Atlanta, where for a small fee, visitors can go and stare at it (the vault, not the 
+formula). Any computation on the formula in the cloud would be extremely sensitive
+and the company might be a tad disappointed if a sysadmin of the cloud provider
+were to post a message on Twitter saying:
+’Sup peeps! I hacked our operating system to learn the Coca Cola Formula.
+Here it is. LOL.
+While it is unlikely that the Coca Cola Company would use a public cloud for
+the most jealously guarded trade secret in history, a lot of organizations do process
+sensitive data in the cloud or use secret algorithms that should not leak, not even if

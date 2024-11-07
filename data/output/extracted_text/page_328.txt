@@ -1,0 +1,43 @@
+SEC. 4.3
+FILE-SYSTEM IMPLEMENTATION
+299
+User!
+process
+FS 1
+FS 2
+FS 3
+Buffer cache
+Virtual file system
+File!
+system
+VFS interface
+POSIX
+Figure 4-21. Position of the virtual file system.
+The VFS also has a ‘‘lower’’ interface to the concrete file systems, which is
+labeled VFS interface in Fig. 4-21. This interface consists of several dozen 
+function calls that the VFS can make to each file system to get work done. Thus to 
+create a new file system that works with the VFS, the designers of the new file system
+must make sure that it supplies the function calls the VFS requires. An obvious
+example of such a function is one that reads a specific block from disk, puts it in
+the file system’s buffer cache, and returns a pointer to it. Thus the VFS has two 
+distinct interfaces: the upper one to the user processes and the lower one to the 
+concrete file systems.
+While most of the file systems under the VFS represent partitions on a local
+disk, this is not always the case. In fact, the original motivation for Sun to build
+the VFS was to support remote file systems using the NFS (Network File System)
+protocol. The VFS design is such that as long as the concrete file system supplies
+the functions the VFS requires, the VFS does not know or care where the data are
+stored or what the underlying file system is like. It requires is the proper interface
+to the underlying file systems.
+Internally, most VFS implementations are essentially object oriented, even if
+they are written in C rather than C++. There are several key object types that are
+normally supported. These include the superblock (which describes a file system),
+the v-node (which describes a file), and the directory (which describes a file 
+system directory). Each of these has associated operations (methods) that the concrete
+file systems must support. In addition, the VFS has some internal data structures
+for its own use, including the mount table and an array of file descriptors to keep
+track of all the open files in the user processes.
+To understand how the VFS works, let us run through an example 
+chronologically. When the system is booted, the root file system is registered with the VFS.
+In addition, when other file systems are mounted, either at boot time or during
+operation, they too must register with the VFS. When a file system registers, what

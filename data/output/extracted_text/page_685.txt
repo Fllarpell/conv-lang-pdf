@@ -1,0 +1,53 @@
+656
+SECURITY 
+CHAP. 9
+randomize all bits of the stack. To keep the stack working as a regular stack that
+grows downward, randomizing the least significant bits is not an option.
+A more important attack against ASLR is formed by memory disclosures. In
+this case, the attacker uses one vulnerability not to take control of the program
+directly, but rather to leak information about the memory layout, which she can
+then use to exploit a second vulnerability. As a trivial example, consider the 
+following code:
+01. void C( ) {
+02. 
+int index;
+03. 
+int pr ime [16] = { 1,2,3,5,7,11,13,17,19,23,29,31,37,41,43,47 };
+04. 
+printf ("Which prime number between 1 and 47 would you like to see?");
+05. 
+index = read user input ( );
+06. 
+printf ("Prime number %d is: %d\n", index, prime[index]);
+07. }
+The code contains a call to read user input, which is not part of the standard C
+library. We simply assume that it exists and returns an integer that the user types on
+the command line. We also assume that it does not contain any errors. Even so, for
+this code it is very easy to leak information. All we need to do is provide an index
+that is greater than 15, or less than 0. As the program does not check the index, it
+will happily return the value of any integer in memory.
+The address of one function is often sufficient for a successful attack. The 
+reason is that even though the position at which a library is loaded may be 
+randomized, the relative offset for each individual function from this position is 
+generally fixed. Phrased differently: if you know one function, you know them all. Even
+if this is not the case, with just one code address, it is often easy to find many 
+others, as shown by Snow et al. (2013). Later in this chapter, we will look at more
+fine-grained randomization also.
+Non-Control-Flow Diverting Attacks
+So far, we hav e considered attacks on the control flow of a program: modifying
+function pointers and return addresses. The goal was always to make the program
+execute new functionality, even if that functionality was recycled from code
+already present in the binary. Howev er, this is not the only possibility. The data
+itself can be an interesting target for the attacker also, as in the following snippet of
+pseudocode:
+01. void A( ) {
+02. 
+int author ized;
+03. 
+char name [128];
+04. 
+authorized = check credentials (...); /* the attacker is not authorized, so returns 0 */
+05. 
+printf ("What is your name?\n");
+06. 
+gets (name);

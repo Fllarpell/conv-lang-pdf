@@ -1,0 +1,43 @@
+178
+PROCESSES AND THREADS
+CHAP. 2
+54. Write a shell script that produces a file of sequential numbers by reading the last 
+number in the file, adding 1 to it, and then appending it to the file. Run one instance of the
+script in the background and one in the foreground, each accessing the same file. How
+long does it take before a race condition manifests itself? What is the critical region?
+Modify the script to prevent the race. (Hint: use
+ln file file.lock
+to lock the data file.)
+55. Assume that you have an operating system that provides semaphores. Implement a
+message system. Write the procedures for sending and receiving messages.
+56. Rewrite the program of Fig. 2-23 to handle more than two processes.
+57. Write a producer-consumer problem that uses threads and shares a common buffer.
+However, do not use semaphores or any other synchronization primitives to guard the
+shared data structures. Just let each thread access them when it wants to. Use sleep and
+wakeup to handle the full and empty conditions. See how long it takes for a fatal race
+condition to occur. For example, you might have the producer print a number once in a
+while. Do not print more than one number every minute because the I/O could affect
+the race conditions.
+58. A process can be put into a round-robin queue more than once to give it a higher 
+priority. Running multiple instances of a program each working on a different part of a data
+pool can have the same effect. First write a program that tests a list of numbers for 
+primality. Then devise a method to allow multiple instances of the program to run at once
+in such a way that no two instances of the program will work on the same number. Can
+you in fact get through the list faster by running multiple copies of the program? Note
+that your results will depend upon what else your computer is doing; on a personal
+computer running only instances of this program you would not expect an
+improvement, but on a system with other processes, you should be able to grab a 
+bigger share of the CPU this way.
+59. The objective of this exercise is to implement a multithreaded solution to find if a
+given number is a perfect number. N is a perfect number if the sum of all its factors,
+excluding itself, is N; examples are 6 and 28. The input is an integer, N. The output is
+true if the number is a perfect number and false otherwise. The main program will read
+the numbers N and P from the command line. The main process will spawn a set of P
+threads. The numbers from 1 to N will be partitioned among these threads so that two
+threads do not work on the name number. For each number in this set, the thread will
+determine if the number is a factor of N. If it is, it adds the number to a shared buffer
+that stores factors of N. The parent process waits till all the threads complete. Use the
+appropriate synchronization primitive here. The parent will then determine if the input
+number is perfect, that is, if N is a sum of all its factors and then report accordingly.
+(Note: You can make the computation faster by restricting the numbers searched from
+1 to the square root of N.)

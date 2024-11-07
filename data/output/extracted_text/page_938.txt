@@ -1,0 +1,46 @@
+SEC. 11.3
+SYSTEM STRUCTURE
+909
+implement the client/server style of computing. RPC also uses named pipes and
+TCP/IP as transports.
+LPC was substantially enhanced in Windows 8 (it is now called ALPC,
+(Advanced LPC) to provide support for new features in RPC, including RPC from
+kernel mode components, like drivers. LPC was a critical component in the 
+original design of NT because it is used by the subsystem layer to implement 
+communication between library stub routines that run in each process and the subsystem
+process which implements the facilities common to a particular operating system
+personality, such as Win32 or POSIX.
+Windows also provides a publish/subscribe service called WNF (Windows
+Notification Facility). WNF notifications are based on changes to an instance of
+WNF state data. A publisher declares an instance of state data (up to 4 KB) and
+tells the operating system how long to maintain it (e.g., until the next reboot or 
+permanently). A publisher atomically updates the state as appropriate. Subscribers
+can arrange to run code whenever an instance of state data is modified by a 
+publisher. Because the WNF state instances contain a fixed amount of preallocated
+data, there is no queuing of data as in message-based IPC—with all the attendant
+resource-management problems. Subscribers are guaranteed only that they can see
+the latest version of a state instance.
+This state-based approach gives WNF its principal advantage over other IPC
+mechanisms: publishers and subscribers are decoupled and can start and stop 
+independently of each other. Publishers need not execute at boot time just to initialize
+their state instances, as those can be persisted by the operating system across
+reboots. Subscribers generally need not be concerned about past values of state
+instances when they start running as all they should need to know about the state’s
+history is encapsulated in the current state. In scenarios where past state values
+cannot be reasonably encapsulated, the current state can provide metadata for 
+managing historical state, say, in a file or in a persisted section object used as a circular
+buffer. WNF is part of the native NT APIs and is not (yet) exposed via Win32
+interfaces. But it is extensively used internally by the system to implement Win32
+and WinRT APIs.
+In Windows NT 4.0, much of the code related to the Win32 graphical interface
+was moved into the kernel because the then-current hardware could not provide the
+required performance. This code previously resided in the csrss.exe subsystem
+process which implemented the Win32 interfaces. The kernel-based GUI code
+resides in a special kernel-driver, win32k.sys. The move to kernel-mode improved
+Win32 performance because the extra user-mode/kernel-mode transitions and the
+cost of switching address spaces to implement communication via LPC was 
+eliminated. However, it has not been without problems because the security 
+requirements on code running in the kernel are very strict, and the complicated API 
+interface exposed by win32k to user-mode has resulted in numerous security 
+vulnerabilities. A future Windows release will hopefully move win32k back into a 
+usermode process while maintaining acceptable performance for GUI code.

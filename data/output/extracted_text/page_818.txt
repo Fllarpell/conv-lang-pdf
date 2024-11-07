@@ -1,0 +1,39 @@
+SEC. 10.6
+THE LINUX FILE SYSTEM
+789
+addition, whenever a cached file is opened, a message is sent to the server to find
+out when the file was last modified. If the last modification occurred after the local
+copy was cached, the cache copy is discarded and the new copy fetched from the
+server. Finally, once every 30 sec a cache timer expires, and all the dirty (i.e., 
+modified) blocks in the cache are sent to the server. While not perfect, these patches
+make the system highly usable in most practical circumstances.
+NFS Version 4
+Version 4 of the Network File System was designed to simplify certain 
+operations from its predecessor. In contrast to NSFv3, which is described above, NFSv4
+is a stateful file system. This permits open operations to be invoked on remote
+files, since the remote NFS server will maintain all file-system-related structures,
+including the file pointer. Read operations then need not include absolute read
+ranges, but can be incrementally applied from the previous file-pointer position.
+This results in shorter messages, and also in the ability to bundle multiple NFSv3
+operations in one network transaction.
+The stateful nature of NFSv4 makes it easy to integrate the variety of NFSv3
+protocols described earlier in this section into one coherent protocol. There is no
+need to support separate protocols for mounting, caching, locking, or secure 
+operations. NFSv4 also works better with both Linux (and UNIX in general) and 
+Windows file-system semantics.
+10.7 SECURITY IN LINUX
+Linux, as a clone of MINIX and UNIX, has been a multiuser system almost
+from the beginning. This history means that security and control of information
+was built in very early on. In the following sections, we will look at some of the
+security aspects of Linux.
+10.7.1 Fundamental Concepts
+The user community for a Linux system consists of some number of registered
+users, each of whom has a unique UID (User ID). A UID is an integer between 0
+and 65,535. Files (but also processes and other resources) are marked with the
+UID of their owner. By default, the owner of a file is the person who created the
+file, although there is a way to change ownership.
+Users can be organized into groups, which are also numbered with 16-bit 
+integers called GIDs (Group IDs). Assigning users to groups is done manually (by
+the system administrator) and consists of making entries in a system database 
+telling which user is in which group. A user could be in one or more groups at the
+same time. For simplicity, we will not discuss this feature further.

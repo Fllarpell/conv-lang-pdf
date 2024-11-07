@@ -1,0 +1,46 @@
+606
+SECURITY 
+CHAP. 9
+the same computer, the trick was to make sure that neither could read or tamper
+with the other’s files, yet allow them to share those files they wanted shared. 
+Elaborate models and mechanisms were developed to make sure no user could get
+access rights to which he or she was not entitled. We will look at some of these
+models in Sec. 9.3.
+Sometimes the models and mechanisms involved classes of users rather than
+just individuals. For example, on a military computer, data had to be markable as
+top secret, secret, confidential, or public, and corporals had to be prevented from
+snooping in generals’ directories, no matter who the corporal was and who the 
+general was. All these themes were thoroughly investigated, reported on, and 
+implemented over a period of decades.
+An unspoken assumption was that once a model was chosen and an 
+implementation made, the software was basically correct and would enforce whatever
+the rules were. The models and software were usually pretty simple so the 
+assumption usually held. Thus, if theoretically Elinor was not permitted to look at a certain
+one of Carolyn’s files, in practice she really could not do it.
+With the rise of the personal computer, tablets, smartphones and the Internet,
+the situation changed. For instance, many devices have only one user, so the threat
+of one user snooping on another user’s files has mostly disappears. Of course, this
+is not true on shared servers (possibly in the cloud). Here, there is a lot of interest
+in keeping users strictly isolated. Also, snooping still happens—in the network, for
+example. If Elinor is on the same Wi-Fi networks as Carolyn, she can intercept all
+of her network data. Modulo the Wi-Fi, this is not a new problem. More than 2000
+years ago, Julius Caesar faced the same issue. Caesar needed to send messages to
+his legions and allies, but there was always a chance that the message would be 
+intercepted by his enemies. To make sure his enemies would not be able to read his
+commands, Caesar used encryption—replacing every letter in the message with the
+letter that was, say, three positions to the left of it in the alphabet. So a ‘‘D’’ 
+became an ‘‘A’’, an ‘‘E’’ became a ‘‘B’’, and so on. While today’s encryption 
+techniques are more sophisticated, the principle is the same: without knowledge of the
+secret key, the adversary should not be able to read the message.
+Unfortunately, this does not always work, because the network is not the only
+place where Elinor can snoop on Carolyn. If Elinor is able to hack into Carolyn’s
+computer, she can intercept all the outgoing messages before, and all incoming
+messages after they are encrypted. Breaking into someone’s computer is not
+always easy, but a lot easier than it should be (and typically a lot easier than 
+cracking someone’s 2048 bit encryption key). The problem is caused by bugs in the 
+software on Carolyn’s computer. Fortunately for Elinor, increasingly bloated operating
+systems and applications guarantee that there is no shortage of bugs. When a bug is
+a security bug, we call it a vulnerability. When Elinor discovers a vulnerability in
+Carolyn’s software, she has to feed that software with exactly the right bytes to
+trigger the bug. A bug-triggering input like this is usually called an exploit. Often,
+successful exploits allow attackers to take full control of the computer. Phrased

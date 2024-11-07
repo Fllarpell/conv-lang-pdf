@@ -1,0 +1,55 @@
+186
+MEMORY MANAGEMENT 
+CHAP. 3
+0
+4
+8
+12
+16
+20
+24
+28
+(c)
+ADD
+JMP 24
+MOV
+JMP 28
+CMP
+...
+0
+...
+0
+16384
+16388
+16392
+16396
+16400
+16404
+16408
+16412
+16380
+32764
+16384
+16384
+Base register
+Limit register
+Figure 3-3. Base and limit registers can be used to give each process a separate
+address space.
+memory. On a typical Windows, MacOS, or Linux system, something like 50–100
+processes or more may be started up as soon as the computer is booted. For 
+example, when a Windows application is installed, it often issues commands so that on
+subsequent system boots, a process will be started that does nothing except check
+for updates to the application. Such a process can easily occupy 5–10 MB of 
+memory. Other background processes check for incoming mail, incoming network 
+connections, and many other things. And all this is before the first user program is
+started. Serious user application programs nowadays, like Photoshop, can require
+almost a gigabyte just to boot and many gigabytes once they start processing data.
+Consequently, keeping all processes in memory all the time requires a huge
+amount of memory and cannot be done if there is insufficient memory.
+Tw o general approaches to dealing with memory overload have been 
+developed over the years. The simplest strategy, called swapping of processes, consists
+of bringing in each process in its entirety, running it for a while, then putting it
+back on nonvolatile storage (disk or SSD). Idle processes are mostly stored on 
+nonvolatile storage, so they do not take up any memory when they are not running
+(although some of them wake up periodically to do their work, then go to sleep
+again). The other strategy, called virtual memory, allows programs to run even

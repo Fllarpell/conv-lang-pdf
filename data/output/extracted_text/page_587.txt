@@ -1,0 +1,42 @@
+558
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+To get around these problems, much research has been done on 
+multicomputers, which are tightly coupled CPUs that do not share memory. Each one has its
+own memory, as shown in Fig. 8-1(b). These systems are also known by a variety
+of other names, including cluster computers and COWs (Clusters Of 
+Workstations). Cloud computing services are always built on multicomputers because they
+need to be large.
+Multicomputers are easy to build because the basic component is just a
+stripped-down PC, without a keyboard, mouse, or monitor, but with a 
+high-performance network interface card. Of course, the secret to getting high performance
+is to design the interconnection network and the interface card cleverly. This 
+problem is completely analogous to building the shared memory in a multiprocessor
+[e.g., see Fig. 8-1(b)]. However, the goal is to send messages on a microsecond
+time scale, rather than access memory on a nanosecond time scale, so it is simpler,
+cheaper, and easier to accomplish.
+In the following sections, we will first take a brief look at multicomputer 
+hardware, especially the interconnection hardware. Then we will move onto the 
+software, starting with low-level communication software, then high-level 
+communication software. We will also look at a way shared memory can be achieved on 
+systems that do not have it. Finally, we will examine scheduling and load balancing.
+8.2.1 Multicomputer Hardware
+The basic node of a multicomputer consists of a CPU, memory, a network
+interface, and sometimes a hard disk. The node may be packaged in a standard PC
+case, but the monitor, keyboard, and mouse are nearly always absent. Sometimes
+this configuration is called a headless workstation because there is no user with a
+head in front of it. A workstation with a human user should logically be called a
+‘‘headed workstation,’’ but for some reason it is not. In some cases, the PC 
+contains a two-way or four-way multiprocessor board, possibly each with a dual-,
+quad- or octa-core chip, instead of a single CPU, but for simplicity, we will assume
+that each node has one CPU. Often hundreds or even thousands of nodes are
+hooked together to form a multicomputer. Below we will say a little about how this
+hardware is organized.
+Interconnection Technology
+Each node has a network interface card with one or two cables (or fibers) 
+coming out of it. These cables connect either to other nodes or to switches. In a small
+system, there may be one switch to which all the nodes are connected in the star
+topology of Fig. 8-16(a). Modern switched Ethernets use this topology within an
+office or a small building.
+As an alternative to the single-switch design, the nodes may form a ring, with
+two wires coming out the network interface card, one into the node on the left and

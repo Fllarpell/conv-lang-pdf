@@ -1,0 +1,43 @@
+SEC. 11.1
+HISTORY OF WINDOWS THROUGH WINDOWS 11
+879
+Ultimately, Windows 10 was the most successful release of Windows ever with
+over 1.3 billion devices running it, as of fall 2021. Ironically, this success cannot be
+attributed to developer enthusiasm over UWP or the popularity of Windows 10
+Mobile because neither really happened. Windows 10 Mobile was discontinued in
+2017, and while UWP is alive and well, it is not nearly the most popular platform
+for developing Windows applications.
+Windows 10 provided a familiar user interface and numerous usability 
+improvements which worked well on desktop/laptop computers as well as tablets and
+‘‘convertible’’ devices. A public beta program called the Windows Insider 
+Program was started early in Windows 10 development cycle to regularly share 
+preview builds of the operating system with ‘‘Windows Insiders.’’ The program was
+very successful with several hundred thousand enthusiasts testing and evaluating
+weekly builds. This arrangement allowed Windows developers access to end-user
+feedback and telemetry which helped improve the product with every 6-month
+release.
+Windows 10 leveraged virtual machine technology to significantly improve
+security. Biometric and multi-factor authentication simplified the user logon
+experience and made it safer. Virtualization-based security helped protect 
+sensitive information from even kernel-mode attacks while providing an isolated 
+runtime environment for certain applications. Taking advantage of the latest hardware
+features from chip manufacturers (including support for the 64-bit ARM 
+architecture complete with transparent emulation of x86 applications), Windows 10
+improved performance and battery life with new devices while keeping its 
+minimum hardware requirements constant and allowed Windows 7 users to upgrade as
+official support for the OS ended.
+11.1.7 Windows 11
+Windows 11 is the most recent version of Windows, publicly made available
+on October 5, 2021. It brings numerous usability improvements such as a fresh,
+rejuvenated UI, more efficient window management and multitasking capabilities
+especially on bigger and multiple monitor configurations. Following the remote
+and hybrid work/learning trend, it provides deeper integration with the Teams 
+collaboration software as well as Microsoft 365 cloud productivity suite.
+While the user interface updates are the most talked-about features of any new
+OS, and most relevant to the typical user, the latest Windows has plenty of
+advances under the hood. In keeping up with hardware developments, Windows 11
+adds various performance, power, and scalability optimizations to take better
+advantage of increased number of processor cores, with support up to 2048 logical
+processors and more than 64 processors per socket. Perhaps more importantly,
+Windows 11 breaks new ground in application compatibility: emulation of x64
+applications is now supported on 64-bit ARM devices and it is even possible to run

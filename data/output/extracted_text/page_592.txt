@@ -1,0 +1,46 @@
+SEC. 8.2
+MULTICOMPUTERS
+563
+can send a packet only by issuing a system call that traps to the kernel. The kernel
+may have to copy the packets to its own memory both on output and on input, for
+example, to avoid page faults while transmitting over the network. Also, the 
+receiving kernel probably does not know where to put incoming packets until it has had a
+chance to examine them. These fiv e copy steps are illustrated in Fig. 8-18.
+If copies to and from RAM are the bottleneck, the extra copies to and from the
+kernel may double the end-to-end delay and cut the throughput in half. To avoid
+this performance hit, many multicomputers map the interface board directly into
+user space and allow the user process to put the packets on the board directly, 
+without the kernel being involved. While this approach definitely helps performance, it
+introduces two problems.
+First, what if several processes are running on the node and both need network
+access to send packets? Which one gets the interface board in its address space?
+Having a system call to map the board in and out of a virtual address space is
+expensive, but if only one process gets the board, how do the other ones send 
+packets? And what happens if the board is mapped into process A’s virtual address
+space and a packet arrives for process B, especially if A and B have different 
+owners, neither of whom wants to put in any effort to help the other?
+One solution is to map the interface board into all processes that need it, but
+then a mechanism is needed to avoid race conditions. For example, if A claims a
+buffer on the interface board, and then, due to a time slice, B runs and claims the
+same buffer, disaster results. Some kind of synchronization mechanism is needed,
+but these mechanisms, such as mutexes, work only when the processes are 
+assumed to be cooperating. In a shared environment with multiple users all in a hurry to
+get their work done, one user might just lock the mutex associated with the board
+and never release it. The conclusion here is that mapping the interface board into
+user space really works well only when there is just one user process running on
+each node unless special precautions are taken (e.g., different processes get 
+different portions of the interface RAM mapped into their address spaces).
+The second problem is that the kernel may well need access to the 
+interconnection network itself, for example, to access the file system on a remote node.
+Having the kernel share the interface board with any users is not a good idea. 
+Suppose that while the board was mapped into user space, a kernel packet arrived. Or
+suppose that the user process sent a packet to a remote machine pretending to be
+the kernel. The conclusion is that the simplest design is to have two network 
+interface boards, one mapped into user space for application traffic and one mapped
+into kernel space for use by the operating system. Many multicomputers do 
+precisely this.
+On the other hand, newer network interfaces are frequently multiqueue, which
+means that they hav e more than one buffer to support multiple users efficiently. For
+instance, network cards can easily have 16 send and 16 receive queues, making
+them virtualizable to many virtual ports. Better still, the card often supports core
+affinity. Specifically, it has its own hashing logic to help steer each packet to a

@@ -1,0 +1,44 @@
+SEC. 10.8
+ANDROID
+831
+An implicit intent is one that describes characteristics of the desired 
+component, but not the component itself; in Linux shell terms this is the equivalent to
+supplying a single command name to the shell, which it uses with its search path to
+find a concrete command to be run. This process of finding the component 
+matching an implicit intent is called intent resolution.
+Android’s general sharing facility, as we previously saw in Fig. 10-55’s 
+illustration of sharing a photo the user took from the camera through the email 
+application, is a good example of implicit intents. Here the camera application builds an
+intent describing the action to be done, and the system finds all activities that can
+potentially perform that action. A share is requested through the intent action
+android.intent.action.SEND, and we can see in Fig. 10-51 that the email 
+application’s compose activity declares that it can perform this action.
+There can be three outcomes to an intent resolution: (1) no match is found, (2)
+a single unique match is found, or (3) there are multiple activities that can handle
+the intent. An empty match will result in either an empty result or an exception,
+depending on the expectations of the caller at that point. If the match is unique,
+then the system can immediately proceed to launching the now explicit intent. If
+the match is not unique, we need to somehow resolve it in another way to a single
+result.
+If the intent resolves to multiple possible activities, we cannot just launch all of
+them; we need to pick a single one to be launched. This is accomplished through a
+trick in the package manager. If the package manager is asked to resolve an intent
+down to a single activity, but it finds there are multiple matches, it instead resolves
+the intent to a special activity built into the system called the ResolverActivity.
+This activity, when launched, simply takes the original intent, asks the package
+manager for a list of all matching activities, and displays these for the user to select
+a single desired action. When one is selected, it creates a new explicit intent from
+the original intent and the selected activity, calling the system to have that new
+activity started.
+Android has another similarity with the Linux shell: Android’s graphical shell,
+the launcher, runs in user space like any other application. An Android launcher
+performs calls on the package manager to find the available activities and launch
+them when selected by the user.
+10.8.10 Process Model
+The traditional process model in Linux is a fork to create a new process, 
+followed by an exec to initialize that process with the code to be run and then start its
+execution. The shell is responsible for driving this execution, forking and 
+executing processes as needed to run shell commands. When those commands exit, the
+process is removed by Linux.
+Android uses processes somewhat differently. As discussed in the previous
+section on applications, the activity manager is the part of Android responsible for

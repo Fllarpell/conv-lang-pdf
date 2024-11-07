@@ -1,0 +1,38 @@
+1094
+READING LIST AND BIBLIOGRAPHY
+CHAP. 13
+Burow et al., ‘‘Control-Flow Integrity: Precision, Security, and Performance,’’
+Since the introduction as a research result in 2005, CFI has gradually gained
+ground and most modern compiler frameworks now support in one way or another.
+This immediately points out an issue: there are many different forms of CFI. This
+paper surveys the different approaches.
+Jover, ‘‘Security Analysis of SMS as a Second Factor of Authentication’’
+We explained how multiple factors can be used to provide authentication.
+Often service providers opt for using SMS text messages as the second factor. This
+article shows that doing so often has many security problems.
+Bratus et al., ‘‘From Buffer Overflows to Weird Machines and Theory of Comput.’’
+Connecting the humble buffer overflow to Alan Turing. The authors show that
+hackers program vulnerable programs like weird machines with strange-looking
+instruction sets. In doing so, they come full circle to Turing’s seminal research on
+‘‘What is computable?’’
+Greenberg, Sandworm
+A fascinating account of a devastating cyberattack on NAT O, American utility
+companies, and electric grids in Europe, where the attack seemed to originate in
+Russia. The story has the feel of a spy movie from the cold war era.
+Hafner and Markoff, Cyberpunk
+Three compelling tales of young hackers breaking into computers around the
+world are told here by the New York Times computer reporter who broke the 
+Internet worm story (Markoff).
+Sasse, ‘‘Red-Eye Blink, Bendy Shuffle, and the Yuck Factor: A User Experience of
+Biometric Airport Systems’’
+The author discusses his experiences with the iris recognition system used at a
+number of large airports. Not all of them are positive.
+Xiong and Szefer, ‘‘Survey of Transient Execution Attacks and Their Mitigations’’
+The new vulnerabilities in hardware as exemplified by Spectre and Meltdown
+cause major grief for operating systems and users alike. In this survey, the authors
+provide an overview of the different attacks and mitigations related to this 
+fascinating (and still new) class of vulnerabilities.
+13.1.10 Case Study 1: UNIX, Linux, and Android
+Bovet and Cesati, Understanding the Linux Kernel
+The Linux community is very encouraging to newcomers who want to get their
+hands dirty in the bowels of the kernel and there tutorials and helpful blogs

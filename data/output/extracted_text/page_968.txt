@@ -1,0 +1,47 @@
+SEC. 11.4
+PROCESSES AND THREADS IN WINDOWS
+939
+Like semaphore handles, mutex handles can be duplicated and passed between
+processes so that threads in different processes can access the same mutex.
+Another synchronization mechanism is called Critical Sections, which 
+implement the concept of critical regions. These are similar to mutexes in Windows,
+except local to the address space of the creating thread. Because critical sections
+are not kernel-mode objects, they do not have explicit handles or security 
+descriptors and cannot be passed between processes. Locking and unlocking are done with
+EnterCr iticalSection and LeaveCr iticalSection, respectively. Because these API
+functions are performed initially in user space and make kernel calls only when
+blocking is needed, they are much faster than mutexes. Critical sections are 
+optimized to combine spin locks (on multiprocessors) with the use of kernel 
+synchronization only when necessary. In many applications, most critical sections are so
+rarely contended or have such short hold times that it is never necessary to allocate
+a kernel synchronization object. This results in a very significant saving in kernel
+memory.
+SRW locks (Slim Reader-Writer locks) are another type of process-local
+lock implemented in user-mode like critical sections, but they support both 
+exclusive and shared acquisition via the AcquireSRWLockExclusive and 
+AcquireSRWLockShared APIs and the corresponding release functions. When the lock is held
+shared, if an exclusive acquire arrives (and starts waiting), subsequent shared 
+acquire attempts block to avoid starving exclusive waiters. A big advantage of SRW
+locks is that they are the size of a pointer which allows them to be used for 
+granular synchronization of small data structures. Unlike critical sections, SRW locks do
+not support recursive acquisition which is generally not a good idea anyway.
+Sometimes applications need to check some state protected by a lock and wait
+until a condition is satisfied in a synchronized way. Examples are 
+producer-consumer or bounded buffer problems. Windows provides Condition variables for these
+situations. They allow the caller to atomically release a lock, either a critical 
+section or an SRW lock, and enter a sleeping state using SleepConditionVar iableCS
+and SleepConditionVar iableSRW APIs. A thread changing the state can wake any
+waiters via WakeConditionVar iable or WakeAllConditionVar iable.
+Tw o other useful user-mode synchronization primitives provided by Windows
+are WaitOnAddress and InitOnceExecuteOnce. WaitOnAddress is called to wait
+for the value at the specified address to be modified. The application must call
+either WakeByAddressSingle (or WakeByAddressAll) after modifying the location
+to wake either the first (or all) of the threads that called WaitOnAddress on that
+location. The advantage of this API over using events is that it is not necessary to
+allocate an explicit event for synchronization. Instead, the system hashes the
+address of the location to find a list of all the waiters for changes to a given
+address. WaitOnAddress functions similar to the sleep/wakeup mechanism found
+in the UNIX kernel. Critical sections mentioned earlier actually use the 
+WaitOnAddress primitive for its implementation.
+InitOnceExecuteOnce can be used to
+ensure that an initialization routine is run exactly one time in a program. Correct

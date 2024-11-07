@@ -1,0 +1,46 @@
+SEC. 5.9
+RESEARCH ON INPUT/OUTPUT
+429
+In some cases, the focus is on performance with the aim of improving security.
+For instance, researchers have tried to accelerate the processing of network 
+processing to build intrusion detection systems that handle the network speeds of 
+modern data center connections (Zhao et al., 2020). Since shuttling data back and forth
+between the network card and the CPU at 100+ Gbps is hard, they make use of
+Field Programmable Gate Arrays (FPGAs) to do most of the processing on the 
+network card itself. Other researchers similarly push much of the filtering (selecting
+specific packets) to the network card’s FPGA accelerator, so that only a few 
+relevant packets are processed by the CPU (Brunella et al., 2020).
+Pushing processing to processors on the network card is also the goal of the
+work by Pismenny et al. (2021). However, instead of doing all the processing of
+the lower layers of the network stack on the card, the authors propose a combined
+software/NIC architecture where some of the processing takes place on the CPU
+and the rest on the NIC. All processing that is done on the CPU no longer needs to
+be done by the card. Others, instead, aggressively optimize the software to ensure
+as much of the processing as possible can be done from the L1 and L2 caches to
+allow 100 Gbps processing without coprocessors on the network card (Farshin et
+al., 2021).
+Performance is also important in storage systems. With fast storage devices,
+the host-level I/O is increasingly a bottleneck for data-intensive computing. The
+need to improve I/O performance requires optimizations that involve the page
+cache maintained by the kernel as well as the access to the storage devices 
+(Papagiannis et al., 2021). As we have seen, memory mapped I/O is efficient if the file
+data is in memory, but if not, the data has to be brought in and some existing data
+evicted. Doing so is expensive, and not flexible (decided once and for all by the
+kernel’s policy.
+As in all chapters so far, security is an important concern here also. 
+Unfortunately, researchers have shown that I/O improvements in hardware may offer new
+opportunities for attackers. A good example is DMA which is good for efficiency,
+but may allow malicious devices (such as a display cable that has been tampered
+with) to access memory to which they should not have access (Markettos et al.,
+2019; Alex et al., 2021). Sometimes a combination of features may create 
+problems. For instance, a CPU feature that allows devices to access caches directly,
+known as Direct Cache Access, combined with Remote DMA (across the 
+network), allows attackers to launch traditional cache attacks from another machine
+(Kurth et al., 2020). At the same time, novel CPU features, such as trusted 
+execution environments (TEE), also help to provide stronger security guarantees in I/O
+by providing I/O libraries inside the TEE (Thalheim et al., 2021).
+Finally, power management is a major headache not just for PCs or battery
+powered devices, but also for large data centers. To help alleviate the pain, data
+centers use power capping—forcefully limiting the power that a server can use. For
+instance, if you have 4 MW of power available for your servers and each server can
+use up to 400 W, you can fit no more than 10,000 servers, even if each server never

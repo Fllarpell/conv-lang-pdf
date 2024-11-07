@@ -1,0 +1,41 @@
+832
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+managing running applications. It coordinates the launching of new application
+processes, determines what will run in them, and when they are no longer needed.
+Starting Processes
+In order to launch new processes, the activity manager must communicate with
+the zygote. When the activity manager first starts, it creates a dedicated socket
+with zygote, through which it sends a command when it needs to start a process.
+The command primarily describes the sandbox to be created: the UID that the new
+process should run (which will be discussed later on security) as and any other
+security restrictions that will apply to it. Zygote thus must run as root: when it
+forks, it does the appropriate setup for the sandbox it will run in, finally dropping
+root privileges and changing the process to the desired sandbox.
+Recall in our previous discussion about Android applications that the activity
+manager maintains dynamic information about the execution of activities (in
+Fig. 10-52), services (Fig. 10-57), broadcasts (to receivers as in Fig. 10-60), and
+content providers (Fig. 10-61). It uses this information to drive the creation and
+management of application processes. For example, when the application launcher
+calls in to the system with a new intent to start an activity as we saw in Fig. 10-52,
+it is the activity manager that is responsible for making that new application run.
+The flow for starting an activity in a new process is shown in Fig. 10-62. The
+details of each step in the illustration are as follows:
+1. Some existing process (such as the app launcher) calls in to the 
+activity manager with an intent describing the new activity it would like to
+have started.
+2. Activity manager asks the package manager to resolve the intent to an
+explicit component.
+3. Activity manager determines that the application’s process is not
+already running, and then asks zygote for a new process of the 
+appropriate UID.
+4. Zygote performs a fork, creating a new process that is a clone of itself,
+drops privileges and sets up its sandbox appropriately, and finishes
+initialization of ART in that process so that the Java runtime is fully
+executing. For example, it must start threads like the garbage 
+collector after it forks.
+5. The new process, now a clone of zygote with the Java environment
+fully up and running, calls back to the activity manager, asking
+‘‘What am I supposed to do?’’
+6. Activity manager returns back the full information about the 
+application it is starting, such as where to find its code.

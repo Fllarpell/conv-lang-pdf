@@ -1,0 +1,46 @@
+SEC. 8.1
+MULTIPROCESSORS
+547
+attempts to use the lock, the requesting CPU should be able to run out of its cache.
+When the CPU owning the lock writes a 0 to it to release it, the cache protocol
+automatically invalidates all copies of it in remote caches, requiring the correct
+value to be fetched again.
+The problem is that caches operate in blocks of 32 or 64 bytes. Usually, the
+words surrounding the lock are needed by the CPU holding the lock. Since the TSL
+instruction is a write (because it modifies the lock), it needs exclusive access to the
+cache block containing the lock. Therefore, every TSL invalidates the block in the
+lock holder’s cache and fetches a private, exclusive copy for the requesting CPU.
+As soon as the lock holder touches a word adjacent to the lock, the cache block is
+moved to its machine. Consequently, the entire cache block containing the lock is
+constantly being shuttled between the lock owner and the lock requester, 
+generating even more bus traffic than individual reads on the lock word would have.
+If we could get rid of all the TSL-induced writes on the requesting side, we
+could reduce the cache thrashing appreciably. This goal can be accomplished by
+having the requesting CPU first do a pure read to see if the lock is free. Only if the
+lock appears to be free does it do a TSL to actually acquire it. The result of this
+small change is that most of the polls are now reads instead of writes. If the CPU
+holding the lock is only reading the variables in the same cache block, they can
+each have a copy of the cache block in shared read-only mode, eliminating all the
+cache-block transfers.
+When the lock is eventually freed, the owner does a write, which requires 
+exclusive access, thus invalidating all copies in remote caches. On the next read by
+the requesting CPU, the cache block will be reloaded. Note that if two or more
+CPUs are contending for the same lock, it can happen that both see that it is free
+simultaneously, and both do a TSL simultaneously to acquire it. Only one of these
+will succeed, so there is no race condition here because the real acquisition is done
+by the TSL instruction, and it is atomic. Seeing that the lock is free and then trying
+to grab it immediately with a TSL does not guarantee that you get it. Someone else
+might win, but for the correctness of the algorithm, it does not matter who gets it.
+Success on the pure read is merely a hint that this would be a good time to try to
+acquire the lock, but it is not a guarantee that the acquisition will succeed.
+Another way to reduce bus traffic is to use the well-known Ethernet binary
+exponential backoff algorithm (Anderson, 1990). Instead of continuously polling,
+as in Fig. 2-25, a delay loop can be inserted between polls. Initially the delay is one
+instruction. If the lock is still busy, the delay is doubled to two instructions, then
+four instructions, and so on up to some maximum. A low maximum gives a fast
+response when the lock is released, but wastes more bus cycles on cache thrashing.
+A high maximum reduces cache thrashing at the expense of not noticing that the
+lock is free so quickly. Binary exponential backoff can be used with or without the
+pure reads preceding the TSL instruction.
+An even better idea is to give each CPU wishing to acquire the mutex its own
+private lock variable to test, as illustrated in Fig. 8-11 (Mellor-Crummey and Scott,

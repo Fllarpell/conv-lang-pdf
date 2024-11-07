@@ -1,0 +1,41 @@
+370
+INPUT/OUTPUT 
+CHAP. 5
+When the SSD or disk is finished, the hardware generates an interrupt. The
+interrupt handler is run to discover what has happened, that is, which device wants
+attention right now. It then extracts the status from the device and wakes up the
+sleeping process to finish off the I/O request and let the user process continue.
+5.4 MASS STORAGE: DISK AND SSD
+Now we will begin studying some real I/O devices. We will begin with storage
+devices. In later sections, we examine clocks, keyboards, and displays. Modern
+storage devices come in a variety of types. The most common ones are magnetic
+hard disks and SSDs. For distribution of programs, data, and movies, old fogeys
+may still use optical disks (DVDs and Blu-ray), but these are rapidly going out of
+fashion and will not be discussed in this (undeniably fashionable) book. Instead,
+we briefly discuss magnetic disks and SSDs. We will start with the former, as it is a
+nice case study.
+5.4.1 Magnetic Disks
+Magnetic disks are characterized by the fact that reads and writes are equally
+fast, which makes them suitable as secondary memory (paging, file systems, etc.).
+Arrays of these disks are sometimes used to provide highly reliable storage. They
+are organized into cylinders, each one containing as many tracks as there are heads
+stacked vertically. The tracks are divided into sectors, with typically up to several
+hundreds of sectors around the circumference. The number of heads varies from 1
+to about 16.
+Older disks had little electronics and just delivered a simple serial bit stream.
+On these disks, the controller did most of the work. On other disks, in particular,
+SATA (Serial ATA) disks, the drive itself contains a microcontroller that does 
+considerable work and allows the real disk controller to issue a set of higher-level
+commands. The controller does track caching, bad-block remapping, and more.
+A device feature that has important implications for the disk driver is the 
+possibility of a controller doing seeks on two or more drives at the same time. These are
+known as overlapped seeks. While the controller and software are waiting for a
+seek to complete on one drive, the controller can initiate a seek on another drive.
+Many controllers can also read or write on one drive while seeking on one or more
+other drives. Moreover, a system with several hard disks with integrated controllers
+can operate them simultaneously, at least to the extent of transferring between the
+disk and the controller’s buffer memory. Howev er, only one transfer between the
+controller and the main memory is possible at once. The ability to perform two or
+more operations at the same time can reduce the average access time considerably.
+If we compare the standard storage medium of the original IBM PC (a floppy
+disk) with a modern hard disk, such as the Seagate IronWolf Pro, we see that many

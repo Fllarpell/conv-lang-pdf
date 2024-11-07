@@ -1,0 +1,46 @@
+266
+FILE SYSTEMS
+CHAP. 4
+(a)
+(b)
+Header
+Header
+Header
+Magic number
+Text size
+Data size
+BSS size
+Symbol table size
+Entry point
+Flags
+Text
+Data
+Relocation!
+bits
+Symbol!
+table
+Object!
+module
+Object!
+module
+Object!
+module
+Module!
+name
+Date
+Owner
+Protection
+Size
+Header
+Figure 4-3. (a) An executable file. (b) An archive.
+While this kind of ‘‘user friendliness’’ may help novices, it drives experienced
+users up the wall since they hav e to devote considerable effort to circumventing the
+operating system’s idea of what is reasonable and what is not.
+Most operating systems offer a slew of tools to examine files. For instance, on
+UNIX you can use the file utility to examine the type of files. It uses heuristics to
+determine that something is a text file, a directory, an executable, etc. Examples of
+its use can be found in Fig. 4-4.
+4.1.4 File Access
+Early operating systems provided only one kind of file access: sequential
+access. In these systems, a process could read all the bytes or records in a file in
+order, starting at the beginning, but could not skip around and read them out of

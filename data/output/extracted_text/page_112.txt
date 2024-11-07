@@ -1,0 +1,43 @@
+CHAP. 1  
+PROBLEMS
+83
+from the disk. If the cache hit rate is 95% and main memory hit rate (after a cache
+miss) is 99%, what is the average time to access a word?
+16. When a user program makes a system call to read or write a disk file, it provides an
+indication of which file it wants, a pointer to the data buffer, and the count. Control is
+then transferred to the operating system, which calls the appropriate driver. Suppose
+that the driver starts the disk and terminates until an interrupt occurs. In the case of
+reading from the disk, obviously the caller will have to be blocked (because there are
+no data for it). What about the case of writing to the disk? Need the caller be blocked
+aw aiting completion of the disk transfer?
+17. What is a trap instruction? Explain its use in operating systems.
+18. Why is the process table needed in a timesharing system? Is it also needed in personal
+computer systems running UNIX or Windows with a single user?
+19. Is there any reason why you might want to mount a file system on a nonempty 
+directory? If so, what is it?
+20. For each of the following system calls, give a condition that causes it to fail: fork, exec,
+and unlink.
+21. What type of multiplexing (time, space, or both) can be used for sharing the following
+resources: CPU, memory, SSD/disk, network card, printer, keyboard, and display?
+22. Can the
+count = write(fd, buffer, nbytes);
+call return any value in count other than nbytes? If so, why?
+23. A file whose file descriptor is fd contains the following sequence of bytes: 2, 7, 1, 8, 2,
+8, 1, 8, 2, 8, 4. The following system calls are made:
+lseek(fd, 3, SEEK SET);
+read(fd, &buffer, 4);
+where the lseek call makes a seek to byte 3 of the file. What does buffer contain after
+the read has completed?
+24. Suppose that a 10-MB file is stored on a disk on the same track (track 50) in 
+consecutive sectors. The disk arm is currently situated over track number 100. How long will
+it take to retrieve this file from the disk? Assume that it takes about 1 msec to move the
+arm from one cylinder to the next and about 5 msec for the sector where the beginning
+of the file is stored to rotate under the head. Also, assume that reading occurs at a rate
+of 200 MB/s.
+25. What is the essential difference between a block special file and a character special
+file?
+26. In the example given in Fig. 1-17, the library procedure is called read and the system
+call itself is called read. Is it essential that both of these have the same name? If not,
+which one is more important?
+27. Modern operating systems decouple a process address space from the machine’s 
+physical memory. List two advantages of this design.

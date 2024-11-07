@@ -1,0 +1,42 @@
+962
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+The last four API functions listed are for managing sections (i.e., file-backed
+or pagefile-backed sections). To map a file, a file-mapping object must first be
+created with CreateFileMapping (see Fig. 11-8). This function returns a handle to
+the file-mapping object (i.e., a section object) and optionally enters a name for it
+into the Win32 namespace so that other processes can use it, too. The next two
+functions map and unmap views on section objects from a process’ virtual address
+space. The last API can be used by a process to map share a mapping that another
+process created with CreateFileMapping, usually one created to map anonymous
+memory. In this way, two or more processes can share regions of their address 
+spaces. This technique allows them to write in limited regions of each other’s virtual
+memory.
+11.5.3 Implementation of Memory Management
+Windows supports a single linear 256 TB demand-paged address space per
+process. Segmentation is not supported in any form. As noted earlier, page size is 4
+KB on all processor architectures supported by Windows today. In addition, the
+memory manager can use 2-MB large pages or even 1-GB huge pages to improve
+the effectiveness of the TLB (Translation Lookaside Buffer) in the processor’s
+memory management unit. Use of large and huge pages by the kernel and large
+applications significantly improves performance by improving the hit rate for the
+TLB as well as enabling a shallower and thus faster hardware page table walk
+when a TLB miss does occur. Large and huge pages are simply composed of
+aligned, contiguous runs of 4 KB pages. As such, these pages are considered 
+nonpageable since paging and reusing them for single pages would make it very 
+difficult, if not impossible, for the memory manager to construct a large or huge page
+when the application accesses it again.
+Unlike the scheduler, which selects individual threads to run and does not care
+much about processes, the memory manager deals entirely with processes and does
+not care much about threads. After all, processes, not threads, own the address
+space and that is what the memory manager is concerned with. When a region of
+virtual address space is allocated, as four of them have been for process A in
+Fig. 11-33, the memory manager creates a VAD (Virtual Address Descriptor) for
+it, listing the range of addresses mapped, the section representing the backing store
+file and offset where it is mapped, and the permissions. When the first page is
+touched, the necessary page table hierarchy is created and corresponding page 
+table entries are filled in as physical pages are allocated to back the VAD. An
+address space is completely defined by the list of its VADs. The VADs are
+organized into a balanced tree, so that the descriptor for a particular address can be
+found efficiently. This scheme supports sparse address spaces. Unused areas 
+between the mapped regions use no memory or disk so they are essentially free.

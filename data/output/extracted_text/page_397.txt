@@ -1,0 +1,39 @@
+368
+INPUT/OUTPUT 
+CHAP. 5
+perform opens on the special files for devices directly. If the device is unavailable,
+the open fails. Closing such a dedicated device then releases it.
+An alternative approach is to have special mechanisms for requesting and
+releasing dedicated devices. An attempt to acquire a device that is not available
+blocks the caller instead of failing. Blocked processes are put on a queue. Sooner
+or later, the requested device becomes available and the first process on the queue
+is allowed to acquire it and continue execution.
+Device-Independent Block Size
+Different SSDs have different flash page sizes, while different disks may have
+different sector sizes. It is up to the device-independent software to hide this fact
+and provide a uniform block size to higher layers, for example, by treating several
+sectors or flash pages as a single logical block. In this way, the higher layers deal
+only with abstract devices that all use the same logical block size, independent of
+the physical sector size. Similarly, some character devices deliver their data one
+byte at a time (e.g., mice), while others deliver theirs in larger units (e.g., Ethernet
+interfaces). These differences may also be hidden.
+5.3.4 User-Space I/O Software
+Although most of the I/O software is within the operating system, a small 
+portion of it consists of libraries linked together with user programs, and even whole
+programs running outside the kernel. System calls, including the I/O system calls,
+are normally made by library procedures. When a C program contains the call
+count = write(fd, buffer, nbytes);
+the library procedure write might be linked with the program and contained in the
+binary program present in memory at run time. In other systems, libraries can be
+loaded during program execution. Either way, the collection of all these library
+procedures is clearly part of the I/O system.
+While most of these procedures do little more than put their parameters in the
+appropriate place for the system call, other I/O procedures actually do real work.
+In particular, formatting of input and output is done by library procedures. One
+example from C is printf, which takes a format string and possibly some variables
+as input, builds an ASCII string, and then calls wr ite to output the string. As an
+example of printf, consider the statement
+pr intf("The square of %3d is %6d\n", i, i*i);
+It formats a string consisting of the 14-character string ‘‘The square of ’’ followed
+by the value i as a 3-character string, then the 4-character string ‘‘ is ’’, then i2 as 6
+characters, and finally a line feed.

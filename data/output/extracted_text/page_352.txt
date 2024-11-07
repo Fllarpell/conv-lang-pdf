@@ -1,0 +1,46 @@
+SEC. 4.4
+FILE-SYSTEM MANAGEMENT AND OPTIMIZATION
+323
+In fact, securely deleting data on disk is not easy. If the disk is old and not
+needed any more but the data must not fall into the wrong hands under any 
+conditions, the best approach is to get a large flowerpot. Put in some thermite, put the
+disk in, and cover it with more thermite. Then light it and watch it burn nicely at
+2500°C. Recovery will be impossible, even for a pro. If you are unfamiliar with
+the properties of thermite, it is strongly recommended that you do not try this at
+home.
+However, if you want to reuse the disk, this technique is clearly not 
+appropriate. Even if you overwrite the original content with zeros, it may not be enough.
+On some hard disks, data stored on the disk leave magnetic traces in areas close to
+the actual tracks. So even if the normal content in the tracks is zeroed out, a highly
+motivated and sophisticated attacker (such as a government intelligence agency)
+could still recover the original content by carefully inspecting the adjacent areas. In
+addition, there may be copies of the file in unexpected places on the disk (for 
+instance, as a backup or in a cache), and these need to be wiped also. SSDs have
+ev en worse problems, as the file system has no control over what flash blocks are
+overwritten and when, since this is determined by the FTL. Usually by overwriting
+a disk with three to seven passes, alternating zeros and random numbers, will
+securely erase it though. There is software available to do this.
+One way to make it impossible to recover data from disk, deleted or not, is by
+encrypting everything that is on the disk. Full disk encryption is available on all
+modern operating systems. As long as you do not write the password on a Post-It
+note stuck somewhere on your computer, full disk encryption with a powerful
+encryption algorithm will keep your data safe even if the disk falls in the hands of
+the baddies.
+Full disk encryption is sometimes also provided by the storage devices 
+themselves in the form of Self-Encrypting Drives (SEDs) with onboard cryptographic
+capabilities to do the encryption and decryption, leading to a performance boost as
+the cryptographic calculations are offloaded from the CPU. Unfortunately,
+researchers found that many SEDs have critical security weaknesses due to 
+specification, design, and implementation issues (Meijer and Van Gastel, 2019).
+As an example of full disk encryption, Windows makes use of the capabilities
+of such SEDs if they are present. If not, it takes care of the encryption itself, using
+a secret key, the volume master key, in a standard encryption algorithm called
+Advanced Encryption Standard (AES). Full disk encryption on Windows was 
+designed to be as unobtrusive as possible and many users are blissfully unaware that
+their data are encrypted on disk. The volume master key used to encrypt or decrypt
+the data on regular (i.e., non SED) storage devices can be obtained by decrypting
+the (itself encrypted) key either with the user password or with the recovery key
+(that was automatically generated the first time the file system was encrypted), or
+by extracting the key from a special-purpose cryptoprocessor known as the Trusted
+Platform Module, or TPM. Either way, once it has the key, Windows can encrypt or
+decrypt the disk data as required.

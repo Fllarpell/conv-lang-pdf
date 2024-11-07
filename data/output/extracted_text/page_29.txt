@@ -1,0 +1,17 @@
+xxviii
+PREFACE
+in most major operating systems, most popular browsers, and all modern Intel
+processors. He believes that offensive research is valuable because the main reason
+for today’s security problems is that systems have become so complex that we no
+longer understand them. By investigating how we can make systems behave in
+unintended ways, we learn more about their (real) nature. Armed with this 
+knowledge, developers can then improve their designs in the future. Indeed, while
+sophisticated new attacks tend to feature prominently in the media, Herbert spends
+most of his time on developing defensive techniques to improve the security.
+His (former) students are all awesome and much cleverer than he is. With
+them, he has won fiv e Pwnie Awards at the Black Hat conference in Las Veg as.
+Moreover, fiv e of his students have won the ACM SIGOPS EuroSys Roger 
+Needham Award for best European Ph.D. thesis in systems, two of them have won the
+ACM SIGSAC Doctoral Dissertation Award for best Ph.D. thesis in security, and
+two more won the William C. Carter Ph.D. Dissertation Award for their work on
+dependability. Herbert worries about climate change and loves the Beatles.

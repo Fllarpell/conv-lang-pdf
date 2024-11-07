@@ -1,0 +1,46 @@
+616
+SECURITY 
+CHAP. 9
+with physical access to the machine (including the cleaning staff, secretary, and all
+visitors) also has access to everything on the machine and also on all other
+machines to which that one has automatic access.
+Another trick to infect somebody’s computer is to offer free, but malicious 
+versions of popular software that users install themselves: Trojans. Unfortunately,
+there are many other examples, and they include high-ranking officials losing USB
+sticks with sensitive information, old hard drives with trade secrets that are not
+properly wiped before being dropped in the recycling bin, and so on. None of these
+are terribly sophisticated.
+Nevertheless, some of the most important security incidents are due to 
+sophisticated cyber attacks. In this book, we are specifically interested in attacks that are
+related to the operating system. In other words, we will not look at Web attacks, or
+attacks on SQL databases. Instead, we focus on attacks where the operating system
+is either the target of the attack or plays an important role in enforcing (or more
+commonly, failing to enforce) the security policies. If you are interested in 
+network security, there are many books on the topic, including Kaufman et al. (2022),
+Moseley (2021), Santos (2022), Schoenfield (2021), and Van Oorschot (2020).
+In general, we distinguish between attacks that passively try to steal 
+information and attacks that actively try to make a computer program misbehave. An
+example of a passive attack is an adversary that sniffs the network traffic and tries
+to break the encryption (if any) to get to the data. In an active attack, the intruder
+may take control of a user’s Web browser to make it execute malicious code, for
+instance to steal credit card details. In the same vein, we distinguish between 
+cryptography, which is all about shuffling a message or file in such a way that it
+becomes hard to recover the original data unless you have the key, and software
+hardening, which adds protection mechanisms to programs to make it hard for
+attackers to make them misbehave. The operating system uses cryptography in
+many places: to transmit data securely over the network, to store files securely on
+disk, to scramble the passwords in a password file, etc. Program hardening is also
+used all over the place: to prevent attackers from injecting new code into running
+software, to make sure that each process has exactly those privileges it needs to do
+what it is supposed to do and no more, etc.
+When the computer is under control of the attacker, it is known as a bot or
+zombie. Typically, none of this is visible to the user. The attacker can use the bot
+to launch new attacks, steal passwords or credit card details, encrypt all the data on
+the disk for ransom, mine cryptocurrency, or any of the 1001 other things you can
+do with someone else’s computer and electricity someone else is paying for.
+Sometimes, the effects of the attack go well beyond the computer systems
+themselves and reach directly into the physical world. One example is the attack on
+the waste management system of Maroochy Shire, in Queensland, Australia—not
+too far from Brisbane. A disgruntled ex-employee of a sewage system installation
+company was not amused when the Maroochy Shire Council turned down his job
+application and he decided not to get mad, but to get even. He took control of the

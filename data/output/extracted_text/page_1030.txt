@@ -1,0 +1,46 @@
+SEC. 11.9
+WINDOWS POWER MANAGEMENT
+1001
+on batteries, and energy-conservation concerns related to desktop computers being
+left on all the time and the high cost of supplying power to the huge server farms
+that exist today.
+Newer power-management facilities include reducing the power consumption
+of components when the system is not in use by switching individual devices to
+standby states, or even powering them off completely using soft power switches.
+Multiprocessors shut down individual CPUs when they are not needed, and even
+the clock rates of the running CPUs can be adjusted downward to reduce power
+consumption. When a processor is idle, its power consumption is also reduced
+since it needs to do nothing except wait for an interrupt to occur.
+On heterogeneous multiprocessor systems with multiple types of processors,
+significant power savings can be achieved by scheduling appropriate work to more
+efficient processors. The power manager closely collaborates with the kernel
+thread scheduler to influence its quality-of-service scheduling policies. For 
+example, if the system is low on battery, the power manager can configure power policy
+such that all low-QoS threads exclusively get scheduled to efficiency cores.
+Windows supports a special shut down mode called hibernation, which copies
+all of physical memory to disk and then shuts down the machine, reducing power
+consumption to zero. Because all the memory state is written to disk, you can even
+replace the battery on a notebook while it is hibernated. When the system resumes
+after hibernation, it restores the saved memory state (and reinitializes the I/O 
+devices). This brings the computer back into the same state it was before hibernation,
+without having to login again and start up all the applications and services that
+were running. Windows optimizes this process by ignoring unmodified pages
+backed by disk already and compressing other memory pages to reduce the amount
+of I/O bandwidth required. The hibernation algorithm automatically tunes itself to
+balance between I/O and processor throughput. If there is more processor 
+available, it uses expensive but more effective compression to reduce the I/O bandwidth
+needed. When I/O bandwidth is sufficient, hibernation will skip the compression
+altogether. With the current generation of multiprocessors, both hibernation and
+resume can be performed in a few seconds even on systems with many gigabytes
+of RAM.
+An alternative to hibernation is standby mode where the power manager
+reduces the entire system to the lowest power state possible, using just enough
+power to the refresh the dynamic RAM. Because memory does not need to be 
+copied to disk, this is somewhat faster than hibernation on some systems.
+Despite the availability of hibernation and standby, many users are still in the
+habit of shutting down their PC when they finish working. Windows uses 
+hibernation to perform a pseudo shutdown and startup, called HiberBoot, that is much
+faster than normal shutdown and startup. When the user tells the system to 
+shutdown, HiberBoot logs the user off and then hibernates the system at the point they
+would normally login again. Later, when the user turns the system on again, 
+HiberBoot will resume the system at the login point. To the user it looks like startup was

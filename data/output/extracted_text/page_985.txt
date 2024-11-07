@@ -1,0 +1,29 @@
+956
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Figure 11-30. Virtual to physical address translation with a 4-level page table
+scheme implementing 48-bits of virtual address.
+(Page Table Entry) is 8 bytes with 512 PTEs per page table. As a result, each
+page table is indexed by 9 bits of the virtual address and the remaining 12 bits of
+the 48-bit virtual address is the byte index into the 4 KB page. The physical
+address of the topmost level table is contained in a special processor register, and
+this register is updated during context switches between processes. This virtual to
+physical address translation is shown in Fig. 11-30. Windows also takes advantage
+of the hardware support for larger page sizes (where available), where a page 
+directory entry can map a 2-MB large page or a page directory parent entry can map a
+1-GB huge page.
+Emerging hardware implements 57-bits of virtual addresses using a 5-level
+page table. Windows 11 supports these processors and provides 128 PB of address
+space on such machines. In our discussion, we will generally stick to the more
+common 48-bit implementations.
+The virtual address space layouts for two 64-bit processes are shown in
+Fig. 11-31 in simplified form. The bottom and top 64 KB of each process’ virtual
+address space is normally unmapped. This choice was made intentionally to help
+catch programming errors and mitigate the exploitability of certain types of 
+vulnerabilities.
+Starting at 64 KB comes the user’s private code and data. This extends up to
+128 TB < 64 KB. The upper 128 TB of the address space is called the kernel
+address space and contains the operating system, including the code, data, paged
+and nonpaged pools, and numerous other OS data structures. The kernel address
+space is shared among all user processes, except for per-process and per-session
+data like page tables and session pool. Of course, this part of the address space is

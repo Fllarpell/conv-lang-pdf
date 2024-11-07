@@ -1,0 +1,125 @@
+1010
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+memory manager can directly use. Rather than allocating new physical pages,
+copying file data into those pages and then pointing PTEs to them, the memory
+manager updates PTEs to point directly to the CPU-addressable file pages 
+themselves. This mechanism allows all processes in the guest OS to share the same
+GPAs that were exposed from the vmmem file mapping. Figure 11-52 shows how
+VA-backed VM memory is organized.
+Host Process A
+Ntdll.dll
+Ntdll.dll
+Ntdll.dll
+VirtualAlloc
+Pagefile
+Pagefile
+0
+1
+2
+3
+4
+5
+6
+7
+8
+0
+GPA
+SPA
+1
+2
+3
+4
+5
+6
+7
+8
+9
+11
+10
+9
+11
+10
+12
+12
+13
+14
+13
+15
+14
+0
+X
+X
+X
+X
+X
+1
+2
+2
+3
+4
+5
+5
+6
+7
+8
+8
+9
+11
+11
+10
+12
+12
+13
+14
+14
+134
+132
+18
+15
+16
+17
+18
+19
+134
+131
+132
+133
+135
+Compressed
+Guest.dll
+Kernelbase.dll
+Kernelbase.dll
+Kernelbase.dll
+Host Process B
+Host
+RAM
+RAM
+Direct
+Mapped
+Binaries
+Vmmem
+Process
+Guest
+Guest
+Logical
+Mapping
+to
+VA Range
+Guest
+SLAT
+GPA Space
+Figure 11-52. VA-backed VM’s GPA space is logically mapped to virtual
+address ranges in its vmmem process on the host.
+In addition to the optimizations described so far, the VA-backed VM design
+also allows various memory management enlightenments in the guest to further 
+optimize memory usage. One important example is hot/cold memory enlightenments.
+Via hypercalls, the guest memory manager can provide hints to the host about
+GPAs that are more or less likely to get accessed soon. In response, the host can
+make sure that those pages are resident and valid in the SLAT (for ‘‘hot’’ pages) or
+trim them out of the vmmem working set (for ‘‘cold’’ pages). Windows guests take
+advantage of this enlightenment to cold-hint pages in the back of the zeroed page
+list. That results in the underlying host physical pages getting freed into the zero
+page list on the host because of the zero-page detection done by the memory 
+manager during working set trim (see Sec. 11.5.3). Hot hints are used for pages at the
+head of the free, zero, and standby lists if these have previously been cold-hinted.

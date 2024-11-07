@@ -1,0 +1,46 @@
+SEC. 4.1
+FILES
+265
+Regular files are generally either ASCII files or binary files. ASCII files 
+consist of lines of text. In some systems, each line is terminated by a carriage return
+character. In others, the line feed character is used. Some systems (e.g., Windows)
+use both. Lines need not all be of the same length.
+The great advantage of ASCII files is that they can be displayed and printed as
+is, and they can be edited with any text editor. Furthermore, if large numbers of
+programs use ASCII files for input and output, it is easy to connect the output of
+one program to the input of another, as in shell pipelines. (The interprocess
+plumbing is not any easier, but interpreting the information certainly is if a 
+standard convention, such as ASCII, is used for expressing it.)
+Other files are binary, which just means that they are not ASCII files. Listing
+them on the printer gives an incomprehensible listing full of random junk. Usually,
+they hav e some internal structure known to programs that use them.
+For example, in Fig. 4-3(a) we see a simple executable binary file taken from
+an early version of UNIX. Although technically the file is just a sequence of bytes,
+the operating system will execute a file only if it has the proper format. It has fiv e
+sections: header, text, data, relocation bits, and symbol table. The header starts
+with a magic number, identifying the file as an executable file (to prevent the 
+accidental execution of a file not in this format). Then come the sizes of the various
+pieces of the file, the address at which execution starts, and some flag bits. After
+the header are the text and data of the program itself. These are loaded into 
+memory and relocated using the relocation bits. The symbol table is for debugging.
+Our second example of a binary file is an archive, also from UNIX. It consists
+of a collection of library procedures (modules) compiled but not linked. Each one
+is prefaced by a header telling its name, creation date, owner, protection code, and
+size. Just as with the executable file, the module headers are full of binary 
+numbers. Copying them to the printer would produce complete gibberish.
+Every operating system must recognize at least one file type: its own 
+executable file; some recognize more. The old TOPS-20 system (for the DECsystem
+20) went so far as to examine the creation time of any file to be executed. Then it
+located the source file and saw whether the source had been modified since the
+binary was made. If it had been, it automatically recompiled the source. In UNIX
+terms, the make program had been built into the shell. The file extensions were
+mandatory, so it could tell which binary program was derived from which source.
+Having strongly typed files like this causes problems whenever the user does
+anything that the system designers did not expect. Consider, as an example, a 
+system in which program output files have extension .dat (data files). If a user writes
+a program formatter that reads a .c file (C program), transforms it (e.g., by 
+converting it to a standard indentation layout), and then writes the transformed file as 
+output, the output file will be of type .dat. If the user tries to offer this to the C 
+compiler to compile it, the system will refuse because it has the wrong extension.
+Attempts to copy file.dat to file.c will be rejected by the system as invalid (to 
+protect the user against mistakes).

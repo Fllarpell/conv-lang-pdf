@@ -1,0 +1,41 @@
+SEC. 7.4
+TECHNIQUES FOR EFFICIENT VIRTUALIZATION
+487
+emulates what the real hardware would do when confronted with a sensitive
+instruction executed in user mode.
+7.4.1 Virtualizing the Unvirtualizable
+Building a virtual machine system is relatively straightforward when VT is
+available, but what did people do before that? For instance, VMware released a
+hypervisor well before the arrival of the virtualization extensions on the x86.
+Again, the answer is that the software engineers who built such systems made
+clever use of binary translation and hardware features that did exist on the x86,
+such as the processor’s protection rings.
+For many years, the x86 has supported four protection modes or rings. Ring 3
+is the least privileged. This is where normal user processes execute. In this ring,
+you cannot execute privileged instructions. Ring 0 is the most privileged ring that
+allows the execution of any instruction. In normal operation, the kernel runs in
+ring 0. The remaining two rings are not used by any current operating system. In
+other words, hypervisors were free to use them as they pleased. As shown in
+Fig. 7-4, many virtualization solutions therefore kept the hypervisor in kernel mode
+(ring 0) and the applications in user mode (ring 3), but put the guest operating 
+system in a layer of intermediate privilege (ring 1). As a result, the kernel is privileged
+relative to the user processes and any attempt to access kernel memory from a user
+program leads to an access violation. At the same time, the guest operating 
+system’s privileged instructions trap to the hypervisor. The hypervisor does some 
+sanity checks and then performs the instructions on the guest’s behalf.
+Type 1 hypervisor
+Virtual
+machine
+Guest operating system
+(Rewrite binary prior to execution + emulate)
+ring 0
+ring 1
+ring 2
+ring 3
+Hardware
+User process
+Figure 7-4. The binary translator rewrites the guest operating system running in
+ring 1, while the hypervisor runs in ring 0.
+As for the sensitive instructions in the guest’s kernel code: the hypervisor
+makes sure they no longer exist. To do so, it rewrites the code, one basic block at a
+time. A basic block is a short, straight-line sequence of instructions that ends with

@@ -1,0 +1,41 @@
+SEC. 11.4
+PROCESSES AND THREADS IN WINDOWS
+941
+11.4.3 Implementation of Processes and Threads
+In this section, we will get into more detail about how Windows creates a 
+process (and the initial thread). Because Win32 is the most documented interface, we
+will start there. But we will quickly work our way down into the kernel and 
+understand the implementation of the native API call for creating a new process. We
+will focus on the main code paths that get executed whenever processes are 
+created, as well as look at a few of the details that fill in gaps in what we have covered
+so far.
+A process is created when another process makes the Win32 CreateProcess
+call. This call invokes a user-mode procedure in kernelbase.dll that makes a call to
+NtCreateUserProcess in the kernel to create the process in several steps.
+1. Convert the executable file name given as a parameter from a Win32
+path name to an NT path name. If the executable has just a name
+without a directory path name, it is searched for in the directories 
+listed in the default directories (which include, but are not limited to,
+those in the PATH variable in the environment).
+2. Bundle up the process-creation parameters and pass them, along with
+the full path name of the executable program, to the native API
+NtCreateUserProcess.
+3. Running in kernel mode, NtCreateUserProcess processes the 
+parameters, then opens the program image and creates a section object that
+can be used to map the program into the new process’ virtual address
+space.
+4. The process manager allocates and initializes the process object (the
+kernel data structure representing a process to both the kernel and
+executive layers).
+5. The memory manager creates the address space for the new process
+by allocating and initializing the page directories and the virtual
+address descriptors which describe the kernel-mode portion, including
+the process-specific regions, such as the self-map page-directory
+entries that gives each process kernel-mode access to the physical
+pages in its entire page table using kernel virtual addresses. (We will
+describe the self map in more detail in Sec. 11.5.)
+6. A handle table is created for the new process, and all the handles from
+the caller that are allowed to be inherited are duplicated into it.
+7. The shared user page is mapped, and the memory manager initializes
+the working-set data structures used for deciding what pages to trim
+from a process when physical memory is low. The executable image

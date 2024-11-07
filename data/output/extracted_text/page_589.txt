@@ -1,0 +1,57 @@
+560
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+1024 nodes but a diameter of only 10, giving excellent delay properties. Note that
+in contrast, 1024 nodes arranged as a 32 × 32 grid have a diameter of 62, more
+than six times worse than the hypercube. The price paid for the smaller diameter is
+that the fanout, and thus the number of links (and the cost), is much larger for the
+hypercube.
+Tw o kinds of switching schemes are used in multicomputers. In the first one,
+each message is first broken up (either by the user software or the network 
+interface) into a chunk of some maximum length called a packet. The switching
+scheme, called store-and-forward packet switching, consists of the packet being
+injected into the first switch by the source node’s network interface board, as
+shown in Fig. 8-17(a). The bits come in one at a time, and when the whole packet
+has arrived at an input buffer, it is copied to the line leading to the next switch
+along the path, as shown in Fig. 8-17(b). When the packet arrives at the switch
+attached to the destination node, as shown in Fig. 8-17(c), the packet is copied to
+that node’s network interface board and eventually to its RAM.
+CPU 1!
+Input port!
+(a)!
+Output port!
+Entire!
+packet!
+Entire!
+packet!
+Four-port!
+switch!
+C!
+A!
+CPU 2!
+Entire!
+packet!
+D!
+B!
+(b)!
+C!
+A!
+D!
+B!
+(c)!
+C!
+A!
+D!
+B!
+Figure 8-17. Store-and-forward packet switching.
+While store-and-forward packet switching is flexible and efficient, it does have
+the problem of increasing latency (delay) through the interconnection network.
+Suppose that the time to move a packet one hop in Fig. 8-17 is T nsec. Since the
+packet must be copied four times to get it from CPU 1 to CPU 2 (to A, to C, to D,
+and to the destination CPU), and no copy can begin until the previous one is 
+finished, the latency through the interconnection network is 4T. One way out is to
+design a network in which a packet can be logically divided into smaller units. As
+soon as the first unit arrives at a switch, it can be forwarded, even before the tail
+has arrived. Conceivably, the unit could be as small as 1 bit.
+The other switching regime, circuit switching, consists of the first switch first
+establishing a path through all the switches to the destination switch. Once that

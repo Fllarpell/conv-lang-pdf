@@ -1,0 +1,102 @@
+1122
+INDEX
+Affinity scheduling, 552
+Aging page replacement algorithm, 166, 213–214
+AIDL (see Android Interface Definition Language)
+Aiken, Howard, 8
+Alarm signal, 41
+Alarm system call, 729, 1077
+Alder Lake architecture, 540
+Alertable wait, 903
+Algorithmic paradigm, 1049
+Alias (symbolic link), 278
+Allocating dedicated devices, 367–368
+ALPC (see Advanced LPC)
+Alternate data stream, NT file system, 994
+Amazon AWS, 502
+AMD EPYC Milan chip, 539
+Amoeba operating system, 626–627
+Analytical engine, 7
+Andreesen, Marc, 78
+Android, 1, 4, 15, 18, 19, 37, 793–863
+Android 1.0, 796–797
+Android 10, 799
+Android 11, 799
+Android 12, 799
+Android 4.2, 798
+Android 4.3, 798
+Android 4.4, 798
+Android 5.0, 798
+Android 6.0, 799
+Android 7.0, 799
+Android 8, 799
+Android 9, 799
+Android activity, 821–825
+Android activity manager, 820
+Android and Google, 794
+Android application, 818–830
+Android architecture, 801–803
+Android ART, 807–808
+Android background execution, 856–861
+Android binder API, 809, 814–815
+Android binder kernel module, 809–814
+Android content provider, 828–830
+Android Dalvik, 796, 798, 802, 807, 809
+Android defense in depth, 843–845
+Android design goals, 800–801
+Android Dream, 796
+Android framework, 802
+Android history, 794–799
+Android IBinder, 814
+Android IExample, 816
+Android init, 801–802
+Android intent, 830–831
+Android interface definition language, 815
+Android Linux extensions, 803–807
+Android open source project, 794
+Android out-of-memory killer, 806–807
+Android package, 818
+Android package manager, 803, 820
+Android parcel, 814–815
+Android permission, 839–843
+Android privacy, 836–856
+Android process dependency, 834–836
+Android process lifecycle, 833–834
+Android process model, 831–836
+Android receiver, 827–828
+Android remote procedure call, 810
+Android resolver activity, 831
+Android runtime, 807–808
+Android sandbox, 837–838
+Android security, 836–856
+Android service, 825–827
+Android Sooner, 795–796
+Android suspend blocker, 804
+Android system server, 807
+Android transaction, 810
+Android wake lock, 804–805
+Android zygote, 801–802, 808–809, 832–833
+Antimalware, Windows, 1034–1045
+Antimalware program, 690
+AOSP (see Android Open Source Project)
+APC (see Asynchronous Procedure Call)
+Aperiodic scheduling, 168
+API (see Application Programming Interface)
+App, 37
+Appcontainer, 882
+Append system call, 269
+Apple, 17
+Application, Android, 818–830
+Application programming interface, 61, 490
+Windows, 60–63
+Application sandbox
+Android, 837–848
+Windows, 1016
+Application silo, Windows, 1012
+Application verifier, 919
+Application-launch prefetching, Windows, 965
+Arbitrary code guard, Windows, 1030
+Architectural coherence, 1048
+Architecture, computer, 4, 7, 11, 22
+Archive, UNIX, 265
+ARM64EC (see ARM 64 Emulation Compatible)

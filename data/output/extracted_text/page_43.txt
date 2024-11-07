@@ -1,0 +1,46 @@
+14
+INTRODUCTION 
+CHAP. 1
+To make a long story short, MULTICS introduced many seminal ideas into the
+computer literature, but turning it into a serious product and a major commercial
+success was a lot harder than anyone had expected. Bell Labs dropped out of the
+project, and General Electric quit the computer business altogether. Howev er,
+M.I.T. persisted and eventually got MULTICS working. It was ultimately sold as a
+commercial product by the company (Honeywell) that bought GE’s computer 
+business when GE got tired of it and was installed by about 80 major companies and
+universities worldwide. While their numbers were small, MULTICS users were
+fiercely loyal. General Motors, Ford, and the U.S. National Security Agency, for
+example, shut down their MULTICS systems only in the late 1990s, 30 years after
+MULTICS was released, after years of begging Honeywell to update the hardware.
+The last MULTICS system was shut down amid a lot of tears in October 2000.
+Can you imagine hanging onto your PC for 30 years because you think it is so
+much better than everything else out there? That’s the kind of loyalty MULTICS
+inspired—and for good reason. It was hugely important.
+By the end of the 20th century, the concept of a computer utility had fizzled
+out, but it came back in the form of cloud computing, in which relatively small
+computers (including smartphones, tablets, and the like) are connected to servers in
+vast and distant data centers where all the computing is done, with the local 
+computer mostly handling the user interface. The motivation here is that most people
+do not want to administrate an increasingly complex and evolving computer 
+system and would prefer to have that work done by a team of professionals, for 
+example, people working for the company running the data center.
+Despite its lack of commercial success, MULTICS had a huge influence on
+subsequent operating systems (especially UNIX and its derivatives, Linux, macOS,
+iOS, and FreeBSD). It is described in several papers and a book (Corbato´ and
+Vyssotsky, 1965; Daley and Dennis, 1968; Organick, 1972; Corbato´ et al., 1972;
+and Saltzer, 1974). It also has an active Website, located at www.multicians.org,
+with much information about the system, its designers, and its users.
+Another major development during the third generation was the phenomenal
+growth of minicomputers, starting with the DEC PDP-1 in 1961. The PDP-1 had
+only 4K of 18-bit words, but at $120,000 per machine (less than 5% of the price of
+a 7094), it sold like hotcakes. For certain kinds of nonnumerical work, it was
+almost as fast as the 7094 and gav e birth to a whole new industry. It was quickly
+followed by a series of other PDPs (unlike IBM’s family, all incompatible) 
+culminating in the PDP-11.
+One of the computer scientists at Bell Labs who had worked on the MULTICS
+project, Ken Thompson, subsequently found a small PDP-7 minicomputer that no
+one was using and set out to write a stripped-down, one-user version of MULTICS.
+This work later developed into the UNIX operating system, which became popular
+in the academic world, with government agencies, and with many companies.
+The history of UNIX has been told elsewhere (e.g., Salus, 1994). Part of that
+story will be given in Chap. 10. For now, suffice it to say that because the source

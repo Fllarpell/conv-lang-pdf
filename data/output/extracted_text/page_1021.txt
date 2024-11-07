@@ -1,0 +1,68 @@
+992
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+16
+15
+14
+13
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+Metadata files
+1 KB
+First user file
+(Reserved for future use)
+(Reserved for future use)
+(Reserved for future use)
+(Reserved for future use)
+$Extend
+  Extensions: quotas,etc
+$Upcase   Case conversion table
+$Secure   Security descriptors for all files
+$BadClus   List of bad blocks
+$Boot
+  Bootstrap loader
+$Bitmap
+  Bitmap of blocks used
+$
+  Root directory
+$AttrDef
+  Attribute definitions
+$Volume   Volume file
+$LogFile   Log file to recovery
+$MftMirr
+  Mirror copy of MFT
+$Mft
+  Master File Table
+Figure 11-44. The NTFS master file table.
+Record 1 is a duplicate of the early portion of the MFT file. This information is
+so precious that having a second copy can be critical in the event one of the first
+blocks of the MFT ever becomes unreadable. Record 2 is the log file. When 
+structural changes are made to the file system, such as adding a new directory or 
+removing an existing one, the action is logged here before it is performed, in order to
+increase the chance of correct recovery in the event of a failure during the 
+operation, such as a system crash. Changes to file attributes are also logged here. In fact,
+the only changes not logged here are changes to user data. Record 3 contains 
+information about the volume, such as its size, label, and version.
+As mentioned above, each MFT record contains a sequence of (attribute 
+header, value) pairs. The $AttrDef file is where the attributes are defined. Information
+about this file is in MFT record 4. Next comes the root directory, which itself is a
+file and can grow to arbitrary length. It is described by MFT record 5.
+Free space on the volume is kept track of with a bitmap. The bitmap is itself a
+file, and its attributes and disk addresses are given in MFT record 6. The next MFT
+record points to the bootstrap loader file. Record 8 is used to link all the bad blocks
+together to make sure they nev er occur in a file. Record 9 contains the security
+information. Record 10 is used for case mapping. For the Latin letters A-Z case
+mapping is obvious (at least for people who speak Latin). Case mapping for other
+languages, such as Greek, Armenian, or Georgian (the country, not the state), is
+less obvious to Latin speakers, so this file tells how to do it. Finally, record 11 is a

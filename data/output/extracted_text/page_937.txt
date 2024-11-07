@@ -1,0 +1,46 @@
+908
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+The executive memory manager implements the demand-paged virtual 
+memory architecture. It manages the mapping of virtual pages onto physical page
+frames, the management of the available physical frames, and management of the
+pagefile on disk used to back private instances of virtual pages that are no longer
+loaded in memory. The memory manager also provides special facilities for large
+server applications such as databases and programming language runtime 
+components such as garbage collectors. We will study memory management later in this
+chapter, in Sec. 11.5.
+The cache manager optimizes the performance of I/O to the file system by
+maintaining a cache of file-system pages in the kernel virtual address space. The
+cache manager uses virtually addressed caching, that is, organizing cached pages
+in terms of their location in their files. This differs from physical block caching, as
+in UNIX, where the system maintains a cache of the physically addressed blocks of
+the raw disk volume.
+Cache management is implemented using mapped files. The actual caching is
+performed by the memory manager. The cache manager need be concerned only
+with deciding what parts of what files to cache, ensuring that cached data is
+flushed to disk in a timely fashion, and managing the kernel virtual addresses used
+to map the cached file pages. If a page needed for I/O to a file is not available in
+the cache, the page will be faulted in using the memory manager. We will study the
+cache manager in Sec. 11.6.
+The security reference monitor enforces Windows’ elaborate security 
+mechanisms, which support the international standards for computer security called
+Common Criteria, an evolution of United States Department of Defense Orange
+Book security requirements. These standards specify a large number of rules that a
+conforming system must meet, such as authenticated login, auditing, zeroing of
+allocated memory, and many more. One rules requires that all access checks be
+implemented by a single module within the system. In Windows, this module is the
+security reference monitor in the kernel. We will study the security system in more
+detail in Sec. 11.10.
+The executive contains a number of other components that we will briefly
+describe. The configuration manager is the executive component which 
+implements the registry, as described earlier. The registry contains configuration data for
+the system in file-system files called hives. The most critical hive is the SYSTEM
+hive which is loaded into memory every time the system is booted from disk. Only
+after the executive layer has successfully initialized all of its key components,
+including the I/O drivers that talk to the system disk, is the in-memory copy of the
+hive reassociated with the copy in the file system. Thus, if something bad happens
+while trying to boot the system, the on-disk copy very unlikely to be corrupted. If
+the on-disk copy were to be corrupted, that would be a disaster.
+The local procedure call component provides for a highly efficient interprocess
+communication used between processes running on the same system. It is one of
+the data transports used by the standards-based remote procedure call facility to

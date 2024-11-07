@@ -1,0 +1,44 @@
+950
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+achieve maximum efficiency for this work at the expense of performance. These
+restrictions are considered by the scheduler when deciding which processor a
+thread should be scheduled to.
+Secondly, a thread’s QoS determines whether it prefers scheduling for 
+performance or efficiency. The scheduler maintains two rankings of the system’s
+processors: one in order of performance and another in order of efficiency. System
+power policy determines which of these orderings should be used by the scheduler
+for each QoS class when it is searching for an idle processor upon which to run a
+thread.
+Finally, a thread’s QoS determines how important a thread’s desire for 
+performance or efficiency is relative to other threads of differing QoS. This 
+importance ordering is used to determine which threads get access to the more 
+performant processors in the system when the more performant cores are over utilized.
+Note that this is different from a thread’s priority in that thread priority determines
+the set of threads that will run at a given point in time whereas importance controls
+which of the threads out of that set will be given their preferred placement. This is
+accomplished via a scheduler policy referred to as core trading. If a thread that
+prefers performance is being scheduled and the scheduler is unable to find an idle
+high-performance processor, but is able to locate a low-performance processor, the
+scheduler will check whether one of the high-performance processors is running a
+lower importance thread. If so, it will swap the processor assignments to place the
+higher importance thread on the more performant processor and place the lower
+importance thread on the less performant processor.
+Windows runs on PCs, which usually have only a single interactive session
+active at a time. However, Windows also supports a terminal server mode which
+supports multiple interactive sessions over the network using the remote desktop
+protocol. When running multiple user sessions, it is easy for one user to interfere
+with another by consuming too much processor resources. Windows implements a
+fair-share algorithm, DFSS (Dynamic Fair-Share Scheduling), which keeps 
+sessions from running excessively. DFSS uses scheduling groups to organize the
+threads in each session. Within each group, the threads are scheduled according to
+normal Windows scheduling policies, but each group is given more or less access
+to the processors based on how much the group has been running in aggregate. The
+relative priorities of the groups are adjusted slowly to allow ignore short bursts of
+activity and reduce the amount a group is allowed to run only if it uses excessive
+processor time over long periods.
+11.4.4 WoW64 and Emulation
+Application compatibility has always been the hallmark of Windows to 
+maintain and grow its user and developer base. As hardware evolves and Windows gets
+ported to new processor architectures, retaining the ability to run existing software
+has consistently been important for customers (and therefore Microsoft). For this

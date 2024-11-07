@@ -1,0 +1,42 @@
+SEC. 3.3
+VIRTUAL MEMORY
+193
+memory, the hardware performs the necessary mapping on the fly. When the 
+program references a part of its address space that is not in physical memory, the 
+operating system is alerted to go get the missing piece and re-execute the instruction
+that failed.
+In a sense, virtual memory is a generalization of the base-and-limit-register
+idea. The 8088 had separate base registers (but no limit registers) for text and data.
+With virtual memory, instead of having separate relocation for just the text and
+data segments, the entire address space can be mapped onto physical memory in
+fairly small units. Different implementations of virtual memory make different
+choices with respect to these units. Nowadays most systems use a technique called
+paging where the units are fixed-size units of, say, 4 KB. In contrast, an alternative
+solution known as segmentation uses entire variable-size segments as units. We
+will look at both solutions, but focus on paging, as segmentation is not really used
+these days anymore.
+Virtual memory works just fine in a multiprogramming system, with bits and
+pieces of many programs in memory at once. While a program is waiting for
+pieces of itself to be read in, the CPU can be given to another process.
+3.3.1 Paging
+Most virtual memory systems use a technique called paging, which we will
+now describe. On any computer, programs reference a set of memory addresses.
+When a program executes an instruction like
+MOV REG,1000
+it does so to copy the contents of memory address 1000 to REG (assuming the first
+operand represents the destination and the second the source). Addresses can be
+generated using indexing, base registers, and various other ways.
+These program-generated addresses are called virtual addresses and form the
+virtual address space. On computers without virtual memory, the virtual address
+is put directly onto the memory bus and causes the physical memory word with the
+same address to be read or written. When virtual memory is used, the virtual 
+addresses do not go directly to the memory bus. Instead, they go to an MMU 
+(Memory Management Unit) that maps the virtual addresses onto the physical memory
+addresses, as illustrated in Fig. 3-8.
+A very simple example of how this mapping works is shown in Fig. 3-9. In
+this example, we have a computer that generates 16-bit addresses, from 0 up to
+64K < 1. These are the virtual addresses. This computer, howev er, has only 32 KB
+of physical memory. So although 64-KB programs can be written, they cannot be
+loaded into memory in their entirety and run. A complete copy of a program’s core
+image, up to 64 KB, must be present on the disk or SSD, however, so that pieces
+can be brought in dynamically as needed.

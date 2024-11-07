@@ -1,0 +1,44 @@
+SEC. 7.6
+MEMORY VIRTUALIZATION
+495
+sync. The former are known as guest-induced page faults, and while they are
+intercepted by the hypervisor, they must be reinjected into the guest. This is not
+cheap at all. The latter are known as hypervisor-induced page faults and they are
+handled by updating the shadow page tables.
+Page faults are always expensive, but especially so in virtualized environments,
+because they lead to so-called VM exits. A VM exit is a situation in which the
+hypervisor regains control. Consider what the CPU needs to do for such a VM exit.
+First, it records the cause of the VM exit, so the hypervisor knows what to do. It
+also records the address of the guest instruction that caused the exit. Next, a 
+context switch is done, which includes saving all the registers. Then, it loads the
+hypervisor’s processor state. Only then can the hypervisor start handling the page
+fault, which was expensive to begin with. Oh, and when it is all done, it should
+reverse these steps. The whole process may take tens of thousands of cycles, or
+more. No wonder people bend over backward to reduce the number of exits.
+In a paravirtualized operating system, the situation is different. Here the
+paravirtualized OS in the guest knows that when it is finished changing some 
+process’ page table, it had better inform the hypervisor. Consequently, it first changes
+the page table completely, then issues a hypervisor call telling the hypervisor about
+the new page table. Thus, instead of a protection fault on every update to the page
+table, there is one hypercall when the whole thing has been updated, obviously a
+more efficient way to do business.
+Hardware Support for Nested Page Tables
+The cost of handling shadow page tables led chip makers to add hardware 
+support for nested page tables. Nested page tables is the term used by AMD. Intel
+refers to them as EPT (Extended Page Tables). They are similar and aim to
+remove most of the overhead by handling the additional page-table manipulation
+all in hardware, all without any traps. Interestingly, the first virtualization 
+extensions in Intel’s x86 hardware did not include support for memory virtualization at
+all. While these VT-extended processors removed many bottlenecks concerning
+CPU virtualization, poking around in page tables was as expensive as ever. It took
+a few years for AMD and Intel to produce the hardware to virtualize memory
+efficiently.
+Recall that even without virtualization, the operating system maintains a 
+mapping between the virtual pages and the physical page. The hardware ‘‘walks’’ these
+page tables to find the physical address that corresponds to a virtual address. 
+Adding more virtual machines simply adds an extra mapping. As an example, suppose
+we need to translate a virtual address of a Linux process running on a type 1 
+hypervisor like Xen or VMware ESX Server to a physical address. In addition to the
+guest virtual addresses, we now also have guest physical addresses and 
+subsequently host physical addresses (sometimes referred to as machine physical
+addresses). We hav e seen that without EPT, the hypervisor is responsible for

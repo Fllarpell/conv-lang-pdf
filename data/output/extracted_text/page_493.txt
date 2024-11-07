@@ -1,0 +1,43 @@
+464
+DEADLOCKS 
+CHAP. 6
+and other abstract resources, the number of potential resources and different uses
+may be so large that no ordering could possibly work.
+Various approaches to deadlock prevention are summarized in Fig. 6-17.
+Condition 
+Approach
+Mutual exclusion 
+Spool ev erything
+Hold and wait 
+Request all resources initially
+No preemption
+Take resources away
+Circular wait 
+Order resources numer ically
+Figure 6-17. Summary of approaches to deadlock prevention.
+6.7 OTHER ISSUES
+In this section, we will discuss a few miscellaneous issues related to deadlocks.
+These include two-phase locking, nonresource deadlocks, and starvation.
+6.7.1 Two-Phase Locking
+Although both avoidance and prevention are not terribly promising in the 
+general case, for specific applications, many excellent special-purpose algorithms are
+known. As an example, in many database systems, an operation that occurs 
+frequently is requesting locks on several records and then updating all the locked
+records. When multiple processes are running at the same time, there is a real 
+danger of deadlock.
+The approach often used is called two-phase locking. In the first phase, the
+process tries to lock all the records it needs, one at a time. If it succeeds, it begins
+the second phase, performing its updates and releasing the locks. No real work is
+done in the first phase.
+If during the first phase some record is needed that is already locked, the 
+process just releases all its locks, waits a bit, and starts the first phase all over. In a 
+certain sense, this approach is similar to requesting all the resources needed in 
+advance, or at least before anything irreversible is done. In some versions of 
+twophase locking, there is no release and restart if a locked record is encountered 
+during the first phase. In these versions, deadlock can occur.
+However, this strategy is not applicable in general. In real-time systems and
+process control systems, for example, it is not acceptable to just terminate a 
+process partway through because a resource is not available and start all over again.
+Neither is it acceptable to start over if the process has read or written messages to
+the network, updated files, or anything else that cannot be safely repeated. The
+algorithm works only in those situations where the programmer has very carefully

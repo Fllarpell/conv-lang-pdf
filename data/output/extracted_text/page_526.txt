@@ -1,0 +1,44 @@
+SEC. 7.6
+MEMORY VIRTUALIZATION
+497
+memory present on the system. In general, this is a good idea, because it allows the
+hypervisor to admit more and more beefy virtual machines at the same time. For
+instance, on a machine with 32 GB of memory, it may run three virtual machines
+each thinking it has 16 GB of memory. Clearly, this does not fit. However, perhaps
+the three machines do not really need the maximum amount of physical memory at
+the same time. Or perhaps they share pages that have the same content (such as the
+Linux kernel) in different virtual machines in an optimization known as 
+deduplication. In that case, the three virtual machines use a total amount of memory that is
+less than 3 times 16 GB. We will discuss deduplication later; for the moment the
+point is that what looks like a good distribution now may be a poor distribution as
+the workloads change. Maybe virtual machine 1 needs more memory, while 
+virtual machine 2 could do with fewer pages. In that case, it would be nice if the 
+hypervisor could transfer resources from one virtual machine to another and make the
+system as a whole benefit. The question is, how can we take away memory pages
+safely if that memory is given to a virtual machine already?
+In principle, we could use yet another level of paging. In case of memory
+shortage, the hypervisor would then page out some of the virtual machine’s pages,
+just as an operating system may page out some of an application’s pages. The
+drawback of this approach is that the hypervisor should do this, and the hypervisor
+has no clue about which pages are the most valuable to the guest. It is very likely
+to page out the wrong ones. Even if it does pick the right pages to swap (i.e., the
+pages that the guest OS would also have picked), there is still more trouble ahead.
+For instance, suppose that the hypervisor pages out a page P. A little later, the
+guest OS also decides to page out this page to disk. Unfortunately, the hypervisor’s
+swap space and the guest’s swap space are not the same. In other words, the 
+hypervisor must first page the contents back into memory, only to see the guest write it
+back out to disk immediately. Not very efficient.
+A common solution is to use a trick known as ballooning, where a small 
+balloon module is loaded in each VM as a pseudo device driver that talks to the 
+hypervisor. The balloon module may inflate at the hypervisor’s request by allocating
+more and more pinned pages, and deflate by deallocating these pages. As the 
+balloon inflates, memory scarcity in the guest increases. The guest operating system
+will respond by paging out what it believes are the least valuable pages—which is
+just what we wanted. Conversely, as the balloon deflates, more memory becomes
+available for the guest to allocate. In other words, the hypervisor tricks the 
+operating system into making tough decisions for it. In politics, this is known as passing
+the buck (or the euro, pound, yen, etc.).
+7.7 I/O VIRTUALIZATION
+Having looked at CPU and memory virtualization, we next examine I/O 
+virtualization. The guest operating system will typically start out probing the hardware
+to find out what kinds of I/O devices are attached. These probes will trap to the

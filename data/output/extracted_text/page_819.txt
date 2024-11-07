@@ -1,0 +1,60 @@
+790
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+The basic security mechanism in Linux is simple. Each process carries the UID
+and GID of its owner. When a file is created, it gets the UID and GID of the 
+creating process. The file also gets a set of permissions determined by the creating 
+process. These permissions specify what access the owner, the other members of the
+owner’s group, and the rest of the users have to the file. For each of these three 
+categories, potential accesses are read, write, and execute, designated by the letters r,
+w, and x, respectively. The ability to execute a file makes sense only if that file is
+an executable binary program, of course. An attempt to execute a file that has
+execute permission but which is not executable (i.e., does not start with a valid
+header) will fail with an error. Since there are three categories of users and 3 bits
+per category, 9 bits are sufficient to represent the access rights. Some examples of
+these 9-bit numbers and their meanings are given in Fig. 10-37.
+Binar y
+Symbolic 
+Allowed file accesses
+111000000 
+rwx– – – – – –  
+Owner can read, write, and execute
+111111000 
+rwxrwx– – –  
+Owner and group can read, write, and execute
+110100000 
+rw–r– – – – –  
+Owner can read and write; group can read
+110100100 
+rw–r– –r– –
+Owner can read and write; all others can read
+111101101 
+rwxr–xr–x
+Owner can do everything, rest can read and execute
+000000000 
+– – – – – – – – –  
+Nobody has any access
+000000111 
+– – – – – –rwx 
+Only outsiders have access (strange, but legal)
+Figure 10-37. Some example file-protection modes.
+The first two entries in Fig. 10-37 allow the owner and the owner’s group full
+access, respectively. The next one allows the owner’s group to read the file but not
+to change it, and prevents outsiders from any access. The fourth entry is common
+for a data file the owner wants to make public. Similarly, the fifth entry is the
+usual one for a publicly available program. The sixth entry denies all access to all
+users. This mode is sometimes used for dummy files used for mutual exclusion
+because an attempt to create such a file will fail if one already exists. Thus if 
+multiple processes simultaneously attempt to create such a file as a lock, only one of
+them will succeed. The last example is strange indeed, since it gives the rest of the
+world more access than the owner. Howev er, its existence follows from the 
+protection rules. Fortunately, there is a way for the owner to subsequently change the
+protection mode, even without having any access to the file itself.
+The user with UID 0 is special and is called the superuser (or root). The
+superuser has the power to read and write all files in the system, no matter who
+owns them and no matter how they are protected. Processes with UID 0 also have
+the ability to make a small number of protected system calls denied to ordinary
+users. Normally, only the system administrator knows the superuser’s password,
+although many undergraduates consider it a great sport to try to look for security
+flaws in the system so they can log in as the superuser without knowing the 
+password. Management tends to frown on such activity.

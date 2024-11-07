@@ -1,0 +1,41 @@
+SEC. 6.9
+SUMMARY
+471
+Livelock is similar to deadlock in that it can stop all forward progress, but it is
+technically different since it involves processes that are not actually blocked. 
+Starvation can be avoided by a first-come, first-served allocation policy.
+PROBLEMS
+1. Give an example of a deadlock taken from politics.
+2. In the dining philosophers problem, let the following protocol be used: An 
+even-numbered philosopher always picks up his left fork before picking up his right fork; an
+odd-numbered philosopher always picks up his right fork before picking up his left
+fork. Will this protocol guarantee deadlock-free operation?
+3. In the solution to the dining philosophers problem (Fig. 6-5), why is the state variable
+set to HUNGRY in the procedure take forks?
+4. Consider the procedure put forks in Fig. 6-5. Suppose that the variable state[i] was
+set to THINKING after the two calls to test, rather than before. How would this change
+affect the solution?
+5. Students working at individual PCs in a computer laboratory send their files to be
+printed by a server that spools the files on its hard disk. Under what conditions may a
+deadlock occur if the disk space for the print spool is limited? How may the deadlock
+be avoided?
+6. In the preceding question, which resources are preemptable and which are 
+nonpreemptable?
+7. In Fig. 6-1, the resources are returned in the reverse order of their acquisition. Would
+giving them back in the other order be just as good?
+8. The four conditions (mutual exclusion, hold and wait, no preemption and circular wait)
+are necessary for a resource deadlock to occur. Giv e an example to show that these
+conditions are not sufficient for a resource deadlock to occur. When are these 
+conditions sufficient for a resource deadlock to occur?
+9. City streets are vulnerable to a circular blocking condition called gridlock, in which
+intersections are blocked by cars that then block cars behind them that then block the
+cars that are trying to enter the previous intersection, etc. All intersections around a
+city block are filled with vehicles that block the oncoming traffic in a circular manner.
+Gridlock is a resource deadlock and a problem in competition synchronization. New
+York City’s prevention algorithm, called ‘‘don’t block the box,’’ prohibits cars from
+entering an intersection unless the space following the intersection is also available.
+Which prevention algorithm is this? Can you provide any other prevention algorithms
+for gridlock?
+10. Suppose four cars each approach an intersection from four different directions 
+simultaneously. Each corner of the intersection has a stop sign. Assume that traffic 
+regulations require that when two cars approach adjacent stop signs at the same time, the car

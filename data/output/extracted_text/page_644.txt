@@ -1,0 +1,46 @@
+615
+friends how clever you were (and the authors will neither confirm nor deny rumors
+that they engaged in such activities in their younger days). Nowadays, however,
+this is no longer the only or even the most important reason to break into a system.
+There are many different types of attackers with different kinds of motivation.
+These include theft, hacktivism, vandalism, terrorism, cyberwarfare, espionage,
+spam, extortion, fraud—and occasionally the attacker still simply wants to show
+off, or expose the poor security of an organization.
+Attackers similarly range from not very skilled beginners who want to be
+cybercriminals but have not learned the ropes yet, to extremely skillful crackers.
+They may be professionals working for criminals, governments (e.g., the police,
+the military, or the secret services), or security firms—or hobbyists that do all their
+hacking in their spare time. It should be clear that trying to keep a hostile foreign
+government from stealing military secrets is quite a different matter from trying to
+keep students from inserting a funny message-of-the-day into the system. The
+amount of effort needed for security and protection clearly depends on who the
+enemy is thought to be.
+Going back to the attack tools, it may come as a surprise that many of them are
+developed by white hats. The explanation is that, while the baddies may (and do)
+use them also, these tools primarily serve as convenient means to test the security
+of a computer system or network. For instance, a fuzzer is a software testing tool
+that throws unexpected and/or invalid inputs at programs to see if the program
+hangs or crashes—evidence of bugs that should be fixed. Some fuzzers can only be
+used on simple user programs, but others explicitly target the operating system. A
+good example is Google’s syzkaller which semi-randomly executes system calls
+with crazy combinations of arguments to trigger bugs in the kernel. Fuzzers may
+be used by developers to test their own code or corporate users to test the software
+they hav e purchased, but also by crackers who look for vulnerabilities that allow
+them to compromise the system. A tool that is useful for attackers as well as
+defenders is known as dual use. There are many examples of such tools.
+However, cybercriminals also offer a wide range of (often online) services to
+wannabe cyber crooks who want to spread malware, launder money, redirect 
+traffic, provide hosting with a no-questions-asked policy, and many other things that
+fit in the perceived business model. Most criminal activities on the Internet build
+on infrastructures known as botnets that consist of thousands (and sometimes 
+millions) of compromised computers—often normal computers of innocent and 
+ignorant users. There are all-too-many ways in which attackers can compromise a
+user’s machine. While the hackers in movies typically ‘‘hack into’’ the system by
+exploiting some minuscule weakness in the victim’s defenses with great genius
+(whatever that means), the reality may be more prosaic. For instance, they may
+guess the password, because ‘‘letmein’’ or ‘‘password’’ turn out to be less secure
+than many people think. The opposite also happens. Some users pick very 
+complicated passwords, so that they cannot remember them, and have to write them down
+on a Post-it note which they attach to their screen or keyboard. This way, anyone
+SEC. 9.1
+FUNDAMENTALS OF OPERATING SYSTEM SECURITY

@@ -1,0 +1,46 @@
+CHAP. 3  
+PROBLEMS
+257
+48. Can you think of any situations where supporting virtual memory would be a bad idea,
+and what would be gained by not having to support virtual memory? Explain.
+49. Virtual memory provides a mechanism for isolating one process from another. What
+memory management difficulties would be involved in allowing two operating systems
+to run concurrently? How might these difficulties be addressed?
+50. Plot a histogram and calculate the mean and median of the sizes of executable binary
+files on a computer to which you have access. On a Windows system, look at all .exe
+and .dll files; on a UNIX system look at all executable files in /bin, /usr/bin, and
+/local/bin that are not scripts (or use the file utility to find all executables). Determine
+the optimal page size for this computer just considering the code (not data). Consider
+internal fragmentation and page table size, making some reasonable assumption about
+the size of a page table entry. Assume that all programs are equally likely to be run and
+thus should be weighted equally.
+51. Write a program that simulates a paging system using the aging algorithm. The number
+of page frames is a parameter. The sequence of page references should be read from a
+file. For a given input file, plot the number of page faults per 1000 memory references
+as a function of the number of page frames available.
+52. Write a program that simulates a toy paging system that uses the WSClock algorithm.
+The system is a toy in that we will assume there are no write references (not very 
+realistic), and process termination and creation are ignored (eternal life). The inputs are:
+• The reclamation age threshold
+• The clock interrupt interval expressed as number of memory references
+• A file containing the sequence of page references
+(a) Describe the basic data structures and algorithms in your implementation.
+(b) Show that your simulation behaves as expected for a simple (but nontrivial) input
+example.
+(c) Plot the number of page faults and working set size per 1000 memory references.
+(d) Explain what is needed to extend the program to handle a page reference stream
+that also includes writes.
+53. Write a program that demonstrates the effect of TLB misses on the effective memory
+access time by measuring the per-access time it takes to stride through a large array.
+(a) Explain the main concepts behind the program, and describe what you expect the
+output to show for some practical virtual memory architecture.
+(b) Run the program on some computer and explain how well the data fit your 
+expectations.
+(c) Repeat part (b) but for an older computer with a different architecture and explain
+any major differences in the output.
+54. Write a program that will demonstrate the difference between using a local page
+replacement policy and a global one for the simple case of two processes. You will
+need a routine that can generate a page reference string based on a statistical model.
+This model has N states numbered from 0 to N < 1 representing each of the possible
+page references and a probability pi associated with each state i representing the
+chance that the next reference is to the same page. Otherwise, the next page reference

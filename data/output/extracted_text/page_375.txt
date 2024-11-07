@@ -1,0 +1,46 @@
+346
+INPUT/OUTPUT 
+CHAP. 5
+each set of registers with the relevant parameters for its transfer. Each transfer must
+use a different device controller. After each word is transferred (steps 2 through 4)
+in Fig. 5-4, the DMA controller decides which device to service next. It may be set
+up to use a round-robin algorithm, or it may have a priority scheme design to favor
+some devices over others. Multiple requests to different device controllers may be
+pending at the same time, provided that there is an unambiguous way to tell the
+acknowledgements apart. Often a different acknowledgement line on the bus is
+used for each DMA channel for this reason.
+Many buses can operate in two modes: word-at-a-time mode and block mode.
+Often, DMA controllers can also operate in either mode. In the former mode, the
+operation is as described above: the DMA controller requests the transfer of one
+word and gets it. If the CPU also wants the bus, it has to wait. The mechanism is
+called cycle stealing because the device controller sneaks in and steals an 
+occasional bus cycle from the CPU once in a while, delaying it slightly. In block mode,
+the DMA controller tells the device to acquire the bus, issue a series of transfers,
+then release the bus. This form of operation is called burst mode. It is more 
+efficient than cycle stealing because acquiring the bus takes time and multiple words
+can be transferred for the price of one bus acquisition. The downside to burst mode
+is that it can block the CPU and other devices for a substantial period if a long
+burst is being transferred.
+In the model we have been discussing, sometimes called fly-by mode, the
+DMA controller tells the device controller to transfer the data directly to main
+memory. An alternative mode that some DMA controllers use is to have the device
+controller send the word to the DMA controller, which then issues a second bus
+request to write the word to wherever it is supposed to go. This scheme requires an
+extra bus cycle per word transferred, but is more flexible in that it can also perform
+device-to-device copies and even memory-to-memory copies (by first issuing a
+read to memory and then issuing a write to memory at a different address).
+Most DMA controllers use physical memory addresses for their transfers.
+Using physical addresses requires the operating system to convert the virtual 
+address of the intended memory buffer into a physical address and write this physical
+address into the DMA controller’s address register. An alternative scheme used in a
+few DMA controllers is to write virtual addresses into the DMA controller instead.
+Then the DMA controller must use the MMU to have the virtual-to-physical 
+translation done. Only when the MMU is part of the memory (possible, but rare), rather
+than part of the CPU, can virtual addresses be put on the bus. In Chap. 7, we will
+see that an IOMMU (an MMU for I/O) offers similar functionality: it translates the
+virtual addresses used by devices to physical addresses. In other words, the virtual
+address of a buffer used by a device may be different from the virtual address used
+for the same buffer by the CPU, while both are different from the corresponding
+physical address.
+We mentioned earlier that before DMA can start, the disk first reads data into
+its internal buffer. You may be wondering why the controller does not just store the

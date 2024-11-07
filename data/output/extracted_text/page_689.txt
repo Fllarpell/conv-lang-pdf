@@ -1,0 +1,44 @@
+660
+SECURITY 
+CHAP. 9
+string. Since printing a format string can overwrite memory, we now hav e the tools
+needed to overwrite the return address of the printf function on the stack and jump
+somewhere else, for example, into the newly entered format string. This approach
+is called a format string attack.
+Performing a format string attack is not exactly trivial. Where will the number
+of characters that the function printed be stored? Well, at the address of the 
+parameter following the format string itself, just as in the example shown above. But in
+the vulnerable code, the attacker could supply only one string (and no second
+parameter to printf). In fact, what will happen is that the printf function will
+assume that there is a second parameter. Let us assume that on the target system
+the parameters to a function are passed via the stack. In that case, it will just take
+the next value on the stack and use that. The attacker may also make printf use the
+next value on the stack, for instance by providing the following format string as
+input:
+"%08x %n"
+The ‘‘%08x’’ again means that printf will print the next parameter as an 8-digit
+hexadecimal number. So if that value is 1, it will print 0000001. In other words,
+with this format string, printf will simply assume that the next value on the stack is
+a 32-bit number that it should print, and the value after that is the address of the
+location where it should store the number of characters printed, in this case 9: 8 for
+the hexadecimal number and 1 for the space. Suppose he supplies the format
+string:
+"%08x %08x %n"
+In that case, printf will store the value at the address provided by the third value
+following the format string on the stack, and so on. This is the key to making the
+above format string bug a ‘‘write anything anywhere’’ primitive for an attacker.
+The details are beyond this book, but the idea is that the attacker makes sure that
+the right target address is on the stack. This is easier than you may think. For
+example, in the vulnerable code we presented in Fig. 9-20, the string g is itself also
+on the stack, at a higher address than the stack frame of printf (see Fig. 9-21). Let
+us assume that the string starts as shown in Fig. 9-21, with ‘‘AAAA’’, followed by a
+sequence of ‘‘%0x’’ and ending with ‘‘%0n’’. What will happen? Well if the
+attacker gets the number of ‘‘%0x’’s just right, she will have reached the format
+string (stored in buffer B) itself. In other words, printf will then use the first 4 bytes
+of the format string as the address to write to. Since the ASCII value of the 
+character A is 65 (or 0x41 in hexadecimal), it will write the result at location 0x41414141,
+but the attacker can specify other addresses also. Of course, she must make sure
+that the number of characters printed is exactly right (because this is what will be
+written in the target address). In practice, there is a little more to it than that, but
+not much. Have a look at the write-up on format string attacks on Bugtraq for more
+details: https://seclists.org/bugtraq/2000/Sep/214.

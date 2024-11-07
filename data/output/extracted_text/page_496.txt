@@ -1,0 +1,45 @@
+SEC. 6.7
+OTHER ISSUES
+467
+6.7.3 Livelock
+In some situations, a process tries to be polite by giving up the locks it already
+acquired whenever it notices that it cannot obtain the next lock it needs. Then it
+waits a millisecond, say, and tries again. In principle, this is good and should help
+to detect and avoid deadlock. However, if the other process does the same thing at
+exactly the same time, they will be in the situation of two people trying to pass
+each other on the street when both of them politely step aside, and yet no progress
+is possible, because they keep stepping the same way at the same time.
+Consider an atomic primitive try lock in which the calling process tests a
+mutex and either grabs it or returns failure. In other words, it never blocks. 
+Programmers can use it together with acquire lock which also tries to grab the lock,
+but blocks if the lock is not currently available. Now imagine a pair of processes
+running in parallel (perhaps on different cores) that use two resources, as shown in
+Fig. 6-19. Each one needs two resources and uses the try lock primitive to try to
+acquire the necessary locks. If the attempt fails, the process gives up the lock it
+holds and tries again. In Fig. 6-19, process A runs and acquires resource 1, while
+process 2 runs and acquires resource 2. Next, they try to acquire the other lock and
+fail. To be polite, they giv e up the lock they are currently holding and try again.
+This procedure repeats until a bored user (or some other entity) puts one of these
+processes out of its misery. Clearly, no process is blocked and we could even say
+that things are happening, so this is not a deadlock. Still, no progress is possible, so
+we do have something equivalent: a livelock.
+Livelock and deadlock can occur in surprising ways. In some systems, the
+total number of processes allowed is determined by the number of entries in the
+process table. Thus, process-table slots are finite resources. If a fork fails because
+the table is full, a reasonable approach for the program doing the fork is to wait a
+random time and try again.
+Now suppose that a UNIX system has 100 process slots. Ten programs are
+running, each of which needs to create 12 children. After each process has created
+9 processes, the 10 original processes and the 90 new processes have exhausted the
+table. Each of the 10 original processes now sits in an endless loop forking and
+failing—a livelock. The probability of this happening is minuscule, but it could
+happen. Should we abandon processes and the fork call to eliminate the problem?
+The maximum number of open files is similarly restricted by the size of the 
+inode table, so a similar problem occurs when it fills up. Swap space on the disk is
+another limited resource. In fact, almost every table in the operating system
+represents a finite resource. Should we abolish all of these because it might 
+happen that a collection of n processes might each claim 1/n of the total, and then each
+try to claim another one? Probably not a good idea.
+Most operating systems, including UNIX and Windows, basically just ignore
+the problem on the assumption that most users would prefer an occasional livelock
+(or even deadlock) to a rule restricting all users to one process, one open file, and

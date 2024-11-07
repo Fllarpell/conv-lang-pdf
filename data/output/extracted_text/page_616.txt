@@ -1,0 +1,46 @@
+SEC. 8.3
+DISTRIBUTED SYSTEMS
+587
+computers communicate is called a protocol. Many protocols exist, including
+router-router protocols, host-host protocols, and others. For a thorough treatment of
+computer networks and their protocols, see Computer Networks, 6/e (Tanenbaum
+et al., 2020).
+All modern networks use what is called a protocol stack to layer different 
+protocols on top of one another. At each layer, different issues are dealt with. For
+example, at the bottom level protocols define how to tell where in the bit stream a
+packet begins and ends. At a higher level, protocols deal with how to route packets
+through complex networks from source to destination. And at a still higher level,
+they make sure that all the packets in a multipacket message have arrived correctly
+and in the proper order.
+Since most distributed systems use the Internet as a base, the key protocols
+these systems use are the two major Internet protocols: IP and TCP. IP (Internet
+Protocol) is a datagram protocol in which a sender injects a datagram of up to 64
+KB into the network and hopes that it arrives. No guarantees are given. The 
+datagram may be fragmented into smaller packets as it passes through the Internet.
+These packets travel independently, possibly along different routes. When all the
+pieces get to the destination, they are assembled in the correct order and delivered.
+Tw o versions of IP are currently in use, v4 and v6. At the moment, v4 still
+dominates, so we will describe that here, but v6 is up and coming. Each v4 packet
+starts with a 40-byte header that contains a 32-bit source address and a 32-bit 
+destination address among other fields. These are called IP addresses and form the
+basis of Internet routing. They are conventionally written as four decimal numbers
+in the range 0–255 separated by dots, as in 192.31.231.65. When a packet arrives
+at a router, the router extracts the IP destination address and uses that for routing.
+Since IP datagrams are not acknowledged, IP alone is not sufficient for reliable
+communication in the Internet. To provide reliable communication, another 
+protocol, TCP (Transmission Control Protocol), is usually layered on top of IP. TCP
+uses IP to provide connection-oriented streams. To use TCP, a process first 
+establishes a connection to a remote process. The process required is specified by the IP
+address of a machine and a port number on that machine, to which processes 
+interested in receiving incoming connections listen. Once that has been done, it just
+pumps bytes into the connection and they are guaranteed to come out the other end
+undamaged and in the correct order. The TCP implementation achieves this 
+guarantee by using sequence numbers, checksums, and retransmissions of incorrectly
+received packets. All of this is transparent to the sending and receiving processes.
+They just see reliable interprocess communication, just like a UNIX pipe.
+To see how all these protocols interact, consider the simplest case of a very
+small message that does not need to be fragmented at any lev el. The host is on an
+Ethernet connected to the Internet. What happens exactly? The user process 
+generates the message and makes a system call to send it on a previously established
+TCP connection. The kernel protocol stack adds a TCP header and then an IP
+header to the front. of the message. Then it goes to the Ethernet driver, which adds

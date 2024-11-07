@@ -1,0 +1,97 @@
+SEC. 4.3
+FILE-SYSTEM IMPLEMENTATION
+287
+File 1 entry length
+File 1 attributes
+Pointer to file 1's name
+File 1 attributes
+Pointer to file 2's name
+File 2 attributes
+Pointer to file 3's name
+File 2 entry length
+File 2 attributes
+File 3 entry length
+File 3 attributes
+p
+e
+b
+e
+r
+c
+u
+t
+o
+t
+d
+
+j
+g
+p
+e
+b
+e
+r
+c
+u
+t
+o
+t
+d
+
+j
+g
+p
+e
+r
+s
+o
+n
+n
+e
+l
+f
+o
+o
+p
+o
+l
+e
+n
+r
+n
+f
+o
+o
+s
+e
+Entry!
+for one!
+file
+Heap
+Entry!
+for one!
+file
+(a)
+(b)
+File 3 attributes
+Figure 4-17. Tw o ways of handling long file names in a directory. (a) In-line.
+(b) In a heap.
+at word boundaries, so no filler characters are needed after file names in
+Fig. 4-17(b) as they are in Fig. 4-17(a).
+In all of the designs so far, directories are searched linearly from beginning to
+end when a file name has to be looked up. For extremely long directories, linear
+searching can be slow. One way to speed up the search is to use a hash table in
+each directory. Call the size of the table n. To enter a file name, the name is hashed
+onto a value between 0 and n < 1, for example, by dividing it by n and taking the
+remainder. Alternatively, the words comprising the file name can be added up and
+this quantity divided by n, or something similar.
+Either way, the table entry corresponding to the hash code is inspected. If it is
+unused, a pointer is placed there to the file entry. File entries follow the hash table.
+If that slot is already in use, a linked list is constructed, headed at the table entry
+and threading through all entries with the same hash value.
+Looking up a file follows the same procedure. The file name is hashed to select
+a hash-table entry. All the entries on the chain headed at that slot are checked to
+see if the file name is present. If the name is not on the chain, the file is not 
+present in the directory.
+Using a hash table has the advantage of much faster lookup, but the 
+disadvantage of a much more complex administration. It is only really a serious candidate

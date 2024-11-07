@@ -1,0 +1,83 @@
+472
+DEADLOCKS 
+CHAP. 6
+on the left must yield to the car on the right. Thus, as four cars each drive up to their
+individual stop signs, each waits (indefinitely) for the car on the left to proceed. Is this
+anomaly a communication deadlock? Is it a resource deadlock?
+11. Is it possible that a resource deadlock involves multiple units of one type and a single
+unit of another? If so, give an example.
+12. Figure 6-6 shows the concept of a resource graph. Do illegal graphs exist, that is,
+graphs that structurally violate the model we have used of resource usage? If so, give
+an example of one.
+13. Consider Fig. 6-7. Suppose that in step (o) C requested S instead of requesting R.
+Would this lead to deadlock? Suppose that it requested both S and R.
+14. Suppose that there is a resource deadlock in a system. Give an example to show that
+the set of processes deadlocked can include processes that are not in the circular chain
+in the corresponding resource allocation graph.
+15. In order to control traffic, a network router, A periodically sends a message to its
+neighbor, B, telling it to increase or decrease the number of packets that it can handle.
+At some point in time, Router A is flooded with traffic and sends B a message telling it
+to cease sending traffic. It does this by specifying that the number of bytes B may send
+(A’s window size) is 0. As traffic surges decrease, A sends a new message, telling B to
+restart transmission. It does this by increasing the window size from 0 to a positive
+number. That message is lost. As described, neither side will ever transmit. What type
+of deadlock is this?
+16. The discussion of the ostrich algorithm mentions the possibility of process-table slots
+or other system tables filling up. Can you suggest a way to enable a system 
+administrator to recover from such a situation?
+17. Consider the following state of a system with four processes, P1, P2, P3, and P4, and
+five types of resources, RS1, RS2, RS3, RS4, and RS5:
+0"
+0"
+0"
+2
+1"
+0"
+0"
+0
+1"
+1"
+0"
+0
+E = (24144)"
+"A = (01021)"
+"C =
+R =
+1
+2
+1
+0
+0
+1
+1
+0
+1
+1
+0
+2
+1
+0
+1
+0
+2
+1
+0
+2
+0
+3
+1
+0
+2
+1
+1
+0
+Using the deadlock detection algorithm described in Section 6.4.2, show that there is a
+deadlock in the system. Identify the processes that are deadlocked.
+18. Explain how the system can recover from the deadlock in previous problem using
+(a) recovery through preemption.
+(b) recovery through rollback.
+(c) recovery through killing processes.
+19. Suppose that in Fig. 6-9 Cij + Rij > E j for some i. What implications does this have
+for the system?
+20. All the trajectories in Fig. 6-11 are horizontal or vertical. Can you envision any 
+cir

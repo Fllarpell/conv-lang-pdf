@@ -1,0 +1,42 @@
+36
+INTRODUCTION 
+CHAP. 1
+called PE (Portable Executable). As you can see, the BIOS under UEFI very
+much looks like a little operating system itself which understands partitions, file
+systems, executables, etc. It even has a shell with some standard commands.
+The boot code still needs to pick one of the bootloader programs to load Linux
+or Windows, or whatever operating system, but there may be many partitions with
+operating systems and given so much choice, which one should it pick? This is
+decided by the UEFI boot manager, which you can think of as a boot menu with
+different entries and a configurable order in which to try the different boot options.
+Changing the menu and the default bootloader is very easy and can be done from
+within the currently executing operating system. As before, the bootloader will
+continue loading the operating system of choice.
+This is by no means the full story. UEFI is very flexible and highly 
+standardized, and contains many advanced features. However, this is enough for now.
+In Chap. 9, we will pick up UEFI again when we discuss an interesting feature
+known as Secure Boot, which allows a user to be sure that the operating system is
+booted as intended and with the correct software.
+1.4 THE OPERATING SYSTEM ZOO
+Operating systems have been around now for over half a century. During this
+time, quite a variety of them have been developed, not all of them widely known.
+In this section, we will briefly touch upon nine of them. We will come back to
+some of these different kinds of systems later in the book.
+1.4.1 Mainframe Operating Systems
+At the high end are the operating systems for mainframes, those room-sized
+computers still found in major corporate data centers. These computers differ from
+personal computers in terms of their I/O capacity. A mainframe with 1000 hard
+disks and many terabytes of data are not unusual; a personal computer with these
+specifications would be the envy of its friends. Mainframes are also making 
+something of a comeback as high-end servers for large-scale electronic commerce sites,
+banking, airline reservations, and servers for business-to-business transactions.
+The operating systems for mainframes are heavily oriented toward processing
+many jobs at once, most of which need prodigious amounts of I/O. They typically
+offer three kinds of services: batch, transaction processing, and timesharing. A
+batch system is one that processes routine jobs without any interactive user present.
+Claims processing in an insurance company or sales reporting for a chain of stores
+is typically done in batch mode. Transaction-processing systems handle large 
+numbers of small requests, for example, check processing at a bank or airline 
+reservations. Each unit of work is small, but the system must handle hundreds or 
+thousands per second. Timesharing systems allow multiple remote users to run jobs on
+the computer at once, such as querying a big database. These functions are closely

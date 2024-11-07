@@ -1,0 +1,44 @@
+SEC. 4.4
+FILE-SYSTEM MANAGEMENT AND OPTIMIZATION
+317
+Furthermore, some blocks, such as i-node blocks, are rarely referenced two
+times within a short interval. These considerations lead to a modified LRU scheme,
+taking two factors into account:
+1. Is the block likely to be needed again soon?
+2. Is the block essential to the consistency of the file system?
+For both questions, blocks can be divided into categories such as i-node blocks,
+indirect blocks, directory blocks, full data blocks, and partially full data blocks.
+Blocks that will probably not be needed again soon go on the front, rather than the
+rear of the LRU list, so their buffers will be reused quickly. Blocks that might be
+needed again soon, such as a partly full block that is being written, go on the end
+of the list, so they will stay around for a long time.
+The second question is independent of the first one. If the block is essential to
+the file-system consistency (basically, everything except data blocks), and it has
+been modified, it should be written to disk immediately, reg ardless of which end of
+the LRU list it is put on. By writing critical blocks quickly, we greatly reduce the
+probability that a crash will wreck the file system. While a user may be unhappy if
+one of his files is ruined in a crash, he is likely to be far more unhappy if the whole
+file system is lost.
+Even with this measure to keep the file-system integrity intact, it is undesirable
+to keep data blocks in the cache too long before writing them out. Consider the
+plight of someone who is using a personal computer to write a book. Even if our
+writer periodically tells the editor to write the file being edited to the disk, there is
+a good chance that everything will still be in the cache and nothing on the disk. If
+the system crashes, the file-system structure will not be corrupted, but a whole
+day’s work will be lost.
+This situation need not happen often before we have a fairly unhappy user.
+Systems take two approaches to dealing with it. The UNIX way is to have a 
+system call, sync, which forces all the modified blocks out onto the disk immediately.
+When the system is started up, a program, usually called update, is started up in
+the background to sit in an endless loop issuing sync calls, sleeping for 30 sec
+between calls. As a result, no more than 30 seconds of work is lost due to a crash.
+Although Windows now has a system call equivalent to sync, called 
+FlushFileBuffers, in the past it did not. Instead, it had a different strategy that was in some
+ways better than the UNIX approach (and in some ways worse). What it did was
+to write every modified block to disk as soon as it was written to the cache. Caches
+in which all modified blocks are written back to the disk immediately are called
+write-through caches. They require more disk I/O than nonwrite-through caches.
+The difference between these two approaches can be seen when a program
+writes a 1-KB block full, one character at a time. UNIX will collect all the 
+characters in the cache and write the block out once every 30 seconds, or whenever the
+block is removed from the cache. With a write-through cache, there is a disk access

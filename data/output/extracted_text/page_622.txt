@@ -1,0 +1,42 @@
+SEC. 8.3
+DISTRIBUTED SYSTEMS
+593
+1. Machine + path naming, such as /machine/path or machine:path.
+2. Mounting remote file systems onto the local file hierarchy.
+3. A single name space that looks the same on all machines.
+The first two are easy to implement, especially as a way to connect existing 
+systems that were not designed for distributed use. The latter is difficult and requires
+careful design, but makes life easier for programmers and users.
+Semantics of File Sharing
+When two or more users share the same file, it is necessary to define the
+semantics of reading and writing precisely to avoid problems. In single-processor
+systems, the semantics normally state that when a read system call follows a wr ite
+system call, the read returns the value just written, as shown in Fig. 8-35(a). 
+Similarly, when two wr ites happen in quick succession, followed by a read, the value
+read is the value stored by the last write. In effect, the system enforces a total
+ordering on all system calls, and all processors see the same ordering. We will
+refer to this model as sequential consistency.
+In a distributed system, sequential consistency can be achieved easily as long
+as there is only one file server and clients do not cache files. All reads and wr ites
+go directly to the file server, which processes them strictly sequentially.
+In practice, however, the performance of a distributed system in which all file
+requests must go to a single server is frequently poor. This problem is often solved
+by allowing clients to maintain local copies of heavily used files in their private
+caches. However, if client 1 modifies a cached file locally and shortly thereafter
+client 2 reads the file from the server, the second client will get an obsolete file, as
+illustrated in Fig. 8-35(b).
+One way out of this difficulty is to propagate all changes to cached files back
+to the server immediately. Although conceptually simple, this approach is 
+inefficient. An alternative solution is to relax the semantics of file sharing. Instead of
+requiring a read to see the effects of all previous wr ites, one can have a new rule
+that says: ‘‘Changes to an open file are initially visible only to the process that
+made them. Only when the file is closed are the changes visible to other 
+processes.’’ The adoption of such a rule does not change what happens in Fig. 8-35(b),
+but it does redefine the actual behavior (B getting the original value of the file) as
+being the correct one. When client 1 closes the file, it sends a copy back to the 
+server, so that subsequent reads get the new value, as required. Effectively, this is the
+upload/download model shown in Fig. 8-33. This semantic rule is widely 
+implemented and is known as session semantics.
+Using session semantics raises the question of what happens if two or more 
+clients are simultaneously caching and modifying the same file. One solution is to say
+that as each file is closed in turn, its value is sent back to the server, so the final

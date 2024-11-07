@@ -1,0 +1,70 @@
+534
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+CPUs
+b
+b
+b
+b
+a
+a
+a
+a
+3 Stages
+Memories
+000
+001
+010
+011
+100
+101
+110
+111
+000
+001
+010
+011
+100
+101
+110
+111
+1A
+1B
+1C
+1D
+2A
+2B
+2C
+2D
+3A
+3B
+3C
+3D
+Figure 8-5. An omega switching network.
+READ message to switch 1D containing the value 110 in the Module field. The
+switch takes the first (i.e., leftmost) bit of 110 and uses it for routing. A 0 routes to
+the upper output and a 1 routes to the lower one. Since this bit is a 1, the message
+is routed via the lower output to 2D.
+All the second-stage switches, including 2D, use the second bit for routing.
+This, too, is a 1, so the message is now forwarded via the lower output to 3D.
+Here, the third bit is tested and found to be a 0. Consequently, the message goes
+out on the upper output and arrives at memory 110, as desired. The path followed
+by this message is marked in Fig. 8-5 by the letter a.
+As the message moves through the switching network, the bits at the left-hand
+end of the module number are no longer needed. They can be put to good use by
+recording the incoming line number there, so the reply can find its way back. For
+path a, the incoming lines are 0 (upper input to 1D), 1 (lower input to 2D), and 1
+(lower input to 3D), respectively. The reply is routed back using 011, only reading
+it from right to left this time.
+At the same time all this is going on, CPU 001 wants to write a word to 
+memory module 001. An analogous process happens here, with the message routed via
+the upper, upper, and lower outputs, respectively, marked by the letter b. When it
+arrives, its Module field reads 001, representing the path it took. Since these two
+requests do not use any of the same switches, lines, or memory modules, they can
+proceed in parallel.
+Now consider what would happen if CPU 000 simultaneously wanted to access
+memory module 000. Its request would come into conflict with CPU 001’s request
+at switch 3A. One of them would then have to wait. Unlike the crossbar switch,
+the omega network is a blocking network. Not every set of requests can be 
+processed simultaneously. Conflicts can occur over the use of a wire or a switch, as
+well as between requests to memory and replies from memory.

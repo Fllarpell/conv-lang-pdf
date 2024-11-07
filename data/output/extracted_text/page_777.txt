@@ -1,0 +1,40 @@
+748
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+is a requirement or merely a hint. The fifth parameter, fd, is the file descriptor for
+the file to be mapped. Only open files can be mapped, so to map a file in, it must
+first be opened. Finally, offset tells where in the file to begin the mapping. It is not
+necessary to start the mapping at byte 0; any page boundary will do.
+The other call, unmap, removes a mapped file. If only a portion of the file is
+unmapped, the rest remains mapped.
+10.4.3 Implementation of Memory Management in Linux
+Each Linux process on a 32-bit machine typically gets 3 GB of virtual address
+space for itself, with the remaining 1 GB reserved for its page tables and other 
+kernel data. The kernel’s 1 GB is not visible when running in user mode, but becomes
+accessible when the process traps into the kernel. The kernel memory typically
+resides in low physical memory but it is mapped in the top 1 GB of each process
+virtual address space, between addresses 0xC0000000 and 0xFFFFFFFF (3–4 GB).
+On most of the current 64-bit x86 machines, only up to 48 bits are used for 
+addressing, implying a theoretical limit of 256 TB for the size of the addressable
+memory. Linux splits this memory between the kernel and user space, resulting in
+a maximum 128 TB per-process virtual address space per process. The address
+space is created when the process is created and is overwritten on an exec system
+call. Recent hardware enhancement have made it possible to use up to 57 address
+bits, which further extends the size of the possible addressable memory to 128 PB
+(Petabytes).
+In order to allow multiple processes to share the underlying physical memory,
+Linux monitors the use of the physical memory, allocates more memory as needed
+by user processes or kernel components, dynamically maps portions of the physical
+memory into the address space of different processes, and dynamically brings in
+and out of memory program executables, files, and other state information as 
+necessary to utilize the platform resources efficiently and to ensure execution progress.
+The remainder of this section describes the implementation of various mechanisms
+in the Linux kernel which are responsible for these operations.
+Physical Memory Management
+Due to idiosyncratic hardware limitations on many systems, not all physical
+memory can be treated identically, especially with respect to I/O and virtual 
+memory. Linux distinguishes between the following memory zones:
+1. ZONE DMA and ZONE DMA32: pages that can be used for DMA.
+2. ZONE NORMAL: normal, regularly mapped pages.
+3. ZONE HIGHMEM: pages with high-memory addresses, which are
+not permanently mapped.

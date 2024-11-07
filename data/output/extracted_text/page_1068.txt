@@ -1,0 +1,58 @@
+CHAP. 11
+PROBLEMS
+1039
+34. A file has the following mapping. Give the MFT run entries.
+Offset 
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9 10
+Disk address
+50 51 52 22 24 25 26 53 
+54
+60
+35. Consider the MFT record of Fig. 11-46. Suppose that the file grew and a 10th block
+was assigned to the end of the file. The number of this block is 66. What would the
+MFT record look like now?
+36. In Fig. 11-49(b), the first two runs are each of length 8 blocks. Is it just an accident
+that they are equal, or does this have to do with the way compression works? Explain
+your answer.
+37. Suppose that you wanted to build Windows Lite. Which of the fields of Fig. 11-55
+could be removed without weakening the security of the system?
+38. The mitigation strategy for improving security despite the continuing presence of 
+vulnerabilities has been very successful. Modern attacks are very sophisticated, often
+requiring the presence of multiple vulnerabilities to build a reliable exploit. One of the
+vulnerabilities that is usually required is an information leak. Explain how an 
+information leak can be used to defeat address-space randomization in order to launch an
+attack based on return-oriented programming.
+39. An extension model used by many programs (Web browsers, Office, COM servers)
+involves hosting DLLs to hook and extend their underlying functionality. Is this a 
+reasonable model for an RPC-based service to use as long as it is careful to impersonate
+clients before loading the DLL? Why not?
+40. When running on a NUMA machine, whenever the Windows memory manager needs
+to allocate a physical page to handle a page fault it attempts to use a page from the
+NUMA node for the current thread’s ideal processor. Why? What if the thread is 
+currently running on a different processor?
+41. Give a couple of examples where an application might be able to recover easily from a
+backup based on a volume shadow copy rather the state of the disk after a system
+crash.
+42. In Sec. 11.10, providing new memory to the process heap was mentioned as one of the
+scenarios that require a supply of zeroed pages in order to satisfy security 
+requirements. Give one or more other examples of virtual memory operations that require
+zeroed pages.
+43. Windows contains a hypervisor which allows multiple operating systems to run 
+simultaneously. This is available on clients, but is far more important in cloud computing.
+When a security update is applied to a guest operating system, it is not much different
+than patching a server. Howev er, when a security update is applied to the root 
+operating system, this can be a big problem for the users of cloud computing. What is the
+nature of the problem? What can be done about it?
+44. Does hotpatching break CFG guarantees by introducing new indirect jumps?
+45. The regedit command can be used to export part or all of the registry to a text file
+under all current versions of Windows. Save the registry several times during a work
+session and see what changes. If you have access to a Windows computer on which

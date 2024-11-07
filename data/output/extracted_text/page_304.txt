@@ -1,0 +1,44 @@
+SEC. 4.2
+DIRECTORIES
+275
+No matter which character is used, if the first character of the path name is the 
+separator, then the path is absolute.
+The other kind of name is the relative path name. This is used in conjunction
+with the concept of the working directory (also called the current directory). A
+user can designate one directory as the current working directory, in which case all
+path names not beginning at the root directory are taken relative to the working
+directory. For example, if the current working directory is /usr/hjb, then the file
+whose absolute path is /usr/hjb/mailbox can be referenced simply as mailbox. In
+other words, the UNIX command
+cp /usr/hjb/mailbox /usr/hjb/mailbox.bak
+and the command
+cp mailbox mailbox.bak
+do exactly the same thing if the working directory is /usr/hjb. The relative form is
+often more convenient, but it does the same thing as the absolute form.
+Some programs need to access a specific file without regard to what the 
+working directory is. In that case, they should always use absolute path names. For
+example, a spelling checker might need to read /usr/lib/dictionary to do its work.
+It should use the full, absolute path name in this case because it does not know
+what the working directory will be when it is called. The absolute path name will
+always work, no matter what the working directory is.
+Of course, if the spelling checker needs a large number of files from /usr/lib,
+an alternative approach is for it to issue a system call to change its working 
+directory to /usr/lib, and then use just dictionary as the first parameter to open. By
+explicitly changing the working directory, it knows for sure where it is in the 
+directory tree, so it can then use relative paths.
+Each process has its own working directory. When it changes its working 
+directory and later exits, no other processes are affected and no traces of the change
+are left behind. In this way, a process can change its working directory whenever it
+is convenient. On the other hand, if a library procedure changes the working 
+directory and does not change back to where it was when it is finished, the rest of the
+program may not work since its assumption about where it is may now suddenly be
+invalid. For this reason, library procedures rarely change the working directory,
+and when they must, they always change it back again before returning.
+Most operating systems that support a hierarchical directory system have two
+special entries in every directory, ‘‘.’’ and ‘‘..’’, generally pronounced ‘‘dot’’ and
+‘‘dotdot.’’ Dot refers to the current directory; dotdot refers to its parent (except in
+the root directory, where it refers to itself). To see how these are used, consider the
+UNIX file tree of Fig. 4-9. A certain process has /usr/ast as its working directory.
+It can use .. to go higher up the tree. For example, it can copy the file 
+/usr/lib/dictionary to its own directory using the command
+cp ../lib/dictionary .

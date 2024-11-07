@@ -1,0 +1,46 @@
+CHAP. 8  
+PROBLEMS
+603
+27. Figure 8-30 lists six different types of service. For each of the following applications,
+which service type is most appropriate?
+(a) Video on demand over the Internet.
+(b) Downloading a Web page.
+28.
+DNS names have a hierarchical structure, such as sales.general-widget.com or
+cs.uni.edu One way to maintain the DNS database would be as one centralized 
+database, but that is not done because it would get too many requests/sec. Propose a way
+that the DNS database could be maintained in practice.
+29. In the discussion of how URLs are processed by a browser, it was stated that 
+connections are made to port 80. Why?
+30. Migrating virtual machines may be easier than migrating processes, but migration can
+still be difficult. What problems can arise when migrating a virtual machine?
+31. When a browser fetches a Web page, it first makes a TCP connection to get the text on
+the page (in the HTML language). Then it closes the connection and examines the
+page. If there are figures or icons, it then makes a separate TCP connection to fetch
+each one. Suggest two alternative designs to improve performance here.
+32. When session semantics are used, it is always true that changes to a file are 
+immediately visible to the process making the change and never visible to processes on other
+machines. However, it is an open question as to whether or not they should be
+immediately visible to other processes on the same machine. Give an argument each
+way.
+33. When multiple processes need access to data, in what way is object-based access better
+than shared memory?
+34. When a Linda in operation is done to locate a tuple, searching the entire tuple space
+linearly is very inefficient. Design a way to organize the tuple space that will speed up
+searches on all in operations.
+35. Imagine that you have two windows open on your computer at once. One of the 
+windows is to a list of files in some directory (e.g., File Explorer in Windows or the Finder
+in MacOS). The other window is to a shell (command line interpreter). In the shell
+you create a new file. In the other window, within a fraction of a second the new file
+shows up. Give a way this could be implemented.
+36. Copying buffers takes time. Write a C program to find out how much time it takes on a
+system to which you have access. Use the clock or times functions to determine how
+long it takes to copy a large array. Test with different array sizes to separate copying
+time from overhead time.
+37. Write C functions that could be used as client and server stubs to make an RPC call to
+the standard printf function, and a main program to test the functions. The client and
+server should communicate by means of a data structure that could be transmitted over
+a network. You may impose reasonable limits on the length of the format string and the
+number, types, and sizes of the variables your client stub will accept.
+38. Write a program that implements the sender-initiated and receiver-initiated load 
+balancing algorithms described in Sec. 8.2. The algorithms should take as input a list of

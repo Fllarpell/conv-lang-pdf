@@ -1,0 +1,43 @@
+xii
+CONTENTS
+4.2 
+DIRECTORIES 272
+4.2.1 Single-Level Directory Systems 272
+4.2.2 Hierarchical Directory Systems 273
+4.2.3 Path Names 274
+4.2.4 Directory Operations 277
+4.3 
+FILE-SYSTEM IMPLEMENTATION 278
+4.3.1 File-System Layout 278
+4.3.2 Implementing Files 280
+4.3.3 Implementing Directories 285
+4.3.4 Shared Files 288
+4.3.5 Log-Structured File Systems 290
+4.3.6 Journaling File Systems 292
+4.3.7 Flash-based File Systems 293
+4.3.8 Virtual File Systems 298
+4.4 
+FILE-SYSTEM MANAGEMENT AND OPTIMIZATION 301
+4.4.1 Disk-Space Management 301
+4.4.2 File-System Backups 307
+4.4.3 File-System Consistency 312
+4.4.4 File-System Performance 315
+4.4.5 Defragmenting Disks 320
+4.4.6 Compression and Deduplication 321
+4.4.7 Secure File Deletion and Disk Encryption 322
+4.5 
+EXAMPLE FILE SYSTEMS 324
+4.5.1 The MS-DOS File System 324
+4.5.2 The UNIX V7 File System 327
+4.6 
+RESEARCH ON FILE SYSTEMS 330
+4.7 
+SUMMARY 331
+5
+INPUT/OUTPUT
+337
+5.1 
+PRINCIPLES OF I/O HARDWARE 337
+5.1.1 I/O Devices 338
+5.1.2 Device Controllers 338
+5.1.3 Memory-Mapped I/O 340

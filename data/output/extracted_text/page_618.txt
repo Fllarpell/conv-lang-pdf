@@ -1,0 +1,111 @@
+SEC. 8.3
+DISTRIBUTED SYSTEMS
+589
+whistles have recently been grafted onto the Web, the underlying paradigm is still
+clearly present: the Web is a great big directed graph of documents that can point
+to other documents, as shown in Fig. 8-32.
+University of North South
+School of 
+Humanities
+School of 
+Sciences
+School of Social 
+Sciences
+Northern  University
+Geography
+History
+Languages
+Main page
+Geography Dept
+Big countries
+Small countries
+Rich countries
+Poor countries
+Humanities
+History Dept.
+Ancient times
+Medieval times
+Modern times
+Future times
+Humanities
+Languages Dept.
+English
+French
+Dutch
+Frisian
+Spanish
+Humanities
+Science
+Astronomy
+Biology
+Chemistry
+Physics
+Main page
+Social sciences
+Anthropology
+Psychology
+Sociology
+Main page
+Astronomy Dept.
+Galaxies
+Nebulas
+Planets
+Quasars
+Stars
+Sciences
+Biology Dept.
+Arachnids
+Mammals
+Protozoa
+Worms
+Sciences
+Chemistry Dept.
+Acids
+Bases
+Esters
+Proteins
+Sciences
+Physics Dept.
+Electrons
+Mesons
+Neutrons
+Neutrinos
+Protons
+Sciences
+Anthropology Dept.
+African tribes
+Australian tribes
+New Guinean 
+tribes
+Social sciences
+Psychology Dept.
+Freud
+Rats
+Social sciences
+Sociology Dept
+Class struggle
+Gender struggle
+Generic struggle
+Social sciences
+Figure 8-32. The Web is a big directed graph of documents.
+Each Web page has a unique address, called a URL (Uniform Resource 
+Locator), of the form protocol://DNS-name/file-name. The protocol is most commonly
+http (HyperText Transfer Protocol), and its secure cousin https, but ftp and others
+also exist. Then comes the DNS name of the host containing the file. Finally, there
+is a local file name telling which file is needed. Thus, a URL uniquely specifies a
+single file worldwide
+The way the whole system hangs together is as follows. The Web is 
+fundamentally a client-server system, with the user being the client and the Website being the
+server. When the user provides the browser with a URL, either by typing it in or
+clicking on a hyperlink on the current page, the browser takes certain steps to fetch
+the requested Web page. As a simple example, suppose the URL provided is
+http://www.minix3.org/getting-started/index.html. The browser then takes the 
+following steps to get the page.
+1. The browser asks DNS for the IP address of www.minix3.org.
+2. DNS replies with 66.147.238.215.
+3. The browser makes a TCP connection to port 80 on 66.147.238.215.
+4. It then sends a request asking for the file getting-started/index.html.
+5. The www.minix3.org server sends the file getting-started/index.html.
+6. The browser displays all the text in getting-started/index.html.
+7. Meanwhile, the browser fetches and displays all images on the page.
+8. The TCP connection is released.

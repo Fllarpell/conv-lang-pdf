@@ -1,0 +1,46 @@
+742
+CASE STUDY 1: UNIX, LINUX, AND ANDROID 
+CHAP. 10
+As initialization proceeds, messages are written here about what is happening, so
+that they can be fished out after a boot failure by a special diagnostic program.
+Think of this as the operating system’s cockpit flight recorder (the black box 
+investigators look for after a plane crash).
+Next the kernel data structures are allocated. Most are of fixed size, but a few,
+such as the page cache and certain page table structures, depend on the amount of
+RAM available.
+At this point, the system begins autoconfiguration. Using configuration files
+telling what kinds of I/O devices might be present, it begins probing the devices to
+see which ones actually are present. If a probed device responds to the probe, it is
+added to a table of attached devices. If it fails to respond, it is assumed to be
+absent and ignored henceforth. Unlike traditional UNIX versions, Linux device
+drivers do not need to be statically linked and may be loaded dynamically (as can
+be done in all versions of MS-DOS and Windows, incidentally).
+The arguments for and against dynamically loading drivers are interesting and
+worth stating explicitly. The main argument for dynamic loading is that a single
+binary can be shipped to customers with divergent configurations and have it 
+automatically load the drivers it needs, possibly even over a network. The main 
+argument against dynamic loading is security. If you are running a secure site, such as
+a bank’s database or a corporate Web server, you probably want to make it 
+impossible for anyone to insert random code into the kernel. The system administrator
+may keep the operating system sources and object files on a secure machine, do all
+system builds there, and ship the kernel binary to other machines over a local area
+network. If drivers cannot be loaded dynamically, this scenario prevents machine
+operators and others who know the superuser password from injecting malicious or
+buggy code into the kernel. Furthermore, at large sites, the hardware configuration
+is known exactly at the time the system is compiled and linked. Changes are rare
+so having to relink the system when a new device is added is not an issue.
+Once all the hardware has been configured, the next thing to do is to carefully
+handcraft process 0, set up its stack, and run it. Process 0 continues initialization,
+doing things like programming the real-time clock, mounting the root file system,
+and creating init (process 1) and the page daemon (process 2).
+Init checks its flags to see if it is supposed to come up single user or multiuser.
+In the former case, it forks off a process that executes the shell and waits for this
+process to exit. In the latter case, it forks off a process that executes the system 
+initialization shell script, /etc/rc, which can do file system consistency checks, mount
+additional file systems, start daemon processes, and so on. Then it reads /etc/ttys,
+which lists the terminals and some of their properties. For each enabled terminal, it
+forks off a copy of itself, which does some housekeeping and then executes a 
+program called getty.
+Getty sets the line speed and other properties for each line (some of which may
+be modems, for example), and then displays
+login:

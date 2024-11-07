@@ -1,0 +1,44 @@
+926
+CASE STUDY 2: WINDOWS 11
+CHAP. 11
+Open file objects are created when a file is opened. Files that are not opened do
+not have objects managed by the object manager. Access tokens are security
+objects. They identify a user and tell what special privileges the user has, if any.
+Profiles are structures used for storing periodic samples of the program counter of
+a running thread to see where the program is spending its time.
+Sections are used to represent memory objects backed by files or the pagefile
+that applications can ask the memory manager to map into their address space. In
+the Win32 API, these are called file mapping objects. Keys represent the mount
+point for the registry namespace on the object manager namespace. There is 
+usually only one key object, named \ REGISTRY, which connects the names of the 
+registry keys and values to the NT namespace.
+Object directories and symbolic links are entirely local to the part of the NT
+namespace managed by the object manager. They are similar to their file system
+counterparts: directories allow related objects to be collected together. Symbolic
+links allow a name in one part of the object namespace to refer to an object in a
+different part of the object namespace.
+Each device known to the operating system has one or more device objects that
+contain information about it and are used to refer to the device by the system.
+Finally, each device driver that has been loaded has a driver object in the object
+space. The driver objects are shared by all the device objects that represent
+instances of the devices controlled by those drivers.
+Other objects (not shown) have more specialized purposes, such as interacting
+with kernel transactions, or the Win32 thread pool’s worker thread factory.
+11.3.4 Subsystems, DLLs, and User-Mode Services
+Going back to Fig. 11-4, we see that the Windows operating system consists of
+components in kernel mode and components in user mode. We hav e now 
+completed our overview of the kernel-mode components; so it is time to look at the
+user-mode components, of which three kinds are particularly important to 
+Windows: environment subsystems, DLLs, and service processes.
+We hav e already described the Windows subsystem model; we will not go into
+more detail now other than to mention that in the original design of NT, 
+subsystems were seen as a way of supporting multiple operating system personalities with
+the same underlying software running in kernel mode. Perhaps this was an attempt
+to avoid having operating systems compete for the same platform, as VMS and
+Berkeley UNIX did on DEC’s VAX. Or maybe it was just that nobody at Microsoft
+knew whether OS/2 would be a success as a programming interface, so they were
+hedging their bets. In any case, OS/2 became irrelevant, and a latecomer, so the
+Win32 API designed to be shared with Windows 95, became dominant.
+A second key aspect of the user-mode design of Windows is the dynamic link
+library which is code that is linked to executable programs at run time rather than
+compile time. Shared libraries are not a new concept, and most modern operating

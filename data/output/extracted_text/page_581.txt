@@ -1,0 +1,44 @@
+552
+MULTIPLE PROCESSOR SYSTEMS
+CHAP. 8
+It is also possible that a context switch happens when a thread’s quantum 
+expires. On a multiprocessor, that has certain properties not present on a 
+uniprocessor. Suppose that the thread happens to hold a spin lock when its quantum
+expires. Other CPUs waiting on the spin lock just waste their time spinning until
+that thread is scheduled again and releases the lock. On a uniprocessor, spin locks
+are rarely used, so if a process is suspended while it holds a mutex, and another
+thread starts and tries to acquire the mutex, it will be immediately blocked, so little
+time is wasted.
+To get around this anomaly, some systems use smart scheduling, in which a
+thread acquiring a spin lock sets a processwide flag to show that it currently has a
+spin lock (Zahorjan et al., 1991). When it releases the lock, it clears the flag. The
+scheduler then does not stop a thread holding a spin lock, but instead gives it a 
+little more time to complete its critical region and release the lock.
+Another issue that plays a role in scheduling is the fact that while all CPUs are
+equal, some CPUs are more equal. In particular, when thread A has run for a long
+time on CPU k, CPU k’s cache will be full of A’s blocks. If A gets to run again
+soon, it may perform better if it is run on CPU k, because k’s cache may still 
+contain some of A’s blocks. Having cache blocks preloaded will increase the cache hit
+rate and thus the thread’s speed. In addition, the TLB may also contain the right
+pages, reducing TLB faults.
+Some multiprocessors take this effect into account and use what is called 
+affinity scheduling (Vaswani and Zahorjan, 1991). The basic idea here is to make a
+serious effort to have a thread run on the same CPU it ran on last time. One way to
+create this affinity is to use a two-level scheduling algorithm. When a thread is
+created, it is assigned to a CPU, for example, based on which one has the smallest
+load at that moment. This assignment of threads to CPUs is the top level of the
+algorithm. As a result, each CPU acquires its own collection of threads.
+The actual scheduling of the threads is the bottom level of the algorithm. It is
+done by each CPU separately, using priorities or some other means. By trying to
+keep a thread on the same CPU for its entire lifetime, cache affinity is maximized.
+However, if a CPU has no threads to run, it takes one from another CPU rather than
+go idle.
+Tw o-level scheduling has three benefits. First, it distributes the load roughly
+ev enly over the available CPUs. Second, advantage is taken of cache affinity
+where possible. Third, by giving each CPU its own ready list, contention for the
+ready lists is minimized because attempts to use another CPU’s ready list are 
+relatively infrequent.
+Space Sharing
+The other general approach to multiprocessor scheduling can be used when
+threads are related to one another in some way. Earlier we mentioned the example
+of parallel make as one case. It also often occurs that a single process has multiple
