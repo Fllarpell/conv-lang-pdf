@@ -60,3 +60,113 @@
 2024-11-07 22:37:16,819 - INFO - РР·РІР»РµС‡РµРЅРёРµ С‚РµРєСЃС‚Р° Р·Р°РІРµСЂС€РµРЅРѕ!
 2024-11-07 22:37:16,819 - INFO - РќР°С‡Р°С‚ РїРµСЂРµРІРѕРґР° Рё СЃРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ PDF С„Р°Р№Р»Р° РїРѕ РїСѓС‚Рё: data/output/output.pdf
 2024-11-07 22:41:31,499 - INFO - РџРµСЂРµРІРµРґРµРЅРѕ: 1.6877637130801686% bСЃС…РѕРґРЅРѕРіРѕ С„Р°Р№Р»Р°
+2024-11-08 01:40:12,798 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 01:40:19,379 - INFO - Извлечение текста завершено!
+2024-11-08 01:40:19,380 - INFO - Начат перевода и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 01:41:52,071 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 01:41:58,442 - INFO - Извлечение текста завершено!
+2024-11-08 01:41:58,442 - INFO - Начат перевода и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 01:42:49,015 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 01:42:55,792 - INFO - Извлечение текста завершено!
+2024-11-08 01:42:55,793 - INFO - Начат перевода и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 01:49:03,098 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 01:49:07,346 - INFO - Извлечение текста завершено!
+2024-11-08 01:49:07,346 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 01:52:52,898 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 01:52:59,166 - INFO - Извлечение текста завершено!
+2024-11-08 01:52:59,166 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 01:54:08,565 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 01:54:14,955 - INFO - Извлечение текста завершено!
+2024-11-08 01:54:14,955 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 01:56:10,542 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 01:56:16,896 - INFO - Извлечение текста завершено!
+2024-11-08 01:56:16,896 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 01:57:02,096 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 01:57:06,022 - INFO - Извлечение текста завершено!
+2024-11-08 01:57:06,022 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 01:58:36,848 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 01:58:43,823 - INFO - Извлечение текста завершено!
+2024-11-08 01:58:43,824 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 02:00:43,322 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:00:49,634 - INFO - Извлечение текста завершено!
+2024-11-08 02:00:49,635 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 02:01:03,055 - INFO - Переведенный PDF сохранен по пути: data/output/output.pdf
+2024-11-08 02:04:45,253 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:04:51,636 - INFO - Извлечение текста завершено!
+2024-11-08 02:04:51,637 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 02:10:59,732 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:11:07,518 - INFO - Извлечение текста завершено!
+2024-11-08 02:11:07,518 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 02:12:31,196 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:12:37,558 - INFO - Извлечение текста завершено!
+2024-11-08 02:12:37,558 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 02:12:53,067 - INFO - Переведенный PDF сохранен по пути: data/output/output.pdf
+2024-11-08 02:16:00,314 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:16:08,035 - INFO - Извлечение текста завершено!
+2024-11-08 02:16:08,035 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 02:16:47,283 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:16:53,820 - INFO - Извлечение текста завершено!
+2024-11-08 02:16:53,821 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 02:17:06,484 - INFO - Переведенный PDF сохранен по пути: data/output/output.pdf
+2024-11-08 02:21:17,773 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:21:24,175 - INFO - Извлечение текста завершено!
+2024-11-08 02:21:24,175 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 02:21:39,435 - INFO - Переведенный PDF сохранен по пути: data/output/output.pdf
+2024-11-08 02:22:33,059 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:22:39,588 - INFO - Извлечение текста завершено!
+2024-11-08 02:22:39,588 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 02:22:54,603 - INFO - Переведенный PDF сохранен по пути: data/output/output.pdf
+2024-11-08 02:23:43,188 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:23:49,496 - INFO - Извлечение текста завершено!
+2024-11-08 02:23:49,496 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 02:24:04,026 - INFO - Переведенный PDF сохранен по пути: data/output/output.pdf
+2024-11-08 02:25:35,364 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:25:41,939 - INFO - Извлечение текста завершено!
+2024-11-08 02:25:41,939 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 02:25:56,797 - INFO - Переведенный PDF сохранен по пути: data/output/output.pdf
+2024-11-08 02:26:44,000 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:26:50,514 - INFO - Извлечение текста завершено!
+2024-11-08 02:26:50,514 - INFO - Начат перевод и создание нового PDF файла по пути: data/output/output.pdf
+2024-11-08 02:27:03,985 - INFO - Переведенный PDF сохранен по пути: data/output/output.pdf
+2024-11-08 02:31:01,027 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:31:06,152 - INFO - Извлечение текста завершено!
+2024-11-08 02:31:06,152 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 02:31:12,234 - ERROR - Font file not found. Please ensure the font path is correct.
+2024-11-08 02:31:50,099 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:31:56,704 - INFO - Извлечение текста завершено!
+2024-11-08 02:31:56,705 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 02:32:02,129 - ERROR - Font file not found. Please ensure the font path is correct.
+2024-11-08 02:33:04,562 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:33:09,227 - INFO - Извлечение текста завершено!
+2024-11-08 02:33:09,227 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 02:36:06,586 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:36:13,149 - INFO - Извлечение текста завершено!
+2024-11-08 02:36:13,150 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 02:37:48,375 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:38:18,397 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:38:25,994 - INFO - Извлечение текста завершено!
+2024-11-08 02:38:25,994 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 02:38:40,700 - INFO - Translated PDF saved at: data/output/output.pdf
+2024-11-08 02:42:24,090 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:42:32,081 - INFO - Извлечение текста завершено!
+2024-11-08 02:42:32,082 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 02:43:20,797 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:43:27,124 - INFO - Извлечение текста завершено!
+2024-11-08 02:43:27,125 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 02:43:42,745 - INFO - Translated PDF saved at: data/output/output.pdf
+2024-11-08 02:44:43,564 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:44:50,829 - INFO - Извлечение текста завершено!
+2024-11-08 02:44:50,830 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 02:45:03,969 - INFO - Translated PDF saved at: data/output/output.pdf
+2024-11-08 02:45:51,658 - INFO - Начато извлечение текста из файла: data/input/input.pdf
+2024-11-08 02:45:59,155 - INFO - Извлечение текста завершено!
+2024-11-08 02:45:59,155 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 02:46:11,879 - INFO - Translated PDF saved at: data/output/output.pdf
+2024-11-08 02:47:47,184 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 02:51:47,439 - INFO - Translated PDF saved at: data/output/output.pdf
+2024-11-08 03:13:34,110 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 03:15:52,877 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 03:17:11,021 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 03:21:02,675 - INFO - Translated PDF saved at: data/output/output.pdf
+2024-11-08 03:23:28,288 - INFO - Starting translation and PDF creation at: data/output/output.pdf
+2024-11-08 03:26:58,657 - INFO - Translated PDF saved at: data/output/output.pdf

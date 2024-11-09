@@ -1,7 +1,8 @@
 import fitz
 import os
 import logging
-
+import nltk
+from nltk.tokenize import sent_tokenize
 from pdf_translator.translator import TranslatorMarianMTModel
 
 logging.basicConfig(
@@ -13,39 +14,67 @@ logging.basicConfig(
     ]
 )
 
+nltk.download('punkt')
+nltk.download('punkt_tab')
+
 
 def create_translated_pdf(input_pdf_path, output_pdf_path):
-    logging.info(f"Начат перевода и создание нового PDF файла по пути: {output_pdf_path}")
+    logging.info(f"Starting translation and PDF creation at: {output_pdf_path}")
     translateModel = TranslatorMarianMTModel()
 
     document = fitz.open(input_pdf_path)
     translated_document = fitz.open()
+
+
     cnt = 0
     for page_num in range(document.page_count):
         cnt += 1
-        if cnt % 20 == 0:
-            logging.info(f"Переведено: {cnt/document.page_count * 100}% исходного файла")
         page = document[page_num]
         translated_page = translated_document.new_page(width=page.rect.width, height=page.rect.height)
+        font = fitz.Font("tiro")
+        translated_page.insert_font(fontname="F0", fontbuffer=font.buffer)
+
         blocks = page.get_text("blocks")
+
+        print(page.get_images(full=True))
+        for img_index, img in enumerate(page.get_images(full=True)):
+            xref = img[0]
+            base_image = document.extract_image(xref)
+            image_bytes = base_image["image"]
+
+            img_rect = page.get_image_rects(xref)[0]
+            translated_page.insert_image(
+                img_rect,
+                stream=image_bytes,
+                keep_proportion=True
+            )
 
         for block in blocks:
             x0, y0, x1, y1, text, _, _ = block
-            try:
-                translated_text = translateModel.translate_text([text])[0]
-            except IndexError:
-                continue
+
+            sentences = sent_tokenize(text)
+            translated_text = ""
+
+            for i in range(0, len(sentences), 1):
+                chunk = ' '.join(sentences[i:i + 1])
+                if chunk:
+                    try:
+                        translated_chunk = translateModel.translate_text([chunk])[0]
+                        translated_text += translated_chunk + " "
+                    except IndexError:
+                        continue
+
             translated_page.insert_textbox(
                 fitz.Rect(x0, y0, x1, y1),
-                translated_text,
+                translated_text.strip(),
                 fontsize=10,
-                fontname="helv",
+                fontname="F0",
                 align=0
             )
 
-    translated_document.save(output_pdf_path)
-    translated_document.close()
-    document.close()
-    logging.info(f"Переведенный PDF сохранен по пути: {output_pdf_path}")
-
-
+        if cnt == 10:
+            translated_document.save(output_pdf_path)
+            translated_document.close()
+            document.close()
+            break
+    logging.info(f"Translated PDF saved at: {output_pdf_path}")
