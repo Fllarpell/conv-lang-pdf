@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const progressBar = document.createElement("progress");
     const fileNameDisplay = document.createElement("div");
 
+    // Create elements for feedback
     uploadingMessage.id = "uploading-message";
     uploadingMessage.textContent = "Загрузка файла...";
     uploadingMessage.style.display = "none";
@@ -20,10 +21,12 @@ document.addEventListener("DOMContentLoaded", function() {
     fileNameDisplay.style.fontSize = "0.9em";
     fileNameDisplay.style.color = "#666";
 
+    // Append elements to the form
     form.appendChild(uploadingMessage);
     form.appendChild(progressBar);
     form.appendChild(fileNameDisplay);
 
+    // Display the selected file name
     fileInput.addEventListener("change", function() {
         if (fileInput.files.length > 0) {
             fileNameDisplay.textContent = `Выбран файл: ${fileInput.files[0].name}`;
@@ -32,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    // Handle form submission
     form.addEventListener("submit", function(event) {
         if (fileInput.files.length === 0) {
             alert("Пожалуйста, выберите файл для загрузки.");
@@ -39,28 +43,28 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        // Показать сообщение "Загрузка файла..." и прогресс бар
+        // Show uploading message and progress bar
         uploadingMessage.style.display = "block";
         progressBar.style.display = "block";
         submitButton.disabled = true;
         submitButton.textContent = "Загрузка...";
 
-        // Имитируем загрузку файла с прогрессом
+        // Simulate file upload progress
         let progress = 0;
         const interval = setInterval(() => {
             if (progress >= 100) {
                 clearInterval(interval);
+                submitButton.textContent = "Перевести"; // Reset button text
+                submitButton.disabled = false; // Re-enable the button
             } else {
                 progress += 5;
                 progressBar.value = progress;
             }
         }, 100);
     });
-});
 
-document.addEventListener("DOMContentLoaded", function() {
+    // Handle download link click
     const downloadLink = document.querySelector(".result-link");
-
     if (downloadLink) {
         downloadLink.addEventListener("click", function(event) {
             event.preventDefault();

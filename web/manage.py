@@ -2,13 +2,15 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+from pathlib import Path
 
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pdf_translator_web.settings')
-
     sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+    sys.path.append(f'{Path(__file__).resolve().parent.parent}/pdf_translator/processor.py')
+    sys.path.append(f'{Path(__file__).resolve().parent.parent}/data/input')
+    sys.path.append(f'{Path(__file__).resolve().parent.parent}/data/output')
 
     try:
         from django.core.management import execute_from_command_line
