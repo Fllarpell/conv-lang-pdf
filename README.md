@@ -23,7 +23,7 @@ PDF Translator — это веб-приложение, которое позво
 1. Клонируйте репозиторий:
 
    ```bash
-   git clone https://github.com/username/conv-lang-pdf.git
+   git clone https://github.com/Fllarpell/conv-lang-pdf.git
    cd conv-lang-pdf
     ```
 2. Создайте виртуальное окружение и установите зависимости:

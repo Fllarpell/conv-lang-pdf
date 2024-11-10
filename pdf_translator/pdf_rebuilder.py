@@ -1,15 +1,14 @@
 import fitz
-import os
 import logging
 import nltk
 from nltk.tokenize import sent_tokenize
-from pdf_translator.translator import TranslatorMarianMTModel
+from pdf_translator.translator import Translator
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("logs/debug.log"),
+        logging.FileHandler("../logs/debug.log"),
         logging.StreamHandler()
     ]
 )
@@ -20,15 +19,12 @@ nltk.download('punkt_tab')
 
 def create_translated_pdf(input_pdf_path, output_pdf_path):
     logging.info(f"Starting translation and PDF creation at: {output_pdf_path}")
-    translateModel = TranslatorMarianMTModel()
+    translateModel = Translator()
 
     document = fitz.open(input_pdf_path)
     translated_document = fitz.open()
 
-
-    cnt = 0
     for page_num in range(document.page_count):
-        cnt += 1
         page = document[page_num]
         translated_page = translated_document.new_page(width=page.rect.width, height=page.rect.height)
         font = fitz.Font("tiro")
@@ -36,7 +32,6 @@ def create_translated_pdf(input_pdf_path, output_pdf_path):
 
         blocks = page.get_text("blocks")
 
-        print(page.get_images(full=True))
         for img_index, img in enumerate(page.get_images(full=True)):
             xref = img[0]
             base_image = document.extract_image(xref)
@@ -72,9 +67,7 @@ def create_translated_pdf(input_pdf_path, output_pdf_path):
                 align=0
             )
 
-        if cnt == 10:
-            translated_document.save(output_pdf_path)
-            translated_document.close()
-            document.close()
-            break
+    translated_document.save(output_pdf_path)
+    translated_document.close()
+    document.close()
     logging.info(f"Translated PDF saved at: {output_pdf_path}")

@@ -1,1 +1,55 @@
-This page is intentionally left blank
+  
+2 
+Problem 2: 
+An object of mass m = 50 g slides with the zero initial velocity down an 
+inclined plane set at an angle α = 30° to the horizontal. It successfully slides down, 
+then covers the distance of 50 cm on the horizontal plane, and stops. Find the 
+work (in J, round to 2 decimal places) performed by the friction forces over 
+the whole distance, assuming the friction coefficient k = 0.15 for both inclined 
+and horizontal planes. 
+ 
+Given: 
+𝑚 = 50 ⋅10−3𝑘𝑔 
+𝑉0 = 0 𝑚∕𝑠 
+𝛼= 300 
+𝑘= 0,15 
+𝑠1 = 0,5 𝑚 
+ 
+Find:  
+The total work 𝑊 
+ 
+ 
+Solution:  
+Calculate acceleration 𝛼1 down the incline: 
+𝛼1 = 𝑔(sin(𝑎) −𝑘𝑐𝑜𝑠(𝑎)) = 9.81 ⋅(𝑠𝑖𝑛300 ⋅𝑐𝑜𝑠300) ≈3.21 m/s2  
+Calculate velocity 𝑉𝐴 at the end of the incline: 
+𝑉𝐴= √2𝛼1𝑠1 = √2 ⋅3.21 ⋅1.5 ≈1.79 𝑚∕𝑠 
+Calculate deceleration 𝑎2 on the horizontal surface:  
+𝑎2 = −𝑘𝑔= −0.15 ⋅9.81 ≈−1.47 𝑚∕𝑠2 
+Calculate distance 𝑠2 on the horizontal plane using 𝑉𝐴: 
+𝑆2 =
+𝑉𝐴
+2
+2|𝑎2| = 1.792
+2 ⋅1.47 ≈0.55 𝑚 
+Calculate work 𝑊1 done by friction on the inclined plane: 
+𝑊2 = −𝑘𝑔𝑚⋅𝑠2 = −0.15 ⋅0.05 ⋅9.81 ⋅0.55 ≈−0.04 𝐽 
+Calculate the total work 𝑊: 
+𝑊= 𝑊1 + 𝑊2 = −0.03 + (−0.04) = −0.07 𝐽 
+ 
+Answer:  
+𝑊= −0.07 J 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+N mg cos(a) 
+a1 
+a2 
+mg
+ 
+s1
+v=0 

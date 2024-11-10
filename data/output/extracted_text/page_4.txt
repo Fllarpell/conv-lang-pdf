@@ -1,10 +1,56 @@
-MODERN
-OPERATING SYSTEMS
-FIFTH EDITION
-ANDREW S. TANENBAUM
-HERBERT BOS
-Vrije Universiteit
-Amsterdam, The Netherlands
-PEARSON
-HOBOKEN, NEW JERSEY 07458
-GLOBAL EDITION
+  
+3 
+Problem 3 solution: 
+A small mass slides down with zero initial velocity from the top of a smooth 
+hill of height H. The foot of the hill has a portion of horizontal surface before the 
+vertical cliff of height h as shown on Figure.   
+1. 
+What must be the height of the horizontal portion (h/H = ?) to 
+ensure the maximum distance s covered by the flying mass?   
+2. 
+What the maximum distance s measured in H equals to?  
+Given: 
+Initial velocity 𝑉0= 0 
+Height of incline 𝐻 
+Height of cliff ℎ  
+ 
+Find:  
+1. The ratio 
+ℎ
+𝐻 that maximizes 
+the horizontal distance 𝑠. 
+2. The maximum horizontal 
+distance 𝑠 in terms of 𝐻. 
+ 
+Solution: 
+Calculate the horizontal velocity 𝑉: 
+𝑉= √2𝑔(𝐻−ℎ) 
+Calculate the time 𝑡 of free fall from height ℎ: 
+𝑡= √2ℎ
+𝑔 
+Calculate the horizontal distance 𝑠: 
+ 
+𝑠= 𝑉⋅𝑡= √2𝑔(𝐻−ℎ) ⋅√2ℎ
+𝑔= √4(𝐻−ℎ)ℎ 
+(1) 
+Maximize 𝑠 by finding the optimal 
+ℎ
+𝐻: we find the derivative of s with 
+respect to ℎ and set it to zero: 
+ⅆ
+ⅆℎ√4(𝐻−ℎ)ℎ= 0 
+ 
+ℎ
+𝐻= 1
+2 => ℎ= 𝐻
+2 
+(2) 
+Substituting [Eq. 2] to [Eq.1]: 
+𝑠= 𝐻 
+ 
+Answer: 
+1. ℎ
+𝐻= 1
+2  
+2. 𝑠= 𝐻 
+g 

@@ -1,4 +1,54 @@
-MODERN
-OPERATING SYSTEMS
-FIFTH EDITION
-GLOBAL EDITION
+  
+1 
+Problem 1: 
+One particular glitch in the Mafia 3 video game resulted in the player’s 
+character getting launched into the air after being intermittently stuck inside a 
+motor boat. A hyper-realistic representation of this scene is shown in the Figure 
+below. The known quantities are: mass of the character m = 80 kg, maximum 
+launch height H = 70 m, initial penetration of the character’s feet into the boat’s 
+hull x = 0.5 m. Answer the following:  
+1. 
+Assuming that the boat’s hull can be modeled as an ideal spring 
+with the stiffness coefficient k, what should be the value of k (in N/m, round to 
+nearest thousand) so that the character is launched into the air by a given height 
+H. Neglect air drag (15 pts).   
+2. 
+What is the maximum character’s speed 𝒗𝒊 (in km/h, round to 1 
+decimal place)? (10 pts).  
+ 
+Given:  
+𝑚= 80 𝑘𝑔 
+𝐻= 70 𝑚 
+𝑥= 0,5 𝑚 
+ 
+Find: 
+1. 𝑘 
+2. 𝑣𝑖 
+Solution: 
+To find 𝑘, we apply the energy conservation principle. The initial elastic 
+potential energy in the spring should be equal to the gravitational potential 
+energy at height 𝐻: 
+1
+2 𝑘𝑥2 = 𝑚𝑔𝐻 
+Solving for 𝑘: 
+𝑘= 2𝑚𝑔𝐻
+𝑥2
+= 2 ⋅80 ⋅9,8 ⋅70
+0, 52
+= 439040 𝑁/𝑚 
+To determine the maximum launch speed 𝑣𝑖, we consider the point where 
+the entire initial elastic potential energy is converted to kinetic energy: 
+1
+2 𝑘𝑥2 = 1
+2 𝑚𝑣𝑖
+2 
+Rearranging to solve for 𝑣𝑖: 
+𝑣𝑖= 𝑥√𝑘
+𝑚=  0,5√439040
+80
+= 37,04 𝑚𝑠
+⁄ = 133,3 𝑘𝑚/ℎ 
+ 
+Answer:  
+1. 𝑘= 439000 𝑁, 𝑚
+2. 𝑣𝑖= 133,3 𝑘𝑚∕ℎ 
